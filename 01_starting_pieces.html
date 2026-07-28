@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Starting Pieces — Probability</title>
+<style>
+  body { font-family: Georgia, serif; max-width: 720px; margin: 40px auto; padding: 0 20px; background: #fafaf7; color: #1a1a1a; line-height: 1.7; }
+  h1 { border-bottom: 2px solid #333; padding-bottom: 8px; }
+  h2 { margin-top: 2em; color: #2c2c6c; }
+  .block { background: #fff; border-left: 4px solid #2c2c6c; padding: 12px 18px; margin: 16px 0; border-radius: 0 6px 6px 0; }
+  .warn { border-left-color: #c0392b; }
+  .green { border-left-color: #27ae60; }
+  code { background: #eee; padding: 1px 5px; border-radius: 3px; font-size: 0.95em; }
+  table { border-collapse: collapse; width: 100%; margin: 12px 0; }
+  td, th { border: 1px solid #ccc; padding: 8px 12px; }
+  th { background: #eef; }
+</style>
+</head>
+<body>
+
+<h1>Starting Pieces — Probability Theory</h1>
+<p><em>My understanding, built from scratch.</em></p>
+
+<h2>1. The Outcome</h2>
+<div class="block green">
+  The experiment runs. One outcome is produced. Call it <strong>ω</strong>.<br>
+  <strong>Ω</strong> = the set of all possible outcomes (sample space).<br>
+  ω ∈ Ω always.
+</div>
+
+<h2>2. Events</h2>
+<div class="block">
+  An <strong>event</strong> is just a subset A ⊆ Ω.<br><br>
+  <strong>A happened</strong> iff ω ∈ A. (Did the actual outcome land inside the set?)<br>
+  <strong>A did not happen</strong> iff ω ∉ A.<br><br>
+  Examples (coin toss forever):<br>
+  <ul>
+    <li>A<sub>H</sub> = {ω : first toss is H}</li>
+    <li>A<sub>HH</sub> = {ω : first two tosses are HH}</li>
+    <li>Ω = always happens. ∅ = never happens.</li>
+  </ul>
+</div>
+
+<h2>3. σ-field (Sigma-Algebra)</h2>
+<div class="block">
+  A <strong>σ-field</strong> ℱ is a collection of subsets of Ω that we are allowed to assign probabilities to.<br><br>
+  Must satisfy:
+  <ol>
+    <li>∅ ∈ ℱ</li>
+    <li>A ∈ ℱ ⟹ Aᶜ ∈ ℱ (if you can ask "did A?", you can ask "did NOT A?")</li>
+    <li>A₁, A₂, … ∈ ℱ ⟹ ∪Aᵢ ∈ ℱ</li>
+  </ol>
+  <em>Just accept these axioms. They exist so probability arithmetic never breaks.</em>
+</div>
+
+<h2>4. Special Events &amp; Filtration</h2>
+<div class="block">
+  At time k, you have seen ω₁, ω₂, …, ωₖ.<br><br>
+  <strong>A is a special event at time k</strong> if:<br>
+  &nbsp;&nbsp;Knowing ω₁,…,ωₖ is enough to say definitively — ω ∈ A or ω ∉ A.<br><br>
+  <strong>A is NOT special at time k</strong> if:<br>
+  &nbsp;&nbsp;You need more tosses. You cannot decide yet.<br><br>
+
+  <table>
+    <tr><th>Event</th><th>Special at k=1?</th><th>Reason</th></tr>
+    <tr><td>A<sub>H</sub></td><td>✅ Yes</td><td>Saw ω₁, enough to decide</td></tr>
+    <tr><td>A<sub>HH</sub></td><td>❌ No</td><td>Need ω₂</td></tr>
+    <tr><td>Ω</td><td>✅ Yes</td><td>Always yes, needs 0 tosses</td></tr>
+  </table>
+
+  <strong>ℱₖ</strong> = the set of ALL special events at time k.<br><br>
+  As k grows, you see more → more events become special:<br>
+  &nbsp;&nbsp;ℱ₀ ⊂ ℱ₁ ⊂ ℱ₂ ⊂ …<br><br>
+  This chain is the <strong>filtration</strong>. It tracks your growing information over time.<br>
+  ℱₖ represents all information available by time k.
+</div>
+
+<h2>5. Probability Measure</h2>
+<div class="block">
+  P is a function: <strong>P : ℱ → [0,1]</strong><br>
+  Input: an event. Output: a number.<br><br>
+  Two rules:
+  <ol>
+    <li>P(Ω) = 1</li>
+    <li>If A₁, A₂, … are pairwise disjoint: P(∪Aᵢ) = ΣP(Aᵢ)</li>
+  </ol>
+</div>
+
+<h2>6. Probability Space</h2>
+<div class="block green">
+  <strong>(Ω, ℱ, P)</strong> — the three pieces:<br>
+  <ul>
+    <li><strong>Ω</strong> — all possible outcomes</li>
+    <li><strong>ℱ</strong> — the events we are allowed to assign probabilities to</li>
+    <li><strong>P</strong> — the function that assigns those numbers</li>
+  </ul>
+</div>
+
+<h2>7. Almost Surely (a.s.)</h2>
+<div class="block warn">
+  P(A) = 1 → A occurs <strong>almost surely</strong>. NOT "surely."<br><br>
+  <strong>Surely</strong> = A = Ω, impossible to be outside A.<br>
+  <strong>Almost surely</strong> = P(A) = 1, but exceptions of probability 0 may exist.
+</div>
+
+</body>
+</html>
