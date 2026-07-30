@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>02 — Almost Surely & Borel-Cantelli (Step-by-Step)</title>
+<style>
+  body { font-family: Georgia, serif; max-width: 720px; margin: 40px auto; padding: 0 20px; background: #fafaf7; color: #1a1a1a; line-height: 1.7; }
+  h1 { border-bottom: 2px solid #333; padding-bottom: 8px; }
+  h2 { margin-top: 2em; color: #2c2c6c; }
+  .block { background: #fff; border-left: 4px solid #2c2c6c; padding: 12px 18px; margin: 16px 0; border-radius: 0 6px 6px 0; }
+  .warn { border-left-color: #c0392b; }
+  .green { border-left-color: #27ae60; }
+  code { background: #eee; padding: 1px 5px; border-radius: 3px; font-size: 0.95em; }
+  table { border-collapse: collapse; width: 100%; margin: 12px 0; }
+  td, th { border: 1px solid #ccc; padding: 8px 12px; }
+  th { background: #eef; }
+</style>
+</head>
+<body>
+
+<h1>02 — Almost Surely &amp; Borel-Cantelli Lemma</h1>
+<p><em>Un-rushed, line-by-line breakdown.</em></p>
+
+<h2>Step 1: The Setup</h2>
+<div class="block">
+  Given a probability space (Ω, ℱ, P) and a sequence of events A<sub>1</sub>, A<sub>2</sub>, A<sub>3</sub>, … ∈ ℱ.<br><br>
+  For each integer n ≥ 1, define:<br>
+  &nbsp;&nbsp;<strong>B<sub>n</sub> = ∪<sub>i=n</sub><sup>∞</sup> A<sub>i</sub> = A<sub>n</sub> ∪ A<sub>n+1</sub> ∪ A<sub>n+2</sub> ∪ …</strong>
+</div>
+
+<h2>Step 2: Understanding B<sub>n</sub> for a single outcome ω</h2>
+<div class="block green">
+  For a fixed outcome ω ∈ Ω:
+  <ul>
+    <li><strong>ω ∈ B<sub>n</sub></strong> iff ω belongs to at least one set in {A<sub>n</sub>, A<sub>n+1</sub>, A<sub>n+2</sub>, …}</li>
+    <li><strong>ω ∉ B<sub>n</sub></strong> iff ω belongs to NONE of the sets in {A<sub>n</sub>, A<sub>n+1</sub>, A<sub>n+2</sub>, …}</li>
+  </ul>
+  As n grows, B<sub>n</sub> drops early A<sub>i</sub> sets. Thus <strong>B<sub>1</sub> ⊇ B<sub>2</sub> ⊇ B<sub>3</sub> ⊇ … (written B<sub>n</sub> ↓)</strong>.
+</div>
+
+<h2>Step 3: The Intersection Set E</h2>
+<div class="block">
+  Define <strong>E = ∩<sub>n=1</sub><sup>∞</sup> B<sub>n</sub> = B<sub>1</sub> ∩ B<sub>2</sub> ∩ B<sub>3</sub> ∩ …</strong><br><br>
+  An outcome ω ∈ E iff ω ∈ B<sub>n</sub> for EVERY n ≥ 1.
+</div>
+
+<h2>Step 4: Characterizing E (The Limsup Event)</h2>
+<div class="block">
+  <ul>
+    <li><strong>If ω belongs to finitely many A<sub>i</sub></strong> (say the last one is A<sub>k</sub>):<br>
+    Then for any n > k, ω ∉ B<sub>n</sub>. Therefore, <strong>ω ∉ E</strong>.</li>
+    <br>
+    <li><strong>If ω belongs to infinitely many A<sub>i</sub>:</strong><br>
+    For every n, there is always some i ≥ n where ω ∈ A<sub>i</sub>. Therefore, <strong>ω ∈ E</strong>.</li>
+  </ul>
+  <strong>Conclusion:</strong> E = {ω ∈ Ω : ω belongs to infinitely many A<sub>i</sub>}. Denoted <strong>lim sup A<sub>n</sub></strong>.
+</div>
+
+<h2>Step 5: Continuity of Measure from Above (*<sub>1</sub>)</h2>
+<div class="block">
+  Since B<sub>n</sub> ↓, probability measure continuity implies:<br>
+  &nbsp;&nbsp;<strong>P(E) = P(∩<sub>n=1</sub><sup>∞</sup> B<sub>n</sub>) = lim<sub>n→∞</sub> P(B<sub>n</sub>)</strong>
+</div>
+
+<h2>Step 6: Union Bound (Subadditivity)</h2>
+<div class="block">
+  By definition of B<sub>n</sub>:<br>
+  &nbsp;&nbsp;<strong>P(B<sub>n</sub>) = P(∪<sub>i=n</sub><sup>∞</sup> A<sub>i</sub>) ≤ Σ<sub>i=n</sub><sup>∞</sup> P(A<sub>i</sub>)</strong>
+</div>
+
+<h2>Step 7: The Complete Proof Chain</h2>
+<div class="block green">
+  Given that Σ<sub>i=1</sub><sup>∞</sup> P(A<sub>i</sub>) &lt; ∞ (convergent series), the tail sum limit is zero:<br>
+  &nbsp;&nbsp;lim<sub>n→∞</sub> Σ<sub>i=n</sub><sup>∞</sup> P(A<sub>i</sub>) = 0<br><br>
+  Chain of inequalities:<br>
+  &nbsp;&nbsp;0 ≤ P(E) = lim<sub>n→∞</sub> P(B<sub>n</sub>) ≤ lim<sub>n→∞</sub> Σ<sub>i=n</sub><sup>∞</sup> P(A<sub>i</sub>) = 0<br><br>
+  <strong>Therefore: P(E) = 0</strong>.
+</div>
+
+<h2>Step 8: Final Physical Meaning</h2>
+<div class="block warn">
+  <strong>P(E) = 0</strong> means the set of outcomes ω that hit infinitely many A<sub>i</sub> events has probability 0.<br><br>
+  <strong>P(E<sup>c</sup>) = 1</strong> means <strong>almost surely</strong>, the actual outcome ω that occurs in real life belongs to E<sup>c</sup>.<br><br>
+  <strong>In plain words:</strong> Almost surely, event A<sub>i</sub> will only occur for finitely many indices i, and after some finite cutoff step N, A<sub>i</sub> will NEVER occur again.
+</div>
+
+</body>
+</html>

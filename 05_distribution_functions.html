@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>05 — Distribution Measure &amp; Cumulative Distribution Function (d.f.)</title>
+<style>
+  body { font-family: Georgia, serif; max-width: 720px; margin: 40px auto; padding: 0 20px; background: #fafaf7; color: #1a1a1a; line-height: 1.7; }
+  h1 { border-bottom: 2px solid #333; padding-bottom: 8px; }
+  h2 { margin-top: 2em; color: #2c2c6c; }
+  .block { background: #fff; border-left: 4px solid #2c2c6c; padding: 12px 18px; margin: 16px 0; border-radius: 0 6px 6px 0; }
+  .warn { border-left-color: #c0392b; }
+  .green { border-left-color: #27ae60; }
+  code { background: #eee; padding: 1px 5px; border-radius: 3px; font-size: 0.95em; }
+  table { border-collapse: collapse; width: 100%; margin: 12px 0; }
+  td, th { border: 1px solid #ccc; padding: 8px 12px; }
+  th { background: #eef; }
+</style>
+</head>
+<body>
+
+<h1>05 — Distribution Measure &amp; Cumulative Distribution Function</h1>
+<p><em>Un-rushed breakdown of push-forward probability measures and distribution functions (d.f.).</em></p>
+
+<h2>Step 1: The Push-Forward Measure P<sub>ξ</sub></h2>
+<div class="block green">
+  Every random variable <strong>ξ : Ω → ℝ</strong> on (Ω, ℱ, P) induces a probability measure <strong>P<sub>ξ</sub></strong> on (ℝ, ℬ(ℝ)), defined for all Borel sets B ∈ ℬ(ℝ) by:
+  <br><br>
+  &nbsp;&nbsp;<strong>P<sub>ξ</sub>(B) = P(ξ ∈ B) = P({ω ∈ Ω : ξ(ω) ∈ B})</strong>
+  <br><br>
+  <strong>Interpretation:</strong> P<sub>ξ</sub> is the "distribution" of ξ. It transports probability measure P from abstract sample space Ω to sets on the real line ℝ.
+</div>
+
+<h2>Step 2: Cumulative Distribution Function F<sub>ξ</sub>(x)</h2>
+<div class="block">
+  The function <strong>F<sub>ξ</sub> : ℝ → [0, 1]</strong> defined by:
+  <br><br>
+  &nbsp;&nbsp;<strong>F<sub>ξ</sub>(x) = P(ξ ≤ x) = P<sub>ξ</sub>((-∞, x])</strong>
+  <br><br>
+  is called the <strong>distribution function (d.f.)</strong> of ξ.
+</div>
+
+<h2>Step 3: Properties of Distribution Functions</h2>
+<div class="block">
+  Every distribution function F<sub>ξ</sub> satisfies three core properties:
+  <br><br>
+  <ol>
+    <li>
+      <strong>Non-Decreasing:</strong> If x₁ &lt; x₂, then F<sub>ξ</sub>(x₁) ≤ F<sub>ξ</sub>(x₂).
+      <br>
+      <em>Proof:</em> (-∞, x₁] ⊆ (-∞, x₂] ⟹ {ξ ≤ x₁} ⊆ {ξ ≤ x₂} ⟹ P(ξ ≤ x₁) ≤ P(ξ ≤ x₂).
+    </li>
+    <br>
+    <li>
+      <strong>Right-Continuous:</strong> lim<sub>h ↓ 0</sub> F<sub>ξ</sub>(x + h) = F<sub>ξ</sub>(x).
+      <br>
+      <em>Proof:</em> For sequence x<sub>n</sub> ↓ x, events A<sub>n</sub> = {ξ ≤ x<sub>n</sub>} form nested decreasing sequence A₁ ⊇ A₂ ⊇ ... with ⋂<sub>n=1</sub><sup>∞</sup> A<sub>n</sub> = {ξ ≤ x}. By continuity of measure from above, lim P(A<sub>n</sub>) = P({ξ ≤ x}).
+    </li>
+    <br>
+    <li>
+      <strong>Limits at ±∞:</strong>
+      <br>
+      &nbsp;&nbsp;lim<sub>x → -∞</sub> F<sub>ξ</sub>(x) = 0 &nbsp;&nbsp;&nbsp; and &nbsp;&nbsp;&nbsp; lim<sub>x → +∞</sub> F<sub>ξ</sub>(x) = 1
+    </li>
+  </ol>
+</div>
+
+</body>
+</html>

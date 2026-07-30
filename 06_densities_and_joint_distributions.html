@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>06 — Probability Densities &amp; Joint Distributions</title>
+<style>
+  body { font-family: Georgia, serif; max-width: 720px; margin: 40px auto; padding: 0 20px; background: #fafaf7; color: #1a1a1a; line-height: 1.7; }
+  h1 { border-bottom: 2px solid #333; padding-bottom: 8px; }
+  h2 { margin-top: 2em; color: #2c2c6c; }
+  .block { background: #fff; border-left: 4px solid #2c2c6c; padding: 12px 18px; margin: 16px 0; border-radius: 0 6px 6px 0; }
+  .warn { border-left-color: #c0392b; }
+  .green { border-left-color: #27ae60; }
+  code { background: #eee; padding: 1px 5px; border-radius: 3px; font-size: 0.95em; }
+</style>
+</head>
+<body>
+
+<h1>06 — Probability Densities &amp; Joint Distributions</h1>
+<p><em>Line-by-line breakdown of continuous, discrete, and joint distributions.</em></p>
+
+<h2>Step 1: Absolutely Continuous Distributions &amp; Density</h2>
+<div class="block green">
+  A random variable <strong>ξ : Ω → ℝ</strong> has an <strong>absolutely continuous distribution</strong> if there exists a Borel function <strong>f<sub>ξ</sub> : ℝ → [0, ∞)</strong> (density) such that for any B ∈ ℬ(ℝ):
+  <br><br>
+  &nbsp;&nbsp;<strong>P(ξ ∈ B) = ∫<sub>B</sub> f<sub>ξ</sub>(x) dx</strong>
+  <br><br>
+  <strong>Single-Point Pitfall:</strong> For any single point x₀ ∈ ℝ, P(ξ = x₀) = ∫<sub>{x₀}</sub> f<sub>ξ</sub>(x) dx = 0.
+</div>
+
+<h2>Step 2: Discrete Distributions</h2>
+<div class="block">
+  A random variable ξ has a <strong>discrete distribution</strong> with distinct values {x₁, x₂, ...} if for any B ∈ ℬ(ℝ):
+  <br><br>
+  &nbsp;&nbsp;<strong>P(ξ ∈ B) = ∑<sub>xᵢ ∈ B</sub> P(ξ = xᵢ)</strong>
+  <br><br>
+  Here, probability mass is concentrated at isolated points xᵢ with P(ξ = xᵢ) &gt; 0.
+</div>
+
+<h2>Step 3: Joint Distributions in ℝⁿ</h2>
+<div class="block green">
+  For random vector <strong>(ξ₁, ..., ξₙ) : Ω → ℝⁿ</strong>, the <strong>joint distribution measure</strong> P<sub>ξ₁,...,ξₙ</sub> on (ℝⁿ, ℬ(ℝⁿ)) satisfies:
+  <br><br>
+  &nbsp;&nbsp;<strong>P<sub>ξ₁,...,ξₙ</sub>(B) = P( (ξ₁, ..., ξₙ) ∈ B ) &nbsp;&nbsp; ∀ B ∈ ℬ(ℝⁿ)</strong>
+  <br><br>
+  If a joint density <strong>f<sub>ξ₁,...,ξₙ</sub></strong> exists:
+  <br><br>
+  &nbsp;&nbsp;<strong>P( (ξ₁, ..., ξₙ) ∈ B ) = ∫...∫<sub>B</sub> f<sub>ξ₁,...,ξₙ</sub>(x₁, ..., xₙ) dx₁...dxₙ</strong>
+</div>
+
+<h2>Step 4: Event Pre-Image Mapping</h2>
+<div class="block warn">
+  Event { ξ₁ ≤ 3, ξ₂ &gt; 5 } corresponds to the joint Borel set:<br>
+  &nbsp;&nbsp;<strong>B = (-∞, 3] × (5, ∞) ⊂ ℝ²</strong>
+</div>
+
+</body>
+</html>
