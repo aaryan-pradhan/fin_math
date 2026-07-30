@@ -1,10 +1,10 @@
 # Measure Theory for Quant Finance
 
-Self-study notes on **probability theory** and **stochastic processes**, the math that underpins quantitative finance, rendered as clean, readable HTML documents.
+Self-study notes on **probability theory** and **stochastic processes**, rendered as clean, readable HTML documents.
 
 ## Motivation
 
-Textbooks are dense. Lectures move on. These notes exist so the ideas actually stick: each topic is distilled into one standalone HTML page with definitions, intuition, and worked examples you can revisit anytime.
+Textbooks are dense. Lectures move on. These notes stick. 
 
 ## Quick Start
 
@@ -14,7 +14,8 @@ Open all notes in your browser at once:
 sh open_all.sh
 ```
 
-Or just double-click any `.html` file. No server, no build step, nothing to install.
+Also have set up an agent in the backend that churns the notes into these html scripts. Not exposing that as I am hella broke 
+and cannot afford any tokens. 
 
 ## Contributing
 
