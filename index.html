@@ -7,7 +7,7 @@
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      font-family: "MesloLGS NF", "Meslo LGS NF", "MesloLGSDNF", "Meslo LGS", monospace;
+      font-family: "MesloLGS NF", "Meslo LGS NF", "MesloLGSDNF", monospace;
       background: #0d1117;
       color: #c9d1d9;
       max-width: 960px;
@@ -18,16 +18,11 @@
     header { text-align: center; margin-bottom: 2.5rem; border-bottom: 1px solid #30363d; padding-bottom: 1rem; }
     h1 { color: #f0f6fc; font-size: 2rem; margin-bottom: 0.3rem; }
     .subtitle { color: #8b949e; font-size: 0.95rem; }
-    
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
-      gap: 1.25rem;
-    }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 1.25rem; }
     .card {
       background: #161b22;
       border: 1px solid #30363d;
-      border-left-width: 5px;
+      border-left: 5px solid;
       border-radius: 8px;
       padding: 1.4rem;
       text-decoration: none;
@@ -37,18 +32,8 @@
       min-height: 100px;
       transition: transform 0.15s ease, background 0.15s ease;
     }
-    .card:hover {
-      background: #1c2128;
-      transform: translateY(-3px);
-    }
-    .card h2 {
-      font-size: 0.98rem;
-      font-weight: 600;
-      color: #f0f6fc;
-      line-height: 1.45;
-      overflow-wrap: break-word;
-      word-break: break-word;
-    }
+    .card:hover { background: #1c2128; transform: translateY(-3px); }
+    .card h2 { font-size: 0.98rem; font-weight: 600; color: #f0f6fc; line-height: 1.45; word-break: break-word; }
   </style>
 </head>
 <body>
@@ -56,40 +41,6 @@
     <h1>FinMath Study Notes</h1>
     <p class="subtitle">Probability Theory, Measure Theory &amp; Stochastic Processes</p>
   </header>
-  <main>
-    <div class="grid">
-      
-      <a href="01_starting_pieces.html" class="card" style="border-left-color: #388bfd;">
-        <h2>Starting Pieces — Probability</h2>
-      </a>
-      <a href="02_almost_surely.html" class="card" style="border-left-color: #2ea043;">
-        <h2>02 — Almost Surely & Borel-Cantelli (Step-by-Step)</h2>
-      </a>
-      <a href="03_random_variables.html" class="card" style="border-left-color: #a371f7;">
-        <h2>03 — Random Variables &amp; Measurability (Step-by-Step)</h2>
-      </a>
-      <a href="04_doob_dynkin_lemma.html" class="card" style="border-left-color: #f0883e;">
-        <h2>04 — Generated σ-Fields &amp; Doob–Dynkin Lemma (Step-by-Step)</h2>
-      </a>
-      <a href="05_distribution_functions.html" class="card" style="border-left-color: #58a6ff;">
-        <h2>05 — Distribution Measure &amp; Cumulative Distribution Function (d.f.)</h2>
-      </a>
-      <a href="06_densities_and_joint_distributions.html" class="card" style="border-left-color: #f85149;">
-        <h2>06 — Probability Densities &amp; Joint Distributions</h2>
-      </a>
-      <a href="07_expectation_and_integration.html" class="card" style="border-left-color: #388bfd;">
-        <h2>07 — Expectation &amp; Integration</h2>
-      </a>
-      <a href="08_change_of_variables_expectation.html" class="card" style="border-left-color: #2ea043;">
-        <h2>08 — Change of Variables for Expectation</h2>
-      </a>
-      <a href="09_conditional_probability_and_independence.html" class="card" style="border-left-color: #a371f7;">
-        <h2>09 — Conditional Probability &amp; Independence</h2>
-      </a>
-      <a href="10_conditional_expectation_and_sigma_fields.html" class="card" style="border-left-color: #f0883e;">
-        <h2>10 — Conditional Expectation &amp; σ-Fields</h2>
-      </a>
-    </div>
-  </main>
+  <main><div class="grid"><a href="01_starting_pieces.html" class="card" style="border-left-color:#388bfd"><h2>Starting Pieces — Probability</h2></a><a href="02_almost_surely.html" class="card" style="border-left-color:#2ea043"><h2>02 — Almost Surely & Borel-Cantelli (Step-by-Step)</h2></a><a href="03_random_variables.html" class="card" style="border-left-color:#a371f7"><h2>03 — Random Variables &amp; Measurability (Step-by-Step)</h2></a><a href="04_doob_dynkin_lemma.html" class="card" style="border-left-color:#f0883e"><h2>04 — Generated σ-Fields &amp; Doob–Dynkin Lemma (Step-by-Step)</h2></a><a href="05_distribution_functions.html" class="card" style="border-left-color:#58a6ff"><h2>05 — Distribution Measure &amp; Cumulative Distribution Function (d.f.)</h2></a><a href="06_densities_and_joint_distributions.html" class="card" style="border-left-color:#f85149"><h2>06 — Probability Densities &amp; Joint Distributions</h2></a><a href="07_expectation_and_integration.html" class="card" style="border-left-color:#388bfd"><h2>07 — Expectation &amp; Integration</h2></a><a href="08_change_of_variables_expectation.html" class="card" style="border-left-color:#2ea043"><h2>08 — Change of Variables for Expectation</h2></a><a href="09_conditional_probability_and_independence.html" class="card" style="border-left-color:#a371f7"><h2>09 — Conditional Probability &amp; Independence</h2></a><a href="10_conditional_expectation_and_sigma_fields.html" class="card" style="border-left-color:#f0883e"><h2>10 — Conditional Expectation &amp; σ-Fields</h2></a></div></main>
 </body>
 </html>
