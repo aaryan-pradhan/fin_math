@@ -2,7 +2,7 @@
 
 Self-study notes on probability theory, measure theory, and stochastic processes.
 
-## Run Hub (Windows / macOS / Linux)
+## Run 
 
 ```bash
 python main.py
