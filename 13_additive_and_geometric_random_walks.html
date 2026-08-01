@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>13 — Additive &amp; Geometric Random Walks</title>
+<style>
+  body { font-family: Georgia, serif; max-width: 720px; margin: 40px auto; padding: 0 20px; background: #fafaf7; color: #1a1a1a; line-height: 1.7; }
+  h1 { border-bottom: 2px solid #333; padding-bottom: 8px; }
+  h2 { margin-top: 2em; color: #2c2c6c; }
+  .block { background: #fff; border-left: 4px solid #2c2c6c; padding: 12px 18px; margin: 16px 0; border-radius: 0 6px 6px 0; }
+  .warn { border-left-color: #c0392b; }
+  .green { border-left-color: #27ae60; }
+  code { background: #eee; padding: 1px 5px; border-radius: 3px; font-size: 0.95em; }
+</style>
+</head>
+<body>
+
+<h1>13 — Additive &amp; Geometric Random Walks</h1>
+<p><em>Rigorously deriving the martingale conditions for discrete additive random walks and exponential (geometric) random walks.</em></p>
+
+<h2>Step 1: Additive Random Walk</h2>
+<div class="block green">
+  <strong>Definition:</strong> Let (Yⱼ)<sub>j ≥ 1</sub> be i.i.d. random variables with E[|Y₁|] &lt; ∞.
+  <br>
+  Define X₀ = 0 and Xₙ = ∑<sub>j=1</sub>ⁿ Yⱼ for n ≥ 1, with natural filtration ℱₙ = σ(Y₁, …, Yₙ).
+  <br><br>
+  <strong>Derivation of E[ Xₙ₊₁ | ℱₙ ]:</strong>
+  <br>
+  1. <strong>Split:</strong> Xₙ₊₁ = Xₙ + Yₙ₊₁.
+  <br>
+  2. <strong>Linearity:</strong> E[ Xₙ₊₁ | ℱₙ ] = E[ Xₙ | ℱₙ ] + E[ Yₙ₊₁ | ℱₙ ].
+  <br>
+  3. <strong>Measurability &amp; Independence:</strong> Since Xₙ is ℱₙ-measurable and Yₙ₊₁ is independent of ℱₙ:
+  <br><br>
+  &nbsp;&nbsp;<strong>E[ Xₙ₊₁ | ℱₙ ] = Xₙ + E[ Y₁ ]</strong>
+  <br><br>
+  <strong>Conclusion:</strong>
+  <br>
+  • (Xₙ) is a <strong>martingale ⟺ E[ Y₁ ] = 0</strong>.
+  <br>
+  • (Xₙ) is a <strong>submartingale ⟺ E[ Y₁ ] ≥ 0</strong>.
+  <br>
+  • (Xₙ) is a <strong>supermartingale ⟺ E[ Y₁ ] ≤ 0</strong>.
+</div>
+
+<h2>Step 2: Geometric (Exponential) Random Walk</h2>
+<div class="block warn">
+  <strong>Definition:</strong> Let (Yⱼ)<sub>j ≥ 1</sub> be i.i.d. random variables and X₀ &gt; 0 constant.
+  <br>
+  Define the geometric random walk:
+  <br><br>
+  &nbsp;&nbsp;<strong>Xₙ = X₀ e<sup>Y₁ + … + Yₙ</sup> = Xₙ₋₁ e<sup>Yₙ</sup> &nbsp;&nbsp; (n ≥ 1)</strong>
+  <br><br>
+  with natural filtration ℱₙ = σ(Y₁, …, Yₙ).
+  <br><br>
+  <strong>Derivation of E[ Xₙ₊₁ | ℱₙ ]:</strong>
+  <br>
+  1. <strong>Product Form:</strong> Xₙ₊₁ = Xₙ · e<sup>Yₙ₊₁</sup>.
+  <br>
+  2. <strong>Taking Out What Is Known:</strong> Since Xₙ is ℱₙ-measurable:
+  <br>
+  &nbsp;&nbsp;E[ Xₙ₊₁ | ℱₙ ] = Xₙ · E[ e<sup>Yₙ₊₁</sup> | ℱₙ ].
+  <br>
+  3. <strong>Independence Rule:</strong> Since Yₙ₊₁ is independent of ℱₙ:
+  <br><br>
+  &nbsp;&nbsp;<strong>E[ Xₙ₊₁ | ℱₙ ] = Xₙ · E[ e<sup>Y₁</sup> ] = Xₙ · ϕ<sub>Y</sub>(1)</strong>
+  <br><br>
+  <strong>Conclusion:</strong> (Xₙ) is a <strong>martingale ⟺ E[ e<sup>Y₁</sup> ] = 1</strong> (i.e. ϕ<sub>Y</sub>(1) = 1).
+</div>
+
+<h2>Step 3: Normal Log-Increments Case</h2>
+<div class="block">
+  <strong>Special Case (Log-Normal):</strong> If Yⱼ ~ N(μ, σ²) i.i.d., then its Moment Generating Function is:
+  <br><br>
+  &nbsp;&nbsp;<strong>E[ e<sup>Y₁</sup> ] = e<sup>μ + ½ σ²</sup></strong>
+  <br><br>
+  For Xₙ = X₀ e<sup>∑ Yⱼ</sup> to be a martingale:
+  <br><br>
+  &nbsp;&nbsp;<strong>e<sup>μ + ½ σ²</sup> = 1 ⟹ μ = - ½ σ²</strong>
+  <br><br>
+  This exact drift correction (μ = -½σ²) appears fundamentally in continuous-time geometric Brownian motion and Black-Scholes asset modeling.
+</div>
+
+</body>
+</html>

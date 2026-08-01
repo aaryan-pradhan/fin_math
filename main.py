@@ -71,11 +71,18 @@ class Handler(http.server.SimpleHTTPRequestHandler):
 if __name__ == "__main__":
     build()
     socketserver.TCPServer.allow_reuse_address = True
-    for p in range(8000, 8010):
+    # ponytail: scans ports 8000-8009, falls back to dynamic port 0 if all occupied
+    for p in list(range(8000, 8010)) + [0]:
         try:
-            httpd = socketserver.TCPServer(("", p), Handler)
-            print(f"Serving at http://localhost:{p}")
-            webbrowser.open(f"http://localhost:{p}")
-            httpd.serve_forever()
-            break
-        except (OSError, KeyboardInterrupt): pass
+            with socketserver.TCPServer(("", p), Handler) as httpd:
+                port = httpd.server_address[1]
+                print(f"Serving at http://localhost:{port}", flush=True)
+                webbrowser.open(f"http://localhost:{port}")
+                try:
+                    httpd.serve_forever()
+                except KeyboardInterrupt:
+                    print("\nServer stopped.")
+                break
+        except OSError:
+            continue
+
