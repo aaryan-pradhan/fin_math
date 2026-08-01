@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>09 — Conditional Probability &amp; Independence</title>
+<style>
+  body { font-family: Georgia, serif; max-width: 720px; margin: 40px auto; padding: 0 20px; background: #fafaf7; color: #1a1a1a; line-height: 1.7; }
+  h1 { border-bottom: 2px solid #333; padding-bottom: 8px; }
+  h2 { margin-top: 2em; color: #2c2c6c; }
+  .block { background: #fff; border-left: 4px solid #2c2c6c; padding: 12px 18px; margin: 16px 0; border-radius: 0 6px 6px 0; }
+  .warn { border-left-color: #c0392b; }
+  .green { border-left-color: #27ae60; }
+  code { background: #eee; padding: 1px 5px; border-radius: 3px; font-size: 0.95em; }
+</style>
+</head>
+<body>
+
+<h1>09 — Conditional Probability &amp; Independence</h1>
+<p><em>Measure-theoretic definition of conditioning, law of total probability, and mutual independence.</em></p>
+
+<h2>Step 1: Conditional Probability</h2>
+<div class="block green">
+  For events <strong>A, B ∈ ℱ</strong> with <strong>P(B) ≠ 0</strong>:
+  <br><br>
+  &nbsp;&nbsp;<strong>P(A | B) = P(A ∩ B) / P(B)</strong>
+  <br><br>
+  <strong>Sample Space Rescaling:</strong> Conditioning on B discards all outcomes ω ∉ B (setting their probability to 0) and rescales B to be the new sample space with measure 1.
+</div>
+
+<h2>Step 2: Subsets &amp; Disjoint Special Cases</h2>
+<div class="block warn">
+  <strong>Subset Ordering:</strong> If A ⊆ B, then A ∩ B = A, so:
+  <br>
+  &nbsp;&nbsp;• <strong>P(A | B) = P(A) / P(B)</strong> (not 1!)
+  <br>
+  &nbsp;&nbsp;• <strong>P(B | A) = P(A) / P(A) = 1</strong> (knowing A happened guarantees B happened).
+  <br><br>
+  <strong>Disjoint Events:</strong> If A ∩ B = ∅, then P(A | B) = 0.
+</div>
+
+<h2>Step 3: Law of Total Probability</h2>
+<div class="block">
+  Let <strong>{B<sub>1</sub>, B<sub>2</sub>, …}</strong> be a countable partition of Ω (pairwise disjoint, ∪B<sub>i</sub> = Ω, P(B<sub>i</sub>) ≠ 0).
+  <br><br>
+  Slicing A into disjoint components A = ∪(A ∩ B<sub>i</sub>) yields:
+  <br><br>
+  &nbsp;&nbsp;<strong>P(A) = Σ<sub>i=1</sub><sup>∞</sup> P(A ∩ B<sub>i</sub>) = Σ<sub>i=1</sub><sup>∞</sup> P(A | B<sub>i</sub>) P(B<sub>i</sub>)</strong>
+</div>
+
+<h2>Step 4: Pairwise vs. Mutual Independence</h2>
+<div class="block green">
+  <strong>Two Events:</strong> A, B are independent if <strong>P(A ∩ B) = P(A) P(B)</strong> ⟺ <strong>P(A | B) = P(A)</strong>.
+  <br><br>
+  <strong>Mutual Independence:</strong> For n events A<sub>1</sub>, …, A<sub>n</sub>, pairwise independence is <em>insufficient</em>.
+  They must satisfy the product rule for <strong>every sub-collection</strong> of size k ∈ {2, …, n}:
+  <br><br>
+  &nbsp;&nbsp;<strong>P(A<sub>i<sub>1</sub></sub> ∩ … ∩ A<sub>i<sub>k</sub></sub>) = P(A<sub>i<sub>1</sub></sub>) ⋯ P(A<sub>i<sub>k</sub></sub>)</strong>
+  <br><br>
+  This requires <strong>2<sup>n</sup> − n − 1</strong> equations in total (e.g., 4 equations for n = 3).
+</div>
+
+</body>
+</html>

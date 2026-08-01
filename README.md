@@ -1,22 +1,22 @@
-# Measure Theory for Quant Finance
+# FinMath Study Notes
 
-Self-study notes on **probability theory** and **stochastic processes**, rendered as clean, readable HTML documents.
+Self-study notes on **probability theory**, **measure theory**, and **stochastic processes**, rendered as clean, readable HTML documents.
 
-## Motivation
+Textbooks are dense. Lectures move on. These notes stick.
 
-Textbooks are dense. Lectures move on. These notes stick. 
+## Cross-Platform Localhost Hub (Windows, macOS, Linux)
 
-## Quick Start
+To open the master dashboard and serve all notes locally on any operating system:
 
-Open all notes in your browser at once:
-
-```sh
-sh open_all.sh
+```bash
+python main.py
 ```
+*(or `python3 main.py` on macOS/Linux)*
 
-Also have set up an agent in the backend that churns the notes into these html scripts. Not exposing that as I am hella broke 
-and cannot afford any tokens. 
+This will:
+1. Auto-scan all `*.html` notes in the directory.
+2. Dynamically build/update `index.html`.
+3. Launch `http://localhost:8000` in your default browser.
 
-## Contributing
-
-These are personal study notes, but if you spot an error or want to suggest a clearer explanation, feel free to open an issue.
+### Adding New Notes
+Whenever you create a new note (e.g. `11_martingales.html`), simply refresh `http://localhost:8000` — it will automatically appear on the dashboard without touching any code!

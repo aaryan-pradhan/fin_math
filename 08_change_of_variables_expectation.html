@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>08 — Change of Variables for Expectation</title>
+<style>
+  body { font-family: Georgia, serif; max-width: 720px; margin: 40px auto; padding: 0 20px; background: #fafaf7; color: #1a1a1a; line-height: 1.7; }
+  h1 { border-bottom: 2px solid #333; padding-bottom: 8px; }
+  h2 { margin-top: 2em; color: #2c2c6c; }
+  .block { background: #fff; border-left: 4px solid #2c2c6c; padding: 12px 18px; margin: 16px 0; border-radius: 0 6px 6px 0; }
+  .warn { border-left-color: #c0392b; }
+  .green { border-left-color: #27ae60; }
+  code { background: #eee; padding: 1px 5px; border-radius: 3px; font-size: 0.95em; }
+</style>
+</head>
+<body>
+
+<h1>08 — Change of Variables for Expectation</h1>
+<p><em>Transferring integration from abstract Ω to ℝ via the push-forward measure P<sub>ξ</sub>.</em></p>
+
+<h2>Theorem Statement</h2>
+<div class="block green">
+  For any Borel function <strong>h : ℝ → ℝ</strong> such that <strong>h(ξ)</strong> is integrable on (Ω, ℱ, P):
+  <br><br>
+  &nbsp;&nbsp;<strong>E(h(ξ)) = ∫<sub>Ω</sub> h(ξ(ω)) dP(ω) = ∫<sub>ℝ</sub> h(x) dP<sub>ξ</sub>(x)</strong>
+  <br><br>
+  where <strong>P<sub>ξ</sub>(A) = P(ξ ∈ A)</strong> is the push-forward (distribution) measure on (ℝ, ℬ(ℝ)).
+</div>
+
+<h2>Step 1: Simple Functions (Base Case)</h2>
+<div class="block">
+  Let <strong>h(x) = Σ<sub>i=1</sub><sup>n</sup> h<sub>i</sub> 𝟏<sub>A<sub>i</sub></sub>(x)</strong> be a simple function over disjoint Borel sets A<sub>i</sub>.
+  <br><br>
+  Evaluating at ξ(ω):
+  <br>
+  &nbsp;&nbsp;<strong>h(ξ(ω)) = Σ<sub>i=1</sub><sup>n</sup> h<sub>i</sub> 𝟏<sub>A<sub>i</sub></sub>(ξ(ω)) = Σ<sub>i=1</sub><sup>n</sup> h<sub>i</sub> 𝟏<sub>{ξ ∈ A<sub>i</sub>}</sub>(ω)</strong>
+  <br><br>
+  Taking expectation:
+  <br>
+  &nbsp;&nbsp;<strong>E(h(ξ)) = Σ<sub>i=1</sub><sup>n</sup> h<sub>i</sub> P(ξ ∈ A<sub>i</sub>) = Σ<sub>i=1</sub><sup>n</sup> h<sub>i</sub> P<sub>ξ</sub>(A<sub>i</sub>) = ∫<sub>ℝ</sub> h(x) dP<sub>ξ</sub>(x)</strong>
+</div>
+
+<h2>Step 2: Non-Negative Borel Functions (MCT)</h2>
+<div class="block">
+  For any <strong>h ≥ 0</strong>, construct a sequence of simple functions <strong>0 ≤ h<sub>1</sub> ≤ h<sub>2</sub> ≤ … ↑ h</strong> pointwise.
+  <br><br>
+  By Step 1, <strong>E(h<sub>n</sub>(ξ)) = ∫<sub>ℝ</sub> h<sub>n</sub>(x) dP<sub>ξ</sub>(x)</strong> for every n.
+  <br><br>
+  By the <strong>Monotone Convergence Theorem (MCT)</strong>, we pass the limit inside both integral signs:
+  <br>
+  &nbsp;&nbsp;<strong>lim<sub>n→∞</sub> E(h<sub>n</sub>(ξ)) = E(h(ξ))</strong> &nbsp; and &nbsp; <strong>lim<sub>n→∞</sub> ∫<sub>ℝ</sub> h<sub>n</sub> dP<sub>ξ</sub> = ∫<sub>ℝ</sub> h dP<sub>ξ</sub></strong>
+  <br><br>
+  Hence, <strong>E(h(ξ)) = ∫<sub>ℝ</sub> h(x) dP<sub>ξ</sub>(x)</strong> holds for all non-negative h.
+</div>
+
+<h2>Step 3: General Integrable Functions</h2>
+<div class="block warn">
+  Decompose <strong>h = h⁺ − h⁻</strong> where h⁺ = max(h, 0) ≥ 0 and h⁻ = max(−h, 0) ≥ 0.
+  <br><br>
+  Since h(ξ) is integrable, both E(h⁺(ξ)) and E(h⁻(ξ)) are finite. Applying Step 2 to both parts:
+  <br>
+  &nbsp;&nbsp;<strong>E(h(ξ)) = E(h⁺(ξ)) − E(h⁻(ξ)) = ∫<sub>ℝ</sub> h⁺ dP<sub>ξ</sub> − ∫<sub>ℝ</sub> h⁻ dP<sub>ξ</sub> = ∫<sub>ℝ</sub> h(x) dP<sub>ξ</sub>(x)</strong>
+</div>
+
+<h2>Step 4: Concrete Applications</h2>
+<div class="block green">
+  <strong>1. Continuous Case:</strong> If ξ has density f<sub>ξ</sub>, then dP<sub>ξ</sub>(x) = f<sub>ξ</sub>(x) dx:
+  <br>
+  &nbsp;&nbsp;<strong>E(h(ξ)) = ∫<sub>−∞</sub><sup>∞</sup> h(x) f<sub>ξ</sub>(x) dx</strong>
+  <br><br>
+  <strong>2. Discrete Case:</strong> If ξ takes discrete values {x<sub>1</sub>, x<sub>2</sub>, …}:
+  <br>
+  &nbsp;&nbsp;<strong>E(h(ξ)) = Σ<sub>i</sub> h(x<sub>i</sub>) P(ξ = x<sub>i</sub>)</strong>
+</div>
+
+</body>
+</html>

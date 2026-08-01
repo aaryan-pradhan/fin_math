@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>10 — Conditional Expectation &amp; σ-Fields</title>
+<style>
+  body { font-family: Georgia, serif; max-width: 720px; margin: 40px auto; padding: 0 20px; background: #fafaf7; color: #1a1a1a; line-height: 1.7; }
+  h1 { border-bottom: 2px solid #333; padding-bottom: 8px; }
+  h2 { margin-top: 2em; color: #2c2c6c; }
+  .block { background: #fff; border-left: 4px solid #2c2c6c; padding: 12px 18px; margin: 16px 0; border-radius: 0 6px 6px 0; }
+  .warn { border-left-color: #c0392b; }
+  .green { border-left-color: #27ae60; }
+  code { background: #eee; padding: 1px 5px; border-radius: 3px; font-size: 0.95em; }
+</style>
+</head>
+<body>
+
+<h1>10 — Conditional Expectation &amp; σ-Fields</h1>
+<p><em>Rigorously connecting independence, sub-σ-fields, the Law of Iterated Expectations, and operational rules.</em></p>
+
+<h2>Step 1: Independence of Random Variables &amp; σ-Fields</h2>
+<div class="block green">
+  <strong>Independent σ-Fields:</strong> Two sub-σ-fields <strong>𝒢, ℋ ⊆ ℱ</strong> are independent if for all A ∈ 𝒢 and all B ∈ ℋ:
+  <br><br>
+  &nbsp;&nbsp;<strong>P(A ∩ B) = P(A) P(B)</strong>
+  <br><br>
+  <strong>Independent Random Variables:</strong> ξ and η are independent ⟺ their generated σ-fields <strong>σ(ξ)</strong> and <strong>σ(η)</strong> are independent, where:
+  <br><br>
+  &nbsp;&nbsp;<strong>σ(ξ) = { ξ⁻¹(B) ⊆ Ω : B ∈ ℬ(ℝ) }</strong>
+</div>
+
+<h2>Step 2: What is E(X | 𝒢)?</h2>
+<div class="block warn">
+  <strong>E(X | 𝒢) is a RANDOM VARIABLE, not a single number.</strong>
+  <br><br>
+  • <strong>E(X | Y = y)</strong> is a single real number (the estimate when Y(ω) = y).
+  <br>
+  • <strong>E(X | Y) = E(X | σ(Y))</strong> is a random variable that assigns E(X | Y = y) whenever Y(ω) = y.
+  <br>
+  • <strong>E(X | 𝒢)</strong> is the general random variable for any sub-σ-field 𝒢 ⊆ ℱ.
+  <br><br>
+  <strong>Formal Definition:</strong> Y = E(X | 𝒢) is the unique (a.s.) random variable satisfying:
+  <br><br>
+  &nbsp;&nbsp;<strong>1. Y is 𝒢-measurable:</strong> σ(Y) ⊆ 𝒢. Y cannot see finer details than 𝒢 allows and is forced to be constant on every information block G ∈ 𝒢.
+  <br><br>
+  &nbsp;&nbsp;<strong>2. Integral Matching (For all G ∈ 𝒢): ∫<sub>G</sub> Y dP = ∫<sub>G</sub> X dP</strong>.
+  Since Y is constant (c<sub>G</sub>) on block G, this reduces to c<sub>G</sub> · P(G) = ∫<sub>G</sub> X dP ⟹ <strong>c<sub>G</sub> = ∫<sub>G</sub> X dP / P(G)</strong>. Condition 2 forces Y to equal the exact average of X over each block G.
+  <br><br>
+  &nbsp;&nbsp;<strong>3. Unique (a.s.):</strong> Any two random variables Y₁, Y₂ satisfying (1) &amp; (2) must be equal everywhere except on a set of probability zero (P(Y₁ ≠ Y₂) = 0).
+</div>
+
+<h2>Step 3: Law of Iterated Expectations (Tower Property)</h2>
+<div class="block">
+  <strong>Theorem:</strong> &nbsp; <strong>E( E(X | Y) ) = E(X)</strong> &nbsp; and generally &nbsp; <strong>E( E(X | 𝒢) ) = E(X)</strong>
+  <br><br>
+  <strong>Proof via Joint Densities:</strong>
+  <br>
+  &nbsp;&nbsp;E( E(X | Y) ) = ∫<sub>−∞</sub><sup>∞</sup> [ ∫<sub>−∞</sub><sup>∞</sup> x f<sub>X|Y=y</sub>(x) dx ] f<sub>Y</sub>(y) dy
+  <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= ∬<sub>ℝ²</sub> x f<sub>X|Y=y</sub>(x) f<sub>Y</sub>(y) dx dy
+  <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= ∬<sub>ℝ²</sub> x f(x, y) dx dy
+  <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= ∫<sub>−∞</sub><sup>∞</sup> x [ ∫<sub>−∞</sub><sup>∞</sup> f(x, y) dy ] dx = ∫<sub>−∞</sub><sup>∞</sup> x f<sub>X</sub>(x) dx = E(X)
+  <br><br>
+  <strong>Tail Probability Application:</strong> Setting X = 𝟏<sub>{X &gt; t}</sub> gives <strong>P(X &gt; t) = E( P(X &gt; t | Y) )</strong>.
+</div>
+
+<h2>Step 4: Operational Rules</h2>
+<div class="block green">
+  <strong>1. Linearity:</strong> For constants a, b ∈ ℝ:
+  <br>
+  &nbsp;&nbsp;<strong>E(aX + bY | 𝒢) = a E(X | 𝒢) + b E(Y | 𝒢)</strong>
+  <br><br>
+  <strong>2. Taking Out What Is Known:</strong> If Z is 𝒢-measurable:
+  <br>
+  &nbsp;&nbsp;<strong>E(Z · X | 𝒢) = Z · E(X | 𝒢)</strong>
+  <br><br>
+  <strong>3. Independence Rule:</strong> If X is independent of 𝒢:
+  <br>
+  &nbsp;&nbsp;<strong>E(X | 𝒢) = E(X)</strong>
+</div>
+
+</body>
+</html>
