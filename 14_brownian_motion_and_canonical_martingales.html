@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>14 — Standard Brownian Motion &amp; Canonical Martingales</title>
+<style>
+  body { font-family: Georgia, serif; max-width: 720px; margin: 40px auto; padding: 0 20px; background: #fafaf7; color: #1a1a1a; line-height: 1.7; }
+  h1 { border-bottom: 2px solid #333; padding-bottom: 8px; }
+  h2 { margin-top: 2em; color: #2c2c6c; }
+  .block { background: #fff; border-left: 4px solid #2c2c6c; padding: 12px 18px; margin: 16px 0; border-radius: 0 6px 6px 0; }
+  .warn { border-left-color: #c0392b; }
+  .green { border-left-color: #27ae60; }
+  code { background: #eee; padding: 1px 5px; border-radius: 3px; font-size: 0.95em; }
+</style>
+</head>
+<body>
+
+<h1>14 — Standard Brownian Motion &amp; Canonical Martingales</h1>
+<p><em>Rigorously defining the Wiener process (Standard Brownian Motion) and deriving its three fundamental canonical martingales.</em></p>
+
+<h2>Step 1: Definition of Standard Brownian Motion (SBM / Wiener Process)</h2>
+<div class="block green">
+  A continuous-time stochastic process (Wₜ)<sub>t ≥ 0</sub> is a <strong>Wiener process</strong> or <strong>Standard Brownian Motion</strong> if:
+  <br><br>
+  1. <strong>Initial State:</strong> W₀ = 0 (P-a.s.).
+  <br>
+  2. <strong>Continuous Paths:</strong> The map t ↦ Wₜ(ω) is continuous P-a.s.
+  <br>
+  3. <strong>Independent Increments:</strong> For 0 ≤ t₁ &lt; t₂ &lt; … &lt; tₙ, increments (W<sub>t₂</sub> - W<sub>t₁</sub>), (W<sub>t₃</sub> - W<sub>t₂</sub>), … are mutually independent.
+  <br>
+  4. <strong>Gaussian Increments:</strong> For 0 ≤ s &lt; t:
+  <br><br>
+  &nbsp;&nbsp;<strong>(Wₜ - Wₛ) ~ N(0, t - s)</strong>
+</div>
+
+<h2>Step 2: Martingale 1 — The Linear Process Wₜ</h2>
+<div class="block">
+  <strong>Theorem:</strong> (Wₜ)<sub>t ≥ 0</sub> is a martingale relative to its natural filtration ℱₜ = σ(Wᵣ : 0 ≤ r ≤ t).
+  <br><br>
+  <strong>Proof:</strong>
+  <br>
+  1. Integrability: E[|Wₜ|] ≤ √(E[Wₜ²]) = √t &lt; ∞.
+  <br>
+  2. For 0 ≤ s &lt; t, decompose Wₜ = (Wₜ - Wₛ) + Wₛ:
+  <br><br>
+  &nbsp;&nbsp;E[ Wₜ | ℱₛ ] = E[ Wₜ - Wₛ | ℱₛ ] + E[ Wₛ | ℱₛ ] = E[ Wₜ - Wₛ ] + Wₛ = 0 + Wₛ = <strong>Wₛ</strong> &nbsp; ■
+</div>
+
+<h2>Step 3: Martingale 2 — The Quadratic Process Wₜ² - t</h2>
+<div class="block warn">
+  <strong>Theorem:</strong> Yₜ = Wₜ² - t is a martingale relative to ℱₜ.
+  <br><br>
+  <strong>Proof:</strong>
+  <br>
+  1. Integrability: E[|Yₜ|] ≤ E[Wₜ²] + t = 2t &lt; ∞.
+  <br>
+  2. Decompose Wₜ² = (Wₜ - Wₛ)² + 2 Wₛ(Wₜ - Wₛ) + Wₛ²:
+  <br><br>
+  &nbsp;&nbsp;E[ Wₜ² | ℱₛ ] = E[ (Wₜ - Wₛ)² | ℱₛ ] + 2 Wₛ E[ Wₜ - Wₛ | ℱₛ ] + Wₛ²
+  <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= (t - s) + 0 + Wₛ² = Wₛ² + t - s.
+  <br><br>
+  Subtract t on both sides: <strong>E[ Wₜ² - t | ℱₛ ] = Wₛ² - s &nbsp; ⟹ &nbsp; E[ Yₜ | ℱₛ ] = Yₛ</strong> &nbsp; ■
+  <br><br>
+  <em>Note: The un-centered process (Wₜ²)<sub>t ≥ 0</sub> is a <strong>submartingale</strong> since E[Wₜ² | ℱₛ] = Wₛ² + (t-s) ≥ Wₛ².</em>
+</div>
+
+<h2>Step 4: Martingale 3 — The Exponential Process e<sup>u Wₜ - ½ u² t</sup></h2>
+<div class="block green">
+  <strong>Theorem:</strong> For any parameter u ∈ ℝ, Zₜ = e<sup>u Wₜ - ½ u² t</sup> is a martingale relative to ℱₜ with <strong>E[Zₜ] = 1</strong>.
+  <br><br>
+  <strong>Proof:</strong>
+  <br>
+  1. Integrability: E[Zₜ] = e<sup>-½ u² t</sup> E[e<sup>u Wₜ</sup>] = e<sup>-½ u² t</sup> e<sup>½ u² t</sup> = 1 &lt; ∞.
+  <br>
+  2. Multiplicative increment splitting for 0 ≤ s &lt; t:
+  <br><br>
+  &nbsp;&nbsp;Zₜ = Zₛ · e<sup>u(Wₜ - Wₛ) - ½ u²(t-s)</sup>
+  <br><br>
+  3. Taking conditional expectation E[ · | ℱₛ ]:
+  <br><br>
+  &nbsp;&nbsp;E[ Zₜ | ℱₛ ] = Zₛ · e<sup>-½ u²(t-s)</sup> E[ e<sup>u(Wₜ - Wₛ)</sup> ]
+  <br><br>
+  Since (Wₜ - Wₛ) ~ N(0, t - s), its MGF is E[e<sup>u(Wₜ - Wₛ)</sup>] = e<sup>½ u²(t-s)</sup>.
+  <br>
+  Substituting this in yields <strong>E[ Zₜ | ℱₛ ] = Zₛ · 1 = Zₛ</strong>. &nbsp; ■
+</div>
+
+</body>
+</html>
