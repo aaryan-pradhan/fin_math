@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>21 — Dynamic Programming & Bellman Equation</title>
+<style>
+  body { font-family: Georgia, serif; max-width: 720px; margin: 40px auto; padding: 0 20px; background: #fafaf7; color: #1a1a1a; line-height: 1.7; }
+  h1 { border-bottom: 2px solid #333; padding-bottom: 8px; }
+  h2 { margin-top: 2em; color: #2c2c6c; }
+  .block { background: #fff; border-left: 4px solid #2c2c6c; padding: 12px 18px; margin: 16px 0; border-radius: 0 6px 6px 0; }
+  .warn { border-left-color: #c0392b; }
+  .green { border-left-color: #27ae60; }
+  code { background: #eee; padding: 1px 5px; border-radius: 3px; font-size: 0.95em; }
+  table { border-collapse: collapse; width: 100%; margin: 12px 0; }
+  td, th { border: 1px solid #ccc; padding: 8px 12px; }
+  th { background: #eef; }
+</style>
+<script>MathJax = { tex: { inlineMath: [['$','$'], ['\\(','\\)']] } };</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body>
+
+<h1>21 — Dynamic Programming &amp; The Bellman Equation</h1>
+<p><em>My understanding, built from scratch.</em></p>
+
+<h2>1. The Objective & The Value Function</h2>
+<div class="block">
+  <strong>Global Goal:</strong> Maximize expected reward over $T$ steps: $\max E\left[ \sum_{t=1}^T R(X_t, a_t) \right]$<br>
+  Finding the whole sequence at once is too hard. We break it down using the <strong>Value Function</strong>.
+</div>
+<div class="block green">
+  $V_n(i)$ = The maximum expected reward you can get starting in state $i$ with exactly $n$ steps left to play.<br>
+  $$V_n(i) = \max_{a} E \left[ \sum_{t=1}^n R(X_t, a_t) \;\middle|\; X_1 = i \right]$$
+</div>
+
+<h2>2. The Dynamic Programming Split</h2>
+<div class="block">
+  Split the global maximum into two pieces: <strong>Right now</strong> + <strong>The rest of the game</strong>.
+  $$V_n(i) = \max_a \left\{ \underbrace{R(i, a)}_{\text{Right now}} + \underbrace{E_a\left[ \sum_{t=2}^n R(X_t, a_t) \;\middle|\; X_1 = i \right]}_{\text{The rest of the game}} \right\}$$
+</div>
+
+<h2>3. The Expectation over the Next State</h2>
+<div class="block">
+  If taking action $a$ instantly teleported us to state $j$, the "rest of the game" would just be $V_{n-1}(j)$.<br>
+  But in an MDP, we only reach state $j$ with probability $P_{ij}(a)$.<br>
+  So, the expected value of the rest of the game is the weighted average over all possible next states:
+  $$E_a[\text{rest of game}] = \sum_j P_{ij}(a) V_{n-1}(j)$$
+</div>
+
+<h2>4. The Bellman Equation</h2>
+<div class="block green">
+  Substituting the expectation back in gives the fundamental equation of DP:<br><br>
+  $$V_n(i) = \max_a \left\{ R(i, a) + \sum_j P_{ij}(a) V_{n-1}(j) \right\}$$
+  <br>
+  <em>To find the best move:</em> For every action $a$, add the immediate reward to the expected optimal future reward. Pick the action with the biggest total.
+</div>
+
+<h2>5. Backward Induction (Value Iteration)</h2>
+<div class="warn block">
+  To calculate $V_{10}$, you must first know $V_9$ for all states. To know $V_9$, you need $V_8$, and so on.
+</div>
+<div class="block">
+  <strong>Algorithm:</strong>
+  <ol>
+    <li>Start at the end: $V_0(i) = 0$ for all states (0 steps left = game over).</li>
+    <li>Use Bellman eq to find $V_1(i)$ from $V_0(i)$.</li>
+    <li>Use Bellman eq to find $V_2(i)$ from $V_1(i)$.</li>
+    <li>Repeat up to $V_n(i)$.</li>
+  </ol>
+  This recursive step-by-step process is called <strong>Backward Induction</strong>.
+</div>
+
+</body>
+</html>

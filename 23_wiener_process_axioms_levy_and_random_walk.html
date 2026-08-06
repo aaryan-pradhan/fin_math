@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>23 — Wiener Process Axioms, Lévy Characterization & Random Walk Limit</title>
+<style>
+  body { font-family: Georgia, serif; max-width: 720px; margin: 40px auto; padding: 0 20px; background: #fafaf7; color: #1a1a1a; line-height: 1.7; }
+  h1 { border-bottom: 2px solid #333; padding-bottom: 8px; }
+  h2 { margin-top: 2em; color: #2c2c6c; }
+  .block { background: #fff; border-left: 4px solid #2c2c6c; padding: 12px 18px; margin: 16px 0; border-radius: 0 6px 6px 0; }
+  .warn { border-left-color: #c0392b; }
+  .green { border-left-color: #27ae60; }
+  code { background: #eee; padding: 1px 5px; border-radius: 3px; font-size: 0.95em; }
+  table { border-collapse: collapse; width: 100%; margin: 12px 0; }
+  td, th { border: 1px solid #ccc; padding: 8px 12px; }
+  th { background: #eef; }
+</style>
+<script>MathJax = { tex: { inlineMath: [['$','$'], ['\\(','\\)']] } };</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body>
+
+<h1>23 — Wiener Process Axioms, Lévy Characterization &amp; Random Walk Limit</h1>
+<p><em>Constructing Brownian Motion from Axioms, Martingales, and Discrete Limits.</em></p>
+
+<h2>1. Classical Definition of Wiener Process</h2>
+<div class="block green">
+  A stochastic process $\{W(t), t \ge 0\}$ is a <strong>Standard Wiener Process</strong> (Brownian Motion) iff:
+  <ol>
+    <li>$W(0) = 0$ almost surely (a.s.).</li>
+    <li>Sample paths $t \mapsto W(t, \omega)$ are continuous a.s.</li>
+    <li>Increments are <strong>independent</strong> and <strong>stationary</strong>.</li>
+    <li>For $0 \le s < t$, increments are Gaussian: $W(t) - W(s) \sim \mathcal{N}(0, t-s)$.</li>
+  </ol>
+</div>
+
+<h2>2. Lévy's Martingale Characterization</h2>
+<div class="block">
+  Without assuming independent or Gaussian increments directly, a continuous process $W(t)$ with $W(0) = 0$ is a Wiener process iff:
+  <ul>
+    <li>$W(t)$ is a martingale wrt natural filtration $\mathcal{F}_t$: $\mathbb{E}[W(t) \mid \mathcal{F}_s] = W(s)$.</li>
+    <li>$W(t)^2 - t$ is a martingale wrt $\mathcal{F}_t$: $\mathbb{E}[W(t)^2 - t \mid \mathcal{F}_s] = W(s)^2 - s$.</li>
+  </ul>
+  <div class="block green">
+    <strong>Conditional Variance Derivation:</strong>
+    $$\mathbb{E}\left[(W(t) - W(s))^2 \;\middle|\; \mathcal{F}_s\right] = \mathbb{E}[W(t)^2 \mid \mathcal{F}_s] - 2W(s)\mathbb{E}[W(t) \mid \mathcal{F}_s] + W(s)^2 = (W(s)^2 + t - s) - 2W(s)^2 + W(s)^2 = t - s$$
+  </div>
+</div>
+
+<h2>3. Microscopic Random Walk Construction</h2>
+<div class="block">
+  Consider a discrete symmetric random walk with step size $\Delta x$ every time step $\Delta t$:
+  $$X(t) = \Delta x \sum_{i=1}^{\lfloor t / \Delta t \rfloor} X_i \quad \text{where } X_i = \pm 1 \text{ with equal prob } \frac{1}{2}$$
+  $$\mathbb{E}[X(t)] = 0, \quad \text{Var}(X(t)) = (\Delta x)^2 \cdot \frac{t}{\Delta t}$$
+</div>
+
+<h2>4. The Diffusion Scaling Limit &amp; CLT</h2>
+<div class="warn block">
+  If $\Delta x = \Delta t \to 0$, $\text{Var}(X(t)) = t \Delta t \to 0$ (motion collapses).<br>
+  To preserve non-zero variance as step size vanishes, we must scale spatial steps as:
+  $$\Delta x = \sigma \sqrt{\Delta t} \implies \text{Var}(X(t)) \to \sigma^2 t$$
+</div>
+
+<div class="block green">
+  By the <strong>Central Limit Theorem (CLT)</strong>, as $\Delta t \to 0$ ($N = \frac{t}{\Delta t} \to \infty$), the standardized sum $\frac{S_N}{\sqrt{N}} \xrightarrow{d} \mathcal{N}(0, 1)$.<br>
+  Multiplying by $c = \sigma \sqrt{t}$ scales the variance by $c^2 = \sigma^2 t$:
+  $$X(t) = \sigma \sqrt{t} \cdot \left( \frac{S_N}{\sqrt{N}} \right) \xrightarrow{d} \mathcal{N}(0, \sigma^2 t)$$
+</div>
+
+</body>
+</html>
