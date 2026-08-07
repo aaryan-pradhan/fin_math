@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>28 — Hitting Times, Reflection Principle & Running Maximum</title>
+<style>
+  body { font-family: Georgia, serif; max-width: 720px; margin: 40px auto; padding: 0 20px; background: #fafaf7; color: #1a1a1a; line-height: 1.7; }
+  h1 { border-bottom: 2px solid #333; padding-bottom: 8px; }
+  h2 { margin-top: 2em; color: #2c2c6c; }
+  .block { background: #fff; border-left: 4px solid #2c2c6c; padding: 12px 18px; margin: 16px 0; border-radius: 0 6px 6px 0; }
+  .warn { border-left-color: #c0392b; }
+  .green { border-left-color: #27ae60; }
+  code { background: #eee; padding: 1px 5px; border-radius: 3px; font-size: 0.95em; }
+  table { border-collapse: collapse; width: 100%; margin: 12px 0; }
+  td, th { border: 1px solid #ccc; padding: 8px 12px; }
+  th { background: #eef; }
+</style>
+<script>MathJax = { tex: { inlineMath: [['$','$'], ['\\(','\\)']] } };</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body>
+
+<h1>28 — Hitting Times, Reflection Principle &amp; Running Maximum</h1>
+<p><em>Wiener Process Stopping Times, Strong Markov Symmetry, and Running Max Distributions.</em></p>
+
+<h2>1. Hitting Time Definition</h2>
+<div class="block green">
+  For standard Brownian motion $W(t)$, the first passage time (hitting time) to level $a$ is:
+  $$T_a = \inf\{t \ge 0 : W(t) = a\}$$
+  $T_a$ is a stopping time because its occurrence depends only on path history up to time $t$.
+</div>
+
+<h2>2. The Reflection Principle &amp; Strong Markov Property</h2>
+<div class="block">
+  For $a > 0$, partition the probability of being above $a$ at time $t$:
+  $$\mathbb{P}(W(t) \ge a) = \mathbb{P}(W(t) \ge a \mid T_a \le t)\mathbb{P}(T_a \le t) + \mathbb{P}(W(t) \ge a \mid T_a > t)\mathbb{P}(T_a > t)$$
+  <ul>
+    <li>$\mathbb{P}(W(t) \ge a \mid T_a > t) = 0$ (must be below $a$ if it never hit $a$).</li>
+    <li>By the **Strong Markov Property**, the post-$T_a$ process $B(u) = W(T_a + u) - W(T_a)$ is a standard Brownian motion independent of history. Because standard Brownian motion is symmetric:
+      $$\mathbb{P}(W(t) \ge a \mid T_a \le t) = \mathbb{P}(B(t-T_a) \ge 0) = \frac{1}{2}$$
+    </li>
+  </ul>
+  $$\mathbb{P}(W(t) \ge a) = \frac{1}{2}\mathbb{P}(T_a \le t) \implies \mathbb{P}(T_a \le t) = 2\mathbb{P}(W(t) \ge a)$$
+</div>
+
+<h2>3. Probability Distribution of $T_a$</h2>
+<div class="block green">
+  Using standard Gaussian integration with substitution $y = x / \sqrt{t}$:
+  $$\mathbb{P}(T_a \le t) = \frac{2}{\sqrt{2\pi}} \int_{|a|/\sqrt{t}}^{\infty} e^{-\frac{y^2}{2}} \, dy = 2\left[ 1 - \Phi\left(\frac{|a|}{\sqrt{t}}\right) \right]$$
+  Differentiating the CDF with respect to $t$ gives the PDF of $T_a$ (L&eacute;vy distribution):
+  $$f(t) = \frac{|a|}{\sqrt{2\pi t^3}} e^{-\frac{a^2}{2t}} \quad (t > 0)$$
+</div>
+
+<h2>4. The Running Maximum $M(t)$</h2>
+<div class="block">
+  Define the running maximum up to time $t$ as:
+  $$M(t) = \max_{0 \le s \le t} W(s)$$
+  The event that the maximum is at least $a$ is equivalent to the hitting time being at or before $t$:
+  $$\{M(t) \ge a\} \iff \{T_a \le t\}$$
+  $$\mathbb{P}(M(t) \ge a) = 2\mathbb{P}(W(t) \ge a) = 2\left[ 1 - \Phi\left(\frac{a}{\sqrt{t}}\right) \right] \quad (a > 0)$$
+</div>
+
+<h2>5. Certain Hitting Time ($\mathbb{P}(T_a < \infty) = 1$)</h2>
+<div class="warn block">
+  $$\mathbb{P}(T_a < \infty) = \lim_{t \to \infty} \mathbb{P}(T_a \le t) = \lim_{t \to \infty} 2\left[ 1 - \Phi\left(\frac{|a|}{\sqrt{t}}\right) \right] = 2\left[ 1 - \Phi(0) \right] = 2\left(1 - \frac{1}{2}\right) = 1$$
+  Standard Brownian motion will hit any level $a$ almost surely, though the expected time $\mathbb{E}[T_a] = \infty$.
+</div>
+
+</body>
+</html>

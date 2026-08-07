@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>27 — Geometric Brownian Motion & Filtration Expectation</title>
+<style>
+  body { font-family: Georgia, serif; max-width: 720px; margin: 40px auto; padding: 0 20px; background: #fafaf7; color: #1a1a1a; line-height: 1.7; }
+  h1 { border-bottom: 2px solid #333; padding-bottom: 8px; }
+  h2 { margin-top: 2em; color: #2c2c6c; }
+  .block { background: #fff; border-left: 4px solid #2c2c6c; padding: 12px 18px; margin: 16px 0; border-radius: 0 6px 6px 0; }
+  .warn { border-left-color: #c0392b; }
+  .green { border-left-color: #27ae60; }
+  code { background: #eee; padding: 1px 5px; border-radius: 3px; font-size: 0.95em; }
+  table { border-collapse: collapse; width: 100%; margin: 12px 0; }
+  td, th { border: 1px solid #ccc; padding: 8px 12px; }
+  th { background: #eef; }
+</style>
+<script>MathJax = { tex: { inlineMath: [['$','$'], ['\\(','\\)']] } };</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body>
+
+<h1>27 — Geometric Brownian Motion (GBM) &amp; Filtration Expectation</h1>
+<p><em>Log-Normal Stock Modeling, Conditional Expectations, and Martingale Drift Correction.</em></p>
+
+<h2>1. Definition of Geometric Brownian Motion</h2>
+<div class="block green">
+  Let $Y(t)$ be Brownian motion with drift $\mu$ and variance $\sigma^2$: $Y(t) \sim \mathcal{N}(\mu t, \sigma^2 t)$.<br>
+  The exponentiated process:
+  $$X(t) = e^{Y(t)}$$
+  is called <strong>Geometric Brownian Motion (GBM)</strong>.
+  <ul>
+    <li>Strictly positive: $X(t) > 0$ for all $t$.</li>
+    <li>Log-Normal distribution: $\log X(t) = Y(t) \sim \mathcal{N}(\mu t, \sigma^2 t)$.</li>
+  </ul>
+</div>
+
+<h2>2. Grounding Filtrations $\mathcal{F}_s$: Discrete vs Continuous</h2>
+<div class="block">
+  <strong>Discrete 3-Coin-Flip Example:</strong>
+  If wealth $X_3 = Y_1 + Y_2 + Y_3$ where $Y_i = \pm 1$ with prob $1/2$, the filtration $\mathcal{F}_1$ is the observed outcome of flip 1.<br>
+  $$\mathbb{E}[X_3 \mid \mathcal{F}_1] = Y_1 + \mathbb{E}[Y_2] + \mathbb{E}[Y_3] = Y_1 + 0 + 0 = Y_1 = X_1$$
+  <br>
+  <strong>Continuous Time:</strong> $\mathcal{F}_s = \sigma(Y(u), 0 \le u \le s)$ represents the total history recorded up to time $s$. Any future increment $Y(t) - Y(s)$ (for $t > s$) is independent of $\mathcal{F}_s$.
+</div>
+
+<h2>3. Moment Generating Function &amp; Derivation of $\mathbb{E}[X(t) \mid \mathcal{F}_s]$</h2>
+<div class="block">
+  For $Z \sim \mathcal{N}(m, v)$, its MGF gives $\mathbb{E}[e^Z] = e^{m + \frac{1}{2}v}$.<br>
+  Since $Y(t) - Y(s) \sim \mathcal{N}(\mu(t-s), \sigma^2(t-s))$:
+  $$\mathbb{E}\left[ e^{Y(t) - Y(s)} \right] = \exp\left( \left(\mu + \frac{\sigma^2}{2}\right)(t-s) \right)$$
+  <div class="block green">
+    <strong>Conditional Expectation:</strong>
+    $$\mathbb{E}[X(t) \mid \mathcal{F}_s] = \mathbb{E}\left[ e^{Y(s)} e^{Y(t)-Y(s)} \;\middle|\; \mathcal{F}_s \right] = X(s) \cdot \mathbb{E}\left[ e^{Y(t)-Y(s)} \right] = X(s) \exp\left( \left(\mu + \frac{\sigma^2}{2}\right)(t-s) \right)$$
+    <strong>Unconditional Expectation ($X(0) = x_0$):</strong>
+    $$\mathbb{E}[X(t)] = x_0 \exp\left( \left(\mu + \frac{\sigma^2}{2}\right)t \right)$$
+  </div>
+</div>
+
+<h2>4. Martingale Property &amp; Itô Drift Correction</h2>
+<div class="warn block">
+  GBM $X(t)$ is a <strong>Martingale</strong> ($\mathbb{E}[X(t) \mid \mathcal{F}_s] = X(s)$) iff:
+  $$\mu + \frac{\sigma^2}{2} = 0 \implies \mu = -\frac{\sigma^2}{2}$$
+  The process $X(t) = \exp\left(-\frac{\sigma^2}{2}t + \sigma W(t)\right)$ is the fundamental <strong>Exponential Martingale</strong> with constant expectation $\mathbb{E}[X(t)] = 1$.
+</div>
+
+<h2>5. Stock Price Modeling via i.i.d. Relative Returns</h2>
+<div class="block">
+  Let relative stock returns $Y_n = \frac{X_n}{X_{n-1}}$ be i.i.d. random variables.<br>
+  $$X_n = Y_n Y_{n-1} \dots Y_1 X_0 \implies \log X_n = \sum_{i=1}^n \log(Y_i) + \log X_0$$
+  By the Central Limit Theorem (CLT), as $n \to \infty$, the sum $\sum \log Y_i$ converges to a Gaussian distribution, proving why stock price levels $X_n$ naturally follow Geometric Brownian Motion!
+</div>
+
+<h2>5. Jensen's Inequality: Why $\mu = -\frac{\sigma^2}{2}$ Cancels the Inflation</h2>
+<div class="block">
+  Since $e^z$ is a <strong>convex function</strong>, Jensen's inequality states:
+  $$\mathbb{E}[e^Z] \ge e^{\mathbb{E}[Z]}$$
+  For $Z \sim \mathcal{N}(0, \sigma^2 t)$ (mean 0):
+  $$\mathbb{E}[e^Z] = e^{\frac{\sigma^2 t}{2}} > 1$$
+  Volatility $\sigma^2$ <em>inflates</em> the expectation above 1. The drift correction $\mu = -\frac{\sigma^2}{2}$ precisely cancels this inflation.
+</div>
+<div class="block green">
+  <table>
+    <tr><th>Drift $\mu$</th><th>$\mathbb{E}[X(t)]$</th><th>Process type</th></tr>
+    <tr><td>$\mu > -\frac{\sigma^2}{2}$</td><td>Growing to $+\infty$</td><td>Submartingale</td></tr>
+    <tr><td>$\mu = -\frac{\sigma^2}{2}$</td><td>Constant $= 1$</td><td>Martingale</td></tr>
+    <tr><td>$\mu < -\frac{\sigma^2}{2}$</td><td>Decaying to $0$</td><td>Supermartingale</td></tr>
+  </table>
+</div>
+
+</body>
+</html>
