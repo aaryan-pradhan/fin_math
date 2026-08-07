@@ -1,6 +1,7 @@
 # FinMath Study Notes
 
 Self-study notes on probability theory, measure theory, and stochastic processes.
+Clone/ Fork repo and then run this obviously?
 
 ## Run 
 
