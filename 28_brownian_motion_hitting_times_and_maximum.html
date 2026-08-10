@@ -30,17 +30,42 @@
   $T_a$ is a stopping time because its occurrence depends only on path history up to time $t$.
 </div>
 
-<h2>2. The Reflection Principle &amp; Strong Markov Property</h2>
+<h2>2. The Reflection Principle</h2>
 <div class="block">
-  For $a > 0$, partition the probability of being above $a$ at time $t$:
+  There are two equivalent ways to understand the Reflection Principle: <strong>Analytical (conditioning via Strong Markov Property)</strong> and <strong>Geometric (path-wise reflection)</strong>.
+  
+  <h3>Method A: Analytical (Strong Markov Property)</h3>
+  For $a > 0$, partition the probability of being above $a$ at time $t$ using the law of total probability:
   $$\mathbb{P}(W(t) \ge a) = \mathbb{P}(W(t) \ge a \mid T_a \le t)\mathbb{P}(T_a \le t) + \mathbb{P}(W(t) \ge a \mid T_a > t)\mathbb{P}(T_a > t)$$
   <ul>
-    <li>$\mathbb{P}(W(t) \ge a \mid T_a > t) = 0$ (must be below $a$ if it never hit $a$).</li>
-    <li>By the **Strong Markov Property**, the post-$T_a$ process $B(u) = W(T_a + u) - W(T_a)$ is a standard Brownian motion independent of history. Because standard Brownian motion is symmetric:
-      $$\mathbb{P}(W(t) \ge a \mid T_a \le t) = \mathbb{P}(B(t-T_a) \ge 0) = \frac{1}{2}$$
+    <li>$\mathbb{P}(W(t) \ge a \mid T_a > t) = 0$ because if the path never hit $a$ by time $t$, it must be strictly below $a$.</li>
+    <li>By the <strong>Strong Markov Property</strong>, at the stopping time $T_a$, the process restarts. The post-$T_a$ increment process $B(u) = W(T_a + u) - W(T_a)$ for $u \ge 0$ is a new standard Brownian motion independent of the history before $T_a$.</li>
+    <li>By standard Gaussian symmetry, $B(t - T_a) \sim \mathcal{N}(0, t - T_a)$ is symmetric about $0$. Thus:
+      $$\mathbb{P}(W(t) \ge a \mid T_a \le t) = \mathbb{P}(a + B(t - T_a) \ge a \mid T_a \le t) = \mathbb{P}(B(t - T_a) \ge 0) = \frac{1}{2}$$
     </li>
   </ul>
   $$\mathbb{P}(W(t) \ge a) = \frac{1}{2}\mathbb{P}(T_a \le t) \implies \mathbb{P}(T_a \le t) = 2\mathbb{P}(W(t) \ge a)$$
+</div>
+
+<div class="block green">
+  <h3>Method B: Geometric (Path-wise Reflection)</h3>
+  Let $\omega$ be a sample path that hits level $a$ at stopping time $T_a(\omega) \le t$. 
+  Define the <strong>reflected path</strong> $W^*(u)$ by reflecting the trajectory across the line $y = a$ after time $T_a$:
+  $$W^*(u) = \begin{cases} 
+  W(u) & \text{for } u \le T_a \\ 
+  2a - W(u) & \text{for } u > T_a 
+  \end{cases}$$
+  <ul>
+    <li><strong>Equiprobability:</strong> Since standard Brownian motion increments are symmetric about 0, the reflected path $W^*(u)$ is just as likely to occur as the original path $W(u)$.</li>
+    <li><strong>Bijection:</strong> Every path that hits $a$ and ends up above $a$ at time $t$ ($W(t) \ge a$) maps uniquely to a reflected path that hits $a$ and ends up below $a$ ($W^*(t) < a$).</li>
+    <li>Thus:
+      $$\mathbb{P}(T_a \le t, W(t) \ge a) = \mathbb{P}(T_a \le t, W(t) < a)$$
+      Since $\{W(t) \ge a\} \subset \{T_a \le t\}$, we can drop the $T_a \le t$ condition on the left side:
+      $$\mathbb{P}(W(t) \ge a) = \mathbb{P}(T_a \le t, W(t) < a)$$
+    </li>
+  </ul>
+  The total probability of hitting $a$ by time $t$ is the sum of paths ending above $a$ and paths ending below $a$:
+  $$\mathbb{P}(T_a \le t) = \mathbb{P}(T_a \le t, W(t) \ge a) + \mathbb{P}(T_a \le t, W(t) < a) = \mathbb{P}(W(t) \ge a) + \mathbb{P}(W(t) \ge a) = 2\mathbb{P}(W(t) \ge a)$$
 </div>
 
 <h2>3. Probability Distribution of $T_a$</h2>
