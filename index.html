@@ -18,6 +18,19 @@
     header { text-align: center; margin-bottom: 2.5rem; border-bottom: 1px solid #30363d; padding-bottom: 1rem; }
     h1 { color: #f0f6fc; font-size: 2rem; margin-bottom: 0.3rem; }
     .subtitle { color: #8b949e; font-size: 0.95rem; }
+    .btn-reset {
+      margin-top: 0.8rem;
+      background: #21262d;
+      color: #8b949e;
+      border: 1px solid #30363d;
+      padding: 0.35rem 0.8rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 0.8rem;
+      transition: all 0.15s ease;
+    }
+    .btn-reset:hover { background: #30363d; color: #f0f6fc; }
     .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 1.25rem; }
     .card {
       background: #161b22;
@@ -30,52 +43,75 @@
       display: flex;
       align-items: center;
       min-height: 100px;
+      cursor: grab;
       transition: transform 0.15s ease, background 0.15s ease;
     }
     .card:hover { background: #1c2128; transform: translateY(-3px); }
+    .card:active { cursor: grabbing; }
     .card h2 { font-size: 0.98rem; font-weight: 600; color: #f0f6fc; line-height: 1.45; word-break: break-word; }
-    footer { margin-top: 2rem; color: #8b949e; font-size: 0.9rem; text-align: center; }
   </style>
 </head>
 <body>
   <header>
     <h1>FinMath Study Notes</h1>
     <p class="subtitle">Probability Theory, Measure Theory &amp; Stochastic Processes</p>
+    <button id="reset-btn" class="btn-reset">Reset Order</button>
   </header>
-  <main>
-    <div class="grid">
-      <a href="01_starting_pieces.html" class="card" style="border-left-color:#388bfd"><h2>01 — Starting Pieces</h2></a>
-      <a href="02_almost_surely.html" class="card" style="border-left-color:#2ea043"><h2>02 — Almost Surely &amp; Borel-Cantelli</h2></a>
-      <a href="03_random_variables.html" class="card" style="border-left-color:#a371f7"><h2>03 — Random Variables &amp; Measurability</h2></a>
-      <a href="04_doob_dynkin_lemma.html" class="card" style="border-left-color:#f0883e"><h2>04 — Generated σ-Fields &amp; Doob–Dynkin Lemma</h2></a>
-      <a href="05_distribution_functions.html" class="card" style="border-left-color:#58a6ff"><h2>05 — Distribution Functions</h2></a>
-      <a href="06_densities_and_joint_distributions.html" class="card" style="border-left-color:#f85149"><h2>06 — Densities &amp; Joint Distributions</h2></a>
-      <a href="07_expectation_and_integration.html" class="card" style="border-left-color:#388bfd"><h2>07 — Expectation &amp; Integration</h2></a>
-      <a href="08_change_of_variables_expectation.html" class="card" style="border-left-color:#2ea043"><h2>08 — Change of Variables (Expectation)</h2></a>
-      <a href="09_conditional_probability_and_independence.html" class="card" style="border-left-color:#a371f7"><h2>09 — Conditional Probability &amp; Independence</h2></a>
-      <a href="10_conditional_expectation_and_sigma_fields.html" class="card" style="border-left-color:#f0883e"><h2>10 — Conditional Expectation &amp; σ-Fields</h2></a>
-      <a href="11_filtrations_and_martingales.html" class="card" style="border-left-color:#58a6ff"><h2>11 — Filtrations &amp; Martingales</h2></a>
-      <a href="12_binomial_model_and_martingale_properties.html" class="card" style="border-left-color:#f85149"><h2>12 — Binomial Model &amp; Martingale Properties</h2></a>
-      <a href="13_additive_and_geometric_random_walks.html" class="card" style="border-left-color:#388bfd"><h2>13 — Additive &amp; Geometric Random Walks</h2></a>
-      <a href="14_brownian_motion_and_canonical_martingales.html" class="card" style="border-left-color:#2ea043"><h2>14 — Brownian Motion &amp; Canonical Martingales</h2></a>
-      <a href="15_stopping_times.html" class="card" style="border-left-color:#a371f7"><h2>15 — Stopping Times</h2></a>
-      <a href="16_american_derivative_securities.html" class="card" style="border-left-color:#f0883e"><h2>16 — American Derivative Securities</h2></a>
-      <a href="17_stopped_process_martingale.html" class="card" style="border-left-color:#58a6ff"><h2>17 — Stopped Processes &amp; Martingales</h2></a>
-      <a href="18_optimal_stopping_theorem.html" class="card" style="border-left-color:#f85149"><h2>18 — Optimal Stopping Theorem</h2></a>
-      <a href="19_gambling_strategies.html" class="card" style="border-left-color:#388bfd"><h2>19 — Gambling Strategies</h2></a>
-      <a href="20_markov_decision_process.html" class="card" style="border-left-color:#2ea043"><h2>20 — Markov Decision Process</h2></a>
-      <a href="21_dynamic_programming_bellman.html" class="card" style="border-left-color:#a371f7"><h2>21 — Dynamic Programming &amp; Bellman</h2></a>
-      <a href="22_brownian_motion_density_and_diffusion.html" class="card" style="border-left-color:#f0883e"><h2>22 — Brownian Motion Density &amp; Diffusion</h2></a>
-      <a href="23_wiener_process_axioms_levy_and_random_walk.html" class="card" style="border-left-color:#58a6ff"><h2>23 — Wiener Process, Lévy &amp; Random Walk</h2></a>
-      <a href="24_brownian_bridge_and_conditional_distributions.html" class="card" style="border-left-color:#f85149"><h2>24 — Brownian Bridge &amp; Conditional Distributions</h2></a>
-      <a href="25_gamblers_ruin_problem_derivation.html" class="card" style="border-left-color:#388bfd"><h2>25 — Gambler's Ruin Problem</h2></a>
-      <a href="26_brownian_motion_with_drift_and_exit_probabilities.html" class="card" style="border-left-color:#2ea043"><h2>26 — Brownian Motion with Drift &amp; Exit Probabilities</h2></a>
-      <a href="27_geometric_brownian_motion.html" class="card" style="border-left-color:#a371f7"><h2>27 — Geometric Brownian Motion</h2></a>
-      <a href="28_brownian_motion_hitting_times_and_maximum.html" class="card" style="border-left-color:#f0883e"><h2>28 — Hitting Times &amp; Maximum</h2></a>
-      <a href="29_multivariate_distribution.html" class="card" style="border-left-color:#58a6ff"><h2>29 — Multivariate Distribution</h2></a>
+  <main><div class="grid"><a href="01_starting_pieces.html" class="card" style="border-left-color:#388bfd"><h2>Starting Pieces — Probability</h2></a><a href="02_almost_surely.html" class="card" style="border-left-color:#2ea043"><h2>Almost Surely & Borel-Cantelli (Step-by-Step)</h2></a><a href="03_random_variables.html" class="card" style="border-left-color:#a371f7"><h2>Random Variables &amp; Measurability (Step-by-Step)</h2></a><a href="04_doob_dynkin_lemma.html" class="card" style="border-left-color:#f0883e"><h2>Generated σ-Fields &amp; Doob–Dynkin Lemma (Step-by-Step)</h2></a><a href="05_distribution_functions.html" class="card" style="border-left-color:#58a6ff"><h2>Distribution Measure &amp; Cumulative Distribution Function (d.f.)</h2></a><a href="06_densities_and_joint_distributions.html" class="card" style="border-left-color:#f85149"><h2>Probability Densities &amp; Joint Distributions</h2></a><a href="07_expectation_and_integration.html" class="card" style="border-left-color:#388bfd"><h2>Expectation &amp; Integration</h2></a><a href="08_change_of_variables_expectation.html" class="card" style="border-left-color:#2ea043"><h2>Change of Variables for Expectation</h2></a><a href="09_conditional_probability_and_independence.html" class="card" style="border-left-color:#a371f7"><h2>Conditional Probability &amp; Independence</h2></a><a href="10_conditional_expectation_and_sigma_fields.html" class="card" style="border-left-color:#f0883e"><h2>Conditional Expectation &amp; σ-Fields</h2></a><a href="11_filtrations_and_martingales.html" class="card" style="border-left-color:#58a6ff"><h2>Filtrations, Adapted Processes &amp; Martingales</h2></a><a href="12_binomial_model_and_martingale_properties.html" class="card" style="border-left-color:#f85149"><h2>Binomial Market Model &amp; Martingale Properties</h2></a><a href="13_additive_and_geometric_random_walks.html" class="card" style="border-left-color:#388bfd"><h2>Additive &amp; Geometric Random Walks</h2></a><a href="14_brownian_motion_and_canonical_martingales.html" class="card" style="border-left-color:#2ea043"><h2>Standard Brownian Motion &amp; Canonical Martingales</h2></a><a href="15_stopping_times.html" class="card" style="border-left-color:#a371f7"><h2>Stopping Times</h2></a><a href="16_american_derivative_securities.html" class="card" style="border-left-color:#f0883e"><h2>American Derivative Securities</h2></a><a href="17_stopped_process_martingale.html" class="card" style="border-left-color:#58a6ff"><h2>Stopped Process & Martingale Preservation</h2></a><a href="18_optimal_stopping_theorem.html" class="card" style="border-left-color:#f85149"><h2>Optimal Stopping Theorem</h2></a><a href="19_gambling_strategies.html" class="card" style="border-left-color:#388bfd"><h2>Gambling Strategies and Fairness</h2></a><a href="20_markov_decision_process.html" class="card" style="border-left-color:#2ea043"><h2>Markov Decision Processes</h2></a><a href="21_dynamic_programming_bellman.html" class="card" style="border-left-color:#a371f7"><h2>Dynamic Programming & Bellman Equation</h2></a><a href="22_brownian_motion_density_and_diffusion.html" class="card" style="border-left-color:#f0883e"><h2>Standard Brownian Motion Density & Diffusion Equation</h2></a><a href="23_wiener_process_axioms_levy_and_random_walk.html" class="card" style="border-left-color:#58a6ff"><h2>Wiener Process Axioms, Lévy Characterization & Random Walk Limit</h2></a><a href="24_brownian_bridge_and_conditional_distributions.html" class="card" style="border-left-color:#f85149"><h2>Brownian Bridge & Conditional Distributions</h2></a><a href="25_gamblers_ruin_problem_derivation.html" class="card" style="border-left-color:#388bfd"><h2>Gambler's Ruin Problem (First-Step Analysis & Infinite Limits)</h2></a><a href="26_brownian_motion_with_drift_and_exit_probabilities.html" class="card" style="border-left-color:#2ea043"><h2>Brownian Motion with Drift & Exit Probabilities</h2></a><a href="27_geometric_brownian_motion.html" class="card" style="border-left-color:#a371f7"><h2>Geometric Brownian Motion & Filtration Expectation</h2></a><a href="28_brownian_motion_hitting_times_and_maximum.html" class="card" style="border-left-color:#f0883e"><h2>Hitting Times, Reflection Principle & Running Maximum</h2></a><a href="29_multivariate_distribution.html" class="card" style="border-left-color:#58a6ff"><h2>Multivariate Normal Distribution & Joint MGF</h2></a><a href="30_bbproperties.html" class="card" style="border-left-color:#f85149"><h2>Gaussian Processes, Brownian Motion & MVN Conditioning</h2></a><a href="test.html" class="card" style="border-left-color:#2ea043"><h2>Hello World Test Lecture</h2></a></div></main>
+  <script>
+    // ponytail: Native HTML5 drag-and-drop with localStorage order persistence
+    document.addEventListener('DOMContentLoaded', () => {
+      const grid = document.querySelector('.grid');
+      let cards = Array.from(grid.querySelectorAll('.card'));
+      
+      cards.forEach(c => {
+        const h2 = c.querySelector('h2');
+        if (h2) h2.textContent = h2.textContent.replace(/^\d+\s*[—\-]\s*/, '');
+      });
 
-    </div>
-  </main>
+      const saved = JSON.parse(localStorage.getItem('finmath_order') || '[]');
+      if (saved.length) {
+        const map = new Map(cards.map(c => [c.getAttribute('href'), c]));
+        saved.forEach(href => { if (map.has(href)) grid.appendChild(map.get(href)); });
+        cards.forEach(c => { if (!grid.contains(c)) grid.appendChild(c); });
+        cards = Array.from(grid.querySelectorAll('.card'));
+      }
 
+      let dragged = null;
+      cards.forEach(card => {
+        card.setAttribute('draggable', 'true');
+        card.addEventListener('dragstart', (e) => {
+          dragged = card;
+          card.style.opacity = '0.4';
+        });
+        card.addEventListener('dragend', () => {
+          if (dragged) dragged.style.opacity = '1';
+          dragged = null;
+          saveOrder();
+        });
+        card.addEventListener('dragover', (e) => e.preventDefault());
+        card.addEventListener('drop', (e) => {
+          e.preventDefault();
+          if (dragged && dragged !== card) {
+            const children = Array.from(grid.children);
+            const fromIdx = children.indexOf(dragged);
+            const toIdx = children.indexOf(card);
+            if (fromIdx < toIdx) grid.insertBefore(dragged, card.nextSibling);
+            else grid.insertBefore(dragged, card);
+          }
+        });
+      });
+
+      function saveOrder() {
+        const order = Array.from(grid.querySelectorAll('.card')).map(c => c.getAttribute('href'));
+        localStorage.setItem('finmath_order', JSON.stringify(order));
+      }
+
+      document.getElementById('reset-btn')?.addEventListener('click', () => {
+        localStorage.removeItem('finmath_order');
+        location.reload();
+      });
+    });
+  </script>
 </body>
 </html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gaussian Processes, Brownian Motion & MVN Conditioning</title>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$$', '$$']],
+                displayMath: [['$$', '$$']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            line-height: 1.6;
+            color: #222;
+            max-width: 820px;
+            margin: 40px auto;
+            padding: 0 20px;
+            background-color: #fcfcfc;
+        }
+        h1, h2, h3 {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            color: #111;
+        }
+        h1 {
+            border-bottom: 2px solid #111;
+            padding-bottom: 8px;
+        }
+        h2 {
+            margin-top: 30px;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 4px;
+        }
+        .block {
+            background: #f4f4f6;
+            border-left: 4px solid #555;
+            padding: 14px 18px;
+            margin: 20px 0;
+            border-radius: 0 4px 4px 0;
+        }
+        .green {
+            background: #edf7ed;
+            border-left: 4px solid #2e7d32;
+            padding: 14px 18px;
+            margin: 20px 0;
+            border-radius: 0 4px 4px 0;
+        }
+        .warn {
+            background: #fff4e5;
+            border-left: 4px solid #ed6c02;
+            padding: 14px 18px;
+            margin: 20px 0;
+            border-radius: 0 4px 4px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Gaussian Processes, Standard Brownian Motion &amp; MVN Conditioning</h1>
+
+    <h2>1. Multivariate Normal (MVN) Distribution Properties</h2>
+    
+    <div class="block">
+        <strong>Definition:</strong> A random vector $$\mathbf{X} \in \mathbb{R}^n$$ follows an $$n$$-dimensional MVN distribution, $$\mathbf{X} \sim \mathcal{N}_n(\boldsymbol{\mu}, \boldsymbol{\Sigma})$$, if every linear combination $$\mathbf{a}^T \mathbf{X}$$ is a univariate Gaussian random variable for any non-zero $$\mathbf{a} \in \mathbb{R}^n$$.
+    </div>
+
+    <h3>Linear Transformation Property</h3>
+    <div class="green">
+        If $$\mathbf{X} \sim \mathcal{N}_n(\boldsymbol{\mu}, \boldsymbol{\Sigma})$$, then for any matrix $$\mathbf{A} \in \mathbb{R}^{m \times n}$$ and vector $$\mathbf{c} \in \mathbb{R}^m$$:
+        $$\mathbf{Y} = \mathbf{A}\mathbf{X} + \mathbf{c} \implies \mathbf{Y} \sim \mathcal{N}_m(\mathbf{A}\boldsymbol{\mu} + \mathbf{c}, \, \mathbf{A}\boldsymbol{\Sigma}\mathbf{A}^T)$$
+    </div>
+
+    <h3>Conditional Distribution of Partitioned MVN</h3>
+    <p>Partition a joint MVN vector into two sub-vectors:</p>
+    $$\mathbf{X} = \begin{pmatrix} \mathbf{X}_1 \\ \mathbf{X}_2 \end{pmatrix} \sim \mathcal{N}\left( \begin{pmatrix} \boldsymbol{\mu}_1 \\ \boldsymbol{\mu}_2 \end{pmatrix}, \, \begin{pmatrix} \boldsymbol{\Sigma}_{11} & \boldsymbol{\Sigma}_{12} \\ \boldsymbol{\Sigma}_{21} & \boldsymbol{\Sigma}_{22} \end{pmatrix} \right)$$
+
+    <div class="block">
+        <strong>Theorem:</strong> The conditional distribution $$\mathbf{X}_1 \mid \mathbf{X}_2 = \mathbf{x}_2$$ is Multivariate Normal:
+        $$\mathbf{X}_1 \mid \mathbf{X}_2 = \mathbf{x}_2 \sim \mathcal{N}(\boldsymbol{\mu}_{1|2}, \boldsymbol{\Sigma}_{1|2})$$
+        <ul>
+            <li><strong>Conditional Expectation:</strong> $$\mathbb{E}[\mathbf{X}_1 \mid \mathbf{X}_2 = \mathbf{x}_2] = \boldsymbol{\mu}_1 + \boldsymbol{\Sigma}_{12}\boldsymbol{\Sigma}_{22}^{-1}(\mathbf{x}_2 - \boldsymbol{\mu}_2)$$</li>
+            <li><strong>Conditional Variance:</strong> $$\text{Var}(\mathbf{X}_1 \mid \mathbf{X}_2 = \mathbf{x}_2) = \boldsymbol{\Sigma}_{11} - \boldsymbol{\Sigma}_{12}\boldsymbol{\Sigma}_{22}^{-1}\boldsymbol{\Sigma}_{21}$$</li>
+        </ul>
+    </div>
+
+    <h2>2. Gaussian Process &amp; Brownian Motion</h2>
+
+    <p>A stochastic process $$\{W(t), t \ge 0\}$$ is a <strong>Gaussian Process</strong> if every finite sub-collection $$(W(t_1), \dots, W(t_n))^T$$ is Multivariate Normal. Standard Brownian Motion is fully defined by:</p>
+    <ul>
+        <li><strong>Mean function:</strong> $$m(t) = \mathbb{E}[W(t)] = 0$$</li>
+        <li><strong>Covariance function:</strong> $$K(s, t) = \text{Cov}(W(s), W(t)) = \min(s, t) = s \wedge t$$</li>
+    </ul>
+
+    <h2>3. Conditional Expectations of Brownian Motion</h2>
+
+    <h3>Case 1: Forward Expectation ($$s < t$$) &mdash; Martingale Property</h3>
+    <p>Using independent increments $$W(t) = W(s) + [W(t) - W(s)]$$, where the increment $$W(t) - W(s)$$ is independent of $$W(s)$$:</p>
+    $$\mathbb{E}[W(t) \mid W(s)] = W(s) + \mathbb{E}[W(t) - W(s)] = W(s)$$
+
+    <h3>Case 2: Backward Expectation &amp; Interpolation ($$s < t$$)</h3>
+    <p>For $$s < t$$, the joint distribution of $$(W(s), W(t))^T$$ is:</p>
+    $$\begin{pmatrix} W(s) \\ W(t) \end{pmatrix} \sim \mathcal{N}_2\left( \begin{pmatrix} 0 \\ 0 \end{pmatrix}, \, \begin{pmatrix} s & s \\ s & t \end{pmatrix} \right)$$
+
+    <p>Applying the MVN conditional parameters for scalars ($$\mu_1=0, \mu_2=0, \Sigma_{11}=s, \Sigma_{12}=s, \Sigma_{22}=t$$):</p>
+
+    <div class="green">
+        <ul>
+            <li><strong>Conditional Mean:</strong>
+                $$\mathbb{E}[W(s) \mid W(t)] = 0 + s \cdot t^{-1} (W(t) - 0) = \frac{s}{t} W(t)$$
+            </li>
+            <li><strong>Conditional Variance:</strong>
+                $$\text{Var}(W(s) \mid W(t)) = s - s \cdot t^{-1} \cdot s = s - \frac{s^2}{t} = \frac{s(t - s)}{t}$$
+            </li>
+        </ul>
+    </div>
+
+    <div class="warn">
+        <strong>Insight (Brownian Bridge):</strong> Given $$W(t)$$, the value at an earlier time $$s < t$$ is non-terminally uncertain with variance $$\frac{s(t-s)}{t}$$, which shrinks to $$0$$ as $$s \to 0$$ or $$s \to t$$.
+    </div>
+
+</body>
+</html>
