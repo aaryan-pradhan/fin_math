@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Standard Brownian Motion &amp; Canonical Martingales</title>
+<link rel="stylesheet" href="note.css">
+<script src="note.js"></script>
+</head>
+<body>
+
+<h1>Standard Brownian Motion &amp; Canonical Martingales</h1>
+<p class="lede">Rigorously defining the Wiener process (Standard Brownian Motion) and deriving its three fundamental canonical martingales.</p>
+
+<h2>Step 1: Definition of Standard Brownian Motion (SBM / Wiener Process)</h2>
+<div class="block def">
+  A continuous-time stochastic process $(W_t)_{t \geq 0}$ is a <strong>Wiener process</strong> or <strong>Standard Brownian Motion</strong> if:
+  <ol>
+    <li><strong>Initial State:</strong> $W_0 = 0$ ($P$-a.s.).</li>
+    <li><strong>Continuous Paths:</strong> The map $t \mapsto W_t(\omega)$ is continuous $P$-a.s.</li>
+    <li><strong>Independent Increments:</strong> For $0 \leq t_1 < t_2 < \cdots < t_n$, increments $(W_{t_2} - W_{t_1}), (W_{t_3} - W_{t_2}), \ldots$ are mutually independent.</li>
+    <li><strong>Gaussian Increments:</strong> For $0 \leq s < t$: $\;(W_t - W_s) \sim \mathcal{N}(0, t - s)$</li>
+  </ol>
+</div>
+
+<h2>Step 2: Martingale 1 — The Linear Process $W_t$</h2>
+<div class="block green">
+  <strong>Theorem:</strong> $(W_t)_{t \geq 0}$ is a martingale relative to its natural filtration $\mathcal{F}_t = \sigma(W_r : 0 \leq r \leq t)$.<br><br>
+  <strong>Proof:</strong>
+  <ol>
+    <li>Integrability: $E[|W_t|] \leq \sqrt{E[W_t^2]} = \sqrt{t} < \infty$.</li>
+    <li>For $0 \leq s < t$, decompose $W_t = (W_t - W_s) + W_s$:</li>
+  </ol>
+  $$E[W_t \mid \mathcal{F}_s] = E[W_t - W_s \mid \mathcal{F}_s] + E[W_s \mid \mathcal{F}_s] = E[W_t - W_s] + W_s = 0 + W_s = W_s \quad ■$$
+</div>
+
+<h2>Step 3: Martingale 2 — The Quadratic Process $W_t^2 - t$</h2>
+<div class="block green">
+  <strong>Theorem:</strong> $Y_t = W_t^2 - t$ is a martingale relative to $\mathcal{F}_t$.<br><br>
+  <strong>Proof:</strong>
+  <ol>
+    <li>Integrability: $E[|Y_t|] \leq E[W_t^2] + t = 2t < \infty$.</li>
+    <li>Decompose $W_t^2 = (W_t - W_s)^2 + 2W_s(W_t - W_s) + W_s^2$:</li>
+  </ol>
+  $$\begin{aligned}
+  E[W_t^2 \mid \mathcal{F}_s] &= E[(W_t - W_s)^2 \mid \mathcal{F}_s] + 2W_s\, E[W_t - W_s \mid \mathcal{F}_s] + W_s^2 \\
+  &= (t - s) + 0 + W_s^2 = W_s^2 + t - s
+  \end{aligned}$$
+  Subtract $t$ on both sides: $E[W_t^2 - t \mid \mathcal{F}_s] = W_s^2 - s \implies E[Y_t \mid \mathcal{F}_s] = Y_s$ ■
+</div>
+<div class="block warn">
+  The un-centered process $(W_t^2)_{t \geq 0}$ is a <strong>submartingale</strong> since $E[W_t^2 \mid \mathcal{F}_s] = W_s^2 + (t-s) \geq W_s^2$.
+</div>
+
+<h2>Step 4: Martingale 3 — The Exponential Process $e^{uW_t - \frac12 u^2 t}$</h2>
+<div class="block green">
+  <strong>Theorem:</strong> For any parameter $u \in \mathbb{R}$, $Z_t = e^{uW_t - \frac12 u^2 t}$ is a martingale relative to $\mathcal{F}_t$ with $E[Z_t] = 1$.<br><br>
+  <strong>Proof:</strong>
+  <ol>
+    <li>Integrability: $E[Z_t] = e^{-\frac12 u^2 t} E[e^{uW_t}] = e^{-\frac12 u^2 t} e^{\frac12 u^2 t} = 1 < \infty$.</li>
+    <li>Multiplicative increment splitting for $0 \leq s < t$: $\;Z_t = Z_s \cdot e^{u(W_t - W_s) - \frac12 u^2(t-s)}$</li>
+    <li>Taking conditional expectation $E[\cdot \mid \mathcal{F}_s]$:</li>
+  </ol>
+  $$E[Z_t \mid \mathcal{F}_s] = Z_s \cdot e^{-\frac12 u^2(t-s)}\, E[e^{u(W_t - W_s)}]$$
+  Since $(W_t - W_s) \sim \mathcal{N}(0, t - s)$, its MGF is $E[e^{u(W_t - W_s)}] = e^{\frac12 u^2(t-s)}$.
+  Substituting this in yields $E[Z_t \mid \mathcal{F}_s] = Z_s \cdot 1 = Z_s$. ■
+</div>
+
+</body>
+</html>

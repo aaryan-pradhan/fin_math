@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Change of Variables for Expectation</title>
+<link rel="stylesheet" href="note.css">
+<script src="note.js"></script>
+</head>
+<body>
+
+<h1>Change of Variables for Expectation</h1>
+<p class="lede">Transferring integration from abstract $\Omega$ to $\mathbb{R}$ via the push-forward measure $P_\xi$.</p>
+
+<h2>Theorem Statement</h2>
+<div class="block def">
+  For any Borel function $h : \mathbb{R} \to \mathbb{R}$ such that $h(\xi)$ is integrable on $(\Omega, \mathcal{F}, P)$:
+  $$E(h(\xi)) = \int_\Omega h(\xi(\omega))\, dP(\omega) = \int_{\mathbb{R}} h(x)\, dP_\xi(x)$$
+  where $P_\xi(A) = P(\xi \in A)$ is the push-forward (distribution) measure on $(\mathbb{R}, \mathcal{B}(\mathbb{R}))$.
+</div>
+
+<h2>Step 1: Simple Functions (Base Case)</h2>
+<div class="block">
+  Let $h(x) = \sum_{i=1}^{n} h_i \mathbb{1}_{A_i}(x)$ be a simple function over disjoint Borel sets $A_i$.<br>
+  Evaluating at $\xi(\omega)$:
+  $$h(\xi(\omega)) = \sum_{i=1}^{n} h_i \mathbb{1}_{A_i}(\xi(\omega)) = \sum_{i=1}^{n} h_i \mathbb{1}_{\{\xi \in A_i\}}(\omega)$$
+  Taking expectation:
+  $$E(h(\xi)) = \sum_{i=1}^{n} h_i P(\xi \in A_i) = \sum_{i=1}^{n} h_i P_\xi(A_i) = \int_{\mathbb{R}} h(x)\, dP_\xi(x)$$
+</div>
+
+<h2>Step 2: Non-Negative Borel Functions (MCT)</h2>
+<div class="block">
+  For any $h \geq 0$, construct a sequence of simple functions $0 \leq h_1 \leq h_2 \leq \cdots \uparrow h$ pointwise.<br>
+  By Step 1, $E(h_n(\xi)) = \int_{\mathbb{R}} h_n(x)\, dP_\xi(x)$ for every $n$.<br>
+  By the <strong>Monotone Convergence Theorem (MCT)</strong>, we pass the limit inside both integral signs:
+  $$\lim_{n\to\infty} E(h_n(\xi)) = E(h(\xi)) \qquad \text{and} \qquad \lim_{n\to\infty} \int_{\mathbb{R}} h_n\, dP_\xi = \int_{\mathbb{R}} h\, dP_\xi$$
+  Hence, $E(h(\xi)) = \int_{\mathbb{R}} h(x)\, dP_\xi(x)$ holds for all non-negative $h$.
+</div>
+
+<h2>Step 3: General Integrable Functions</h2>
+<div class="block warn">
+  Decompose $h = h^+ - h^-$ where $h^+ = \max(h, 0) \geq 0$ and $h^- = \max(-h, 0) \geq 0$.<br>
+  Since $h(\xi)$ is integrable, both $E(h^+(\xi))$ and $E(h^-(\xi))$ are finite. Applying Step 2 to both parts:
+  $$E(h(\xi)) = E(h^+(\xi)) - E(h^-(\xi)) = \int_{\mathbb{R}} h^+\, dP_\xi - \int_{\mathbb{R}} h^-\, dP_\xi = \int_{\mathbb{R}} h(x)\, dP_\xi(x)$$
+</div>
+
+<h2>Step 4: Concrete Applications</h2>
+<div class="block ex">
+  <strong>1. Continuous Case:</strong> If $\xi$ has density $f_\xi$, then $dP_\xi(x) = f_\xi(x)\, dx$:
+  $$E(h(\xi)) = \int_{-\infty}^{\infty} h(x) f_\xi(x)\, dx$$
+  <strong>2. Discrete Case:</strong> If $\xi$ takes discrete values $\{x_1, x_2, \ldots\}$:
+  $$E(h(\xi)) = \sum_i h(x_i) P(\xi = x_i)$$
+</div>
+
+</body>
+</html>

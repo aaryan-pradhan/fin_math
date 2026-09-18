@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hitting Times, Reflection Principle & Running Maximum</title>
+<link rel="stylesheet" href="note.css">
+<script src="note.js"></script>
+</head>
+<body>
+
+<h1>Hitting Times, Reflection Principle &amp; Running Maximum</h1>
+<p class="lede">Wiener Process Stopping Times, Strong Markov Symmetry, and Running Max Distributions.</p>
+
+<h2>1. Hitting Time Definition</h2>
+<div class="block green">
+  For standard Brownian motion $W(t)$, the first passage time (hitting time) to level $a$ is:
+  $$T_a = \inf\{t \ge 0 : W(t) = a\}$$
+  $T_a$ is a stopping time because its occurrence depends only on path history up to time $t$.
+</div>
+
+<h2>2. The Reflection Principle</h2>
+<div class="block">
+  There are two equivalent ways to understand the Reflection Principle: <strong>Analytical (conditioning via Strong Markov Property)</strong> and <strong>Geometric (path-wise reflection)</strong>.
+  
+  <h3>Method A: Analytical (Strong Markov Property)</h3>
+  For $a > 0$, partition the probability of being above $a$ at time $t$ using the law of total probability:
+  $$\mathbb{P}(W(t) \ge a) = \mathbb{P}(W(t) \ge a \mid T_a \le t)\mathbb{P}(T_a \le t) + \mathbb{P}(W(t) \ge a \mid T_a > t)\mathbb{P}(T_a > t)$$
+  <ul>
+    <li>$\mathbb{P}(W(t) \ge a \mid T_a > t) = 0$ because if the path never hit $a$ by time $t$, it must be strictly below $a$.</li>
+    <li>By the <strong>Strong Markov Property</strong>, at the stopping time $T_a$, the process restarts. The post-$T_a$ increment process $B(u) = W(T_a + u) - W(T_a)$ for $u \ge 0$ is a new standard Brownian motion independent of the history before $T_a$.</li>
+    <li>By standard Gaussian symmetry, $B(t - T_a) \sim \mathcal{N}(0, t - T_a)$ is symmetric about $0$. Thus:
+      $$\mathbb{P}(W(t) \ge a \mid T_a \le t) = \mathbb{P}(a + B(t - T_a) \ge a \mid T_a \le t) = \mathbb{P}(B(t - T_a) \ge 0) = \frac{1}{2}$$
+    </li>
+  </ul>
+  $$\mathbb{P}(W(t) \ge a) = \frac{1}{2}\mathbb{P}(T_a \le t) \implies \mathbb{P}(T_a \le t) = 2\mathbb{P}(W(t) \ge a)$$
+</div>
+
+<div class="block green">
+  <h3>Method B: Geometric (Path-wise Reflection)</h3>
+  Let $\omega$ be a sample path that hits level $a$ at stopping time $T_a(\omega) \le t$. 
+  Define the <strong>reflected path</strong> $W^*(u)$ by reflecting the trajectory across the line $y = a$ after time $T_a$:
+  $$W^*(u) = \begin{cases} 
+  W(u) & \text{for } u \le T_a \\ 
+  2a - W(u) & \text{for } u > T_a 
+  \end{cases}$$
+  <ul>
+    <li><strong>Equiprobability:</strong> Since standard Brownian motion increments are symmetric about 0, the reflected path $W^*(u)$ is just as likely to occur as the original path $W(u)$.</li>
+    <li><strong>Bijection:</strong> Every path that hits $a$ and ends up above $a$ at time $t$ ($W(t) \ge a$) maps uniquely to a reflected path that hits $a$ and ends up below $a$ ($W^*(t) < a$).</li>
+    <li>Thus:
+      $$\mathbb{P}(T_a \le t, W(t) \ge a) = \mathbb{P}(T_a \le t, W(t) < a)$$
+      Since $\{W(t) \ge a\} \subset \{T_a \le t\}$, we can drop the $T_a \le t$ condition on the left side:
+      $$\mathbb{P}(W(t) \ge a) = \mathbb{P}(T_a \le t, W(t) < a)$$
+    </li>
+  </ul>
+  The total probability of hitting $a$ by time $t$ is the sum of paths ending above $a$ and paths ending below $a$:
+  $$\mathbb{P}(T_a \le t) = \mathbb{P}(T_a \le t, W(t) \ge a) + \mathbb{P}(T_a \le t, W(t) < a) = \mathbb{P}(W(t) \ge a) + \mathbb{P}(W(t) \ge a) = 2\mathbb{P}(W(t) \ge a)$$
+</div>
+
+<h2>3. Probability Distribution of $T_a$</h2>
+<div class="block green">
+  Using standard Gaussian integration with substitution $y = x / \sqrt{t}$:
+  $$\mathbb{P}(T_a \le t) = \frac{2}{\sqrt{2\pi}} \int_{|a|/\sqrt{t}}^{\infty} e^{-\frac{y^2}{2}} \, dy = 2\left[ 1 - \Phi\left(\frac{|a|}{\sqrt{t}}\right) \right]$$
+  Differentiating the CDF with respect to $t$ gives the PDF of $T_a$ (L&eacute;vy distribution):
+  $$f(t) = \frac{|a|}{\sqrt{2\pi t^3}} e^{-\frac{a^2}{2t}} \quad (t > 0)$$
+</div>
+
+<h2>4. The Running Maximum $M(t)$</h2>
+<div class="block def">
+  Define the running maximum up to time $t$ as:
+  $$M(t) = \max_{0 \le s \le t} W(s)$$
+  The event that the maximum is at least $a$ is equivalent to the hitting time being at or before $t$:
+  $$\{M(t) \ge a\} \iff \{T_a \le t\}$$
+  $$\mathbb{P}(M(t) \ge a) = 2\mathbb{P}(W(t) \ge a) = 2\left[ 1 - \Phi\left(\frac{a}{\sqrt{t}}\right) \right] \quad (a > 0)$$
+</div>
+
+<h2>5. Certain Hitting Time ($\mathbb{P}(T_a < \infty) = 1$)</h2>
+<div class="block warn">
+  $$\mathbb{P}(T_a < \infty) = \lim_{t \to \infty} \mathbb{P}(T_a \le t) = \lim_{t \to \infty} 2\left[ 1 - \Phi\left(\frac{|a|}{\sqrt{t}}\right) \right] = 2\left[ 1 - \Phi(0) \right] = 2\left(1 - \frac{1}{2}\right) = 1$$
+  Standard Brownian motion will hit any level $a$ almost surely, though the expected time $\mathbb{E}[T_a] = \infty$.
+</div>
+
+</body>
+</html>

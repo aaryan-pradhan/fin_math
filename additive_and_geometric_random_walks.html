@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Additive &amp; Geometric Random Walks</title>
+<link rel="stylesheet" href="note.css">
+<script src="note.js"></script>
+</head>
+<body>
+
+<h1>Additive &amp; Geometric Random Walks</h1>
+<p class="lede">Rigorously deriving the martingale conditions for discrete additive random walks and exponential (geometric) random walks.</p>
+
+<h2>Step 1: Additive Random Walk</h2>
+<div class="block def">
+  <strong>Definition:</strong> Let $(Y_j)_{j \geq 1}$ be i.i.d. random variables with $E[|Y_1|] < \infty$.
+  Define $X_0 = 0$ and $X_n = \sum_{j=1}^{n} Y_j$ for $n \geq 1$, with natural filtration $\mathcal{F}_n = \sigma(Y_1, \ldots, Y_n)$.
+</div>
+<div class="block green">
+  <strong>Derivation of $E[X_{n+1} \mid \mathcal{F}_n]$:</strong>
+  <ol>
+    <li><strong>Split:</strong> $X_{n+1} = X_n + Y_{n+1}$.</li>
+    <li><strong>Linearity:</strong> $E[X_{n+1} \mid \mathcal{F}_n] = E[X_n \mid \mathcal{F}_n] + E[Y_{n+1} \mid \mathcal{F}_n]$.</li>
+    <li><strong>Measurability &amp; Independence:</strong> Since $X_n$ is $\mathcal{F}_n$-measurable and $Y_{n+1}$ is independent of $\mathcal{F}_n$:</li>
+  </ol>
+  $$E[X_{n+1} \mid \mathcal{F}_n] = X_n + E[Y_1]$$
+  <strong>Conclusion:</strong>
+  <ul>
+    <li>$(X_n)$ is a <strong>martingale</strong> $\iff E[Y_1] = 0$.</li>
+    <li>$(X_n)$ is a <strong>submartingale</strong> $\iff E[Y_1] \geq 0$.</li>
+    <li>$(X_n)$ is a <strong>supermartingale</strong> $\iff E[Y_1] \leq 0$.</li>
+  </ul>
+</div>
+
+<h2>Step 2: Geometric (Exponential) Random Walk</h2>
+<div class="block def">
+  <strong>Definition:</strong> Let $(Y_j)_{j \geq 1}$ be i.i.d. random variables and $X_0 > 0$ constant.
+  Define the geometric random walk:
+  $$X_n = X_0 e^{Y_1 + \cdots + Y_n} = X_{n-1} e^{Y_n} \quad (n \geq 1)$$
+  with natural filtration $\mathcal{F}_n = \sigma(Y_1, \ldots, Y_n)$.
+</div>
+<div class="block green">
+  <strong>Derivation of $E[X_{n+1} \mid \mathcal{F}_n]$:</strong>
+  <ol>
+    <li><strong>Product Form:</strong> $X_{n+1} = X_n \cdot e^{Y_{n+1}}$.</li>
+    <li><strong>Taking Out What Is Known:</strong> Since $X_n$ is $\mathcal{F}_n$-measurable: $E[X_{n+1} \mid \mathcal{F}_n] = X_n \cdot E[e^{Y_{n+1}} \mid \mathcal{F}_n]$.</li>
+    <li><strong>Independence Rule:</strong> Since $Y_{n+1}$ is independent of $\mathcal{F}_n$:</li>
+  </ol>
+  $$E[X_{n+1} \mid \mathcal{F}_n] = X_n \cdot E[e^{Y_1}] = X_n \cdot \phi_Y(1)$$
+  <strong>Conclusion:</strong> $(X_n)$ is a <strong>martingale</strong> $\iff E[e^{Y_1}] = 1$ (i.e. $\phi_Y(1) = 1$).
+</div>
+
+<h2>Step 3: Normal Log-Increments Case</h2>
+<div class="block ex">
+  <strong>Special Case (Log-Normal):</strong> If $Y_j \sim \mathcal{N}(\mu, \sigma^2)$ i.i.d., then its Moment Generating Function is:
+  $$E[e^{Y_1}] = e^{\mu + \frac12 \sigma^2}$$
+  For $X_n = X_0 e^{\sum Y_j}$ to be a martingale:
+  $$e^{\mu + \frac12 \sigma^2} = 1 \implies \mu = -\tfrac12 \sigma^2$$
+</div>
+<div class="block green">
+  This exact drift correction ($\mu = -\tfrac12\sigma^2$) appears fundamentally in continuous-time geometric Brownian motion and Black-Scholes asset modeling.
+</div>
+
+</body>
+</html>

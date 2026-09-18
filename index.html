@@ -1,117 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FinMath Notes</title>
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: "MesloLGS NF", "Meslo LGS NF", "MesloLGSDNF", monospace;
-      background: #0d1117;
-      color: #c9d1d9;
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 3rem 1.5rem;
-      line-height: 1.6;
-    }
-    header { text-align: center; margin-bottom: 2.5rem; border-bottom: 1px solid #30363d; padding-bottom: 1rem; }
-    h1 { color: #f0f6fc; font-size: 2rem; margin-bottom: 0.3rem; }
-    .subtitle { color: #8b949e; font-size: 0.95rem; }
-    .btn-reset {
-      margin-top: 0.8rem;
-      background: #21262d;
-      color: #8b949e;
-      border: 1px solid #30363d;
-      padding: 0.35rem 0.8rem;
-      border-radius: 6px;
-      cursor: pointer;
-      font-family: inherit;
-      font-size: 0.8rem;
-      transition: all 0.15s ease;
-    }
-    .btn-reset:hover { background: #30363d; color: #f0f6fc; }
-    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 1.25rem; }
-    .card {
-      background: #161b22;
-      border: 1px solid #30363d;
-      border-left: 5px solid;
-      border-radius: 8px;
-      padding: 1.4rem;
-      text-decoration: none;
-      color: inherit;
-      display: flex;
-      align-items: center;
-      min-height: 100px;
-      cursor: grab;
-      transition: transform 0.15s ease, background 0.15s ease;
-    }
-    .card:hover { background: #1c2128; transform: translateY(-3px); }
-    .card:active { cursor: grabbing; }
-    .card h2 { font-size: 0.98rem; font-weight: 600; color: #f0f6fc; line-height: 1.45; word-break: break-word; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FinMath Notes</title>
+<link rel="stylesheet" href="note.css">
 </head>
 <body>
-  <header>
-    <h1>FinMath Study Notes</h1>
-    <p class="subtitle">Probability Theory, Measure Theory &amp; Stochastic Processes</p>
-    <button id="reset-btn" class="btn-reset">Reset Order</button>
-  </header>
-  <main><div class="grid"><a href="01_starting_pieces.html" class="card" style="border-left-color:#388bfd"><h2>Starting Pieces — Probability</h2></a><a href="02_almost_surely.html" class="card" style="border-left-color:#2ea043"><h2>Almost Surely & Borel-Cantelli (Step-by-Step)</h2></a><a href="03_random_variables.html" class="card" style="border-left-color:#a371f7"><h2>Random Variables &amp; Measurability (Step-by-Step)</h2></a><a href="04_doob_dynkin_lemma.html" class="card" style="border-left-color:#f0883e"><h2>Generated σ-Fields &amp; Doob–Dynkin Lemma (Step-by-Step)</h2></a><a href="05_distribution_functions.html" class="card" style="border-left-color:#58a6ff"><h2>Distribution Measure &amp; Cumulative Distribution Function (d.f.)</h2></a><a href="06_densities_and_joint_distributions.html" class="card" style="border-left-color:#f85149"><h2>Probability Densities &amp; Joint Distributions</h2></a><a href="07_expectation_and_integration.html" class="card" style="border-left-color:#388bfd"><h2>Expectation &amp; Integration</h2></a><a href="08_change_of_variables_expectation.html" class="card" style="border-left-color:#2ea043"><h2>Change of Variables for Expectation</h2></a><a href="09_conditional_probability_and_independence.html" class="card" style="border-left-color:#a371f7"><h2>Conditional Probability &amp; Independence</h2></a><a href="10_conditional_expectation_and_sigma_fields.html" class="card" style="border-left-color:#f0883e"><h2>Conditional Expectation &amp; σ-Fields</h2></a><a href="11_filtrations_and_martingales.html" class="card" style="border-left-color:#58a6ff"><h2>Filtrations, Adapted Processes &amp; Martingales</h2></a><a href="12_binomial_model_and_martingale_properties.html" class="card" style="border-left-color:#f85149"><h2>Binomial Market Model &amp; Martingale Properties</h2></a><a href="13_additive_and_geometric_random_walks.html" class="card" style="border-left-color:#388bfd"><h2>Additive &amp; Geometric Random Walks</h2></a><a href="14_brownian_motion_and_canonical_martingales.html" class="card" style="border-left-color:#2ea043"><h2>Standard Brownian Motion &amp; Canonical Martingales</h2></a><a href="15_stopping_times.html" class="card" style="border-left-color:#a371f7"><h2>Stopping Times</h2></a><a href="16_american_derivative_securities.html" class="card" style="border-left-color:#f0883e"><h2>American Derivative Securities</h2></a><a href="17_stopped_process_martingale.html" class="card" style="border-left-color:#58a6ff"><h2>Stopped Process & Martingale Preservation</h2></a><a href="18_optimal_stopping_theorem.html" class="card" style="border-left-color:#f85149"><h2>Optimal Stopping Theorem</h2></a><a href="19_gambling_strategies.html" class="card" style="border-left-color:#388bfd"><h2>Gambling Strategies and Fairness</h2></a><a href="20_markov_decision_process.html" class="card" style="border-left-color:#2ea043"><h2>Markov Decision Processes</h2></a><a href="21_dynamic_programming_bellman.html" class="card" style="border-left-color:#a371f7"><h2>Dynamic Programming & Bellman Equation</h2></a><a href="22_brownian_motion_density_and_diffusion.html" class="card" style="border-left-color:#f0883e"><h2>Standard Brownian Motion Density & Diffusion Equation</h2></a><a href="23_wiener_process_axioms_levy_and_random_walk.html" class="card" style="border-left-color:#58a6ff"><h2>Wiener Process Axioms, Lévy Characterization & Random Walk Limit</h2></a><a href="24_brownian_bridge_and_conditional_distributions.html" class="card" style="border-left-color:#f85149"><h2>Brownian Bridge & Conditional Distributions</h2></a><a href="25_gamblers_ruin_problem_derivation.html" class="card" style="border-left-color:#388bfd"><h2>Gambler's Ruin Problem (First-Step Analysis & Infinite Limits)</h2></a><a href="26_brownian_motion_with_drift_and_exit_probabilities.html" class="card" style="border-left-color:#2ea043"><h2>Brownian Motion with Drift & Exit Probabilities</h2></a><a href="27_geometric_brownian_motion.html" class="card" style="border-left-color:#a371f7"><h2>Geometric Brownian Motion & Filtration Expectation</h2></a><a href="28_brownian_motion_hitting_times_and_maximum.html" class="card" style="border-left-color:#f0883e"><h2>Hitting Times, Reflection Principle & Running Maximum</h2></a><a href="29_multivariate_distribution.html" class="card" style="border-left-color:#58a6ff"><h2>Multivariate Normal Distribution & Joint MGF</h2></a><a href="30_bbproperties.html" class="card" style="border-left-color:#f85149"><h2>Gaussian Processes, Brownian Motion & MVN Conditioning</h2></a><a href="formula_sheet_1.html" class="card" style="border-left-color:#388bfd"><h2>FinMath Formula Sheet</h2></a><a href="joint_distribution_BM_max.html" class="card" style="border-left-color:#a371f7"><h2>Joint Distribution of W(t) and M(t)</h2></a></div></main>
-  <script>
-    // ponytail: Native HTML5 drag-and-drop with localStorage order persistence
-    document.addEventListener('DOMContentLoaded', () => {
-      const grid = document.querySelector('.grid');
-      let cards = Array.from(grid.querySelectorAll('.card'));
-      
-      cards.forEach(c => {
-        const h2 = c.querySelector('h2');
-        if (h2) h2.textContent = h2.textContent.replace(/^\d+\s*[—\-]\s*/, '');
-      });
-
-      const saved = JSON.parse(localStorage.getItem('finmath_order') || '[]');
-      if (saved.length) {
-        const map = new Map(cards.map(c => [c.getAttribute('href'), c]));
-        saved.forEach(href => { if (map.has(href)) grid.appendChild(map.get(href)); });
-        cards.forEach(c => { if (!grid.contains(c)) grid.appendChild(c); });
-        cards = Array.from(grid.querySelectorAll('.card'));
-      }
-
-      let dragged = null;
-      cards.forEach(card => {
-        card.setAttribute('draggable', 'true');
-        card.addEventListener('dragstart', (e) => {
-          dragged = card;
-          card.style.opacity = '0.4';
-        });
-        card.addEventListener('dragend', () => {
-          if (dragged) dragged.style.opacity = '1';
-          dragged = null;
-          saveOrder();
-        });
-        card.addEventListener('dragover', (e) => e.preventDefault());
-        card.addEventListener('drop', (e) => {
-          e.preventDefault();
-          if (dragged && dragged !== card) {
-            const children = Array.from(grid.children);
-            const fromIdx = children.indexOf(dragged);
-            const toIdx = children.indexOf(card);
-            if (fromIdx < toIdx) grid.insertBefore(dragged, card.nextSibling);
-            else grid.insertBefore(dragged, card);
-          }
-        });
-      });
-
-      function saveOrder() {
-        const order = Array.from(grid.querySelectorAll('.card')).map(c => c.getAttribute('href'));
-        localStorage.setItem('finmath_order', JSON.stringify(order));
-      }
-
-      document.getElementById('reset-btn')?.addEventListener('click', () => {
-        localStorage.removeItem('finmath_order');
-        location.reload();
-      });
-    });
-  </script>
+<h1>FinMath Notes</h1>
+<p class="lede">Probability, measure theory &amp; stochastic processes.</p>
+<h2>Foundations</h2>
+<ol>
+  <li><a href="starting_pieces.html">Starting Pieces — Probability</a></li>
+  <li><a href="almost_surely.html">Almost Surely & Borel-Cantelli (Step-by-Step)</a></li>
+  <li><a href="random_variables.html">Random Variables &amp; Measurability (Step-by-Step)</a></li>
+  <li><a href="doob_dynkin_lemma.html">Generated σ-Fields &amp; Doob–Dynkin Lemma (Step-by-Step)</a></li>
+  <li><a href="distribution_functions.html">Distribution Measure &amp; Cumulative Distribution Function (d.f.)</a></li>
+  <li><a href="densities_and_joint_distributions.html">Probability Densities &amp; Joint Distributions</a></li>
+  <li><a href="multivariate_distribution.html">Multivariate Normal Distribution & Joint MGF</a></li>
+</ol>
+<h2>Expectation</h2>
+<ol>
+  <li><a href="expectation_and_integration.html">Expectation &amp; Integration</a></li>
+  <li><a href="change_of_variables_expectation.html">Change of Variables for Expectation</a></li>
+  <li><a href="conditional_probability_and_independence.html">Conditional Probability &amp; Independence</a></li>
+  <li><a href="conditional_expectation_and_sigma_fields.html">Conditional Expectation &amp; σ-Fields</a></li>
+</ol>
+<h2>Martingales</h2>
+<ol>
+  <li><a href="filtrations_and_martingales.html">Filtrations, Adapted Processes &amp; Martingales</a></li>
+  <li><a href="binomial_model_and_martingale_properties.html">Binomial Market Model &amp; Martingale Properties</a></li>
+  <li><a href="stopping_times.html">Stopping Times</a></li>
+  <li><a href="stopped_process_martingale.html">Stopped Process & Martingale Preservation</a></li>
+  <li><a href="optimal_stopping_theorem.html">Optimal Stopping Theorem</a></li>
+  <li><a href="gambling_strategies.html">Gambling Strategies and Fairness</a></li>
+</ol>
+<h2>Random walks</h2>
+<ol>
+  <li><a href="additive_and_geometric_random_walks.html">Additive &amp; Geometric Random Walks</a></li>
+  <li><a href="gamblers_ruin_problem_derivation.html">Gambler's Ruin Problem (First-Step Analysis & Infinite Limits)</a></li>
+</ol>
+<h2>Brownian motion</h2>
+<ol>
+  <li><a href="gaussian_processes_and_mvn_conditioning.html">Gaussian Processes, Brownian Motion & MVN Conditioning</a></li>
+  <li><a href="brownian_motion_and_canonical_martingales.html">Standard Brownian Motion &amp; Canonical Martingales</a></li>
+  <li><a href="wiener_process_axioms_levy_and_random_walk.html">Wiener Process Axioms, Lévy Characterization & Random Walk Limit</a></li>
+  <li><a href="brownian_motion_density_and_diffusion.html">Standard Brownian Motion Density & Diffusion Equation</a></li>
+  <li><a href="brownian_bridge_and_conditional_distributions.html">Brownian Bridge & Conditional Distributions</a></li>
+  <li><a href="brownian_motion_with_drift_and_exit_probabilities.html">Brownian Motion with Drift & Exit Probabilities</a></li>
+  <li><a href="geometric_brownian_motion.html">Geometric Brownian Motion & Filtration Expectation</a></li>
+  <li><a href="brownian_motion_hitting_times_and_maximum.html">Hitting Times, Reflection Principle & Running Maximum</a></li>
+  <li><a href="joint_distribution_of_bm_and_maximum.html">Joint Distribution of W(t) and M(t)</a></li>
+</ol>
+<h2>Reference</h2>
+<ol>
+  <li><a href="formula_sheet.html">FinMath Formula Sheet</a></li>
+</ol>
 </body>
 </html>

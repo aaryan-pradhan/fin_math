@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Almost Surely & Borel-Cantelli (Step-by-Step)</title>
+<link rel="stylesheet" href="note.css">
+<script src="note.js"></script>
+</head>
+<body>
+
+<h1>Almost Surely &amp; Borel-Cantelli Lemma</h1>
+<p class="lede">Un-rushed, line-by-line breakdown.</p>
+
+<h2>Step 1: The Setup</h2>
+<div class="block def">
+  Given a probability space $(\Omega, \mathcal{F}, P)$ and a sequence of events $A_1, A_2, A_3, \ldots \in \mathcal{F}$.<br><br>
+  For each integer $n \geq 1$, define:
+  $$B_n = \bigcup_{i=n}^{\infty} A_i = A_n \cup A_{n+1} \cup A_{n+2} \cup \cdots$$
+</div>
+
+<h2>Step 2: Understanding $B_n$ for a single outcome $\omega$</h2>
+<div class="block green">
+  For a fixed outcome $\omega \in \Omega$:
+  <ul>
+    <li>$\omega \in B_n$ iff $\omega$ belongs to at least one set in $\{A_n, A_{n+1}, A_{n+2}, \ldots\}$</li>
+    <li>$\omega \notin B_n$ iff $\omega$ belongs to NONE of the sets in $\{A_n, A_{n+1}, A_{n+2}, \ldots\}$</li>
+  </ul>
+  As $n$ grows, $B_n$ drops early $A_i$ sets. Thus $B_1 \supseteq B_2 \supseteq B_3 \supseteq \cdots$ (written $B_n \downarrow$).
+</div>
+
+<h2>Step 3: The Intersection Set $E$</h2>
+<div class="block def">
+  Define
+  $$E = \bigcap_{n=1}^{\infty} B_n = B_1 \cap B_2 \cap B_3 \cap \cdots$$
+  An outcome $\omega \in E$ iff $\omega \in B_n$ for EVERY $n \geq 1$.
+</div>
+
+<h2>Step 4: Characterizing $E$ (The Limsup Event)</h2>
+<div class="block">
+  <ul>
+    <li><strong>If $\omega$ belongs to finitely many $A_i$</strong> (say the last one is $A_k$):
+    then for any $n > k$, $\omega \notin B_n$. Therefore, $\omega \notin E$.</li>
+    <li><strong>If $\omega$ belongs to infinitely many $A_i$:</strong>
+    for every $n$, there is always some $i \geq n$ where $\omega \in A_i$. Therefore, $\omega \in E$.</li>
+  </ul>
+  <strong>Conclusion:</strong> $E = \{\omega \in \Omega : \omega \text{ belongs to infinitely many } A_i\}$. Denoted $\limsup A_n$.
+</div>
+
+<h2>Step 5: Continuity of Measure from Above $(*_1)$</h2>
+<div class="block">
+  Since $B_n \downarrow$, probability measure continuity implies:
+  $$P(E) = P\left(\bigcap_{n=1}^{\infty} B_n\right) = \lim_{n\to\infty} P(B_n)$$
+</div>
+
+<h2>Step 6: Union Bound (Subadditivity)</h2>
+<div class="block">
+  By definition of $B_n$:
+  $$P(B_n) = P\left(\bigcup_{i=n}^{\infty} A_i\right) \leq \sum_{i=n}^{\infty} P(A_i)$$
+</div>
+
+<h2>Step 7: The Complete Proof Chain</h2>
+<div class="block green">
+  Given that $\sum_{i=1}^{\infty} P(A_i) < \infty$ (convergent series), the tail sum limit is zero:
+  $$\lim_{n\to\infty} \sum_{i=n}^{\infty} P(A_i) = 0$$
+  Chain of inequalities:
+  $$0 \leq P(E) = \lim_{n\to\infty} P(B_n) \leq \lim_{n\to\infty} \sum_{i=n}^{\infty} P(A_i) = 0$$
+  <strong>Therefore: $P(E) = 0$.</strong>
+</div>
+
+<h2>Step 8: Final Physical Meaning</h2>
+<div class="block warn">
+  <strong>$P(E) = 0$</strong> means the set of outcomes $\omega$ that hit infinitely many $A_i$ events has probability 0.<br><br>
+  <strong>$P(E^c) = 1$</strong> means <strong>almost surely</strong>, the actual outcome $\omega$ that occurs in real life belongs to $E^c$.<br><br>
+  <strong>In plain words:</strong> Almost surely, event $A_i$ will only occur for finitely many indices $i$, and after some finite cutoff step $N$, $A_i$ will NEVER occur again.
+</div>
+
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gambler's Ruin Problem (First-Step Analysis & Infinite Limits)</title>
+<link rel="stylesheet" href="note.css">
+<script src="note.js"></script>
+</head>
+<body>
+
+<h1>Gambler's Ruin Problem</h1>
+<p class="lede">First-Step Analysis, Recurrence Equations, and Infinite Bankroll Limits.</p>
+
+<h2>1. Problem Formulation</h2>
+<div class="block def">
+  Consider a gambler starting with Rs $i$ playing against an opponent with total combined wealth Rs $N$.<br>
+  State space $S = \{0, 1, \dots, N\}$. Independent bets $Z_n \in \{+1, -1\}$ with $P(Z_n = +1) = p$ and $P(Z_n = -1) = q = 1-p$.<br>
+  Wealth process: $X_n = i + \sum_{k=1}^n Z_k$.
+  <ul>
+    <li>Absorbing states (recurrent): $0$ (ruin) and $N$ (target reached).</li>
+    <li>Transient states: $\{1, 2, \dots, N-1\}$.</li>
+  </ul>
+</div>
+
+<h2>2. First-Step Analysis &amp; Difference Equation</h2>
+<div class="block green">
+  Let $P_i = \mathbb{P}(T_N < T_0 \mid X_0 = i)$ be the probability of reaching Rs $N$ before going broke.<br>
+  Conditioning on the first step $Z_1$:
+  $$P_i = p P_{i+1} + q P_{i-1} \quad \text{for } 1 \le i \le N-1$$
+  Boundary conditions: $P_0 = 0$ and $P_N = 1$.<br><br>
+  Using $(p+q)P_i = p P_{i+1} + q P_{i-1}$ yields:
+  $$P_{i+1} - P_i = \frac{q}{p} (P_i - P_{i-1})$$
+</div>
+
+<h2>3. Telescoping Sum &amp; General Solution</h2>
+<div class="block">
+  Summing differences $P_{k+1} - P_k = \left(\frac{q}{p}\right)^k P_1$ from $k=0$ to $i-1$:
+  $$P_i = P_1 \sum_{k=0}^{i-1} \left(\frac{q}{p}\right)^k$$
+  Solving for $P_1$ using $P_N = 1$:
+  $$\begin{aligned}
+  \text{Unfair Game } \left(p \ne \frac{1}{2}\right): &\quad P_i = \frac{1 - \left(\frac{q}{p}\right)^i}{1 - \left(\frac{q}{p}\right)^N} \\[8pt]
+  \text{Fair Game } \left(p = \frac{1}{2}\right): &\quad P_i = \frac{i}{N}
+  \end{aligned}$$
+</div>
+
+<h2>4. Infinite Bankroll Limit ($N \to \infty$)</h2>
+<div class="block warn">
+  Taking the limit as $N \to \infty$ (playing against an infinitely rich casino):
+  $$\lim_{N \to \infty} P_i = \begin{cases} 
+  1 - \left(\frac{q}{p}\right)^i & \text{if } p > \frac{1}{2} \;\left(\frac{q}{p} < 1, \text{positive edge}\right) \\[8pt]
+  0 & \text{if } p \le \frac{1}{2} \;\left(\frac{q}{p} \ge 1, \text{fair or house edge}\right)
+  \end{cases}$$
+  <strong>Key Conclusion:</strong> In any fair or unfavorable game ($p \le 1/2$) against an infinite bankroll, going broke is almost surely guaranteed ($\mathbb{P}(\text{Ruin}) = 1$).
+</div>
+
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brownian Bridge & Conditional Distributions</title>
+<link rel="stylesheet" href="note.css">
+<script src="note.js"></script>
+</head>
+<body>
+
+<h1>Brownian Bridge &amp; Conditional Distributions</h1>
+<p class="lede">Master Reference Rules &amp; Derivation of $[Y(s) \mid Y(t) = C]$.</p>
+
+<h2>1. Reference Rules &amp; Definitions</h2>
+<div class="block">
+  <ul>
+    <li><strong>Rule 1 (Density Notation):</strong> $f_t(x)$ is shorthand for $f_{W(t)}(x)$, the density of $W(t) \sim \mathcal{N}(0, t)$.</li>
+    <li><strong>Rule 2 (Bayes' Rule for Densities):</strong> $f_{X \mid Y}(x \mid y) = \frac{f_{X, Y}(x, y)}{f_Y(y)}$.</li>
+    <li><strong>Rule 3 (Independent Increments):</strong> For $s < t$, $f_{W(s), W(t)}(x, B) = f_{W(s)}(x) \cdot f_{W(t)-W(s)}(B - x)$.</li>
+    <li><strong>Rule 4 (Stationary Increments):</strong> $W(t) - W(s) \sim \mathcal{N}(0, t-s) \implies f_{W(t)-W(s)}(B - x) = f_{t-s}(B - x)$.</li>
+    <li><strong>Rule 5 (Gaussian Density):</strong> $f_v(z) = \frac{1}{\sqrt{2\pi v}} \exp\left( -\frac{z^2}{2v} \right)$.</li>
+    <li><strong>Rule 6 (Completing the Square):</strong> $f(x) = K \exp\left(-\frac{(x - \mu)^2}{2\sigma^2}\right) \implies \mathcal{N}(\mu, \sigma^2)$.</li>
+  </ul>
+</div>
+
+<h2>2. Derivation of Standard Brownian Bridge $[W(s) \mid W(t) = B]$</h2>
+<div class="block green">
+  Using Rules 2, 3, 4, 5:
+  $$f_{W(s) \mid W(t)}(x \mid B) = \frac{f_s(x) f_{t-s}(B - x)}{f_t(B)} = K_1 \exp\left( -\frac{x^2}{2s} - \frac{(B-x)^2}{2(t-s)} \right)$$
+  Completing the square for $x$:
+  $$-\frac{x^2}{2s} - \frac{(B-x)^2}{2(t-s)} = -\frac{\left( x - \frac{s}{t}B \right)^2}{2 \left[ \frac{s(t-s)}{t} \right]} + \text{const}$$
+  $$[W(s) \mid W(t) = B] \sim \mathcal{N}\left( \frac{s}{t}B, \;\; \frac{s(t-s)}{t} \right)$$
+</div>
+
+<h2>3. General Brownian Motion $Y(t) = \sigma W(t)$</h2>
+<div class="block">
+  For general Brownian motion $Y(t) = \sigma W(t) \sim \mathcal{N}(0, \sigma^2 t)$:
+  <ul>
+    <li>Condition $Y(t) = C \implies W(t) = \frac{C}{\sigma}$.</li>
+    <li>$[Y(s) \mid Y(t) = C] = \sigma \left[ W(s) \;\middle|\; W(t) = \frac{C}{\sigma} \right]$.</li>
+  </ul>
+  <div class="block green">
+    $$\text{Mean: } \mu_Y = \sigma \left( \frac{s}{t} \frac{C}{\sigma} \right) = \frac{s}{t} C \quad \text{($\sigma$ cancels out)}$$
+    $$\text{Variance: } \text{Var}_Y = \sigma^2 \left( \frac{s(t-s)}{t} \right) = \sigma^2 \frac{s(t-s)}{t} \quad \text{($\sigma^2$ scales variance)}$$
+    $$[Y(s) \mid Y(t) = C] \sim \mathcal{N}\left( \frac{s}{t}C, \;\; \sigma^2 \frac{s(t-s)}{t} \right)$$
+  </div>
+</div>
+
+<h2>4. Application: Bicycle Race Model</h2>
+<div class="block ex">
+  Let $Y(t) = \sigma W(t)$ be the lead margin at $100t\%$ completion ($0 \le t \le 1$).
+  <br><br>
+  <strong>(i) Given midpoint lead $Y(1/2) = \sigma$, probability of winning ($Y(1) > 0$):</strong>
+  $$P\left( Y(1) - Y(1/2) > -\sigma \right) = P\left( Z > \frac{-\sigma}{\sigma/\sqrt{2}} \right) = P(Z > -\sqrt{2}) = \Phi(\sqrt{2}) \approx 0.9213$$
+
+  <strong>(ii) Given winning margin $Y(1) = \sigma$, probability of leading at midpoint ($Y(1/2) > 0$):</strong>
+  $$\left[ Y(1/2) \;\middle|\; Y(1) = \sigma \right] \sim \mathcal{N}\left( \frac{\sigma}{2}, \; \frac{\sigma^2}{4} \right) \implies P(Z > -1) = \Phi(1) \approx 0.8413$$
+</div>
+
+</body>
+</html>

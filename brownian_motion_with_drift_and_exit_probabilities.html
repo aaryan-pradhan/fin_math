@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brownian Motion with Drift & Exit Probabilities</title>
+<link rel="stylesheet" href="note.css">
+<script src="note.js"></script>
+</head>
+<body>
+
+<h1>Brownian Motion with Drift &amp; Exit Probabilities</h1>
+<p class="lede">Continuous Gambler's Ruin, Rigorous Floor Limits, and First Passage Times.</p>
+
+<h2>1. Definition of Brownian Motion with Drift</h2>
+<div class="block green">
+  A stochastic process $\{X(t), t \ge 0\}$ is <strong>Brownian Motion with drift $\mu$</strong> if:
+  $$X(t) = \mu t + W(t)$$
+  where $W(t)$ is standard Brownian motion. Thus $X(t) \sim \mathcal{N}(\mu t, t)$ with stationary, independent increments.
+</div>
+
+<h2>2. Squeeze Theorem Proof for Random Walk Limit</h2>
+<div class="block">
+  Set time step $\Delta t$, spatial step $\Delta x = \sqrt{\Delta t}$, and move right ($+\Delta x$) with prob $p = \frac{1}{2}(1 + \mu\sqrt{\Delta t})$.<br>
+  Number of steps by time $t$ is $N(t) = \lfloor t / \Delta t \rfloor$. Using $\frac{t}{\Delta t} - 1 < \lfloor t / \Delta t \rfloor \le \frac{t}{\Delta t}$:
+  $$\mu t - \mu \Delta t < \mathbb{E}[X(t)] \le \mu t \implies \lim_{\Delta t \to 0} \mathbb{E}[X(t)] = \mu t \quad \text{(Squeeze Theorem)}$$
+  $$\text{Var}(X(t)) = \Delta t (1 - \mu^2 \Delta t) \left\lfloor \frac{t}{\Delta t} \right\rfloor \implies \lim_{\Delta t \to 0} \text{Var}(X(t)) = t$$
+</div>
+
+<h2>3. Continuous to Discrete Coordinate Mapping</h2>
+<div class="block">
+  Map continuous domain $[-B, A]$ to discrete grid $\{0, 1, \dots, N\}$ via:
+  $$g(x) = \left\lfloor \frac{x + B}{\Delta x} \right\rfloor$$
+  <ul>
+    <li>Lower Barrier ($x = -B$) $\mapsto 0$</li>
+    <li>Starting Point ($x$) $\mapsto i = \left\lfloor \frac{x + B}{\Delta x} \right\rfloor$</li>
+    <li>Upper Barrier ($x = A$) $\mapsto N = \left\lfloor \frac{A + B}{\Delta x} \right\rfloor$</li>
+  </ul>
+</div>
+
+<h2>4. Floor Function Limit for Exit Probabilities</h2>
+<div class="block green">
+  Let $r = \frac{q}{p} = \frac{1 - \mu \Delta x}{1 + \mu \Delta x}$. Since $\lim_{\Delta x \to 0} r^{1/\Delta x} = e^{-2\mu}$:
+  $$r^{\frac{B}{\Delta x}} \le r^{\lfloor B/\Delta x \rfloor} < r^{-1} \cdot \left(r^{\frac{1}{\Delta x}}\right)^B \implies \lim_{\Delta x \to 0} r^{\lfloor B/\Delta x \rfloor} = e^{-2\mu B}$$
+  Substituting into discrete Gambler's Ruin $P(x) = \frac{1 - r^i}{1 - r^N}$ yields:
+  $$P(x) = \mathbb{P}(X(t) \text{ hits } A \text{ before } -B \mid X(0) = x) = \frac{1 - e^{-2\mu(x+B)}}{1 - e^{-2\mu(A+B)}}$$
+</div>
+
+<h2>5. Special Cases</h2>
+<div class="block warn">
+  <ul>
+    <li><strong>Negative Drift ($\mu < 0$):</strong> Letting $B \to \infty$, the probability of ever reaching $+A$ starting from $0$ is:
+      $$\mathbb{P}(\text{Max } \ge A) = e^{2\mu A}$$
+      The maximum $M = \sup_{t \ge 0} X(t)$ is Exponentially distributed with rate $-2\mu > 0$.</li>
+    <li><strong>Zero Drift ($\mu = 0$):</strong> Taking $\mu \to 0$ via L'Hôpital's rule:
+      $$P(x) = \frac{x+B}{A+B}$$</li>
+  </ul>
+</div>
+
+<h2>6. Application: Optimal Stock Option Exercise Threshold</h2>
+<div class="block green">
+  Suppose current stock price $X(0) = 0$ follows BM with negative drift $\mu = -d < 0$. We hold an option to buy one unit at fixed strike price $A$.<br>
+  If we set a rule to exercise as soon as stock price reaches target $x > A$:
+  $$\text{Gain upon exercise} = x - A, \qquad \mathbb{P}(\text{ever hits } x) = e^{2\mu x} = e^{-2dx}$$
+  Expected gain function:
+  $$f(x) = (x - A) e^{-2dx}$$
+  Setting derivative $f'(x) = e^{-2dx} [1 - 2d(x - A)] = 0$ gives the optimal target:
+  $$x^* = A + \frac{1}{2d}$$
+  Maximum expected gain: $f(x^*) = \frac{1}{2d} e^{-2dA - 1}$.
+</div>
+
+</body>
+</html>

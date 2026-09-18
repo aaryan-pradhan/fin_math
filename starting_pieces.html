@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Starting Pieces — Probability</title>
+<link rel="stylesheet" href="note.css">
+<script src="note.js"></script>
+</head>
+<body>
+
+<h1>Starting Pieces — Probability Theory</h1>
+<p class="lede">My understanding, built from scratch.</p>
+
+<h2>1. The Outcome</h2>
+<div class="block def">
+  The experiment runs. One outcome is produced. Call it $\omega$.<br>
+  $\Omega$ = the set of all possible outcomes (sample space).<br>
+  $\omega \in \Omega$ always.
+</div>
+
+<h2>2. Events</h2>
+<div class="block def">
+  An <strong>event</strong> is just a subset $A \subseteq \Omega$.<br><br>
+  <strong>$A$ happened</strong> iff $\omega \in A$. (Did the actual outcome land inside the set?)<br>
+  <strong>$A$ did not happen</strong> iff $\omega \notin A$.
+</div>
+<div class="block ex">
+  Examples (coin toss forever):
+  <ul>
+    <li>$A_H = \{\omega : \text{first toss is H}\}$</li>
+    <li>$A_{HH} = \{\omega : \text{first two tosses are HH}\}$</li>
+    <li>$\Omega$ = always happens. $\varnothing$ = never happens.</li>
+  </ul>
+</div>
+
+<h2>3. σ-field (Sigma-Algebra)</h2>
+<div class="block def">
+  A <strong>σ-field</strong> $\mathcal{F}$ is a collection of subsets of $\Omega$ that we are allowed to assign probabilities to.<br><br>
+  Must satisfy:
+  <ol>
+    <li>$\varnothing \in \mathcal{F}$</li>
+    <li>$A \in \mathcal{F} \implies A^c \in \mathcal{F}$ (if you can ask "did $A$?", you can ask "did NOT $A$?")</li>
+    <li>$A_1, A_2, \ldots \in \mathcal{F} \implies \bigcup_i A_i \in \mathcal{F}$</li>
+  </ol>
+  <em>Just accept these axioms. They exist so probability arithmetic never breaks.</em>
+</div>
+
+<h2>4. Special Events &amp; Filtration</h2>
+<div class="block def">
+  At time $k$, you have seen $\omega_1, \omega_2, \ldots, \omega_k$.<br><br>
+  <strong>$A$ is a special event at time $k$</strong> if:
+  knowing $\omega_1, \ldots, \omega_k$ is enough to say definitively — $\omega \in A$ or $\omega \notin A$.<br><br>
+  <strong>$A$ is NOT special at time $k$</strong> if:
+  you need more tosses. You cannot decide yet.
+</div>
+<div class="block ex">
+  <table>
+    <tr><th>Event</th><th>Special at $k=1$?</th><th>Reason</th></tr>
+    <tr><td>$A_H$</td><td>✅ Yes</td><td>Saw $\omega_1$, enough to decide</td></tr>
+    <tr><td>$A_{HH}$</td><td>❌ No</td><td>Need $\omega_2$</td></tr>
+    <tr><td>$\Omega$</td><td>✅ Yes</td><td>Always yes, needs 0 tosses</td></tr>
+  </table>
+</div>
+<div class="block def">
+  $\mathcal{F}_k$ = the set of ALL special events at time $k$.<br><br>
+  As $k$ grows, you see more → more events become special:
+  $$\mathcal{F}_0 \subset \mathcal{F}_1 \subset \mathcal{F}_2 \subset \cdots$$
+  This chain is the <strong>filtration</strong>. It tracks your growing information over time.
+  $\mathcal{F}_k$ represents all information available by time $k$.
+</div>
+
+<h2>5. Probability Measure</h2>
+<div class="block def">
+  $P$ is a function: $P : \mathcal{F} \to [0,1]$.<br>
+  Input: an event. Output: a number.<br><br>
+  Two rules:
+  <ol>
+    <li>$P(\Omega) = 1$</li>
+    <li>If $A_1, A_2, \ldots$ are pairwise disjoint: $P\left(\bigcup_i A_i\right) = \sum_i P(A_i)$</li>
+  </ol>
+</div>
+
+<h2>6. Probability Space</h2>
+<div class="block green">
+  $(\Omega, \mathcal{F}, P)$ — the three pieces:
+  <ul>
+    <li>$\Omega$ — all possible outcomes</li>
+    <li>$\mathcal{F}$ — the events we are allowed to assign probabilities to</li>
+    <li>$P$ — the function that assigns those numbers</li>
+  </ul>
+</div>
+
+<h2>7. Almost Surely (a.s.)</h2>
+<div class="block warn">
+  $P(A) = 1$ → $A$ occurs <strong>almost surely</strong>. NOT "surely."<br><br>
+  <strong>Surely</strong>: $A = \Omega$, impossible to be outside $A$.<br>
+  <strong>Almost surely</strong>: $P(A) = 1$, but exceptions of probability 0 may exist.
+</div>
+
+</body>
+</html>

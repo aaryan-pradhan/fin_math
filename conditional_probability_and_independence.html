@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Conditional Probability &amp; Independence</title>
+<link rel="stylesheet" href="note.css">
+<script src="note.js"></script>
+</head>
+<body>
+
+<h1>Conditional Probability &amp; Independence</h1>
+<p class="lede">Measure-theoretic definition of conditioning, law of total probability, and mutual independence.</p>
+
+<h2>Step 1: Conditional Probability</h2>
+<div class="block def">
+  For events $A, B \in \mathcal{F}$ with $P(B) \neq 0$:
+  $$P(A \mid B) = \frac{P(A \cap B)}{P(B)}$$
+</div>
+<div class="block green">
+  <strong>Sample Space Rescaling:</strong> Conditioning on $B$ discards all outcomes $\omega \notin B$ (setting their probability to 0) and rescales $B$ to be the new sample space with measure 1.
+</div>
+
+<h2>Step 2: Subsets &amp; Disjoint Special Cases</h2>
+<div class="block warn">
+  <strong>Subset Ordering:</strong> If $A \subseteq B$, then $A \cap B = A$, so:
+  <ul>
+    <li>$P(A \mid B) = P(A) / P(B)$ (not 1!)</li>
+    <li>$P(B \mid A) = P(A) / P(A) = 1$ (knowing $A$ happened guarantees $B$ happened).</li>
+  </ul>
+  <strong>Disjoint Events:</strong> If $A \cap B = \varnothing$, then $P(A \mid B) = 0$.
+</div>
+
+<h2>Step 3: Law of Total Probability</h2>
+<div class="block">
+  Let $\{B_1, B_2, \ldots\}$ be a countable partition of $\Omega$ (pairwise disjoint, $\bigcup B_i = \Omega$, $P(B_i) \neq 0$).<br>
+  Slicing $A$ into disjoint components $A = \bigcup (A \cap B_i)$ yields:
+  $$P(A) = \sum_{i=1}^{\infty} P(A \cap B_i) = \sum_{i=1}^{\infty} P(A \mid B_i)\, P(B_i)$$
+</div>
+
+<h2>Step 4: Pairwise vs. Mutual Independence</h2>
+<div class="block def">
+  <strong>Two Events:</strong> $A, B$ are independent if $P(A \cap B) = P(A)P(B) \iff P(A \mid B) = P(A)$.<br><br>
+  <strong>Mutual Independence:</strong> For $n$ events $A_1, \ldots, A_n$, pairwise independence is <em>insufficient</em>.
+  They must satisfy the product rule for <strong>every sub-collection</strong> of size $k \in \{2, \ldots, n\}$:
+  $$P(A_{i_1} \cap \cdots \cap A_{i_k}) = P(A_{i_1}) \cdots P(A_{i_k})$$
+</div>
+<div class="block green">
+  This requires $2^n - n - 1$ equations in total (e.g., 4 equations for $n = 3$).
+</div>
+
+</body>
+</html>

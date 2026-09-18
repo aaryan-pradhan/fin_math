@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Distribution Measure &amp; Cumulative Distribution Function (d.f.)</title>
+<link rel="stylesheet" href="note.css">
+<script src="note.js"></script>
+</head>
+<body>
+
+<h1>Distribution Measure &amp; Cumulative Distribution Function</h1>
+<p class="lede">Un-rushed breakdown of push-forward probability measures and distribution functions (d.f.).</p>
+
+<h2>Step 1: The Push-Forward Measure $P_\xi$</h2>
+<div class="block def">
+  Every random variable $\xi : \Omega \to \mathbb{R}$ on $(\Omega, \mathcal{F}, P)$ induces a probability measure $P_\xi$ on $(\mathbb{R}, \mathcal{B}(\mathbb{R}))$, defined for all Borel sets $B \in \mathcal{B}(\mathbb{R})$ by:
+  $$P_\xi(B) = P(\xi \in B) = P(\{\omega \in \Omega : \xi(\omega) \in B\})$$
+</div>
+<div class="block green">
+  <strong>Interpretation:</strong> $P_\xi$ is the "distribution" of $\xi$. It transports probability measure $P$ from abstract sample space $\Omega$ to sets on the real line $\mathbb{R}$.
+</div>
+
+<h2>Step 2: Cumulative Distribution Function $F_\xi(x)$</h2>
+<div class="block def">
+  The function $F_\xi : \mathbb{R} \to [0, 1]$ defined by:
+  $$F_\xi(x) = P(\xi \leq x) = P_\xi((-\infty, x])$$
+  is called the <strong>distribution function (d.f.)</strong> of $\xi$.
+</div>
+
+<h2>Step 3: Properties of Distribution Functions</h2>
+<div class="block">
+  Every distribution function $F_\xi$ satisfies three core properties:
+  <ol>
+    <li>
+      <strong>Non-Decreasing:</strong> If $x_1 < x_2$, then $F_\xi(x_1) \leq F_\xi(x_2)$.<br>
+      <em>Proof:</em> $(-\infty, x_1] \subseteq (-\infty, x_2] \implies \{\xi \leq x_1\} \subseteq \{\xi \leq x_2\} \implies P(\xi \leq x_1) \leq P(\xi \leq x_2)$.
+    </li>
+    <li>
+      <strong>Right-Continuous:</strong> $\lim_{h \downarrow 0} F_\xi(x + h) = F_\xi(x)$.<br>
+      <em>Proof:</em> For sequence $x_n \downarrow x$, events $A_n = \{\xi \leq x_n\}$ form nested decreasing sequence $A_1 \supseteq A_2 \supseteq \cdots$ with $\bigcap_{n=1}^{\infty} A_n = \{\xi \leq x\}$. By continuity of measure from above, $\lim P(A_n) = P(\{\xi \leq x\})$.
+    </li>
+    <li>
+      <strong>Limits at $\pm\infty$:</strong>
+      $$\lim_{x \to -\infty} F_\xi(x) = 0 \qquad \text{and} \qquad \lim_{x \to +\infty} F_\xi(x) = 1$$
+    </li>
+  </ol>
+</div>
+
+</body>
+</html>

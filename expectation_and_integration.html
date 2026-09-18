@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Expectation &amp; Integration</title>
+<link rel="stylesheet" href="note.css">
+<script src="note.js"></script>
+</head>
+<body>
+
+<h1>Expectation &amp; Integration</h1>
+<p class="lede">The Lebesgue integral construction: from integrable r.v.s through indicators to simple functions.</p>
+
+<h2>Step 1: Integrable Random Variables</h2>
+<div class="block def">
+  A random variable $\xi : \Omega \to \mathbb{R}$ is <strong>integrable</strong> if:
+  $$\int_\Omega |\xi|\, dP < \infty$$
+  When this holds, the <strong>expectation</strong> exists and is defined as:
+  $$E(\xi) = \int_\Omega \xi\, dP$$
+  The family of all integrable r.v.s on $(\Omega, \mathcal{F}, P)$ is denoted $L^1$ or $L^1(\Omega, \mathcal{F}, P)$.
+</div>
+
+<h2>Step 2: Why Absolute Value?</h2>
+<div class="block warn">
+  <strong>Pitfall:</strong> Every r.v. decomposes as $\xi = \xi^+ - \xi^-$ where $\xi^+ = \max(\xi, 0)$ and $\xi^- = \max(-\xi, 0)$.
+  Both $\int \xi^+\, dP$ and $\int \xi^-\, dP$ exist in $[0, \infty]$.<br><br>
+  If both are $+\infty$, then $E(\xi) = \infty - \infty$ — <strong>undefined</strong>.<br><br>
+  Requiring $\int |\xi|\, dP < \infty$ forces <strong>both</strong> $\int \xi^+\, dP < \infty$ and $\int \xi^-\, dP < \infty$ (since $|\xi| = \xi^+ + \xi^-$), guaranteeing the subtraction is a finite real number.
+</div>
+
+<h2>Step 3: Indicator Random Variables</h2>
+<div class="block def">
+  For any event $A \in \mathcal{F}$, the <strong>indicator function</strong> is:
+  $$\mathbb{1}_A(\omega) = \begin{cases} 1 & \omega \in A \\ 0 & \omega \in \Omega \setminus A \end{cases}$$
+</div>
+<div class="block green">
+  Its expectation:
+  $$E(\mathbb{1}_A) = \int_\Omega \mathbb{1}_A\, dP = \int_A 1\, dP + \int_{\Omega \setminus A} 0\, dP = P(A)$$
+  The integrand is 0 outside $A$, so only the measure of $A$ survives. This works for any $\Omega$ (discrete or uncountable) — no $\omega$-by-$\omega$ summation needed.
+</div>
+
+<h2>Step 4: Simple Functions</h2>
+<div class="block def">
+  A <strong>simple function</strong> $\eta : \Omega \to \mathbb{R}$ is a finite linear combination of indicators over <strong>pairwise disjoint</strong> events:
+  $$\eta = \sum_{i=1}^{n} \eta_i \mathbb{1}_{A_i}$$
+  where $\eta_1, \ldots, \eta_n \in \mathbb{R}$ and $A_1, \ldots, A_n$ are pairwise disjoint events.
+</div>
+<div class="block green">
+  <strong>Why disjoint?</strong> Each $\omega$ lands in at most one $A_i$, so $\eta(\omega) = \eta_i$ — one clean value, no ambiguity. (Disjointness is <em>not</em> needed for linearity of the integral — that always holds. It's needed for the representation to be unambiguous.)<br><br>
+  <strong>Do the $A_i$ need to cover $\Omega$?</strong> No. If $\omega \notin \bigcup A_i$, every indicator is 0, so $\eta(\omega) = 0$.
+</div>
+
+<h2>Step 5: Expectation of Simple Functions</h2>
+<div class="block green">
+  By linearity of the integral:
+  $$E(\eta) = \int_\Omega \eta\, dP = \sum_{i=1}^{n} \eta_i \int_\Omega \mathbb{1}_{A_i}\, dP = \sum_{i=1}^{n} \eta_i P(A_i)$$
+  This is the weighted sum of probabilities. The construction ladder:<br>
+  indicators → simple functions → (approximate arbitrary r.v.s by simple functions → general Lebesgue integral)
+</div>
+
+</body>
+</html>

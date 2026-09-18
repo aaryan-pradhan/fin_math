@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stopping Times</title>
+<link rel="stylesheet" href="note.css">
+<script src="note.js"></script>
+</head>
+<body>
+
+<h1>Stopping Times</h1>
+<p class="lede">Definition, equivalent characterisation, and the first-entry time example — all on a filtered probability space $(\Omega, \mathcal{F}, \mathbb{F}, P)$.</p>
+
+<h2>Step 1: Definition</h2>
+<div class="block def">
+  A random variable $\tau : \Omega \to \{0, 1, 2, \ldots\} \cup \{\infty\}$ on a filtered probability space $(\Omega, \mathcal{F}, \mathbb{F}, P)$ is called a <strong>stopping time (ST)</strong> if:
+  $$\{\tau \leq t\} \in \mathcal{F}_t \quad \text{for each } t = 0, 1, 2, \ldots \qquad (1)$$
+</div>
+<div class="block green">
+  <strong>Operational meaning:</strong> At time $t$, using only information available up to $t$, you can determine whether stopping has already occurred. No future peeking. This captures decisions like "stop gambling" or "sell a block of shares at the stock exchange" — if $\tau = k$, you act at time $k$ based only on what you already know by then.
+</div>
+
+<h2>Step 2: Equivalent Characterisation — (1) $\iff$ (2)</h2>
+<div class="block">
+  Condition (2): $\{\tau = t\} \in \mathcal{F}_t$ for each $t$.<br><br>
+  <strong>(1) $\implies$ (2):</strong> Write
+  $$\{\tau = t\} = \{\tau \leq t\} \cap \{\tau \leq t-1\}^c$$
+  $\{\tau \leq t\} \in \mathcal{F}_t$ by (1). $\{\tau \leq t-1\} \in \mathcal{F}_{t-1} \subseteq \mathcal{F}_t$ by (1), so its complement is also $\in \mathcal{F}_t$ (σ-algebras are closed under complements). Their intersection $\in \mathcal{F}_t$ (closed under finite intersections). $\therefore \{\tau = t\} \in \mathcal{F}_t$.<br><br>
+  <strong>(2) $\implies$ (1):</strong> Write
+  $$\{\tau \leq t\} = \bigcup_{s=0}^{t} \{\tau = s\}$$
+  Each $\{\tau = s\} \in \mathcal{F}_s \subseteq \mathcal{F}_t$ (filtration is nested). Finite union of $\mathcal{F}_t$-sets $\in \mathcal{F}_t$ (σ-algebras are closed under countable unions). $\therefore \{\tau \leq t\} \in \mathcal{F}_t$. ■
+</div>
+
+<h2>Step 3: Example — First Entry Time is a ST</h2>
+<div class="block ex">
+  <strong>Setup:</strong> Let $(X_n)$ be a sequence of r.v.'s adapted to $(\mathcal{F}_n)$, and let $B \subseteq \mathbb{R}$ be a Borel set.<br><br>
+  <strong>Claim:</strong> $\tau = \min\{n : X_n \in B\}$ is a stopping time.<br><br>
+  <strong>Proof:</strong> Use condition (2). For each $n$:
+  $$\{\tau = n\} = \{X_1 \notin B\} \cap \cdots \cap \{X_{n-1} \notin B\} \cap \{X_n \in B\}$$
+  Each piece lands in $\mathcal{F}_n$:
+  <ul>
+    <li>$\{X_n \in B\} \in \mathcal{F}_n$: $X_n$ is $\mathcal{F}_n$-measurable (adapted), so preimages of Borel sets land in $\mathcal{F}_n$.</li>
+    <li>$\{X_k \notin B\} = \{X_k \in B^c\} \in \mathcal{F}_k \subseteq \mathcal{F}_n$ for $k < n$ (same measurability + filtration nesting).</li>
+  </ul>
+  Finite intersection of $\mathcal{F}_n$-sets $\in \mathcal{F}_n$. $\therefore \{\tau = n\} \in \mathcal{F}_n$ for each $n \implies \tau$ is a ST. ■
+</div>
+<div class="block warn">
+  <strong>Pitfall — "last exit time" is NOT a ST:</strong> $\tau = \max\{n : X_n \in B\}$ requires knowing the future (whether $X_{n+1}, X_{n+2}, \ldots$ ever re-enter $B$). At time $n$ you cannot determine this — so $\{\tau = n\} \notin \mathcal{F}_n$ in general.
+</div>
+
+</body>
+</html>

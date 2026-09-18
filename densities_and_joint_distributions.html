@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Probability Densities &amp; Joint Distributions</title>
+<link rel="stylesheet" href="note.css">
+<script src="note.js"></script>
+</head>
+<body>
+
+<h1>Probability Densities &amp; Joint Distributions</h1>
+<p class="lede">Line-by-line breakdown of continuous, discrete, and joint distributions.</p>
+
+<h2>Step 1: Absolutely Continuous Distributions &amp; Density</h2>
+<div class="block def">
+  A random variable $\xi : \Omega \to \mathbb{R}$ has an <strong>absolutely continuous distribution</strong> if there exists a Borel function $f_\xi : \mathbb{R} \to [0, \infty)$ (density) such that for any $B \in \mathcal{B}(\mathbb{R})$:
+  $$P(\xi \in B) = \int_B f_\xi(x)\, dx$$
+</div>
+<div class="block warn">
+  <strong>Single-Point Pitfall:</strong> For any single point $x_0 \in \mathbb{R}$, $P(\xi = x_0) = \int_{\{x_0\}} f_\xi(x)\, dx = 0$.
+</div>
+
+<h2>Step 2: Discrete Distributions</h2>
+<div class="block def">
+  A random variable $\xi$ has a <strong>discrete distribution</strong> with distinct values $\{x_1, x_2, \ldots\}$ if for any $B \in \mathcal{B}(\mathbb{R})$:
+  $$P(\xi \in B) = \sum_{x_i \in B} P(\xi = x_i)$$
+  Here, probability mass is concentrated at isolated points $x_i$ with $P(\xi = x_i) > 0$.
+</div>
+
+<h2>Step 3: Joint Distributions in $\mathbb{R}^n$</h2>
+<div class="block def">
+  For random vector $(\xi_1, \ldots, \xi_n) : \Omega \to \mathbb{R}^n$, the <strong>joint distribution measure</strong> $P_{\xi_1,\ldots,\xi_n}$ on $(\mathbb{R}^n, \mathcal{B}(\mathbb{R}^n))$ satisfies:
+  $$P_{\xi_1,\ldots,\xi_n}(B) = P\big((\xi_1, \ldots, \xi_n) \in B\big) \quad \forall B \in \mathcal{B}(\mathbb{R}^n)$$
+  If a joint density $f_{\xi_1,\ldots,\xi_n}$ exists:
+  $$P\big((\xi_1, \ldots, \xi_n) \in B\big) = \int \!\cdots\! \int_B f_{\xi_1,\ldots,\xi_n}(x_1, \ldots, x_n)\, dx_1 \cdots dx_n$$
+</div>
+
+<h2>Step 4: Event Pre-Image Mapping</h2>
+<div class="block ex">
+  Event $\{\xi_1 \leq 3,\ \xi_2 > 5\}$ corresponds to the joint Borel set:
+  $$B = (-\infty, 3] \times (5, \infty) \subset \mathbb{R}^2$$
+</div>
+
+</body>
+</html>

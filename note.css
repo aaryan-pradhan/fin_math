@@ -1,0 +1,34 @@
+/* Shared style for every Note. Block vocabulary: .def .ex .green .warn on top of .block */
+:root {
+  --bg: #0d1117; --panel: #161b22; --line: #30363d;
+  --ink: #c9d1d9; --head: #f0f6fc; --dim: #8b949e;
+  --def: #58a6ff; --ex: #a371f7; --green: #3fb950; --warn: #f85149;
+}
+* { box-sizing: border-box; }
+body {
+  font-family: Georgia, "Times New Roman", serif;
+  max-width: 780px; margin: 0 auto; padding: 2.5rem 16px 5rem;
+  background: var(--bg); color: var(--ink); line-height: 1.75; font-size: 17px;
+}
+a { color: var(--def); }
+h1 { color: var(--head); border-bottom: 2px solid var(--line); padding-bottom: .4rem; }
+h2 { color: var(--head); margin-top: 2.2em; }
+h3 { color: var(--head); margin-top: 1.6em; }
+.lede { color: var(--dim); font-style: italic; }
+.block {
+  background: var(--panel); border: 1px solid var(--line); border-left: 4px solid var(--dim);
+  border-radius: 0 6px 6px 0; padding: .8rem 1.1rem; margin: 1rem 0; overflow-x: auto;
+}
+.def   { border-left-color: var(--def); }
+.ex    { border-left-color: var(--ex); }
+.green { border-left-color: var(--green); }
+.warn  { border-left-color: var(--warn); }
+strong { color: var(--head); }
+code, pre { font-family: Menlo, Consolas, monospace; font-size: .88em; background: var(--panel); border-radius: 4px; }
+code { padding: 1px 5px; }
+pre { border: 1px solid var(--line); padding: 1rem; overflow-x: auto; line-height: 1.5; }
+table { border-collapse: collapse; width: 100%; margin: 1rem 0; display: block; overflow-x: auto; }
+td, th { border: 1px solid var(--line); padding: .5rem .8rem; text-align: left; }
+th { background: var(--panel); color: var(--head); }
+svg { display: block; max-width: 100%; height: auto; margin: 1.5rem auto; }
+mjx-container[display="true"] { overflow-x: auto; overflow-y: hidden; }
