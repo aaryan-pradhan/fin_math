@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FinMath Formula Sheet</title>
+<script>MathJax = { tex: { inlineMath: [['$','$'], ['\\(','\\)']] } };</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<style>
+  :root {
+    --ink: #1a1a2e;
+    --sub: #5b5b6b;
+    --paper: #f6f5f1;
+    --card: #ffffff;
+    --rule: #e2ddd0;
+    --accent: #3a3060;
+    --accent2: #6b5fa8;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    margin: 0;
+    padding: 0 0 4rem;
+    line-height: 1.5;
+  }
+  header {
+    background: var(--accent);
+    color: #fff;
+    padding: 1.6rem 1.5rem 1.3rem;
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+  header h1 { font-size: 1.3rem; margin: 0; font-weight: 700; letter-spacing: 0.01em; }
+  header p { margin: 0.15rem 0 0; font-size: 0.82rem; color: #cfc9e6; }
+  #print-btn {
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.35);
+    color: #fff;
+    padding: 0.4rem 0.9rem;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    cursor: pointer;
+  }
+  #print-btn:hover { background: rgba(255,255,255,0.22); }
+  main { max-width: 1400px; margin: 0 auto; padding: 1.4rem 1.5rem 0; }
+  .section { margin-bottom: 1.8rem; }
+  .section-title {
+    display: inline-block;
+    background: var(--accent2);
+    color: #fff;
+    font-size: 0.92rem;
+    font-weight: 700;
+    padding: 0.35rem 0.9rem;
+    border-radius: 4px;
+    margin-bottom: 0.8rem;
+    letter-spacing: 0.01em;
+  }
+  .section-num { opacity: 0.75; font-weight: 500; margin-right: 0.3rem; }
+  .formulas { columns: 320px; column-gap: 1rem; }
+  .card {
+    break-inside: avoid;
+    -webkit-column-break-inside: avoid;
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--accent2);
+    border-radius: 6px;
+    padding: 0.65rem 0.85rem 0.7rem;
+    margin: 0 0 0.85rem;
+  }
+  .card h4 {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--accent2);
+    font-weight: 700;
+    margin: 0 0 0.3rem;
+  }
+  .card .eq { font-size: 0.92rem; margin: 0.15rem 0; overflow-x: auto; }
+  .card .note { font-size: 0.79rem; color: var(--sub); margin-top: 0.35rem; line-height: 1.45; }
+  .card .cond { font-size: 0.72rem; color: #8a8a98; font-style: italic; margin-top: 0.15rem; }
+  footer {
+    max-width: 1400px;
+    margin: 2rem auto 0;
+    padding: 1rem 1.5rem;
+    font-size: 0.78rem;
+    color: #9a9aa8;
+    border-top: 1px solid var(--rule);
+    text-align: center;
+  }
+  @media print {
+    header { position: static; background: #fff; color: #000; }
+    header p, .section-title { color: #000 !important; background: none !important; }
+    #print-btn { display: none; }
+    .card { border: 1px solid #ccc; break-inside: avoid; }
+    .formulas { columns: 2; }
+    body { background: #fff; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>FinMath Formula Sheet</h1>
+    <p>Every formula worth memorizing — probability theory, martingales &amp; stochastic processes (chapters 01&ndash;30 + joint distribution note)</p>
+  </div>
+  <button id="print-btn" onclick="window.print()">Print / Save PDF</button>
+</header>
+
+<main>
+
+<!-- ════════════════════════════════════════ 1 ════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title"><span class="section-num">1.</span>Measure-Theoretic Foundations</div>
+  <div class="formulas">
+
+    <div class="card">
+      <h4>σ-Field Axioms</h4>
+      <div class="eq">$\emptyset \in \mathcal{F}$; &nbsp; $A \in \mathcal{F} \Rightarrow A^c \in \mathcal{F}$; &nbsp; $A_1, A_2, \ldots \in \mathcal{F} \Rightarrow \bigcup_i A_i \in \mathcal{F}$</div>
+      <div class="note">The collection of events you're allowed to assign probability to.</div>
+    </div>
+
+    <div class="card">
+      <h4>Probability Measure Axioms</h4>
+      <div class="eq">$P(\Omega) = 1$; &nbsp; $A_i$ disjoint $\Rightarrow P\left(\bigcup_i A_i\right) = \sum_i P(A_i)$</div>
+    </div>
+
+    <div class="card">
+      <h4>Filtration</h4>
+      <div class="eq">$\mathcal{F}_0 \subseteq \mathcal{F}_1 \subseteq \mathcal{F}_2 \subseteq \cdots \subseteq \mathcal{F}$</div>
+      <div class="note">$\mathcal{F}_t$ = all information observable by time $t$; nested and increasing.</div>
+    </div>
+
+    <div class="card">
+      <h4>ℱ-Measurability</h4>
+      <div class="eq">$X$ is $\mathcal{F}$-measurable $\iff [X \in B] = X^{-1}(B) \in \mathcal{F}\ \ \forall B \in \mathcal{B}(\mathbb{R})$</div>
+      <div class="note">Guarantees $P(X \in B)$ is well-defined; a random variable is a measurable function.</div>
+    </div>
+
+    <div class="card">
+      <h4>σ-Field Generated by a R.V.</h4>
+      <div class="eq">$\sigma(\xi) = \{\xi^{-1}(B) : B \in \mathcal{B}(\mathbb{R})\}$</div>
+      <div class="note">Smallest σ-field making $\xi$ measurable; the events decidable from $\xi(\omega)$ alone.</div>
+    </div>
+
+    <div class="card">
+      <h4>Doob&ndash;Dynkin Lemma</h4>
+      <div class="eq">$\eta$ is $\sigma(\xi)$-measurable $\iff \eta = f(\xi)$ for some Borel $f: \mathbb{R} \to \mathbb{R}$</div>
+      <div class="note">$\eta$ is fully determined by $\xi$'s value — no extra randomness.</div>
+    </div>
+
+    <div class="card">
+      <h4>Adapted Process</h4>
+      <div class="eq">$(X_t)$ adapted to $\mathbb{F} \iff X_t$ is $\mathcal{F}_t$-measurable $\ \forall t$</div>
+      <div class="note">$X_t$ can be computed from information available by time $t$ — no look-ahead.</div>
+    </div>
+
+    <div class="card">
+      <h4>Borel-Cantelli Lemma</h4>
+      <div class="eq">$\sum_{i=1}^\infty P(A_i) < \infty \implies P(\limsup_n A_n) = 0$</div>
+      <div class="note">Almost surely, only finitely many $A_i$ occur — eventually they stop forever.</div>
+    </div>
+
+    <div class="card">
+      <h4>Push-Forward (Distribution) Measure</h4>
+      <div class="eq">$P_\xi(B) = P(\xi \in B), \quad B \in \mathcal{B}(\mathbb{R})$</div>
+      <div class="note">Transports probability from abstract $\Omega$ onto the real line.</div>
+    </div>
+
+    <div class="card">
+      <h4>Cumulative Distribution Function</h4>
+      <div class="eq">$F_\xi(x) = P(\xi \leq x) = P_\xi((-\infty, x])$</div>
+      <div class="note">Non-decreasing, right-continuous, $F(-\infty)=0$, $F(+\infty)=1$.</div>
+    </div>
+
+    <div class="card">
+      <h4>Density (Absolutely Continuous r.v.)</h4>
+      <div class="eq">$P(\xi \in B) = \int_B f_\xi(x)\,dx$</div>
+      <div class="cond">Single points have probability 0: $P(\xi = x_0) = 0$.</div>
+    </div>
+
+    <div class="card">
+      <h4>Discrete Distribution</h4>
+      <div class="eq">$P(\xi \in B) = \sum_{x_i \in B} P(\xi = x_i)$</div>
+    </div>
+
+    <div class="card">
+      <h4>Joint Density in $\mathbb{R}^n$</h4>
+      <div class="eq">$P\big((\xi_1,\ldots,\xi_n)\in B\big) = \int\!\cdots\!\int_B f_{\xi_1,\ldots,\xi_n}(x_1,\ldots,x_n)\,dx_1\cdots dx_n$</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════ 2 ════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title"><span class="section-num">2.</span>Expectation, Integration &amp; Change of Variables</div>
+  <div class="formulas">
+
+    <div class="card">
+      <h4>Expectation as Lebesgue Integral</h4>
+      <div class="eq">$E(\xi) = \int_\Omega \xi\,dP, \quad \text{requires } \int_\Omega |\xi|\,dP < \infty$</div>
+      <div class="note">$\xi$ integrable ($\xi \in L^1$) iff its absolute value has finite expectation.</div>
+    </div>
+
+    <div class="card">
+      <h4>Expectation of an Indicator</h4>
+      <div class="eq">$E(\mathbf{1}_A) = \int_\Omega \mathbf{1}_A\,dP = P(A)$</div>
+    </div>
+
+    <div class="card">
+      <h4>Expectation of a Simple Function</h4>
+      <div class="eq">$\eta = \sum_{i=1}^n \eta_i \mathbf{1}_{A_i} \implies E(\eta) = \sum_{i=1}^n \eta_i P(A_i)$</div>
+      <div class="cond">$A_i$ pairwise disjoint.</div>
+    </div>
+
+    <div class="card">
+      <h4>Change of Variables for Expectation</h4>
+      <div class="eq">$E(h(\xi)) = \int_\Omega h(\xi(\omega))\,dP(\omega) = \int_{\mathbb{R}} h(x)\,dP_\xi(x)$</div>
+      <div class="note">Shifts integration from abstract $\Omega$ to $\mathbb{R}$ via the push-forward measure.</div>
+    </div>
+
+    <div class="card">
+      <h4>Change of Variables — Continuous Case</h4>
+      <div class="eq">$E(h(\xi)) = \int_{-\infty}^{\infty} h(x)\,f_\xi(x)\,dx$</div>
+    </div>
+
+    <div class="card">
+      <h4>Change of Variables — Discrete Case</h4>
+      <div class="eq">$E(h(\xi)) = \sum_i h(x_i)\,P(\xi = x_i)$</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════ 3 ════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title"><span class="section-num">3.</span>Conditional Probability, Independence &amp; Conditional Expectation</div>
+  <div class="formulas">
+
+    <div class="card">
+      <h4>Conditional Probability</h4>
+      <div class="eq">$P(A \mid B) = \dfrac{P(A \cap B)}{P(B)}, \quad P(B) \neq 0$</div>
+    </div>
+
+    <div class="card">
+      <h4>Law of Total Probability</h4>
+      <div class="eq">$P(A) = \sum_{i=1}^\infty P(A \mid B_i)\,P(B_i)$</div>
+      <div class="cond">$\{B_i\}$ a countable partition of $\Omega$.</div>
+    </div>
+
+    <div class="card">
+      <h4>Independence (Two Events)</h4>
+      <div class="eq">$P(A \cap B) = P(A)P(B) \iff P(A\mid B) = P(A)$</div>
+    </div>
+
+    <div class="card">
+      <h4>Mutual Independence ($n$ Events)</h4>
+      <div class="eq">$P(A_{i_1} \cap \cdots \cap A_{i_k}) = P(A_{i_1})\cdots P(A_{i_k})$ for every subcollection</div>
+      <div class="note">Pairwise independence is not enough; requires $2^n - n - 1$ equations total.</div>
+    </div>
+
+    <div class="card">
+      <h4>Conditional Expectation — Defining Properties</h4>
+      <div class="eq">$Y = E(X \mid \mathcal{G})$: &nbsp;(1) $\sigma(Y) \subseteq \mathcal{G}$; &nbsp;(2) $\int_G Y\,dP = \int_G X\,dP\ \ \forall G \in \mathcal{G}$</div>
+      <div class="note">$Y$ is the unique (a.s.) $\mathcal{G}$-measurable "best average" of $X$ given information $\mathcal{G}$.</div>
+    </div>
+
+    <div class="card">
+      <h4>Conditional Expectation on a Partition</h4>
+      <div class="eq">$E(X \mid \mathcal{G})(\omega) = \dfrac{\int_{A_i} X\,dP}{P(A_i)} = \dfrac{E[X \cdot \mathbf{1}_{A_i}]}{P(A_i)}, \ \ \omega \in A_i$</div>
+      <div class="cond">$\mathcal{G} = \sigma(A_1,\ldots,A_k)$, a finite partition.</div>
+    </div>
+
+    <div class="card">
+      <h4>Tower Property (Law of Iterated Expectations)</h4>
+      <div class="eq">$E\big(E(X \mid \mathcal{G})\big) = E(X)$</div>
+    </div>
+
+    <div class="card">
+      <h4>Conditional Expectation — Linearity</h4>
+      <div class="eq">$E(aX + bY \mid \mathcal{G}) = aE(X\mid\mathcal{G}) + bE(Y\mid\mathcal{G})$</div>
+    </div>
+
+    <div class="card">
+      <h4>Taking Out What Is Known</h4>
+      <div class="eq">$E(ZX \mid \mathcal{G}) = Z\cdot E(X \mid \mathcal{G})$</div>
+      <div class="cond">$Z$ is $\mathcal{G}$-measurable.</div>
+    </div>
+
+    <div class="card">
+      <h4>Independence Rule</h4>
+      <div class="eq">$X$ independent of $\mathcal{G} \implies E(X \mid \mathcal{G}) = E(X)$</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════ 4 ════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title"><span class="section-num">4.</span>Martingales — Core Definitions &amp; Theorems</div>
+  <div class="formulas">
+
+    <div class="card">
+      <h4>Martingale</h4>
+      <div class="eq">$E[X_{t+1} \mid \mathcal{F}_t] = X_t \quad (P\text{-a.s.})$</div>
+      <div class="note">Adapted + integrable + "fair game": tomorrow's expectation equals today's value.</div>
+    </div>
+
+    <div class="card">
+      <h4>Submartingale / Supermartingale</h4>
+      <div class="eq">Sub: $E[X_{t+1}\mid\mathcal{F}_t] \geq X_t$ &nbsp;&nbsp; Super: $E[X_{t+1}\mid\mathcal{F}_t] \leq X_t$</div>
+      <div class="note">Sub = grows in expectation (player-favored); Super = shrinks (house-favored).</div>
+    </div>
+
+    <div class="card">
+      <h4>Multi-Step Martingale Property</h4>
+      <div class="eq">$E[X_{t+s} \mid \mathcal{F}_t] = X_t \quad \forall s \geq 1$</div>
+      <div class="note">Proved by iterating the tower property one step at a time.</div>
+    </div>
+
+    <div class="card">
+      <h4>Constant Unconditional Mean</h4>
+      <div class="eq">$E[X_t] = E[X_0] \quad \forall t \geq 0$</div>
+      <div class="cond">Sub-MG: $E[X_t] \geq E[X_0]$.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════ 5 ════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title"><span class="section-num">5.</span>Random Walks &amp; the Binomial Model</div>
+  <div class="formulas">
+
+    <div class="card">
+      <h4>Additive Random Walk — Martingale Condition</h4>
+      <div class="eq">$X_n = \sum_{j=1}^n Y_j, \quad$ MG $\iff E[Y_1] = 0$</div>
+      <div class="note">Sub-MG $\iff E[Y_1]\geq 0$; Super-MG $\iff E[Y_1]\leq 0$.</div>
+    </div>
+
+    <div class="card">
+      <h4>Geometric Random Walk — Martingale Condition</h4>
+      <div class="eq">$X_n = X_0\,e^{Y_1+\cdots+Y_n}, \quad$ MG $\iff E[e^{Y_1}] = 1$</div>
+    </div>
+
+    <div class="card">
+      <h4>Log-Normal Increments — Drift Correction</h4>
+      <div class="eq">$Y_j \sim N(\mu,\sigma^2) \implies E[e^{Y_1}] = e^{\mu + \frac12\sigma^2}$</div>
+      <div class="eq">MG $\iff \mu = -\tfrac12\sigma^2$</div>
+      <div class="note">The canonical drift correction that reappears throughout GBM and Black&ndash;Scholes.</div>
+    </div>
+
+    <div class="card">
+      <h4>Binomial Asset Price</h4>
+      <div class="eq">$S_t = v_t S_{t-1}, \quad v_t \in \{u, d\}, \quad 0<d<u$</div>
+    </div>
+
+    <div class="card">
+      <h4>Binomial Stock — Martingale Condition</h4>
+      <div class="eq">$S_t$ is MG $\iff p\,u + (1-p)\,d = 1$</div>
+      <div class="cond">$p = P(v_{t+1}=u)$.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════ 6 ════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title"><span class="section-num">6.</span>Stopping Times &amp; Optimal Stopping</div>
+  <div class="formulas">
+
+    <div class="card">
+      <h4>Stopping Time — Definition</h4>
+      <div class="eq">$\{\tau \leq t\} \in \mathcal{F}_t \ \ \forall t \iff \{\tau = t\} \in \mathcal{F}_t \ \ \forall t$</div>
+      <div class="note">Whether you've stopped by time $t$ is decidable using only information up to $t$.</div>
+    </div>
+
+    <div class="card">
+      <h4>Stopped Process</h4>
+      <div class="eq">$Z_t = X_{t \wedge \tau} = \sum_{k=0}^t X_k\mathbf{1}_{\{\tau=k\}} + X_{t+1}\mathbf{1}_{\{\tau>t\}}$</div>
+      <div class="note">Freezes the process at whatever value it had when $\tau$ occurred.</div>
+    </div>
+
+    <div class="card">
+      <h4>Stopped-Process Martingale Preservation</h4>
+      <div class="eq">$(X_t)$ MG $\implies (Z_t) = (X_{t\wedge\tau})$ is also MG</div>
+      <div class="note">Type is preserved: MG→MG, Sub-MG→Sub-MG, Super-MG→Super-MG.</div>
+    </div>
+
+    <div class="card">
+      <h4>Optional Stopping Theorem</h4>
+      <div class="eq">$(X_t)$ MG, $\tau \leq c$ a.s. (bounded) $\implies E[X_\tau] = E[X_0]$</div>
+      <div class="note">No stopping strategy can beat a fair game. Fails if $\tau$ is unbounded.</div>
+    </div>
+
+    <div class="card">
+      <h4>Predictable Gambling Strategy</h4>
+      <div class="eq">Stake $\alpha_n$ must be $\mathcal{F}_{n-1}$-measurable</div>
+      <div class="note">You bet before seeing the outcome — no crystal ball.</div>
+    </div>
+
+    <div class="card">
+      <h4>Wealth-Process Preservation</h4>
+      <div class="eq">$\Xi_n$ MG, $\alpha$ bounded $\implies Z_n = \sum_{k=1}^n \alpha_k(\Xi_k-\Xi_{k-1})$ is MG</div>
+      <div class="cond">Sub-MG case additionally needs $\alpha_n \geq 0$.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════ 7 ════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title"><span class="section-num">7.</span>Markov Decision Processes &amp; Dynamic Programming</div>
+  <div class="formulas">
+
+    <div class="card">
+      <h4>Stationary Policy</h4>
+      <div class="eq">$a_t = f(X_t)$</div>
+      <div class="note">Action depends only on the current state, never on time or history.</div>
+    </div>
+
+    <div class="card">
+      <h4>Value Function</h4>
+      <div class="eq">$V_n(i) = \max_a\, E\!\left[\sum_{t=1}^n R(X_t,a_t)\ \middle|\ X_1=i\right]$</div>
+      <div class="note">Max expected reward starting in state $i$ with $n$ steps remaining.</div>
+    </div>
+
+    <div class="card">
+      <h4>Bellman Equation</h4>
+      <div class="eq">$V_n(i) = \max_a \left\{ R(i,a) + \sum_j P_{ij}(a)\,V_{n-1}(j) \right\}$</div>
+      <div class="note">Immediate reward + expected optimal future reward; solved by backward induction from $V_0(i)=0$.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════ 8 ════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title"><span class="section-num">8.</span>American Derivatives</div>
+  <div class="formulas">
+
+    <div class="card">
+      <h4>American Derivative Security</h4>
+      <div class="eq">Adapted process $(X_t)_{t\leq T}$, $\ X_t \geq 0$</div>
+      <div class="note">Right, not obligation, to exercise at any $t \leq T$; payoff $X_\tau$ if exercised, $X_T$ if expired.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════ 9 ════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title"><span class="section-num">9.</span>Standard Brownian Motion — Definition &amp; Canonical Martingales</div>
+  <div class="formulas">
+
+    <div class="card">
+      <h4>Wiener Process Axioms</h4>
+      <div class="eq">$W_0=0$ a.s.; continuous paths a.s.; independent increments; $W_t - W_s \sim N(0, t-s)$</div>
+    </div>
+
+    <div class="card">
+      <h4>Lévy's Martingale Characterization</h4>
+      <div class="eq">$W_t$ MG and $W_t^2 - t$ MG $\implies (W_t)$ is a Wiener process</div>
+      <div class="note">Alternative to the four classical axioms — needs no independence/Gaussian assumption directly.</div>
+    </div>
+
+    <div class="card">
+      <h4>Canonical Martingale 1 — Linear</h4>
+      <div class="eq">$E[W_t \mid \mathcal{F}_s] = W_s$</div>
+    </div>
+
+    <div class="card">
+      <h4>Canonical Martingale 2 — Quadratic</h4>
+      <div class="eq">$E[W_t^2 - t \mid \mathcal{F}_s] = W_s^2 - s$</div>
+      <div class="note">$(W_t^2)$ alone is a submartingale: $E[W_t^2\mid\mathcal{F}_s]=W_s^2+(t-s)$.</div>
+    </div>
+
+    <div class="card">
+      <h4>Canonical Martingale 3 — Exponential</h4>
+      <div class="eq">$Z_t = e^{uW_t - \frac12 u^2 t}, \quad E[Z_t \mid \mathcal{F}_s] = Z_s, \quad E[Z_t]=1$</div>
+    </div>
+
+    <div class="card">
+      <h4>Density of $W(t)$</h4>
+      <div class="eq">$f(x,t) = \dfrac{1}{\sqrt{2\pi t}}\,e^{-x^2/2t}$</div>
+    </div>
+
+    <div class="card">
+      <h4>Diffusion (Heat) Equation</h4>
+      <div class="eq">$\dfrac{\partial f}{\partial t} = \dfrac12\,\dfrac{\partial^2 f}{\partial x^2}$</div>
+      <div class="note">The BM density is the fundamental solution with diffusion coefficient $D=\tfrac12$.</div>
+    </div>
+
+    <div class="card">
+      <h4>Diffusive Scaling Limit</h4>
+      <div class="eq">$\Delta x = \sigma\sqrt{\Delta t} \implies X(t) \xrightarrow{d} N(0,\sigma^2 t)$</div>
+      <div class="note">Random walk converges to BM only under this specific $\sqrt{\Delta t}$ step scaling (CLT).</div>
+    </div>
+
+    <div class="card">
+      <h4>Brownian Motion as Gaussian Process</h4>
+      <div class="eq">$m(t) = 0, \quad K(s,t) = \operatorname{Cov}(W(s),W(t)) = s \wedge t = \min(s,t)$</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════ 10 ═══════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title"><span class="section-num">10.</span>Hitting Times, Reflection Principle &amp; Running Maximum</div>
+  <div class="formulas">
+
+    <div class="card">
+      <h4>Hitting Time</h4>
+      <div class="eq">$T_a = \inf\{t \geq 0 : W(t) = a\}$</div>
+    </div>
+
+    <div class="card">
+      <h4>Reflection Principle Result</h4>
+      <div class="eq">$P(T_a \leq t) = 2\,P(W(t) \geq a) = 2\left[1 - \Phi\!\left(\dfrac{|a|}{\sqrt t}\right)\right]$</div>
+    </div>
+
+    <div class="card">
+      <h4>Reflected Path</h4>
+      <div class="eq">$W^*(u) = \begin{cases} W(u) & u \leq T_a \\ 2a - W(u) & u > T_a \end{cases}$</div>
+      <div class="note">Equiprobable to the original path; the bijective trick behind the reflection principle.</div>
+    </div>
+
+    <div class="card">
+      <h4>Hitting-Time Density (Lévy Distribution)</h4>
+      <div class="eq">$f(t) = \dfrac{|a|}{\sqrt{2\pi t^3}}\,e^{-a^2/2t}, \quad t>0$</div>
+    </div>
+
+    <div class="card">
+      <h4>Certain Hitting, Infinite Expectation</h4>
+      <div class="eq">$P(T_a < \infty) = 1, \qquad E[T_a] = \infty$</div>
+    </div>
+
+    <div class="card">
+      <h4>Running Maximum</h4>
+      <div class="eq">$M(t) = \max_{0 \leq s \leq t} W(s)$</div>
+      <div class="cond">$\{M(t) \geq a\} \iff \{T_a \leq t\}$.</div>
+    </div>
+
+    <div class="card">
+      <h4>Distribution of the Running Maximum</h4>
+      <div class="eq">$P(M(t) > a) = 2\left[1 - \Phi\!\left(\dfrac{a}{\sqrt t}\right)\right], \quad a>0$</div>
+    </div>
+
+    <div class="card">
+      <h4>Joint $W(t)$/$M(t)$ — Reflection Formula</h4>
+      <div class="eq">$P(W(t) \leq a-y,\ M(t) > a) = 1 - \Phi\!\left(\dfrac{a+y}{\sqrt t}\right)$</div>
+      <div class="cond">Requires $a > 0$.</div>
+    </div>
+
+    <div class="card">
+      <h4>Joint $W(t)$/$M(t)$ — Half-Line Form</h4>
+      <div class="eq">$P(W(t) \leq b,\ M(t) \geq c) = 1 - \Phi\!\left(\dfrac{2c-b}{\sqrt t}\right)$</div>
+    </div>
+
+    <div class="card">
+      <h4>Joint $W(t)$/$M(t)$ — Rectangle (Disjoint Intervals)</h4>
+      <div class="eq">$P(a{<}W(t){\leq}b,\ c{<}M(t){\leq}d) = \Phi\!\left(\tfrac{2d-b}{\sqrt t}\right) - \Phi\!\left(\tfrac{2c-b}{\sqrt t}\right) + \Phi\!\left(\tfrac{2c-a}{\sqrt t}\right) - \Phi\!\left(\tfrac{2d-a}{\sqrt t}\right)$</div>
+      <div class="cond">$I=(a,b]$ entirely below $J=(c,d]$, $c>0$.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════ 11 ═══════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title"><span class="section-num">11.</span>Brownian Motion with Drift, Gambler's Ruin &amp; Exit Probabilities</div>
+  <div class="formulas">
+
+    <div class="card">
+      <h4>Brownian Motion with Drift</h4>
+      <div class="eq">$X(t) = \mu t + W(t) \sim N(\mu t,\, t)$</div>
+    </div>
+
+    <div class="card">
+      <h4>Discrete Gambler's Ruin — Unfair Game</h4>
+      <div class="eq">$P_i = \dfrac{1-(q/p)^i}{1-(q/p)^N}, \quad p \neq \tfrac12$</div>
+      <div class="note">$P_i$ = probability of reaching $N$ before $0$, starting from $i$.</div>
+    </div>
+
+    <div class="card">
+      <h4>Discrete Gambler's Ruin — Fair Game</h4>
+      <div class="eq">$P_i = \dfrac{i}{N}, \quad p = \tfrac12$</div>
+    </div>
+
+    <div class="card">
+      <h4>Infinite Bankroll Limit</h4>
+      <div class="eq">$\lim_{N\to\infty} P_i = \begin{cases} 1-(q/p)^i & p > \tfrac12 \\ 0 & p \leq \tfrac12 \end{cases}$</div>
+      <div class="note">Against an infinite bankroll, ruin is a.s. certain unless you have a genuine positive edge.</div>
+    </div>
+
+    <div class="card">
+      <h4>BM with Drift — Two-Barrier Exit Probability</h4>
+      <div class="eq">$P(x) = P(\text{hit } A \text{ before } {-}B \mid X(0){=}x) = \dfrac{1 - e^{-2\mu(x+B)}}{1 - e^{-2\mu(A+B)}}$</div>
+      <div class="note">Continuous-time analogue of discrete gambler's ruin.</div>
+    </div>
+
+    <div class="card">
+      <h4>Negative Drift — Max Ever Reached</h4>
+      <div class="eq">$P(\max_{t\geq0} X(t) \geq A) = e^{2\mu A}, \quad \mu<0$</div>
+      <div class="note">$M = \sup_t X(t)$ is Exponentially distributed with rate $-2\mu$.</div>
+    </div>
+
+    <div class="card">
+      <h4>Zero-Drift Exit Probability</h4>
+      <div class="eq">$P(x) = \dfrac{x+B}{A+B}$</div>
+    </div>
+
+    <div class="card">
+      <h4>Optimal Exercise Threshold (Drift $-d$)</h4>
+      <div class="eq">$x^* = A + \dfrac{1}{2d}, \qquad f(x^*) = \dfrac{1}{2d}\,e^{-2dA-1}$</div>
+      <div class="note">Maximizes $f(x)=(x-A)e^{-2dx}$, expected gain from exercising an option at target $x$.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════ 12 ═══════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title"><span class="section-num">12.</span>Brownian Bridge &amp; Conditional Distributions</div>
+  <div class="formulas">
+
+    <div class="card">
+      <h4>Standard Brownian Bridge</h4>
+      <div class="eq">$[W(s) \mid W(t)=B] \sim N\!\left(\dfrac{s}{t}B,\ \dfrac{s(t-s)}{t}\right)$</div>
+      <div class="cond">$0 \leq s < t$.</div>
+    </div>
+
+    <div class="card">
+      <h4>General BM Bridge ($Y=\sigma W$)</h4>
+      <div class="eq">$[Y(s) \mid Y(t)=C] \sim N\!\left(\dfrac{s}{t}C,\ \sigma^2\dfrac{s(t-s)}{t}\right)$</div>
+      <div class="note">Bridge variance vanishes as $s\to0$ or $s\to t$ — certainty at the endpoints.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════ 13 ═══════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title"><span class="section-num">13.</span>Geometric Brownian Motion</div>
+  <div class="formulas">
+
+    <div class="card">
+      <h4>GBM Definition</h4>
+      <div class="eq">$X(t) = e^{Y(t)}, \quad Y(t) \sim N(\mu t, \sigma^2 t)$</div>
+      <div class="note">$X(t) > 0$ always; $\log X(t)$ is Gaussian (log-normal price model).</div>
+    </div>
+
+    <div class="card">
+      <h4>Conditional Expectation of GBM</h4>
+      <div class="eq">$E[X(t) \mid \mathcal{F}_s] = X(s)\,\exp\!\left[\left(\mu+\tfrac{\sigma^2}{2}\right)(t-s)\right]$</div>
+    </div>
+
+    <div class="card">
+      <h4>Unconditional Expectation of GBM</h4>
+      <div class="eq">$E[X(t)] = x_0\,\exp\!\left[\left(\mu+\tfrac{\sigma^2}{2}\right)t\right]$</div>
+    </div>
+
+    <div class="card">
+      <h4>GBM Martingale (Drift) Condition</h4>
+      <div class="eq">$\mu = -\dfrac{\sigma^2}{2} \implies X(t)=\exp\!\left(-\tfrac{\sigma^2}{2}t+\sigma W(t)\right),\ E[X(t)]=1$</div>
+      <div class="note">Volatility inflates $E[e^Z]$ above 1 (Jensen: $E[e^Z]\geq e^{E[Z]}$); this drift term exactly cancels it.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════ 14 ═══════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title"><span class="section-num">14.</span>Multivariate Normal &amp; Gaussian Processes</div>
+  <div class="formulas">
+
+    <div class="card">
+      <h4>MVN Construction</h4>
+      <div class="eq">$\mathbf{X} = \mathbf{A}\mathbf{Z} + \boldsymbol{\mu}, \quad \mathbf{Z}\sim N(\mathbf{0},\mathbf{I}_n)$</div>
+      <div class="eq">$\boldsymbol{\mu} = E[\mathbf{X}], \qquad \boldsymbol{\Sigma} = \mathbf{A}\mathbf{A}^T,\ \ \Sigma_{ij}=\operatorname{Cov}(X_i,X_j)$</div>
+    </div>
+
+    <div class="card">
+      <h4>Linear Combination of MVN Components</h4>
+      <div class="eq">$Y = \mathbf{t}^T\mathbf{X} \sim N\!\left(\mathbf{t}^T\boldsymbol{\mu},\ \mathbf{t}^T\boldsymbol{\Sigma}\mathbf{t}\right)$</div>
+    </div>
+
+    <div class="card">
+      <h4>1D Normal Exponential Moment</h4>
+      <div class="eq">$Y \sim N(\mu_Y,\sigma_Y^2) \implies E[e^Y] = \exp\!\left(\mu_Y + \tfrac12\sigma_Y^2\right)$</div>
+    </div>
+
+    <div class="card">
+      <h4>Joint MGF of MVN</h4>
+      <div class="eq">$\phi_{\mathbf{X}}(\mathbf{t}) = \exp\!\left(\mathbf{t}^T\boldsymbol{\mu} + \tfrac12\mathbf{t}^T\boldsymbol{\Sigma}\mathbf{t}\right)$</div>
+    </div>
+
+    <div class="card">
+      <h4>MVN Linear Transformation</h4>
+      <div class="eq">$\mathbf{X}\sim N_n(\boldsymbol{\mu},\boldsymbol{\Sigma}) \implies \mathbf{A}\mathbf{X}+\mathbf{c} \sim N_m\!\left(\mathbf{A}\boldsymbol{\mu}+\mathbf{c},\ \mathbf{A}\boldsymbol{\Sigma}\mathbf{A}^T\right)$</div>
+    </div>
+
+    <div class="card">
+      <h4>MVN Conditional Distribution</h4>
+      <div class="eq">$E[\mathbf{X}_1\mid\mathbf{X}_2{=}\mathbf{x}_2] = \boldsymbol{\mu}_1+\boldsymbol{\Sigma}_{12}\boldsymbol{\Sigma}_{22}^{-1}(\mathbf{x}_2-\boldsymbol{\mu}_2)$</div>
+      <div class="eq">$\operatorname{Var}(\mathbf{X}_1\mid\mathbf{X}_2{=}\mathbf{x}_2) = \boldsymbol{\Sigma}_{11}-\boldsymbol{\Sigma}_{12}\boldsymbol{\Sigma}_{22}^{-1}\boldsymbol{\Sigma}_{21}$</div>
+    </div>
+
+    <div class="card">
+      <h4>BM Conditional — Forward (Martingale)</h4>
+      <div class="eq">$E[W(t) \mid W(s)] = W(s), \quad s<t$</div>
+    </div>
+
+    <div class="card">
+      <h4>BM Conditional — Backward (Interpolation)</h4>
+      <div class="eq">$E[W(s)\mid W(t)] = \dfrac{s}{t}W(t), \qquad \operatorname{Var}(W(s)\mid W(t)) = \dfrac{s(t-s)}{t}$</div>
+      <div class="cond">$s<t$; same result as the Brownian bridge, derived via MVN conditioning.</div>
+    </div>
+
+  </div>
+</div>
+
+</main>
+
+<footer>
+  FinMath Study Notes — formula reference distilled from 01_starting_pieces.html through 30_bbproperties.html and joint_distribution_BM_max.html
+</footer>
+
+</body>
+</html>
