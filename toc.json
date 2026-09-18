@@ -56,7 +56,14 @@
     "module": "Stochastic calculus",
     "notes": [
       "ito_integral",
-      "ito_formula"
+      "ito_formula",
+      "stochastic_differential_equations"
+    ]
+  },
+  {
+    "module": "Problems",
+    "notes": [
+      "class_test_1_solutions"
     ]
   },
   {

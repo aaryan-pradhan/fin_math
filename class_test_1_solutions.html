@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Class Test 1 Solutions</title>
+<link rel="stylesheet" href="note.css">
+<script src="note.js"></script>
+</head>
+<body>
+
+<h1>Class Test 1 Solutions</h1>
+<p class="lede">Financial Mathematics (MA30247/MA60225), CT-1 2026: answer keys for Sets 1–4 and full solutions for Set 1. Source: <a href="Revised CT-1 soln 2026.pdf">Revised CT-1 soln 2026.pdf</a>.</p>
+
+<div class="block">Given: if $Z\sim N(0,1)$ then $E(Z^3) = 0$, $E(Z^4) = 3$. $W_t$ is a Wiener process. 10 questions × 2 marks = 20, 45 mins.</div>
+
+<h2>Answer keys</h2>
+<div class="block">
+<table>
+<tr><th>Q</th><th>Set 1</th><th>Set 2</th><th>Set 3</th><th>Set 4</th></tr>
+<tr><td>1</td><td>$\int_0^1 t\,dW_t$<br>$N(0,1/3)$</td><td>$\int_0^1 t^2\,dW_t$<br>$N(0,1/5)$</td><td>$\int_0^1 t^3\,dW_t$<br>$N(0,1/7)$</td><td>$\int_0^1 t^4\,dW_t$<br>$N(0,1/9)$</td></tr>
+<tr><td>2</td><td>$E(W_2^2W_3^2)$<br>$14$</td><td>$E(W_1^2W_3^2)$<br>$5$</td><td>$E(W_2^2W_4^2)$<br>$16$</td><td>$E(W_1^2W_4^2)$<br>$6$</td></tr>
+<tr><td>3</td><td>$e^{-t}W(e^{2t})$ Gaussian?<br>Yes</td><td>$e^{-2t}W(e^{2t})$<br>Yes</td><td>$e^{-t}W(e^{t})$<br>Yes</td><td>$e^{-3t}W(e^{2t})$<br>Yes</td></tr>
+<tr><td>4</td><td>$4W_1 + 6W_3$<br>$N(0,172)$</td><td>$3W_1 + 6W_3$<br>$N(0,153)$</td><td>$4W_1 + 5W_3$<br>$N(0,131)$</td><td>$4W_1 + 7W_3$<br>$N(0,219)$</td></tr>
+<tr><td>5</td><td>$e^{t/2}\sin W_t$ martingale?<br>Yes</td><td>$e^{t}\cos W_t$<br>No</td><td>$e^{t}\sin W_t$<br>No</td><td>$e^{t/2}\cos W_t$<br>Yes</td></tr>
+<tr><td>6</td><td>GBM $\mu=0.01$, $\sigma=0.3$, $Y(0)=5$, $E[Y(10)]$<br>$5e^{0.55}$ or $5e^{0.1}$</td><td>$\mu=0.02$, $\sigma=0.4$, $Y(0)=10$<br>$10e$ or $10e^{0.2}$</td><td>$\mu=0.03$, $\sigma=0.2$, $Y(0)=5$<br>$5e^{0.5}$ or $5e^{0.3}$</td><td>$\mu=0.01$, $\sigma=0.2$, $Y(0)=5$<br>$5e^{0.3}$ or $5e^{0.1}$</td></tr>
+<tr><td>7</td><td>Wiener is Gaussian (T/F)<br>T</td><td>Wiener is <em>not</em> Gaussian<br>F</td><td>Wiener is Gaussian<br>T</td><td>Wiener is <em>not</em> Gaussian<br>F</td></tr>
+<tr><td>8</td><td colspan="4">The option saying "the mean of a martingale process is constant with respect to time" (Set 1: (c), Set 2: (a), Set 3: (d), Set 4: (b))</td></tr>
+<tr><td>9</td><td>$Cov(Y_1,Y_2)$, $Y_t = e^{W_t}$<br>$(e-1)e^{3/2}$</td><td>$Cov(Y_2,Y_3)$<br>$e^{5/2}(e^2-1)$</td><td>$Cov(Y_2,Y_4)$<br>$e^3(e^2-1)$</td><td>$Cov(Y_1,Y_4)$<br>$e^{5/2}(e-1)\approx 20.933$</td></tr>
+<tr><td>10</td><td>Win 10 / lose 5<br>$1/3$, $50$</td><td>Win 20 / lose 5<br>$1/5$, $100$</td><td>Win 30 / lose 10<br>$1/4$, $300$</td><td>Win 6 / lose 5<br>$5/11$, $30$</td></tr>
+</table></div>
+<div class="block warn">Set 3 Q9: the key prints $e^3(e^2-1)\approx 948.43$. The closed form is right, but its value is $\approx 128.34$. ($Var(W_2 + W_4) = 2 + 4 + 2\cdot 2 = 10$, so $Cov = e^5 - e^{1}e^{2} = e^3(e^2 - 1)$.)</div>
+
+<h2>Q1: Distribution of $\int_0^1 t\,dW_t$</h2>
+<div class="block">$$E\left[\int_0^1 t\,dW_t\right] = 0$$
+Itô isometry (deterministic integrand):
+$$Var = E\left[\left(\int_0^1 t\,dW_t\right)^2\right] = \int_0^1 t^2\,dt = \frac13$$
+So $\int_0^1 t\,dW_t \sim N(0, 1/3)$.</div>
+
+<h2>Q2: $E(W_2^2W_3^2)$</h2>
+<div class="block">Independent increments: $Z = W_3 - W_2$, $W_3 = W_2 + Z$.
+<ul>
+<li>$W_2\sim N(0,2)$, so $E(W_2^2) = 2$.</li>
+<li>$Z\sim N(0,1)$, so $E(Z^2) = 1$, $E(Z) = 0$.</li>
+<li>$W_2$ and $Z$ are independent.</li>
+</ul>
+$$E(W_2^2W_3^2) = E\left[W_2^2(W_2^2 + 2W_2Z + Z^2)\right] = E(W_2^4) + 2E(W_2^3Z) + E(W_2^2Z^2)$$
+<ol>
+<li>$E(W_2^4) = 3(Var\,W_2)^2 = 3\cdot 2^2 = 12$ (fourth moment $3\sigma^4$).</li>
+<li>$2E(W_2^3Z) = 2E(W_2^3)E(Z) = 0$.</li>
+<li>$E(W_2^2Z^2) = E(W_2^2)E(Z^2) = 2\cdot 1 = 2$.</li>
+</ol>
+$$E(W_2^2W_3^2) = 12 + 0 + 2 = 14$$</div>
+
+<h2>Q3: Is $X(t) = e^{-t}W(e^{2t})$ Gaussian?</h2>
+<div class="block def">Gaussian process: for every finite $t_1,\dots,t_n$, $(X(t_1),\dots,X(t_n))$ is multivariate Gaussian.</div>
+<div class="block"><ol>
+<li>$W$ is a Gaussian process.</li>
+<li>Time change $t\mapsto e^{2t}$ is deterministic: $(W(e^{2t_1}),\dots,W(e^{2t_n}))$ is still jointly Gaussian.</li>
+<li>Multiplying by deterministic $e^{-t_i}$ is a linear map; linear maps preserve joint Gaussianity.</li>
+</ol>
+Yes.</div>
+
+<h2>Q4: $4W_1 + 6W_3$</h2>
+<div class="block">Linear combination of jointly Gaussian variables, so normal.
+<ul>
+<li>Mean: $4E[W_1] + 6E[W_3] = 0$.</li>
+<li>Variance: $16\,Var(W_1) + 36\,Var(W_3) + 48\,Cov(W_1,W_3)$, with $Var(W_t) = t$, $Cov(W_s,W_t) = \min(s,t)$:
+$$\sigma^2 = 16(1) + 36(3) + 48(1) = 172$$</li>
+</ul>
+$4W_1 + 6W_3 \sim N(0, 172)$.</div>
+
+<h2>Q5: Is $Y_t = e^{t/2}\sin W_t$ a martingale?</h2>
+<div class="block">Show $E[Y_t\mid\mathcal{F}_s] = Y_s$ for $0\le s\le t$.<br>
+<strong>1. Independent increments.</strong> $W_t = (W_t - W_s) + W_s$, $\sin(A+B) = \sin A\cos B + \cos A\sin B$:
+$$Y_t = e^{t/2}\left[\sin(W_t - W_s)\cos W_s + \cos(W_t - W_s)\sin W_s\right]$$
+<strong>2. Condition.</strong> $W_s$ is $\mathcal{F}_s$-measurable (pull out); $W_t - W_s$ is independent of $\mathcal{F}_s$ (drop conditioning):
+$$E[Y_t\mid\mathcal{F}_s] = e^{t/2}\left[\cos W_s\,E[\sin(W_t - W_s)] + \sin W_s\,E[\cos(W_t - W_s)]\right]$$
+<strong>3. Evaluate</strong> with $W_t - W_s\sim N(0, t-s)$:
+<ul>
+<li>$E[\sin(W_t - W_s)] = 0$ (odd function, symmetric distribution).</li>
+<li>$E[\cos(W_t - W_s)] = e^{-\frac12(t-s)}$ (characteristic function $E[e^{iuX}] = e^{-\frac12u^2\sigma^2}$ at $u=1$).</li>
+</ul>
+<strong>4. Simplify.</strong>
+$$E[Y_t\mid\mathcal{F}_s] = e^{t/2}e^{-t/2 + s/2}\sin W_s = e^{s/2}\sin W_s = Y_s$$
+Yes.</div>
+<div class="block green">Same computation for $e^{ct}\sin W_t$ or $e^{ct}\cos W_t$ gives $e^{(c - 1/2)(t-s)}Y_s$: martingale iff $c = \tfrac12$. Hence Set 2/3 (with $e^t$): No.</div>
+
+<h2>Q6: GBM, $E[Y(10)]$</h2>
+<div class="block"><strong>Method 1 (SDE).</strong> $dY = \mu Y\,dt + \sigma Y\,dW$, solution $Y(t) = Y(0)\exp\left((\mu - \tfrac12\sigma^2)t + \sigma W(t)\right)$:
+$$E[Y(t)] = Y(0)e^{\mu t},\qquad E[Y(10)] = 5e^{0.1}\approx 5.5259$$
+<strong>Method 2 (exponent).</strong> $Y(t) = Y(0)e^{\mu t + \sigma W(t)}$:
+$$E[Y(t)] = Y(0)e^{(\mu + \frac12\sigma^2)t},\quad \mu + \tfrac12\sigma^2 = 0.01 + 0.045 = 0.055$$
+$$E[Y(10)] = 5e^{0.55}\approx 8.6663$$
+Formula used in class: Method 2. Answer $5e^{0.55}$ (both accepted).</div>
+
+<h2>Q7: Wiener process is Gaussian</h2>
+<div class="block">True.</div>
+
+<h2>Q8: Martingale mean</h2>
+<div class="block">(c): the mean of a martingale is constant in time ($E[M_t] = E[E[M_t\mid\mathcal{F}_0]] = E[M_0]$).</div>
+
+<h2>Q9: $Cov(Y_1,Y_2)$, $Y_t = e^{W_t}$</h2>
+<div class="block">$Cov(Y_1,Y_2) = E[Y_1Y_2] - E[Y_1]E[Y_2]$.<br>
+<strong>1.</strong> $E[e^{W_t}] = e^{t/2}$: $E[Y_1]E[Y_2] = e^{1/2}e^{1} = e^{3/2}$.<br>
+<strong>2.</strong> $E[Y_1Y_2] = E[e^{W_1 + W_2}]$, with $W_1 + W_2$ normal, mean $0$,
+$$Var(W_1 + W_2) = 1 + 2 + 2\min(1,2) = 5 \quad\Rightarrow\quad E[e^{W_1 + W_2}] = e^{5/2}$$
+<strong>3.</strong>
+$$Cov(Y_1,Y_2) = e^{5/2} - e^{3/2} = e^{3/2}(e - 1)$$</div>
+
+<h2>Q10: Gambler's ruin (win 10 / lose 5)</h2>
+<div class="block"><strong>Gambler's ruin.</strong> Shift: lower barrier $0$, start $z = 5$, upper barrier $a = 15$, $p = q = \tfrac12$.
+<ul>
+<li>(a) $P_z = \frac{z}{a} = \frac{5}{15} = \frac13$.</li>
+<li>(b) $E_z = z(a - z) = 5\cdot 10 = 50$.</li>
+</ul></div>
+<div class="block"><strong>Martingales (alternative).</strong> $X_n = \sum_{i=1}^n Y_i$, $P(Y_i = \pm1) = \tfrac12$. Martingales: $X_n$ and $X_n^2 - n$. $\tau = \min\{n\ge 0: X_n = 10 \text{ or } X_n = -5\}$, a.s. finite, process bounded up to $\tau$, so OST applies.<br>
+(a) $E[X_\tau] = 0$: $10p - 5(1-p) = 0 \Rightarrow p = \tfrac13$.<br>
+(b) $E[X_\tau^2 - \tau] = 0 \Rightarrow E[\tau] = E[X_\tau^2]$:
+$$E[\tau] = 100\cdot\tfrac13 + 25\cdot\tfrac23 = \tfrac{150}{3} = 50$$</div>
+<div class="block green">General: win $A$ / lose $B$, fair game: $P(\text{win}) = \frac{B}{A+B}$, $E[\tau] = AB$.</div>
+
+</body>
+</html>

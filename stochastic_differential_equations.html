@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stochastic Differential Equations</title>
+<link rel="stylesheet" href="note.css">
+<script src="note.js"></script>
+</head>
+<body>
+
+<h1>Stochastic Differential Equations</h1>
+<p class="lede">An Itô process whose coefficients depend on the process itself; solved (rarely) by choosing $f$ so Itô's formula removes the unknown.</p>
+
+<h2>Step 1: Ingredients</h2>
+<div class="block def">Filtered space $(\Omega,\mathcal{F},\mathbb{F},P)$ with standard BM $W$. Two <strong>non-random</strong> functions $a, b : [0,T]\times\mathbb{R}\to\mathbb{R}$: fixed numbers once $(t,x)$ is fixed, no $\omega$.</div>
+<div class="block ex">$a(t,x) = -2x$: $a(3,4) = -8$. With a random input, $\omega\mapsto a(t, X_t(\omega))$ is a random variable (composition; $a$ Borel). $X_1(\omega_1)=5 \Rightarrow a=-10$; $X_1(\omega_2)=-1 \Rightarrow a = 2$.</div>
+
+<h2>Step 2: SDE vs Itô process</h2>
+<div class="block def">Itô process: $dX_t = a_t\,dt + b_t\,dW_t$, with $a_t, b_t$ <em>given</em>. Nothing to solve.<br>
+<strong>SDE</strong>: $$dX_t = a(t,X_t)\,dt + b(t,X_t)\,dW_t,\quad X_0 = x_0 \qquad (1)$$
+Coefficients built from the unknown $X$: an equation.</div>
+<div class="block ex">$dX_t = W_t\,dt + dW_t$: Itô process ($a_t = W_t$ given). &nbsp; $dX_t = X_t^2\,dt + dW_t$: SDE ($a(t,x) = x^2$).</div>
+
+<h2>Step 3: Solution</h2>
+<div class="block def">An Itô process $X$ <strong>solves (1)</strong> if for all $t\in[0,T]$
+$$X_t = x_0 + \int_0^t a(s,X_s)\,ds + \int_0^t b(s,X_s)\,dW_s \qquad (2)$$
+Check a candidate: plug into the RHS, evaluate, show RHS $=$ LHS.</div>
+<div class="block ex">$dX_t = dt + 2\,dW_t$, $x_0 = 3$: $X_t = 3 + t + 2W_t$ since RHS $= 3 + t + 2W_t$.<br>
+$dX_t = X_t\,dt$, $x_0=1$ ($b=0$): (2) is $X_t = 1 + \int_0^t X_s\,ds$. Candidate $e^t$: $1 + (e^t - 1) = e^t$. ✓</div>
+<div class="block warn">Most SDEs have no closed-form solution. Existence is proved abstractly; solutions are simulated.</div>
+
+<h2>Step 4: Toolkit</h2>
+<div class="block green">
+<ul>
+<li><strong>T1</strong> $dt\cdot dt = 0$, $dt\cdot dW = 0$, $dW\cdot dW = dt$.</li>
+<li><strong>T2</strong> $df(t,X_t) = \partial_t f\,dt + \partial_x f\,dX_t + \tfrac12\partial_{xx}f\,b^2\,dt$.</li>
+<li><strong>T3</strong> $f = g(t)x$: $d(g(t)X_t) = g'(t)X_t\,dt + g(t)\,dX_t$ (no correction, $\partial_{xx}f = 0$).</li>
+<li><strong>T4</strong> $dY_t = h_t\,dt + k_t\,dW_t \iff Y_t = Y_0 + \int_0^t h_s\,ds + \int_0^t k_s\,dW_s$.</li>
+<li><strong>T5</strong> Integrating factor for $dX_t = -rX_t\,dt + (\text{no }X)$: T3 with $g = e^{rt}$, substitute SDE ($X$ cancels), T4, multiply by $e^{-rt}$.</li>
+<li><strong>T6</strong> $\mathbb{E}\left[\int_0^t k_s\,dW_s\right] = 0$.</li>
+<li><strong>T7</strong> Itô isometry: $\mathbb{E}\left[\left(\int_0^t k_s\,dW_s\right)^2\right] = \int_0^t \mathbb{E}[k_s^2]\,ds$.</li>
+<li><strong>T8</strong> $k$ deterministic $\Rightarrow \int_0^t k(s)\,dW_s \sim N\left(0, \int_0^t k(s)^2\,ds\right)$ (sums $\sum k(s_j)\Delta W_j$ are normal; $L^2$ limits of normals are normal).</li>
+<li><strong>T9</strong> $Q\sim N(0,v) \Rightarrow c + \sigma Q \sim N(c, \sigma^2 v)$.</li>
+<li><strong>T10</strong> $df(X_t) = f'(X_t)\,dX_t + \tfrac12 f''(X_t)(dX_t)^2$, $(dX_t)^2$ via T1.</li>
+</ul></div>
+
+<h2>Step 5: Ornstein–Uhlenbeck process</h2>
+<div class="block def">$$dX_t = -rX_t\,dt + \sigma\,dW_t,\quad X_0 = x_0,\quad r,\sigma > 0 \qquad (3)$$
+$a(t,x) = -rx$, $b = \sigma$. Drift points toward $0$, stronger farther away: <strong>mean reversion</strong>. At $X_t = 0$ drift is $0$ but noise still moves $X$.</div>
+<div class="block ex">$r=2$: $X_t = 5 \Rightarrow$ drift $-10$; $X_t = -5 \Rightarrow$ drift $+10$.</div>
+<div class="block warn">Direct integration fails: $X_t = x_0 - r\int_0^t X_s\,ds + \sigma W_t$ still has $X$ inside.</div>
+<div class="block">T5. $f(t,x) = e^{rt}x$: $\partial_t f = re^{rt}x$, $\partial_x f = e^{rt}$, $\partial_{xx} f = 0$.
+$$d(e^{rt}X_t) = re^{rt}X_t\,dt + e^{rt}\,dX_t \qquad (5)$$
+Substitute (3): $re^{rt}X_t\,dt - re^{rt}X_t\,dt + \sigma e^{rt}\,dW_t = \sigma e^{rt}\,dW_t$. T4:
+$$e^{rt}X_t = x_0 + \sigma\int_0^t e^{rs}\,dW_s$$
+$$X_t = x_0e^{-rt} + \sigma\int_0^t e^{-r(t-s)}\,dW_s$$</div>
+
+<h2>Step 6: Distribution of OU</h2>
+<div class="block">$Q_t = \int_0^t e^{-r(t-s)}\,dW_s$. T6: $\mathbb{E}[Q_t] = 0$. T7:
+$$\mathbb{E}[Q_t^2] = \int_0^t e^{-2r(t-s)}\,ds = e^{-2rt}\left[\frac{e^{2rs}}{2r}\right]_0^t = \frac{1 - e^{-2rt}}{2r}$$
+T8, T9:
+$$X_t \sim N\left(x_0e^{-rt},\ \sigma^2_{r,t}\right),\qquad \sigma^2_{r,t} = \frac{\sigma^2}{2r}\left(1 - e^{-2rt}\right) \qquad (6)$$</div>
+<div class="block green">$t\to\infty$: $X_t \to N\left(0, \frac{\sigma^2}{2r}\right)$ in distribution. Start forgotten; variance bounded (BM's grows like $t$).</div>
+<div class="block warn">$X$ is a Gaussian process when $X_0$ is Gaussian <em>and independent of $W$</em>.</div>
+
+<h2>Step 7: Vasicek model</h2>
+<div class="block def">$$dr_t = a(b - r_t)\,dt + \sigma\,dW_t,\quad a,b,\sigma > 0$$
+$b$: long-run mean. $a$: reversion speed.</div>
+<div class="block">$X_t = r_t - b$, $dX_t = dr_t = -aX_t\,dt + \sigma\,dW_t$: OU with $r\to a$, $x_0 \to r_0 - b$. By (6):
+$$r_t \sim N\left(b + e^{-at}(r_0 - b),\ \frac{\sigma^2}{2a}\left(1 - e^{-2at}\right)\right)$$</div>
+<div class="block warn">Gaussian rates go negative: $P(r_t < 0) \to \Phi\left(-\frac{b\sqrt{2a}}{\sigma}\right) > 0$.</div>
+
+<h2>Step 8: CIR model</h2>
+<div class="block def">$$dr_t = a(b - r_t)\,dt + \sigma\sqrt{r_t}\,dW_t,\quad a,b,\sigma,r_0 > 0$$
+Noise $\to 0$ as $r_t\to 0$, drift $ab>0$ pushes up: $r_t \ge 0$; strictly positive if $2ab \ge \sigma^2$ (Feller).</div>
+<div class="block">T5 does not close (noise contains $r$):
+$$r_t = b + e^{-at}(r_0 - b) + \sigma\int_0^t e^{-a(t-s)}\sqrt{r_s}\,dW_s$$
+No closed form, but T6 gives $\mathbb{E}[r_t] = b + e^{-at}(r_0 - b)$, same as Vasicek. Not normal.</div>
+
+<h2>Step 9: Geometric BM</h2>
+<div class="block def">$N_t$ asset price, $r$ rate, $\alpha$ volatility. Multiplicative noise:
+$$dN_t = rN_t\,dt + \alpha N_t\,dW_t,\quad N_0 > 0 \qquad (6^*)$$
+$\frac{dN_t}{N_t} = r\,dt + \alpha\,dW_t$ (7) is notation for this, not division of differentials.</div>
+<div class="block">T10 with $f = \log x$, $f' = \frac1x$, $f'' = -\frac1{x^2}$; $(dN_t)^2 = \alpha^2N_t^2\,dt$:
+$$d(\log N_t) = \frac{dN_t}{N_t} - \frac{(dN_t)^2}{2N_t^2} = \left(r - \frac{\alpha^2}{2}\right)dt + \alpha\,dW_t$$
+T4, exponentiate:
+$$N_t = N_0\exp\left\{\left(r - \frac{\alpha^2}{2}\right)t + \alpha W_t\right\}$$</div>
+<div class="block warn">$\log N_t$ presumes $N_t > 0$. Close the gap by verifying: Itô on $e^{\mu t + \sigma W_t}$ gives drift $\mu + \frac{\sigma^2}{2}$; with $\mu = r - \frac{\alpha^2}{2}$, $\sigma = \alpha$ this is $(6^*)$.</div>
+<div class="block green">$\mathbb{E}[N_t] = N_0e^{(r - \alpha^2/2)t}\,\mathbb{E}\left[e^{\alpha W_t}\right] = N_0e^{(r-\alpha^2/2)t}e^{\alpha^2t/2} = N_0e^{rt}$. Median $= N_0e^{(r - \alpha^2/2)t} <$ mean: rare large paths pull the mean up.</div>
+
+</body>
+</html>
