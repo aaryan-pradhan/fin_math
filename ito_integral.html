@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Itô Integral</title>
+<link rel="stylesheet" href="note.css">
+<script src="note.js"></script>
+</head>
+<body>
+
+<h1>Itô Integral</h1>
+<p class="lede">$\int f\,dW$ is a limit of left-endpoint sums; for non-random smooth $f$ it is $\mathcal{N}\!\left(0, \int f^2\,dt\right)$, and for $\int W\,dW$ a $-\tfrac{t}{2}$ correction appears.</p>
+
+<h2>Step 1: Definition</h2>
+<div class="block def">Let $W$ be standard Brownian motion and $f$ non-random with continuous derivative on $[a,b]$. For a partition $a = t_0 &lt; t_1 &lt; \dots &lt; t_n = b$ with mesh $\max_i (t_i - t_{i-1})$:
+$$\int_a^b f(t)\,dW(t) = \lim_{\text{mesh}\to 0} \sum_{i=1}^n f(t_{i-1})\big(W(t_i) - W(t_{i-1})\big)$$
+$f$ is evaluated at the <strong>left endpoint</strong>.</div>
+<div class="block ex">$f(t)=t$ on $[0,1]$, $n=2$: $S_2 = 0\cdot(W(0.5)-W(0)) + 0.5\,(W(1)-W(0.5))$. Path with $W(0.5)=0.3$, $W(1)=-0.1$ gives $S_2 = -0.2$.<br>
+$S_2$ is a random variable: $W(1)-W(0.5) \sim \mathcal{N}(0, 0.5)$, so $S_2 \sim \mathcal{N}(0,\ 0.5^2 \cdot 0.5) = \mathcal{N}(0, 0.125)$.</div>
+<div class="block warn">$0.5\cdot\mathcal{N}(0,0.5)$ is not a distribution. Scaling squares in variance: $\operatorname{Var}(cX) = c^2\operatorname{Var}(X)$.</div>
+
+<h2>Step 2: Summation by parts</h2>
+<div class="block">Pure algebra (telescoping):
+$$\sum_{i=1}^n f(t_{i-1})\big(W(t_i)-W(t_{i-1})\big) = f(b)W(b) - f(a)W(a) - \sum_{i=1}^n W(t_i)\big(f(t_i)-f(t_{i-1})\big)$$</div>
+<div class="block ex">Same path, $f(t)=t$: RHS $= -0.1 - (0.3\cdot 0.5 + (-0.1)\cdot 0.5) = -0.1 - 0.1 = -0.2$ = LHS.</div>
+
+<h2>Step 3: Pathwise formula</h2>
+<div class="block green">The RHS sum uses increments of the smooth $f$, so for each fixed (continuous) path it is an ordinary Riemann–Stieltjes sum:
+$$\int_a^b f(t)\,dW(t) = f(b)W(b) - f(a)W(a) - \int_a^b W(t)\,f'(t)\,dt$$
+No $dW$ on the right: ordinary calculus path by path. Works because $f$ is non-random and smooth.</div>
+<div class="block ex">$\int_0^1 t\,dW(t) = W(1) - \int_0^1 W(t)\,dt$. &nbsp; $f\equiv 1$: $\int_a^b dW = W(b)-W(a)$ (sum telescopes directly too).</div>
+
+<h2>Step 4: Mean zero</h2>
+<div class="block">Each term: $\mathbb{E}\big[f(t_{i-1})\,\Delta W_i\big] = f(t_{i-1})\cdot 0 = 0$ ($f(t_{i-1})$ is a constant). Linearity, then limit:
+$$\mathbb{E}\left[\int_a^b f(t)\,dW(t)\right] = 0$$</div>
+<div class="block ex">Check via Step 3: $\mathbb{E}[W(1)] - \int_0^1 \mathbb{E}[W(t)]\,dt = 0 - 0 = 0$, since $\mathbb{E}[W(t)]=0$ for every $t$.</div>
+
+<h2>Step 5: Itô's isometry</h2>
+<div class="block green">$$\operatorname{Var}\left(\int_a^b f\,dW\right) = \mathbb{E}\left[\left(\int_a^b f\,dW\right)^2\right] = \int_a^b f^2(t)\,dt$$
+First "=": mean is 0. Second, on the sum:
+$$\operatorname{Var}\Big(\sum f(t_{i-1})\Delta W_i\Big) = \sum f^2(t_{i-1})\operatorname{Var}(\Delta W_i) = \sum f^2(t_{i-1})(t_i - t_{i-1}) \to \int_a^b f^2\,dt$$
+Variance of sum = sum of variances because increments over non-overlapping intervals are independent, so $\operatorname{Cov}(\Delta W_i,\Delta W_j)=0$ for $i\ne j$.</div>
+<div class="block green"><strong>Result.</strong> Each sum is a sum of independent normals, hence normal. For non-random $f$:
+$$\int_a^b f(t)\,dW(t) \sim \mathcal{N}\left(0,\ \int_a^b f^2(t)\,dt\right)$$</div>
+<div class="block ex">Example 1: $X = \int_0^t s\,dW_s \sim \mathcal{N}\left(0, \int_0^t s^2\,ds\right) = \mathcal{N}\left(0, \tfrac{t^3}{3}\right)$.</div>
+<div class="block warn">$\int_0^t W_s\,dW_s$ is <strong>not</strong> $\mathcal{N}(0,\int W_s^2\,ds)$: $W_s$ is random, and that "variance" would itself be random.</div>
+
+<h2>Step 6: Algebra trick for $\int W\,dW$</h2>
+<div class="block">For reals $a,b$: $a(b-a) = \tfrac12(b^2-a^2) - \tfrac12(b-a)^2$. Summing with $a_k = W_{t_k}$ (telescoping, $a_0 = W_0 = 0$):
+$$\sum_{k=1}^n a_{k-1}(a_k - a_{k-1}) = \tfrac12 a_n^2 - \tfrac12\sum_{k=1}^n (a_k - a_{k-1})^2$$</div>
+<div class="block ex">$a=0.3$, $b=-0.1$: LHS $=-0.12$; RHS $= \tfrac12(0.01-0.09) - \tfrac12(0.16) = -0.12$.</div>
+
+<h2>Step 7: Sum of squared increments $\to t$</h2>
+<div class="block">Uniform partition of $[0,t]$: $\Delta W_j \sim \mathcal{N}(0, t/n)$, so $\Delta W_j \overset{d}{=} \sqrt{t/n}\,Z_j$ with $Z_j$ iid $\mathcal{N}(0,1)$.
+$$\sum_{j=1}^n (\Delta W_j)^2 \overset{d}{=} t\cdot\frac1n\sum_{j=1}^n Z_j^2 \to t\,\mathbb{E}[Z^2] = t \quad\text{(LLN)}$$</div>
+<div class="block ex">$t=1$, $n=4$, $Z = 1.2, -0.5, 0.8, -1.1$: $(1.44+0.25+0.64+1.21)/4 = 0.885 \approx 1$.</div>
+<div class="block green">Example 2:
+$$\int_0^t W_s\,dW_s = \tfrac12 W_t^2 - \tfrac12 t$$
+Ordinary calculus would give $\tfrac12 x^2$; the extra $-\tfrac{t}{2}$ comes from squared increments not vanishing.</div>
+<div class="block warn">Check: $\mathbb{E}[W_t^2] = t$ ($W_t^2/t \sim \chi^2_1$), so $\mathbb{E}[\tfrac12W_t^2 - \tfrac12 t] = 0$ as required. Without $-\tfrac t2$ the mean would be $\tfrac t2 \ne 0$.</div>
+
+</body>
+</html>

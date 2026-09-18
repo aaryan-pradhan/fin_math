@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Itô's Formula</title>
+<link rel="stylesheet" href="note.css">
+<script src="note.js"></script>
+</head>
+<body>
+
+<h1>Itô's Formula</h1>
+<p class="lede">Chain rule for Itô processes: Taylor to second order, because $(dW)^2 = dt$ does not vanish.</p>
+
+<h2>Step 1: Itô process</h2>
+<div class="block def">On a filtered probability space $(\Omega,\mathcal{F},\mathbb{F},P)$ with BM $W$, an <strong>Itô process</strong> is
+$$X_t = X_0 + \int_0^t a_s\,ds + \int_0^t b_s\,dW_s,\quad t\in[0,T]$$
+<ul>
+<li>$X_0$ is $\mathcal{F}_0$-measurable.</li>
+<li>$a$ (drift), $b$ (noise coefficient) are $\mathbb{F}$-adapted: may be random, but depend only on the path up to time $t$.</li>
+<li>$\int_0^T |a_s|\,ds &lt; \infty$ and $\int_0^T \mathbb{E}[b_s^2]\,ds &lt; \infty$ (technical: integrals exist).</li>
+</ul>
+Shorthand (stochastic differential): $dX_t = a_t\,dt + b_t\,dW_t$. It means only the integral equation.</div>
+<div class="block ex">$X=W$: $a=0$, $b=1$. &nbsp; $X_t=\int_0^t s\,dW_s$: $a=0$, $b_s=s$.<br>
+From $\int_0^t W\,dW = \tfrac12W_t^2 - \tfrac12t$: $W_t^2 = \int_0^t 1\,ds + \int_0^t 2W_s\,dW_s$, i.e. $d(W_t^2) = dt + 2W_t\,dW_t$ ($a=1$, $b=2W_t$).</div>
+
+<h2>Step 2: Multiplication table</h2>
+<div class="block">$$dt\cdot dt = 0,\qquad dt\cdot dW = 0,\qquad dW\cdot dW = dt$$
+Each is shorthand for a limit of sums over a uniform partition ($\Delta t = t/n$):
+<table>
+<tr><th>Rule</th><th>Sum</th><th>Limit</th></tr>
+<tr><td>$dt\cdot dt=0$</td><td>$\sum(\Delta t)^2 = t^2/n$</td><td>$0$</td></tr>
+<tr><td>$dt\cdot dW=0$</td><td>$\sum \Delta t\,\Delta W_k = \tfrac tn W_t$</td><td>$0$</td></tr>
+<tr><td>$dW\cdot dW=dt$</td><td>$\sum(\Delta W_k)^2$</td><td>$t$ (LLN)</td></tr>
+</table>
+Reason: $\Delta W$ has size $\sqrt{\Delta t}$, so $(\Delta W)^2 \sim \Delta t$ survives; $\Delta t^2$, $\Delta t^{3/2}$ vanish.</div>
+<div class="block green">$$(dX_t)^2 = (a\,dt + b\,dW)^2 = a^2(dt)^2 + 2ab\,dt\,dW + b^2(dW)^2 = b_t^2\,dt$$</div>
+
+<h2>Step 3: Itô's formula</h2>
+<div class="block green">$f$ twice continuously differentiable, $Y_t = f(X_t)$. Taylor: $f(x) \approx f(a) + f'(a)(x-a) + \tfrac12 f''(a)(x-a)^2$. With $x-a = dX_t$:
+$$dY_t = f'(X_t)\,dX_t + \tfrac12 f''(X_t)\,(dX_t)^2 = f'(X_t)\,dX_t + \tfrac12 f''(X_t)\,b_t^2\,dt$$</div>
+<div class="block warn">Ordinary calculus drops the second-order term since $(dx)^2=0$. Here $(dX)^2 = b^2\,dt \ne 0$, so it stays. Third order and up vanish ($dW^3 = dt\,dW = 0$).</div>
+<div class="block ex">$f(x)=x^2$, $X=W$: $d(W_t^2) = 2W_t\,dW_t + \tfrac12\cdot 2\,dt = dt + 2W_t\,dW_t$. Matches Step 1.</div>
+<div class="block ex">$f(x)=x^3$, $X=W$: $d(W_t^3) = 3W_t^2\,dW_t + 3W_t\,dt$, i.e.
+$$W_t^3 = 3\int_0^t W_s\,ds + 3\int_0^t W_s^2\,dW_s$$</div>
+
+</body>
+</html>

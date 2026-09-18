@@ -1,20 +1,68 @@
 [
-  {"module": "Foundations", "notes": [
-    "starting_pieces", "almost_surely", "random_variables", "doob_dynkin_lemma",
-    "distribution_functions", "densities_and_joint_distributions", "multivariate_distribution"]},
-  {"module": "Expectation", "notes": [
-    "expectation_and_integration", "change_of_variables_expectation",
-    "conditional_probability_and_independence", "conditional_expectation_and_sigma_fields"]},
-  {"module": "Martingales", "notes": [
-    "filtrations_and_martingales", "binomial_model_and_martingale_properties", "stopping_times",
-    "stopped_process_martingale", "optimal_stopping_theorem", "gambling_strategies"]},
-  {"module": "Random walks", "notes": [
-    "additive_and_geometric_random_walks", "gamblers_ruin_problem_derivation"]},
-  {"module": "Brownian motion", "notes": [
-    "gaussian_processes_and_mvn_conditioning", "brownian_motion_and_canonical_martingales",
-    "wiener_process_axioms_levy_and_random_walk", "brownian_motion_density_and_diffusion",
-    "brownian_bridge_and_conditional_distributions", "brownian_motion_with_drift_and_exit_probabilities",
-    "geometric_brownian_motion", "brownian_motion_hitting_times_and_maximum",
-    "joint_distribution_of_bm_and_maximum"]},
-  {"module": "Reference", "notes": ["formula_sheet"]}
+  {
+    "module": "Foundations",
+    "notes": [
+      "starting_pieces",
+      "almost_surely",
+      "random_variables",
+      "doob_dynkin_lemma",
+      "distribution_functions",
+      "densities_and_joint_distributions",
+      "multivariate_distribution"
+    ]
+  },
+  {
+    "module": "Expectation",
+    "notes": [
+      "expectation_and_integration",
+      "change_of_variables_expectation",
+      "conditional_probability_and_independence",
+      "conditional_expectation_and_sigma_fields"
+    ]
+  },
+  {
+    "module": "Martingales",
+    "notes": [
+      "filtrations_and_martingales",
+      "binomial_model_and_martingale_properties",
+      "stopping_times",
+      "stopped_process_martingale",
+      "optimal_stopping_theorem",
+      "gambling_strategies"
+    ]
+  },
+  {
+    "module": "Random walks",
+    "notes": [
+      "additive_and_geometric_random_walks",
+      "gamblers_ruin_problem_derivation"
+    ]
+  },
+  {
+    "module": "Brownian motion",
+    "notes": [
+      "gaussian_processes_and_mvn_conditioning",
+      "brownian_motion_and_canonical_martingales",
+      "wiener_process_axioms_levy_and_random_walk",
+      "brownian_motion_density_and_diffusion",
+      "brownian_bridge_and_conditional_distributions",
+      "brownian_motion_with_drift_and_exit_probabilities",
+      "geometric_brownian_motion",
+      "brownian_motion_hitting_times_and_maximum",
+      "joint_distribution_of_bm_and_maximum"
+    ]
+  },
+  {
+    "module": "Stochastic calculus",
+    "notes": [
+      "ito_integral",
+      "ito_formula"
+    ]
+  },
+  {
+    "module": "Reference",
+    "notes": [
+      "formula_sheet"
+    ]
+  }
 ]
