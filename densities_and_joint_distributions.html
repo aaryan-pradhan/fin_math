@@ -17,8 +17,26 @@
   A random variable $\xi : \Omega \to \mathbb{R}$ has an <strong>absolutely continuous distribution</strong> if there exists a Borel function $f_\xi : \mathbb{R} \to [0, \infty)$ (density) such that for any $B \in \mathcal{B}(\mathbb{R})$:
   $$P(\xi \in B) = \int_B f_\xi(x)\, dx$$
 </div>
+<div class="block ex">
+  <strong>Uniform on $[0,2]$:</strong> $f(x) = \tfrac12$ on $[0,2]$, $0$ elsewhere.
+  <ul>
+    <li>$P(0.5 \le \xi \le 1.5) = \int_{0.5}^{1.5} \tfrac12\,dx = \tfrac12 \cdot 1 = 0.5$.</li>
+    <li>Total mass: $\int_0^2 \tfrac12\,dx = 1$ ✅</li>
+  </ul>
+  <strong>Exponential(1):</strong> $f(x) = e^{-x}$ for $x \ge 0$.
+  <ul>
+    <li>$P(\xi > 1) = \int_1^\infty e^{-x}\,dx = e^{-1} \approx 0.368$.</li>
+    <li>$P(1 &lt; \xi \le 2) = e^{-1} - e^{-2} \approx 0.233$.</li>
+  </ul>
+</div>
+<div class="block warn">
+  A density is not a probability, and it can exceed 1. Uniform on $[0, 0.5]$ has $f = 2$. Only its integrals are probabilities.
+</div>
 <div class="block warn">
   <strong>Single-Point Pitfall:</strong> For any single point $x_0 \in \mathbb{R}$, $P(\xi = x_0) = \int_{\{x_0\}} f_\xi(x)\, dx = 0$.
+</div>
+<div class="block ex">
+  Uniform on $[0,2]$: $P(\xi = 1) = \int_1^1 \tfrac12\,dx = 0$. So endpoints don't matter: $P(\xi &lt; 1) = P(\xi \le 1) = 0.5$. Compare the discrete jump case in the d.f. note, where $&lt;$ vs $\le$ did matter.
 </div>
 
 <h2>Step 2: Discrete Distributions</h2>
@@ -26,6 +44,10 @@
   A random variable $\xi$ has a <strong>discrete distribution</strong> with distinct values $\{x_1, x_2, \ldots\}$ if for any $B \in \mathcal{B}(\mathbb{R})$:
   $$P(\xi \in B) = \sum_{x_i \in B} P(\xi = x_i)$$
   Here, probability mass is concentrated at isolated points $x_i$ with $P(\xi = x_i) > 0$.
+</div>
+<div class="block ex">
+  Fair die: $P(\xi \in [2, 4.5]) = P(2) + P(3) + P(4) = \tfrac36 = \tfrac12$. The value 4.5 carries no mass, so only 2, 3, 4 count.<br>
+  Poisson(2): $P(\xi = k) = e^{-2}\tfrac{2^k}{k!}$. $P(\xi \le 1) = e^{-2}(1 + 2) = 3e^{-2} \approx 0.406$.
 </div>
 
 <h2>Step 3: Joint Distributions in $\mathbb{R}^n$</h2>
@@ -35,11 +57,28 @@
   If a joint density $f_{\xi_1,\ldots,\xi_n}$ exists:
   $$P\big((\xi_1, \ldots, \xi_n) \in B\big) = \int \!\cdots\! \int_B f_{\xi_1,\ldots,\xi_n}(x_1, \ldots, x_n)\, dx_1 \cdots dx_n$$
 </div>
+<div class="block ex">
+  <strong>Discrete: two dice $(\xi_1, \xi_2)$.</strong> Each of the 36 pairs has mass $\tfrac1{36}$.
+  <ul>
+    <li>$B = \{(x,y) : x + y = 7\}$ has 6 pairs, so $P = \tfrac6{36} = \tfrac16$.</li>
+    <li>$B = \{(x,y) : x > y\}$ has 15 pairs, so $P = \tfrac{15}{36}$.</li>
+  </ul>
+  <strong>Continuous: uniform on the unit square,</strong> $f(x,y) = 1$ on $[0,1]^2$. Probability = area of $B$ inside the square.
+  <ul>
+    <li>$P(\xi_1 \le 0.5,\ \xi_2 \le 0.2) = 0.5 \times 0.2 = 0.1$.</li>
+    <li>$P(\xi_1 + \xi_2 \le 1)$ = area of the triangle below $x + y = 1$ = $\tfrac12$.</li>
+    <li>$P(\xi_1 = \xi_2) = 0$: the diagonal is a line, with zero area.</li>
+  </ul>
+</div>
 
 <h2>Step 4: Event Pre-Image Mapping</h2>
 <div class="block ex">
   Event $\{\xi_1 \leq 3,\ \xi_2 > 5\}$ corresponds to the joint Borel set:
   $$B = (-\infty, 3] \times (5, \infty) \subset \mathbb{R}^2$$
+</div>
+<div class="block ex">
+  Unit square: $\{\xi_1 \le 0.3,\ \xi_2 > 0.5\}$ is the rectangle $B = (-\infty, 0.3] \times (0.5, \infty)$. Its part inside $[0,1]^2$ is $[0, 0.3] \times (0.5, 1]$, so $P = 0.3 \times 0.5 = 0.15$.<br>
+  Two dice: $\{\xi_1 \le 3,\ \xi_2 > 5\}$ is $\{1,2,3\} \times \{6\}$, so $P = \tfrac3{36} = \tfrac1{12}$.
 </div>
 
 </body>

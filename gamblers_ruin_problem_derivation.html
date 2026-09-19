@@ -10,48 +10,233 @@
 <body>
 
 <h1>Gambler's Ruin Problem</h1>
-<p class="lede">First-Step Analysis, Recurrence Equations, and Infinite Bankroll Limits.</p>
+<p class="lede">Win probability and expected duration, derived line by line: first-step analysis, recurrences, a martingale check, and the infinite-bankroll limits.</p>
 
 <h2>1. Problem Formulation</h2>
 <div class="block def">
-  Consider a gambler starting with Rs $i$ playing against an opponent with total combined wealth Rs $N$.<br>
-  State space $S = \{0, 1, \dots, N\}$. Independent bets $Z_n \in \{+1, -1\}$ with $P(Z_n = +1) = p$ and $P(Z_n = -1) = q = 1-p$.<br>
-  Wealth process: $X_n = i + \sum_{k=1}^n Z_k$.
+  A gambler starts with Rs $i$. The opponent has Rs $N - i$, so the total wealth in play is Rs $N$.<br>
+  Each round is an independent bet $Z_n \in \{+1, -1\}$ with $P(Z_n = +1) = p$ and $P(Z_n = -1) = q = 1 - p$.<br>
+  Wealth after $n$ rounds: $X_n = i + \sum_{k=1}^n Z_k$. State space $S = \{0, 1, \dots, N\}$.
   <ul>
-    <li>Absorbing states (recurrent): $0$ (ruin) and $N$ (target reached).</li>
-    <li>Transient states: $\{1, 2, \dots, N-1\}$.</li>
+    <li>The game stops at $0$ (ruin) or at $N$ (target reached). These are absorbing states.</li>
+    <li>$\{1, \dots, N-1\}$ are transient: the game is still running.</li>
+  </ul>
+  $T_0$ = first time $X_n = 0$, $T_N$ = first time $X_n = N$. Game length $\tau = \min(T_0, T_N)$.
+</div>
+<div class="block ex">
+  CT-1 Q10 (win 10 / lose 5): shift so that "lost 5" is $0$. Then $i = 5$ and $N = 5 + 10 = 15$.<br>
+  Path $+1, +1, -1$ from $i = 5$: $X = 6, 7, 6$, still running.
+</div>
+
+<h2>2. Win Probability: First-Step Equation</h2>
+<div class="block def">
+  $P_i = P(T_N &lt; T_0 \mid X_0 = i)$, the probability of reaching $N$ before $0$ when starting from $i$.
+</div>
+<div class="block">
+  <strong>Step 1: Boundaries.</strong> Start at $0$: already ruined, so $P_0 = 0$. Start at $N$: already won, so $P_N = 1$.<br><br>
+  <strong>Step 2: Condition on the first bet</strong> (law of total probability):
+  $$P_i = P(\text{win} \mid Z_1 = +1)\,P(Z_1 = +1) + P(\text{win} \mid Z_1 = -1)\,P(Z_1 = -1)$$
+  <strong>Step 3: Restart.</strong> After the first bet you are at $i+1$ or $i-1$. The later bets are independent of $Z_1$ and have the same law, so the game from there is a fresh game from the new position:
+  $$P(\text{win} \mid Z_1 = +1) = P_{i+1},\qquad P(\text{win} \mid Z_1 = -1) = P_{i-1}$$
+  <strong>Step 4: Combine</strong>, for $1 \le i \le N-1$:
+  $$P_i = pP_{i+1} + qP_{i-1}$$
+</div>
+<div class="block ex">
+  $N = 3$, fair: $P_1 = \tfrac12P_2 + \tfrac12\cdot 0$ and $P_2 = \tfrac12\cdot 1 + \tfrac12P_1$. Substitute the second into the first: $P_1 = \tfrac14 + \tfrac14P_1$, so $\tfrac34P_1 = \tfrac14$ and $P_1 = \tfrac13$. Then $P_2 = \tfrac12 + \tfrac16 = \tfrac23$.
+</div>
+
+<h2>3. From the Equation to a Ratio of Differences</h2>
+<div class="block">
+  <strong>Step 1.</strong> Since $p + q = 1$, write the left side as $P_i = (p + q)P_i = pP_i + qP_i$:
+  $$pP_i + qP_i = pP_{i+1} + qP_{i-1}$$
+  <strong>Step 2.</strong> Move the $p$-terms to one side and the $q$-terms to the other:
+  $$pP_{i+1} - pP_i = qP_i - qP_{i-1} \implies p(P_{i+1} - P_i) = q(P_i - P_{i-1})$$
+  <strong>Step 3.</strong> Divide by $p > 0$ and write $r = \tfrac{q}{p}$:
+  $$P_{i+1} - P_i = r\,(P_i - P_{i-1})$$
+</div>
+
+<h2>4. Unrolling the Differences</h2>
+<div class="block">
+  <strong>Step 1.</strong> Name the differences $d_k = P_{k+1} - P_k$. Step 3 of Section 3 says $d_k = r\,d_{k-1}$.<br><br>
+  <strong>Step 2.</strong> Apply it repeatedly:
+  $$d_k = r\,d_{k-1} = r^2d_{k-2} = \cdots = r^kd_0$$
+  <strong>Step 3.</strong> $d_0 = P_1 - P_0 = P_1 - 0 = P_1$. So
+  $$d_k = r^kP_1$$
+  <strong>Step 4: Telescope.</strong> Add the differences from $k = 0$ to $i - 1$. Every middle term cancels:
+  $$d_0 + d_1 + \cdots + d_{i-1} = (P_1 - P_0) + (P_2 - P_1) + \cdots + (P_i - P_{i-1}) = P_i - P_0 = P_i$$
+  <strong>Step 5.</strong> Substitute $d_k = r^kP_1$:
+  $$P_i = P_1\sum_{k=0}^{i-1} r^k = P_1\left(1 + r + r^2 + \cdots + r^{i-1}\right)$$
+</div>
+
+<h2>5. Summing the Geometric Series and Using $P_N = 1$</h2>
+<div class="block">
+  <strong>Step 1: Geometric sum</strong> ($r \ne 1$). Let $S = 1 + r + \cdots + r^{i-1}$. Then $rS = r + r^2 + \cdots + r^i$. Subtract: $S - rS = 1 - r^i$, so
+  $$S = \frac{1 - r^i}{1 - r}$$
+  If $r = 1$, every term is $1$, so $S = i$.<br><br>
+  <strong>Step 2: When is $r = 1$?</strong> $\tfrac{q}{p} = 1 \iff q = p \iff p = \tfrac12$. So $r = 1$ exactly for the fair game.<br><br>
+  <strong>Step 3: Unfair ($r \ne 1$).</strong> Put $i = N$ and use $P_N = 1$:
+  $$1 = P_1\frac{1 - r^N}{1 - r} \implies P_1 = \frac{1 - r}{1 - r^N}$$
+  Substitute back into $P_i = P_1\frac{1 - r^i}{1 - r}$. The $(1 - r)$ cancels:
+  $$P_i = \frac{1 - r}{1 - r^N}\cdot\frac{1 - r^i}{1 - r} = \frac{1 - r^i}{1 - r^N}$$
+  <strong>Step 4: Fair ($r = 1$).</strong> $P_i = iP_1$. At $i = N$: $1 = NP_1$, so $P_1 = \tfrac1N$ and
+  $$P_i = \frac{i}{N}$$
+</div>
+<div class="block ex">
+  <ul>
+    <li>Fair, $i = 5$, $N = 15$: $P_5 = \tfrac5{15} = \tfrac13$ (CT-1 Q10a). $N = 3$, $i = 1$: $\tfrac13$, which matches Section 2.</li>
+    <li>$p = 0.4$, $q = 0.6$, so $r = 1.5$. With $i = 5$, $N = 10$: $1.5^5 = 7.594$ and $1.5^{10} = 57.665$.
+      $$P_5 = \frac{1 - 7.594}{1 - 57.665} = \frac{-6.594}{-56.665} \approx 0.1164$$
+      A small house edge drops your chance from $0.5$ (fair) to about $0.12$.</li>
   </ul>
 </div>
 
-<h2>2. First-Step Analysis &amp; Difference Equation</h2>
-<div class="block green">
-  Let $P_i = \mathbb{P}(T_N < T_0 \mid X_0 = i)$ be the probability of reaching Rs $N$ before going broke.<br>
-  Conditioning on the first step $Z_1$:
-  $$P_i = p P_{i+1} + q P_{i-1} \quad \text{for } 1 \le i \le N-1$$
-  Boundary conditions: $P_0 = 0$ and $P_N = 1$.<br><br>
-  Using $(p+q)P_i = p P_{i+1} + q P_{i-1}$ yields:
-  $$P_{i+1} - P_i = \frac{q}{p} (P_i - P_{i-1})$$
-</div>
-
-<h2>3. Telescoping Sum &amp; General Solution</h2>
+<h2>6. Win Probability as $N \to \infty$</h2>
 <div class="block">
-  Summing differences $P_{k+1} - P_k = \left(\frac{q}{p}\right)^k P_1$ from $k=0$ to $i-1$:
-  $$P_i = P_1 \sum_{k=0}^{i-1} \left(\frac{q}{p}\right)^k$$
-  Solving for $P_1$ using $P_N = 1$:
-  $$\begin{aligned}
-  \text{Unfair Game } \left(p \ne \frac{1}{2}\right): &\quad P_i = \frac{1 - \left(\frac{q}{p}\right)^i}{1 - \left(\frac{q}{p}\right)^N} \\[8pt]
-  \text{Fair Game } \left(p = \frac{1}{2}\right): &\quad P_i = \frac{i}{N}
-  \end{aligned}$$
+  Playing against an infinitely rich casino: fix $i$ and let $N \to \infty$.
+  <ul>
+    <li><strong>$p > \tfrac12$:</strong> $r &lt; 1$, so $r^N \to 0$ and
+      $$P_i \to \frac{1 - r^i}{1 - 0} = 1 - r^i$$</li>
+    <li><strong>$p &lt; \tfrac12$:</strong> $r > 1$. Multiply the top and bottom by $-1$: $P_i = \frac{r^i - 1}{r^N - 1}$. The top is fixed and the bottom $\to \infty$, so $P_i \to 0$.</li>
+    <li><strong>$p = \tfrac12$:</strong> $P_i = \tfrac iN \to 0$.</li>
+  </ul>
+</div>
+<div class="block ex">
+  $p = 0.6$ ($r = \tfrac23$), $i = 5$: $P \to 1 - (\tfrac23)^5 = 1 - 0.132 = 0.868$. With a player edge you survive forever with probability about 87%.
+</div>
+<div class="block warn">
+  <strong>Key Conclusion:</strong> In any fair or unfavorable game ($p \le \tfrac12$) against an infinite bankroll, ruin is almost sure: $P(\text{Ruin}) = 1$.
 </div>
 
-<h2>4. Infinite Bankroll Limit ($N \to \infty$)</h2>
+<h2>7. Expected Duration: First-Step Equation</h2>
+<div class="block def">
+  $E_i = \mathbb{E}[\tau \mid X_0 = i]$, the expected number of rounds until the game stops, starting from $i$.
+</div>
+<div class="block">
+  <strong>Step 1: Boundaries.</strong> At $0$ or $N$ no rounds are played: $E_0 = 0$ and $E_N = 0$.<br><br>
+  <strong>Step 2: Split off the first round.</strong> $\tau = 1 + \tau'$, where $\tau'$ is the number of rounds after the first. As in Section 2, $\tau'$ is the length of a fresh game from $i \pm 1$.<br><br>
+  <strong>Step 3: Condition on the first bet:</strong>
+  $$E_i = \mathbb{E}[1 + \tau' \mid Z_1 = +1]\,p + \mathbb{E}[1 + \tau' \mid Z_1 = -1]\,q = (1 + E_{i+1})p + (1 + E_{i-1})q$$
+  <strong>Step 4: Expand</strong> and use $p + q = 1$:
+  $$E_i = (p + q) + pE_{i+1} + qE_{i-1} = 1 + pE_{i+1} + qE_{i-1},\qquad 1 \le i \le N-1$$
+</div>
+<div class="block ex">
+  $N = 3$, fair:
+  $$E_1 = 1 + \tfrac12E_2 + \tfrac12\cdot 0,\qquad E_2 = 1 + \tfrac12\cdot 0 + \tfrac12E_1$$
+  Substitute $E_2$ into $E_1$: $E_1 = 1 + \tfrac12 + \tfrac14E_1$, so $\tfrac34E_1 = \tfrac32$ and $E_1 = 2$. Then $E_2 = 1 + 1 = 2$.
+</div>
 <div class="block warn">
-  Taking the limit as $N \to \infty$ (playing against an infinitely rich casino):
-  $$\lim_{N \to \infty} P_i = \begin{cases} 
-  1 - \left(\frac{q}{p}\right)^i & \text{if } p > \frac{1}{2} \;\left(\frac{q}{p} < 1, \text{positive edge}\right) \\[8pt]
-  0 & \text{if } p \le \frac{1}{2} \;\left(\frac{q}{p} \ge 1, \text{fair or house edge}\right)
-  \end{cases}$$
-  <strong>Key Conclusion:</strong> In any fair or unfavorable game ($p \le 1/2$) against an infinite bankroll, going broke is almost surely guaranteed ($\mathbb{P}(\text{Ruin}) = 1$).
+  Difference from $P_i$: the extra $+1$ makes the equation <em>inhomogeneous</em>. The ratio trick of Section 3 no longer gives a clean geometric pattern: $p(E_{i+1} - E_i) = q(E_i - E_{i-1}) - 1$.
+</div>
+
+<h2>8. Fair Game: $E_i = i(N - i)$</h2>
+<div class="block">
+  <strong>Step 1.</strong> Put $p = q = \tfrac12$: $E_i = 1 + \tfrac12E_{i+1} + \tfrac12E_{i-1}$. Multiply by 2:
+  $$2E_i = 2 + E_{i+1} + E_{i-1}$$
+  <strong>Step 2.</strong> Move everything to one side:
+  $$E_{i+1} - 2E_i + E_{i-1} = -2$$
+  <strong>Step 3.</strong> Split $-2E_i = -E_i - E_i$ and group:
+  $$(E_{i+1} - E_i) - (E_i - E_{i-1}) = -2$$
+  <strong>Step 4.</strong> Name the differences $D_k = E_{k+1} - E_k$. Step 3 says $D_i = D_{i-1} - 2$: each difference is 2 smaller than the one before.<br><br>
+  <strong>Step 5.</strong> Unroll: $D_1 = D_0 - 2$, $D_2 = D_0 - 4$, …, so
+  $$D_k = D_0 - 2k,\qquad D_0 = E_1 - E_0 = E_1 \quad\Rightarrow\quad D_k = E_1 - 2k$$
+  <strong>Step 6: Telescope</strong>, as in Section 4:
+  $$E_i = E_i - E_0 = D_0 + D_1 + \cdots + D_{i-1} = \sum_{k=0}^{i-1}(E_1 - 2k)$$
+  <strong>Step 7.</strong> Split the sum. There are $i$ copies of $E_1$, and $0 + 1 + \cdots + (i-1) = \frac{i(i-1)}{2}$:
+  $$E_i = iE_1 - 2\cdot\frac{i(i-1)}{2} = iE_1 - i(i-1)$$
+  <strong>Step 8: Use $E_N = 0$.</strong> $NE_1 - N(N-1) = 0$. Divide by $N$: $E_1 = N - 1$.<br><br>
+  <strong>Step 9: Substitute and simplify.</strong>
+  $$E_i = i(N - 1) - i(i - 1) = iN - i - i^2 + i = iN - i^2 = i(N - i)$$
+</div>
+<div class="block green">
+  <strong>Verify in the recurrence.</strong> Expand the two neighbours:
+  $$(i+1)(N-i-1) = i(N-i) + N - 2i - 1,\qquad (i-1)(N-i+1) = i(N-i) - N + 2i - 1$$
+  Their sum is $2i(N-i) - 2$, and half of it is $i(N-i) - 1$. So $1 + \tfrac12E_{i+1} + \tfrac12E_{i-1} = 1 + i(N-i) - 1 = i(N-i) = E_i$ ✅
+</div>
+<div class="block ex">
+  <ul>
+    <li>$N = 3$, $i = 1$: $1\cdot 2 = 2$. Matches Section 7.</li>
+    <li>CT-1 Q10: $i = 5$, $N = 15$, so $E_5 = 5\cdot 10 = 50$.</li>
+    <li>$i = 50$, $N = 100$: $2500$ rounds for a ±50 swing.</li>
+  </ul>
+  Rule: fair game, stop at $+A$ or $-B$ gives $\mathbb{E}[\tau] = AB$.
+</div>
+
+<h2>9. Unfair Game ($p \ne q$)</h2>
+<div class="block">
+  <strong>Step 1: Structure of the solution.</strong> Suppose $E$ and $E'$ both solve $E_i = 1 + pE_{i+1} + qE_{i-1}$. Subtract the two equations. The $1$ cancels, so $H = E - E'$ solves the <em>homogeneous</em> equation
+  $$H_i = pH_{i+1} + qH_{i-1}$$
+  Hence <strong>every solution = one particular solution + a homogeneous solution</strong>.<br><br>
+  <strong>Step 2: Homogeneous solutions.</strong> Try $H_i = \lambda^i$:
+  $$\lambda^i = p\lambda^{i+1} + q\lambda^{i-1}$$
+  Divide by $\lambda^{i-1}$: $\lambda = p\lambda^2 + q$, i.e. $p\lambda^2 - \lambda + q = 0$.<br>
+  Factor, using $p + q = 1$: $(\lambda - 1)(p\lambda - q) = p\lambda^2 - (p+q)\lambda + q = p\lambda^2 - \lambda + q$ ✅<br>
+  Roots: $\lambda = 1$ and $\lambda = \tfrac qp = r$. They are distinct since $r \ne 1$. So
+  $$H_i = A\cdot 1^i + B\,r^i = A + Br^i$$
+  (This is exactly the equation $P_i$ solves. $P_0 = 0$, $P_N = 1$ give $A = -B$ and $B = \frac{-1}{1 - r^N}$, which recovers Section 5.)<br><br>
+  <strong>Step 3: A particular solution.</strong> A constant $c$ fails: $c = 1 + pc + qc = 1 + c$ gives $0 = 1$ (constants solve the homogeneous part). So try $E_i = ci$:
+  $$ci = 1 + pc(i+1) + qc(i-1) = 1 + pci + pc + qci - qc = 1 + ci(p + q) + c(p - q) = 1 + ci + c(p - q)$$
+  Cancel $ci$: $0 = 1 + c(p - q)$, so
+  $$c = \frac{-1}{p - q} = \frac{1}{q - p}$$
+  <strong>Step 4: General solution.</strong>
+  $$E_i = \frac{i}{q - p} + A + Br^i$$
+  <strong>Step 5: Use $E_0 = 0$.</strong> $0 + A + B = 0$, so $A = -B$:
+  $$E_i = \frac{i}{q - p} + A(1 - r^i)$$
+  <strong>Step 6: Use $E_N = 0$.</strong>
+  $$\frac{N}{q - p} + A(1 - r^N) = 0 \implies A = -\frac{N}{(q - p)(1 - r^N)}$$
+  <strong>Step 7: Substitute and factor out $\frac1{q-p}$.</strong>
+  $$E_i = \frac{i}{q - p} - \frac{N}{q - p}\cdot\frac{1 - r^i}{1 - r^N} = \frac{1}{q - p}\left[\,i - N\,\frac{1 - r^i}{1 - r^N}\right]$$
+  <strong>Step 8.</strong> The fraction is $P_i$ from Section 5:
+  $$E_i = \frac{i - NP_i}{q - p}$$
+</div>
+<div class="block ex">
+  $p = 0.4$, $q = 0.6$, $r = 1.5$, $i = 5$, $N = 10$:
+  <ol>
+    <li>$P_5 \approx 0.1164$ (Section 5).</li>
+    <li>$NP_5 = 10 \times 0.1164 = 1.164$.</li>
+    <li>$i - NP_5 = 5 - 1.164 = 3.836$.</li>
+    <li>$q - p = 0.2$, so $E_5 = 3.836/0.2 \approx 19.18$.</li>
+  </ol>
+  The fair game from the same start lasts $5\cdot 5 = 25$ rounds on average. With a house edge it ends sooner, mostly in ruin.
+</div>
+
+<h2>10. Martingale Check (Optimal Stopping)</h2>
+<div class="block green">
+  <strong>Fair: $P_i$.</strong> $X_n$ is a MG. OST: $\mathbb{E}[X_\tau] = X_0 = i$. $X_\tau = N$ with probability $P_i$ and $0$ otherwise, so $NP_i = i$, i.e. $P_i = \tfrac iN$ ✅<br><br>
+  <strong>Fair: $E_i$.</strong>
+  <ol>
+    <li>$X_n^2 - n$ is a MG: $\mathbb{E}[X_{n+1}^2 - (n+1) \mid \mathcal{F}_n] = X_n^2 + 2X_n\mathbb{E}[Z] + \mathbb{E}[Z^2] - n - 1 = X_n^2 + 0 + 1 - n - 1 = X_n^2 - n$.</li>
+    <li>OST: $\mathbb{E}[X_\tau^2 - \tau] = X_0^2 - 0 = i^2$.</li>
+    <li>$\mathbb{E}[X_\tau^2] = N^2\cdot\tfrac iN + 0^2\cdot(1 - \tfrac iN) = Ni$.</li>
+    <li>$\mathbb{E}[\tau] = Ni - i^2 = i(N - i)$ ✅</li>
+  </ol>
+  <strong>Unfair: $P_i$.</strong>
+  <ol>
+    <li>$r^{X_n}$ is a MG: $\mathbb{E}[r^{Z}] = p\cdot\tfrac qp + q\cdot\tfrac pq = q + p = 1$, so $\mathbb{E}[r^{X_{n+1}} \mid \mathcal{F}_n] = r^{X_n}\cdot 1$.</li>
+    <li>OST: $r^N P_i + r^0(1 - P_i) = r^i$, so $P_i(r^N - 1) = r^i - 1$ and $P_i = \frac{r^i - 1}{r^N - 1} = \frac{1 - r^i}{1 - r^N}$ ✅</li>
+  </ol>
+  <strong>Unfair: $E_i$.</strong>
+  <ol>
+    <li>$X_n - (p - q)n$ is a MG: $\mathbb{E}[X_{n+1} - (p-q)(n+1) \mid \mathcal{F}_n] = X_n + (p - q) - (p - q)(n + 1) = X_n - (p - q)n$.</li>
+    <li>OST: $\mathbb{E}[X_\tau] - (p - q)\mathbb{E}[\tau] = i$.</li>
+    <li>$\mathbb{E}[X_\tau] = NP_i$, so $(p - q)\mathbb{E}[\tau] = NP_i - i$.</li>
+    <li>$\mathbb{E}[\tau] = \frac{NP_i - i}{p - q} = \frac{i - NP_i}{q - p}$ ✅</li>
+  </ol>
+  ($\tau$ is unbounded, but $X_{n\wedge\tau}$ stays in $[0, N]$ and $\mathbb{E}[\tau] &lt; \infty$, so OST applies via the limit $n \to \infty$.)
+</div>
+
+<h2>11. Expected Duration as $N \to \infty$</h2>
+<div class="block warn">
+  <ul>
+    <li><strong>Fair:</strong> $E_i = i(N - i) \to \infty$ for fixed $i \ge 1$. Ruin is certain (Section 6), yet the <em>expected</em> time to ruin is infinite. Starting with Rs 1: ruin a.s., but $\mathbb{E}[T_0] = \infty$.</li>
+    <li><strong>House edge</strong> ($p &lt; q$, $r > 1$):
+      <ol>
+        <li>$NP_i = N\frac{r^i - 1}{r^N - 1}$. The top grows like $N$, the bottom like $r^N$ (exponentially), so $NP_i \to 0$.</li>
+        <li>Hence $E_i = \frac{i - NP_i}{q - p} \to \frac{i}{q - p}$.</li>
+        <li>Meaning: you lose $q - p$ per round on average, so losing Rs $i$ takes $i/(q-p)$ rounds.</li>
+      </ol>
+      Example: $p = 0.4$, $i = 5$: $5/0.2 = 25$ rounds. (With $N = 10$ it was $19.18$, shorter because the game could also end by winning.)</li>
+    <li><strong>Player edge</strong> ($p > q$): $\tau = \infty$ with probability $1 - r^i > 0$ (Section 6), so $\mathbb{E}[\tau] = \infty$.</li>
+  </ul>
 </div>
 
 </body>

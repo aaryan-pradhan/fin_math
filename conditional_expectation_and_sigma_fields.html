@@ -19,6 +19,14 @@
   <strong>Independent Random Variables:</strong> $\xi$ and $\eta$ are independent $\iff$ their generated σ-fields $\sigma(\xi)$ and $\sigma(\eta)$ are independent, where:
   $$\sigma(\xi) = \{\xi^{-1}(B) \subseteq \Omega : B \in \mathcal{B}(\mathbb{R})\}$$
 </div>
+<div class="block ex">
+  Two tosses. $\xi = \mathbb{1}\{\text{toss 1 H}\}$, $\eta = \mathbb{1}\{\text{toss 2 H}\}$.
+  <ul>
+    <li>$\sigma(\xi) = \{\varnothing, \{HH,HT\}, \{TH,TT\}, \Omega\}$ and $\sigma(\eta) = \{\varnothing, \{HH,TH\}, \{HT,TT\}, \Omega\}$.</li>
+    <li>Check one pair: $P(\{HH,HT\} \cap \{HH,TH\}) = P(\{HH\}) = \tfrac14 = \tfrac12\cdot\tfrac12$ ✅. The other pairs work the same way (pairs involving $\varnothing$ or $\Omega$ are automatic). So they are independent.</li>
+  </ul>
+  Dependent: $\xi$ and $S = \xi + \eta$. $P(\xi = 1, S = 0) = 0$, but $P(\xi = 1)P(S = 0) = \tfrac12\cdot\tfrac14 \ne 0$.
+</div>
 
 <h2>Step 2: What is $E(X \mid \mathcal{G})$?</h2>
 <div class="block warn">
@@ -29,6 +37,13 @@
     <li>$E(X \mid \mathcal{G})$ is the general random variable for any sub-σ-field $\mathcal{G} \subseteq \mathcal{F}$.</li>
   </ul>
 </div>
+<div class="block ex">
+  Two dice, $X$ = sum, $Y$ = first die.
+  <ul>
+    <li><strong>Number:</strong> $E(X \mid Y = 4) = 4 + E(\text{second}) = 4 + 3.5 = 7.5$.</li>
+    <li><strong>Random variable:</strong> $E(X \mid Y) = Y + 3.5$. If $\omega = (4, 1)$, its value is $7.5$. If $\omega = (2, 6)$, its value is $5.5$.</li>
+  </ul>
+</div>
 <div class="block def">
   <strong>Formal Definition:</strong> $Y = E(X \mid \mathcal{G})$ is the unique (a.s.) random variable satisfying:
   <ol>
@@ -37,6 +52,15 @@
     Since $Y$ is constant ($c_G$) on block $G$, this reduces to $c_G \cdot P(G) = \int_G X\, dP \implies c_G = \int_G X\, dP \,/\, P(G)$. Condition 2 forces $Y$ to equal the exact average of $X$ over each block $G$.</li>
     <li><strong>Unique (a.s.):</strong> Any two random variables $Y_1, Y_2$ satisfying (1) &amp; (2) must be equal everywhere except on a set of probability zero ($P(Y_1 \neq Y_2) = 0$).</li>
   </ol>
+</div>
+<div class="block ex">
+  Die, $X = \omega$, $\mathcal{G} = \sigma(\text{odd}, \text{even})$.
+  <ol>
+    <li>Measurability: $Y$ is constant on odd $\{1,3,5\}$ and on even $\{2,4,6\}$.</li>
+    <li>Matching on $G$ = odd: $\int_G X\,dP = \tfrac16(1 + 3 + 5) = 1.5$. So $c_{\text{odd}}\cdot\tfrac12 = 1.5$, giving $c_{\text{odd}} = 3$.</li>
+    <li>On even: $\tfrac16(2 + 4 + 6) = 2 = c_{\text{even}}\cdot\tfrac12$, giving $c_{\text{even}} = 4$.</li>
+  </ol>
+  $E(X \mid \mathcal{G}) = 3$ on odd outcomes and $4$ on even ones. Uniqueness: changing $Y$ on a probability-0 set changes nothing, but a die has no such sets, so here $Y$ is fully unique.
 </div>
 
 <h2>Step 3: Law of Iterated Expectations (Tower Property)</h2>
@@ -53,6 +77,14 @@
 <div class="block ex">
   <strong>Tail Probability Application:</strong> Setting $X = \mathbb{1}_{\{X > t\}}$ gives $P(X > t) = E(P(X > t \mid Y))$.
 </div>
+<div class="block ex">
+  <ul>
+    <li><strong>Dice:</strong> $E(E(X \mid Y)) = E(Y + 3.5) = 3.5 + 3.5 = 7 = E(X)$ ✅</li>
+    <li><strong>Die, odd/even:</strong> $\tfrac12(3) + \tfrac12(4) = 3.5 = E(X)$ ✅</li>
+    <li><strong>Random coin:</strong> bias $p \sim U[0,1]$, $X$ = heads in 10 tosses. $E(X \mid p) = 10p$, so $E(X) = E(10p) = 5$.</li>
+    <li><strong>Tail:</strong> lifetime $X \sim \text{Exp}(Y)$ with rate $Y = 1$ or $2$, each with probability $\tfrac12$. $P(X > 1) = \tfrac12e^{-1} + \tfrac12e^{-2} \approx 0.184 + 0.068 = 0.252$.</li>
+  </ul>
+</div>
 
 <h2>Step 4: Operational Rules</h2>
 <div class="block green">
@@ -62,6 +94,47 @@
   $$E(Z \cdot X \mid \mathcal{G}) = Z \cdot E(X \mid \mathcal{G})$$
   <strong>3. Independence Rule:</strong> If $X$ is independent of $\mathcal{G}$:
   $$E(X \mid \mathcal{G}) = E(X)$$
+</div>
+<div class="block ex">
+  Two dice $X_1, X_2$, $\mathcal{G} = \sigma(X_1)$:
+  <ul>
+    <li>Linearity + known + independence: $E(X_1 + X_2 \mid X_1) = X_1 + E(X_2) = X_1 + 3.5$.</li>
+    <li>Take out what is known: $E(X_1X_2 \mid X_1) = X_1E(X_2 \mid X_1) = 3.5X_1$. If $X_1 = 2$, this is $7$.</li>
+    <li>Squares: $E((X_1 + X_2)^2 \mid X_1) = X_1^2 + 2X_1E(X_2) + E(X_2^2) = X_1^2 + 7X_1 + \tfrac{91}{6}$.</li>
+  </ul>
+</div>
+<div class="block warn">
+  Two extremes: if $X$ is $\mathcal{G}$-measurable, $E(X \mid \mathcal{G}) = X$ (full information). If $\mathcal{G} = \{\varnothing, \Omega\}$, $E(X \mid \mathcal{G}) = E(X)$ (no information).
+</div>
+
+<h2>Practice Questions</h2>
+<div class="block ex">
+  <strong>Q1.</strong> Die, $\mathcal{G} = \sigma(\{1,2,3\}, \{4,5,6\})$. Find $E(X^2 \mid \mathcal{G})$ and check the tower property.
+  <details><summary>Answer</summary>Low: $\tfrac{1 + 4 + 9}{3} = \tfrac{14}{3}$. High: $\tfrac{16 + 25 + 36}{3} = \tfrac{77}{3}$. Tower: $\tfrac12\left(\tfrac{14}3 + \tfrac{77}3\right) = \tfrac{91}{6} = E(X^2)$ ✅</details>
+</div>
+<div class="block ex">
+  <strong>Q2.</strong> Two dice. Find $E(X_1 \mid X_1 + X_2 = 4)$. Guess the general formula for $E(X_1 \mid S)$.
+  <details><summary>Answer</summary>The pairs with sum 4 are $(1,3), (2,2), (3,1)$, equally likely, so the average of $X_1$ is $2$. By symmetry $E(X_1 \mid S) = E(X_2 \mid S)$, and the two add up to $E(S \mid S) = S$. So $E(X_1 \mid S) = S/2$.</details>
+</div>
+<div class="block ex">
+  <strong>Q3.</strong> Two dice. Find $E(\max(X_1, X_2) \mid X_1 = 5)$.
+  <details><summary>Answer</summary>If $X_2 \le 5$ (probability $\tfrac56$), the max is 5. If $X_2 = 6$, it's 6. $E = \tfrac{5\cdot 5 + 6}{6} = \tfrac{31}{6} \approx 5.17$.</details>
+</div>
+<div class="block ex">
+  <strong>Q4.</strong> Symmetric random walk. Find $E(S_5 \mid \mathcal{F}_3)$ and $E(S_5^2 \mid \mathcal{F}_3)$.
+  <details><summary>Answer</summary>$S_5 = S_3 + D$ with $D = \xi_4 + \xi_5$ independent of $\mathcal{F}_3$, $E(D) = 0$, $E(D^2) = 2$. So $E(S_5 \mid \mathcal{F}_3) = S_3$ and $E(S_5^2 \mid \mathcal{F}_3) = S_3^2 + 2S_3\cdot 0 + 2 = S_3^2 + 2$.</details>
+</div>
+<div class="block ex">
+  <strong>Q5.</strong> The number of insurance claims is $N \sim \text{Poisson}(3)$. Each claim has mean Rs 100, independent of $N$. Find the expected total.
+  <details><summary>Answer</summary>$E(\text{total} \mid N) = 100N$ (linearity + independence). Tower: $E(\text{total}) = E(100N) = 300$.</details>
+</div>
+<div class="block ex">
+  <strong>Q6.</strong> Two dice. Are $X_1$ and $\mathbb{1}\{X_1 + X_2 = 7\}$ independent?
+  <details><summary>Answer</summary>Yes, surprisingly. For every $k$, $P(\text{sum} = 7 \mid X_1 = k) = P(X_2 = 7 - k) = \tfrac16 = P(\text{sum} = 7)$. (For sum $= 8$ it fails: $X_1 = 1$ makes 8 impossible.)</details>
+</div>
+<div class="block ex">
+  <strong>Q7.</strong> $X$ is $\mathcal{G}$-measurable and $Z$ is independent of $\mathcal{G}$ with $E(Z) = 2$. Simplify $E(3X + XZ + 5 \mid \mathcal{G})$.
+  <details><summary>Answer</summary>$3X + X\,E(Z \mid \mathcal{G}) + 5 = 3X + 2X + 5 = 5X + 5$.</details>
 </div>
 
 </body>

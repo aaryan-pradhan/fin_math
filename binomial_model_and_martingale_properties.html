@@ -26,8 +26,23 @@
     <li>$\mathcal{F}_t \subset \mathcal{F}_{t+1}$ (nested information structure)</li>
   </ul>
 </div>
+<div class="block ex">
+  <strong>Running example:</strong> $S_0 = 100$, $u = 1.2$, $d = 0.8$, $T = 2$.
+  <table>
+    <tr><th>path $v$</th><th>$S_1$</th><th>$S_2$</th></tr>
+    <tr><td>$(u,u)$</td><td>120</td><td>144</td></tr>
+    <tr><td>$(u,d)$</td><td>120</td><td>96</td></tr>
+    <tr><td>$(d,u)$</td><td>80</td><td>96</td></tr>
+    <tr><td>$(d,d)$</td><td>80</td><td>64</td></tr>
+  </table>
+  Atoms of $\mathcal{F}_1$: $A_u = \{uu, ud\}$ ($S_1 = 120$) and $A_d = \{du, dd\}$ ($S_1 = 80$).<br>
+  $S_2 = 96$ on both $ud$ and $du$, so $S_2$ alone can't tell them apart. $\mathcal{F}_2 = \sigma(S_0, S_1, S_2)$ can, because $S_1$ differs (120 vs 80).
+</div>
 <div class="block warn">
   <strong>Non-Adapted Increment:</strong> $Y_t := S_{t+1} - S_t$ is <em>not</em> $\mathcal{F}_t$-measurable because determining $\{Y_t = c\}$ requires future move $v_{t+1} \notin \mathcal{F}_t$.
+</div>
+<div class="block ex">
+  Running example: on the atom $A_u$, $Y_1 = S_2 - S_1$ equals $144 - 120 = 24$ on $uu$ but $96 - 120 = -24$ on $ud$. It is not constant on an atom of $\mathcal{F}_1$, so it is not $\mathcal{F}_1$-measurable.
 </div>
 
 <h2>Step 2: Martingale, Submartingale &amp; Supermartingale</h2>
@@ -44,6 +59,16 @@
   If $P(v_{t+1} = u) = p$, then $E[v_{t+1}] = pu + (1-p)d$.<br>
   $S_t$ is a martingale $\iff pu + (1-p)d = 1$.
 </div>
+<div class="block ex">
+  Running example: solve $1.2p + 0.8(1-p) = 1$, i.e. $0.4p = 0.2$, so $p = \tfrac12$. In general $p = \frac{1-d}{u-d}$.
+  <table>
+    <tr><th>$p$</th><th>$E[v] = 1.2p + 0.8(1-p)$</th><th>type</th></tr>
+    <tr><td>0.5</td><td>1.00</td><td>MG</td></tr>
+    <tr><td>0.6</td><td>1.04</td><td>sub-MG</td></tr>
+    <tr><td>0.4</td><td>0.96</td><td>super-MG</td></tr>
+  </table>
+  Check at $p = 0.5$ on $A_u$: $E[S_2 \mid S_1 = 120] = \tfrac12(144) + \tfrac12(96) = 120 = S_1$ ✅
+</div>
 
 <h2>Step 3: Multi-Step Expectation Theorem</h2>
 <div class="block green">
@@ -53,6 +78,11 @@
   $$E[X_{t+s} \mid \mathcal{F}_t] = E\big[E[X_{t+s} \mid \mathcal{F}_{t+s-1}] \mid \mathcal{F}_t\big]$$
   By martingale property, $E[X_{t+s} \mid \mathcal{F}_{t+s-1}] = X_{t+s-1}$, so
   $$= E[X_{t+s-1} \mid \mathcal{F}_t] = \cdots = E[X_{t+1} \mid \mathcal{F}_t] = X_t. \quad ■$$
+</div>
+<div class="block ex">
+  Running example, $p = \tfrac12$, two steps from $t = 0$:
+  $$E[S_2 \mid \mathcal{F}_0] = \tfrac14(144) + \tfrac12(96) + \tfrac14(64) = 36 + 48 + 16 = 100 = S_0\ ✅$$
+  Tower version: $E[S_2 \mid \mathcal{F}_1] = S_1 \in \{120, 80\}$, then $E[S_1] = \tfrac12(120) + \tfrac12(80) = 100$.
 </div>
 
 <h2>Step 4: Corollary — Constant Unconditional Mean</h2>
@@ -65,6 +95,31 @@
     <li>Setting $t = 0$: $E[X_s] = E[X_0]$ $\forall s \geq 0$. ■</li>
   </ol>
   <strong>For Submartingales:</strong> $E[Y_{t+s} \mid \mathcal{F}_t] \geq Y_t \implies E[Y_{t+s}] \geq E[Y_t] \geq E[Y_0]$.
+</div>
+<div class="block ex">
+  Sub-MG case $p = 0.6$: $E[S_t] = 100(1.04)^t$. Check $t = 2$ by the table: $0.36(144) + 0.48(96) + 0.16(64) = 51.84 + 46.08 + 10.24 = 108.16 = 100(1.04)^2$ ✅. The mean grows: $100 \to 104 \to 108.16$.
+</div>
+
+<h2>Practice Questions</h2>
+<div class="block ex">
+  <strong>Q1.</strong> $u = 2$, $d = 0.5$. For which $p$ is $S_t$ a martingale?
+  <details><summary>Answer</summary>$p = \frac{1-d}{u-d} = \frac{0.5}{1.5} = \tfrac13$. Check: $\tfrac13(2) + \tfrac23(0.5) = \tfrac23 + \tfrac13 = 1$ ✅</details>
+</div>
+<div class="block ex">
+  <strong>Q2.</strong> $S_0 = 50$, $u = 1.1$, $d = 0.9$. Find $E[S_3]$ for (a) $p = 0.5$, (b) $p = 0.7$.
+  <details><summary>Answer</summary>(a) $E[v] = 0.55 + 0.45 = 1$, a MG, so $E[S_3] = 50$. (b) $E[v] = 0.77 + 0.27 = 1.04$, so $E[S_3] = 50(1.04)^3 = 56.2432$.</details>
+</div>
+<div class="block ex">
+  <strong>Q3.</strong> Running example with $p = \tfrac12$ (so $S_t$ is a MG). Is $S_t^2$ a MG?
+  <details><summary>Answer</summary>$E[S_{t+1}^2 \mid \mathcal{F}_t] = S_t^2E[v^2] = S_t^2\cdot\tfrac12(1.44 + 0.64) = 1.04\,S_t^2 > S_t^2$. It is a sub-MG, not a MG. Numbers: $S_0^2 = 10000$, $E[S_1^2] = \tfrac12(14400 + 6400) = 10400$.</details>
+</div>
+<div class="block ex">
+  <strong>Q4.</strong> $p = 0.6$ (so $m = E[v] = 1.04$). Show $X_t = S_t/m^t$ is a MG and compute $X_1$ on both atoms.
+  <details><summary>Answer</summary>$E[X_{t+1} \mid \mathcal{F}_t] = \frac{S_tE[v]}{m^{t+1}} = \frac{S_t}{m^t} = X_t$. $X_1 = 120/1.04 \approx 115.38$ on $A_u$ and $80/1.04 \approx 76.92$ on $A_d$. $E[X_1] = 0.6(115.38) + 0.4(76.92) = 100 = X_0$ ✅</details>
+</div>
+<div class="block ex">
+  <strong>Q5.</strong> Running tree. Which are $\mathcal{F}_1$-measurable: (a) $S_1^2$, (b) $S_2 - S_1$, (c) $\max(S_0, S_1)$, (d) $\mathbb{1}\{S_2 > 100\}$?
+  <details><summary>Answer</summary>(a) Yes (a function of $S_1$). (b) No ($\pm24$ within $A_u$). (c) Yes: 120 on $A_u$, 100 on $A_d$. (d) No: on $A_u$ it is 1 at $uu$ (144) but 0 at $ud$ (96).</details>
 </div>
 
 </body>

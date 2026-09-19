@@ -21,6 +21,15 @@
 <div class="block warn">
   ⚠️ <strong>Bounded is essential.</strong> Unbounded $\tau$ (e.g. doubling strategy: "quit when I first win") can appear to beat $E[X_0]$ — but only by waiting potentially forever. The theorem doesn't apply.
 </div>
+<div class="block ex">
+  <strong>Unbounded counterexample.</strong> Symmetric walk from 0, $\tau$ = first hit of $+1$. The walk hits $+1$ a.s., so $X_\tau = 1$ always and $E[X_\tau] = 1 \ne 0 = E[X_0]$. The catch: $E[\tau] = \infty$, and on the way the walk can sink arbitrarily low.<br><br>
+  <strong>Doubling, capped at 10 rounds (bounded).</strong> Bet 1, 2, 4, … and quit at the first win.
+  <ul>
+    <li>A win at round $k$ nets $2^{k-1} - (1 + 2 + \cdots + 2^{k-2}) = +1$. Probability $1 - (\tfrac12)^{10} = \tfrac{1023}{1024}$.</li>
+    <li>Losing all 10 rounds costs $1 + 2 + \cdots + 512 = 1023$. Probability $\tfrac1{1024}$.</li>
+  </ul>
+  $E = \tfrac{1023}{1024}(1) - \tfrac{1}{1024}(1023) = 0$ ✅. A frequent small win is paid for by a rare huge loss.
+</div>
 
 <h2>2. Proof</h2>
 <div class="block">
@@ -57,6 +66,13 @@
   $$2 - 4E[\tau] = 0 \implies \boxed{E[\tau] = \tfrac{1}{2}}$$
   <em>The trick:</em> optimal stopping converts an unknown distribution of $\tau$ into one-line algebra.
 </div>
+<div class="block ex">
+  <strong>Gambler's ruin with OST</strong> (CT-1 Q10). Walk from 0, stop at $+10$ or $-5$. ($\tau$ is not bounded, but $X_{t\wedge\tau}$ stays in $[-5, 10]$, so taking the limit is justified.)
+  <ul>
+    <li>MG $X_n$: $10p - 5(1-p) = 0$, so $p = \tfrac13$.</li>
+    <li>MG $X_n^2 - n$: $E[\tau] = E[X_\tau^2] = 100\cdot\tfrac13 + 25\cdot\tfrac23 = 50$.</li>
+  </ul>
+</div>
 
 <h2>5. Sub/Super-MG Extension</h2>
 <div class="block">
@@ -78,6 +94,32 @@
   <strong>Optimal Stopping = 4-line proof</strong><br>
   Stopped process is MG → constant mean → evaluate at $t=c$ → $E[X_\tau] = E[X_0]$.<br><br>
   Heavy lifting done by the stopped process theorem. This theorem is just applying it.
+</div>
+
+<h2>Practice Questions</h2>
+<div class="block ex">
+  <strong>Q1.</strong> Symmetric walk from 0, stop at $+3$ or $-2$. Find $P(\text{hit } +3)$ and $E[\tau]$.
+  <details><summary>Answer</summary>$3p - 2(1-p) = 0$, so $p = \tfrac25$. $E[\tau] = 9\cdot\tfrac25 + 4\cdot\tfrac35 = \tfrac{18 + 12}{5} = 6$. Shortcut: $E[\tau] = AB = 3\cdot 2$.</details>
+</div>
+<div class="block ex">
+  <strong>Q2.</strong> $\tau = \min\{t : W(t) = 3 - 6t\}$. Find $E[\tau]$.
+  <details><summary>Answer</summary>$E[W(\tau)] = 0$, so $E[3 - 6\tau] = 0$, giving $E[\tau] = \tfrac12$.</details>
+</div>
+<div class="block ex">
+  <strong>Q3.</strong> Try the same method on $\tau = \min\{t : W(t) = 1 + 2t\}$. What goes wrong?
+  <details><summary>Answer</summary>You'd get $1 + 2E[\tau] = 0$, so $E[\tau] = -\tfrac12 &lt; 0$, which is impossible. The line runs away upward, BM may never catch it, and $P(\tau = \infty) > 0$. OST needs $\tau$ bounded (or a limit argument that holds). Always check the hypotheses before doing the algebra.</details>
+</div>
+<div class="block ex">
+  <strong>Q4.</strong> Doubling strategy capped at 5 rounds. Distribution of the final wealth and its mean?
+  <details><summary>Answer</summary>$+1$ with probability $1 - \tfrac1{32} = \tfrac{31}{32}$. $-(1+2+4+8+16) = -31$ with probability $\tfrac1{32}$. Mean $= \tfrac{31}{32} - \tfrac{31}{32} = 0$.</details>
+</div>
+<div class="block ex">
+  <strong>Q5.</strong> Symmetric walk, $\tau$ = first exit from $(-2, 2)$, i.e. first time $|X_n| = 2$. Find $E[\tau]$.
+  <details><summary>Answer</summary>$X_\tau^2 = 4$ always. MG $X_n^2 - n$ gives $E[\tau] = E[X_\tau^2] = 4$. Sanity check: after 2 steps you're at $\pm2$ with probability $\tfrac12$, otherwise back at 0 and starting over. So $E[\tau] = 2 + \tfrac12E[\tau]$, giving $E[\tau] = 4$ ✅</details>
+</div>
+<div class="block ex">
+  <strong>Q6.</strong> $X_n$ is a super-MG (house edge), $X_0 = 100$, $\tau \le 50$. What can you say about $E[X_\tau]$?
+  <details><summary>Answer</summary>$E[X_\tau] \le 100$. The stopped process is a super-MG, so its mean can only fall.</details>
 </div>
 
 </body>

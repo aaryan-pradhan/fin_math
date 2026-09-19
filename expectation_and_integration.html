@@ -20,6 +20,13 @@
   $$E(\xi) = \int_\Omega \xi\, dP$$
   The family of all integrable r.v.s on $(\Omega, \mathcal{F}, P)$ is denoted $L^1$ or $L^1(\Omega, \mathcal{F}, P)$.
 </div>
+<div class="block ex">
+  <ul>
+    <li><strong>Fair die</strong>, $\xi(\omega) = \omega$: $E|\xi| = \tfrac16(1 + \cdots + 6) = 3.5 &lt; \infty$, so it's integrable and $E\xi = 3.5$.</li>
+    <li><strong>Any bounded r.v.</strong> ($|\xi| \le M$) is integrable: $E|\xi| \le M$.</li>
+    <li><strong>St Petersburg:</strong> $P(\xi = 2^k) = 2^{-k}$ for $k = 1, 2, \ldots$ Then $E|\xi| = \sum 2^k\cdot 2^{-k} = 1 + 1 + \cdots = \infty$. Not integrable.</li>
+  </ul>
+</div>
 
 <h2>Step 2: Why Absolute Value?</h2>
 <div class="block warn">
@@ -27,6 +34,17 @@
   Both $\int \xi^+\, dP$ and $\int \xi^-\, dP$ exist in $[0, \infty]$.<br><br>
   If both are $+\infty$, then $E(\xi) = \infty - \infty$ — <strong>undefined</strong>.<br><br>
   Requiring $\int |\xi|\, dP < \infty$ forces <strong>both</strong> $\int \xi^+\, dP < \infty$ and $\int \xi^-\, dP < \infty$ (since $|\xi| = \xi^+ + \xi^-$), guaranteeing the subtraction is a finite real number.
+</div>
+<div class="block ex">
+  <strong>Finite case.</strong> Die, $\xi = \omega - 3.5$:
+  <table>
+    <tr><th>$\omega$</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td></tr>
+    <tr><th>$\xi$</th><td>−2.5</td><td>−1.5</td><td>−0.5</td><td>0.5</td><td>1.5</td><td>2.5</td></tr>
+    <tr><th>$\xi^+$</th><td>0</td><td>0</td><td>0</td><td>0.5</td><td>1.5</td><td>2.5</td></tr>
+    <tr><th>$\xi^-$</th><td>2.5</td><td>1.5</td><td>0.5</td><td>0</td><td>0</td><td>0</td></tr>
+  </table>
+  $E\xi^+ = \tfrac{4.5}{6} = 0.75$ and $E\xi^- = 0.75$, so $E\xi = 0.75 - 0.75 = 0$.<br><br>
+  <strong>$\infty - \infty$ case.</strong> $P(\xi = 2^k) = P(\xi = -2^k) = 2^{-k-1}$. Then $E\xi^+ = \sum 2^k 2^{-k-1} = \sum \tfrac12 = \infty$, and likewise $E\xi^- = \infty$. The distribution is symmetric, yet $E\xi$ is <em>undefined</em>, not 0.
 </div>
 
 <h2>Step 3: Indicator Random Variables</h2>
@@ -39,6 +57,12 @@
   $$E(\mathbb{1}_A) = \int_\Omega \mathbb{1}_A\, dP = \int_A 1\, dP + \int_{\Omega \setminus A} 0\, dP = P(A)$$
   The integrand is 0 outside $A$, so only the measure of $A$ survives. This works for any $\Omega$ (discrete or uncountable) — no $\omega$-by-$\omega$ summation needed.
 </div>
+<div class="block ex">
+  <ul>
+    <li>Die, $A = \{5, 6\}$: $\mathbb{1}_A = 0,0,0,0,1,1$, so $E\mathbb{1}_A = \tfrac26 = \tfrac13 = P(A)$.</li>
+    <li>Uniform $U$ on $[0,1]$, $A = \{0.2 \le U \le 0.5\}$: $E\mathbb{1}_A = 0.3$. There's nothing to sum $\omega$ by $\omega$ (uncountably many), and none is needed.</li>
+  </ul>
+</div>
 
 <h2>Step 4: Simple Functions</h2>
 <div class="block def">
@@ -50,6 +74,15 @@
   <strong>Why disjoint?</strong> Each $\omega$ lands in at most one $A_i$, so $\eta(\omega) = \eta_i$ — one clean value, no ambiguity. (Disjointness is <em>not</em> needed for linearity of the integral — that always holds. It's needed for the representation to be unambiguous.)<br><br>
   <strong>Do the $A_i$ need to cover $\Omega$?</strong> No. If $\omega \notin \bigcup A_i$, every indicator is 0, so $\eta(\omega) = 0$.
 </div>
+<div class="block ex">
+  Die, $\eta = 10\cdot\mathbb{1}_{\{1,2\}} + 5\cdot\mathbb{1}_{\{3\}}$:
+  <table>
+    <tr><th>$\omega$</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td></tr>
+    <tr><th>$\eta$</th><td>10</td><td>10</td><td>5</td><td>0</td><td>0</td><td>0</td></tr>
+  </table>
+  $\{4,5,6\}$ is not covered, so $\eta = 0$ there.<br>
+  Non-disjoint: $\mathbb{1}_{\{1,2\}} + \mathbb{1}_{\{2,3\}}$ equals 2 at $\omega = 2$. It's still a fine function, but its disjoint form is $1\cdot\mathbb{1}_{\{1,3\}} + 2\cdot\mathbb{1}_{\{2\}}$.
+</div>
 
 <h2>Step 5: Expectation of Simple Functions</h2>
 <div class="block green">
@@ -57,6 +90,43 @@
   $$E(\eta) = \int_\Omega \eta\, dP = \sum_{i=1}^{n} \eta_i \int_\Omega \mathbb{1}_{A_i}\, dP = \sum_{i=1}^{n} \eta_i P(A_i)$$
   This is the weighted sum of probabilities. The construction ladder:<br>
   indicators → simple functions → (approximate arbitrary r.v.s by simple functions → general Lebesgue integral)
+</div>
+<div class="block ex">
+  Die $\eta$ above: $E\eta = 10\cdot\tfrac26 + 5\cdot\tfrac16 = \tfrac{25}6 \approx 4.17$. Check $\omega$ by $\omega$: $\tfrac16(10 + 10 + 5 + 0 + 0 + 0) = \tfrac{25}6$ ✅
+</div>
+<div class="block ex">
+  <strong>Approximating $U$ (uniform on $[0,1]$) from below.</strong> $\eta_n = \lfloor 2^nU \rfloor / 2^n$ rounds $U$ down to a multiple of $2^{-n}$.
+  <ul>
+    <li>$n = 1$: values $0, \tfrac12$, each with probability $\tfrac12$. $E\eta_1 = 0.25$.</li>
+    <li>$n = 2$: values $0, \tfrac14, \tfrac12, \tfrac34$, each $\tfrac14$. $E\eta_2 = 0.375$.</li>
+    <li>In general $E\eta_n = \tfrac12(1 - 2^{-n}) \uparrow \tfrac12 = EU$.</li>
+  </ul>
+</div>
+
+<h2>Practice Questions</h2>
+<div class="block ex">
+  <strong>Q1.</strong> Fair die. Compute $E(\xi^2)$ as a simple-function expectation.
+  <details><summary>Answer</summary>$\xi^2 = \sum_{k=1}^6 k^2\mathbb{1}_{\{k\}}$, so $E = \tfrac16(1 + 4 + 9 + 16 + 25 + 36) = \tfrac{91}6 \approx 15.17$.</details>
+</div>
+<div class="block ex">
+  <strong>Q2.</strong> $P(\xi = k) = \tfrac{c}{k^2}$, $k = 1, 2, \ldots$, with $c = 6/\pi^2$. Is $\xi$ integrable?
+  <details><summary>Answer</summary>$E|\xi| = \sum k\cdot\tfrac{c}{k^2} = c\sum\tfrac1k = \infty$ (harmonic series). Not integrable, even though $P$ is a valid distribution.</details>
+</div>
+<div class="block ex">
+  <strong>Q3.</strong> $U$ uniform on $[0,1]$, $\eta = 2\cdot\mathbb{1}\{U &lt; 0.3\} - 1\cdot\mathbb{1}\{U \ge 0.7\}$. Find $E\eta$.
+  <details><summary>Answer</summary>$2(0.3) + (-1)(0.3) = 0.3$.</details>
+</div>
+<div class="block ex">
+  <strong>Q4.</strong> Die, $A = \{1,2,3\}$, $B = \{3,4\}$. Find $E(\mathbb{1}_A + \mathbb{1}_B)$ two ways.
+  <details><summary>Answer</summary>Linearity (no disjointness needed): $\tfrac12 + \tfrac13 = \tfrac56$. Pointwise values $1, 1, 2, 1, 0, 0$: $\tfrac56$ ✅</details>
+</div>
+<div class="block ex">
+  <strong>Q5.</strong> For the dyadic approximation $\eta_3$ of $U$, compute $E\eta_3$.
+  <details><summary>Answer</summary>Values $\tfrac k8$, $k = 0..7$, each with probability $\tfrac18$: $E = \tfrac1{64}(0 + 1 + \cdots + 7) = \tfrac{28}{64} = 0.4375 = \tfrac12(1 - \tfrac18)$ ✅</details>
+</div>
+<div class="block ex">
+  <strong>Q6.</strong> $X \sim \text{Exp}(1)$, $\xi = X - 1$. Compute $E\xi^+$ and $E\xi^-$, and check $E\xi = 0$.
+  <details><summary>Answer</summary>$E\xi^+ = \int_1^\infty (x-1)e^{-x}\,dx = e^{-1}$. $E\xi^- = \int_0^1 (1-x)e^{-x}\,dx = (1 - e^{-1}) - (1 - 2e^{-1}) = e^{-1}$. So $E\xi = e^{-1} - e^{-1} = 0 = EX - 1$ ✅</details>
 </div>
 
 </body>

@@ -20,6 +20,11 @@
 <div class="block green">
   <strong>Sample Space Rescaling:</strong> Conditioning on $B$ discards all outcomes $\omega \notin B$ (setting their probability to 0) and rescales $B$ to be the new sample space with measure 1.
 </div>
+<div class="block ex">
+  <strong>Die, told "even".</strong> $B = \{2,4,6\}$. The new weights are $\tfrac13$ each on $2, 4, 6$, and $0$ on $1, 3, 5$.
+  $$P(\{6\} \mid B) = \frac{P(\{6\})}{P(B)} = \frac{1/6}{1/2} = \frac13,\qquad P(\{\ge 4\} \mid B) = \frac{P(\{4,6\})}{1/2} = \frac{2/6}{1/2} = \frac23$$
+  <strong>Two dice.</strong> $P(\text{sum} = 8 \mid \text{first} = 3) = \frac{P(\{(3,5)\})}{P(\text{first} = 3)} = \frac{1/36}{1/6} = \frac16$.
+</div>
 
 <h2>Step 2: Subsets &amp; Disjoint Special Cases</h2>
 <div class="block warn">
@@ -30,12 +35,23 @@
   </ul>
   <strong>Disjoint Events:</strong> If $A \cap B = \varnothing$, then $P(A \mid B) = 0$.
 </div>
+<div class="block ex">
+  Die, $A = \{6\} \subseteq B = \{2,4,6\}$: $P(A \mid B) = \frac{1/6}{1/2} = \frac13$, but $P(B \mid A) = 1$ (a six is always even).<br>
+  Disjoint: $A = \{1\}$, $B$ = even gives $P(A \mid B) = 0$. Knowing "even" rules out 1.
+</div>
 
 <h2>Step 3: Law of Total Probability</h2>
 <div class="block">
   Let $\{B_1, B_2, \ldots\}$ be a countable partition of $\Omega$ (pairwise disjoint, $\bigcup B_i = \Omega$, $P(B_i) \neq 0$).<br>
   Slicing $A$ into disjoint components $A = \bigcup (A \cap B_i)$ yields:
   $$P(A) = \sum_{i=1}^{\infty} P(A \cap B_i) = \sum_{i=1}^{\infty} P(A \mid B_i)\, P(B_i)$$
+</div>
+<div class="block ex">
+  <strong>Two coins.</strong> Pick a fair coin or a two-headed coin with probability $\tfrac12$ each, then toss it.
+  $$P(H) = P(H \mid \text{fair})\tfrac12 + P(H \mid \text{2-headed})\tfrac12 = \tfrac12\cdot\tfrac12 + 1\cdot\tfrac12 = \tfrac34$$
+  <strong>Factory.</strong> Machine $M_1$ makes 60% of items (2% defective), $M_2$ makes 40% (5% defective).
+  $$P(D) = 0.02(0.6) + 0.05(0.4) = 0.012 + 0.020 = 0.032$$
+  Reverse the conditioning (Bayes): $P(M_2 \mid D) = \frac{P(D \cap M_2)}{P(D)} = \frac{0.020}{0.032} = 0.625$. $M_2$ makes only 40% of items but 62.5% of the defects.
 </div>
 
 <h2>Step 4: Pairwise vs. Mutual Independence</h2>
@@ -47,6 +63,49 @@
 </div>
 <div class="block green">
   This requires $2^n - n - 1$ equations in total (e.g., 4 equations for $n = 3$).
+</div>
+<div class="block ex">
+  <strong>Independent, not obviously.</strong> Die, $A = \{1,2\}$, $B$ = even. $P(A \cap B) = P(\{2\}) = \tfrac16$ and $P(A)P(B) = \tfrac13\cdot\tfrac12 = \tfrac16$ ✅. Knowing "even" leaves $P(A) = \tfrac13$ unchanged.
+</div>
+<div class="block ex">
+  <strong>Pairwise but not mutual.</strong> Two dice. $A$ = first even, $B$ = second even, $C$ = sum even. Each has probability $\tfrac12$.
+  <ul>
+    <li>$P(A \cap B) = \tfrac14 = \tfrac12\cdot\tfrac12$ ✅</li>
+    <li>$P(A \cap C) = P(\text{both even}) = \tfrac14$ ✅</li>
+    <li>$P(B \cap C) = \tfrac14$ ✅</li>
+    <li>$P(A \cap B \cap C) = P(\text{both even}) = \tfrac14 \ne \tfrac18$ ❌</li>
+  </ul>
+  Any two of them tell you the third, so they are not mutually independent.
+</div>
+
+<h2>Practice Questions</h2>
+<div class="block ex">
+  <strong>Q1.</strong> Two tosses. Find $P(\text{both H} \mid \text{at least one H})$ and $P(\text{both H} \mid \text{first is H})$.
+  <details><summary>Answer</summary>$\frac{1/4}{3/4} = \tfrac13$ and $\frac{1/4}{1/2} = \tfrac12$. The information differs: "at least one" leaves 3 outcomes, "first" leaves 2.</details>
+</div>
+<div class="block ex">
+  <strong>Q2.</strong> A disease has prevalence 1%. The test detects 99% of sick people and gives false positives for 5% of healthy people. You test positive. $P(\text{sick})$?
+  <details><summary>Answer</summary>$P(+) = 0.99(0.01) + 0.05(0.99) = 0.0099 + 0.0495 = 0.0594$. $P(\text{sick} \mid +) = 0.0099/0.0594 \approx 0.167$. Only about 17%: most positives are false because healthy people vastly outnumber sick ones.</details>
+</div>
+<div class="block ex">
+  <strong>Q3.</strong> Can two disjoint events with $P(A), P(B) > 0$ be independent?
+  <details><summary>Answer</summary>No. $P(A \cap B) = 0$ but $P(A)P(B) > 0$. Disjoint means that learning $A$ rules $B$ out, which is maximal dependence.</details>
+</div>
+<div class="block ex">
+  <strong>Q4.</strong> Die, $A = \{1,2,3\}$, $B = \{3,4\}$. Independent?
+  <details><summary>Answer</summary>$P(A \cap B) = P(\{3\}) = \tfrac16$ and $P(A)P(B) = \tfrac12\cdot\tfrac13 = \tfrac16$. Yes.</details>
+</div>
+<div class="block ex">
+  <strong>Q5.</strong> $A, B$ independent. Show $A$ and $B^c$ are independent.
+  <details><summary>Answer</summary>$P(A \cap B^c) = P(A) - P(A \cap B) = P(A) - P(A)P(B) = P(A)(1 - P(B)) = P(A)P(B^c)$ ✅</details>
+</div>
+<div class="block ex">
+  <strong>Q6.</strong> How many product equations must be checked for mutual independence of 4 events?
+  <details><summary>Answer</summary>$2^4 - 4 - 1 = 11$: six pairs, four triples, one quadruple.</details>
+</div>
+<div class="block ex">
+  <strong>Q7.</strong> Urn with 3 red and 2 blue balls. Draw two without replacement. $P(\text{2nd red})$?
+  <details><summary>Answer</summary>Law of total probability over the 1st draw: $P = \tfrac24\cdot\tfrac35 + \tfrac34\cdot\tfrac25 = \tfrac{6}{20} + \tfrac{6}{20} = \tfrac35$. Same as the first draw, by symmetry.</details>
 </div>
 
 </body>

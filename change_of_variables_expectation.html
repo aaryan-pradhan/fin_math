@@ -18,6 +18,14 @@
   $$E(h(\xi)) = \int_\Omega h(\xi(\omega))\, dP(\omega) = \int_{\mathbb{R}} h(x)\, dP_\xi(x)$$
   where $P_\xi(A) = P(\xi \in A)$ is the push-forward (distribution) measure on $(\mathbb{R}, \mathcal{B}(\mathbb{R}))$.
 </div>
+<div class="block ex">
+  Two tosses, $\xi$ = number of heads, $h(x) = x^2$. Compute $E(\xi^2)$ both ways:
+  <ul>
+    <li><strong>On $\Omega$</strong> (sum over outcomes): $HH \to 4$, $HT \to 1$, $TH \to 1$, $TT \to 0$. $E = \tfrac14(4 + 1 + 1 + 0) = 1.5$.</li>
+    <li><strong>On $\mathbb{R}$</strong> (sum over values, weighted by $P_\xi$): $0^2\cdot\tfrac14 + 1^2\cdot\tfrac12 + 2^2\cdot\tfrac14 = 1.5$ ✅</li>
+  </ul>
+  The $\mathbb{R}$ version groups $HT$ and $TH$, which share $\xi = 1$. You never need $\Omega$ once you know $P_\xi$.
+</div>
 
 <h2>Step 1: Simple Functions (Base Case)</h2>
 <div class="block">
@@ -26,6 +34,10 @@
   $$h(\xi(\omega)) = \sum_{i=1}^{n} h_i \mathbb{1}_{A_i}(\xi(\omega)) = \sum_{i=1}^{n} h_i \mathbb{1}_{\{\xi \in A_i\}}(\omega)$$
   Taking expectation:
   $$E(h(\xi)) = \sum_{i=1}^{n} h_i P(\xi \in A_i) = \sum_{i=1}^{n} h_i P_\xi(A_i) = \int_{\mathbb{R}} h(x)\, dP_\xi(x)$$
+</div>
+<div class="block ex">
+  Same $\xi$, $h = 3\cdot\mathbb{1}_{[1,\infty)} - 1\cdot\mathbb{1}_{(-\infty, 1)}$ ("win 3 if at least one head, else lose 1"):
+  $$E(h(\xi)) = 3\,P_\xi([1,\infty)) - 1\,P_\xi((-\infty,1)) = 3\cdot\tfrac34 - \tfrac14 = 2$$
 </div>
 
 <h2>Step 2: Non-Negative Borel Functions (MCT)</h2>
@@ -36,12 +48,22 @@
   $$\lim_{n\to\infty} E(h_n(\xi)) = E(h(\xi)) \qquad \text{and} \qquad \lim_{n\to\infty} \int_{\mathbb{R}} h_n\, dP_\xi = \int_{\mathbb{R}} h\, dP_\xi$$
   Hence, $E(h(\xi)) = \int_{\mathbb{R}} h(x)\, dP_\xi(x)$ holds for all non-negative $h$.
 </div>
+<div class="block ex">
+  $\xi \sim \text{Exp}(1)$, $h(x) = x$. Truncations $h_n = \min(x, n) \uparrow x$.
+  $$E\min(\xi, n) = \int_0^n P(\xi > t)\,dt = \int_0^n e^{-t}\,dt = 1 - e^{-n}$$
+  $n = 1$: $0.632$. $n = 3$: $0.950$. $n = 10$: $0.99995$. These increase to $1 = E\xi$, exactly as MCT promises.
+</div>
 
 <h2>Step 3: General Integrable Functions</h2>
 <div class="block warn">
   Decompose $h = h^+ - h^-$ where $h^+ = \max(h, 0) \geq 0$ and $h^- = \max(-h, 0) \geq 0$.<br>
   Since $h(\xi)$ is integrable, both $E(h^+(\xi))$ and $E(h^-(\xi))$ are finite. Applying Step 2 to both parts:
   $$E(h(\xi)) = E(h^+(\xi)) - E(h^-(\xi)) = \int_{\mathbb{R}} h^+\, dP_\xi - \int_{\mathbb{R}} h^-\, dP_\xi = \int_{\mathbb{R}} h(x)\, dP_\xi(x)$$
+</div>
+<div class="block ex">
+  $\xi$ uniform on $[-1, 2]$ (density $\tfrac13$), $h(x) = x$:
+  $$\int h^+\,dP_\xi = \int_0^2 \tfrac x3\,dx = \tfrac23,\qquad \int h^-\,dP_\xi = \int_{-1}^0 \tfrac{-x}{3}\,dx = \tfrac16$$
+  $E\xi = \tfrac23 - \tfrac16 = \tfrac12$, the midpoint of $[-1, 2]$ ✅
 </div>
 
 <h2>Step 4: Concrete Applications</h2>
@@ -50,6 +72,42 @@
   $$E(h(\xi)) = \int_{-\infty}^{\infty} h(x) f_\xi(x)\, dx$$
   <strong>2. Discrete Case:</strong> If $\xi$ takes discrete values $\{x_1, x_2, \ldots\}$:
   $$E(h(\xi)) = \sum_i h(x_i) P(\xi = x_i)$$
+</div>
+<div class="block ex">
+  <ul>
+    <li>$U$ uniform on $[0,1]$: $E(U^2) = \int_0^1 x^2\,dx = \tfrac13$.</li>
+    <li>$Z \sim N(0,1)$: $E(e^Z) = \int e^x\frac{1}{\sqrt{2\pi}}e^{-x^2/2}\,dx = e^{1/2} \approx 1.649$.</li>
+    <li>Die: $E(1/\xi) = \tfrac16\left(1 + \tfrac12 + \cdots + \tfrac16\right) = \tfrac{2.45}{6} \approx 0.408$. Not $1/E\xi = 1/3.5 \approx 0.286$.</li>
+  </ul>
+</div>
+<div class="block warn">
+  $E(h(\xi)) \ne h(E\xi)$ in general. Apply $h$ inside the integral, to each value, before averaging.
+</div>
+
+<h2>Practice Questions</h2>
+<div class="block ex">
+  <strong>Q1.</strong> $\xi$ uniform on $[0, 2]$. Find $E(\xi^3)$.
+  <details><summary>Answer</summary>$\int_0^2 x^3\cdot\tfrac12\,dx = \tfrac12\cdot\tfrac{16}{4} = 2$.</details>
+</div>
+<div class="block ex">
+  <strong>Q2.</strong> $\xi \sim \text{Exp}(1)$. Find $E(e^{\xi/2})$. What about $E(e^{\xi})$?
+  <details><summary>Answer</summary>$\int_0^\infty e^{x/2}e^{-x}\,dx = \int_0^\infty e^{-x/2}\,dx = 2$. For $E(e^\xi)$: $\int_0^\infty e^{x}e^{-x}\,dx = \int_0^\infty 1\,dx = \infty$, so $e^\xi$ is not integrable.</details>
+</div>
+<div class="block ex">
+  <strong>Q3.</strong> $\xi \sim \text{Poisson}(2)$. Find $E[\xi(\xi - 1)]$.
+  <details><summary>Answer</summary>$\sum_{k\ge 2} k(k-1)e^{-2}\frac{2^k}{k!} = 4\sum_{k\ge 2} e^{-2}\frac{2^{k-2}}{(k-2)!} = 4\cdot 1 = 4$. (In general $\lambda^2$.)</details>
+</div>
+<div class="block ex">
+  <strong>Q4.</strong> $Z \sim N(0,1)$. Find $E|Z|$.
+  <details><summary>Answer</summary>$2\int_0^\infty x\frac{1}{\sqrt{2\pi}}e^{-x^2/2}\,dx = \frac{2}{\sqrt{2\pi}}\left[-e^{-x^2/2}\right]_0^\infty = \frac{2}{\sqrt{2\pi}} = \sqrt{2/\pi} \approx 0.798$.</details>
+</div>
+<div class="block ex">
+  <strong>Q5.</strong> $U$ uniform on $[0,1]$. Compare $E(U^2)$ with $(EU)^2$, and $E\sqrt U$ with $\sqrt{EU}$.
+  <details><summary>Answer</summary>$E(U^2) = \tfrac13 > \tfrac14 = (EU)^2$ (convex $h$). $E\sqrt U = \int_0^1 x^{1/2}\,dx = \tfrac23 \approx 0.667 &lt; \sqrt{0.5} \approx 0.707$ (concave $h$). This is Jensen's inequality.</details>
+</div>
+<div class="block ex">
+  <strong>Q6.</strong> Two fair dice, $S$ = sum. Compute $E(\mathbb{1}\{S \ge 10\})$ and $E(S\cdot\mathbb{1}\{S \ge 10\})$.
+  <details><summary>Answer</summary>$P(S = 10, 11, 12) = \tfrac{3}{36}, \tfrac2{36}, \tfrac1{36}$. First: $\tfrac6{36} = \tfrac16$. Second: $\tfrac{10\cdot 3 + 11\cdot 2 + 12\cdot 1}{36} = \tfrac{64}{36} \approx 1.78$.</details>
 </div>
 
 </body>

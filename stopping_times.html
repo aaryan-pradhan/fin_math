@@ -20,6 +20,14 @@
 <div class="block green">
   <strong>Operational meaning:</strong> At time $t$, using only information available up to $t$, you can determine whether stopping has already occurred. No future peeking. This captures decisions like "stop gambling" or "sell a block of shares at the stock exchange" — if $\tau = k$, you act at time $k$ based only on what you already know by then.
 </div>
+<div class="block ex">
+  Three tosses, $\mathcal{F}_t$ = first $t$ tosses. Write $H{\_}{\_}$ for "all outcomes starting with H".
+  <ul>
+    <li>$\tau$ = first H (or $\infty$ if none). $\{\tau \le 1\} = H{\_}{\_} \in \mathcal{F}_1$ ✅. $\{\tau \le 2\} = H{\_}{\_} \cup TH{\_} \in \mathcal{F}_2$ ✅. So it is a stopping time.</li>
+    <li>$\tau = 5$ (constant): $\{\tau \le t\}$ is $\varnothing$ for $t &lt; 5$ and $\Omega$ for $t \ge 5$. Both are in every $\mathcal{F}_t$ ✅</li>
+    <li>$\tau = 1$ if toss 2 is H, else $\tau = 2$. Then $\{\tau \le 1\} = \{{\_}H{\_}\} \notin \mathcal{F}_1$ ❌. You would need toss 2 at time 1.</li>
+  </ul>
+</div>
 
 <h2>Step 2: Equivalent Characterisation — (1) $\iff$ (2)</h2>
 <div class="block">
@@ -30,6 +38,14 @@
   <strong>(2) $\implies$ (1):</strong> Write
   $$\{\tau \leq t\} = \bigcup_{s=0}^{t} \{\tau = s\}$$
   Each $\{\tau = s\} \in \mathcal{F}_s \subseteq \mathcal{F}_t$ (filtration is nested). Finite union of $\mathcal{F}_t$-sets $\in \mathcal{F}_t$ (σ-algebras are closed under countable unions). $\therefore \{\tau \leq t\} \in \mathcal{F}_t$. ■
+</div>
+<div class="block ex">
+  $\tau$ = first H, three tosses:
+  <ul>
+    <li>(1)⇒(2): $\{\tau = 2\} = \{\tau \le 2\} \setminus \{\tau \le 1\} = (H{\_}{\_} \cup TH{\_}) \setminus H{\_}{\_} = TH{\_}$.</li>
+    <li>(2)⇒(1): $\{\tau \le 2\} = \{\tau = 0\} \cup \{\tau = 1\} \cup \{\tau = 2\} = \varnothing \cup H{\_}{\_} \cup TH{\_}$.</li>
+  </ul>
+  Probabilities: $P(\tau = 1) = \tfrac12$, $P(\tau = 2) = \tfrac14$, $P(\tau = 3) = \tfrac18$, $P(\tau = \infty) = P(TTT) = \tfrac18$.
 </div>
 
 <h2>Step 3: Example — First Entry Time is a ST</h2>
@@ -45,8 +61,48 @@
   </ul>
   Finite intersection of $\mathcal{F}_n$-sets $\in \mathcal{F}_n$. $\therefore \{\tau = n\} \in \mathcal{F}_n$ for each $n \implies \tau$ is a ST. ■
 </div>
+<div class="block ex">
+  Random walk $X_0 = 0$, $B = \{2\}$. Path of steps $+1, -1, +1, +1, \ldots$ gives $X = 1, 0, 1, 2, \ldots$, so $\tau = 4$. At time 4 you check: "$X_1, X_2, X_3 \ne 2$ and $X_4 = 2$". That uses only the past ✅<br>
+  Path $-1, -1, -1, \ldots$ (drifting away forever) never hits 2, so $\tau = \infty$. This is why $\infty$ is allowed as a value.
+</div>
 <div class="block warn">
   <strong>Pitfall — "last exit time" is NOT a ST:</strong> $\tau = \max\{n : X_n \in B\}$ requires knowing the future (whether $X_{n+1}, X_{n+2}, \ldots$ ever re-enter $B$). At time $n$ you cannot determine this — so $\{\tau = n\} \notin \mathcal{F}_n$ in general.
+</div>
+<div class="block ex">
+  Three-step walk, $\tau$ = last $n \le 3$ with $X_n = 1$.
+  <ul>
+    <li>Steps $+1, -1, -1$: $X = 1, 0, -1$, so $\tau = 1$.</li>
+    <li>Steps $+1, -1, +1$: $X = 1, 0, 1$, so $\tau = 3$.</li>
+  </ul>
+  Both start with $+1$, so they lie in the same atom of $\mathcal{F}_1$. Yet one has $\tau = 1$ and the other doesn't. So $\{\tau = 1\} \notin \mathcal{F}_1$ ❌
+</div>
+
+<h2>Practice Questions</h2>
+<div class="block ex">
+  <strong>Q1.</strong> $\tau_1, \tau_2$ are stopping times. Which are stopping times: $\min(\tau_1, \tau_2)$, $\max(\tau_1, \tau_2)$, $\tau_1 + 1$, $\tau_1 - 1$?
+  <details><summary>Answer</summary>
+  <ul>
+    <li>$\min$: $\{\min \le t\} = \{\tau_1 \le t\} \cup \{\tau_2 \le t\} \in \mathcal{F}_t$ ✅</li>
+    <li>$\max$: $\{\max \le t\} = \{\tau_1 \le t\} \cap \{\tau_2 \le t\} \in \mathcal{F}_t$ ✅</li>
+    <li>$\tau_1 + 1$: $\{\tau_1 + 1 \le t\} = \{\tau_1 \le t-1\} \in \mathcal{F}_{t-1} \subseteq \mathcal{F}_t$ ✅</li>
+    <li>$\tau_1 - 1$: $\{\tau_1 - 1 \le t\} = \{\tau_1 \le t+1\} \in \mathcal{F}_{t+1}$, which in general is not in $\mathcal{F}_t$ ❌ (stopping one step before an event you can't yet see).</li>
+  </ul></details>
+</div>
+<div class="block ex">
+  <strong>Q2.</strong> Three tosses, $\tau$ = first time two heads in a row have appeared (the time of the second H). List $\{\tau = 2\}$ and $\{\tau = 3\}$, and give their probabilities.
+  <details><summary>Answer</summary>$\{\tau = 2\} = HH{\_} = \{HHH, HHT\}$, probability $\tfrac14$. $\{\tau = 3\} = \{THH\}$, probability $\tfrac18$ ($HTH$ has no consecutive pair). The remaining 5 outcomes $HTH, HTT, THT, TTH, TTT$ have no $HH$, so $\tau = \infty$ within 3 tosses, probability $\tfrac58$. Check: $\tfrac28 + \tfrac18 + \tfrac58 = 1$ ✅</details>
+</div>
+<div class="block ex">
+  <strong>Q3.</strong> Walk steps $+1, +1, -1, +1, +1$. Find $\tau$ = first hit of 3, and $\sigma$ = first hit of $-1$.
+  <details><summary>Answer</summary>$X = 1, 2, 1, 2, 3$, so $\tau = 5$. The path never reaches $-1$ in these 5 steps, so $\sigma > 5$ (possibly $\infty$).</details>
+</div>
+<div class="block ex">
+  <strong>Q4.</strong> Is "the time at which $X_n$ reaches its maximum over $n \le 10$" a stopping time?
+  <details><summary>Answer</summary>No. To know that time $n$ is the maximum you need $X_{n+1}, \ldots, X_{10}$ to be smaller, which is future information. Same flaw as the last exit time.</details>
+</div>
+<div class="block ex">
+  <strong>Q5.</strong> $\tau = \min\{n : X_n \ge 2\} \wedge 10$. Stopping time? Bounded?
+  <details><summary>Answer</summary>Yes: it is the min of a first-entry time and the constant 10, both stopping times (Q1). It is bounded by 10, which is exactly what the Optimal Stopping Theorem needs.</details>
 </div>
 
 </body>

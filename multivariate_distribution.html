@@ -13,45 +13,90 @@
 
     <h2>1. Definition & Construction</h2>
     <p>
-        Let $$Z_1, Z_2, \dots, Z_n \sim \text{NID}(0,1)$$ be independent standard normal random variables. 
-        A random vector $$\mathbf{X} = (X_1, \dots, X_m)^T$$ follows a <strong>Multivariate Normal Distribution</strong> if every component $$X_i$$ is a linear combination of these independent standard normals plus a deterministic mean shift $$\mu_i$$:
+        Let $Z_1, Z_2, \dots, Z_n \sim \text{NID}(0,1)$ be independent standard normal random variables. 
+        A random vector $\mathbf{X} = (X_1, \dots, X_m)^T$ follows a <strong>Multivariate Normal Distribution</strong> if every component $X_i$ is a linear combination of these independent standard normals plus a deterministic mean shift $\mu_i$:
     </p>
     $$\begin{pmatrix} X_1 \\ X_2 \\ \vdots \\ X_m \end{pmatrix} = \begin{pmatrix} a_{11} & \dots & a_{1n} \\ a_{21} & \dots & a_{2n} \\ \vdots & \ddots & \vdots \\ a_{m1} & \dots & a_{mn} \end{pmatrix} \begin{pmatrix} Z_1 \\ Z_2 \\ \vdots \\ Z_n \end{pmatrix} + \begin{pmatrix} \mu_1 \\ \mu_2 \\ \vdots \\ \mu_m \end{pmatrix}$$
     
     <div class="block">
         <strong>Matrix Representation:</strong>
         $$\mathbf{X} = \mathbf{A}\mathbf{Z} + \boldsymbol{\mu}$$
-        where $$\mathbf{A} \in \mathbb{R}^{m \times n}$$, $$\mathbf{Z} \sim \mathcal{N}(\mathbf{0}, \mathbf{I}_n)$$, and $$\boldsymbol{\mu} \in \mathbb{R}^m$$.
+        where $\mathbf{A} \in \mathbb{R}^{m \times n}$, $\mathbf{Z} \sim \mathcal{N}(\mathbf{0}, \mathbf{I}_n)$, and $\boldsymbol{\mu} \in \mathbb{R}^m$.
+    </div>
+    <div class="block ex">
+        <strong>Running example.</strong> $Z_1, Z_2$ independent $N(0,1)$, and
+        $$X_1 = Z_1 + 1,\qquad X_2 = Z_1 + Z_2$$
+        $$\mathbf{A} = \begin{pmatrix} 1 & 0 \\ 1 & 1 \end{pmatrix},\qquad \boldsymbol{\mu} = \begin{pmatrix} 1 \\ 0 \end{pmatrix}$$
+        Sample: $Z_1 = 0.5$, $Z_2 = -1.2$ gives $X_1 = 1.5$, $X_2 = -0.7$. $X_1$ and $X_2$ share $Z_1$, so they move together.
+    </div>
+    <div class="block ex">
+        Brownian motion is MVN: $W_1 = Z_1$ and $W_3 = W_1 + (W_3 - W_1) = Z_1 + \sqrt2\,Z_2$, since $W_3 - W_1 \sim N(0,2)$ is independent of $W_1$.
+        $$\mathbf{A} = \begin{pmatrix} 1 & 0 \\ 1 & \sqrt2 \end{pmatrix},\qquad \boldsymbol{\mu} = \mathbf{0}$$
     </div>
 
     <h2>2. Mean and Covariance Structure</h2>
-    <p>The joint distribution of $$\mathbf{X}$$ is completely specified by two parameters:</p>
+    <p>The joint distribution of $\mathbf{X}$ is completely specified by two parameters:</p>
     <ul>
-        <li><strong>Mean Vector:</strong> $$\boldsymbol{\mu} = \mathbb{E}[\mathbf{X}] = (\mu_1, \dots, \mu_m)^T$$</li>
-        <li><strong>Covariance Matrix:</strong> $$\boldsymbol{\Sigma} = \text{Cov}(\mathbf{X}) = \mathbf{A}\mathbf{A}^T$$, where entry $$\Sigma_{ij} = \text{Cov}(X_i, X_j)$$</li>
+        <li><strong>Mean Vector:</strong> $\boldsymbol{\mu} = \mathbb{E}[\mathbf{X}] = (\mu_1, \dots, \mu_m)^T$</li>
+        <li><strong>Covariance Matrix:</strong> $\boldsymbol{\Sigma} = \text{Cov}(\mathbf{X}) = \mathbf{A}\mathbf{A}^T$, where entry $\Sigma_{ij} = \text{Cov}(X_i, X_j)$</li>
     </ul>
+
+    <div class="block ex">
+        Running example:
+        $$\boldsymbol{\Sigma} = \mathbf{A}\mathbf{A}^T = \begin{pmatrix} 1 & 0 \\ 1 & 1 \end{pmatrix}\begin{pmatrix} 1 & 1 \\ 0 & 1 \end{pmatrix} = \begin{pmatrix} 1 & 1 \\ 1 & 2 \end{pmatrix}$$
+        Direct check:
+        <ul>
+            <li>$Var(X_1) = Var(Z_1) = 1$</li>
+            <li>$Var(X_2) = Var(Z_1) + Var(Z_2) = 2$</li>
+            <li>$Cov(X_1, X_2) = Cov(Z_1 + 1, Z_1 + Z_2) = Var(Z_1) = 1$</li>
+        </ul>
+        BM example:
+        $$\boldsymbol{\Sigma} = \begin{pmatrix} 1 & 0 \\ 1 & \sqrt2 \end{pmatrix}\begin{pmatrix} 1 & 1 \\ 0 & \sqrt2 \end{pmatrix} = \begin{pmatrix} 1 & 1 \\ 1 & 3 \end{pmatrix}$$
+        This matches $Var(W_t) = t$ and $Cov(W_s, W_t) = \min(s,t)$.
+    </div>
 
     <h3>Linear Combinations</h3>
-    <p>For any vector of fixed coefficients $$\mathbf{t} = (t_1, \dots, t_m)^T$$, the linear combination $$Y = \mathbf{t}^T\mathbf{X} = \sum_{i=1}^m t_i X_i$$ is a 1D normal random variable with:</p>
+    <p>For any vector of fixed coefficients $\mathbf{t} = (t_1, \dots, t_m)^T$, the linear combination $Y = \mathbf{t}^T\mathbf{X} = \sum_{i=1}^m t_i X_i$ is a 1D normal random variable with:</p>
     <ul>
-        <li><strong>Mean:</strong> $$\mathbb{E}[\mathbf{t}^T\mathbf{X}] = \mathbf{t}^T\boldsymbol{\mu} = \sum_{i=1}^m t_i \mu_i$$</li>
-        <li><strong>Variance:</strong> $$\text{Var}(\mathbf{t}^T\mathbf{X}) = \mathbf{t}^T\boldsymbol{\Sigma}\mathbf{t} = \sum_{i=1}^m \sum_{j=1}^m t_i t_j \text{Cov}(X_i, X_j)$$</li>
+        <li><strong>Mean:</strong> $\mathbb{E}[\mathbf{t}^T\mathbf{X}] = \mathbf{t}^T\boldsymbol{\mu} = \sum_{i=1}^m t_i \mu_i$</li>
+        <li><strong>Variance:</strong> $\text{Var}(\mathbf{t}^T\mathbf{X}) = \mathbf{t}^T\boldsymbol{\Sigma}\mathbf{t} = \sum_{i=1}^m \sum_{j=1}^m t_i t_j \text{Cov}(X_i, X_j)$</li>
     </ul>
+    <div class="block ex">
+        Running example, $\mathbf{t} = (1,1)^T$, $Y = X_1 + X_2$:
+        <ul>
+            <li>Mean: $1\cdot 1 + 1\cdot 0 = 1$.</li>
+            <li>Variance: $\mathbf{t}^T\boldsymbol{\Sigma}\mathbf{t} = \Sigma_{11} + \Sigma_{22} + 2\Sigma_{12} = 1 + 2 + 2 = 5$.</li>
+            <li>Direct check: $Y = 2Z_1 + Z_2 + 1$, so $Var(Y) = 4 + 1 = 5$ ✅</li>
+        </ul>
+        So $Y \sim N(1, 5)$.
+    </div>
+    <div class="block ex">
+        BM, $\mathbf{t} = (4, 6)^T$ (CT-1 Q4):
+        $$Var(4W_1 + 6W_3) = 16\cdot 1 + 36\cdot 3 + 2\cdot 4\cdot 6\cdot 1 = 16 + 108 + 48 = 172$$
+        So $4W_1 + 6W_3 \sim N(0, 172)$.
+    </div>
 
     <h2>3. 1D Normal Expectation Foundation</h2>
-    <p>To compute moment generating functions, we rely on the fundamental expectation for $$Z \sim N(0,1)$$ obtained via completing the square:</p>
+    <p>To compute moment generating functions, we rely on the fundamental expectation for $Z \sim N(0,1)$ obtained via completing the square:</p>
     $$\mathbb{E}[e^{kZ}] = \int_{-\infty}^{\infty} e^{kz} \frac{1}{\sqrt{2\pi}} e^{-\frac{1}{2}z^2} dz = e^{\frac{1}{2}k^2} \int_{-\infty}^{\infty} \frac{1}{\sqrt{2\pi}} e^{-\frac{1}{2}(z-k)^2} dz = e^{\frac{1}{2}k^2}$$
 
     <div class="block green">
-        <strong>Key Identity:</strong> For any univariate normal $$Y \sim N(\mu_Y, \sigma_Y^2)$$, writing $$Y = \mu_Y + \sigma_Y Z$$ gives:
+        <strong>Key Identity:</strong> For any univariate normal $Y \sim N(\mu_Y, \sigma_Y^2)$, writing $Y = \mu_Y + \sigma_Y Z$ gives:
         $$\mathbb{E}[e^Y] = \mathbb{E}[e^{\mu_Y + \sigma_Y Z}] = e^{\mu_Y} \mathbb{E}[e^{\sigma_Y Z}] = \exp\left(\mu_Y + \frac{1}{2}\sigma_Y^2\right)$$
+    </div>
+    <div class="block ex">
+        <ul>
+            <li>$\mathbb{E}[e^{2Z}] = e^{\frac12\cdot 4} = e^2 \approx 7.39$. Compare $e^{\mathbb{E}[2Z]} = e^0 = 1$: the mean of $e^Y$ is not $e$ to the mean of $Y$.</li>
+            <li>$Y \sim N(1, 4)$: $\mathbb{E}[e^Y] = e^{1 + 2} = e^3$.</li>
+            <li>$W_t \sim N(0, t)$: $\mathbb{E}[e^{W_t}] = e^{t/2}$. For example $\mathbb{E}[e^{W_2}] = e$.</li>
+        </ul>
     </div>
 
     <h2>4. Joint Moment Generating Function (MGF)</h2>
-    <p>The joint MGF of $$\mathbf{X}$$ is defined as:</p>
+    <p>The joint MGF of $\mathbf{X}$ is defined as:</p>
     $$\phi_{\mathbf{X}}(\mathbf{t}) = \mathbb{E}\left[ e^{\mathbf{t}^T\mathbf{X}} \right]$$
 
-    <p>By treating $$Y = \mathbf{t}^T\mathbf{X}$$ as a scalar normal random variable $$Y \sim N(\mathbf{t}^T\boldsymbol{\mu}, \mathbf{t}^T\boldsymbol{\Sigma}\mathbf{t})$$, we directly apply the 1D expectation identity:</p>
+    <p>By treating $Y = \mathbf{t}^T\mathbf{X}$ as a scalar normal random variable $Y \sim N(\mathbf{t}^T\boldsymbol{\mu}, \mathbf{t}^T\boldsymbol{\Sigma}\mathbf{t})$, we directly apply the 1D expectation identity:</p>
 
     $$\phi_{\mathbf{X}}(\mathbf{t}) = \exp\left( \mathbf{t}^T\boldsymbol{\mu} + \frac{1}{2} \mathbf{t}^T\boldsymbol{\Sigma}\mathbf{t} \right)$$
 
@@ -60,8 +105,18 @@
         $$\phi(t_1, \dots, t_m) = \exp\left( \sum_{i=1}^m t_i \mu_i + \frac{1}{2} \sum_{i=1}^m \sum_{j=1}^m t_i t_j \text{Cov}(X_i, X_j) \right)$$
     </div>
 
+    <div class="block ex">
+        Running example, $\boldsymbol{\mu} = (1, 0)$, $\boldsymbol{\Sigma} = \begin{pmatrix} 1 & 1 \\ 1 & 2 \end{pmatrix}$:
+        $$\phi(t_1, t_2) = \exp\left(t_1 + \tfrac12\left(t_1^2 + 2t_2^2 + 2t_1t_2\right)\right)$$
+        At $\mathbf{t} = (1,1)$: $\exp\left(1 + \tfrac12\cdot 5\right) = e^{3.5}$. This is $\mathbb{E}[e^{X_1 + X_2}]$, i.e. $\mathbb{E}[e^Y]$ for $Y \sim N(1,5)$.
+    </div>
+    <div class="block ex">
+        BM (CT-1 Q9): $\mathbb{E}[e^{W_1 + W_2}]$ is the MGF of $(W_1, W_2)$ at $\mathbf{t} = (1,1)$, with $\boldsymbol{\Sigma} = \begin{pmatrix} 1 & 1 \\ 1 & 2 \end{pmatrix}$:
+        $$\mathbb{E}[e^{W_1 + W_2}] = e^{\frac12(1 + 2 + 2)} = e^{5/2}$$
+    </div>
+
     <div class="block warn">
-        <strong>Pitfall Alert:</strong> In $$\mathbf{t}^T\boldsymbol{\Sigma}\mathbf{t}$$, remember that $$t_i$$ and $$t_j$$ are scalar parameters of the MGF function, while $$\Sigma_{ij} = \text{Cov}(X_i, X_j)$$ represents the underlying distribution variance/covariance!
+        <strong>Pitfall Alert:</strong> In $\mathbf{t}^T\boldsymbol{\Sigma}\mathbf{t}$, remember that $t_i$ and $t_j$ are scalar parameters of the MGF function, while $\Sigma_{ij} = \text{Cov}(X_i, X_j)$ represents the underlying distribution variance/covariance!
     </div>
 
 </body>

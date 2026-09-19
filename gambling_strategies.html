@@ -24,6 +24,13 @@
   <tr><td>$E(\Xi_n \mid \mathcal{F}_{n-1}) \geq \Xi_{n-1}$</td><td>Sub-Martingale</td><td>Favorable to you (expected change $\geq 0$)</td></tr>
   <tr><td>$E(\Xi_n \mid \mathcal{F}_{n-1}) \leq \Xi_{n-1}$</td><td>Super-Martingale</td><td>Unfavorable to you (expected change $\leq 0$)</td></tr>
 </table>
+<div class="block ex">
+  <ul>
+    <li><strong>Fair coin:</strong> $\eta = \pm1$ with probability $\tfrac12$ each, so $E\eta = 0$ and it's a MG. Results $+1, -1, +1$ give $\Xi = 1, 0, 1$.</li>
+    <li><strong>Roulette, betting on red</strong> (18 red out of 37 pockets): $\eta = +1$ with probability $\tfrac{18}{37}$, $-1$ with probability $\tfrac{19}{37}$. $E\eta = -\tfrac1{37} \approx -0.027$, a super-MG. You lose about 2.7 paise per rupee staked.</li>
+    <li><strong>Loaded coin in your favour,</strong> $p = 0.6$: $E\eta = 0.2$, a sub-MG.</li>
+  </ul>
+</div>
 
 <h2>2. The Gambling Strategy ($\alpha_n$)</h2>
 <div class="block green">
@@ -33,12 +40,28 @@
 <div class="block warn">
   ⚠️ If $\alpha_n$ were $\mathcal{F}_n$-measurable, you would be placing bets <em>after</em> knowing the outcome (crystal ball / insider trading). The math requires predictable strategies to model reality correctly.
 </div>
+<div class="block ex">
+  <ul>
+    <li>Predictable ✅: $\alpha_n = 2$ if you won game $n-1$, else 1. $\alpha_n = n$ (deterministic). Doubling: $\alpha_n = 2^{(\text{losses in a row so far})}$.</li>
+    <li>Not predictable ❌: $\alpha_n = \mathbb{1}\{\eta_n = +1\}$, "bet only on the games you'll win". Then $Z_n$ = number of wins $\ge 0$, and $E[Z_1] = \tfrac12 > 0$ in a fair game. The crystal ball beats fairness.</li>
+  </ul>
+</div>
 
 <h2>3. Total Wealth Process ($Z_n$)</h2>
 <div class="block def">
   Your total wealth after $n$ games with strategy $\alpha$:
   $$Z_n = \sum_{k=1}^n \alpha_k \eta_k = \sum_{k=1}^n \alpha_k (\Xi_k - \Xi_{k-1})$$
   Recursive form: $Z_n = Z_{n-1} + \alpha_n(\Xi_n - \Xi_{n-1})$.
+</div>
+<div class="block ex">
+  Doubling after each loss. Results $\eta = +1, -1, -1, +1$.
+  <table>
+    <tr><th>$n$</th><td>1</td><td>2</td><td>3</td><td>4</td></tr>
+    <tr><th>$\alpha_n$</th><td>1</td><td>1</td><td>2</td><td>4</td></tr>
+    <tr><th>$\alpha_n\eta_n$</th><td>+1</td><td>−1</td><td>−2</td><td>+4</td></tr>
+    <tr><th>$Z_n$</th><td>1</td><td>0</td><td>−2</td><td>2</td></tr>
+  </table>
+  After the win at game 1 the stake resets to 1. It doubles after each loss (1 → 2 → 4).
 </div>
 
 <h2>4. Preservation Theorem</h2>
@@ -51,12 +74,48 @@
   $$= Z_{n-1} + \alpha_n \cdot \underbrace{E( \Xi_n - \Xi_{n-1} \mid \mathcal{F}_{n-1})}_{=0 \text{ (since } \Xi \text{ is MG)}}$$
   $$= Z_{n-1} \quad \checkmark$$
 </div>
+<div class="block ex">
+  Numeric check, two fair games: $\alpha_1 = 1$, and $\alpha_2 = 2$ after a loss, 1 after a win.
+  <table>
+    <tr><th>results</th><th>$Z_2$</th></tr>
+    <tr><td>W W</td><td>$1 + 1 = 2$</td></tr>
+    <tr><td>W L</td><td>$1 - 1 = 0$</td></tr>
+    <tr><td>L W</td><td>$-1 + 2 = 1$</td></tr>
+    <tr><td>L L</td><td>$-1 - 2 = -3$</td></tr>
+  </table>
+  $E[Z_2] = \tfrac14(2 + 0 + 1 - 3) = 0$ ✅. The strategy changes the <em>shape</em> of the outcomes, not the mean.
+</div>
 
 <div class="block">
   <strong>Part 2 (Sub-Martingale):</strong> If the game is favorable ($\Xi_n$ is Sub-MG) and your strategy is bounded and <strong>non-negative</strong> ($\alpha_n \geq 0$), then $Z_n$ is also a Sub-MG.<br><br>
   <strong>Why $\alpha_n \geq 0$?</strong><br>
   If $\Xi_n$ is a Sub-MG, $E(\Xi_n - \Xi_{n-1} \mid \mathcal{F}_{n-1}) \geq 0$.<br>
   If you were allowed to take a negative position (short selling, $\alpha_n < 0$), you would multiply a negative stake by a positive expected gain, resulting in an expected loss! To maintain the favorable property, you must stick to long positions.
+</div>
+<div class="block ex">
+  Loaded coin, $E\eta = 0.2$. Stake $\alpha = 3$: expected gain per game $3\times 0.2 = +0.6$. Stake $\alpha = -3$ (betting against the favourable side): $-3\times 0.2 = -0.6$.
+</div>
+
+<h2>Practice Questions</h2>
+<div class="block ex">
+  <strong>Q1.</strong> Roulette on red, stake ₹10 for each of 37 spins. Expected total?
+  <details><summary>Answer</summary>$37\times 10\times(-\tfrac1{37}) = -₹10$.</details>
+</div>
+<div class="block ex">
+  <strong>Q2.</strong> Fair coin, stake $\alpha_n = n$ in game $n$. Find $E[Z_{10}]$ and $\text{Var}(Z_{10})$.
+  <details><summary>Answer</summary>$Z_{10} = \sum n\eta_n$. $E = 0$. $\text{Var} = \sum n^2\,\text{Var}(\eta) = 1 + 4 + \cdots + 100 = 385$. Same mean, much bigger risk.</details>
+</div>
+<div class="block ex">
+  <strong>Q3.</strong> Doubling until the first win, capped at 3 games. Give the distribution of the final wealth and check fairness.
+  <details><summary>Answer</summary>A win at game 1, 2 or 3 gives $+1$, with probability $\tfrac12 + \tfrac14 + \tfrac18 = \tfrac78$. Losing all three gives $-(1 + 2 + 4) = -7$, probability $\tfrac18$. $E = \tfrac78 - \tfrac78 = 0$ ✅</details>
+</div>
+<div class="block ex">
+  <strong>Q4.</strong> Is $\alpha_n = |\Xi_{n-1}| + 1$ allowed in the preservation theorem?
+  <details><summary>Answer</summary>Predictable ✅ (it uses only $\Xi_{n-1}$). Bounded for each $n$: $|\Xi_{n-1}| \le n-1$, so $\alpha_n \le n$ ✅. Hence $Z_n$ is a MG in a fair game.</details>
+</div>
+<div class="block ex">
+  <strong>Q5.</strong> Loaded coin ($p = 0.6$). Which make $Z_n$ a sub-MG: (a) $\alpha_n = 2$, (b) $\alpha_n = -1$, (c) $\alpha_n = \mathbb{1}\{\text{won game } n-1\}$?
+  <details><summary>Answer</summary>(a) Yes. (b) No, it's a super-MG (drift $-0.2$ per game). (c) Yes: predictable, bounded, $\ge 0$.</details>
 </div>
 
 </body>

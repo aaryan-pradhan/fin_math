@@ -18,6 +18,11 @@
   For each integer $n \geq 1$, define:
   $$B_n = \bigcup_{i=n}^{\infty} A_i = A_n \cup A_{n+1} \cup A_{n+2} \cup \cdots$$
 </div>
+<div class="block ex">
+  <strong>Running example.</strong> $\Omega = [0,1]$, uniform point, $P([a,b]) = b - a$. Let $A_i = [0, 1/i^2]$:
+  $$A_1 = [0,1],\quad A_2 = [0, 0.25],\quad A_3 = [0, 0.111],\quad A_{10} = [0, 0.01]$$
+  The sets shrink, so the union starting at $n$ is just the first one: $B_n = A_n = [0, 1/n^2]$. For example $B_2 = [0, 0.25]$.
+</div>
 
 <h2>Step 2: Understanding $B_n$ for a single outcome $\omega$</h2>
 <div class="block green">
@@ -27,6 +32,14 @@
     <li>$\omega \notin B_n$ iff $\omega$ belongs to NONE of the sets in $\{A_n, A_{n+1}, A_{n+2}, \ldots\}$</li>
   </ul>
   As $n$ grows, $B_n$ drops early $A_i$ sets. Thus $B_1 \supseteq B_2 \supseteq B_3 \supseteq \cdots$ (written $B_n \downarrow$).
+</div>
+<div class="block ex">
+  $\omega = 0.3$: $0.3 \in A_1 = [0,1]$, but $0.3 \notin A_2 = [0, 0.25]$ and not in any later $A_i$.
+  <ul>
+    <li>$\omega \in B_1$ (it is in $A_1$).</li>
+    <li>$\omega \notin B_2$ (it is in none of $A_2, A_3, \ldots$).</li>
+  </ul>
+  $\omega = 0.05$: in $A_i$ iff $1/i^2 \ge 0.05$ iff $i \le 4.47$, so in $A_1,\dots,A_4$ only. Hence $0.05 \in B_4$ but $0.05 \notin B_5$.
 </div>
 
 <h2>Step 3: The Intersection Set $E$</h2>
@@ -46,17 +59,32 @@
   </ul>
   <strong>Conclusion:</strong> $E = \{\omega \in \Omega : \omega \text{ belongs to infinitely many } A_i\}$. Denoted $\limsup A_n$.
 </div>
+<div class="block ex">
+  Running example: $E = \bigcap_n [0, 1/n^2] = \{0\}$.
+  <ul>
+    <li>$\omega = 0$ is in every $A_i$ (infinitely many), so $0 \in E$.</li>
+    <li>Any $\omega > 0$ is in $A_i$ only for $i \le 1/\sqrt{\omega}$ (finitely many), so $\omega \notin E$.</li>
+  </ul>
+  Coin example: $A_i = \{\text{toss } i \text{ is H}\}$. $\omega = HTHTHT\ldots$ is in $A_1, A_3, A_5, \ldots$, which is infinitely many, so $\omega \in E$. $\omega = HHTTTT\ldots$ is in $A_1, A_2$ only, so $\omega \notin E$.
+</div>
 
 <h2>Step 5: Continuity of Measure from Above $(*_1)$</h2>
 <div class="block">
   Since $B_n \downarrow$, probability measure continuity implies:
   $$P(E) = P\left(\bigcap_{n=1}^{\infty} B_n\right) = \lim_{n\to\infty} P(B_n)$$
 </div>
+<div class="block ex">
+  Running example: $P(B_n) = 1/n^2$, i.e. $1, 0.25, 0.111, \ldots, 0.01$ (at $n = 10$) $\to 0$. And indeed $P(E) = P(\{0\}) = 0$.
+</div>
 
 <h2>Step 6: Union Bound (Subadditivity)</h2>
 <div class="block">
   By definition of $B_n$:
   $$P(B_n) = P\left(\bigcup_{i=n}^{\infty} A_i\right) \leq \sum_{i=n}^{\infty} P(A_i)$$
+</div>
+<div class="block ex">
+  Union bound with overlapping events: die, $A = \{1,2\}$, $B = \{2,3\}$. $P(A\cup B) = P(\{1,2,3\}) = \tfrac12 \le \tfrac13 + \tfrac13 = \tfrac23$. The sum double-counts the overlap $\{2\}$.<br>
+  Running example, $n = 2$: $P(B_2) = 0.25 \le \sum_{i\ge 2} 1/i^2 = \tfrac{\pi^2}{6} - 1 \approx 0.645$.
 </div>
 
 <h2>Step 7: The Complete Proof Chain</h2>
@@ -67,12 +95,26 @@
   $$0 \leq P(E) = \lim_{n\to\infty} P(B_n) \leq \lim_{n\to\infty} \sum_{i=n}^{\infty} P(A_i) = 0$$
   <strong>Therefore: $P(E) = 0$.</strong>
 </div>
+<div class="block ex">
+  Running example: $\sum_i 1/i^2 = \tfrac{\pi^2}{6} \approx 1.645 < \infty$, so the lemma gives $P(E) = 0$. Tail sums: $\sum_{i\ge 10} 1/i^2 \approx 0.105$, $\sum_{i\ge 100} 1/i^2 \approx 0.010$, $\to 0$.
+</div>
+<div class="block warn">
+  Divergent sum: the lemma says nothing. $A_i = [0, 1/i]$: $\sum 1/i = \infty$, yet still $E = \{0\}$ and $P(E) = 0$. A divergent sum does not force $P(E) > 0$.
+</div>
 
 <h2>Step 8: Final Physical Meaning</h2>
 <div class="block warn">
   <strong>$P(E) = 0$</strong> means the set of outcomes $\omega$ that hit infinitely many $A_i$ events has probability 0.<br><br>
   <strong>$P(E^c) = 1$</strong> means <strong>almost surely</strong>, the actual outcome $\omega$ that occurs in real life belongs to $E^c$.<br><br>
   <strong>In plain words:</strong> Almost surely, event $A_i$ will only occur for finitely many indices $i$, and after some finite cutoff step $N$, $A_i$ will NEVER occur again.
+</div>
+<div class="block ex">
+  Running example, the cutoff $N$ depends on $\omega$:
+  <ul>
+    <li>$\omega = 0.01$: $A_i$ occurs iff $i \le 10$. So $N = 10$.</li>
+    <li>$\omega = 0.0001$: $A_i$ occurs iff $i \le 100$. So $N = 100$.</li>
+    <li>$\omega = 0$: no cutoff. But $P(\{0\}) = 0$.</li>
+  </ul>
 </div>
 
 </body>

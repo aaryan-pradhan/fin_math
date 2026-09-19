@@ -20,12 +20,38 @@
 <div class="block green">
   <strong>Interpretation:</strong> $P_\xi$ is the "distribution" of $\xi$. It transports probability measure $P$ from abstract sample space $\Omega$ to sets on the real line $\mathbb{R}$.
 </div>
+<div class="block ex">
+  Two fair tosses, $\xi$ = number of heads. Push each outcome's $\tfrac14$ onto its value:
+  <table>
+    <tr><th>value $x$</th><td>0</td><td>1</td><td>2</td></tr>
+    <tr><th>outcomes</th><td>$TT$</td><td>$HT, TH$</td><td>$HH$</td></tr>
+    <tr><th>$P_\xi(\{x\})$</th><td>$\tfrac14$</td><td>$\tfrac12$</td><td>$\tfrac14$</td></tr>
+  </table>
+  Any Borel set: $P_\xi([0.5, 10]) = P_\xi(\{1\}) + P_\xi(\{2\}) = \tfrac34$. $P_\xi((-\infty, 0)) = 0$.
+</div>
+<div class="block ex">
+  Different $\Omega$, same distribution. Uniform point $\omega \in [0,1]$, and
+  $$\eta(\omega) = \begin{cases} 0 & \omega < 0.25 \\ 1 & 0.25 \le \omega < 0.75 \\ 2 & \omega \ge 0.75 \end{cases}$$
+  $P_\eta(\{0\}) = 0.25$, $P_\eta(\{1\}) = 0.5$, $P_\eta(\{2\}) = 0.25$. This is the same as $P_\xi$ above, even though $\Omega$ is completely different. $P_\xi$ only records values and their probabilities, not which $\Omega$ produced them.
+</div>
 
 <h2>Step 2: Cumulative Distribution Function $F_\xi(x)$</h2>
 <div class="block def">
   The function $F_\xi : \mathbb{R} \to [0, 1]$ defined by:
   $$F_\xi(x) = P(\xi \leq x) = P_\xi((-\infty, x])$$
   is called the <strong>distribution function (d.f.)</strong> of $\xi$.
+</div>
+<div class="block ex">
+  Number of heads in two tosses: add up the mass at values $\le x$.
+  $$F_\xi(x) = \begin{cases} 0 & x < 0 \\ \tfrac14 & 0 \le x < 1 \\ \tfrac34 & 1 \le x < 2 \\ 1 & x \ge 2 \end{cases}$$
+  $F_\xi(-3) = 0$, $F_\xi(0.5) = \tfrac14$, $F_\xi(1) = \tfrac34$, $F_\xi(1.99) = \tfrac34$, $F_\xi(100) = 1$.
+</div>
+<div class="block ex">
+  Uniform on $[0,1]$: $F(x) = 0$ for $x < 0$, $F(x) = x$ for $0 \le x \le 1$, $F(x) = 1$ for $x > 1$. $F(0.3) = P(U \le 0.3) = 0.3$. No jumps.
+</div>
+<div class="block green">
+  Interval probabilities from $F$: $P(a < \xi \le b) = F(b) - F(a)$.<br>
+  Heads: $P(0 < \xi \le 2) = 1 - \tfrac14 = \tfrac34$. Uniform: $P(0.2 < U \le 0.7) = 0.7 - 0.2 = 0.5$.
 </div>
 
 <h2>Step 3: Properties of Distribution Functions</h2>
@@ -45,6 +71,18 @@
       $$\lim_{x \to -\infty} F_\xi(x) = 0 \qquad \text{and} \qquad \lim_{x \to +\infty} F_\xi(x) = 1$$
     </li>
   </ol>
+</div>
+<div class="block ex">
+  Checking all three on the heads $F_\xi$:
+  <ol>
+    <li>Non-decreasing: $0 \to \tfrac14 \to \tfrac34 \to 1$. It never goes down.</li>
+    <li>Right-continuous at the jump $x = 1$: from the right, $F(1.1) = F(1.01) = F(1.001) = \tfrac34 = F(1)$ ✅. From the left, $F(0.99) = \tfrac14 \ne F(1)$. Left limits can differ from $F(x)$.</li>
+    <li>$F(-1000) = 0$, $F(1000) = 1$.</li>
+  </ol>
+  Jump size = point mass: $F(1) - F(1^-) = \tfrac34 - \tfrac14 = \tfrac12 = P(\xi = 1)$.
+</div>
+<div class="block warn">
+  $\le$ vs $&lt;$ matters when there is a jump: $P(\xi \le 1) = \tfrac34$ but $P(\xi &lt; 1) = F(1^-) = \tfrac14$.
 </div>
 
 </body>

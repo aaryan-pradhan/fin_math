@@ -34,6 +34,15 @@
     <tr><td>4</td><td>$X_2$ (frozen)</td></tr>
   </table>
 </div>
+<div class="block ex">
+  <strong>With numbers.</strong> Walk steps $+1, +1, -1, +1$, so $X = 0, 1, 2, 1, 2$. $\tau$ = first hit of 2 = 2.
+  <table>
+    <tr><th>$t$</th><td>0</td><td>1</td><td>2</td><td>3</td><td>4</td></tr>
+    <tr><th>$X_t$</th><td>0</td><td>1</td><td>2</td><td>1</td><td>2</td></tr>
+    <tr><th>$Z_t = X_{t\wedge\tau}$</th><td>0</td><td>1</td><td>2</td><td>2</td><td>2</td></tr>
+  </table>
+  After $\tau$, $Z$ ignores what $X$ does: $X_3 = 1$, but $Z_3 = 2$.
+</div>
 
 <h2>3. Explicit Formula</h2>
 <div class="block">
@@ -60,6 +69,21 @@
   <strong>Combine:</strong>
   $$= \sum_{k=0}^t X_k \mathbf{1}_{\tau=k} + \mathbf{1}_{\{\tau>t\}} X_t = Z_t \checkmark$$
 </div>
+<div class="block ex">
+  <strong>Numeric check.</strong> Two-step walk, $\tau$ = first time $X = 1$, capped at 2.
+  <table>
+    <tr><th>$\omega$</th><th>$X_1, X_2$</th><th>$\tau$</th><th>$Z_1$</th><th>$Z_2$</th></tr>
+    <tr><td>$HH$</td><td>1, 2</td><td>1</td><td>1</td><td>1</td></tr>
+    <tr><td>$HT$</td><td>1, 0</td><td>1</td><td>1</td><td>1</td></tr>
+    <tr><td>$TH$</td><td>−1, 0</td><td>2</td><td>−1</td><td>0</td></tr>
+    <tr><td>$TT$</td><td>−1, −2</td><td>2</td><td>−1</td><td>−2</td></tr>
+  </table>
+  <ul>
+    <li>Atom $\{HH, HT\}$: $E[Z_2 \mid \mathcal{F}_1] = \tfrac12(1 + 1) = 1 = Z_1$ ✅ (frozen)</li>
+    <li>Atom $\{TH, TT\}$: $E[Z_2 \mid \mathcal{F}_1] = \tfrac12(0 - 2) = -1 = Z_1$ ✅ (still running)</li>
+    <li>$E[Z_2] = \tfrac14(1 + 1 + 0 - 2) = 0 = Z_0$ ✅</li>
+  </ul>
+</div>
 
 <h2>5. Stopping Time — Coin Flip Grounding</h2>
 <div class="block ex">
@@ -81,6 +105,29 @@
   If $(X_t)$ is a martingale: no stopping strategy beats $E[X_0]$.<br>
   $$E[X_\tau] = E[Z_\tau] = E[Z_0] = E[X_0]$$
   You cannot exploit a fair game by choosing when to quit.
+</div>
+
+<h2>Practice Questions</h2>
+<div class="block ex">
+  <strong>Q1.</strong> $X = 0, -1, 0, 1, 2, 1$ for $t = 0, \ldots, 5$. $\tau$ = first time $X = 1$. Write $Z_0, \ldots, Z_5$.
+  <details><summary>Answer</summary>$\tau = 3$. $Z = 0, -1, 0, 1, 1, 1$.</details>
+</div>
+<div class="block ex">
+  <strong>Q2.</strong> Three-step walk, $\tau$ = first time $X = -1$, else 3. Enumerate all 8 paths and compute $E[X_\tau]$.
+  <details><summary>Answer</summary>
+  <ul>
+    <li>Paths $T{\_}{\_}$ (4 of them): $\tau = 1$, $X_\tau = -1$. Total $-4$.</li>
+    <li>$HHH$: 3. $HHT$: 1. $HTH$: $X = 1, 0, 1$, so 1. $HTT$: $X = 1, 0, -1$, so $\tau = 3$ and $X_\tau = -1$.</li>
+  </ul>
+  $E[X_\tau] = \tfrac18(-4 + 3 + 1 + 1 - 1) = 0$ ✅</details>
+</div>
+<div class="block ex">
+  <strong>Q3.</strong> Two-step walk. "Cheat" rule: $\tau = 1$ if toss 2 will be T, else $\tau = 2$. Compute $E[X_\tau]$. Why doesn't the theorem stop this?
+  <details><summary>Answer</summary>$HH$: $\tau = 2$, $X = 2$. $HT$: $\tau = 1$, $X = 1$. $TH$: $\tau = 2$, $X = 0$. $TT$: $\tau = 1$, $X = -1$. $E[X_\tau] = \tfrac14(2 + 1 + 0 - 1) = 0.5 > 0$. This $\tau$ is not a stopping time: $\{\tau = 1\}$ depends on toss 2. The proof uses $\mathbf{1}_{\{\tau > t\}} \in \mathcal{F}_t$, which fails here.</details>
+</div>
+<div class="block ex">
+  <strong>Q4.</strong> In the formula for $Z_{t+1}$, with $\tau(\omega) = 5$, compute $Z_3$ term by term.
+  <details><summary>Answer</summary>$Z_3 = \sum_{k=0}^{2} X_k\mathbf{1}_{\tau=k} + X_3\mathbf{1}_{\tau>2}$. All indicators $\mathbf{1}_{\tau=k}$ for $k \le 2$ are 0, and $\mathbf{1}_{\tau>2} = 1$. So $Z_3 = X_3$: not yet stopped.</details>
 </div>
 
 </body>
