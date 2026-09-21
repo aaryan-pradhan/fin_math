@@ -19,7 +19,7 @@ _Avoid_: index (that is the generated page), ordering
 **Formula Sheet**:
 A dense reference page of results across Notes, with no Socratic build-up; listed under the Reference Module.
 Every entry is a **Card**, and a Card is only complete with all three parts (see **Card**).
-Organised in Parts, each covering a set of Modules: Part I is Random walks and Brownian motion (sections 1-14), Part II is Foundations, Expectation and Martingales (sections F, E, M); Part III is Stochastic calculus (sections I). A Part is added whole, never piecemeal.
+Organised in Parts, each covering a set of Modules, in TOC order: Part I is Foundations, Expectation and Martingales (sections F, E, M); Part II is Random walks and Brownian motion (sections 1-14); Part III is Stochastic calculus (sections I); Part IV is Option pricing (sections A). A Part is added whole, never piecemeal.
 Section numbering is frozen once published, so cross-references never rot; a new Part gets a new prefix rather than renumbering the old one.
 _Avoid_: cheat sheet, summary note
 

@@ -3,18 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FinMath Formula Sheet — Random Walks &amp; Brownian Motion</title>
+<title>FinMath Formula Sheet</title>
 <script>MathJax = { tex: { inlineMath: [['$','$'], ['\\(','\\)']] } };</script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 <style>
   :root {
-    --ink: #1a1a2e;
-    --sub: #5b5b6b;
-    --paper: #f6f5f1;
-    --card: #ffffff;
-    --rule: #e2ddd0;
-    --accent: #3a3060;
-    --accent2: #6b5fa8;
+    --ink: #e7e5f0;
+    --sub: #a2a0b4;
+    --paper: #13131b;
+    --card: #1d1d28;
+    --rule: #33333f;
+    --accent: #262038;
+    --accent2: #8a7bd0;
+    --use-bg: #2b2517;
+    --use-fg: #e6d6a4;
+    --use-b: #f2ce6e;
+    --ex-bg: #16271d;
+    --ex-fg: #c2e5d0;
+    --ex-b: #86dca8;
+    --bad-bg: #2b1a1a;
+    --bad-fg: #f0bcbc;
   }
   * { box-sizing: border-box; }
   body {
@@ -39,7 +47,7 @@
     gap: 0.6rem;
   }
   header h1 { font-size: 1.3rem; margin: 0; font-weight: 700; letter-spacing: 0.01em; }
-  header p { margin: 0.15rem 0 0; font-size: 0.82rem; color: #cfc9e6; }
+  header p { margin: 0.15rem 0 0; font-size: 0.82rem; color: #b8b2d4; }
   #print-btn {
     background: rgba(255,255,255,0.12);
     border: 1px solid rgba(255,255,255,0.35);
@@ -64,7 +72,7 @@
     letter-spacing: 0.01em;
   }
   .section-num { opacity: 0.75; font-weight: 500; margin-right: 0.3rem; }
-  .formulas { columns: 320px; column-gap: 1rem; }
+  .formulas { columns: 440px; column-gap: 1.2rem; }
   .card {
     break-inside: avoid;
     -webkit-column-break-inside: avoid;
@@ -72,8 +80,9 @@
     border: 1px solid var(--rule);
     border-left: 3px solid var(--accent2);
     border-radius: 6px;
-    padding: 0.65rem 0.85rem 0.7rem;
-    margin: 0 0 0.85rem;
+    padding: 0.8rem 1rem 0.85rem;
+    margin: 0 0 1rem;
+    max-width: 100%;
   }
   .card h4 {
     font-size: 0.72rem;
@@ -83,52 +92,63 @@
     font-weight: 700;
     margin: 0 0 0.3rem;
   }
-  .card .eq { font-size: 0.92rem; margin: 0.15rem 0; overflow-x: auto; }
+  .card .eq { font-size: 0.92rem; margin: 0.2rem 0; overflow-x: auto; overflow-y: hidden; }
+  .card .use, .card .ex, .card .bad, .card .note { overflow-x: auto; overflow-y: hidden; }
+  mjx-container { max-width: 100%; }
   .card .note { font-size: 0.79rem; color: var(--sub); margin-top: 0.35rem; line-height: 1.45; }
-  .card .cond { font-size: 0.72rem; color: #8a8a98; font-style: italic; margin-top: 0.15rem; }
+  .card .cond { font-size: 0.72rem; color: #9a98a8; font-style: italic; margin-top: 0.15rem; }
   .card .use {
     font-size: 0.775rem; line-height: 1.45;
-    background: #fdf8e8; border-left: 2px solid #d4a017; color: #6b5311;
+    background: var(--use-bg); border-left: 2px solid #d4a017; color: var(--use-fg);
     padding: 0.35rem 0.55rem; margin-top: 0.45rem; border-radius: 3px;
   }
-  .card .use b { color: #8a6d1f; }
+  .card .use b { color: var(--use-b); }
   .card .ex {
     font-size: 0.775rem; line-height: 1.45;
-    background: #edf6f0; border-left: 2px solid #4a9d6a; color: #235238;
+    background: var(--ex-bg); border-left: 2px solid #4a9d6a; color: var(--ex-fg);
     padding: 0.35rem 0.55rem; margin-top: 0.35rem; border-radius: 3px;
   }
-  .card .ex b { color: #1b6b3f; }
+  .card .ex b { color: var(--ex-b); }
   .card .bad {
     font-size: 0.775rem; line-height: 1.45;
-    background: #fdefee; border-left: 2px solid #d05050; color: #7d2b2b;
+    background: var(--bad-bg); border-left: 2px solid #d05050; color: var(--bad-fg);
     padding: 0.35rem 0.55rem; margin-top: 0.35rem; border-radius: 3px;
   }
   .card.flag { border-left-color: #d05050; }
-  .card.flag h4 { color: #c0392b; }
+  .card.flag h4 { color: #ff8b7b; }
   .part-banner {
-    background: var(--accent); color: #fff; border-radius: 6px;
+    background: var(--accent); color: #fff; border: 1px solid var(--rule); border-radius: 6px;
     padding: 0.7rem 1rem; font-size: 1.02rem; font-weight: 700; letter-spacing: 0.01em;
   }
-  .part-banner span { display: block; font-weight: 400; font-size: 0.8rem; color: #cfc9e6; margin-top: 0.2rem; }
+  .part-banner span { display: block; font-weight: 400; font-size: 0.8rem; color: #b8b2d4; margin-top: 0.2rem; }
   table.routing { width: 100%; border-collapse: collapse; font-size: 0.82rem; background: var(--card); border: 1px solid var(--rule); border-radius: 6px; overflow: hidden; }
   table.routing th { background: var(--accent2); color: #fff; text-align: left; padding: 0.45rem 0.65rem; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.04em; }
   table.routing td { border-top: 1px solid var(--rule); padding: 0.42rem 0.65rem; vertical-align: top; }
-  table.routing td:last-child { color: var(--accent); font-weight: 600; white-space: nowrap; font-size: 0.78rem; }
+  table.routing td:last-child { color: var(--accent2); font-weight: 600; white-space: nowrap; font-size: 0.78rem; }
   footer {
     max-width: 1400px;
     margin: 2rem auto 0;
     padding: 1rem 1.5rem;
     font-size: 0.78rem;
-    color: #9a9aa8;
+    color: #8a8898;
     border-top: 1px solid var(--rule);
     text-align: center;
   }
   @media print {
+    :root {
+      --ink: #1a1a2e; --sub: #5b5b6b; --paper: #fff; --card: #fff; --rule: #ddd;
+      --accent: #3a3060; --accent2: #6b5fa8;
+      --use-bg: #fdf8e8; --use-fg: #6b5311; --use-b: #8a6d1f;
+      --ex-bg: #edf6f0; --ex-fg: #235238; --ex-b: #1b6b3f;
+      --bad-bg: #fdefee; --bad-fg: #7d2b2b;
+    }
+    body { color: #000; }
+    .card.flag h4 { color: #c0392b; }
     header { position: static; background: #fff; color: #000; }
     header p, .section-title { color: #000 !important; background: none !important; }
     #print-btn { display: none; }
     .card { border: 1px solid #ccc; break-inside: avoid; }
-    .formulas { columns: 2; }
+    .formulas { columns: 2; column-gap: 1rem; }
     body { background: #fff; }
     table.routing th { background: #eee !important; color: #000 !important; }
     .part-banner { background: #fff !important; color: #000 !important; border: 2px solid #000; }
@@ -140,8 +160,8 @@
 
 <header>
   <div>
-    <h1>FinMath Formula Sheet — Random Walks &amp; Brownian Motion</h1>
-    <p>Plug-and-play. Every card: the formula &rarr; when it applies &rarr; a past-paper instance and the trick. Part I: random walks &amp; Brownian motion. Part II: foundations, expectation &amp; martingales. Part III: stochastic calculus.</p>
+    <h1>FinMath Formula Sheet</h1>
+    <p>Plug-and-play. Every card: the formula &rarr; when it applies &rarr; a past-paper instance and the trick. Part I: foundations, expectation &amp; martingales. Part II: random walks &amp; Brownian motion. Part III: stochastic calculus. Part IV: option pricing &amp; arbitrage.</p>
   </div>
   <button id="print-btn" onclick="window.print()">Print / Save PDF</button>
 </header>
@@ -153,24 +173,7 @@
   <div class="section-title"><span class="section-num">0.</span>Routing Table — read the question, jump to the card</div>
   <table class="routing">
     <tr><th>The question says&hellip;</th><th>It is really asking</th><th>Go to</th></tr>
-    <tr><td>&ldquo;Compute the distribution of $\int_0^T f(t)\,dW_t$&rdquo;</td><td>It&rsquo;s Gaussian; variance by It&ocirc; isometry</td><td>&sect;7.5</td></tr>
-    <tr><td>&ldquo;$aW_s + bW_t \sim$ ?&rdquo; / &ldquo;$W_1 - W_2 + 3W_4 \sim$ ?&rdquo;</td><td>Normal, mean $0$, variance from $\min(s,t)$</td><td>&sect;6.2</td></tr>
-    <tr><td>&ldquo;Compute $E(W_s^2 W_t^2)$&rdquo; / &ldquo;$\operatorname{Cov}(e^{W_s},e^{W_t})$&rdquo;</td><td>Split $W_t = W_s + (W_t - W_s)$, independence</td><td>&sect;6.4, &sect;6.5</td></tr>
-    <tr><td>&ldquo;Is $Y_t = e^{\lambda t}\sin W_t$ a martingale?&rdquo;</td><td>It&ocirc; drift $= 0$ test</td><td>&sect;7.4</td></tr>
-    <tr><td>&ldquo;Is $|W_t|^2 - t$ a martingale?&rdquo;</td><td>Canonical martingale #2 &mdash; yes</td><td>&sect;7.2</td></tr>
-    <tr><td>&ldquo;Is $\tfrac1c W(c^2t)$ / $e^{-\lambda t}W(e^{2\lambda t})$ a Wiener / Gaussian process?&rdquo;</td><td>4-point Wiener checklist vs. Gaussian-process test</td><td>&sect;5.2, &sect;5.3</td></tr>
-    <tr><td>&ldquo;GBM with drift $\mu$, volatility $\sigma$, $Y(0)$. Find $E[Y(t)]$&rdquo;</td><td>Which $\mu$ convention? Give both</td><td>&sect;11.2</td></tr>
-    <tr><td>&ldquo;Wins/loses 1 rupee, stops at $+W$ or $-L$&rdquo;</td><td>Gambler&rsquo;s ruin: win-prob and duration</td><td>&sect;3</td></tr>
-    <tr><td>&ldquo;$P(B(t)$ reaches $-2$ before $1)$&rdquo;</td><td>Two-barrier exit, drift $0$ &rArr; ratio of distances</td><td>&sect;10.4</td></tr>
-    <tr><td>&ldquo;Drift $-\mu$, buy at fixed price $K$. When to exercise?&rdquo;</td><td>Maximize $(x-K)e^{-2\mu x/\sigma^2}$</td><td>&sect;10.6</td></tr>
-    <tr><td>&ldquo;cdf and pdf of $\tau_a$&rdquo; / &ldquo;$P(\tau_a &lt; \infty)$&rdquo; / &ldquo;$E[\tau_a]$&rdquo;</td><td>Reflection principle &rArr; $2\Phi(-a/\sqrt t)$</td><td>&sect;12.3&ndash;12.5</td></tr>
-    <tr><td>&ldquo;$T = \min\{t : W_t = a + bt\}$, find $E[T]$&rdquo;</td><td>OST on $W_t$: $E[W_T] = 0$</td><td>&sect;10.7</td></tr>
-    <tr><td>&ldquo;$M(t) = \max_{0\le u\le t} W(u)$. Find $P(\cdot)$&rdquo; &mdash; $M$ alone</td><td>$M(t) \overset{d}{=} |W(t)|$</td><td>&sect;13</td></tr>
-    <tr><td>&ldquo;$P(\alpha &lt; W(t) &lt; \beta,\ \gamma &lt; M(t) &lt; \delta)$&rdquo; &mdash; both</td><td>Master function $G$ + 4-term inclusion&ndash;exclusion</td><td>&sect;14.3</td></tr>
-    <tr><td>&ldquo;$W(s)$ given $W(t) = b$&rdquo; / Brownian bridge</td><td>Backward interpolation $N(\tfrac st b, \tfrac{s(t-s)}{t})$</td><td>&sect;9.4</td></tr>
-    <tr><td>&ldquo;Random walk $\pm\sqrt{\Delta t}$, $p=\tfrac12(1+\mu\sqrt{\Delta t})$&rdquo;</td><td>Diffusive scaling limit &rarr; BM drift $\mu$</td><td>&sect;4</td></tr>
-    <tr><td>&ldquo;$X_n = Y_1\cdots Y_n$ (or $2^nU_1\cdots U_n$). Martingale?&rdquo;</td><td>Geometric RW: need $E[Y] = 1$</td><td>&sect;2.2</td></tr>
-    <tr><th colspan="3" style="background:#4a4070">Part II &mdash; Foundations, Expectation &amp; Martingales</th></tr>
+    <tr><th colspan="3" style="background:#3a3258">Part I &mdash; Foundations, Expectation &amp; Martingales</th></tr>
     <tr><td>&ldquo;Is this collection a $\sigma$-field?&rdquo;</td><td>Three axioms; complement fails first</td><td>&sect;F1.2</td></tr>
     <tr><td>&ldquo;How many events are in $\sigma(\xi)$?&rdquo;</td><td>Count distinct values $k$, answer $2^{k}$</td><td>&sect;F1.5, &sect;F4.1</td></tr>
     <tr><td>&ldquo;Show $P(A_n$ i.o.$) = 0$&rdquo; / &ldquo;prove Borel&ndash;Cantelli&rdquo;</td><td>Convergent sum &rArr; BC&nbsp;I; needs $B_n\downarrow$ + union bound</td><td>&sect;F2.3, &sect;F2.5</td></tr>
@@ -199,7 +202,25 @@
     <tr><td>Ruin probability <em>and</em> duration together</td><td>Two martingales: $X_n$ and $X_n^{2}-n$</td><td>&sect;M6.6</td></tr>
     <tr><td>&ldquo;Can a betting system beat a fair game?&rdquo;</td><td>No &mdash; predictable bounded $\alpha$ keeps $Z_n$ a MG</td><td>&sect;M7.2, &sect;M7.5</td></tr>
     <tr><td>&ldquo;Short note: American vs European call&rdquo;</td><td>Equal for a non-dividend call; differ for a put</td><td>&sect;M7.6</td></tr>
-    <tr><th colspan="3" style="background:#4a4070">Part III &mdash; Stochastic Calculus</th></tr>
+    <tr><th colspan="3" style="background:#3a3258">Part II &mdash; Random Walks &amp; Brownian Motion</th></tr>
+    <tr><td>&ldquo;Compute the distribution of $\int_0^T f(t)\,dW_t$&rdquo;</td><td>It&rsquo;s Gaussian; variance by It&ocirc; isometry</td><td>&sect;7.5</td></tr>
+    <tr><td>&ldquo;$aW_s + bW_t \sim$ ?&rdquo; / &ldquo;$W_1 - W_2 + 3W_4 \sim$ ?&rdquo;</td><td>Normal, mean $0$, variance from $\min(s,t)$</td><td>&sect;6.2</td></tr>
+    <tr><td>&ldquo;Compute $E(W_s^2 W_t^2)$&rdquo; / &ldquo;$\operatorname{Cov}(e^{W_s},e^{W_t})$&rdquo;</td><td>Split $W_t = W_s + (W_t - W_s)$, independence</td><td>&sect;6.4, &sect;6.5</td></tr>
+    <tr><td>&ldquo;Is $Y_t = e^{\lambda t}\sin W_t$ a martingale?&rdquo;</td><td>It&ocirc; drift $= 0$ test</td><td>&sect;7.4</td></tr>
+    <tr><td>&ldquo;Is $|W_t|^2 - t$ a martingale?&rdquo;</td><td>Canonical martingale #2 &mdash; yes</td><td>&sect;7.2</td></tr>
+    <tr><td>&ldquo;Is $\tfrac1c W(c^2t)$ / $e^{-\lambda t}W(e^{2\lambda t})$ a Wiener / Gaussian process?&rdquo;</td><td>4-point Wiener checklist vs. Gaussian-process test</td><td>&sect;5.2, &sect;5.3</td></tr>
+    <tr><td>&ldquo;GBM with drift $\mu$, volatility $\sigma$, $Y(0)$. Find $E[Y(t)]$&rdquo;</td><td>Which $\mu$ convention? Give both</td><td>&sect;11.2</td></tr>
+    <tr><td>&ldquo;Wins/loses 1 rupee, stops at $+W$ or $-L$&rdquo;</td><td>Gambler&rsquo;s ruin: win-prob and duration</td><td>&sect;3</td></tr>
+    <tr><td>&ldquo;$P(B(t)$ reaches $-2$ before $1)$&rdquo;</td><td>Two-barrier exit, drift $0$ &rArr; ratio of distances</td><td>&sect;10.4</td></tr>
+    <tr><td>&ldquo;Drift $-\mu$, buy at fixed price $K$. When to exercise?&rdquo;</td><td>Maximize $(x-K)e^{-2\mu x/\sigma^2}$</td><td>&sect;10.6</td></tr>
+    <tr><td>&ldquo;cdf and pdf of $\tau_a$&rdquo; / &ldquo;$P(\tau_a &lt; \infty)$&rdquo; / &ldquo;$E[\tau_a]$&rdquo;</td><td>Reflection principle &rArr; $2\Phi(-a/\sqrt t)$</td><td>&sect;12.3&ndash;12.5</td></tr>
+    <tr><td>&ldquo;$T = \min\{t : W_t = a + bt\}$, find $E[T]$&rdquo;</td><td>OST on $W_t$: $E[W_T] = 0$</td><td>&sect;10.7</td></tr>
+    <tr><td>&ldquo;$M(t) = \max_{0\le u\le t} W(u)$. Find $P(\cdot)$&rdquo; &mdash; $M$ alone</td><td>$M(t) \overset{d}{=} |W(t)|$</td><td>&sect;13</td></tr>
+    <tr><td>&ldquo;$P(\alpha &lt; W(t) &lt; \beta,\ \gamma &lt; M(t) &lt; \delta)$&rdquo; &mdash; both</td><td>Master function $G$ + 4-term inclusion&ndash;exclusion</td><td>&sect;14.3</td></tr>
+    <tr><td>&ldquo;$W(s)$ given $W(t) = b$&rdquo; / Brownian bridge</td><td>Backward interpolation $N(\tfrac st b, \tfrac{s(t-s)}{t})$</td><td>&sect;9.4</td></tr>
+    <tr><td>&ldquo;Random walk $\pm\sqrt{\Delta t}$, $p=\tfrac12(1+\mu\sqrt{\Delta t})$&rdquo;</td><td>Diffusive scaling limit &rarr; BM drift $\mu$</td><td>&sect;4</td></tr>
+    <tr><td>&ldquo;$X_n = Y_1\cdots Y_n$ (or $2^nU_1\cdots U_n$). Martingale?&rdquo;</td><td>Geometric RW: need $E[Y] = 1$</td><td>&sect;2.2</td></tr>
+    <tr><th colspan="3" style="background:#3a3258">Part III &mdash; Stochastic Calculus</th></tr>
     <tr><td>&ldquo;Compute the stochastic differential $d(\cdot)$&rdquo;</td><td>It&ocirc;: drift $=\tfrac12 f''$, diffusion $= f'$</td><td>&sect;I4</td></tr>
     <tr><td>&ldquo;Derive It&ocirc;&rsquo;s formula&rdquo;</td><td>Taylor to 2nd order + the multiplication table</td><td>&sect;I3.1, &sect;I2.2</td></tr>
     <tr><td>&ldquo;Variance / distribution of $\int_0^T f\,dW$&rdquo;</td><td>It&ocirc; isometry: $N\big(0,\int_0^T f^2dt\big)$</td><td>&sect;I1.4&ndash;I1.5</td></tr>
@@ -210,817 +231,20 @@
     <tr><td>&ldquo;Find $E(X_t)$ and $\operatorname{Var}(X_t)$&rdquo; from an SDE</td><td>Drift ODE for the mean; It&ocirc; on $X^2$ for the variance</td><td>&sect;I5.2&ndash;I5.3</td></tr>
     <tr><td>&ldquo;Is it an OU process? Explain&rdquo;</td><td>Drift $-rX$, constant noise &rArr; mean-reverting, Gaussian</td><td>&sect;I7.3</td></tr>
     <tr><td>&ldquo;Using part (i) or otherwise, evaluate $E[f(W_t)]$&rdquo;</td><td>Constant mean of the martingale from part (i)</td><td>&sect;I5.4</td></tr>
+    <tr><th colspan="3" style="background:#3a3258">Part IV &mdash; Option Pricing &amp; Arbitrage</th></tr>
+    <tr><td>&ldquo;For which $c$ is there no arbitrage?&rdquo;</td><td>Riskless portfolio, then gain $=0$</td><td>&sect;A1.2</td></tr>
+    <tr><td>&ldquo;Price the call / put with interest rate $r$&rdquo;</td><td>$(1+r)^{-1}E^{*}[\text{payoff}]$ with $p^{*}$</td><td>&sect;A1.3, &sect;A1.4</td></tr>
+    <tr><td>&ldquo;Find the replicating portfolio $(\Delta,B)$&rdquo;</td><td>$\Delta = $ payoff spread / price spread</td><td>&sect;A1.5</td></tr>
+    <tr><td>&ldquo;Is $E_p[\text{payoff}]/(1+r)$ the price?&rdquo; (real $p$ given)</td><td>No &mdash; it is an arbitrage; use $p^{*}$</td><td>&sect;A1.6</td></tr>
+    <tr><td>&ldquo;State / prove the arbitrage theorem&rdquo;</td><td>Dichotomy: risk-neutral measure XOR sure win</td><td>&sect;A2.3</td></tr>
+    <tr><td>&ldquo;Three possible time-1 prices &mdash; find $c$&rdquo;</td><td>Underdetermined: an <em>interval</em> of prices</td><td>&sect;A2.4</td></tr>
+    <tr><td>&ldquo;Payoff of a forward vs a call vs a put&rdquo;</td><td>$S_T-K$ / $(S_T-K)^+$ / $(K-S_T)^+$</td><td>&sect;A2.1</td></tr>
+    <tr><td>&ldquo;American call &mdash; exercise early?&rdquo;</td><td>Never, if no dividends and $r\ge0$</td><td>&sect;A2.2</td></tr>
   </table>
 </div>
 
 <div class="section">
-  <div class="part-banner">Part I &mdash; Random Walks &amp; Brownian Motion<span>Sections 1&ndash;14. Jump here from the routing table above.</span></div>
-</div>
-
-<!-- ════════════════════════════════════════ 1 ════════════════════════════════════════ -->
-<div class="section">
-  <div class="section-title"><span class="section-num">1.</span>Normal &amp; MVN Toolkit — the plug-in layer</div>
-  <div class="formulas">
-
-    <div class="card">
-      <h4>1.1 &nbsp;Standard Normal cdf</h4>
-      <div class="eq">$\Phi(-x) = 1 - \Phi(x), \qquad \Phi(0) = 0.5$</div>
-      <div class="eq">$P(a &lt; Z \le b) = \Phi(b) - \Phi(a)$</div>
-      <div class="use"><b>Use when:</b> always. Standardize first: $X \sim N(\mu,\sigma^2) \Rightarrow P(X\le x) = \Phi\!\big(\frac{x-\mu}{\sigma}\big)$.</div>
-      <div class="ex"><b>Table values worth memorizing:</b> $\Phi(1){=}.8413$, $\Phi(1.5){=}.9332$, $\Phi(2){=}.9772$, $\Phi(2.5){=}.9938$, $\Phi(3){=}.9987$.</div>
-    </div>
-
-    <div class="card">
-      <h4>1.2 &nbsp;Exponential Moment (log-normal mean)</h4>
-      <div class="eq">$X \sim N(\mu,\sigma^2) \;\Longrightarrow\; E[e^{X}] = e^{\mu + \sigma^2/2}$</div>
-      <div class="eq">$E[e^{aZ}] = e^{a^2/2}, \qquad Z\sim N(0,1)$</div>
-      <div class="use"><b>Use when:</b> an exponential of a normal appears &mdash; GBM means, $\operatorname{Cov}(e^{W_s},e^{W_t})$, exponential martingale, Black&ndash;Scholes.</div>
-      <div class="ex"><b>Trick:</b> the whole GBM section is this one identity. $E[e^{W_t}] = e^{t/2}$ because $W_t\sim N(0,t)$.</div>
-    </div>
-
-    <div class="card">
-      <h4>1.3 &nbsp;Log-normal Variance</h4>
-      <div class="eq">$\operatorname{Var}(e^X) = e^{2\mu+\sigma^2}\big(e^{\sigma^2}-1\big)$</div>
-      <div class="cond">$X \sim N(\mu,\sigma^2)$.</div>
-      <div class="use"><b>Use when:</b> asked for $\operatorname{Var}$ or $\operatorname{Cov}$ of a GBM / of $e^{W_t}$.</div>
-      <div class="ex"><b>Q:</b> $Y=e^{W_2}$, find $\operatorname{Var}(Y)$. Here $\mu{=}0,\sigma^2{=}2$: $e^{2}(e^{2}-1)=\mathbf{47.21}$.<br><b>Trick:</b> $\operatorname{Var} = (\text{mean})^2(e^{\sigma^2}-1)$ &mdash; compute the mean first, square it.</div>
-    </div>
-
-    <div class="card">
-      <h4>1.4 &nbsp;Even Moments of a Normal</h4>
-      <div class="eq">$E[Z^{2n}] = (2n-1)!! = 1\cdot3\cdot5\cdots(2n-1)$</div>
-      <div class="eq">$E[Z]{=}0,\ E[Z^2]{=}1,\ E[Z^3]{=}0,\ E[Z^4]{=}3$</div>
-      <div class="eq">$E[W_t^{2n}] = (2n-1)!!\,t^{\,n}, \qquad E[W_t^4] = 3t^2$</div>
-      <div class="use"><b>Use when:</b> any odd power &rarr; $0$ by symmetry. Any 4th moment &rarr; $3t^2$.</div>
-      <div class="ex"><b>Paper:</b> CT-1 prints &ldquo;$E(Z^3)=0$, $E(Z^4)=3$&rdquo; at the top of the sheet &mdash; they expect you to need it in Q2.</div>
-    </div>
-
-    <div class="card">
-      <h4>1.5 &nbsp;MVN — Definition by Linear Combinations</h4>
-      <div class="eq">$\mathbf{X}$ is MVN $\iff$ $\mathbf{a}^{\!\top}\mathbf{X} = \sum_i a_i X_i$ is univariate normal for <em>every</em> $\mathbf{a}$</div>
-      <div class="use"><b>Use when:</b> proving something is a Gaussian process. This <em>is</em> the definition &mdash; do not try to write a joint density.</div>
-      <div class="ex"><b>Q:</b> CT-1&rsquo;26 Q3 &mdash; is $e^{-t}W(e^{2t})$ a Gaussian process?<br><b>Trick:</b> it is a fixed linear combination of BM values, so every $\sum a_i X(t_i)$ is normal. <b>Yes</b>, with zero computation.</div>
-    </div>
-
-    <div class="card">
-      <h4>1.6 &nbsp;Variance of a Linear Combination</h4>
-      <div class="eq">$\operatorname{Var}\!\Big(\sum_i a_i X_i\Big) = \sum_i\sum_j a_i a_j \operatorname{Cov}(X_i,X_j)$</div>
-      <div class="use"><b>Use when:</b> the master identity for every &ldquo;$aW_s+bW_t\sim\,$?&rdquo; question. Plug $\operatorname{Cov}(W_s,W_t)=\min(s,t)$.</div>
-      <div class="ex"><b>Q:</b> $\operatorname{Var}(W_1 - W_2 + 3W_4)$.<br><b>Trick:</b> write the $\min$ matrix $\begin{pmatrix}1&amp;1&amp;1\\1&amp;2&amp;2\\1&amp;2&amp;4\end{pmatrix}$, sandwich with $\mathbf a = (1,-1,3)$ &rarr; $\mathbf{31}$.</div>
-    </div>
-
-    <div class="card">
-      <h4>1.7 &nbsp;MVN Linear Transformation</h4>
-      <div class="eq">$\mathbf{X}\sim N_n(\boldsymbol\mu,\Sigma) \Rightarrow A\mathbf{X}+\mathbf{b}\sim N_m(A\boldsymbol\mu+\mathbf{b},\,A\Sigma A^{\!\top})$</div>
-      <div class="use"><b>Use when:</b> a process is built as a fixed matrix times BM values &mdash; e.g. the Brownian bridge $B(s)=W(s)-\frac st W(t)$.</div>
-      <div class="ex"><b>Q:</b> show $B(s) = W(s) - \tfrac st W(t)$ is Gaussian with $\operatorname{Cov} = \min(u,v)-\tfrac{uv}{t}$.<br><b>Trick:</b> $B$ is a <em>fixed</em> matrix times $(W(s),W(t))$, so MVN is automatic &mdash; then just compute $A\Sigma A^{\!\top}$.</div>
-    </div>
-
-    <div class="card">
-      <h4>1.8 &nbsp;MVN Joint MGF</h4>
-      <div class="eq">$M_{\mathbf X}(\mathbf t) = \exp\!\big(\mathbf t^{\!\top}\boldsymbol\mu + \tfrac12 \mathbf t^{\!\top}\Sigma\,\mathbf t\big)$</div>
-      <div class="use"><b>Use when:</b> you need $E[e^{W_s+W_t}]$ &mdash; set $\mathbf t = (1,1)$. Fastest route to $\operatorname{Cov}(e^{W_s},e^{W_t})$.</div>
-      <div class="ex"><b>Q:</b> $E[e^{W_1+W_2}]$. &nbsp;$W_1+W_2 \sim N(0,\,1+2+2(1)) = N(0,5)$ &rarr; $\mathbf{e^{5/2}}$.<br><b>Trick:</b> set $\mathbf t = (1,1)$; the MGF hands you $\exp(\tfrac12\sum_i\sum_j\Sigma_{ij})$ in one step.</div>
-    </div>
-
-    <div class="card">
-      <h4>1.9 &nbsp;MVN Conditional Distribution</h4>
-      <div class="eq">$\mathbf X \mid \mathbf Y{=}\mathbf y \sim N\big(\boldsymbol\mu_X + \Sigma_{XY}\Sigma_{YY}^{-1}(\mathbf y - \boldsymbol\mu_Y),\ \Sigma_{XX} - \Sigma_{XY}\Sigma_{YY}^{-1}\Sigma_{YX}\big)$</div>
-      <div class="use"><b>Use when:</b> any &ldquo;given $W(t)=b$, find the law of $W(s)$&rdquo;. Conditional variance <em>never</em> depends on the observed value.</div>
-      <div class="ex"><b>Trick:</b> for BM this collapses to &sect;9.4 &mdash; don&rsquo;t invert matrices, quote the bridge result.</div>
-    </div>
-
-  </div>
-</div>
-
-<!-- ════════════════════════════════════════ 2 ════════════════════════════════════════ -->
-<div class="section">
-  <div class="section-title"><span class="section-num">2.</span>Random Walks — Additive &amp; Geometric</div>
-  <div class="formulas">
-
-    <div class="card">
-      <h4>2.1 &nbsp;Additive Random Walk</h4>
-      <div class="eq">$X_0 = 0,\quad X_n = Y_1 + \cdots + Y_n,\quad Y_i \text{ i.i.d.}$</div>
-      <div class="eq">$\{X_n\}$ is a martingale $\iff E[Y_1] = 0$</div>
-      <div class="cond">Needs $E|Y_1| &lt; \infty$.</div>
-      <div class="use"><b>Use when:</b> the walk is built by <em>adding</em> i.i.d. steps. Sub-MG if $E[Y]&gt;0$, super-MG if $E[Y]&lt;0$.</div>
-      <div class="ex"><b>Paper:</b> Midsem&rsquo;24 Q1(b) &mdash; &ldquo;$\{X_n\}$ is a martingale if $E(Y_1) = \underline{\ \ }$&rdquo; &rarr; <b>$0$</b>.</div>
-    </div>
-
-    <div class="card">
-      <h4>2.2 &nbsp;Geometric Random Walk</h4>
-      <div class="eq">$X_n = X_0 \prod_{i=1}^{n} Y_i, \quad Y_i &gt; 0 \text{ i.i.d.}$</div>
-      <div class="eq">$\{X_n\}$ is a martingale $\iff E[Y_1] = 1$</div>
-      <div class="use"><b>Use when:</b> the walk <em>multiplies</em>. Proof is one line: $E[X_{n+1}\mid\mathcal F_n] = X_n E[Y_{n+1}]$ by independence + taking out what is known.</div>
-      <div class="ex"><b>Paper:</b> CT-2&rsquo;25 Q3 &mdash; $X_n = 2^n U_1\cdots U_n$, $U_i\sim\mathrm{Unif}(0,1)$. Step is $Y_i = 2U_i$, $E[2U]=2\cdot\tfrac12=1$ &rArr; <b>Yes, MG</b>.</div>
-    </div>
-
-    <div class="card">
-      <h4>2.3 &nbsp;Log-normal Steps — Drift Correction</h4>
-      <div class="eq">$Y_i = e^{Z_i},\ Z_i\sim N(\mu,\sigma^2) \Rightarrow E[Y_i] = e^{\mu+\sigma^2/2}$</div>
-      <div class="eq">martingale $\iff \mu = -\dfrac{\sigma^2}{2}$</div>
-      <div class="use"><b>Use when:</b> geometric walk with normal log-steps. The $-\sigma^2/2$ is the <em>same</em> correction that appears in GBM (&sect;11.4) and Black&ndash;Scholes.</div>
-      <div class="ex"><b>Q:</b> log-price steps $Z_i \sim N(\mu, 0.04)$; for what $\mu$ is the price a martingale? &rarr; $\mu = \mathbf{-0.02}$.<br><b>Trick:</b> this $-\sigma^2/2$ reappears in GBM (&sect;11.4) and as $d_2$ in Black&ndash;Scholes. Same correction, three places.</div>
-    </div>
-
-    <div class="card">
-      <h4>2.4 &nbsp;Moments of a Symmetric $\pm1$ Walk</h4>
-      <div class="eq">$E[X_n] = 0,\qquad \operatorname{Var}(X_n) = n$</div>
-      <div class="eq">$\operatorname{Cov}(X_m, X_n) = \min(m,n)$</div>
-      <div class="use"><b>Use when:</b> discrete analogue of $\operatorname{Cov}(W_s,W_t)=\min(s,t)$. Same proof: overlap of independent increments.</div>
-      <div class="ex"><b>Q:</b> $\operatorname{Cov}(X_3, X_7)$ for a $\pm1$ walk $= \mathbf{3}$.<br><b>Trick:</b> only the shared first $\min(m,n)$ steps contribute; everything after is independent and mean zero.</div>
-    </div>
-
-  </div>
-</div>
-
-<!-- ════════════════════════════════════════ 3 ════════════════════════════════════════ -->
-<div class="section">
-  <div class="section-title"><span class="section-num">3.</span>Gambler&rsquo;s Ruin — probability <em>and</em> duration</div>
-  <div class="formulas">
-
-    <div class="card">
-      <h4>3.0 &nbsp;Setting Up the Word Problem</h4>
-      <div class="eq">&ldquo;stops when up $\,W\,$ or down $\,L$&rdquo; $\;\Longrightarrow\; i = L,\quad N = L + W$</div>
-      <div class="use"><b>Use when:</b> the exam always phrases it as &ldquo;won $W$ rupees or lost $L$ rupees&rdquo;, never as &ldquo;start at $i$, barriers $0$ and $N$&rdquo;. <b>Do this translation first</b> &mdash; it is where marks are lost.</div>
-      <div class="ex"><b>Paper:</b> CT-1&rsquo;26 Set-1 &mdash; &ldquo;won 10 or lost 5&rdquo; &rArr; $i=5$, $N=15$. Set-3 &mdash; &ldquo;won 30 or lost 10&rdquo; &rArr; $i=10$, $N=40$.</div>
-    </div>
-
-    <div class="card">
-      <h4>3.1 &nbsp;Ruin Probability — Fair Game</h4>
-      <div class="eq">$P_i = P(\text{hit } N \text{ before } 0 \mid X_0 = i) = \dfrac{i}{N}$</div>
-      <div class="cond">$p = \tfrac12$.</div>
-      <div class="use"><b>Use when:</b> &ldquo;equal chances&rdquo;, &ldquo;fair coin&rdquo;, &ldquo;wins or loses one rupee with equal probability&rdquo;.</div>
-      <div class="ex"><b>Paper:</b> CT-1&rsquo;26 all four sets. Set-1: $5/15 = \mathbf{1/3}$. Set-2 (won 20, lost 5): $5/25 = \mathbf{1/5}$. Set-3: $10/40=\mathbf{1/4}$. Set-4 (won 6, lost 5): $\mathbf{5/11}$.</div>
-    </div>
-
-    <div class="card">
-      <h4>3.2 &nbsp;Expected Duration — Fair Game</h4>
-      <div class="eq">$D_i = E[\text{number of rounds}] = i\,(N - i)$</div>
-      <div class="cond">$p=\tfrac12$. Equivalently $D = L \cdot W$ in the word-problem variables.</div>
-      <div class="use"><b>Use when:</b> part (b) of the ruin question &mdash; &ldquo;expected number of rounds before stopping&rdquo;. It is <em>always</em> asked alongside 3.1.</div>
-      <div class="ex"><b>Paper:</b> CT-1&rsquo;26 Set-1: $5\times10 = \mathbf{50}$. Set-2: $5\times20=\mathbf{100}$. Set-3: $10\times30=\mathbf{300}$. Set-4: $5\times6=\mathbf{30}$. <b>Trick:</b> it is literally $L\times W$ &mdash; no formula needed.</div>
-    </div>
-
-    <div class="card">
-      <h4>3.3 &nbsp;Ruin Probability — Unfair Game</h4>
-      <div class="eq">$P_i = \dfrac{1-(q/p)^i}{1-(q/p)^N}, \qquad q = 1-p,\ p\neq\tfrac12$</div>
-      <div class="use"><b>Use when:</b> win probability is given as anything other than $1/2$ (e.g. $2/3$ and $1/3$). Let $r = q/p$ and evaluate numerically &mdash; do not expand.</div>
-      <div class="ex"><b>Q:</b> $p = 2/3$, stop at $+3$ or $-2$. Translate: $i{=}2$, $N{=}5$, $r = q/p = \tfrac12$.<br>$P = \dfrac{1-(1/2)^2}{1-(1/2)^5} = \dfrac{0.75}{0.96875} = \mathbf{0.774}$.<br><b>Trick:</b> compute $r$ once, then it is two powers and a division.</div>
-    </div>
-
-    <div class="card">
-      <h4>3.4 &nbsp;Expected Duration — Unfair Game</h4>
-      <div class="eq">$D_i = \dfrac{i}{q-p} - \dfrac{N}{q-p}\cdot\dfrac{1-(q/p)^i}{1-(q/p)^N}$</div>
-      <div class="eq">$= \dfrac{1}{q-p}\big(i - N P_i\big)$</div>
-      <div class="use"><b>Use when:</b> duration with $p\ne\tfrac12$. <b>Trick:</b> compute $P_i$ first (3.3), then this is one subtraction.</div>
-      <div class="ex"><b>Q:</b> same numbers. $q-p = -\tfrac13$, so $D = \dfrac{2 - 5(0.774)}{-1/3} = \mathbf{5.61}$ rounds.<br><b>Trick:</b> always get $P_i$ from 3.3 first &mdash; never expand the full expression.</div>
-    </div>
-
-    <div class="card">
-      <h4>3.5 &nbsp;Infinite Bankroll Limit</h4>
-      <div class="eq">$\lim_{N\to\infty} P_i = \begin{cases} 1-(q/p)^i & p &gt; \tfrac12 \\[2pt] 0 & p \le \tfrac12\end{cases}$</div>
-      <div class="use"><b>Use when:</b> &ldquo;plays forever against an infinitely rich opponent&rdquo; / &ldquo;$N\to\infty$&rdquo;. Ruin is a.s. certain unless there is a genuine edge.</div>
-      <div class="ex"><b>Q:</b> &ldquo;plays forever against the house with $p = 0.49$, starting with 10&rdquo;. $p &lt; \tfrac12$ &rarr; ruin probability $\mathbf{1}$.<br><b>Trick:</b> any fair-or-worse game against an infinite bankroll ends in ruin almost surely. No arithmetic needed.</div>
-    </div>
-
-    <div class="card">
-      <h4>3.6 &nbsp;Derivation Hook (first-step analysis)</h4>
-      <div class="eq">$P_i = p\,P_{i+1} + q\,P_{i-1}, \quad P_0 = 0,\ P_N = 1$</div>
-      <div class="eq">$D_i = 1 + p\,D_{i+1} + q\,D_{i-1}, \quad D_0 = D_N = 0$</div>
-      <div class="use"><b>Use when:</b> the question says &ldquo;derive&rdquo; or &ldquo;using first-step analysis&rdquo; (Midsem&rsquo;25 Q2(c) asks for a short note on gambler&rsquo;s ruin). The $+1$ in the duration recursion is the round just played.</div>
-      <div class="ex"><b>Paper:</b> Midsem&rsquo;25 Q2(c) &mdash; &ldquo;write a short note on gambler&rsquo;s ruin&rdquo; [2 marks].<br><b>Trick:</b> state the recursion, state the boundary conditions, then quote 3.1/3.3 as its solution. That is the whole answer.</div>
-    </div>
-
-  </div>
-</div>
-
-<!-- ════════════════════════════════════════ 4 ════════════════════════════════════════ -->
-<div class="section">
-  <div class="section-title"><span class="section-num">4.</span>Random Walk &rarr; Brownian Motion (scaling limit)</div>
-  <div class="formulas">
-
-    <div class="card">
-      <h4>4.1 &nbsp;Diffusive Scaling — Driftless</h4>
-      <div class="eq">steps $\pm\Delta x$ every $\Delta t$, $\ \Delta x = \sigma\sqrt{\Delta t}$</div>
-      <div class="eq">$X_{\lfloor t/\Delta t\rfloor} \;\xrightarrow[\Delta t\to0]{d}\; \sigma W(t)$</div>
-      <div class="use"><b>Use when:</b> a limit of a symmetric walk is taken. The <b>only</b> scaling that survives is space $\sim \sqrt{\text{time}}$ &mdash; that is what forces $\operatorname{Var}(W_t)=t$.</div>
-      <div class="ex"><b>Q:</b> &ldquo;why is $\operatorname{Var}(W_t) = t$ and not $t^2$?&rdquo;<br><b>Trick:</b> $n = t/\Delta t$ steps of size $\Delta x$ give variance $t(\Delta x)^2/\Delta t$. That is finite <em>and</em> non-zero only if $\Delta x \propto \sqrt{\Delta t}$. Everything else degenerates.</div>
-    </div>
-
-    <div class="card">
-      <h4>4.2 &nbsp;Scaling with Drift</h4>
-      <div class="eq">$p = \tfrac12\Big(1 + \dfrac{\mu}{\sigma}\sqrt{\Delta t}\Big),\quad \text{steps } \pm\sigma\sqrt{\Delta t}$</div>
-      <div class="eq">$\Longrightarrow\ X(t) \to \mu t + \sigma W(t)$</div>
-      <div class="use"><b>Use when:</b> the question hands you a walk with $p$ depending on $\sqrt{\Delta t}$ and says &ldquo;argue the limit is BM with drift $\mu$&rdquo;.</div>
-      <div class="ex"><b>Paper:</b> Midsem&rsquo;24 Q3(b) &mdash; steps $\pm\sqrt{\Delta t}$, $p=\tfrac12(1+\mu\sqrt{\Delta t})$ (so $\sigma=1$).<br><b>Two-line proof:</b> per-step mean $=\sqrt{\Delta t}(2p-1) = \mu\,\Delta t$; per-step variance $=\Delta t\big(1-(2p-1)^2\big) \to \Delta t$. Over $n=t/\Delta t$ steps: mean $\to\mu t$, variance $\to t$. CLT finishes it.</div>
-    </div>
-
-  </div>
-</div>
-
-<!-- ════════════════════════════════════════ 5 ════════════════════════════════════════ -->
-<div class="section">
-  <div class="section-title"><span class="section-num">5.</span>Wiener Process — Axioms &amp; Identification Tests</div>
-  <div class="formulas">
-
-    <div class="card">
-      <h4>5.1 &nbsp;Wiener Process Axioms</h4>
-      <div class="eq">(i) $W(0) = 0$</div>
-      <div class="eq">(ii) independent increments</div>
-      <div class="eq">(iii) $W(t) - W(s) \sim N(0,\,t-s)$ for $s&lt;t$ &nbsp;(stationary)</div>
-      <div class="eq">(iv) $t \mapsto W(t)$ continuous a.s.</div>
-      <div class="use"><b>Use when:</b> the four-item checklist for &ldquo;short note&rdquo; questions and for verifying a constructed process.</div>
-      <div class="ex"><b>Paper:</b> Midsem&rsquo;25 Q2 / Endsem &mdash; &ldquo;short note on the Wiener process&rdquo;.<br><b>Trick:</b> write the four axioms, then add $\operatorname{Cov}=\min(s,t)$ and &ldquo;continuous but nowhere differentiable&rdquo; for the extra mark.</div>
-    </div>
-
-    <div class="card">
-      <h4>5.2 &nbsp;Is $X(t)$ a Wiener Process? — 4-point test</h4>
-      <div class="eq">1. $X(0) = 0$ ?</div>
-      <div class="eq">2. $X$ Gaussian (all f.d.d. normal) ?</div>
-      <div class="eq">3. $E[X(t)] = 0$ ?</div>
-      <div class="eq">4. $\operatorname{Cov}(X(s),X(t)) = \min(s,t)$ ?</div>
-      <div class="use"><b>Use when:</b> T/F questions of the form &ldquo;$V(t) = \ldots$ is also a Wiener process&rdquo;. Checking $\min(s,t)$ is usually the deciding step; $X(0)=0$ is the usual trap.</div>
-      <div class="ex"><b>Paper:</b> Midsem&rsquo;25 Q1(e) &mdash; $V(t)=\tfrac1c W(c^2t)$, $c&gt;0$. $V(0)=0$ ✓; $\operatorname{Cov} = \tfrac1{c^2}\min(c^2s,c^2t)=\min(s,t)$ ✓ &rArr; <b>True</b>.</div>
-    </div>
-
-    <div class="card">
-      <h4>5.3 &nbsp;Is $X(t)$ a Gaussian Process? — weaker test</h4>
-      <div class="eq">Yes $\iff$ every finite $\sum a_i X(t_i)$ is normal</div>
-      <div class="eq">$f(t)\,W(g(t))$ with $f,g$ deterministic $\Rightarrow$ <b>always</b> Gaussian</div>
-      <div class="use"><b>Use when:</b> the question asks Gaussian process, <em>not</em> Wiener. A deterministic scaling and a deterministic time change can never destroy jointly-normal structure &mdash; the answer is Yes without computation.</div>
-      <div class="ex"><b>Paper:</b> CT-1&rsquo;26 Q3, all four sets &mdash; $e^{-t}W(e^{2t})$, $e^{-2t}W(e^{2t})$, $e^{-t}W(e^{t})$, $e^{-3t}W(e^{2t})$. Every answer is <b>Yes</b>. Not Wiener though: $X(0) = W(1) \ne 0$.</div>
-    </div>
-
-    <div class="card">
-      <h4>5.4 &nbsp;The Four Invariances of BM</h4>
-      <div class="eq">Scaling: $\tfrac1c W(c^2 t)$</div>
-      <div class="eq">Symmetry: $-W(t)$</div>
-      <div class="eq">Time inversion: $t\,W(1/t)$ for $t&gt;0$, $\;0$ at $t=0$</div>
-      <div class="eq">Time reversal on $[0,T]$: $W(T) - W(T-t)$</div>
-      <div class="use"><b>Use when:</b> all four <em>are</em> standard BM. Anything else in a T/F question is probably not &mdash; run &sect;5.2.</div>
-      <div class="ex"><b>Q:</b> &ldquo;Is $-W(t)$ a Wiener process? Is $tW(1/t)$?&rdquo; &mdash; both <b>Yes</b>.<br><b>Trick:</b> memorize these four outright. A T/F on anything <em>else</em> means you must run the &sect;5.2 checklist.</div>
-    </div>
-
-    <div class="card">
-      <h4>5.5 &nbsp;Ornstein&ndash;Uhlenbeck from BM</h4>
-      <div class="eq">$X(t) = e^{-\lambda t}W\!\big(e^{2\lambda t}\big)$</div>
-      <div class="eq">$\operatorname{Cov}(X(s),X(t)) = e^{-\lambda|t-s|}$</div>
-      <div class="use"><b>Use when:</b> covariance depends on $|t-s|$ only &rArr; <b>stationary</b> Gaussian process (OU), <em>not</em> Wiener. Wiener needs $\min(s,t)$.</div>
-      <div class="ex"><b>Trick:</b> $\operatorname{Cov} = e^{-\lambda(s+t)}\min(e^{2\lambda s},e^{2\lambda t}) = e^{-\lambda(s+t)}e^{2\lambda \min(s,t)} = e^{-\lambda|t-s|}$.</div>
-    </div>
-
-    <div class="card">
-      <h4>5.6 &nbsp;Lévy&rsquo;s Martingale Characterization</h4>
-      <div class="eq">$X$ continuous, $X(0)=0$, $X_t$ and $X_t^2 - t$ both martingales $\Longrightarrow X$ is standard BM</div>
-      <div class="use"><b>Use when:</b> you must prove BM-ness without touching distributions. Two martingale checks replace the whole axiom list.</div>
-      <div class="ex"><b>Q:</b> &ldquo;prove the scaled random-walk limit is Brownian motion&rdquo;.<br><b>Trick:</b> L&eacute;vy lets you skip distributions entirely &mdash; show continuity, $X_0 = 0$, and that $X_t$ and $X_t^2 - t$ are both martingales.</div>
-    </div>
-
-    <div class="card">
-      <h4>5.7 &nbsp;Path Properties (short-note ammo)</h4>
-      <div class="eq">Continuous everywhere, differentiable nowhere (a.s.)</div>
-      <div class="eq">Quadratic variation on $[0,t]$ $= t$, i.e. $(dW)^2 = dt$</div>
-      <div class="eq">Total variation $=\infty$; Markov; strong Markov</div>
-      <div class="use"><b>Use when:</b> &ldquo;write a short note&rdquo;. $(dW)^2 = dt$ is the single fact that powers all of It&ocirc;&rsquo;s formula.</div>
-      <div class="ex"><b>Q:</b> Endsem-style &mdash; &ldquo;explain quadratic variation&rdquo;.<br><b>Trick:</b> say the sentence &ldquo;$(dW)^2 = dt$ is why It&ocirc;&rsquo;s formula carries the $\tfrac12 f''$ term at all&rdquo;. That one link is what they are marking.</div>
-    </div>
-
-  </div>
-</div>
-
-<!-- ════════════════════════════════════════ 6 ════════════════════════════════════════ -->
-<div class="section">
-  <div class="section-title"><span class="section-num">6.</span>Covariance &amp; Moments — the $\min(s,t)$ machine</div>
-  <div class="formulas">
-
-    <div class="card">
-      <h4>6.1 &nbsp;Covariance of BM</h4>
-      <div class="eq">$\operatorname{Cov}(W_s, W_t) = E[W_s W_t] = \min(s,t)$</div>
-      <div class="use"><b>Use when:</b> the single most-used identity in the paper. Derivation: for $s&lt;t$, $E[W_sW_t] = E[W_s(W_s + (W_t-W_s))] = s + 0$.</div>
-      <div class="ex"><b>Paper:</b> Midsem&rsquo;24 Q1(d) &mdash; $\operatorname{Var}(W_4)\times\operatorname{Cov}(W_1,W_4) = 4 \times 1 = \mathbf{4}$.</div>
-    </div>
-
-    <div class="card">
-      <h4>6.2 &nbsp;Linear Combination of BM Values</h4>
-      <div class="eq">$\sum_i a_i W_{t_i} \sim N\!\Big(0,\ \sum_i\sum_j a_i a_j \min(t_i,t_j)\Big)$</div>
-      <div class="eq">two terms: $\operatorname{Var}(aW_s + bW_t) = a^2 s + b^2 t + 2ab\min(s,t)$</div>
-      <div class="use"><b>Use when:</b> &ldquo;$4W_1 + 6W_3 \sim\ ?$&rdquo;. <b>Trick:</b> build the $\min$ matrix, then it is one dot product. Mean is always $0$.</div>
-      <div class="ex"><b>Paper:</b> CT-1&rsquo;26 Q4 &mdash; $4W_1+6W_3$: $16(1)+36(3)+2(24)(1) = 16+108+48 = \mathbf{N(0,172)}$. Set-2 $3W_1{+}6W_3\!: \mathbf{153}$; Set-3 $4W_1{+}5W_3\!: \mathbf{131}$; Set-4 $4W_1{+}7W_3\!: \mathbf{219}$.<br>Midsem&rsquo;25 Q1(d) &mdash; $W_1 - W_2 + 3W_4$: $1+2+36-2(1)+6(1)-6(2) = \mathbf{N(0,31)}$.</div>
-    </div>
-
-    <div class="card">
-      <h4>6.3 &nbsp;Increment Splitting — the universal trick</h4>
-      <div class="eq">$s&lt;t:\quad W_t = W_s + \underbrace{(W_t - W_s)}_{\Delta \,\sim\, N(0,\,t-s),\ \perp\ \mathcal F_s}$</div>
-      <div class="use"><b>Use when:</b> <em>any</em> mixed moment $E[g(W_s)h(W_t)]$. Substitute, expand, kill odd powers of $\Delta$, use independence. This replaces every 2-D integral.</div>
-      <div class="ex"><b>Q:</b> $E[W_2 W_3^3]$. Put $W_3 = W_2 + \Delta$, expand: $E[W_2^4] + 3E[W_2^2]E[\Delta^2] = 3(4) + 3(2)(1) = \mathbf{18}$.<br><b>General:</b> $E[W_sW_t^3] = 3st$ for $s\le t$. <b>Trick:</b> every odd power of $\Delta$ dies.</div>
-    </div>
-
-    <div class="card">
-      <h4>6.4 &nbsp;Mixed Fourth Moment</h4>
-      <div class="eq">$E[W_s^2 W_t^2] = 2s^2 + st = s(2s+t), \qquad s \le t$</div>
-      <div class="use"><b>Use when:</b> exactly this question. <b>Order matters</b> &mdash; $s$ is the <em>smaller</em> index. Derivation: $E[W_s^2(W_s+\Delta)^2] = E[W_s^4] + E[W_s^2]E[\Delta^2] = 3s^2 + s(t-s)$.</div>
-      <div class="ex"><b>Paper:</b> CT-1&rsquo;26 Q2 &mdash; $E(W_2^2W_3^2)=2(4)+6=\mathbf{14}$; $E(W_1^2W_3^2)=2+3=\mathbf{5}$; $E(W_2^2W_4^2)=8+8=\mathbf{16}$; $E(W_1^2W_4^2)=2+4=\mathbf{6}$.</div>
-    </div>
-
-    <div class="card">
-      <h4>6.5 &nbsp;Covariance of Exponentials</h4>
-      <div class="eq">$\operatorname{Cov}\big(e^{W_s}, e^{W_t}\big) = e^{(s+t)/2}\Big(e^{\min(s,t)} - 1\Big)$</div>
-      <div class="use"><b>Use when:</b> $Y_t := e^{W_t}$, asked for $\operatorname{Cov}(Y_s,Y_t)$. <b>Trick:</b> $W_s+W_t\sim N(0,\,s+t+2\min(s,t))$, then $E[e^{W_s+W_t}] = e^{(s+t+2\min)/2}$, minus $e^{s/2}e^{t/2}$.</div>
-      <div class="ex"><b>Paper:</b> CT-1&rsquo;26 Q9 &mdash; $\operatorname{Cov}(Y_1,Y_2)=e^{3/2}(e-1)$; $\operatorname{Cov}(Y_2,Y_3)=e^{5/2}(e^2-1)$; $\operatorname{Cov}(Y_2,Y_4)=e^{3}(e^2-1)\approx\mathbf{948.43}$; $\operatorname{Cov}(Y_1,Y_4)=e^{5/2}(e-1)\approx\mathbf{20.93}$.</div>
-    </div>
-
-    <div class="card">
-      <h4>6.6 &nbsp;Correlation of BM</h4>
-      <div class="eq">$\operatorname{Corr}(W_s,W_t) = \dfrac{\min(s,t)}{\sqrt{st}} = \sqrt{\dfrac{s}{t}}, \quad s\le t$</div>
-      <div class="use"><b>Use when:</b> a correlation (not covariance) is requested, or when setting up a bivariate normal for conditioning.</div>
-      <div class="ex"><b>Q:</b> $\operatorname{Corr}(W_1,W_4) = \sqrt{1/4} = \mathbf{0.5}$.<br><b>Trick:</b> correlation is $\sqrt{s/t}$ &mdash; it decays like a square root, so distant times are far less correlated than the covariance $\min(s,t)$ suggests.</div>
-    </div>
-
-  </div>
-</div>
-
-<!-- ════════════════════════════════════════ 7 ════════════════════════════════════════ -->
-<div class="section">
-  <div class="section-title"><span class="section-num">7.</span>Martingales of Brownian Motion &amp; the Drift Test</div>
-  <div class="formulas">
-
-    <div class="card">
-      <h4>7.1 &nbsp;Canonical Martingale 1 — Linear</h4>
-      <div class="eq">$W(t)$ is a martingale; $\;E[W_t\mid\mathcal F_s] = W_s$</div>
-      <div class="use"><b>Use when:</b> the base case, and the engine behind every Optional Stopping argument (&sect;10.7).</div>
-      <div class="ex"><b>Paper:</b> Endsem&rsquo;25 Q1(d) needs exactly one fact: $E[W_T] = 0$ at a stopping time.<br><b>Trick:</b> $W_t$ being a martingale is the <em>only</em> input to every OST question in &sect;10.7. Nothing else is required.</div>
-    </div>
-
-    <div class="card">
-      <h4>7.2 &nbsp;Canonical Martingale 2 — Quadratic</h4>
-      <div class="eq">$W(t)^2 - t$ is a martingale; $\;E[W_t^2\mid\mathcal F_s] = W_s^2 + (t-s)$</div>
-      <div class="use"><b>Use when:</b> you need $E[\tau]$ for an exit problem, or a T/F on $|W_t|^2 - t$.</div>
-      <div class="ex"><b>Paper:</b> Midsem&rsquo;25 Q1(f) &mdash; &ldquo;$|W_t|^2 - t$ is <b>NOT</b> a martingale (T/F)&rdquo;. It <em>is</em> one, so the statement is <b>False</b>. Watch the negation.</div>
-    </div>
-
-    <div class="card">
-      <h4>7.3 &nbsp;Canonical Martingale 3 — Exponential</h4>
-      <div class="eq">$M_\lambda(t) = \exp\!\Big(\lambda W_t - \tfrac{\lambda^2}{2}t\Big)$ is a martingale, every $\lambda\in\mathbb R$</div>
-      <div class="use"><b>Use when:</b> hitting-time Laplace transforms, Girsanov, and checking GBM martingality. $E[M_\lambda(t)] = 1$ for all $t$.</div>
-      <div class="ex"><b>Q:</b> find $E[e^{-\lambda\tau_a}]$ (&sect;12.7).<br><b>Trick:</b> choose the $\lambda$ in the martingale that makes the exponent match the barrier, then apply OST. $E[M_\lambda(t)] = 1$ finishes it.</div>
-    </div>
-
-    <div class="card">
-      <h4>7.4 &nbsp;Martingale Test for $f(t,W_t)$ — It&ocirc; drift $=0$</h4>
-      <div class="eq">$df = \Big(\partial_t f + \tfrac12 \partial_{ww} f\Big)dt + \partial_w f\, dW$</div>
-      <div class="eq">martingale $\iff \partial_t f + \tfrac12\partial_{ww} f = 0$</div>
-      <div class="eq">special case $f = e^{\lambda t}g(w)$: &nbsp; MG $\iff \lambda g + \tfrac12 g'' = 0$</div>
-      <div class="use"><b>Use when:</b> every &ldquo;Is $Y_t := \ldots$ a martingale? (Yes/No)&rdquo;. For $g = \sin$ or $\cos$, $g'' = -g$, so the <b>only</b> working exponent is $\lambda = \tfrac12$.</div>
-      <div class="ex"><b>Paper:</b> CT-1&rsquo;26 Q5 &mdash; $e^{t/2}\sin W_t$ <b>Yes</b>; $e^{t}\cos W_t$ <b>No</b>; $e^{t}\sin W_t$ <b>No</b>; $e^{t/2}\cos W_t$ <b>Yes</b>.<br><b>One-second rule:</b> exponent $\tfrac12$ &rarr; Yes, anything else &rarr; No.</div>
-    </div>
-
-    <div class="card">
-      <h4>7.5 &nbsp;It&ocirc; Integral — Always a Martingale, Always Normal</h4>
-      <div class="eq">$\int_0^T f(t)\,dW_t \sim N\!\Big(0,\ \int_0^T f(t)^2\,dt\Big)$</div>
-      <div class="eq">It&ocirc; isometry: $E\Big[\big(\int_0^T H_t dW_t\big)^2\Big] = E\int_0^T H_t^2\,dt$</div>
-      <div class="cond">Normality needs $f$ <em>deterministic</em>; the martingale/isometry part holds for adapted $H$.</div>
-      <div class="use"><b>Use when:</b> &ldquo;compute the distribution of $\int_0^1 t^k dW_t$&rdquo;. Mean is $0$ free; variance is a one-line calculus integral.</div>
-      <div class="ex"><b>Paper:</b> CT-1&rsquo;26 Q1 &mdash; $\int_0^1 t^k dW_t \sim N\big(0,\tfrac{1}{2k+1}\big)$: $k{=}1\!\to\!\mathbf{N(0,1/3)}$, $k{=}2\!\to\!\mathbf{1/5}$, $k{=}3\!\to\!\mathbf{1/7}$, $k{=}4\!\to\!\mathbf{1/9}$. CT-2&rsquo;25 Q7: $\int_0^1 t^2dW_t\sim N(0,1/5)$.</div>
-    </div>
-
-    <div class="card">
-      <h4>7.6 &nbsp;Conditional Expectations You Can Quote</h4>
-      <div class="eq">$E[W_t\mid\mathcal F_s] = W_s$</div>
-      <div class="eq">$E[W_t^2\mid\mathcal F_s] = W_s^2 + (t-s)$</div>
-      <div class="eq">$E[e^{W_t}\mid\mathcal F_s] = e^{W_s + (t-s)/2}$</div>
-      <div class="eq">$E[e^{\lambda W_t}\mid\mathcal F_s] = e^{\lambda W_s + \lambda^2(t-s)/2}$</div>
-      <div class="use"><b>Use when:</b> &ldquo;filtration expectation&rdquo; questions. All four come from &sect;6.3 + &sect;1.2 in one step.</div>
-      <div class="ex"><b>Q:</b> find $E[W_3^2 \mid \mathcal F_1]$ &rarr; $\mathbf{W_1^2 + 2}$.<br><b>Trick:</b> all four lines are &sect;6.3 (split the increment) followed by &sect;1.2 (exponential moment). Derive them, don&rsquo;t memorize them.</div>
-    </div>
-
-  </div>
-</div>
-
-<!-- ════════════════════════════════════════ 8 ════════════════════════════════════════ -->
-<div class="section">
-  <div class="section-title"><span class="section-num">8.</span>Density, Transition Kernel &amp; the Diffusion Equation</div>
-  <div class="formulas">
-
-    <div class="card">
-      <h4>8.1 &nbsp;Density of $W(t)$</h4>
-      <div class="eq">$f_{W(t)}(x) = \dfrac{1}{\sqrt{2\pi t}}\,e^{-x^2/(2t)}$</div>
-      <div class="eq">$P(W(t) \le x) = \Phi\!\left(\dfrac{x}{\sqrt t}\right)$</div>
-      <div class="use"><b>Use when:</b> $W$ alone, no maximum, no barrier. <b>Always divide by $\sqrt t$, never $t$.</b></div>
-      <div class="ex"><b>Q:</b> $P(W(4) &gt; 3) = 1 - \Phi(3/2) = \mathbf{0.0668}$.<br><b>Trick:</b> $\sqrt t = 2$, <b>not</b> $4$. Dividing by $t$ instead of $\sqrt t$ is the single most common lost mark on this paper.</div>
-    </div>
-
-    <div class="card">
-      <h4>8.2 &nbsp;Transition Density</h4>
-      <div class="eq">$p(t;x,y) = \dfrac{1}{\sqrt{2\pi t}}\exp\!\Big(-\dfrac{(y-x)^2}{2t}\Big)$</div>
-      <div class="use"><b>Use when:</b> BM started at $x\neq0$. Everything else is unchanged &mdash; recentre and reuse every formula.</div>
-      <div class="ex"><b>Q:</b> BM started at $5$; $P(W(1) &lt; 7) = \Phi(2) = \mathbf{0.9772}$.<br><b>Trick:</b> subtract the starting point first &mdash; then every other formula on this sheet applies unchanged.</div>
-    </div>
-
-    <div class="card">
-      <h4>8.3 &nbsp;Diffusion (Heat) Equation</h4>
-      <div class="eq">$\dfrac{\partial p}{\partial t} = \dfrac12\,\dfrac{\partial^2 p}{\partial y^2}$</div>
-      <div class="use"><b>Use when:</b> &ldquo;show the density satisfies the heat equation&rdquo;. Differentiate 8.1 twice; the $\tfrac12$ is the same $\tfrac12$ as in It&ocirc;&rsquo;s formula.</div>
-      <div class="ex"><b>Q:</b> &ldquo;show the transition density satisfies the heat equation&rdquo;.<br><b>Trick:</b> $\partial_{yy}$ brings down $\big(\tfrac{(y-x)^2}{t^2} - \tfrac1t\big)$; $\partial_t$ brings down exactly half of it. One line each, then compare.</div>
-    </div>
-
-    <div class="card">
-      <h4>8.4 &nbsp;Chapman&ndash;Kolmogorov</h4>
-      <div class="eq">$p(t+s;x,z) = \displaystyle\int_{\mathbb R} p(t;x,y)\,p(s;y,z)\,dy$</div>
-      <div class="use"><b>Use when:</b> justifying the Markov property, or short-note questions on why independent increments force Gaussian transitions.</div>
-      <div class="ex"><b>Q:</b> &ldquo;why <em>must</em> the increments be Gaussian?&rdquo;<br><b>Trick:</b> Chapman&ndash;Kolmogorov plus stationary independent increments plus continuity forces the normal family. That sentence is the short-note answer.</div>
-    </div>
-
-  </div>
-</div>
-
-<!-- ════════════════════════════════════════ 9 ════════════════════════════════════════ -->
-<div class="section">
-  <div class="section-title"><span class="section-num">9.</span>Conditioning &amp; the Brownian Bridge</div>
-  <div class="formulas">
-
-    <div class="card">
-      <h4>9.1 &nbsp;Which Direction Are You Conditioning?</h4>
-      <div class="eq">Forward (know past, want future) &rarr; 9.2</div>
-      <div class="eq">Backward (know endpoint, want interior) &rarr; 9.4</div>
-      <div class="use"><b>Use when:</b> <b>decide this first.</b> Forward is trivial (martingale, variance grows). Backward is the bridge (variance shrinks to $0$ at both ends).</div>
-      <div class="ex"><b>Q:</b> &ldquo;Given $W(1)=2$, find $E[W(3)]$&rdquo; &rarr; $\mathbf{2}$ (martingale). &ldquo;Given $W(3)=2$, find $E[W(1)]$&rdquo; &rarr; $\tfrac13(2) = \mathbf{2/3}$ (bridge).<br><b>Trick:</b> identify which time is <em>known</em> before you write a single symbol.</div>
-    </div>
-
-    <div class="card">
-      <h4>9.2 &nbsp;Forward Conditional</h4>
-      <div class="eq">$W(t)\mid \mathcal F_s \sim N\big(W(s),\ t-s\big), \qquad t&gt;s$</div>
-      <div class="use"><b>Use when:</b> future given present. Independent increments, nothing more.</div>
-      <div class="ex"><b>Q:</b> $W(5) \mid W(2) = 3 \sim \mathbf{N(3,\,3)}$.<br><b>Trick:</b> the mean stays exactly where you left it; the variance is the elapsed time and nothing else.</div>
-    </div>
-
-    <div class="card">
-      <h4>9.3 &nbsp;Standard Brownian Bridge</h4>
-      <div class="eq">$B(s) = W(s) - \dfrac{s}{t}W(t), \quad 0\le s\le t$</div>
-      <div class="eq">$E[B(s)] = 0, \qquad \operatorname{Cov}(B(u),B(v)) = \min(u,v) - \dfrac{uv}{t}$</div>
-      <div class="eq">$B \perp W(t)$</div>
-      <div class="use"><b>Use when:</b> the process is pinned at both ends. The $-uv/t$ term is exactly the information removed by knowing the endpoint.</div>
-      <div class="ex"><b>Q:</b> $\operatorname{Var}(B(t/2))$ on $[0,t]$ $= \tfrac t2 - \tfrac{(t/2)^2}{t} = \mathbf{t/4}$.<br><b>Trick:</b> bridge variance is zero at both ends and peaks at the midpoint &mdash; a 2-second sanity check on any bridge answer.</div>
-    </div>
-
-    <div class="card">
-      <h4>9.4 &nbsp;Backward Interpolation — the workhorse</h4>
-      <div class="eq">$W(s)\mid W(t){=}b \;\sim\; N\!\left(\dfrac{s}{t}\,b,\ \dfrac{s(t-s)}{t}\right), \qquad s&lt;t$</div>
-      <div class="use"><b>Use when:</b> &ldquo;given $W(t)=b$, find $P(W(s)&lt;x)$ / $E[W(s)]$ / $\operatorname{Var}$&rdquo;. Mean is the straight line from $(0,0)$ to $(t,b)$; variance vanishes at both ends and peaks at the midpoint.</div>
-      <div class="ex"><b>Trick:</b> derive it in 10 seconds from &sect;1.9 with $\Sigma = \begin{pmatrix} s & s\\ s& t\end{pmatrix}$: mean $= \frac st b$, var $= s - \frac{s^2}{t}$.</div>
-    </div>
-
-    <div class="card">
-      <h4>9.5 &nbsp;Bridge Pinned $a \to b$</h4>
-      <div class="eq">$X(s) \sim N\!\left(a + \dfrac{s}{t}(b-a),\ \dfrac{s(t-s)}{t}\right)$</div>
-      <div class="cond">$X(0)=a$, $X(t)=b$.</div>
-      <div class="use"><b>Use when:</b> the process does not start at $0$. Only the mean line shifts; the variance is untouched.</div>
-      <div class="ex"><b>Q:</b> $W(0)=2$, $W(10)=8$; find the law of $W(4)$. Mean $= 2 + \tfrac{4}{10}(6) = \mathbf{4.4}$, Var $= \tfrac{4(6)}{10} = \mathbf{2.4}$.<br><b>Trick:</b> the mean is plain linear interpolation between the two pins.</div>
-    </div>
-
-    <div class="card">
-      <h4>9.6 &nbsp;Scaled BM ($Y = \sigma W$)</h4>
-      <div class="eq">$Y(s)\mid Y(t){=}b \sim N\!\left(\dfrac st b,\ \sigma^2\dfrac{s(t-s)}{t}\right)$</div>
-      <div class="use"><b>Use when:</b> volatility $\sigma\ne1$. <b>Mean is unchanged</b> (ratios cancel); only variance picks up $\sigma^2$.</div>
-      <div class="ex"><b>Q:</b> $Y = 3W$ with $Y(10) = 12$; find the law of $Y(4)$. Mean $= \tfrac{4}{10}(12) = \mathbf{4.8}$, Var $= 9\cdot\tfrac{4(6)}{10} = \mathbf{21.6}$.<br><b>Trick:</b> $\sigma^2$ scales the variance and leaves the mean untouched.</div>
-    </div>
-
-  </div>
-</div>
-
-<!-- ════════════════════════════════════════ 10 ═══════════════════════════════════════ -->
-<div class="section">
-  <div class="section-title"><span class="section-num">10.</span>BM with Drift — Exit Probabilities &amp; Optimal Stopping</div>
-  <div class="formulas">
-
-    <div class="card">
-      <h4>10.1 &nbsp;Definition</h4>
-      <div class="eq">$X(t) = \mu t + \sigma W(t) \sim N(\mu t,\ \sigma^2 t)$</div>
-      <div class="eq">$X(t) - X(s) \sim N\big(\mu(t-s),\ \sigma^2(t-s)\big)$, independent increments</div>
-      <div class="use"><b>Use when:</b> &ldquo;drift coefficient / drift parameter $\mu$ and variance parameter $\sigma^2$&rdquo;. Careful: some questions give $\sigma^2$, some give $\sigma$.</div>
-      <div class="ex"><b>Paper:</b> Midsem&rsquo;25 Q1(a) says &ldquo;drift coefficient $-1$&rdquo; &rarr; $\mu{=}{-}1$, $\sigma{=}1$. CT-1&rsquo;26 Q6 says &ldquo;volatility parameter $\sigma = 0.3$&rdquo; &rarr; that is $\sigma$, not $\sigma^2$.<br><b>Trick:</b> check whether they handed you $\sigma$ or $\sigma^2$ &mdash; the exit formulas all want $\sigma^2$.</div>
-    </div>
-
-    <div class="card">
-      <h4>10.2 &nbsp;Which Exit Formula? — decision</h4>
-      <div class="eq">$\mu = 0$, two barriers &nbsp;&rarr;&nbsp; 10.4 (distance ratio)</div>
-      <div class="eq">$\mu \ne 0$, two barriers &nbsp;&rarr;&nbsp; 10.3 (exponentials)</div>
-      <div class="eq">$\mu &lt; 0$, <em>one</em> upper barrier, no lower &nbsp;&rarr;&nbsp; 10.5</div>
-      <div class="eq">$\mu \ge 0$, one upper barrier &nbsp;&rarr;&nbsp; probability $= 1$</div>
-      <div class="use"><b>Use when:</b> run this fork before writing anything. Most lost marks are from using 10.3 when $\mu=0$ (it is $0/0$).</div>
-      <div class="ex"><b>Paper:</b> Midsem&rsquo;24 Q1(c) gives $\mu = 0$, so 10.4 applies and 10.3 does not.<br><b>Trick:</b> at $\mu = 0$ the exponential formula is literally $0/0$. Check the drift <em>before</em> choosing a formula, every time.</div>
-    </div>
-
-    <div class="card">
-      <h4>10.3 &nbsp;Two-Barrier Exit — Drift $\ne 0$</h4>
-      <div class="eq">$P(\text{hit } A \text{ before } -B \mid X(0){=}0) = \dfrac{1 - e^{-2\mu B/\sigma^2}}{1 - e^{-2\mu(A+B)/\sigma^2}}$</div>
-      <div class="eq">from $X(0)=x$, barriers $A$ (up) and $-B$ (down): replace $B \to x+B$</div>
-      <div class="cond">$A,B&gt;0$, $\mu\ne0$.</div>
-      <div class="use"><b>Use when:</b> continuous-time gambler&rsquo;s ruin. It is &sect;3.3 with $(q/p)^i \to e^{-2\mu x/\sigma^2}$.</div>
-      <div class="ex"><b>Q:</b> $\mu = 0.1$, $\sigma = 1$, barriers $+2$ and $-3$ from $0$.<br>$P = \dfrac{1-e^{-0.6}}{1-e^{-1}} = \dfrac{0.4512}{0.6321} = \mathbf{0.714}$.<br><b>Trick:</b> set $r = 2\mu/\sigma^2$ once, then it reads $\frac{1-e^{-rB}}{1-e^{-r(A+B)}}$.</div>
-    </div>
-
-    <div class="card">
-      <h4>10.4 &nbsp;Two-Barrier Exit — Zero Drift</h4>
-      <div class="eq">$P(\text{hit } A \text{ before } -B \mid X(0){=}0) = \dfrac{B}{A+B}$</div>
-      <div class="eq">$P(\text{hit } -B \text{ first}) = \dfrac{A}{A+B}$</div>
-      <div class="use"><b>Use when:</b> $\mu = 0$. <b>Trick:</b> the probability of hitting a barrier is proportional to the distance to the <em>opposite</em> barrier. $\sigma$ cancels and never appears.</div>
-      <div class="ex"><b>Paper:</b> Midsem&rsquo;24 Q1(c) &mdash; $B(t)$, $\mu{=}0$, $\sigma^2{=}1$, &ldquo;reaches $-2$ before $1$&rdquo;. Up-barrier $A{=}1$, down-barrier $B{=}2$. $P(\text{down first}) = \frac{A}{A+B} = \frac{1}{3}$ &rArr; $\mathbf{1/3}$.</div>
-    </div>
-
-    <div class="card">
-      <h4>10.5 &nbsp;Negative Drift — Maximum Ever Reached</h4>
-      <div class="eq">$P\Big(\max_{t\ge0} X(t) \ge a\Big) = e^{2\mu a/\sigma^2} = e^{-2|\mu|a/\sigma^2}, \qquad \mu&lt;0,\ a&gt;0$</div>
-      <div class="eq">$\displaystyle\max_{t\ge0}X(t) \sim \mathrm{Exp}\!\left(\frac{2|\mu|}{\sigma^2}\right)$</div>
-      <div class="use"><b>Use when:</b> only an upper target, drift pulls down, infinite horizon. If $\mu\ge0$ the probability is $1$ (the process reaches every level a.s.).</div>
-      <div class="ex"><b>Trick:</b> memoryless &rArr; the all-time max is Exponential. That is what makes the optimization in 10.6 a one-line calculus problem.</div>
-    </div>
-
-    <div class="card">
-      <h4>10.6 &nbsp;Optimal Exercise Threshold (drift $-\mu$)</h4>
-      <div class="eq">maximize $\ g(x) = (x-K)\,e^{-2\mu x/\sigma^2}$ over $x \ge K$</div>
-      <div class="eq">$x^{*} = K + \dfrac{\sigma^2}{2\mu}, \qquad g(x^{*}) = \dfrac{\sigma^2}{2\mu}\,e^{-2\mu K/\sigma^2 - 1}$</div>
-      <div class="cond">$\sigma = 1$ case: $x^{*} = K + \frac{1}{2\mu}$.</div>
-      <div class="use"><b>Use when:</b> &ldquo;option to buy at fixed price $K$; price follows BM with drift coefficient $-\mu$; when, if ever, should we exercise?&rdquo;<br><b>Set-up:</b> payoff $x-K$, probability of ever reaching $x$ is $e^{-2\mu x/\sigma^2}$ (10.5). Differentiate, done.</div>
-      <div class="ex"><b>Paper:</b> Midsem&rsquo;25 Q1(a) &mdash; $K=100$, drift $-1$ (so $\mu{=}1$, $\sigma{=}1$), start $0$. $x^{*} = 100 + \tfrac12 = \mathbf{100.5}$. Exercise the first time the price hits $100.5$.</div>
-    </div>
-
-    <div class="card">
-      <h4>10.7 &nbsp;Hitting a Sloping Line — via OST</h4>
-      <div class="eq">$T = \min\{t: W_t = a + bt\}$</div>
-      <div class="eq">$E[W_T] = 0 \Rightarrow a + b\,E[T] = 0 \Rightarrow E[T] = -\dfrac{a}{b}$</div>
-      <div class="cond">Needs $ab &lt; 0$ (line slopes back toward $0$), else $E[T]=\infty$.</div>
-      <div class="use"><b>Use when:</b> the barrier <em>moves</em>. Apply OST to the martingale $W_t$ at the stopping time, substitute the barrier equation, solve for $E[T]$.</div>
-      <div class="ex"><b>Paper:</b> Endsem&rsquo;25 Q1(d) &mdash; $T = \min\{t: W_t = 2 - 3t\}$. $0 = 2 - 3E[T] \Rightarrow E[T] = \mathbf{2/3}$.</div>
-    </div>
-
-    <div class="card">
-      <h4>10.8 &nbsp;Expected Exit Time (two barriers)</h4>
-      <div class="eq">$\mu = 0:\quad E[T] = \dfrac{A\,B}{\sigma^2}$ &nbsp; (from $X(0)=0$)</div>
-      <div class="eq">$\mu \ne 0:\quad E[T] = \dfrac{A\,p - B(1-p)}{\mu}$, &nbsp; $p$ from 10.3</div>
-      <div class="use"><b>Use when:</b> duration asked as well as probability. $\mu{=}0$ case uses the martingale $X_t^2 - \sigma^2 t$; $\mu\ne0$ uses $X_t - \mu t$ (Wald).</div>
-      <div class="ex"><b>Check:</b> $\mu=0$, $\sigma=1$, $A=B=n$ gives $E[T]=n^2$ &mdash; the discrete $i(N-i)$ of &sect;3.2 with $i=n,N=2n$.</div>
-    </div>
-
-  </div>
-</div>
-
-<!-- ════════════════════════════════════════ 11 ═══════════════════════════════════════ -->
-<div class="section">
-  <div class="section-title"><span class="section-num">11.</span>Geometric Brownian Motion</div>
-  <div class="formulas">
-
-    <div class="card flag">
-      <h4>11.1 &nbsp;⚠ Two Conventions for &ldquo;drift parameter $\mu$&rdquo;</h4>
-      <div class="eq"><b>(R) Ross / log-drift:</b> $\;Y(t) = Y(0)\,e^{\mu t + \sigma W_t}$</div>
-      <div class="eq"><b>(S) SDE:</b> $\;dY = \mu Y\,dt + \sigma Y\,dW \;\Rightarrow\; Y(t) = Y(0)e^{(\mu - \sigma^2/2)t + \sigma W_t}$</div>
-      <div class="bad"><b>The paper accepts BOTH.</b> CT-1&rsquo;26 Q6 official answer key literally reads &ldquo;$5e^{0.55}$ <b>or</b> $5e^{0.1}$&rdquo;. <b>Write both, label them</b> &mdash; that is the full-marks answer.</div>
-      <div class="use"><b>Tell them apart:</b> &ldquo;logarithm of the price is BM with drift $\mu$&rdquo; &rArr; (R). &ldquo;$dS = \mu S\,dt + \ldots$&rdquo; or &ldquo;expected return $\mu$&rdquo; &rArr; (S).</div>
-      <div class="ex"><b>Paper:</b> CT-1&rsquo;26 Q6, all four sets, and Midsem&rsquo;25 Q1(b).<br><b>Trick:</b> write both, labelled: &ldquo;log-drift convention: $\ldots$ ; SDE convention: $\ldots$&rdquo;. Two boxed expressions. The key accepts either, and labelling proves you know why there are two.</div>
-    </div>
-
-    <div class="card">
-      <h4>11.2 &nbsp;Mean of GBM</h4>
-      <div class="eq">(R) $\;E[Y(t)] = Y(0)\,e^{(\mu + \sigma^2/2)\,t}$</div>
-      <div class="eq">(S) $\;E[Y(t)] = Y(0)\,e^{\mu t}$</div>
-      <div class="use"><b>Use when:</b> the single most repeated GBM question. Both are &sect;1.2 applied to $\mu t + \sigma W_t \sim N(\mu t, \sigma^2 t)$.</div>
-      <div class="ex"><b>Paper:</b> CT-1&rsquo;26 Q6 &mdash; $\mu{=}.01,\sigma{=}.3,Y_0{=}5$: $5e^{(.01+.045)10} = \mathbf{5e^{0.55}}$ or $\mathbf{5e^{0.1}}$. Set-2 $\mu{=}.02,\sigma{=}.4,Y_0{=}10$: $\mathbf{10e^{1}}$ or $\mathbf{10e^{0.2}}$. Set-3: $\mathbf{5e^{0.5}}$ / $5e^{0.3}$. Set-4: $\mathbf{5e^{0.3}}$ / $5e^{0.1}$.<br>Midsem&rsquo;25 Q1(b) &mdash; $\mu{=}.01,\sigma{=}.2,Y_0{=}10,t{=}100$: $\mathbf{10e^{3}}$ or $10e^{1}$.</div>
-    </div>
-
-    <div class="card">
-      <h4>11.3 &nbsp;Filtration Expectation of GBM</h4>
-      <div class="eq">(R) $\;E[Y(t)\mid\mathcal F_s] = Y(s)\,e^{(\mu+\sigma^2/2)(t-s)}$</div>
-      <div class="eq">(S) $\;E[Y(t)\mid\mathcal F_s] = Y(s)\,e^{\mu(t-s)}$</div>
-      <div class="use"><b>Use when:</b> conditional version. <b>Trick:</b> same formula with $Y(0)\to Y(s)$ and $t \to t-s$ &mdash; GBM is multiplicatively memoryless.</div>
-      <div class="ex"><b>Q:</b> $E[Y(10)\mid\mathcal F_4]$ with (R), $\mu{=}0.01$, $\sigma{=}0.2$ &rarr; $Y(4)\,e^{(0.01+0.02)(6)} = \mathbf{Y(4)e^{0.18}}$.<br><b>Trick:</b> same formula as 11.2 with $Y(0)\to Y(s)$ and $t \to t-s$.</div>
-    </div>
-
-    <div class="card">
-      <h4>11.4 &nbsp;GBM Martingale Condition</h4>
-      <div class="eq">(R) MG $\iff \mu = -\dfrac{\sigma^2}{2}$ &nbsp;&nbsp; (S) MG $\iff \mu = 0$</div>
-      <div class="use"><b>Use when:</b> &ldquo;is the discounted/undiscounted price a martingale?&rdquo;. Same $-\sigma^2/2$ as the geometric random walk (&sect;2.3).</div>
-      <div class="ex"><b>Q:</b> &ldquo;Is $e^{W_t - t/2}$ a martingale?&rdquo; &rarr; <b>Yes</b>: it is (R) with $\mu = -\tfrac12 = -\sigma^2/2$, $\sigma = 1$.<br><b>Trick:</b> it is precisely the exponential martingale of &sect;7.3 at $\lambda = 1$. Same object, two names.</div>
-    </div>
-
-    <div class="card">
-      <h4>11.5 &nbsp;Higher Moments &amp; Variance</h4>
-      <div class="eq">(R) $\;E[Y(t)^n] = Y(0)^n\,e^{(n\mu + n^2\sigma^2/2)t}$</div>
-      <div class="eq">$\operatorname{Var}(Y(t)) = E[Y(t)]^2\big(e^{\sigma^2 t} - 1\big)$</div>
-      <div class="use"><b>Use when:</b> variance or second moment requested. Note $\operatorname{Var}$ is convention-free once written in terms of $E[Y(t)]$.</div>
-      <div class="ex"><b>Q:</b> (R) with $\mu{=}0$, $\sigma{=}1$, $Y_0{=}1$, $t{=}1$: $E[Y] = e^{1/2}$, so $\operatorname{Var} = e(e-1) = \mathbf{4.67}$.<br><b>Trick:</b> get $E[Y(t)]$ first, square it, multiply by $(e^{\sigma^2 t}-1)$. Convention-free once written that way.</div>
-    </div>
-
-    <div class="card">
-      <h4>11.6 &nbsp;Median vs Mean</h4>
-      <div class="eq">(R) median $= Y(0)e^{\mu t}$, &nbsp; mean $= Y(0)e^{(\mu+\sigma^2/2)t}$</div>
-      <div class="use"><b>Use when:</b> conceptual questions on why a GBM can have growing mean but drift to $0$ almost surely: for $\mu &lt; 0 &lt; \mu + \sigma^2/2$, median $\to 0$ while mean $\to\infty$.</div>
-      <div class="ex"><b>Q:</b> (R) with $\mu = -0.1$, $\sigma = 0.6$: does the stock grow? The mean grows ($\mu + \sigma^2/2 = 0.08 &gt; 0$) while the median $\to 0$.<br><b>Trick:</b> that gap <em>is</em> the log-normal. Expect a conceptual mark on it.</div>
-    </div>
-
-    <div class="card">
-      <h4>11.7 &nbsp;Distribution &amp; Probabilities</h4>
-      <div class="eq">$\ln\dfrac{Y(t)}{Y(0)} \sim N\big(\mu t,\ \sigma^2 t\big)$ &nbsp;(R)</div>
-      <div class="eq">$P(Y(t) &gt; K) = 1 - \Phi\!\left(\dfrac{\ln(K/Y_0) - \mu t}{\sigma\sqrt t}\right)$</div>
-      <div class="use"><b>Use when:</b> &ldquo;probability the price exceeds $K$&rdquo;. Take logs first, <em>then</em> standardize. This is the $d_2$ of Black&ndash;Scholes.</div>
-      <div class="ex"><b>Q:</b> $S_0 = 100$, (R) $\mu = 0.05$, $\sigma = 0.2$, $t = 1$. $P(S_1 &gt; 110) = 1 - \Phi\!\big(\tfrac{\ln 1.1 - 0.05}{0.2}\big) = 1-\Phi(0.227) = \mathbf{0.410}$.<br><b>Trick:</b> take logs <em>first</em>, then standardize. That expression is Black&ndash;Scholes&rsquo; $d_2$.</div>
-    </div>
-
-  </div>
-</div>
-
-<!-- ════════════════════════════════════════ 12 ═══════════════════════════════════════ -->
-<div class="section">
-  <div class="section-title"><span class="section-num">12.</span>Hitting Times &amp; the Reflection Principle</div>
-  <div class="formulas">
-
-    <div class="card">
-      <h4>12.1 &nbsp;Hitting Time &amp; the Key Equivalence</h4>
-      <div class="eq">$\tau_a = \inf\{t \ge 0 : W(t) = a\}$</div>
-      <div class="eq">$\{\tau_a \le t\} = \{M(t) \ge a\}$ &nbsp; for $a &gt; 0$</div>
-      <div class="use"><b>Use when:</b> this equivalence is the bridge between &sect;12 and &sect;13 &mdash; every maximum question is a hitting-time question and vice versa. For $a&lt;0$ use $\tau_a \overset{d}{=} \tau_{|a|}$ by symmetry.</div>
-      <div class="ex"><b>Q:</b> $P(M(4) \ge 3)$ and $P(\tau_3 \le 4)$ are the same number.<br><b>Trick:</b> whenever you see one, silently rewrite it as the other and use whichever formula you actually remember. They are interchangeable by definition.</div>
-    </div>
-
-    <div class="card">
-      <h4>12.2 &nbsp;Reflection Principle</h4>
-      <div class="eq">$P\big(W(t)\le a-y,\ M(t) &gt; a\big) = P\big(W(t) \ge a+y\big) = 1-\Phi\!\left(\dfrac{a+y}{\sqrt t}\right)$</div>
-      <div class="cond"><b>Requires $a&gt;0$ and $y\ge0$.</b></div>
-      <div class="use"><b>Use when:</b> the engine for all of &sect;13&ndash;14. Reflect the path after $\tau_a$ across the line $W=a$; the strong Markov property makes the reflected path an equally likely BM.<br><b>Why $a&gt;0$:</b> it forces $\tau_a\le t$ automatically, so that condition can be dropped.</div>
-      <div class="ex"><b>Q:</b> $P(W(4) \le 1,\ M(4) &gt; 2)$: read off $a = 2$, $y = 2-1 = 1$ &rarr; $1 - \Phi(3/2) = \mathbf{0.0668}$.<br><b>Trick:</b> $a$ is the barrier, $y$ is barrier minus the $W$-bound. If $y &lt; 0$ you are in the third branch of &sect;14.1 instead.</div>
-    </div>
-
-    <div class="card">
-      <h4>12.3 &nbsp;cdf of $\tau_a$</h4>
-      <div class="eq">$P(\tau_a \le t) = 2\Big(1-\Phi\!\Big(\dfrac{a}{\sqrt t}\Big)\Big) = 2\,\Phi\!\Big(-\dfrac{a}{\sqrt t}\Big)$</div>
-      <div class="cond">$a&gt;0$; for general $a$ replace $a$ by $|a|$.</div>
-      <div class="use"><b>Use when:</b> &ldquo;find the cdf of $\tau_a$&rdquo;. <b>Trick:</b> set $y=0$ in 12.2 and double for the symmetric half $\{W(t)&gt;a\}$.</div>
-      <div class="ex"><b>Paper:</b> Midsem&rsquo;25 Q5(a) &mdash; &ldquo;find the cdf and pdf of $\tau_a$&rdquo;. Quote 12.3 then differentiate for 12.4.</div>
-    </div>
-
-    <div class="card">
-      <h4>12.4 &nbsp;pdf of $\tau_a$ (Lévy distribution)</h4>
-      <div class="eq">$f_{\tau_a}(t) = \dfrac{|a|}{\sqrt{2\pi}\;t^{3/2}}\,e^{-a^2/(2t)}, \qquad t&gt;0$</div>
-      <div class="use"><b>Use when:</b> follows from 12.3 by $\frac{d}{dt}$. <b>Trick:</b> differentiate $2\Phi(-a t^{-1/2})$ using the chain rule; the $t^{-3/2}$ comes from $\frac{d}{dt}t^{-1/2}$.</div>
-      <div class="ex"><b>Paper:</b> Midsem&rsquo;25 Q5(a), second half. $f_{\tau_2}(4) = \dfrac{2}{\sqrt{2\pi}\,8}e^{-1/2} = \mathbf{0.0605}$.<br><b>Trick:</b> differentiate 12.3 &mdash; never try to integrate the joint density for this.</div>
-    </div>
-
-    <div class="card">
-      <h4>12.5 &nbsp;Certain Hitting, Infinite Mean</h4>
-      <div class="eq">$P(\tau_a &lt; \infty) = \lim_{t\to\infty} 2\Phi\!\Big(-\dfrac{a}{\sqrt t}\Big) = 2\Phi(0) = 1$</div>
-      <div class="eq">$E[\tau_a] = \infty$ &nbsp; (the $t^{-3/2}$ tail is not integrable)</div>
-      <div class="use"><b>Use when:</b> &ldquo;$P(T_a &lt; \infty) = ?$&rdquo; &rarr; <b>1</b>. BM hits every level with certainty, but takes infinitely long on average. Both facts are asked.</div>
-      <div class="ex"><b>Paper:</b> Midsem&rsquo;24 Q1(f) &mdash; &ldquo;$T_a$ = time to hit $a$; find $P(T_a&lt;\infty)$&rdquo; &rArr; $\mathbf{1}$.</div>
-    </div>
-
-    <div class="card">
-      <h4>12.6 &nbsp;Scaling of $\tau_a$</h4>
-      <div class="eq">$\tau_a \overset{d}{=} a^2\,\tau_1$</div>
-      <div class="use"><b>Use when:</b> comparing hitting times of different levels, or sanity-checking: doubling the barrier quadruples the typical time.</div>
-      <div class="ex"><b>Q:</b> &ldquo;$E[\tau_1] = \infty$ &mdash; what about $\tau_{10}$?&rdquo; Also $\infty$, and typically $100\times$ longer.<br><b>Trick:</b> $\tau_a \overset{d}{=} a^2\tau_1$ is the same $\sqrt t$ scaling as &sect;4.1, seen from the other side.</div>
-    </div>
-
-    <div class="card">
-      <h4>12.7 &nbsp;Laplace Transform of $\tau_a$</h4>
-      <div class="eq">$E\big[e^{-\lambda \tau_a}\big] = e^{-a\sqrt{2\lambda}}, \qquad \lambda&gt;0,\ a&gt;0$</div>
-      <div class="use"><b>Use when:</b> a discounted payoff at a hitting time. Derived by OST on the exponential martingale (&sect;7.3) with $\lambda_{\text{mg}}=\sqrt{2\lambda}$.</div>
-      <div class="ex"><b>Q:</b> value of Rs 1 paid the instant the price first hits $a$, discounted at rate $\lambda$ &rarr; $\mathbf{e^{-a\sqrt{2\lambda}}}$.<br><b>Trick:</b> apply OST to $\exp(\theta W_t - \tfrac{\theta^2}{2}t)$ with $\theta = \sqrt{2\lambda}$, so the $t$-term becomes exactly the discount factor.</div>
-    </div>
-
-  </div>
-</div>
-
-<!-- ════════════════════════════════════════ 13 ═══════════════════════════════════════ -->
-<div class="section">
-  <div class="section-title"><span class="section-num">13.</span>The Running Maximum $M(t)$ — alone</div>
-  <div class="formulas">
-
-    <div class="card">
-      <h4>13.1 &nbsp;Definition &amp; Hard Constraints</h4>
-      <div class="eq">$M(t) = \max_{0\le u \le t} W(u)$</div>
-      <div class="eq">$M(t) \ge W(t)$ &nbsp;and&nbsp; $M(t) \ge 0$ &nbsp;<b>always</b></div>
-      <div class="use"><b>Use when:</b> check these two first. Any event forcing $W(t) &gt; M(t)$, or $M(t) &lt; 0$, has probability <b>zero</b> &mdash; write &ldquo;$0$&rdquo; and move on.</div>
-      <div class="ex"><b>Q:</b> $P(2 &lt; W(4) &lt; 3,\ 0 &lt; M(4) &lt; 1) = \mathbf{0}$.<br><b>Trick:</b> it demands $W &gt; M$, which is impossible. Spot it, write $0$, move on &mdash; this is a deliberate trap and free marks.</div>
-    </div>
-
-    <div class="card">
-      <h4>13.2 &nbsp;Distribution of $M(t)$ — half-normal</h4>
-      <div class="eq">$M(t) \overset{d}{=} |W(t)|$</div>
-      <div class="eq">$P(M(t) \ge a) = 2\Big(1 - \Phi\!\Big(\dfrac{a}{\sqrt t}\Big)\Big), \qquad a\ge0$</div>
-      <div class="eq">$P(M(t) \le a) = 2\Phi\!\Big(\dfrac{a}{\sqrt t}\Big) - 1$</div>
-      <div class="use"><b>Use when:</b> the question involves $M$ but <b>not</b> $W$. One line, no reflection needed.</div>
-      <div class="ex"><b>Interval:</b> $P(c &lt; M(t) \le d) = 2\big[\Phi(d/\sqrt t) - \Phi(c/\sqrt t)\big]$. For $t{=}4$, $(c,d)=(2,3)$: $2[\Phi(1.5)-\Phi(1)] = 2[.9332-.8413] = \mathbf{0.1837}$.</div>
-    </div>
-
-    <div class="card">
-      <h4>13.3 &nbsp;Density of $M(t)$</h4>
-      <div class="eq">$f_{M(t)}(a) = \dfrac{2}{\sqrt{2\pi t}}\,e^{-a^2/(2t)}, \qquad a\ge0$</div>
-      <div class="use"><b>Use when:</b> an expectation over $M$ is needed. It is twice the $N(0,t)$ density on the positive half-line.</div>
-      <div class="ex"><b>Q:</b> &ldquo;compute $E[M(4)]$ by integrating the density&rdquo;.<br><b>Trick:</b> don&rsquo;t &mdash; quote &sect;13.4. Reach for the density only when the functional is non-standard (e.g. $E[e^{M(t)}]$).</div>
-    </div>
-
-    <div class="card">
-      <h4>13.4 &nbsp;Moments of $M(t)$</h4>
-      <div class="eq">$E[M(t)] = \sqrt{\dfrac{2t}{\pi}}, \qquad E[M(t)^2] = t$</div>
-      <div class="eq">$\operatorname{Var}(M(t)) = t\Big(1 - \dfrac{2}{\pi}\Big)$</div>
-      <div class="use"><b>Use when:</b> &ldquo;expected maximum&rdquo;. Note $E[M(t)^2]=E[W(t)^2]=t$ because $M\overset{d}{=}|W|$.</div>
-      <div class="ex"><b>Q:</b> &ldquo;expected highest level reached in 4 units of time&rdquo; $= \sqrt{8/\pi} = \mathbf{1.596}$.<br><b>Trick:</b> $E[M(t)] = \sqrt{2t/\pi} \approx 0.8\sqrt t$ &mdash; useful for checking an answer&rsquo;s order of magnitude.</div>
-    </div>
-
-    <div class="card">
-      <h4>13.5 &nbsp;Running Minimum</h4>
-      <div class="eq">$m(t) = \min_{0\le u\le t}W(u) \overset{d}{=} -M(t)$</div>
-      <div class="eq">$P(m(t) \le -a) = 2\Big(1-\Phi\!\Big(\dfrac{a}{\sqrt t}\Big)\Big), \quad a \ge 0$</div>
-      <div class="use"><b>Use when:</b> a minimum or a lower barrier appears. Flip signs everywhere ($W\to-W$) and reuse &sect;13&ndash;14 verbatim.</div>
-      <div class="ex"><b>Q:</b> $P\big(\min_{u\le4} W(u) \le -3\big) = 2(1-\Phi(1.5)) = \mathbf{0.1336}$.<br><b>Trick:</b> reflect the entire problem ($W \to -W$) and reuse &sect;13.2 with $+3$. Never derive a separate minimum formula.</div>
-    </div>
-
-  </div>
-</div>
-
-<!-- ════════════════════════════════════════ 14 ═══════════════════════════════════════ -->
-<div class="section">
-  <div class="section-title"><span class="section-num">14.</span>Joint Law of $\big(W(t),M(t)\big)$ — the master recipe</div>
-  <div class="formulas">
-
-    <div class="card flag">
-      <h4>14.1 &nbsp;⚠ The Guard Everyone Gets Wrong</h4>
-      <div class="eq">$G(b,c) := P\big(W(t)\le b,\ M(t)\ge c\big)$</div>
-      <div class="eq">$\boxed{\;G(b,c)=\begin{cases} \Phi\!\big(\tfrac{b}{\sqrt t}\big) & c \le 0\\[6pt] 1 - \Phi\!\big(\tfrac{2c-b}{\sqrt t}\big) & 0 &lt; c,\ b \le c\\[6pt] 1 + \Phi\!\big(\tfrac{b}{\sqrt t}\big) - 2\Phi\!\big(\tfrac{c}{\sqrt t}\big) & 0 &lt; c &lt; b\end{cases}}$</div>
-      <div class="bad"><b>The $b&gt;c$ case is NOT zero.</b> The reflection formula $1-\Phi(\frac{2c-b}{\sqrt t})$ is only valid while $b\le c$. If $b &gt; c$, split at $c$: once $W(t)&gt;c$ the constraint $M(t)\ge c$ is automatic, so<br>$G = \underbrace{[1-\Phi(\tfrac{c}{\sqrt t})]}_{W\le c} + \underbrace{[\Phi(\tfrac{b}{\sqrt t})-\Phi(\tfrac{c}{\sqrt t})]}_{c&lt;W\le b}$.</div>
-      <div class="use"><b>Sanity checks:</b> at $b=c$ both branches give $1-\Phi(c/\sqrt t)$ ✓. As $b\to\infty$: $G\to 2(1-\Phi(c/\sqrt t)) = P(M\ge c)$ ✓ (&sect;13.2).</div>
-      <div class="ex"><b>Q:</b> this guard alone decides Midsem&rsquo;25 Q5(b) &mdash; see 14.4.<br><b>Trick:</b> before evaluating any $G$, <b>write down the comparison of $b$ with $c$</b> on your script. $b \le c$ &rarr; reflection formula; $b &gt; c$ &rarr; the three-term form.</div>
-    </div>
-
-    <div class="card">
-      <h4>14.2 &nbsp;Joint Density</h4>
-      <div class="eq">$f_{W,M}(w,m) = \dfrac{2(2m-w)}{t\sqrt{2\pi t}}\;\exp\!\left(-\dfrac{(2m-w)^2}{2t}\right)$</div>
-      <div class="cond">Support: $m \ge \max(0, w)$. Zero elsewhere.</div>
-      <div class="use"><b>Use when:</b> the region is not a rectangle, or an expectation like $E[M(t)W(t)]$ is asked. For rectangles use 14.3 &mdash; it is far faster.</div>
-      <div class="ex"><b>Q:</b> $E[M(4)W(4)]$, or any non-rectangular region.<br><b>Trick:</b> the substitution $u = 2m - w$ turns every integral of this density into a standard normal one &mdash; that substitution is exactly how &sect;14.1 is derived.</div>
-    </div>
-
-    <div class="card">
-      <h4>14.3 &nbsp;⭐ Master Recipe — any rectangle, any position</h4>
-      <div class="eq">$P\big(a &lt; W(t) \le b,\ c &lt; M(t)\le d\big)$</div>
-      <div class="eq">$=\big[G(b,c) - G(a,c)\big] - \big[G(b,d) - G(a,d)\big]$</div>
-      <div class="cond">$G$ from 14.1. Strict vs non-strict inequalities are irrelevant (continuous laws).</div>
-      <div class="use"><b>Use when:</b> <b>always.</b> This one line replaces the whole &ldquo;is $I$ above / below / overlapping $J$&rdquo; case tree &mdash; the branching lives inside $G$, so you never classify anything.<br><b>Four evaluations of $G$, one subtraction. That is the entire problem.</b></div>
-      <div class="ex"><b>Trick:</b> tabulate $G(b,c), G(a,c), G(b,d), G(a,d)$ in a $2\times2$ box, then (top-left − bottom-left) − (top-right − bottom-right).</div>
-    </div>
-
-    <div class="card">
-      <h4>14.4 &nbsp;⭐ Worked: Midsem&rsquo;25 Q5(b)</h4>
-      <div class="eq">$P\big(1 &lt; W(4) &lt; 3,\ 2 &lt; M(4) &lt; 3\big)$</div>
-      <div class="eq">$t=4,\ \sqrt t = 2;\quad a{=}1,\ b{=}3,\ c{=}2,\ d{=}3$</div>
-      <div class="ex">
-      $G(3,2)$: $0&lt;c{=}2&lt;b{=}3$ &rarr; branch 3: $1+\Phi(1.5)-2\Phi(1) = 1+.9332-1.6827 = .2505$<br>
-      $G(1,2)$: $b{=}1\le c{=}2$ &rarr; branch 2: $1-\Phi(\tfrac{4-1}{2}) = 1-\Phi(1.5) = .0668$<br>
-      $G(3,3)$: $b{=}3\le c{=}3$ &rarr; branch 2: $1-\Phi(\tfrac{6-3}{2}) = 1-\Phi(1.5) = .0668$<br>
-      $G(1,3)$: $b{=}1\le c{=}3$ &rarr; branch 2: $1-\Phi(\tfrac{6-1}{2}) = 1-\Phi(2.5) = .0062$<br>
-      <br>
-      $\big[.2505-.0668\big] - \big[.0668-.0062\big] = .1837 - .0606 = \mathbf{0.1231}$
-      </div>
-      <div class="use"><b>Note:</b> $G(3,2)$ hits the $b&gt;c$ branch. Using the naive reflection formula there gives $1-\Phi(\tfrac{4-3}{2})=1-\Phi(.5)=.3085$ and a wrong final answer of $0.1811$. <b>This single guard is the whole question.</b></div>
-    </div>
-
-    <div class="card">
-      <h4>14.5 &nbsp;Shortcut — $I$ entirely below $J$</h4>
-      <div class="eq">$b \le c,\ c&gt;0:$</div>
-      <div class="eq">$P = \Phi\!\Big(\tfrac{2d-b}{\sqrt t}\Big) - \Phi\!\Big(\tfrac{2c-b}{\sqrt t}\Big) + \Phi\!\Big(\tfrac{2c-a}{\sqrt t}\Big) - \Phi\!\Big(\tfrac{2d-a}{\sqrt t}\Big)$</div>
-      <div class="use"><b>Use when:</b> $I=(a,b]$ lies entirely below $J=(c,d]$. This is 14.3 with all four $G$&rsquo;s on branch 2 &mdash; write it directly if you spot $b\le c$.</div>
-      <div class="ex"><b>Q:</b> $P(1 &lt; W(4) \le 2,\ 2 &lt; M(4) \le 3)$: here $b{=}2 \le c{=}2$ ✓, so<br>$\Phi(2)-\Phi(1)+\Phi(1.5)-\Phi(2.5) = \mathbf{0.0753}$.<br><b>Trick:</b> this is exactly the lower half of Midsem&rsquo;25 Q5(b); the upper half $(2,3)$ needs the $b&gt;c$ branch.</div>
-    </div>
-
-    <div class="card">
-      <h4>14.6 &nbsp;Shortcut — $I$ entirely above $J$</h4>
-      <div class="eq">$a \ge d \;\Longrightarrow\; P\big(W(t)\in I,\ M(t)\in J\big) = 0$</div>
-      <div class="use"><b>Use when:</b> would need $W(t) &gt; M(t)$ &mdash; impossible (&sect;13.1). Also $d\le 0 \Rightarrow 0$, since $M \ge 0$. Spot these before computing anything.</div>
-      <div class="ex"><b>Q:</b> $P(3 &lt; W(4) &lt; 4,\ 1 &lt; M(4) &lt; 2) = \mathbf{0}$, since $a{=}3 \ge d{=}2$.<br><b>Trick:</b> test $a \ge d$ and $d \le 0$ first &mdash; two comparisons that can retire the whole question instantly.</div>
-    </div>
-
-    <div class="card">
-      <h4>14.7 &nbsp;Useful Special Cases of $G$</h4>
-      <div class="eq">$P(W(t)\le b,\ M(t)\ge c)$ with $b=c$: $\;1-\Phi\!\big(\tfrac{c}{\sqrt t}\big)$</div>
-      <div class="eq">$P(M(t)\ge c) = G(\infty,c) = 2\big(1-\Phi(\tfrac{c}{\sqrt t})\big)$</div>
-      <div class="eq">$P(W(t)\le b,\ M(t)&lt; c) = \Phi\!\big(\tfrac{b}{\sqrt t}\big) - G(b,c)$</div>
-      <div class="use"><b>Use when:</b> the question gives a half-line instead of an interval &mdash; set the missing endpoint to $\pm\infty$ and use $\Phi(\pm\infty) = 1$ or $0$.</div>
-      <div class="ex"><b>Q:</b> $P(W(4) \le 1,\ M(4) &lt; 2) = \Phi(0.5) - G(1,2) = 0.6915 - 0.0668 = \mathbf{0.6247}$.<br><b>Trick:</b> &ldquo;the max stayed below $c$&rdquo; is the marginal of $W$ minus $G$. Half-lines are just $\pm\infty$ endpoints.</div>
-    </div>
-
-    <div class="card">
-      <h4>14.8 &nbsp;Barrier-Option Translation</h4>
-      <div class="eq">knock-out / knock-in payoffs $=$ rectangles in $(W,M)$</div>
-      <div class="eq">$P(\text{never hit } c,\ W(t)\in I) = P(W(t)\in I) - G(\cdot,c)$ terms</div>
-      <div class="use"><b>Use when:</b> a question is dressed as a barrier option. Translate &ldquo;price never exceeded $c$&rdquo; into $\{M(t) &lt; c\}$ and run 14.3.</div>
-      <div class="ex"><b>Q:</b> up-and-out call, barrier $3$, $S = e^{W}$ &rarr; $P\big(M(4) &lt; \ln 3,\ W(4) \in I\big)$.<br><b>Trick:</b> &ldquo;the price never touched the barrier&rdquo; $\iff \{M(t) &lt; c\}$. Translate, then run &sect;14.3 verbatim.</div>
-    </div>
-
-  </div>
-</div>
-
-<!-- ══════════════════════════════════ PART II ══════════════════════════════════ -->
-<div class="section">
-  <div class="part-banner">Part II &mdash; Foundations, Expectation &amp; Martingales<span>Measure theory &rarr; conditional expectation &rarr; discrete-time martingales and the binomial market. Markov decision processes are out of syllabus.</span></div>
+  <div class="part-banner">Part I &mdash; Foundations, Expectation &amp; Martingales<span>Measure theory &rarr; conditional expectation &rarr; discrete-time martingales and the binomial market. Markov decision processes are out of syllabus.</span></div>
 </div>
 
 <!-- ─────────────────────────── F1 ─────────────────────────── -->
@@ -1886,6 +1110,812 @@
 
 <!-- ══════════════════════════════════ PART III ══════════════════════════════════ -->
 <div class="section">
+  <div class="part-banner">Part II &mdash; Random Walks &amp; Brownian Motion<span>Sections 1&ndash;14. Jump here from the routing table above.</span></div>
+</div>
+
+<!-- ════════════════════════════════════════ 1 ════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title"><span class="section-num">1.</span>Normal &amp; MVN Toolkit — the plug-in layer</div>
+  <div class="formulas">
+
+    <div class="card">
+      <h4>1.1 &nbsp;Standard Normal cdf</h4>
+      <div class="eq">$\Phi(-x) = 1 - \Phi(x), \qquad \Phi(0) = 0.5$</div>
+      <div class="eq">$P(a &lt; Z \le b) = \Phi(b) - \Phi(a)$</div>
+      <div class="use"><b>Use when:</b> always. Standardize first: $X \sim N(\mu,\sigma^2) \Rightarrow P(X\le x) = \Phi\!\big(\frac{x-\mu}{\sigma}\big)$.</div>
+      <div class="ex"><b>Table values worth memorizing:</b> $\Phi(1){=}.8413$, $\Phi(1.5){=}.9332$, $\Phi(2){=}.9772$, $\Phi(2.5){=}.9938$, $\Phi(3){=}.9987$.</div>
+    </div>
+
+    <div class="card">
+      <h4>1.2 &nbsp;Exponential Moment (log-normal mean)</h4>
+      <div class="eq">$X \sim N(\mu,\sigma^2) \;\Longrightarrow\; E[e^{X}] = e^{\mu + \sigma^2/2}$</div>
+      <div class="eq">$E[e^{aZ}] = e^{a^2/2}, \qquad Z\sim N(0,1)$</div>
+      <div class="use"><b>Use when:</b> an exponential of a normal appears &mdash; GBM means, $\operatorname{Cov}(e^{W_s},e^{W_t})$, exponential martingale, Black&ndash;Scholes.</div>
+      <div class="ex"><b>Trick:</b> the whole GBM section is this one identity. $E[e^{W_t}] = e^{t/2}$ because $W_t\sim N(0,t)$.</div>
+    </div>
+
+    <div class="card">
+      <h4>1.3 &nbsp;Log-normal Variance</h4>
+      <div class="eq">$\operatorname{Var}(e^X) = e^{2\mu+\sigma^2}\big(e^{\sigma^2}-1\big)$</div>
+      <div class="cond">$X \sim N(\mu,\sigma^2)$.</div>
+      <div class="use"><b>Use when:</b> asked for $\operatorname{Var}$ or $\operatorname{Cov}$ of a GBM / of $e^{W_t}$.</div>
+      <div class="ex"><b>Q:</b> $Y=e^{W_2}$, find $\operatorname{Var}(Y)$. Here $\mu{=}0,\sigma^2{=}2$: $e^{2}(e^{2}-1)=\mathbf{47.21}$.<br><b>Trick:</b> $\operatorname{Var} = (\text{mean})^2(e^{\sigma^2}-1)$ &mdash; compute the mean first, square it.</div>
+    </div>
+
+    <div class="card">
+      <h4>1.4 &nbsp;Even Moments of a Normal</h4>
+      <div class="eq">$E[Z^{2n}] = (2n-1)!! = 1\cdot3\cdot5\cdots(2n-1)$</div>
+      <div class="eq">$E[Z]{=}0,\ E[Z^2]{=}1,\ E[Z^3]{=}0,\ E[Z^4]{=}3$</div>
+      <div class="eq">$E[W_t^{2n}] = (2n-1)!!\,t^{\,n}, \qquad E[W_t^4] = 3t^2$</div>
+      <div class="use"><b>Use when:</b> any odd power &rarr; $0$ by symmetry. Any 4th moment &rarr; $3t^2$.</div>
+      <div class="ex"><b>Paper:</b> CT-1 prints &ldquo;$E(Z^3)=0$, $E(Z^4)=3$&rdquo; at the top of the sheet &mdash; they expect you to need it in Q2.</div>
+    </div>
+
+    <div class="card">
+      <h4>1.5 &nbsp;MVN — Definition by Linear Combinations</h4>
+      <div class="eq">$\mathbf{X}$ is MVN $\iff$ $\mathbf{a}^{\!\top}\mathbf{X} = \sum_i a_i X_i$ is univariate normal for <em>every</em> $\mathbf{a}$</div>
+      <div class="use"><b>Use when:</b> proving something is a Gaussian process. This <em>is</em> the definition &mdash; do not try to write a joint density.</div>
+      <div class="ex"><b>Q:</b> CT-1&rsquo;26 Q3 &mdash; is $e^{-t}W(e^{2t})$ a Gaussian process?<br><b>Trick:</b> it is a fixed linear combination of BM values, so every $\sum a_i X(t_i)$ is normal. <b>Yes</b>, with zero computation.</div>
+    </div>
+
+    <div class="card">
+      <h4>1.6 &nbsp;Variance of a Linear Combination</h4>
+      <div class="eq">$\operatorname{Var}\!\Big(\sum_i a_i X_i\Big) = \sum_i\sum_j a_i a_j \operatorname{Cov}(X_i,X_j)$</div>
+      <div class="use"><b>Use when:</b> the master identity for every &ldquo;$aW_s+bW_t\sim\,$?&rdquo; question. Plug $\operatorname{Cov}(W_s,W_t)=\min(s,t)$.</div>
+      <div class="ex"><b>Q:</b> $\operatorname{Var}(W_1 - W_2 + 3W_4)$.<br><b>Trick:</b> write the $\min$ matrix $\begin{pmatrix}1&amp;1&amp;1\\1&amp;2&amp;2\\1&amp;2&amp;4\end{pmatrix}$, sandwich with $\mathbf a = (1,-1,3)$ &rarr; $\mathbf{31}$.</div>
+    </div>
+
+    <div class="card">
+      <h4>1.7 &nbsp;MVN Linear Transformation</h4>
+      <div class="eq">$\mathbf{X}\sim N_n(\boldsymbol\mu,\Sigma) \Rightarrow A\mathbf{X}+\mathbf{b}\sim N_m(A\boldsymbol\mu+\mathbf{b},\,A\Sigma A^{\!\top})$</div>
+      <div class="use"><b>Use when:</b> a process is built as a fixed matrix times BM values &mdash; e.g. the Brownian bridge $B(s)=W(s)-\frac st W(t)$.</div>
+      <div class="ex"><b>Q:</b> show $B(s) = W(s) - \tfrac st W(t)$ is Gaussian with $\operatorname{Cov} = \min(u,v)-\tfrac{uv}{t}$.<br><b>Trick:</b> $B$ is a <em>fixed</em> matrix times $(W(s),W(t))$, so MVN is automatic &mdash; then just compute $A\Sigma A^{\!\top}$.</div>
+    </div>
+
+    <div class="card">
+      <h4>1.8 &nbsp;MVN Joint MGF</h4>
+      <div class="eq">$M_{\mathbf X}(\mathbf t) = \exp\!\big(\mathbf t^{\!\top}\boldsymbol\mu + \tfrac12 \mathbf t^{\!\top}\Sigma\,\mathbf t\big)$</div>
+      <div class="use"><b>Use when:</b> you need $E[e^{W_s+W_t}]$ &mdash; set $\mathbf t = (1,1)$. Fastest route to $\operatorname{Cov}(e^{W_s},e^{W_t})$.</div>
+      <div class="ex"><b>Q:</b> $E[e^{W_1+W_2}]$. &nbsp;$W_1+W_2 \sim N(0,\,1+2+2(1)) = N(0,5)$ &rarr; $\mathbf{e^{5/2}}$.<br><b>Trick:</b> set $\mathbf t = (1,1)$; the MGF hands you $\exp(\tfrac12\sum_i\sum_j\Sigma_{ij})$ in one step.</div>
+    </div>
+
+    <div class="card">
+      <h4>1.9 &nbsp;MVN Conditional Distribution</h4>
+      <div class="eq">$\mathbf X \mid \mathbf Y{=}\mathbf y \sim N\big(\boldsymbol\mu_X + \Sigma_{XY}\Sigma_{YY}^{-1}(\mathbf y - \boldsymbol\mu_Y),\ \Sigma_{XX} - \Sigma_{XY}\Sigma_{YY}^{-1}\Sigma_{YX}\big)$</div>
+      <div class="use"><b>Use when:</b> any &ldquo;given $W(t)=b$, find the law of $W(s)$&rdquo;. Conditional variance <em>never</em> depends on the observed value.</div>
+      <div class="ex"><b>Trick:</b> for BM this collapses to &sect;9.4 &mdash; don&rsquo;t invert matrices, quote the bridge result.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════ 2 ════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title"><span class="section-num">2.</span>Random Walks — Additive &amp; Geometric</div>
+  <div class="formulas">
+
+    <div class="card">
+      <h4>2.1 &nbsp;Additive Random Walk</h4>
+      <div class="eq">$X_0 = 0,\quad X_n = Y_1 + \cdots + Y_n,\quad Y_i \text{ i.i.d.}$</div>
+      <div class="eq">$\{X_n\}$ is a martingale $\iff E[Y_1] = 0$</div>
+      <div class="cond">Needs $E|Y_1| &lt; \infty$.</div>
+      <div class="use"><b>Use when:</b> the walk is built by <em>adding</em> i.i.d. steps. Sub-MG if $E[Y]&gt;0$, super-MG if $E[Y]&lt;0$.</div>
+      <div class="ex"><b>Paper:</b> Midsem&rsquo;24 Q1(b) &mdash; &ldquo;$\{X_n\}$ is a martingale if $E(Y_1) = \underline{\ \ }$&rdquo; &rarr; <b>$0$</b>.</div>
+    </div>
+
+    <div class="card">
+      <h4>2.2 &nbsp;Geometric Random Walk</h4>
+      <div class="eq">$X_n = X_0 \prod_{i=1}^{n} Y_i, \quad Y_i &gt; 0 \text{ i.i.d.}$</div>
+      <div class="eq">$\{X_n\}$ is a martingale $\iff E[Y_1] = 1$</div>
+      <div class="use"><b>Use when:</b> the walk <em>multiplies</em>. Proof is one line: $E[X_{n+1}\mid\mathcal F_n] = X_n E[Y_{n+1}]$ by independence + taking out what is known.</div>
+      <div class="ex"><b>Paper:</b> CT-2&rsquo;25 Q3 &mdash; $X_n = 2^n U_1\cdots U_n$, $U_i\sim\mathrm{Unif}(0,1)$. Step is $Y_i = 2U_i$, $E[2U]=2\cdot\tfrac12=1$ &rArr; <b>Yes, MG</b>.</div>
+    </div>
+
+    <div class="card">
+      <h4>2.3 &nbsp;Log-normal Steps — Drift Correction</h4>
+      <div class="eq">$Y_i = e^{Z_i},\ Z_i\sim N(\mu,\sigma^2) \Rightarrow E[Y_i] = e^{\mu+\sigma^2/2}$</div>
+      <div class="eq">martingale $\iff \mu = -\dfrac{\sigma^2}{2}$</div>
+      <div class="use"><b>Use when:</b> geometric walk with normal log-steps. The $-\sigma^2/2$ is the <em>same</em> correction that appears in GBM (&sect;11.4) and Black&ndash;Scholes.</div>
+      <div class="ex"><b>Q:</b> log-price steps $Z_i \sim N(\mu, 0.04)$; for what $\mu$ is the price a martingale? &rarr; $\mu = \mathbf{-0.02}$.<br><b>Trick:</b> this $-\sigma^2/2$ reappears in GBM (&sect;11.4) and as $d_2$ in Black&ndash;Scholes. Same correction, three places.</div>
+    </div>
+
+    <div class="card">
+      <h4>2.4 &nbsp;Moments of a Symmetric $\pm1$ Walk</h4>
+      <div class="eq">$E[X_n] = 0,\qquad \operatorname{Var}(X_n) = n$</div>
+      <div class="eq">$\operatorname{Cov}(X_m, X_n) = \min(m,n)$</div>
+      <div class="use"><b>Use when:</b> discrete analogue of $\operatorname{Cov}(W_s,W_t)=\min(s,t)$. Same proof: overlap of independent increments.</div>
+      <div class="ex"><b>Q:</b> $\operatorname{Cov}(X_3, X_7)$ for a $\pm1$ walk $= \mathbf{3}$.<br><b>Trick:</b> only the shared first $\min(m,n)$ steps contribute; everything after is independent and mean zero.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════ 3 ════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title"><span class="section-num">3.</span>Gambler&rsquo;s Ruin — probability <em>and</em> duration</div>
+  <div class="formulas">
+
+    <div class="card">
+      <h4>3.0 &nbsp;Setting Up the Word Problem</h4>
+      <div class="eq">&ldquo;stops when up $\,W\,$ or down $\,L$&rdquo; $\;\Longrightarrow\; i = L,\quad N = L + W$</div>
+      <div class="use"><b>Use when:</b> the exam always phrases it as &ldquo;won $W$ rupees or lost $L$ rupees&rdquo;, never as &ldquo;start at $i$, barriers $0$ and $N$&rdquo;. <b>Do this translation first</b> &mdash; it is where marks are lost.</div>
+      <div class="ex"><b>Paper:</b> CT-1&rsquo;26 Set-1 &mdash; &ldquo;won 10 or lost 5&rdquo; &rArr; $i=5$, $N=15$. Set-3 &mdash; &ldquo;won 30 or lost 10&rdquo; &rArr; $i=10$, $N=40$.</div>
+    </div>
+
+    <div class="card">
+      <h4>3.1 &nbsp;Ruin Probability — Fair Game</h4>
+      <div class="eq">$P_i = P(\text{hit } N \text{ before } 0 \mid X_0 = i) = \dfrac{i}{N}$</div>
+      <div class="cond">$p = \tfrac12$.</div>
+      <div class="use"><b>Use when:</b> &ldquo;equal chances&rdquo;, &ldquo;fair coin&rdquo;, &ldquo;wins or loses one rupee with equal probability&rdquo;.</div>
+      <div class="ex"><b>Paper:</b> CT-1&rsquo;26 all four sets. Set-1: $5/15 = \mathbf{1/3}$. Set-2 (won 20, lost 5): $5/25 = \mathbf{1/5}$. Set-3: $10/40=\mathbf{1/4}$. Set-4 (won 6, lost 5): $\mathbf{5/11}$.</div>
+    </div>
+
+    <div class="card">
+      <h4>3.2 &nbsp;Expected Duration — Fair Game</h4>
+      <div class="eq">$D_i = E[\text{number of rounds}] = i\,(N - i)$</div>
+      <div class="cond">$p=\tfrac12$. Equivalently $D = L \cdot W$ in the word-problem variables.</div>
+      <div class="use"><b>Use when:</b> part (b) of the ruin question &mdash; &ldquo;expected number of rounds before stopping&rdquo;. It is <em>always</em> asked alongside 3.1.</div>
+      <div class="ex"><b>Paper:</b> CT-1&rsquo;26 Set-1: $5\times10 = \mathbf{50}$. Set-2: $5\times20=\mathbf{100}$. Set-3: $10\times30=\mathbf{300}$. Set-4: $5\times6=\mathbf{30}$. <b>Trick:</b> it is literally $L\times W$ &mdash; no formula needed.</div>
+    </div>
+
+    <div class="card">
+      <h4>3.3 &nbsp;Ruin Probability — Unfair Game</h4>
+      <div class="eq">$P_i = \dfrac{1-(q/p)^i}{1-(q/p)^N}, \qquad q = 1-p,\ p\neq\tfrac12$</div>
+      <div class="use"><b>Use when:</b> win probability is given as anything other than $1/2$ (e.g. $2/3$ and $1/3$). Let $r = q/p$ and evaluate numerically &mdash; do not expand.</div>
+      <div class="ex"><b>Q:</b> $p = 2/3$, stop at $+3$ or $-2$. Translate: $i{=}2$, $N{=}5$, $r = q/p = \tfrac12$.<br>$P = \dfrac{1-(1/2)^2}{1-(1/2)^5} = \dfrac{0.75}{0.96875} = \mathbf{0.774}$.<br><b>Trick:</b> compute $r$ once, then it is two powers and a division.</div>
+    </div>
+
+    <div class="card">
+      <h4>3.4 &nbsp;Expected Duration — Unfair Game</h4>
+      <div class="eq">$D_i = \dfrac{i}{q-p} - \dfrac{N}{q-p}\cdot\dfrac{1-(q/p)^i}{1-(q/p)^N}$</div>
+      <div class="eq">$= \dfrac{1}{q-p}\big(i - N P_i\big)$</div>
+      <div class="use"><b>Use when:</b> duration with $p\ne\tfrac12$. <b>Trick:</b> compute $P_i$ first (3.3), then this is one subtraction.</div>
+      <div class="ex"><b>Q:</b> same numbers. $q-p = -\tfrac13$, so $D = \dfrac{2 - 5(0.774)}{-1/3} = \mathbf{5.61}$ rounds.<br><b>Trick:</b> always get $P_i$ from 3.3 first &mdash; never expand the full expression.</div>
+    </div>
+
+    <div class="card">
+      <h4>3.5 &nbsp;Infinite Bankroll Limit</h4>
+      <div class="eq">$\lim_{N\to\infty} P_i = \begin{cases} 1-(q/p)^i & p &gt; \tfrac12 \\[2pt] 0 & p \le \tfrac12\end{cases}$</div>
+      <div class="use"><b>Use when:</b> &ldquo;plays forever against an infinitely rich opponent&rdquo; / &ldquo;$N\to\infty$&rdquo;. Ruin is a.s. certain unless there is a genuine edge.</div>
+      <div class="ex"><b>Q:</b> &ldquo;plays forever against the house with $p = 0.49$, starting with 10&rdquo;. $p &lt; \tfrac12$ &rarr; ruin probability $\mathbf{1}$.<br><b>Trick:</b> any fair-or-worse game against an infinite bankroll ends in ruin almost surely. No arithmetic needed.</div>
+    </div>
+
+    <div class="card">
+      <h4>3.6 &nbsp;Derivation Hook (first-step analysis)</h4>
+      <div class="eq">$P_i = p\,P_{i+1} + q\,P_{i-1}, \quad P_0 = 0,\ P_N = 1$</div>
+      <div class="eq">$D_i = 1 + p\,D_{i+1} + q\,D_{i-1}, \quad D_0 = D_N = 0$</div>
+      <div class="use"><b>Use when:</b> the question says &ldquo;derive&rdquo; or &ldquo;using first-step analysis&rdquo; (Midsem&rsquo;25 Q2(c) asks for a short note on gambler&rsquo;s ruin). The $+1$ in the duration recursion is the round just played.</div>
+      <div class="ex"><b>Paper:</b> Midsem&rsquo;25 Q2(c) &mdash; &ldquo;write a short note on gambler&rsquo;s ruin&rdquo; [2 marks].<br><b>Trick:</b> state the recursion, state the boundary conditions, then quote 3.1/3.3 as its solution. That is the whole answer.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════ 4 ════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title"><span class="section-num">4.</span>Random Walk &rarr; Brownian Motion (scaling limit)</div>
+  <div class="formulas">
+
+    <div class="card">
+      <h4>4.1 &nbsp;Diffusive Scaling — Driftless</h4>
+      <div class="eq">steps $\pm\Delta x$ every $\Delta t$, $\ \Delta x = \sigma\sqrt{\Delta t}$</div>
+      <div class="eq">$X_{\lfloor t/\Delta t\rfloor} \;\xrightarrow[\Delta t\to0]{d}\; \sigma W(t)$</div>
+      <div class="use"><b>Use when:</b> a limit of a symmetric walk is taken. The <b>only</b> scaling that survives is space $\sim \sqrt{\text{time}}$ &mdash; that is what forces $\operatorname{Var}(W_t)=t$.</div>
+      <div class="ex"><b>Q:</b> &ldquo;why is $\operatorname{Var}(W_t) = t$ and not $t^2$?&rdquo;<br><b>Trick:</b> $n = t/\Delta t$ steps of size $\Delta x$ give variance $t(\Delta x)^2/\Delta t$. That is finite <em>and</em> non-zero only if $\Delta x \propto \sqrt{\Delta t}$. Everything else degenerates.</div>
+    </div>
+
+    <div class="card">
+      <h4>4.2 &nbsp;Scaling with Drift</h4>
+      <div class="eq">$p = \tfrac12\Big(1 + \dfrac{\mu}{\sigma}\sqrt{\Delta t}\Big),\quad \text{steps } \pm\sigma\sqrt{\Delta t}$</div>
+      <div class="eq">$\Longrightarrow\ X(t) \to \mu t + \sigma W(t)$</div>
+      <div class="use"><b>Use when:</b> the question hands you a walk with $p$ depending on $\sqrt{\Delta t}$ and says &ldquo;argue the limit is BM with drift $\mu$&rdquo;.</div>
+      <div class="ex"><b>Paper:</b> Midsem&rsquo;24 Q3(b) &mdash; steps $\pm\sqrt{\Delta t}$, $p=\tfrac12(1+\mu\sqrt{\Delta t})$ (so $\sigma=1$).<br><b>Two-line proof:</b> per-step mean $=\sqrt{\Delta t}(2p-1) = \mu\,\Delta t$; per-step variance $=\Delta t\big(1-(2p-1)^2\big) \to \Delta t$. Over $n=t/\Delta t$ steps: mean $\to\mu t$, variance $\to t$. CLT finishes it.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════ 5 ════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title"><span class="section-num">5.</span>Wiener Process — Axioms &amp; Identification Tests</div>
+  <div class="formulas">
+
+    <div class="card">
+      <h4>5.1 &nbsp;Wiener Process Axioms</h4>
+      <div class="eq">(i) $W(0) = 0$</div>
+      <div class="eq">(ii) independent increments</div>
+      <div class="eq">(iii) $W(t) - W(s) \sim N(0,\,t-s)$ for $s&lt;t$ &nbsp;(stationary)</div>
+      <div class="eq">(iv) $t \mapsto W(t)$ continuous a.s.</div>
+      <div class="use"><b>Use when:</b> the four-item checklist for &ldquo;short note&rdquo; questions and for verifying a constructed process.</div>
+      <div class="ex"><b>Paper:</b> Midsem&rsquo;25 Q2 / Endsem &mdash; &ldquo;short note on the Wiener process&rdquo;.<br><b>Trick:</b> write the four axioms, then add $\operatorname{Cov}=\min(s,t)$ and &ldquo;continuous but nowhere differentiable&rdquo; for the extra mark.</div>
+    </div>
+
+    <div class="card">
+      <h4>5.2 &nbsp;Is $X(t)$ a Wiener Process? — 4-point test</h4>
+      <div class="eq">1. $X(0) = 0$ ?</div>
+      <div class="eq">2. $X$ Gaussian (all f.d.d. normal) ?</div>
+      <div class="eq">3. $E[X(t)] = 0$ ?</div>
+      <div class="eq">4. $\operatorname{Cov}(X(s),X(t)) = \min(s,t)$ ?</div>
+      <div class="use"><b>Use when:</b> T/F questions of the form &ldquo;$V(t) = \ldots$ is also a Wiener process&rdquo;. Checking $\min(s,t)$ is usually the deciding step; $X(0)=0$ is the usual trap.</div>
+      <div class="ex"><b>Paper:</b> Midsem&rsquo;25 Q1(e) &mdash; $V(t)=\tfrac1c W(c^2t)$, $c&gt;0$. $V(0)=0$ ✓; $\operatorname{Cov} = \tfrac1{c^2}\min(c^2s,c^2t)=\min(s,t)$ ✓ &rArr; <b>True</b>.</div>
+    </div>
+
+    <div class="card">
+      <h4>5.3 &nbsp;Is $X(t)$ a Gaussian Process? — weaker test</h4>
+      <div class="eq">Yes $\iff$ every finite $\sum a_i X(t_i)$ is normal</div>
+      <div class="eq">$f(t)\,W(g(t))$ with $f,g$ deterministic $\Rightarrow$ <b>always</b> Gaussian</div>
+      <div class="use"><b>Use when:</b> the question asks Gaussian process, <em>not</em> Wiener. A deterministic scaling and a deterministic time change can never destroy jointly-normal structure &mdash; the answer is Yes without computation.</div>
+      <div class="ex"><b>Paper:</b> CT-1&rsquo;26 Q3, all four sets &mdash; $e^{-t}W(e^{2t})$, $e^{-2t}W(e^{2t})$, $e^{-t}W(e^{t})$, $e^{-3t}W(e^{2t})$. Every answer is <b>Yes</b>. Not Wiener though: $X(0) = W(1) \ne 0$.</div>
+    </div>
+
+    <div class="card">
+      <h4>5.4 &nbsp;The Four Invariances of BM</h4>
+      <div class="eq">Scaling: $\tfrac1c W(c^2 t)$</div>
+      <div class="eq">Symmetry: $-W(t)$</div>
+      <div class="eq">Time inversion: $t\,W(1/t)$ for $t&gt;0$, $\;0$ at $t=0$</div>
+      <div class="eq">Time reversal on $[0,T]$: $W(T) - W(T-t)$</div>
+      <div class="use"><b>Use when:</b> all four <em>are</em> standard BM. Anything else in a T/F question is probably not &mdash; run &sect;5.2.</div>
+      <div class="ex"><b>Q:</b> &ldquo;Is $-W(t)$ a Wiener process? Is $tW(1/t)$?&rdquo; &mdash; both <b>Yes</b>.<br><b>Trick:</b> memorize these four outright. A T/F on anything <em>else</em> means you must run the &sect;5.2 checklist.</div>
+    </div>
+
+    <div class="card">
+      <h4>5.5 &nbsp;Ornstein&ndash;Uhlenbeck from BM</h4>
+      <div class="eq">$X(t) = e^{-\lambda t}W\!\big(e^{2\lambda t}\big)$</div>
+      <div class="eq">$\operatorname{Cov}(X(s),X(t)) = e^{-\lambda|t-s|}$</div>
+      <div class="use"><b>Use when:</b> covariance depends on $|t-s|$ only &rArr; <b>stationary</b> Gaussian process (OU), <em>not</em> Wiener. Wiener needs $\min(s,t)$.</div>
+      <div class="ex"><b>Trick:</b> $\operatorname{Cov} = e^{-\lambda(s+t)}\min(e^{2\lambda s},e^{2\lambda t}) = e^{-\lambda(s+t)}e^{2\lambda \min(s,t)} = e^{-\lambda|t-s|}$.</div>
+    </div>
+
+    <div class="card">
+      <h4>5.6 &nbsp;Lévy&rsquo;s Martingale Characterization</h4>
+      <div class="eq">$X$ continuous, $X(0)=0$, $X_t$ and $X_t^2 - t$ both martingales $\Longrightarrow X$ is standard BM</div>
+      <div class="use"><b>Use when:</b> you must prove BM-ness without touching distributions. Two martingale checks replace the whole axiom list.</div>
+      <div class="ex"><b>Q:</b> &ldquo;prove the scaled random-walk limit is Brownian motion&rdquo;.<br><b>Trick:</b> L&eacute;vy lets you skip distributions entirely &mdash; show continuity, $X_0 = 0$, and that $X_t$ and $X_t^2 - t$ are both martingales.</div>
+    </div>
+
+    <div class="card">
+      <h4>5.7 &nbsp;Path Properties (short-note ammo)</h4>
+      <div class="eq">Continuous everywhere, differentiable nowhere (a.s.)</div>
+      <div class="eq">Quadratic variation on $[0,t]$ $= t$, i.e. $(dW)^2 = dt$</div>
+      <div class="eq">Total variation $=\infty$; Markov; strong Markov</div>
+      <div class="use"><b>Use when:</b> &ldquo;write a short note&rdquo;. $(dW)^2 = dt$ is the single fact that powers all of It&ocirc;&rsquo;s formula.</div>
+      <div class="ex"><b>Q:</b> Endsem-style &mdash; &ldquo;explain quadratic variation&rdquo;.<br><b>Trick:</b> say the sentence &ldquo;$(dW)^2 = dt$ is why It&ocirc;&rsquo;s formula carries the $\tfrac12 f''$ term at all&rdquo;. That one link is what they are marking.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════ 6 ════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title"><span class="section-num">6.</span>Covariance &amp; Moments — the $\min(s,t)$ machine</div>
+  <div class="formulas">
+
+    <div class="card">
+      <h4>6.1 &nbsp;Covariance of BM</h4>
+      <div class="eq">$\operatorname{Cov}(W_s, W_t) = E[W_s W_t] = \min(s,t)$</div>
+      <div class="use"><b>Use when:</b> the single most-used identity in the paper. Derivation: for $s&lt;t$, $E[W_sW_t] = E[W_s(W_s + (W_t-W_s))] = s + 0$.</div>
+      <div class="ex"><b>Paper:</b> Midsem&rsquo;24 Q1(d) &mdash; $\operatorname{Var}(W_4)\times\operatorname{Cov}(W_1,W_4) = 4 \times 1 = \mathbf{4}$.</div>
+    </div>
+
+    <div class="card">
+      <h4>6.2 &nbsp;Linear Combination of BM Values</h4>
+      <div class="eq">$\sum_i a_i W_{t_i} \sim N\!\Big(0,\ \sum_i\sum_j a_i a_j \min(t_i,t_j)\Big)$</div>
+      <div class="eq">two terms: $\operatorname{Var}(aW_s + bW_t) = a^2 s + b^2 t + 2ab\min(s,t)$</div>
+      <div class="use"><b>Use when:</b> &ldquo;$4W_1 + 6W_3 \sim\ ?$&rdquo;. <b>Trick:</b> build the $\min$ matrix, then it is one dot product. Mean is always $0$.</div>
+      <div class="ex"><b>Paper:</b> CT-1&rsquo;26 Q4 &mdash; $4W_1+6W_3$: $16(1)+36(3)+2(24)(1) = 16+108+48 = \mathbf{N(0,172)}$. Set-2 $3W_1{+}6W_3\!: \mathbf{153}$; Set-3 $4W_1{+}5W_3\!: \mathbf{131}$; Set-4 $4W_1{+}7W_3\!: \mathbf{219}$.<br>Midsem&rsquo;25 Q1(d) &mdash; $W_1 - W_2 + 3W_4$: $1+2+36-2(1)+6(1)-6(2) = \mathbf{N(0,31)}$.</div>
+    </div>
+
+    <div class="card">
+      <h4>6.3 &nbsp;Increment Splitting — the universal trick</h4>
+      <div class="eq">$s&lt;t:\quad W_t = W_s + \underbrace{(W_t - W_s)}_{\Delta \,\sim\, N(0,\,t-s),\ \perp\ \mathcal F_s}$</div>
+      <div class="use"><b>Use when:</b> <em>any</em> mixed moment $E[g(W_s)h(W_t)]$. Substitute, expand, kill odd powers of $\Delta$, use independence. This replaces every 2-D integral.</div>
+      <div class="ex"><b>Q:</b> $E[W_2 W_3^3]$. Put $W_3 = W_2 + \Delta$, expand: $E[W_2^4] + 3E[W_2^2]E[\Delta^2] = 3(4) + 3(2)(1) = \mathbf{18}$.<br><b>General:</b> $E[W_sW_t^3] = 3st$ for $s\le t$. <b>Trick:</b> every odd power of $\Delta$ dies.</div>
+    </div>
+
+    <div class="card">
+      <h4>6.4 &nbsp;Mixed Fourth Moment</h4>
+      <div class="eq">$E[W_s^2 W_t^2] = 2s^2 + st = s(2s+t), \qquad s \le t$</div>
+      <div class="use"><b>Use when:</b> exactly this question. <b>Order matters</b> &mdash; $s$ is the <em>smaller</em> index. Derivation: $E[W_s^2(W_s+\Delta)^2] = E[W_s^4] + E[W_s^2]E[\Delta^2] = 3s^2 + s(t-s)$.</div>
+      <div class="ex"><b>Paper:</b> CT-1&rsquo;26 Q2 &mdash; $E(W_2^2W_3^2)=2(4)+6=\mathbf{14}$; $E(W_1^2W_3^2)=2+3=\mathbf{5}$; $E(W_2^2W_4^2)=8+8=\mathbf{16}$; $E(W_1^2W_4^2)=2+4=\mathbf{6}$.</div>
+    </div>
+
+    <div class="card">
+      <h4>6.5 &nbsp;Covariance of Exponentials</h4>
+      <div class="eq">$\operatorname{Cov}\big(e^{W_s}, e^{W_t}\big) = e^{(s+t)/2}\Big(e^{\min(s,t)} - 1\Big)$</div>
+      <div class="use"><b>Use when:</b> $Y_t := e^{W_t}$, asked for $\operatorname{Cov}(Y_s,Y_t)$. <b>Trick:</b> $W_s+W_t\sim N(0,\,s+t+2\min(s,t))$, then $E[e^{W_s+W_t}] = e^{(s+t+2\min)/2}$, minus $e^{s/2}e^{t/2}$.</div>
+      <div class="ex"><b>Paper:</b> CT-1&rsquo;26 Q9 &mdash; $\operatorname{Cov}(Y_1,Y_2)=e^{3/2}(e-1)$; $\operatorname{Cov}(Y_2,Y_3)=e^{5/2}(e^2-1)$; $\operatorname{Cov}(Y_2,Y_4)=e^{3}(e^2-1)\approx\mathbf{948.43}$; $\operatorname{Cov}(Y_1,Y_4)=e^{5/2}(e-1)\approx\mathbf{20.93}$.</div>
+    </div>
+
+    <div class="card">
+      <h4>6.6 &nbsp;Correlation of BM</h4>
+      <div class="eq">$\operatorname{Corr}(W_s,W_t) = \dfrac{\min(s,t)}{\sqrt{st}} = \sqrt{\dfrac{s}{t}}, \quad s\le t$</div>
+      <div class="use"><b>Use when:</b> a correlation (not covariance) is requested, or when setting up a bivariate normal for conditioning.</div>
+      <div class="ex"><b>Q:</b> $\operatorname{Corr}(W_1,W_4) = \sqrt{1/4} = \mathbf{0.5}$.<br><b>Trick:</b> correlation is $\sqrt{s/t}$ &mdash; it decays like a square root, so distant times are far less correlated than the covariance $\min(s,t)$ suggests.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════ 7 ════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title"><span class="section-num">7.</span>Martingales of Brownian Motion &amp; the Drift Test</div>
+  <div class="formulas">
+
+    <div class="card">
+      <h4>7.1 &nbsp;Canonical Martingale 1 — Linear</h4>
+      <div class="eq">$W(t)$ is a martingale; $\;E[W_t\mid\mathcal F_s] = W_s$</div>
+      <div class="use"><b>Use when:</b> the base case, and the engine behind every Optional Stopping argument (&sect;10.7).</div>
+      <div class="ex"><b>Paper:</b> Endsem&rsquo;25 Q1(d) needs exactly one fact: $E[W_T] = 0$ at a stopping time.<br><b>Trick:</b> $W_t$ being a martingale is the <em>only</em> input to every OST question in &sect;10.7. Nothing else is required.</div>
+    </div>
+
+    <div class="card">
+      <h4>7.2 &nbsp;Canonical Martingale 2 — Quadratic</h4>
+      <div class="eq">$W(t)^2 - t$ is a martingale; $\;E[W_t^2\mid\mathcal F_s] = W_s^2 + (t-s)$</div>
+      <div class="use"><b>Use when:</b> you need $E[\tau]$ for an exit problem, or a T/F on $|W_t|^2 - t$.</div>
+      <div class="ex"><b>Paper:</b> Midsem&rsquo;25 Q1(f) &mdash; &ldquo;$|W_t|^2 - t$ is <b>NOT</b> a martingale (T/F)&rdquo;. It <em>is</em> one, so the statement is <b>False</b>. Watch the negation.</div>
+    </div>
+
+    <div class="card">
+      <h4>7.3 &nbsp;Canonical Martingale 3 — Exponential</h4>
+      <div class="eq">$M_\lambda(t) = \exp\!\Big(\lambda W_t - \tfrac{\lambda^2}{2}t\Big)$ is a martingale, every $\lambda\in\mathbb R$</div>
+      <div class="use"><b>Use when:</b> hitting-time Laplace transforms, Girsanov, and checking GBM martingality. $E[M_\lambda(t)] = 1$ for all $t$.</div>
+      <div class="ex"><b>Q:</b> find $E[e^{-\lambda\tau_a}]$ (&sect;12.7).<br><b>Trick:</b> choose the $\lambda$ in the martingale that makes the exponent match the barrier, then apply OST. $E[M_\lambda(t)] = 1$ finishes it.</div>
+    </div>
+
+    <div class="card">
+      <h4>7.4 &nbsp;Martingale Test for $f(t,W_t)$ — It&ocirc; drift $=0$</h4>
+      <div class="eq">$df = \Big(\partial_t f + \tfrac12 \partial_{ww} f\Big)dt + \partial_w f\, dW$</div>
+      <div class="eq">martingale $\iff \partial_t f + \tfrac12\partial_{ww} f = 0$</div>
+      <div class="eq">special case $f = e^{\lambda t}g(w)$: &nbsp; MG $\iff \lambda g + \tfrac12 g'' = 0$</div>
+      <div class="use"><b>Use when:</b> every &ldquo;Is $Y_t := \ldots$ a martingale? (Yes/No)&rdquo;. For $g = \sin$ or $\cos$, $g'' = -g$, so the <b>only</b> working exponent is $\lambda = \tfrac12$.</div>
+      <div class="ex"><b>Paper:</b> CT-1&rsquo;26 Q5 &mdash; $e^{t/2}\sin W_t$ <b>Yes</b>; $e^{t}\cos W_t$ <b>No</b>; $e^{t}\sin W_t$ <b>No</b>; $e^{t/2}\cos W_t$ <b>Yes</b>.<br><b>One-second rule:</b> exponent $\tfrac12$ &rarr; Yes, anything else &rarr; No.</div>
+    </div>
+
+    <div class="card">
+      <h4>7.5 &nbsp;It&ocirc; Integral — Always a Martingale, Always Normal</h4>
+      <div class="eq">$\int_0^T f(t)\,dW_t \sim N\!\Big(0,\ \int_0^T f(t)^2\,dt\Big)$</div>
+      <div class="eq">It&ocirc; isometry: $E\Big[\big(\int_0^T H_t dW_t\big)^2\Big] = E\int_0^T H_t^2\,dt$</div>
+      <div class="cond">Normality needs $f$ <em>deterministic</em>; the martingale/isometry part holds for adapted $H$.</div>
+      <div class="use"><b>Use when:</b> &ldquo;compute the distribution of $\int_0^1 t^k dW_t$&rdquo;. Mean is $0$ free; variance is a one-line calculus integral.</div>
+      <div class="ex"><b>Paper:</b> CT-1&rsquo;26 Q1 &mdash; $\int_0^1 t^k dW_t \sim N\big(0,\tfrac{1}{2k+1}\big)$: $k{=}1\!\to\!\mathbf{N(0,1/3)}$, $k{=}2\!\to\!\mathbf{1/5}$, $k{=}3\!\to\!\mathbf{1/7}$, $k{=}4\!\to\!\mathbf{1/9}$. CT-2&rsquo;25 Q7: $\int_0^1 t^2dW_t\sim N(0,1/5)$.</div>
+    </div>
+
+    <div class="card">
+      <h4>7.6 &nbsp;Conditional Expectations You Can Quote</h4>
+      <div class="eq">$E[W_t\mid\mathcal F_s] = W_s$</div>
+      <div class="eq">$E[W_t^2\mid\mathcal F_s] = W_s^2 + (t-s)$</div>
+      <div class="eq">$E[e^{W_t}\mid\mathcal F_s] = e^{W_s + (t-s)/2}$</div>
+      <div class="eq">$E[e^{\lambda W_t}\mid\mathcal F_s] = e^{\lambda W_s + \lambda^2(t-s)/2}$</div>
+      <div class="use"><b>Use when:</b> &ldquo;filtration expectation&rdquo; questions. All four come from &sect;6.3 + &sect;1.2 in one step.</div>
+      <div class="ex"><b>Q:</b> find $E[W_3^2 \mid \mathcal F_1]$ &rarr; $\mathbf{W_1^2 + 2}$.<br><b>Trick:</b> all four lines are &sect;6.3 (split the increment) followed by &sect;1.2 (exponential moment). Derive them, don&rsquo;t memorize them.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════ 8 ════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title"><span class="section-num">8.</span>Density, Transition Kernel &amp; the Diffusion Equation</div>
+  <div class="formulas">
+
+    <div class="card">
+      <h4>8.1 &nbsp;Density of $W(t)$</h4>
+      <div class="eq">$f_{W(t)}(x) = \dfrac{1}{\sqrt{2\pi t}}\,e^{-x^2/(2t)}$</div>
+      <div class="eq">$P(W(t) \le x) = \Phi\!\left(\dfrac{x}{\sqrt t}\right)$</div>
+      <div class="use"><b>Use when:</b> $W$ alone, no maximum, no barrier. <b>Always divide by $\sqrt t$, never $t$.</b></div>
+      <div class="ex"><b>Q:</b> $P(W(4) &gt; 3) = 1 - \Phi(3/2) = \mathbf{0.0668}$.<br><b>Trick:</b> $\sqrt t = 2$, <b>not</b> $4$. Dividing by $t$ instead of $\sqrt t$ is the single most common lost mark on this paper.</div>
+    </div>
+
+    <div class="card">
+      <h4>8.2 &nbsp;Transition Density</h4>
+      <div class="eq">$p(t;x,y) = \dfrac{1}{\sqrt{2\pi t}}\exp\!\Big(-\dfrac{(y-x)^2}{2t}\Big)$</div>
+      <div class="use"><b>Use when:</b> BM started at $x\neq0$. Everything else is unchanged &mdash; recentre and reuse every formula.</div>
+      <div class="ex"><b>Q:</b> BM started at $5$; $P(W(1) &lt; 7) = \Phi(2) = \mathbf{0.9772}$.<br><b>Trick:</b> subtract the starting point first &mdash; then every other formula on this sheet applies unchanged.</div>
+    </div>
+
+    <div class="card">
+      <h4>8.3 &nbsp;Diffusion (Heat) Equation</h4>
+      <div class="eq">$\dfrac{\partial p}{\partial t} = \dfrac12\,\dfrac{\partial^2 p}{\partial y^2}$</div>
+      <div class="use"><b>Use when:</b> &ldquo;show the density satisfies the heat equation&rdquo;. Differentiate 8.1 twice; the $\tfrac12$ is the same $\tfrac12$ as in It&ocirc;&rsquo;s formula.</div>
+      <div class="ex"><b>Q:</b> &ldquo;show the transition density satisfies the heat equation&rdquo;.<br><b>Trick:</b> $\partial_{yy}$ brings down $\big(\tfrac{(y-x)^2}{t^2} - \tfrac1t\big)$; $\partial_t$ brings down exactly half of it. One line each, then compare.</div>
+    </div>
+
+    <div class="card">
+      <h4>8.4 &nbsp;Chapman&ndash;Kolmogorov</h4>
+      <div class="eq">$p(t+s;x,z) = \displaystyle\int_{\mathbb R} p(t;x,y)\,p(s;y,z)\,dy$</div>
+      <div class="use"><b>Use when:</b> justifying the Markov property, or short-note questions on why independent increments force Gaussian transitions.</div>
+      <div class="ex"><b>Q:</b> &ldquo;why <em>must</em> the increments be Gaussian?&rdquo;<br><b>Trick:</b> Chapman&ndash;Kolmogorov plus stationary independent increments plus continuity forces the normal family. That sentence is the short-note answer.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════ 9 ════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title"><span class="section-num">9.</span>Conditioning &amp; the Brownian Bridge</div>
+  <div class="formulas">
+
+    <div class="card">
+      <h4>9.1 &nbsp;Which Direction Are You Conditioning?</h4>
+      <div class="eq">Forward (know past, want future) &rarr; 9.2</div>
+      <div class="eq">Backward (know endpoint, want interior) &rarr; 9.4</div>
+      <div class="use"><b>Use when:</b> <b>decide this first.</b> Forward is trivial (martingale, variance grows). Backward is the bridge (variance shrinks to $0$ at both ends).</div>
+      <div class="ex"><b>Q:</b> &ldquo;Given $W(1)=2$, find $E[W(3)]$&rdquo; &rarr; $\mathbf{2}$ (martingale). &ldquo;Given $W(3)=2$, find $E[W(1)]$&rdquo; &rarr; $\tfrac13(2) = \mathbf{2/3}$ (bridge).<br><b>Trick:</b> identify which time is <em>known</em> before you write a single symbol.</div>
+    </div>
+
+    <div class="card">
+      <h4>9.2 &nbsp;Forward Conditional</h4>
+      <div class="eq">$W(t)\mid \mathcal F_s \sim N\big(W(s),\ t-s\big), \qquad t&gt;s$</div>
+      <div class="use"><b>Use when:</b> future given present. Independent increments, nothing more.</div>
+      <div class="ex"><b>Q:</b> $W(5) \mid W(2) = 3 \sim \mathbf{N(3,\,3)}$.<br><b>Trick:</b> the mean stays exactly where you left it; the variance is the elapsed time and nothing else.</div>
+    </div>
+
+    <div class="card">
+      <h4>9.3 &nbsp;Standard Brownian Bridge</h4>
+      <div class="eq">$B(s) = W(s) - \dfrac{s}{t}W(t), \quad 0\le s\le t$</div>
+      <div class="eq">$E[B(s)] = 0, \qquad \operatorname{Cov}(B(u),B(v)) = \min(u,v) - \dfrac{uv}{t}$</div>
+      <div class="eq">$B \perp W(t)$</div>
+      <div class="use"><b>Use when:</b> the process is pinned at both ends. The $-uv/t$ term is exactly the information removed by knowing the endpoint.</div>
+      <div class="ex"><b>Q:</b> $\operatorname{Var}(B(t/2))$ on $[0,t]$ $= \tfrac t2 - \tfrac{(t/2)^2}{t} = \mathbf{t/4}$.<br><b>Trick:</b> bridge variance is zero at both ends and peaks at the midpoint &mdash; a 2-second sanity check on any bridge answer.</div>
+    </div>
+
+    <div class="card">
+      <h4>9.4 &nbsp;Backward Interpolation — the workhorse</h4>
+      <div class="eq">$W(s)\mid W(t){=}b \;\sim\; N\!\left(\dfrac{s}{t}\,b,\ \dfrac{s(t-s)}{t}\right), \qquad s&lt;t$</div>
+      <div class="use"><b>Use when:</b> &ldquo;given $W(t)=b$, find $P(W(s)&lt;x)$ / $E[W(s)]$ / $\operatorname{Var}$&rdquo;. Mean is the straight line from $(0,0)$ to $(t,b)$; variance vanishes at both ends and peaks at the midpoint.</div>
+      <div class="ex"><b>Trick:</b> derive it in 10 seconds from &sect;1.9 with $\Sigma = \begin{pmatrix} s & s\\ s& t\end{pmatrix}$: mean $= \frac st b$, var $= s - \frac{s^2}{t}$.</div>
+    </div>
+
+    <div class="card">
+      <h4>9.5 &nbsp;Bridge Pinned $a \to b$</h4>
+      <div class="eq">$X(s) \sim N\!\left(a + \dfrac{s}{t}(b-a),\ \dfrac{s(t-s)}{t}\right)$</div>
+      <div class="cond">$X(0)=a$, $X(t)=b$.</div>
+      <div class="use"><b>Use when:</b> the process does not start at $0$. Only the mean line shifts; the variance is untouched.</div>
+      <div class="ex"><b>Q:</b> $W(0)=2$, $W(10)=8$; find the law of $W(4)$. Mean $= 2 + \tfrac{4}{10}(6) = \mathbf{4.4}$, Var $= \tfrac{4(6)}{10} = \mathbf{2.4}$.<br><b>Trick:</b> the mean is plain linear interpolation between the two pins.</div>
+    </div>
+
+    <div class="card">
+      <h4>9.6 &nbsp;Scaled BM ($Y = \sigma W$)</h4>
+      <div class="eq">$Y(s)\mid Y(t){=}b \sim N\!\left(\dfrac st b,\ \sigma^2\dfrac{s(t-s)}{t}\right)$</div>
+      <div class="use"><b>Use when:</b> volatility $\sigma\ne1$. <b>Mean is unchanged</b> (ratios cancel); only variance picks up $\sigma^2$.</div>
+      <div class="ex"><b>Q:</b> $Y = 3W$ with $Y(10) = 12$; find the law of $Y(4)$. Mean $= \tfrac{4}{10}(12) = \mathbf{4.8}$, Var $= 9\cdot\tfrac{4(6)}{10} = \mathbf{21.6}$.<br><b>Trick:</b> $\sigma^2$ scales the variance and leaves the mean untouched.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════ 10 ═══════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title"><span class="section-num">10.</span>BM with Drift — Exit Probabilities &amp; Optimal Stopping</div>
+  <div class="formulas">
+
+    <div class="card">
+      <h4>10.1 &nbsp;Definition</h4>
+      <div class="eq">$X(t) = \mu t + \sigma W(t) \sim N(\mu t,\ \sigma^2 t)$</div>
+      <div class="eq">$X(t) - X(s) \sim N\big(\mu(t-s),\ \sigma^2(t-s)\big)$, independent increments</div>
+      <div class="use"><b>Use when:</b> &ldquo;drift coefficient / drift parameter $\mu$ and variance parameter $\sigma^2$&rdquo;. Careful: some questions give $\sigma^2$, some give $\sigma$.</div>
+      <div class="ex"><b>Paper:</b> Midsem&rsquo;25 Q1(a) says &ldquo;drift coefficient $-1$&rdquo; &rarr; $\mu{=}{-}1$, $\sigma{=}1$. CT-1&rsquo;26 Q6 says &ldquo;volatility parameter $\sigma = 0.3$&rdquo; &rarr; that is $\sigma$, not $\sigma^2$.<br><b>Trick:</b> check whether they handed you $\sigma$ or $\sigma^2$ &mdash; the exit formulas all want $\sigma^2$.</div>
+    </div>
+
+    <div class="card">
+      <h4>10.2 &nbsp;Which Exit Formula? — decision</h4>
+      <div class="eq">$\mu = 0$, two barriers &nbsp;&rarr;&nbsp; 10.4 (distance ratio)</div>
+      <div class="eq">$\mu \ne 0$, two barriers &nbsp;&rarr;&nbsp; 10.3 (exponentials)</div>
+      <div class="eq">$\mu &lt; 0$, <em>one</em> upper barrier, no lower &nbsp;&rarr;&nbsp; 10.5</div>
+      <div class="eq">$\mu \ge 0$, one upper barrier &nbsp;&rarr;&nbsp; probability $= 1$</div>
+      <div class="use"><b>Use when:</b> run this fork before writing anything. Most lost marks are from using 10.3 when $\mu=0$ (it is $0/0$).</div>
+      <div class="ex"><b>Paper:</b> Midsem&rsquo;24 Q1(c) gives $\mu = 0$, so 10.4 applies and 10.3 does not.<br><b>Trick:</b> at $\mu = 0$ the exponential formula is literally $0/0$. Check the drift <em>before</em> choosing a formula, every time.</div>
+    </div>
+
+    <div class="card">
+      <h4>10.3 &nbsp;Two-Barrier Exit — Drift $\ne 0$</h4>
+      <div class="eq">$P(\text{hit } A \text{ before } -B \mid X(0){=}0) = \dfrac{1 - e^{-2\mu B/\sigma^2}}{1 - e^{-2\mu(A+B)/\sigma^2}}$</div>
+      <div class="eq">from $X(0)=x$, barriers $A$ (up) and $-B$ (down): replace $B \to x+B$</div>
+      <div class="cond">$A,B&gt;0$, $\mu\ne0$.</div>
+      <div class="use"><b>Use when:</b> continuous-time gambler&rsquo;s ruin. It is &sect;3.3 with $(q/p)^i \to e^{-2\mu x/\sigma^2}$.</div>
+      <div class="ex"><b>Q:</b> $\mu = 0.1$, $\sigma = 1$, barriers $+2$ and $-3$ from $0$.<br>$P = \dfrac{1-e^{-0.6}}{1-e^{-1}} = \dfrac{0.4512}{0.6321} = \mathbf{0.714}$.<br><b>Trick:</b> set $r = 2\mu/\sigma^2$ once, then it reads $\frac{1-e^{-rB}}{1-e^{-r(A+B)}}$.</div>
+    </div>
+
+    <div class="card">
+      <h4>10.4 &nbsp;Two-Barrier Exit — Zero Drift</h4>
+      <div class="eq">$P(\text{hit } A \text{ before } -B \mid X(0){=}0) = \dfrac{B}{A+B}$</div>
+      <div class="eq">$P(\text{hit } -B \text{ first}) = \dfrac{A}{A+B}$</div>
+      <div class="use"><b>Use when:</b> $\mu = 0$. <b>Trick:</b> the probability of hitting a barrier is proportional to the distance to the <em>opposite</em> barrier. $\sigma$ cancels and never appears.</div>
+      <div class="ex"><b>Paper:</b> Midsem&rsquo;24 Q1(c) &mdash; $B(t)$, $\mu{=}0$, $\sigma^2{=}1$, &ldquo;reaches $-2$ before $1$&rdquo;. Up-barrier $A{=}1$, down-barrier $B{=}2$. $P(\text{down first}) = \frac{A}{A+B} = \frac{1}{3}$ &rArr; $\mathbf{1/3}$.</div>
+    </div>
+
+    <div class="card">
+      <h4>10.5 &nbsp;Negative Drift — Maximum Ever Reached</h4>
+      <div class="eq">$P\Big(\max_{t\ge0} X(t) \ge a\Big) = e^{2\mu a/\sigma^2} = e^{-2|\mu|a/\sigma^2}, \qquad \mu&lt;0,\ a&gt;0$</div>
+      <div class="eq">$\displaystyle\max_{t\ge0}X(t) \sim \mathrm{Exp}\!\left(\frac{2|\mu|}{\sigma^2}\right)$</div>
+      <div class="use"><b>Use when:</b> only an upper target, drift pulls down, infinite horizon. If $\mu\ge0$ the probability is $1$ (the process reaches every level a.s.).</div>
+      <div class="ex"><b>Trick:</b> memoryless &rArr; the all-time max is Exponential. That is what makes the optimization in 10.6 a one-line calculus problem.</div>
+    </div>
+
+    <div class="card">
+      <h4>10.6 &nbsp;Optimal Exercise Threshold (drift $-\mu$)</h4>
+      <div class="eq">maximize $\ g(x) = (x-K)\,e^{-2\mu x/\sigma^2}$ over $x \ge K$</div>
+      <div class="eq">$x^{*} = K + \dfrac{\sigma^2}{2\mu}, \qquad g(x^{*}) = \dfrac{\sigma^2}{2\mu}\,e^{-2\mu K/\sigma^2 - 1}$</div>
+      <div class="cond">$\sigma = 1$ case: $x^{*} = K + \frac{1}{2\mu}$.</div>
+      <div class="use"><b>Use when:</b> &ldquo;option to buy at fixed price $K$; price follows BM with drift coefficient $-\mu$; when, if ever, should we exercise?&rdquo;<br><b>Set-up:</b> payoff $x-K$, probability of ever reaching $x$ is $e^{-2\mu x/\sigma^2}$ (10.5). Differentiate, done.</div>
+      <div class="ex"><b>Paper:</b> Midsem&rsquo;25 Q1(a) &mdash; $K=100$, drift $-1$ (so $\mu{=}1$, $\sigma{=}1$), start $0$. $x^{*} = 100 + \tfrac12 = \mathbf{100.5}$. Exercise the first time the price hits $100.5$.</div>
+    </div>
+
+    <div class="card">
+      <h4>10.7 &nbsp;Hitting a Sloping Line — via OST</h4>
+      <div class="eq">$T = \min\{t: W_t = a + bt\}$</div>
+      <div class="eq">$E[W_T] = 0 \Rightarrow a + b\,E[T] = 0 \Rightarrow E[T] = -\dfrac{a}{b}$</div>
+      <div class="cond">Needs $ab &lt; 0$ (line slopes back toward $0$), else $E[T]=\infty$.</div>
+      <div class="use"><b>Use when:</b> the barrier <em>moves</em>. Apply OST to the martingale $W_t$ at the stopping time, substitute the barrier equation, solve for $E[T]$.</div>
+      <div class="ex"><b>Paper:</b> Endsem&rsquo;25 Q1(d) &mdash; $T = \min\{t: W_t = 2 - 3t\}$. $0 = 2 - 3E[T] \Rightarrow E[T] = \mathbf{2/3}$.</div>
+    </div>
+
+    <div class="card">
+      <h4>10.8 &nbsp;Expected Exit Time (two barriers)</h4>
+      <div class="eq">$\mu = 0:\quad E[T] = \dfrac{A\,B}{\sigma^2}$ &nbsp; (from $X(0)=0$)</div>
+      <div class="eq">$\mu \ne 0:\quad E[T] = \dfrac{A\,p - B(1-p)}{\mu}$, &nbsp; $p$ from 10.3</div>
+      <div class="use"><b>Use when:</b> duration asked as well as probability. $\mu{=}0$ case uses the martingale $X_t^2 - \sigma^2 t$; $\mu\ne0$ uses $X_t - \mu t$ (Wald).</div>
+      <div class="ex"><b>Check:</b> $\mu=0$, $\sigma=1$, $A=B=n$ gives $E[T]=n^2$ &mdash; the discrete $i(N-i)$ of &sect;3.2 with $i=n,N=2n$.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════ 11 ═══════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title"><span class="section-num">11.</span>Geometric Brownian Motion</div>
+  <div class="formulas">
+
+    <div class="card flag">
+      <h4>11.1 &nbsp;⚠ Two Conventions for &ldquo;drift parameter $\mu$&rdquo;</h4>
+      <div class="eq"><b>(R) Ross / log-drift:</b> $\;Y(t) = Y(0)\,e^{\mu t + \sigma W_t}$</div>
+      <div class="eq"><b>(S) SDE:</b> $\;dY = \mu Y\,dt + \sigma Y\,dW \;\Rightarrow\; Y(t) = Y(0)e^{(\mu - \sigma^2/2)t + \sigma W_t}$</div>
+      <div class="bad"><b>The paper accepts BOTH.</b> CT-1&rsquo;26 Q6 official answer key literally reads &ldquo;$5e^{0.55}$ <b>or</b> $5e^{0.1}$&rdquo;. <b>Write both, label them</b> &mdash; that is the full-marks answer.</div>
+      <div class="use"><b>Tell them apart:</b> &ldquo;logarithm of the price is BM with drift $\mu$&rdquo; &rArr; (R). &ldquo;$dS = \mu S\,dt + \ldots$&rdquo; or &ldquo;expected return $\mu$&rdquo; &rArr; (S).</div>
+      <div class="ex"><b>Paper:</b> CT-1&rsquo;26 Q6, all four sets, and Midsem&rsquo;25 Q1(b).<br><b>Trick:</b> write both, labelled: &ldquo;log-drift convention: $\ldots$ ; SDE convention: $\ldots$&rdquo;. Two boxed expressions. The key accepts either, and labelling proves you know why there are two.</div>
+    </div>
+
+    <div class="card">
+      <h4>11.2 &nbsp;Mean of GBM</h4>
+      <div class="eq">(R) $\;E[Y(t)] = Y(0)\,e^{(\mu + \sigma^2/2)\,t}$</div>
+      <div class="eq">(S) $\;E[Y(t)] = Y(0)\,e^{\mu t}$</div>
+      <div class="use"><b>Use when:</b> the single most repeated GBM question. Both are &sect;1.2 applied to $\mu t + \sigma W_t \sim N(\mu t, \sigma^2 t)$.</div>
+      <div class="ex"><b>Paper:</b> CT-1&rsquo;26 Q6 &mdash; $\mu{=}.01,\sigma{=}.3,Y_0{=}5$: $5e^{(.01+.045)10} = \mathbf{5e^{0.55}}$ or $\mathbf{5e^{0.1}}$. Set-2 $\mu{=}.02,\sigma{=}.4,Y_0{=}10$: $\mathbf{10e^{1}}$ or $\mathbf{10e^{0.2}}$. Set-3: $\mathbf{5e^{0.5}}$ / $5e^{0.3}$. Set-4: $\mathbf{5e^{0.3}}$ / $5e^{0.1}$.<br>Midsem&rsquo;25 Q1(b) &mdash; $\mu{=}.01,\sigma{=}.2,Y_0{=}10,t{=}100$: $\mathbf{10e^{3}}$ or $10e^{1}$.</div>
+    </div>
+
+    <div class="card">
+      <h4>11.3 &nbsp;Filtration Expectation of GBM</h4>
+      <div class="eq">(R) $\;E[Y(t)\mid\mathcal F_s] = Y(s)\,e^{(\mu+\sigma^2/2)(t-s)}$</div>
+      <div class="eq">(S) $\;E[Y(t)\mid\mathcal F_s] = Y(s)\,e^{\mu(t-s)}$</div>
+      <div class="use"><b>Use when:</b> conditional version. <b>Trick:</b> same formula with $Y(0)\to Y(s)$ and $t \to t-s$ &mdash; GBM is multiplicatively memoryless.</div>
+      <div class="ex"><b>Q:</b> $E[Y(10)\mid\mathcal F_4]$ with (R), $\mu{=}0.01$, $\sigma{=}0.2$ &rarr; $Y(4)\,e^{(0.01+0.02)(6)} = \mathbf{Y(4)e^{0.18}}$.<br><b>Trick:</b> same formula as 11.2 with $Y(0)\to Y(s)$ and $t \to t-s$.</div>
+    </div>
+
+    <div class="card">
+      <h4>11.4 &nbsp;GBM Martingale Condition</h4>
+      <div class="eq">(R) MG $\iff \mu = -\dfrac{\sigma^2}{2}$ &nbsp;&nbsp; (S) MG $\iff \mu = 0$</div>
+      <div class="use"><b>Use when:</b> &ldquo;is the discounted/undiscounted price a martingale?&rdquo;. Same $-\sigma^2/2$ as the geometric random walk (&sect;2.3).</div>
+      <div class="ex"><b>Q:</b> &ldquo;Is $e^{W_t - t/2}$ a martingale?&rdquo; &rarr; <b>Yes</b>: it is (R) with $\mu = -\tfrac12 = -\sigma^2/2$, $\sigma = 1$.<br><b>Trick:</b> it is precisely the exponential martingale of &sect;7.3 at $\lambda = 1$. Same object, two names.</div>
+    </div>
+
+    <div class="card">
+      <h4>11.5 &nbsp;Higher Moments &amp; Variance</h4>
+      <div class="eq">(R) $\;E[Y(t)^n] = Y(0)^n\,e^{(n\mu + n^2\sigma^2/2)t}$</div>
+      <div class="eq">$\operatorname{Var}(Y(t)) = E[Y(t)]^2\big(e^{\sigma^2 t} - 1\big)$</div>
+      <div class="use"><b>Use when:</b> variance or second moment requested. Note $\operatorname{Var}$ is convention-free once written in terms of $E[Y(t)]$.</div>
+      <div class="ex"><b>Q:</b> (R) with $\mu{=}0$, $\sigma{=}1$, $Y_0{=}1$, $t{=}1$: $E[Y] = e^{1/2}$, so $\operatorname{Var} = e(e-1) = \mathbf{4.67}$.<br><b>Trick:</b> get $E[Y(t)]$ first, square it, multiply by $(e^{\sigma^2 t}-1)$. Convention-free once written that way.</div>
+    </div>
+
+    <div class="card">
+      <h4>11.6 &nbsp;Median vs Mean</h4>
+      <div class="eq">(R) median $= Y(0)e^{\mu t}$, &nbsp; mean $= Y(0)e^{(\mu+\sigma^2/2)t}$</div>
+      <div class="use"><b>Use when:</b> conceptual questions on why a GBM can have growing mean but drift to $0$ almost surely: for $\mu &lt; 0 &lt; \mu + \sigma^2/2$, median $\to 0$ while mean $\to\infty$.</div>
+      <div class="ex"><b>Q:</b> (R) with $\mu = -0.1$, $\sigma = 0.6$: does the stock grow? The mean grows ($\mu + \sigma^2/2 = 0.08 &gt; 0$) while the median $\to 0$.<br><b>Trick:</b> that gap <em>is</em> the log-normal. Expect a conceptual mark on it.</div>
+    </div>
+
+    <div class="card">
+      <h4>11.7 &nbsp;Distribution &amp; Probabilities</h4>
+      <div class="eq">$\ln\dfrac{Y(t)}{Y(0)} \sim N\big(\mu t,\ \sigma^2 t\big)$ &nbsp;(R)</div>
+      <div class="eq">$P(Y(t) &gt; K) = 1 - \Phi\!\left(\dfrac{\ln(K/Y_0) - \mu t}{\sigma\sqrt t}\right)$</div>
+      <div class="use"><b>Use when:</b> &ldquo;probability the price exceeds $K$&rdquo;. Take logs first, <em>then</em> standardize. This is the $d_2$ of Black&ndash;Scholes.</div>
+      <div class="ex"><b>Q:</b> $S_0 = 100$, (R) $\mu = 0.05$, $\sigma = 0.2$, $t = 1$. $P(S_1 &gt; 110) = 1 - \Phi\!\big(\tfrac{\ln 1.1 - 0.05}{0.2}\big) = 1-\Phi(0.227) = \mathbf{0.410}$.<br><b>Trick:</b> take logs <em>first</em>, then standardize. That expression is Black&ndash;Scholes&rsquo; $d_2$.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════ 12 ═══════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title"><span class="section-num">12.</span>Hitting Times &amp; the Reflection Principle</div>
+  <div class="formulas">
+
+    <div class="card">
+      <h4>12.1 &nbsp;Hitting Time &amp; the Key Equivalence</h4>
+      <div class="eq">$\tau_a = \inf\{t \ge 0 : W(t) = a\}$</div>
+      <div class="eq">$\{\tau_a \le t\} = \{M(t) \ge a\}$ &nbsp; for $a &gt; 0$</div>
+      <div class="use"><b>Use when:</b> this equivalence is the bridge between &sect;12 and &sect;13 &mdash; every maximum question is a hitting-time question and vice versa. For $a&lt;0$ use $\tau_a \overset{d}{=} \tau_{|a|}$ by symmetry.</div>
+      <div class="ex"><b>Q:</b> $P(M(4) \ge 3)$ and $P(\tau_3 \le 4)$ are the same number.<br><b>Trick:</b> whenever you see one, silently rewrite it as the other and use whichever formula you actually remember. They are interchangeable by definition.</div>
+    </div>
+
+    <div class="card">
+      <h4>12.2 &nbsp;Reflection Principle</h4>
+      <div class="eq">$P\big(W(t)\le a-y,\ M(t) &gt; a\big) = P\big(W(t) \ge a+y\big) = 1-\Phi\!\left(\dfrac{a+y}{\sqrt t}\right)$</div>
+      <div class="cond"><b>Requires $a&gt;0$ and $y\ge0$.</b></div>
+      <div class="use"><b>Use when:</b> the engine for all of &sect;13&ndash;14. Reflect the path after $\tau_a$ across the line $W=a$; the strong Markov property makes the reflected path an equally likely BM.<br><b>Why $a&gt;0$:</b> it forces $\tau_a\le t$ automatically, so that condition can be dropped.</div>
+      <div class="ex"><b>Q:</b> $P(W(4) \le 1,\ M(4) &gt; 2)$: read off $a = 2$, $y = 2-1 = 1$ &rarr; $1 - \Phi(3/2) = \mathbf{0.0668}$.<br><b>Trick:</b> $a$ is the barrier, $y$ is barrier minus the $W$-bound. If $y &lt; 0$ you are in the third branch of &sect;14.1 instead.</div>
+    </div>
+
+    <div class="card">
+      <h4>12.3 &nbsp;cdf of $\tau_a$</h4>
+      <div class="eq">$P(\tau_a \le t) = 2\Big(1-\Phi\!\Big(\dfrac{a}{\sqrt t}\Big)\Big) = 2\,\Phi\!\Big(-\dfrac{a}{\sqrt t}\Big)$</div>
+      <div class="cond">$a&gt;0$; for general $a$ replace $a$ by $|a|$.</div>
+      <div class="use"><b>Use when:</b> &ldquo;find the cdf of $\tau_a$&rdquo;. <b>Trick:</b> set $y=0$ in 12.2 and double for the symmetric half $\{W(t)&gt;a\}$.</div>
+      <div class="ex"><b>Paper:</b> Midsem&rsquo;25 Q5(a) &mdash; &ldquo;find the cdf and pdf of $\tau_a$&rdquo;. Quote 12.3 then differentiate for 12.4.</div>
+    </div>
+
+    <div class="card">
+      <h4>12.4 &nbsp;pdf of $\tau_a$ (Lévy distribution)</h4>
+      <div class="eq">$f_{\tau_a}(t) = \dfrac{|a|}{\sqrt{2\pi}\;t^{3/2}}\,e^{-a^2/(2t)}, \qquad t&gt;0$</div>
+      <div class="use"><b>Use when:</b> follows from 12.3 by $\frac{d}{dt}$. <b>Trick:</b> differentiate $2\Phi(-a t^{-1/2})$ using the chain rule; the $t^{-3/2}$ comes from $\frac{d}{dt}t^{-1/2}$.</div>
+      <div class="ex"><b>Paper:</b> Midsem&rsquo;25 Q5(a), second half. $f_{\tau_2}(4) = \dfrac{2}{\sqrt{2\pi}\,8}e^{-1/2} = \mathbf{0.0605}$.<br><b>Trick:</b> differentiate 12.3 &mdash; never try to integrate the joint density for this.</div>
+    </div>
+
+    <div class="card">
+      <h4>12.5 &nbsp;Certain Hitting, Infinite Mean</h4>
+      <div class="eq">$P(\tau_a &lt; \infty) = \lim_{t\to\infty} 2\Phi\!\Big(-\dfrac{a}{\sqrt t}\Big) = 2\Phi(0) = 1$</div>
+      <div class="eq">$E[\tau_a] = \infty$ &nbsp; (the $t^{-3/2}$ tail is not integrable)</div>
+      <div class="use"><b>Use when:</b> &ldquo;$P(T_a &lt; \infty) = ?$&rdquo; &rarr; <b>1</b>. BM hits every level with certainty, but takes infinitely long on average. Both facts are asked.</div>
+      <div class="ex"><b>Paper:</b> Midsem&rsquo;24 Q1(f) &mdash; &ldquo;$T_a$ = time to hit $a$; find $P(T_a&lt;\infty)$&rdquo; &rArr; $\mathbf{1}$.</div>
+    </div>
+
+    <div class="card">
+      <h4>12.6 &nbsp;Scaling of $\tau_a$</h4>
+      <div class="eq">$\tau_a \overset{d}{=} a^2\,\tau_1$</div>
+      <div class="use"><b>Use when:</b> comparing hitting times of different levels, or sanity-checking: doubling the barrier quadruples the typical time.</div>
+      <div class="ex"><b>Q:</b> &ldquo;$E[\tau_1] = \infty$ &mdash; what about $\tau_{10}$?&rdquo; Also $\infty$, and typically $100\times$ longer.<br><b>Trick:</b> $\tau_a \overset{d}{=} a^2\tau_1$ is the same $\sqrt t$ scaling as &sect;4.1, seen from the other side.</div>
+    </div>
+
+    <div class="card">
+      <h4>12.7 &nbsp;Laplace Transform of $\tau_a$</h4>
+      <div class="eq">$E\big[e^{-\lambda \tau_a}\big] = e^{-a\sqrt{2\lambda}}, \qquad \lambda&gt;0,\ a&gt;0$</div>
+      <div class="use"><b>Use when:</b> a discounted payoff at a hitting time. Derived by OST on the exponential martingale (&sect;7.3) with $\lambda_{\text{mg}}=\sqrt{2\lambda}$.</div>
+      <div class="ex"><b>Q:</b> value of Rs 1 paid the instant the price first hits $a$, discounted at rate $\lambda$ &rarr; $\mathbf{e^{-a\sqrt{2\lambda}}}$.<br><b>Trick:</b> apply OST to $\exp(\theta W_t - \tfrac{\theta^2}{2}t)$ with $\theta = \sqrt{2\lambda}$, so the $t$-term becomes exactly the discount factor.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════ 13 ═══════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title"><span class="section-num">13.</span>The Running Maximum $M(t)$ — alone</div>
+  <div class="formulas">
+
+    <div class="card">
+      <h4>13.1 &nbsp;Definition &amp; Hard Constraints</h4>
+      <div class="eq">$M(t) = \max_{0\le u \le t} W(u)$</div>
+      <div class="eq">$M(t) \ge W(t)$ &nbsp;and&nbsp; $M(t) \ge 0$ &nbsp;<b>always</b></div>
+      <div class="use"><b>Use when:</b> check these two first. Any event forcing $W(t) &gt; M(t)$, or $M(t) &lt; 0$, has probability <b>zero</b> &mdash; write &ldquo;$0$&rdquo; and move on.</div>
+      <div class="ex"><b>Q:</b> $P(2 &lt; W(4) &lt; 3,\ 0 &lt; M(4) &lt; 1) = \mathbf{0}$.<br><b>Trick:</b> it demands $W &gt; M$, which is impossible. Spot it, write $0$, move on &mdash; this is a deliberate trap and free marks.</div>
+    </div>
+
+    <div class="card">
+      <h4>13.2 &nbsp;Distribution of $M(t)$ — half-normal</h4>
+      <div class="eq">$M(t) \overset{d}{=} |W(t)|$</div>
+      <div class="eq">$P(M(t) \ge a) = 2\Big(1 - \Phi\!\Big(\dfrac{a}{\sqrt t}\Big)\Big), \qquad a\ge0$</div>
+      <div class="eq">$P(M(t) \le a) = 2\Phi\!\Big(\dfrac{a}{\sqrt t}\Big) - 1$</div>
+      <div class="use"><b>Use when:</b> the question involves $M$ but <b>not</b> $W$. One line, no reflection needed.</div>
+      <div class="ex"><b>Interval:</b> $P(c &lt; M(t) \le d) = 2\big[\Phi(d/\sqrt t) - \Phi(c/\sqrt t)\big]$. For $t{=}4$, $(c,d)=(2,3)$: $2[\Phi(1.5)-\Phi(1)] = 2[.9332-.8413] = \mathbf{0.1837}$.</div>
+    </div>
+
+    <div class="card">
+      <h4>13.3 &nbsp;Density of $M(t)$</h4>
+      <div class="eq">$f_{M(t)}(a) = \dfrac{2}{\sqrt{2\pi t}}\,e^{-a^2/(2t)}, \qquad a\ge0$</div>
+      <div class="use"><b>Use when:</b> an expectation over $M$ is needed. It is twice the $N(0,t)$ density on the positive half-line.</div>
+      <div class="ex"><b>Q:</b> &ldquo;compute $E[M(4)]$ by integrating the density&rdquo;.<br><b>Trick:</b> don&rsquo;t &mdash; quote &sect;13.4. Reach for the density only when the functional is non-standard (e.g. $E[e^{M(t)}]$).</div>
+    </div>
+
+    <div class="card">
+      <h4>13.4 &nbsp;Moments of $M(t)$</h4>
+      <div class="eq">$E[M(t)] = \sqrt{\dfrac{2t}{\pi}}, \qquad E[M(t)^2] = t$</div>
+      <div class="eq">$\operatorname{Var}(M(t)) = t\Big(1 - \dfrac{2}{\pi}\Big)$</div>
+      <div class="use"><b>Use when:</b> &ldquo;expected maximum&rdquo;. Note $E[M(t)^2]=E[W(t)^2]=t$ because $M\overset{d}{=}|W|$.</div>
+      <div class="ex"><b>Q:</b> &ldquo;expected highest level reached in 4 units of time&rdquo; $= \sqrt{8/\pi} = \mathbf{1.596}$.<br><b>Trick:</b> $E[M(t)] = \sqrt{2t/\pi} \approx 0.8\sqrt t$ &mdash; useful for checking an answer&rsquo;s order of magnitude.</div>
+    </div>
+
+    <div class="card">
+      <h4>13.5 &nbsp;Running Minimum</h4>
+      <div class="eq">$m(t) = \min_{0\le u\le t}W(u) \overset{d}{=} -M(t)$</div>
+      <div class="eq">$P(m(t) \le -a) = 2\Big(1-\Phi\!\Big(\dfrac{a}{\sqrt t}\Big)\Big), \quad a \ge 0$</div>
+      <div class="use"><b>Use when:</b> a minimum or a lower barrier appears. Flip signs everywhere ($W\to-W$) and reuse &sect;13&ndash;14 verbatim.</div>
+      <div class="ex"><b>Q:</b> $P\big(\min_{u\le4} W(u) \le -3\big) = 2(1-\Phi(1.5)) = \mathbf{0.1336}$.<br><b>Trick:</b> reflect the entire problem ($W \to -W$) and reuse &sect;13.2 with $+3$. Never derive a separate minimum formula.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════ 14 ═══════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title"><span class="section-num">14.</span>Joint Law of $\big(W(t),M(t)\big)$ — the master recipe</div>
+  <div class="formulas">
+
+    <div class="card flag">
+      <h4>14.1 &nbsp;⚠ The Guard Everyone Gets Wrong</h4>
+      <div class="eq">$G(b,c) := P\big(W(t)\le b,\ M(t)\ge c\big)$</div>
+      <div class="eq">$\boxed{\;G(b,c)=\begin{cases} \Phi\!\big(\tfrac{b}{\sqrt t}\big) & c \le 0\\[6pt] 1 - \Phi\!\big(\tfrac{2c-b}{\sqrt t}\big) & 0 &lt; c,\ b \le c\\[6pt] 1 + \Phi\!\big(\tfrac{b}{\sqrt t}\big) - 2\Phi\!\big(\tfrac{c}{\sqrt t}\big) & 0 &lt; c &lt; b\end{cases}}$</div>
+      <div class="bad"><b>The $b&gt;c$ case is NOT zero.</b> The reflection formula $1-\Phi(\frac{2c-b}{\sqrt t})$ is only valid while $b\le c$. If $b &gt; c$, split at $c$: once $W(t)&gt;c$ the constraint $M(t)\ge c$ is automatic, so<br>$G = \underbrace{[1-\Phi(\tfrac{c}{\sqrt t})]}_{W\le c} + \underbrace{[\Phi(\tfrac{b}{\sqrt t})-\Phi(\tfrac{c}{\sqrt t})]}_{c&lt;W\le b}$.</div>
+      <div class="use"><b>Sanity checks:</b> at $b=c$ both branches give $1-\Phi(c/\sqrt t)$ ✓. As $b\to\infty$: $G\to 2(1-\Phi(c/\sqrt t)) = P(M\ge c)$ ✓ (&sect;13.2).</div>
+      <div class="ex"><b>Q:</b> this guard alone decides Midsem&rsquo;25 Q5(b) &mdash; see 14.4.<br><b>Trick:</b> before evaluating any $G$, <b>write down the comparison of $b$ with $c$</b> on your script. $b \le c$ &rarr; reflection formula; $b &gt; c$ &rarr; the three-term form.</div>
+    </div>
+
+    <div class="card">
+      <h4>14.2 &nbsp;Joint Density</h4>
+      <div class="eq">$f_{W,M}(w,m) = \dfrac{2(2m-w)}{t\sqrt{2\pi t}}\;\exp\!\left(-\dfrac{(2m-w)^2}{2t}\right)$</div>
+      <div class="cond">Support: $m \ge \max(0, w)$. Zero elsewhere.</div>
+      <div class="use"><b>Use when:</b> the region is not a rectangle, or an expectation like $E[M(t)W(t)]$ is asked. For rectangles use 14.3 &mdash; it is far faster.</div>
+      <div class="ex"><b>Q:</b> $E[M(4)W(4)]$, or any non-rectangular region.<br><b>Trick:</b> the substitution $u = 2m - w$ turns every integral of this density into a standard normal one &mdash; that substitution is exactly how &sect;14.1 is derived.</div>
+    </div>
+
+    <div class="card">
+      <h4>14.3 &nbsp;⭐ Master Recipe — any rectangle, any position</h4>
+      <div class="eq">$P\big(a &lt; W(t) \le b,\ c &lt; M(t)\le d\big)$</div>
+      <div class="eq">$=\big[G(b,c) - G(a,c)\big] - \big[G(b,d) - G(a,d)\big]$</div>
+      <div class="cond">$G$ from 14.1. Strict vs non-strict inequalities are irrelevant (continuous laws).</div>
+      <div class="use"><b>Use when:</b> <b>always.</b> This one line replaces the whole &ldquo;is $I$ above / below / overlapping $J$&rdquo; case tree &mdash; the branching lives inside $G$, so you never classify anything.<br><b>Four evaluations of $G$, one subtraction. That is the entire problem.</b></div>
+      <div class="ex"><b>Trick:</b> tabulate $G(b,c), G(a,c), G(b,d), G(a,d)$ in a $2\times2$ box, then (top-left − bottom-left) − (top-right − bottom-right).</div>
+    </div>
+
+    <div class="card">
+      <h4>14.4 &nbsp;⭐ Worked: Midsem&rsquo;25 Q5(b)</h4>
+      <div class="eq">$P\big(1 &lt; W(4) &lt; 3,\ 2 &lt; M(4) &lt; 3\big)$</div>
+      <div class="eq">$t=4,\ \sqrt t = 2;\quad a{=}1,\ b{=}3,\ c{=}2,\ d{=}3$</div>
+      <div class="ex">
+      $G(3,2)$: $0&lt;c{=}2&lt;b{=}3$ &rarr; branch 3: $1+\Phi(1.5)-2\Phi(1) = 1+.9332-1.6827 = .2505$<br>
+      $G(1,2)$: $b{=}1\le c{=}2$ &rarr; branch 2: $1-\Phi(\tfrac{4-1}{2}) = 1-\Phi(1.5) = .0668$<br>
+      $G(3,3)$: $b{=}3\le c{=}3$ &rarr; branch 2: $1-\Phi(\tfrac{6-3}{2}) = 1-\Phi(1.5) = .0668$<br>
+      $G(1,3)$: $b{=}1\le c{=}3$ &rarr; branch 2: $1-\Phi(\tfrac{6-1}{2}) = 1-\Phi(2.5) = .0062$<br>
+      <br>
+      $\big[.2505-.0668\big] - \big[.0668-.0062\big] = .1837 - .0606 = \mathbf{0.1231}$
+      </div>
+      <div class="use"><b>Note:</b> $G(3,2)$ hits the $b&gt;c$ branch. Using the naive reflection formula there gives $1-\Phi(\tfrac{4-3}{2})=1-\Phi(.5)=.3085$ and a wrong final answer of $0.1811$. <b>This single guard is the whole question.</b></div>
+    </div>
+
+    <div class="card">
+      <h4>14.5 &nbsp;Shortcut — $I$ entirely below $J$</h4>
+      <div class="eq">$b \le c,\ c&gt;0:$</div>
+      <div class="eq">$P = \Phi\!\Big(\tfrac{2d-b}{\sqrt t}\Big) - \Phi\!\Big(\tfrac{2c-b}{\sqrt t}\Big) + \Phi\!\Big(\tfrac{2c-a}{\sqrt t}\Big) - \Phi\!\Big(\tfrac{2d-a}{\sqrt t}\Big)$</div>
+      <div class="use"><b>Use when:</b> $I=(a,b]$ lies entirely below $J=(c,d]$. This is 14.3 with all four $G$&rsquo;s on branch 2 &mdash; write it directly if you spot $b\le c$.</div>
+      <div class="ex"><b>Q:</b> $P(1 &lt; W(4) \le 2,\ 2 &lt; M(4) \le 3)$: here $b{=}2 \le c{=}2$ ✓, so<br>$\Phi(2)-\Phi(1)+\Phi(1.5)-\Phi(2.5) = \mathbf{0.0753}$.<br><b>Trick:</b> this is exactly the lower half of Midsem&rsquo;25 Q5(b); the upper half $(2,3)$ needs the $b&gt;c$ branch.</div>
+    </div>
+
+    <div class="card">
+      <h4>14.6 &nbsp;Shortcut — $I$ entirely above $J$</h4>
+      <div class="eq">$a \ge d \;\Longrightarrow\; P\big(W(t)\in I,\ M(t)\in J\big) = 0$</div>
+      <div class="use"><b>Use when:</b> would need $W(t) &gt; M(t)$ &mdash; impossible (&sect;13.1). Also $d\le 0 \Rightarrow 0$, since $M \ge 0$. Spot these before computing anything.</div>
+      <div class="ex"><b>Q:</b> $P(3 &lt; W(4) &lt; 4,\ 1 &lt; M(4) &lt; 2) = \mathbf{0}$, since $a{=}3 \ge d{=}2$.<br><b>Trick:</b> test $a \ge d$ and $d \le 0$ first &mdash; two comparisons that can retire the whole question instantly.</div>
+    </div>
+
+    <div class="card">
+      <h4>14.7 &nbsp;Useful Special Cases of $G$</h4>
+      <div class="eq">$P(W(t)\le b,\ M(t)\ge c)$ with $b=c$: $\;1-\Phi\!\big(\tfrac{c}{\sqrt t}\big)$</div>
+      <div class="eq">$P(M(t)\ge c) = G(\infty,c) = 2\big(1-\Phi(\tfrac{c}{\sqrt t})\big)$</div>
+      <div class="eq">$P(W(t)\le b,\ M(t)&lt; c) = \Phi\!\big(\tfrac{b}{\sqrt t}\big) - G(b,c)$</div>
+      <div class="use"><b>Use when:</b> the question gives a half-line instead of an interval &mdash; set the missing endpoint to $\pm\infty$ and use $\Phi(\pm\infty) = 1$ or $0$.</div>
+      <div class="ex"><b>Q:</b> $P(W(4) \le 1,\ M(4) &lt; 2) = \Phi(0.5) - G(1,2) = 0.6915 - 0.0668 = \mathbf{0.6247}$.<br><b>Trick:</b> &ldquo;the max stayed below $c$&rdquo; is the marginal of $W$ minus $G$. Half-lines are just $\pm\infty$ endpoints.</div>
+    </div>
+
+    <div class="card">
+      <h4>14.8 &nbsp;Barrier-Option Translation</h4>
+      <div class="eq">knock-out / knock-in payoffs $=$ rectangles in $(W,M)$</div>
+      <div class="eq">$P(\text{never hit } c,\ W(t)\in I) = P(W(t)\in I) - G(\cdot,c)$ terms</div>
+      <div class="use"><b>Use when:</b> a question is dressed as a barrier option. Translate &ldquo;price never exceeded $c$&rdquo; into $\{M(t) &lt; c\}$ and run 14.3.</div>
+      <div class="ex"><b>Q:</b> up-and-out call, barrier $3$, $S = e^{W}$ &rarr; $P\big(M(4) &lt; \ln 3,\ W(4) \in I\big)$.<br><b>Trick:</b> &ldquo;the price never touched the barrier&rdquo; $\iff \{M(t) &lt; c\}$. Translate, then run &sect;14.3 verbatim.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════════ PART II ══════════════════════════════════ -->
+<div class="section">
   <div class="part-banner">Part III &mdash; Stochastic Calculus<span>It&ocirc; integral &rarr; It&ocirc;&rsquo;s formula &rarr; stochastic differential equations. Sections I1&ndash;I8.</span></div>
 </div>
 
@@ -2344,10 +2374,110 @@
   </div>
 </div>
 
+<div class="section">
+  <div class="part-banner">Part IV &mdash; Option Pricing &amp; Arbitrage<span>Sections A1&ndash;A2. One-period binomial, the arbitrage theorem, contingent claims. Builds on &sect;M3&ndash;M4.</span></div>
+</div>
+
+<!-- ════════════════════════════════════════ A1 ════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title"><span class="section-num">A1.</span>Arbitrage &amp; the Risk-Neutral Measure</div>
+  <div class="formulas">
+
+    <div class="card">
+      <h4>A1.1 &nbsp;Arbitrage &mdash; definition</h4>
+      <div class="eq">A scheme with cost $\le 0$ at $t=0$ and payoff $\ge 0$ in <em>every</em> outcome, $&gt;0$ in some.</div>
+      <div class="note">Risk-free profit. &ldquo;Every outcome&rdquo; means with probability 1 &mdash; not on average. No probability appears in the definition.</div>
+      <div class="use"><b>Use when:</b> any question saying &ldquo;sure win&rdquo;, &ldquo;risk-free profit&rdquo;, &ldquo;for which price is there no arbitrage&rdquo;. The answer is always: build a portfolio whose time-1 value is the <em>same number</em> in all states, then compare with its cost.</div>
+      <div class="ex"><b>Trick:</b> if a certain gain is positive for one scale $x$, it is unbounded &mdash; scale $x$ up. That is why an arbitrage price cannot survive in a market.</div>
+    </div>
+
+    <div class="card">
+      <h4>A1.2 &nbsp;⭐ No-arbitrage price by hedging (one period, two states)</h4>
+      <div class="eq">Buy $x$ stock, $y$ options. Force $V_1$ equal in both states $\Rightarrow$ $y$ in terms of $x$, then</div>
+      <div class="eq">$\text{gain} = V_1 - (1+r)\,\text{cost} = 0 \;\Longrightarrow\; c^{*}$</div>
+      <div class="use"><b>Use when:</b> two possible time-1 prices and an option quoted at $c$. Works with <em>no probabilities at all</em> &mdash; only the two possible values matter.</div>
+      <div class="ex"><b>Paper:</b> $S_0=100 \to \{200,50\}$, $K=150$, $r=0$. $200x+50y = 50x \Rightarrow y=-3x$; $V_1 = 50x$, cost $=100x-3xc$, gain $= x(3c-50)$. So $c^{*} = \mathbf{50/3}$; $c=20$ (buy stock, write 3 calls) or $c=15$ (short stock, buy 3 calls) both print money.</div>
+    </div>
+
+    <div class="card">
+      <h4>A1.3 &nbsp;⭐ Risk-neutral measure</h4>
+      <div class="eq">$S_0 = \dfrac{E^{*}[S_1]}{1+r}, \qquad p^{*} = \dfrac{(1+r)S_0 - S_d}{S_u - S_d} = \dfrac{1+r-d}{u-d}$</div>
+      <div class="note">Equivalently: every wager has zero expected return under $p^{*}$; the discounted price is a martingale (&sect;M3.4).</div>
+      <div class="use"><b>Use when:</b> any binomial pricing question. Need $d &lt; 1+r &lt; u$, else $p^{*}\notin(0,1)$ and the market itself is an arbitrage.</div>
+      <div class="ex"><b>Paper:</b> $100\to\{130,80\}$, $r=0.05$: $105 = 80 + 50p^{*} \Rightarrow p^{*} = \mathbf{0.5}$ &mdash; unrelated to the real $p=0.4$.</div>
+    </div>
+
+    <div class="card">
+      <h4>A1.4 &nbsp;⭐ Pricing formula for any claim</h4>
+      <div class="eq">$C_0 = \dfrac{E^{*}\big[g(S_1)\big]}{1+r}, \qquad \text{call: } g(s) = (s-K)^+$</div>
+      <div class="use"><b>Use when:</b> &ldquo;price the call / put / claim&rdquo;. Two steps, never more: (1) $p^{*}$ from the <em>stock</em>, (2) expectation of the <em>payoff</em>. Never use the real-world $p$.</div>
+      <div class="ex"><b>Paper:</b> $100\to\{130,80\}$, $K=110$, $r=0.05$, $p^{*}=0.5$: $C_0 = \frac{20(0.5)+0(0.5)}{1.05} = \mathbf{9.52}$.</div>
+    </div>
+
+    <div class="card">
+      <h4>A1.5 &nbsp;⭐ Replicating portfolio $(\Delta, B)$</h4>
+      <div class="eq">$\Delta = \dfrac{C_u - C_d}{S_u - S_d}, \qquad B = \dfrac{C_u - \Delta S_u}{1+r}, \qquad C_0 = \Delta S_0 + B$</div>
+      <div class="note">$\Delta$ = shares held, $B$ = cash lent ($B&lt;0$ means borrowing). $C_0$ from replication always equals $C_0$ from &sect;A1.4 &mdash; two routes, one price.</div>
+      <div class="use"><b>Use when:</b> &ldquo;construct the hedge&rdquo;, &ldquo;show the claim is attainable&rdquo;, or when you must <em>exhibit</em> the arbitrage rather than merely assert it.</div>
+      <div class="ex"><b>Paper:</b> $\Delta = \frac{20-0}{130-80} = 0.4$, $B = \frac{20-52}{1.05} = -30.48$; $C_0 = 40-30.48 = \mathbf{9.52}$. Down state check: $0.4(80)-32 = 0$ ✓.</div>
+    </div>
+
+    <div class="card flag">
+      <h4>A1.6 &nbsp;⚠ The actuarial trap</h4>
+      <div class="eq">$\dfrac{E_p[\text{payoff}]}{1+r} \ne C_0$ &nbsp; when $p$ is the <em>real-world</em> probability.</div>
+      <div class="bad"><b>Why it fails:</b> the payoff is <em>replicable</em>. Two portfolios with identical cash flows in every state must have identical prices, whatever anyone believes about likelihoods. Insurance risk is diversifiable but not hedgeable, which is why the actuarial method is right there and wrong here.</div>
+      <div class="ex"><b>Paper:</b> $p=0.4$ gives $\frac{20(0.4)}{1.05} = 7.62$, but $C_0 = 9.52$. At $7.62$: buy the call, short $0.4$ shares $(+40)$, lend $30.48$ &rArr; net $+1.90$ today, payoffs cancel at $T$. <b>Certain $1.90$ per contract.</b></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════ A2 ════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-title"><span class="section-num">A2.</span>Contingent Claims, the Arbitrage Theorem &amp; Incompleteness</div>
+  <div class="formulas">
+
+    <div class="card">
+      <h4>A2.1 &nbsp;Payoff dictionary</h4>
+      <div class="eq">Forward (long): $S_T - K$ &nbsp;&mdash;&nbsp; an <b>obligation</b>, can be negative</div>
+      <div class="eq">European call: $(S_T-K)^+$ &nbsp;|&nbsp; European put: $(K-S_T)^+$</div>
+      <div class="note">A <em>derivative security</em> / <em>contingent claim</em> is any $X = g(S_T)$ paid at $T$. $x^+ := \max(x,0)$.</div>
+      <div class="use"><b>Use when:</b> writing down the payoff before anything else. Getting $(\cdot)^+$ vs no $(\cdot)^+$ right is the whole difference between an option and a forward.</div>
+      <div class="ex"><b>Trick:</b> $K=150$, $S_T\in\{200,50\}$ &rarr; forward $+50/-100$, call $50/0$, put $0/100$. The call is the forward with the loss leg deleted &mdash; which is exactly what the premium buys. Futures = forwards, but exchange-traded and marked to market daily.</div>
+    </div>
+
+    <div class="card">
+      <h4>A2.2 &nbsp;American vs European</h4>
+      <div class="eq">$\text{price} = \sup_{\tau \le T} E^{*}\big[(1+r)^{-\tau}(S_\tau - K)^+\big]$, &nbsp; $\tau$ a <b>stopping time</b></div>
+      <div class="note">$(S_\tau-K)^+$ is the <em>payoff</em>, not the price. $\{\tau \le t\}\in\mathcal F_t$ is compulsory: &ldquo;the time $S$ peaks&rdquo; is not admissible, since at $t$ you cannot know the future (&sect;M5).</div>
+      <div class="use"><b>Use when:</b> &ldquo;short note: American vs European&rdquo;. No dividends and $r\ge0$ &rArr; early exercise of a <b>call</b> is never optimal, so the two prices are <b>equal</b>; for a <b>put</b> early exercise can be optimal and the American is strictly dearer.</div>
+      <div class="ex"><b>Trick:</b> one-line reason for the call: exercising early throws away the interest on $K$ and the remaining insurance value. See &sect;M7.6.</div>
+    </div>
+
+    <div class="card">
+      <h4>A2.3 &nbsp;⭐ Arbitrage theorem (dichotomy)</h4>
+      <div class="eq">Wagers $i=1..n$, outcomes $j=1..m$, return $r_i(j)$ per unit staked. <b>Exactly one</b> holds:</div>
+      <div class="eq">(i) $\exists\,\underline p$ probability vector with $\displaystyle\sum_{j} p_j r_i(j) = 0 \;\forall i$</div>
+      <div class="eq">(ii) $\exists\,\underline x$ with $\displaystyle\sum_{i} x_i r_i(j) &gt; 0 \;\forall j$</div>
+      <div class="note"><b>No arbitrage $\iff$ a risk-neutral measure exists.</b> Return $=$ payoff $-$ cost; $x_i&lt;0$ allowed (short).</div>
+      <div class="use"><b>Use when:</b> asked to state or prove it. The &ldquo;not both&rdquo; half is three lines: $\sum_j p_j R(j) = \sum_i x_i\sum_j p_j r_i(j) = 0$, yet $R(j)&gt;0 \,\forall j$ and $\sum_j p_j = 1$ force it $&gt;0$. Contradiction.</div>
+      <div class="ex"><b>Trick:</b> the &ldquo;at least one&rdquo; half is a separating-hyperplane (Farkas) argument &mdash; say so and move on; it is never asked in full.</div>
+    </div>
+
+    <div class="card">
+      <h4>A2.4 &nbsp;Three states &rArr; incomplete market</h4>
+      <div class="eq">$m$ states, $n$ assets with $n &lt; m$: $\;p^{*}$ is not unique $\Rightarrow$ an <b>interval</b> of arbitrage-free prices.</div>
+      <div class="use"><b>Use when:</b> the tree has three or more branches from one node. Do not hunt for a single price &mdash; there is none, and the claim cannot be replicated.</div>
+      <div class="ex"><b>Paper:</b> $100 \to \{300,200,50\}$, $K=150$, $r=0$. Stock: $250p_1 + 150p_2 = 50 \Rightarrow p_2 = \frac{1-5p_1}{3}$; option: $c = 150p_1 + 50p_2 = \frac{200p_1+50}{3}$. Positivity gives $p_1\in(0,\tfrac15)$, hence $c \in \big(\mathbf{\tfrac{50}{3}},\,\mathbf{30}\big)$.</div>
+    </div>
+
+  </div>
+</div>
+
 </main>
 
 <footer>
-  FinMath Formula Sheet &mdash; Random Walks, Brownian Motion, Foundations, Expectation, Martingales &amp; Stochastic Calculus. Markov decision processes are out of syllabus.
+  FinMath Formula Sheet &mdash; Foundations, Expectation, Martingales, Random Walks, Brownian Motion, Stochastic Calculus &amp; Option Pricing. Markov decision processes are out of syllabus.
   Cases and worked instances cross-checked against MA60225 Midsem 2024, Midsem 2025, Endsem 2025, CT-1 2026 (Sets 1&ndash;4) and CT-2 2025.
 </footer>
 
