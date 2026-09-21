@@ -32,3 +32,14 @@ td, th { border: 1px solid var(--line); padding: .5rem .8rem; text-align: left; 
 th { background: var(--panel); color: var(--head); }
 svg { display: block; max-width: 100%; height: auto; margin: 1.5rem auto; }
 mjx-container[display="true"] { overflow-x: auto; overflow-y: hidden; }
+/* Formula-sheet reference links and their hover card (note.js) */
+a.fref { text-decoration: underline dotted; }
+.fpop {
+  position: fixed; z-index: 10; max-width: min(520px, calc(100vw - 16px)); max-height: 60vh; overflow: auto;
+  background: var(--panel); border: 1px solid var(--def); border-radius: 6px; padding: .6rem .9rem;
+  font-size: 15px; line-height: 1.5; box-shadow: 0 6px 24px rgba(0,0,0,.5);
+}
+.fpop h4 { margin: 0 0 .4rem; color: var(--head); }
+.fpop .eq { margin: .3rem 0; overflow-x: auto; }
+.fpop .use { margin-top: .5rem; padding: .3rem .6rem; border-left: 3px solid #d4a017; font-size: 13.5px; color: var(--dim); }
+.fpop .ex { display: none; }
