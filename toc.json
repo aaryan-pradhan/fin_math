@@ -61,6 +61,12 @@
     ]
   },
   {
+    "module": "Option pricing",
+    "notes": [
+      "arbitrage_and_risk_neutral_pricing"
+    ]
+  },
+  {
     "module": "Problems",
     "notes": [
       "class_test_1_solutions"

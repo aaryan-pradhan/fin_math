@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arbitrage and Risk-Neutral Pricing</title>
+<link rel="stylesheet" href="note.css">
+<script src="note.js"></script>
+</head>
+<body>
+
+<h1>Arbitrage and Risk-Neutral Pricing</h1>
+<p class="lede">In a market with no arbitrage, a derivative's price is its expected payoff under the risk-neutral measure, discounted at the risk-free rate — and the real-world probabilities never appear.</p>
+
+<h2>Step 1: Discounting</h2>
+<div class="block def">With continuously-compounded rate $\alpha$, an amount $v$ received at time $t$ is worth $ve^{-\alpha t}$ today. $e^{-\alpha t}$ is the <em>discount factor</em>. In discrete time with periodic rate $r$, the risk-free asset is the bond $B_t=(1+r)^tB_0$, and the discount factor is $(1+r)^{-t}$.</div>
+<div class="block ex">$\alpha=0.05$, $t=1$, $v=100$: today's worth is $100e^{-0.05}\approx 95.12$.</div>
+<div class="block warn">The first worked example below sets $\alpha=0$, so every discount factor is $1$. That is an assumption of the example, not a theorem. Step 9 restores $r>0$.</div>
+
+<h2>Step 2: The one-period binomial market</h2>
+<div class="block def">One stock, two dates. $S_0=100$ known. $S_1$ is a random variable on $\Omega=\{u,d\}$ with
+$$S_1=\begin{cases}200 & \text{on } u\\ 50 & \text{on } d\end{cases}$$
+No probabilities are attached yet — deliberately.</div>
+
+<h2>Step 3: Payoff of a European call</h2>
+<div class="block def">A European call with strike $K$ and maturity $T$ gives the <em>right, not the obligation</em>, to buy one unit of the asset at price $K$ at time $T$. Its value at $T$ is
+$$X=(S_T-K)^+=\max(S_T-K,0).$$
+The $\max$ is forced: if $S_T&lt;K$ the holder declines and buys on the market, so the right is worth $0$ and never negative.</div>
+<div class="block ex">$K=150$. If $S_1=200$: pay 150 for a share worth 200, payoff $50$. If $S_1=50$: walk away, payoff $0$.</div>
+
+<h2>Step 4: The portfolio</h2>
+<div class="block">At time 0 buy $x$ units of stock and $y$ units of the call, the call costing $c$ per unit. Both $x,y\in\mathbb{R}$, and negative is allowed: $x&lt;0$ is short-selling the stock, $y&lt;0$ is writing (selling) calls.
+$$V_1=\begin{cases}200x+50y & \text{on } u\\ 50x+0\cdot y & \text{on } d\end{cases}\qquad \text{cost}=100x+cy.$$
+The coefficients of $y$ are just the two call payoffs from Step 3.</div>
+
+<h2>Step 5: Killing the randomness</h2>
+<div class="block def">A portfolio is <em>riskless</em> if $V_1$ takes the same value in every outcome, i.e. $V_1$ is a constant, not a random variable.</div>
+<div class="block">Impose it:
+$$200x+50y=50x\;\Longrightarrow\;150x+50y=0\;\Longrightarrow\; y=-3x,$$
+and then $V_1=50x$ with certainty.</div>
+<div class="block ex">$x=1,\,y=-3$: buy 1 share, write 3 calls. Up state $200-150=50$; down state $50-0=50$. Same number, so no probability is needed to value it.</div>
+
+<h2>Step 6: The gain and the definition of arbitrage</h2>
+<div class="block">Cost at time 0 is $100x-3xc$; certain value at time 1 is $50x$. With $\alpha=0$,
+$$\text{gain}=50x-(100x-3xc)=x(3c-50).$$
+This is a known number at time 0, not an expectation.</div>
+<div class="block def">An <em>arbitrage</em> is a betting scheme requiring no net investment (or producing a net inflow) whose payoff is, with probability 1, non-negative in every outcome and positive somewhere. Risk-free profit.</div>
+<div class="block">Three cases:
+<ul>
+<li>$3c&gt;50$: take $x&gt;0$, gain positive.</li>
+<li>$3c&lt;50$: take $x&lt;0$, gain positive.</li>
+<li>$3c=50$: gain $=0$ for every $x$. No arbitrage.</li>
+</ul>
+So exactly one price survives: $c=\dfrac{50}{3}\approx16.67$.</div>
+<div class="block ex">$c=20$: $3c-50=10$, gain $=10x$. Buy 1 share (pay 100), write 3 calls (receive 60), net cost 40; holding is worth 50 in both states; certain profit 10. Scaling to $x=1000$ prints 10 000 risk-free.</div>
+<div class="block ex">$c=15$: $3c-50=-5$, so $x=-1,\,y=3$. Short 1 share (receive 100), buy 3 calls (pay 45), net inflow 55; holding at time 1 is $50x=-50$; certain profit $55-50=5$.</div>
+<div class="block green">The price was pinned down using only the two <em>possible</em> values of $S_1$. How likely they are never entered the argument.</div>
+
+<h2>Step 7: The same price via a probability</h2>
+<div class="block def">Attach $\mathbb{P}(S_1=200)=p$, $\mathbb{P}(S_1=50)=1-p$, and treat each tradable asset as a <em>wager</em> whose <em>return per unit</em> is payoff minus cost. Impose $E[\text{return}]=0$ for every wager.</div>
+<div class="block">Stock: return is $100$ on $u$ and $-50$ on $d$, so
+$$100p-50(1-p)=0\;\Longleftrightarrow\;100=200p+50(1-p)\;\Longrightarrow\;p=\tfrac13.$$</div>
+<div class="block">Option: return is $50-c$ on $u$ and $-c$ on $d$, so
+$$(50-c)\tfrac13-c\cdot\tfrac23=0\;\Longrightarrow\;c=\tfrac{50}{3},$$
+matching Step 6.</div>
+<div class="block def">$p=\tfrac13$ is the <em>risk-neutral</em> (martingale) measure: the unique probability under which every wager has zero expected return. Equivalently
+$$c=E_p\big[(S_1-K)^+\big].$$
+Price equals expected payoff under $p$. This is the engine of all option pricing; Black–Scholes is this formula with a continuum of outcomes.</div>
+<div class="block warn">$p$ is not the market's actual chance of a rise. The true probability could be $0.9$ and nothing changes, because $0.9$ never entered an equation. "No arbitrage" is a property of the <em>prices</em>; $p$ is the certificate of it.</div>
+
+<h2>Step 8: The arbitrage theorem</h2>
+<div class="block def">Outcomes $S=\{1,\dots,m\}$, exactly one occurs. There are $n$ wagers, and $r_i(j)$ is the return per unit staked on wager $i$ when outcome $j$ occurs. A <em>betting scheme</em> is $\underline x=(x_1,\dots,x_n)\in\mathbb{R}^n$ (negative entries allowed), with total return in outcome $j$
+$$R(j)=\sum_{i=1}^n x_i\,r_i(j).$$</div>
+<div class="block green"><strong>Arbitrage theorem.</strong> Exactly one of the following holds.
+<ol>
+<li>There is a probability vector $\underline p=(p_1,\dots,p_m)$, $p_j\ge0$, $\sum_j p_j=1$, with $\displaystyle\sum_{j=1}^m p_j\,r_i(j)=0$ for every $i=1,\dots,n$.</li>
+<li>There is a betting scheme $\underline x$ with $\displaystyle\sum_{i=1}^n x_i\,r_i(j)&gt;0$ for every $j=1,\dots,m$.</li>
+</ol>
+Slogan: <strong>no arbitrage $\iff$ a risk-neutral measure exists.</strong></div>
+<div class="block">Proof that both cannot hold. Assume (i) and (ii). Then
+$$\sum_j p_jR(j)=\sum_j p_j\sum_i x_ir_i(j)=\sum_i x_i\underbrace{\sum_j p_jr_i(j)}_{=0}=0,$$
+but $R(j)&gt;0$ for all $j$ and $\sum_jp_j=1$ forces some $p_j&gt;0$, giving $\sum_jp_jR(j)&gt;0$. Contradiction.</div>
+<div class="block warn">The other half — that at least one of (i), (ii) holds — is a separating-hyperplane (Farkas duality) argument, not reproduced here.</div>
+
+<h2>Step 9: Three outcomes — incomplete markets</h2>
+<div class="block">Now $S_1\in\{300,200,50\}$ with probabilities $(p_1,p_2,1-p_1-p_2)$, $S_0=100$, $K=150$, so payoffs are $150,50,0$. Fairness of the two wagers gives
+$$100=300p_1+200p_2+50(1-p_1-p_2),\qquad c=150p_1+50p_2.$$</div>
+<div class="block">First equation: $250p_1+150p_2=50$, so $p_2=\dfrac{1-5p_1}{3}$. Substituting,
+$$c=150p_1+\frac{50(1-5p_1)}{3}=\frac{200p_1+50}{3}.$$
+Positivity: $p_2&gt;0\Rightarrow p_1&lt;\tfrac15$, and $p_3=\tfrac{2+2p_1}{3}&gt;0$ always. Hence $p_1\in(0,\tfrac15)$ and
+$$c\in\left(\tfrac{50}{3},\,30\right).$$</div>
+<div class="block green">Two equations, three unknowns: an <em>interval</em> of arbitrage-free prices, not one. With three outcomes and only two assets the option cannot be hedged, so no single price is forced. Such a market is <strong>incomplete</strong>.</div>
+
+<h2>Step 10: The instrument zoo</h2>
+<div class="block def"><strong>Forward.</strong> An agreement at time 0 to trade one unit at fixed price $K$ at time $T$. It is an <em>obligation</em> on both sides: long is obliged to buy, short to sell. Payoff to the long:
+$$S_T-K,$$
+linear, and negative when $S_T&lt;K$ — no $(\cdot)^+$, since no one may walk away.</div>
+<div class="block warn">"Forwards give the right to buy or sell" is wrong. The right-without-obligation is exactly what makes an instrument an <em>option</em>. A future is the same economics as a forward but exchange-traded, standardised and marked to market daily; a forward is a private bilateral agreement.</div>
+<div class="block def"><strong>European call:</strong> $X=(S_T-K)^+$, exercisable only at the single date $T$.<br>
+<strong>American call:</strong> exercisable at any $\tau\in[0,T]$, paying $(S_\tau-K)^+$.<br>
+<strong>European put:</strong> right to sell at $K$, $X=(K-S_T)^+$.</div>
+<div class="block ex">$K=150$, $S_T\in\{200,50\}$: forward pays $+50$ or $-100$; call pays $50$ or $0$; put pays $0$ or $100$. The call is the forward with the $-100$ stripped off, which is precisely why it costs money upfront and the forward does not.</div>
+<div class="block warn">$\tau$ must be a <strong>stopping time</strong>: $\{\tau\le t\}\in\mathcal F_t$. "The time at which $S_t$ attains its maximum on $[0,T]$" is not admissible, because at $t$ one cannot know whether the level will be exceeded later. Without this restriction the American price would be $\max_t(S_t-K)^+$, which is not attainable. See <em>stopping_times</em>.</div>
+<div class="block warn">The notes' line "price of American call $=(S_\tau-K)^+$" confuses payoff with price. The price is $\sup_\tau E_{p}\big[(1+r)^{-\tau}(S_\tau-K)^+\big]$ over stopping times $\tau\le T$. For a non-dividend-paying stock with $r\ge0$, early exercise of a <em>call</em> is never optimal, so its price equals the European call's; for a <em>put</em> it can be optimal and the prices differ.</div>
+<div class="block def"><strong>Derivative security</strong> (= <em>contingent claim</em>) with maturity $T$: a random variable $X=X(\omega)=g\big(S_T(\omega)\big)\ge0$ paid to the holder at $T$. "Contingent" because its value depends on which $\omega$ is realised. Call: $g(s)=(s-K)^+$. Put: $g(s)=(K-s)^+$.</div>
+
+<h2>Step 11: Why the actuarial price is an arbitrage</h2>
+<div class="block">Data: $S_0=100$; $S_1=130$ with real-world probability $0.4$, $S_1=80$ with $0.6$; European call, $K=110$, $T=1$; risk-free rate $r=0.05$ for both lending and borrowing. Payoff $X=(S_1-110)^+$ is $20$ up, $0$ down.</div>
+<div class="block">The <em>classical</em> (actuarial) valuation discounts the expectation under the true measure:
+$$E_p[X]=20(0.4)=8,\qquad C_0=\frac{8}{1.05}=7.62.$$</div>
+<div class="block">The risk-neutral valuation instead solves $100=\dfrac{1}{1.05}\big(130p^*+80(1-p^*)\big)$:
+$$105=80+50p^*\;\Longrightarrow\;p^*=0.5,\qquad C_0=\frac{20(0.5)}{1.05}=\frac{10}{1.05}=9.52.$$</div>
+<div class="block green">Replication proves $9.52$ is the only possible price. Hold $\Delta$ shares and borrow $B$:
+$$\Delta=\frac{20-0}{130-80}=0.4,\qquad 0.4(130)-1.05B=20\Rightarrow B=\frac{32}{1.05}=30.48,$$
+and the down state checks out: $0.4(80)-32=0$. This portfolio <em>is</em> the call in every state, and it costs $40-30.48=9.52$.</div>
+<div class="block ex">At a quoted price of $7.62$: buy the call ($-7.62$), short $0.4$ shares ($+40$), lend $30.48$ ($-30.48$). Net inflow today $9.52-7.62=1.90$; at $T$ the call's payoff cancels the short position in both states. Certain profit $1.90$ per contract, scalable without limit.</div>
+<div class="block warn">The actuarial method is correct for insurance, where risk is <em>diversifiable</em> but not hedgeable. It fails for derivatives because the payoff is <em>replicable</em>: the market already contains a portfolio with identical cash flows, and two identical cash-flow streams must carry the same price.</div>
+
+</body>
+</html>
