@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mid-Autumn 2025 Solutions</title>
+<link rel="stylesheet" href="note.css">
+<script src="note.js"></script>
+</head>
+<body>
+
+<h1>Mid-Autumn 2025 Solutions</h1>
+<p class="lede">MA60225 Financial Mathematics, Mid-Autumn Semester 2025&ndash;26. Full paper with worked solutions, each keyed to the <a href="formula_sheet.html">formula sheet</a> section that produces it. 30 marks, 2 hours. Source: <a href="13068_MA60225_FINANCIAL-MATHEMATICS_2025_autumn_midsem.pdf">13068_MA60225_FINANCIAL-MATHEMATICS_2025_autumn_midsem.pdf</a>.</p>
+
+<div class="block">Calculator and statistical tables allowed. Numerical answers to at least two decimal places. Q1 is answer-only (1&times;6); Q2 short notes (2&times;3); Q3&ndash;Q5 full working (3 marks each).</div>
+
+<h2>Q1(a) &mdash; Optimal exercise under negative drift [1]</h2>
+<div class="block"><b>Question.</b> Suppose we have the option of buying, at some time in the future, one unit of a stock at a fixed price Rs. 100, independent of its current market price. The current market price of the stock is taken to be 0, and we suppose that it changes in accordance with a Brownian motion process having a drift coefficient $-1$. When, if ever, should we exercise our option?</div>
+<div class="block green"><b>Answer.</b> Exercise the first time the price reaches
+$$x^{*} = K + \frac{\sigma^{2}}{2\mu} = 100 + \frac{1}{2} = \mathbf{100.5},$$
+and never otherwise.
+<br><br>
+<b>Method (&sect;10.6).</b> For Brownian motion with drift $-\mu$ ($\mu>0$), the probability of ever reaching a level $x>0$ is $e^{-2\mu x/\sigma^{2}}$. The policy &ldquo;exercise on first hitting $x$&rdquo; therefore has value
+$$g(x) = (x-K)\,e^{-2\mu x/\sigma^{2}},\qquad x\ge K.$$
+Differentiating, $g'(x) = e^{-2\mu x/\sigma^{2}}\big[1-\tfrac{2\mu}{\sigma^{2}}(x-K)\big] = 0$ gives $x^{*} = K+\sigma^{2}/(2\mu)$. Here $\mu=1$, $\sigma=1$, $K=100$.</div>
+<div class="block warn">The drift is negative, so the price drifts away from the strike and $P(\text{ever reach }100.5)=e^{-201}$ is minuscule. The question asks <em>when</em>, not whether it is worth much: the answer is a level, not a time.</div>
+
+<h2>Q1(b) &mdash; Mean of a geometric Brownian motion [1]</h2>
+<div class="block"><b>Question.</b> Suppose that $\{Y(t),\ t\ge 0\}$ is a geometric Brownian motion with drift parameter $\mu=0.01$ and volatility parameter $\sigma=0.2$. If $Y(0)=10$, find $E[Y(100)]$.</div>
+<div class="block green"><b>Answer.</b> $E[Y(t)] = Y(0)e^{(\mu+\sigma^{2}/2)t}$, so
+$$E[Y(100)] = 10\,e^{0.01(100)+\frac{1}{2}(0.04)(100)} = 10e^{1+2} = 10e^{3} = \mathbf{200.86}.$$
+<b>Method (&sect;11.2, &sect;1.2).</b> $Y(t)=Y(0)e^{X(t)}$ with $X(t)\sim N(\mu t,\sigma^{2}t)$, and the log-normal mean is $E[e^{X}] = e^{\mathbb{E}X+\frac12\operatorname{Var}X}$.</div>
+<div class="block warn"><b>Convention trap.</b> If the intended definition is the SDE $dY = \mu Y\,dt + \sigma Y\,dW$, then $E[Y(t)] = Y(0)e^{\mu t} = 10e = 27.18$. Ross&rsquo;s convention (used in this course) gives $200.86$. State which one you used &mdash; the paper's own CT-1 key lists both.</div>
+
+<h2>Q1(c) &mdash; Arbitrage range for an option price [1]</h2>
+<div class="block"><b>Question.</b> The present price of a stock is 50. The price at time 1 will be either 25 or 100. An option to purchase $y$ shares of the stock at time 1 for the (present value) price $Ky$ costs $cy$. If $K=85$, for which values of $c$ does an arbitrage opportunity occur?</div>
+<div class="block green"><b>Answer.</b> An arbitrage exists for <b>every $c \ne 5$</b>. The unique arbitrage-free price is $c = 5$.
+<br><br>
+<b>Risk-neutral route (&sect;A1.3, &sect;A1.4).</b> With $r=0$ (the strike is quoted in present value),
+$$50 = 100p^{*} + 25(1-p^{*}) \;\Longrightarrow\; p^{*} = \tfrac13 .$$
+Payoff $(S_1-85)^+$ equals $15$ (up) and $0$ (down), so
+$$c^{*} = E^{*}\big[(S_1-K)^+\big] = \tfrac13(15) = \mathbf{5}.$$
+<b>Hedging route (&sect;A1.2).</b> Buy $x$ shares and $y$ options. Forcing equal time-1 value: $100x+15y = 25x \Rightarrow y = -5x$, giving $V_1 = 25x$ and cost $50x-5xc$, hence
+$$\text{gain} = 25x-(50x-5xc) = 5x(c-5).$$
+Take $x>0$ when $c>5$, $x<0$ when $c<5$: a certain profit in both cases. Only $c=5$ kills it.</div>
+
+<h2>Q1(d) &mdash; Distribution of a linear combination [1]</h2>
+<div class="block"><b>Question.</b> Let $\{W_t,\ t\ge0\}$ be a Wiener process. Find the distribution of $W_1 - W_2 + 3W_4$.</div>
+<div class="block green"><b>Answer.</b> $\mathbf{N(0,\,31)}$.
+<br><br>
+<b>Method (&sect;1.6, &sect;6.2).</b> A fixed linear combination of jointly normal variables is normal; the mean is $0$. With $\mathbf a = (1,-1,3)$ at times $(1,2,4)$ and $\operatorname{Cov}(W_s,W_t)=\min(s,t)$,
+$$M = \begin{pmatrix}1&1&1\\1&2&2\\1&2&4\end{pmatrix},\qquad
+\operatorname{Var} = \mathbf a^{\top}M\mathbf a = 3-5+33 = 31.$$</div>
+
+<h2>Q1(e) &mdash; Scaling invariance (T/F) [1]</h2>
+<div class="block"><b>Question.</b> Let $\{W(t),\ t\ge0\}$ be a Wiener process and $c>0$. Then $V(t) = \tfrac1c W(c^{2}t)$ is also a Wiener process. (T/F)</div>
+<div class="block green"><b>Answer. True.</b> Check the four axioms (&sect;5.2): $V(0)=0$; paths are continuous since $W$'s are; increments $V(t)-V(s) = \tfrac1c\big(W(c^{2}t)-W(c^{2}s)\big)$ are independent over disjoint intervals and normal with mean $0$ and variance $\tfrac1{c^{2}}c^{2}(t-s) = t-s$.</div>
+
+<h2>Q1(f) &mdash; Canonical martingale (T/F) [1]</h2>
+<div class="block"><b>Question.</b> Let $\{W_t,\ t\ge0\}$ be a Wiener process. Then $|W_t|^{2}-t$ is <b>NOT</b> a martingale. (T/F)</div>
+<div class="block green"><b>Answer. False</b> &mdash; it <em>is</em> a martingale (&sect;7.2). For $s<t$,
+$$E\big[W_t^{2}-t \mid \mathcal F_s\big] = E\big[(W_s + (W_t-W_s))^{2}\mid\mathcal F_s\big]-t = W_s^{2} + (t-s) - t = W_s^{2}-s.$$</div>
+<div class="block warn">Read the negation carefully. The statement asserts &ldquo;not a martingale&rdquo;, so the correct response is <b>F</b>, not T.</div>
+
+<h2>Q2(a) &mdash; Short note: American vs European call [2]</h2>
+<div class="block"><b>Question.</b> Write a short note on American and European call options.</div>
+<div class="block green"><b>Answer (&sect;A2.2, &sect;M7.6).</b> Both give the right, not the obligation, to buy one unit at strike $K$.
+<ul>
+<li><b>European:</b> exercisable only at maturity $T$; payoff $(S_T-K)^{+}$; price $e^{-rT}E^{*}[(S_T-K)^{+}]$.</li>
+<li><b>American:</b> exercisable at any <em>stopping time</em> $\tau\le T$; payoff $(S_\tau-K)^{+}$; price $\sup_{\tau\le T}E^{*}\big[(1+r)^{-\tau}(S_\tau-K)^{+}\big]$, an optimal-stopping problem.</li>
+</ul>
+Since the American right contains the European one, its price is never smaller. But for a call on a <b>non-dividend-paying</b> stock with $r\ge0$, early exercise is never optimal &mdash; it throws away the interest on $K$ and the remaining insurance value &mdash; so the two prices are <b>equal</b>. For a <b>put</b>, early exercise can be optimal and the American is strictly dearer.</div>
+<div class="block warn">$(S_\tau-K)^{+}$ is the <em>payoff</em>, not the price. Also, $\tau$ must satisfy $\{\tau\le t\}\in\mathcal F_t$: &ldquo;the time at which $S$ peaks&rdquo; is not an admissible exercise rule.</div>
+
+<h2>Q2(b) &mdash; Derive It&ocirc;'s formula [2]</h2>
+<div class="block"><b>Question.</b> Derive It&ocirc;'s formula.</div>
+<div class="block green"><b>Answer (&sect;I3.1, &sect;I2.2).</b> Let $f(t,x)\in C^{1,2}$ and $dX_t = a\,dt + b\,dW_t$. Taylor-expand to second order over $[t,t+dt]$:
+$$df = f_t\,dt + f_x\,dX_t + \tfrac12 f_{xx}(dX_t)^{2} + \text{(higher order)}.$$
+Apply the multiplication table $dt\,dt = dt\,dW = 0$, $dW\,dW = dt$, which comes from the quadratic variation $\sum (W_{t_{i+1}}-W_{t_i})^{2}\to t$ in $L^{2}$: then $(dX_t)^{2} = b^{2}dt$, so
+$$df(t,X_t) = \Big(f_t + a f_x + \tfrac12 b^{2} f_{xx}\Big)dt + b f_x\,dW_t .$$
+For $X = W$ ($a=0$, $b=1$): $df(t,W_t) = \big(f_t+\tfrac12 f_{xx}\big)dt + f_x\,dW_t$. The term $\tfrac12 f_{xx}\,dt$ is the entire difference from ordinary calculus, and it survives only because $W$ has non-zero quadratic variation.</div>
+
+<h2>Q2(c) &mdash; Short note: gambler's ruin [2]</h2>
+<div class="block"><b>Question.</b> Write a short note on the gambler's ruin problem.</div>
+<div class="block green"><b>Answer (&sect;3).</b> A gambler starts with $i$, wins Rs. 1 with probability $p$ and loses Rs. 1 with probability $q=1-p$ each play, and stops on reaching $0$ (ruin) or $N$ (target). Let $P_i = P(\text{reach }N\text{ before }0)$. First-step analysis (conditioning on the first play) gives
+$$P_i = pP_{i+1} + qP_{i-1},\qquad P_0=0,\ P_N=1,$$
+a linear difference equation whose solution, with $r = q/p$, is
+$$P_i = \frac{1-r^{i}}{1-r^{N}}\ (p\ne\tfrac12),\qquad P_i = \frac{i}{N}\ (p=\tfrac12).$$
+Expected duration: $E_i = \dfrac{i}{q-p}-\dfrac{N}{q-p}\cdot\dfrac{1-r^{i}}{1-r^{N}}$ for $p\ne\tfrac12$, and $E_i = i(N-i)$ for the fair game. As $N\to\infty$ with $p\le\tfrac12$, ruin is certain. Martingale route (&sect;M6.6): apply the OST to $X_n$ (fair case) or $r^{X_n}$ (biased case) for the ruin probability, and to $X_n^{2}-n$ for the duration.</div>
+
+<h2>Q3(a) &mdash; Optimality equation for a Markov decision process [3]</h2>
+<div class="block"><b>Question.</b> For the dynamic programming technique in Markov decision processes, derive the optimality equation using the total probability formula.</div>
+<div class="block green"><b>Answer.</b> Let $V_n(x)$ be the maximal expected utility with $n$ stages remaining from state $x$, with $V_0(\cdot)$ the terminal utility. Condition on the first action $a$ and the resulting state $y$; by total probability,
+$$E\big[\text{total utility}\mid x,a\big] = r(x,a) + \sum_{y}P(y\mid x,a)\,E\big[\text{remaining utility}\mid y\big].$$
+Optimising over $a$ and using the Markov property (the future depends on the past only through $y$) gives the <b>optimality equation</b>
+$$V_n(x) = \max_{a\in A(x)}\Big\{ r(x,a) + \sum_{y}P(y\mid x,a)\,V_{n-1}(y)\Big\}.$$
+The maximising $a$ at each $(x,n)$ defines the optimal policy, which is therefore Markov and deterministic.</div>
+
+<h2>Q3(b) &mdash; Optimal betting under log utility [3]</h2>
+<div class="block"><b>Question.</b> At each play of the game, a gambler can bet any non-negative amount up to his present fortune and will either win or lose that amount with probabilities $2/3$ and $1/3$ respectively. The gambler is allowed to make $T=3$ bets, and his objective is to maximise the expected Bernoulli (logarithmic) utility of his final outcome. What is the optimal strategy? Obtain it using the optimality equation of part (a).</div>
+<div class="block green"><b>Answer.</b> Bet the fixed fraction
+$$f^{*} = p - q = \tfrac23-\tfrac13 = \tfrac13$$
+of the current fortune at <em>every</em> play, independent of the stage and of the fortune.
+<br><br>
+<b>Derivation.</b> Take $V_0(x) = \log x$. One stage remaining, betting $b = fx$:
+$$V_1(x) = \max_{0\le f\le1}\Big\{p\log\big(x(1+f)\big) + q\log\big(x(1-f)\big)\Big\} = \log x + \max_f\big\{p\log(1+f)+q\log(1-f)\big\}.$$
+Differentiating: $\dfrac{p}{1+f} = \dfrac{q}{1-f} \Rightarrow f^{*} = p-q = \tfrac13$, and
+$$C := p\log 2p + q\log 2q = \tfrac23\log\tfrac43 + \tfrac13\log\tfrac23 = 0.0566 .$$
+So $V_1(x) = \log x + C$. Assume $V_{n-1}(x) = \log x + (n-1)C$; the same maximisation gives $V_n(x) = \log x + nC$, so the optimal fraction is $\tfrac13$ at every stage. With $T=3$,
+$$E[\log X_3] = \log x_0 + 3C = \log x_0 + \mathbf{0.17}.$$</div>
+<div class="block warn">The logarithm makes the problem scale-invariant, which is exactly why the optimal <em>fraction</em> is constant. Betting the whole fortune is never optimal here: one loss gives $\log 0 = -\infty$.</div>
+
+<h2>Q4(a) &mdash; Solving an SDE by It&ocirc; [3]</h2>
+<div class="block"><b>Question.</b> Consider the SDE $dX_t = dt + 2\sqrt{X_t}\,dW_t$, $X_0 = 0$. Show that it has solution $X_t = W_t^{2}$. Also find $E(X_t)$ and $\operatorname{Var}(X_t)$.</div>
+<div class="block green"><b>Answer.</b> Apply It&ocirc; to $f(w) = w^{2}$, where $f' = 2w$, $f'' = 2$ (&sect;I4):
+$$d(W_t^{2}) = 2W_t\,dW_t + \tfrac12(2)\,dt = dt + 2W_t\,dW_t = dt + 2\sqrt{X_t}\,dW_t,$$
+and $X_0 = W_0^{2} = 0$. ✓
+<br><br>
+$$E[X_t] = E[W_t^{2}] = \mathbf{t},$$
+$$\operatorname{Var}(X_t) = E[W_t^{4}] - \big(E[W_t^{2}]\big)^{2} = 3t^{2}-t^{2} = \mathbf{2t^{2}},$$
+using $E[W_t^{4}] = 3t^{2}$ (&sect;1.4).</div>
+<div class="block warn"><b>Precision point worth one line in the exam.</b> Strictly $2\sqrt{X_t} = 2|W_t|$, not $2W_t$. Writing $B_t := \int_0^{t}\operatorname{sgn}(W_s)\,dW_s$, L&eacute;vy's characterisation (&sect;5.3) shows $B$ is a Wiener process and $dX_t = dt + 2\sqrt{X_t}\,dB_t$ exactly. So $X = W^{2}$ solves the equation in law &mdash; it is the squared Bessel process of dimension 1.</div>
+
+<h2>Q4(b) &mdash; It&ocirc; plus the martingale trick [3]</h2>
+<div class="block"><b>Question.</b> Let $X_t := e^{t/2}\cos(W_t)$, $t\ge0$. (i) Apply It&ocirc;'s formula to compute $dX_t$. (ii) Using the result of part (i) or otherwise, evaluate $E(\cos(W_t))$.</div>
+<div class="block green"><b>(i)</b> With $f(t,x) = e^{t/2}\cos x$: $f_t = \tfrac12 f$, $f_x = -e^{t/2}\sin x$, $f_{xx} = -f$. Then
+$$dX_t = \tfrac12 X_t\,dt - e^{t/2}\sin W_t\,dW_t - \tfrac12 X_t\,dt = \mathbf{-e^{t/2}\sin(W_t)\,dW_t}.$$
+<b>(ii)</b> The drift vanishes, so $X_t$ is a martingale (&sect;I5.1) and $E[X_t] = X_0 = e^{0}\cos 0 = 1$. Hence
+$$e^{t/2}E[\cos W_t] = 1 \;\Longrightarrow\; E[\cos W_t] = \mathbf{e^{-t/2}}.$$
+<b>Check.</b> $E[e^{iW_t}] = e^{-t/2}$ (characteristic function at $u=1$); its real part is $E[\cos W_t]$, and $E[\sin W_t]=0$ by symmetry. ✓</div>
+<div class="block warn">&ldquo;Using part (i) or otherwise&rdquo; is the examiner naming the method: the zero drift <em>is</em> the solution (&sect;I5.4). Do not attempt the integral $\int\cos x\,e^{-x^{2}/2t}dx$ from scratch.</div>
+
+<h2>Q5(a) &mdash; cdf and pdf of the hitting time [3]</h2>
+<div class="block"><b>Question.</b> Let $\tau_a$ denote the hitting time of level $a>0$ for a Wiener process. Find the cdf and pdf of $\tau_a$.</div>
+<div class="block green"><b>Answer (&sect;12.3&ndash;12.5).</b> By the reflection principle, every path reaching $a$ before $t$ is matched by its reflection after $\tau_a$, and the two families have equal probability:
+$$P(\tau_a\le t) = 2P(W_t \ge a) = 2\Big(1-\Phi\big(\tfrac{a}{\sqrt t}\big)\Big) = \mathbf{2\Phi\!\big(-\tfrac{a}{\sqrt t}\big)}.$$
+Differentiating with respect to $t$:
+$$f_{\tau_a}(t) = \frac{a}{\sqrt{2\pi}\,t^{3/2}}\,e^{-a^{2}/(2t)},\qquad t>0.$$
+<b>Consequences.</b> $P(\tau_a<\infty) = \lim_{t\to\infty}2\Phi(-a/\sqrt t) = 1$: the level is hit almost surely. But the tail decays like $t^{-3/2}$, so $E[\tau_a] = \infty$ &mdash; certain to happen, with infinite expected wait.</div>
+
+<h2>Q5(b) &mdash; Joint law of $W(t)$ and its running maximum [3]</h2>
+<div class="block"><b>Question.</b> Let $W(t)$ be a Wiener process and $M(t) = \max_{0\le u\le t}W(u)$. Find $P\big(1<W(4)<3,\ 2<M(4)<3\big)$.</div>
+<div class="block green"><b>Answer.</b> $\mathbf{0.1231}$.
+<br><br>
+<b>Method (&sect;14.3).</b> Write $A(x,m) := P\big(W_t\le x,\ M_t\le m\big)$. For $x\le m$ the reflection principle gives
+$$A(x,m) = \Phi\!\big(\tfrac{x}{\sqrt t}\big) - \overline{\Phi}\!\big(\tfrac{2m-x}{\sqrt t}\big),$$
+while for $x\ge m$ the constraint $M_t\le m$ already forces $W_t\le m$, so $A(x,m) = P(M_t\le m) = 2\Phi(m/\sqrt t)-1$. Then
+$$P(1<W<3,\ 2<M<3) = A(3,3)-A(3,2)-A(1,3)+A(1,2).$$
+With $t=4$, $\sqrt t = 2$:
+<table>
+<tr><th>Term</th><th>Expression</th><th>Value</th></tr>
+<tr><td>$A(3,3)$</td><td>$2\Phi(1.5)-1$</td><td>$0.86638$</td></tr>
+<tr><td>$A(3,2)$</td><td>$2\Phi(1)-1$</td><td>$0.68268$</td></tr>
+<tr><td>$A(1,3)$</td><td>$\Phi(0.5)-\overline{\Phi}(2.5)$</td><td>$0.68525$</td></tr>
+<tr><td>$A(1,2)$</td><td>$\Phi(0.5)-\overline{\Phi}(1.5)$</td><td>$0.62465$</td></tr>
+</table>
+$$0.86638-0.68268-0.68525+0.62465 = \mathbf{0.1231}.$$</div>
+<div class="block warn"><b>The trap.</b> The reflection formula $A(x,m) = \Phi(x/\sqrt t)-\overline\Phi((2m-x)/\sqrt t)$ requires $x\le m$. At $A(3,2)$ we have $x=3>m=2$, and using it blindly returns $0.1811$ &mdash; wrong. Always check $x\le m$ before substituting; otherwise the term collapses to $P(M_t\le m)$.</div>
+
+</body>
+</html>
