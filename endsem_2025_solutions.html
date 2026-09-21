@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>End-Autumn 2025 Solutions</title>
+<link rel="stylesheet" href="note.css">
+<script src="note.js"></script>
+</head>
+<body>
+
+<h1>End-Autumn 2025 Solutions</h1>
+<p class="lede">MA60225 Financial Mathematics, End-Autumn Semester 2025&ndash;26. Full paper with worked solutions, each keyed to the <a href="formula_sheet.html">formula sheet</a> section that produces it; the Black&ndash;Scholes material has no sheet section yet, so those answers are self-contained. 50 marks, 3 hours. Source: <a href="13069_MA60225_FINANCIAL-MATHEMATICS_2025_autumn_endsem.pdf">13069_MA60225_FINANCIAL-MATHEMATICS_2025_autumn_endsem.pdf</a>.</p>
+
+<div class="block">Calculator and statistical tables allowed. Numerical answers to at least two decimal places. Q1 answer-only (1&times;5); Q2 five short answers (3 marks each); Q3 (5+5); Q4 [10]; Q5 [10]. Notation throughout: $\Phi$ = standard normal cdf, $\varphi$ = its density.</div>
+
+<h2>Q1(a) &mdash; Variance of $\int_0^1 t^4\,dW_t$ [1]</h2>
+<div class="block green"><b>Answer.</b> By the It&ocirc; isometry (&sect;I1.4),
+$$\operatorname{Var}\Big(\int_0^1 t^4\,dW_t\Big) = \int_0^1 t^{8}\,dt = \frac19 = \mathbf{0.11}.$$
+The mean is $0$, and with a deterministic integrand the integral is $N(0,\tfrac19)$ (&sect;I1.5).</div>
+
+<h2>Q1(b) &mdash; $d(e^{t}W_t)$ [1]</h2>
+<div class="block green"><b>Answer (&sect;I4.5, &sect;I8.4).</b> $f(t,x) = e^{t}x$: $f_t = e^{t}x$, $f_x = e^{t}$, $f_{xx}=0$, so
+$$d(e^{t}W_t) = \mathbf{e^{t}W_t\,dt + e^{t}\,dW_t}.$$
+No It&ocirc; correction: $f$ is linear in $x$.</div>
+
+<h2>Q1(c) &mdash; Is $Y_t = e^{t}W_t$ a martingale? [1]</h2>
+<div class="block green"><b>Answer. No.</b> The drift $e^{t}W_t\,dt$ in (b) is not zero (&sect;I5.1). Directly: $E[Y_t\mid\mathcal F_s] = e^{t}W_s \ne e^{s}W_s = Y_s$ for $t>s$ whenever $W_s\ne0$.</div>
+
+<h2>Q1(d) &mdash; Hitting the line $2-3t$ [1]</h2>
+<div class="block"><b>Question.</b> $T = \min\{t: W_t = 2-3t\}$. Use the martingale stopping theorem to find $E(T)$.</div>
+<div class="block green"><b>Answer.</b> $E(T) = \tfrac23 = \mathbf{0.67}$.
+<br><br>
+<b>Method (&sect;M6.5, &sect;10.7).</b> $W_T = 2-3T$. $W$ is a martingale with $W_0=0$, so OST gives $E[W_T]=0$:
+$$E[2-3T] = 0 \;\Longrightarrow\; E(T) = \tfrac23 .$$
+Guard: OST needs $E[T]<\infty$. Here $W_t+3t$ is BM with drift $+3$ heading towards level $2$, so $T$ is the first passage of a positively drifting BM, whose mean $2/3$ is finite (&sect;M6.7).</div>
+
+<h2>Q1(e) &mdash; Black&ndash;Scholes call value [1]</h2>
+<div class="block"><b>Question.</b> $S_0=80$, $K=85$, $T=1$, $r=5\%$, $\sigma=0.15$. Value the European call.</div>
+<div class="block green"><b>Answer.</b> $C = \mathbf{4.39}$.
+$$d_1 = \frac{\ln(80/85) + (0.05 + 0.15^{2}/2)(1)}{0.15} = \frac{-0.06062 + 0.06125}{0.15} = 0.0042,\qquad d_2 = d_1 - 0.15 = -0.1458 .$$
+$$C = S_0\Phi(d_1) - Ke^{-rT}\Phi(d_2) = 80(0.5017) - 85e^{-0.05}(0.4420) = 40.13 - 35.74 = 4.39 .$$</div>
+
+<h2>Q2(a) &mdash; Interpreting delta, gamma, theta [3]</h2>
+<div class="block green"><b>Answer.</b> The Greeks are partial derivatives of the call price $C(S,t)$. Each one measures how sensitive the price is to one input.
+<ul>
+<li><b>Delta</b> $\Delta = \partial C/\partial S = \Phi(d_1)\in(0,1)$: the price change per Rs 1 move in the stock. It is also the number of shares in the replicating (hedge) portfolio, which is the basis of delta hedging. Deep in the money $\Delta\to1$; deep out of the money $\Delta\to0$.</li>
+<li><b>Gamma</b> $\Gamma = \partial^{2}C/\partial S^{2} = \dfrac{\varphi(d_1)}{S\sigma\sqrt{T-t}} > 0$: the rate at which delta changes, i.e. the curvature. High gamma (at the money, near expiry) means the hedge must be rebalanced often. Positive gamma: a long call gains from large moves in either direction.</li>
+<li><b>Theta</b> $\Theta = \partial C/\partial t = -\dfrac{S\varphi(d_1)\sigma}{2\sqrt{T-t}} - rKe^{-r(T-t)}\Phi(d_2) < 0$: time decay. With everything else fixed, the call loses value as expiry approaches. Theta is the cost of holding positive gamma; the BS PDE ties them together: $\Theta + rS\Delta + \tfrac12\sigma^{2}S^{2}\Gamma = rC$.</li>
+</ul>
+Derivations are in Q5.</div>
+
+<h2>Q2(b) &mdash; Put&ndash;call parity [3]</h2>
+<div class="block green"><b>Answer (&sect;M4.6).</b> Take a European call $C$ and put $P$ with the same underlying, strike $K$ and expiry $T$, and a continuously compounded rate $r$. Compare two portfolios:
+<ul>
+<li><b>A:</b> one call plus cash $Ke^{-rT}$ (which grows to $K$ at $T$). Value at $T$: $(S_T-K)^{+} + K = \max(S_T, K)$.</li>
+<li><b>B:</b> one put plus one share. Value at $T$: $(K-S_T)^{+} + S_T = \max(S_T, K)$.</li>
+</ul>
+They pay the same in every state. By no arbitrage (law of one price) they cost the same today:
+$$\boxed{C + Ke^{-rT} = P + S_0}\qquad\text{i.e.}\qquad C - P = S_0 - Ke^{-rT}.$$
+If, for example, $C + Ke^{-rT} > P + S_0$: sell A and buy B. This locks in the difference today, with zero net payoff at $T$. The argument uses no model for $S$. Discrete-time version: replace $e^{-rT}$ by $(1+r)^{-T}$.</div>
+
+<h2>Q2(c) &mdash; Black&ndash;Scholes market is arbitrage-free [3]</h2>
+<div class="block green"><b>Answer.</b> The market has a bond $dB = rB\,dt$ and a stock $dS = \mu S\,dt + \sigma S\,dW$, with $\sigma>0$.
+<ol>
+<li><b>Risk-neutral measure.</b> Let $\lambda = (\mu - r)/\sigma$ (the market price of risk). By Girsanov, $W^{Q}_t = W_t + \lambda t$ is a Brownian motion under an equivalent measure $Q$. Under $Q$, $dS = rS\,dt + \sigma S\,dW^{Q}$, so the discounted price $\tilde S_t = e^{-rt}S_t$ satisfies $d\tilde S = \sigma\tilde S\,dW^{Q}$. This has zero drift, so $\tilde S$ is a $Q$-martingale.</li>
+<li><b>Portfolios.</b> A self-financing portfolio $(\phi_t,\psi_t)$ has discounted value $d\tilde V = \phi_t\,d\tilde S_t = \phi_t\sigma\tilde S_t\,dW^{Q}_t$. This is an It&ocirc; integral, so $\tilde V$ is a $Q$-martingale (for admissible, e.g. square-integrable, strategies).</li>
+<li><b>No arbitrage.</b> Suppose $V_0 = 0$ and $V_T\ge0$. Then $E^{Q}[\tilde V_T] = \tilde V_0 = 0$ with $\tilde V_T\ge0$, so $V_T = 0$ $Q$-a.s. Because $Q$ and $P$ are equivalent (they have the same null sets), $V_T = 0$ $P$-a.s. too, so $P(V_T>0) = 0$. No arbitrage exists.</li>
+</ol>
+This is the continuous-time version of the arbitrage theorem (&sect;A2.3): an equivalent martingale measure exists, so there is no arbitrage.</div>
+
+<h2>Q2(d) &mdash; Straddle payoff [3]</h2>
+<div class="block green"><b>Answer.</b> Long one call and one put, both with strike $K$:
+$$\text{payoff}(S_T) = (S_T-K)^{+} + (K-S_T)^{+} = |S_T - K| .$$
+The graph is a V with its vertex at $(K, 0)$ and slopes $-1$ (left) and $+1$ (right). The payoff is $K$ at $S_T=0$ and unbounded as $S_T\to\infty$. After paying the premium $C+P$, the <b>profit</b> is the same V shifted down by $C+P$. It is negative between the breakevens $K\pm(C+P)$. A straddle bets on <b>volatility</b>, not direction: it pays if the stock moves far either way.
+<svg viewBox="0 0 320 190" width="320" style="display:block;margin:1em auto;max-width:100%" role="img" aria-label="Straddle payoff: V shape with vertex at K">
+<g fill="none" stroke="currentColor" stroke-width="1.2">
+<line x1="30" y1="160" x2="305" y2="160"/><line x1="30" y1="160" x2="30" y2="15"/>
+</g>
+<polyline points="30,70 150,160 295,51" fill="none" stroke="currentColor" stroke-width="2.5"/>
+<polyline points="30,100 150,190 295,81" fill="none" stroke="currentColor" stroke-width="1.2" stroke-dasharray="5 4" opacity="0.6"/>
+<g fill="currentColor" font-size="12" font-family="sans-serif">
+<text x="146" y="176">K</text><text x="282" y="176">S<tspan font-size="9" dy="3">T</tspan></text>
+<text x="4" y="74">K</text><text x="36" y="24">payoff</text>
+<text x="200" y="62">|S<tspan font-size="9" dy="3">T</tspan><tspan dy="-3">−K|</tspan></text>
+<text x="210" y="140" opacity="0.7">profit (dashed)</text>
+</g>
+</svg></div>
+
+<h2>Q2(e) &mdash; Value at risk [3]</h2>
+<div class="block green"><b>Answer.</b> Let $L$ be the loss on a portfolio over a horizon $h$ (e.g. 1 day, 10 days). The <b>VaR at confidence level $\alpha$</b> (e.g. 99%) is the $\alpha$-quantile of $L$:
+$$\operatorname{VaR}_\alpha = \inf\{\ell : P(L\le\ell)\ge\alpha\},$$
+i.e. with probability $\alpha$ the loss over $h$ will not exceed $\operatorname{VaR}_\alpha$. Example: 1-day 99% VaR of Rs 10 lakh means that on 1 day in 100 we expect to lose more than Rs 10 lakh.
+<ul>
+<li><b>Normal (variance&ndash;covariance) method:</b> if $L\sim N(\mu_L,\sigma_L^{2})$, then $\operatorname{VaR}_\alpha = \mu_L + z_\alpha\sigma_L$ ($z_{0.99} = 2.326$). The $h$-day VaR is roughly $\sqrt h\times$ the 1-day VaR.</li>
+<li><b>Historical simulation:</b> the empirical $\alpha$-quantile of past losses, revalued on today's portfolio.</li>
+<li><b>Monte Carlo:</b> simulate the risk factors, revalue, and take the quantile.</li>
+</ul>
+<b>Limitations.</b> VaR says nothing about how large the loss is beyond the quantile (tail blindness). It is not subadditive, so merging two portfolios can raise VaR, which penalises diversification. The normal method understates fat tails. Expected shortfall, $E[L\mid L\ge\operatorname{VaR}_\alpha]$, fixes the first two problems.</div>
+
+<h2>Q3(a) &mdash; Black&ndash;Scholes from the binomial model [5]</h2>
+<div class="block green"><b>Answer.</b> Split $[0,T]$ into $n$ steps of length $\Delta = T/n$. Each step multiplies the stock by $u = e^{\sigma\sqrt\Delta}$ or $d = e^{-\sigma\sqrt\Delta}$, and the bond grows by $e^{r\Delta}$.
+<ol>
+<li><b>Binomial price</b> (&sect;M4.2): with $q = \dfrac{e^{r\Delta}-d}{u-d}$,
+$$C_n = e^{-rT}\sum_{j=0}^{n}\binom nj q^{j}(1-q)^{n-j}\big(S_0u^{j}d^{\,n-j}-K\big)^{+}.$$</li>
+<li><b>Moments of one log-step under $q$.</b> Expanding to order $\Delta$ gives $q = \tfrac12 + \tfrac{r-\sigma^{2}/2}{2\sigma}\sqrt\Delta + O(\Delta)$. So $\ln(S_{k+1}/S_k) = \pm\sigma\sqrt\Delta$ has mean $(2q-1)\sigma\sqrt\Delta = (r-\tfrac12\sigma^{2})\Delta + o(\Delta)$ and variance $\sigma^{2}\Delta + o(\Delta)$.</li>
+<li><b>CLT</b> (as in &sect;4.2): $\ln(S_T/S_0)$ is a sum of $n$ i.i.d. log-steps, so under $q$, as $n\to\infty$,
+$$\ln(S_T/S_0)\ \to\ N\big((r-\tfrac12\sigma^{2})T,\ \sigma^{2}T\big),\quad\text{i.e.}\quad S_T = S_0e^{(r-\sigma^{2}/2)T + \sigma\sqrt T Z}.$$</li>
+<li><b>Evaluate</b> $C = e^{-rT}E\big[(S_T-K)^{+}\big]$. The option is exercised iff $Z > -d_2$, where $d_2 = \dfrac{\ln(S_0/K)+(r-\sigma^{2}/2)T}{\sigma\sqrt T}$. Then
+$$e^{-rT}E\big[K\mathbf 1_{Z>-d_2}\big] = Ke^{-rT}\Phi(d_2).$$
+For the stock term, complete the square: $e^{-rT}S_0E\big[e^{(r-\sigma^{2}/2)T+\sigma\sqrt TZ}\mathbf 1_{Z>-d_2}\big] = S_0P(Z+\sigma\sqrt T > -d_2) = S_0\Phi(d_1)$, where $d_1 = d_2+\sigma\sqrt T$. Hence
+$$\boxed{C = S_0\Phi(d_1) - Ke^{-rT}\Phi(d_2),\qquad d_{1,2} = \frac{\ln(S_0/K) + (r\pm\tfrac12\sigma^{2})T}{\sigma\sqrt T}.}$$</li>
+</ol>
+<b>The Black&ndash;Scholes framework.</b> Assumptions: the stock follows GBM $dS = \mu S\,dt + \sigma S\,dW$ with constant $\mu,\sigma$; the risk-free rate $r$ is constant and the same for borrowing and lending; trading is continuous and frictionless (no costs or taxes, short selling allowed, shares divisible); no dividends; no arbitrage. Consequences: a call can be replicated by continuously rebalancing $\Phi(d_1)$ shares plus bonds. Its price solves the PDE $C_t + rSC_S + \tfrac12\sigma^{2}S^{2}C_{SS} = rC$ with $C(S,T) = (S-K)^{+}$. The drift $\mu$ does not appear, because pricing uses the risk-neutral measure (Q2(c)). The only unobservable input is $\sigma$, which in practice is backed out as implied volatility.</div>
+
+<h2>Q3(b) &mdash; Two-period put [5]</h2>
+<div class="block"><b>Question.</b> $u = 5/3$, $d = 1/3$, $r = 0$, $S_0 = 60$. Price a put with $T=2$, $K=80$.</div>
+<div class="block green"><b>Answer.</b> $P_0 = \mathbf{41.67}$ $(=125/3)$.
+<br><br>
+<b>Method (&sect;M3.4, &sect;A1.4).</b> $d < 1 < u$, so the market is arbitrage-free, and
+$$q = \frac{1+r-d}{u-d} = \frac{2/3}{4/3} = \frac12 .$$
+<table>
+<tr><th>Node</th><th>$S$</th><th>Put value</th></tr>
+<tr><td>uu</td><td>$166.67$</td><td>$(80-166.67)^{+} = 0$</td></tr>
+<tr><td>ud</td><td>$33.33$</td><td>$46.67$</td></tr>
+<tr><td>dd</td><td>$6.67$</td><td>$73.33$</td></tr>
+<tr><td>u</td><td>$100$</td><td>$\tfrac12(0 + 46.67) = 23.33$</td></tr>
+<tr><td>d</td><td>$20$</td><td>$\tfrac12(46.67+73.33) = 60$</td></tr>
+<tr><td>0</td><td>$60$</td><td>$\tfrac12(23.33+60) = \mathbf{41.67}$</td></tr>
+</table>
+One line: $P_0 = \tfrac14(0) + \tfrac12(46.67) + \tfrac14(73.33) = 41.67$.</div>
+<div class="block warn">The put is European by default (the paper does not say American). If it were American, compare with immediate exercise at each node: at d, $80-20 = 60$ equals the continuation value $60$, so exercising early would change nothing here.</div>
+
+<h2>Q4 &mdash; Two-period call: price, replication, self-financing, put [10]</h2>
+<div class="block"><b>Question.</b> $T=2$, $u=1.35$, $d=0.6$, $r=0.15$, $S_0=400$. (i) Price a call with $K=500$. (ii) Construct a replicating portfolio. (iii) Verify directly that it is self-financing. (iv) Price the put with the same maturity and strike.</div>
+<div class="block green"><b>(i)</b> $d = 0.6 < 1.15 < 1.35 = u$, so the market is arbitrage-free, and
+$$q = \frac{1.15-0.6}{1.35-0.6} = \frac{0.55}{0.75} = \frac{11}{15} = 0.7333 .$$
+Terminal prices: $S_{uu} = 729$, $S_{ud} = 324$, $S_{dd} = 144$. Call payoffs: $229,\ 0,\ 0$.
+$$C_u = \frac{0.7333(229)}{1.15} = 146.03,\qquad C_d = 0,\qquad C_0 = \frac{0.7333(146.03)}{1.15} = \mathbf{93.12}.$$
+Check: $C_0 = q^{2}(229)/1.15^{2} = 0.53778(229)/1.3225 = 93.12$.
+<br><br>
+<b>(ii)</b> At each node, hold $\Delta = \dfrac{V_{\text{up}}-V_{\text{down}}}{S_{\text{up}}-S_{\text{down}}}$ shares and put $\beta = V - \Delta S$ in the bond (&sect;A1.5, &sect;M4.3):
+<table>
+<tr><th>Node</th><th>$S$</th><th>$V$</th><th>$\Delta$ (shares)</th><th>$\beta$ (bond, Rs)</th></tr>
+<tr><td>0</td><td>400</td><td>93.12</td><td>$\frac{146.03-0}{540-240} = 0.4868$</td><td>$93.12 - 194.71 = -101.59$</td></tr>
+<tr><td>u</td><td>540</td><td>146.03</td><td>$\frac{229-0}{729-324} = 0.5654$</td><td>$146.03 - 305.33 = -159.30$</td></tr>
+<tr><td>d</td><td>240</td><td>0</td><td>$0$</td><td>$0$</td></tr>
+</table>
+So: at $t=0$ buy 0.4868 shares and borrow Rs 101.59. After an up move, rebalance to 0.5654 shares, borrowing Rs 159.30 in total. After a down move, sell everything; the call is dead.
+<br><br>
+<b>(iii) Self-financing</b> (&sect;M4.7): at $t=1$, the old portfolio's value must equal the cost of the new one, with no cash added or withdrawn.
+<table>
+<tr><th>Node</th><th>Old portfolio at $t=1$: $\Delta_0S_1 + 1.15\beta_0$</th><th>New portfolio: $\Delta_1S_1 + \beta_1$</th></tr>
+<tr><td>u</td><td>$0.4868(540) - 1.15(101.59) = 262.85 - 116.82 = 146.03$</td><td>$0.5654(540) - 159.30 = 146.03$ ✓</td></tr>
+<tr><td>d</td><td>$0.4868(240) - 116.82 = 116.82 - 116.82 = 0$</td><td>$0$ ✓</td></tr>
+</table>
+At $t=2$ the portfolio pays exactly the claim. From u: $0.5654(729) - 1.15(159.30) = 412.20 - 183.20 = 229$ ✓ and $0.5654(324) - 183.20 = 0$ ✓.
+<br><br>
+<b>(iv) Put</b> by parity (&sect;M4.6):
+$$P_0 = C_0 - S_0 + \frac{K}{(1+r)^{2}} = 93.12 - 400 + \frac{500}{1.3225} = 93.12 - 400 + 378.07 = \mathbf{71.19}.$$
+Tree check: put payoffs $0,\ 176,\ 356$; $P_u = 40.81$, $P_d = 194.78$; $P_0 = (0.7333(40.81)+0.2667(194.78))/1.15 = 71.19$ ✓.</div>
+
+<h2>Q5 &mdash; Deriving the Greeks of a European call [10]</h2>
+<div class="block green"><b>Answer.</b> Let $C = S\Phi(d_1) - Ke^{-r\tau}\Phi(d_2)$, with $\tau = T-t$, $d_{1,2} = \dfrac{\ln(S/K)+(r\pm\sigma^{2}/2)\tau}{\sigma\sqrt\tau}$ and $d_2 = d_1 - \sigma\sqrt\tau$.
+<br><br>
+<b>Key identity.</b> $\varphi(d_2) = \varphi(d_1)\,e^{d_1\sigma\sqrt\tau - \sigma^{2}\tau/2} = \varphi(d_1)\dfrac{S}{K}e^{r\tau}$, because $d_1\sigma\sqrt\tau - \tfrac12\sigma^{2}\tau = \ln(S/K) + r\tau$. Hence
+$$\boxed{S\varphi(d_1) = Ke^{-r\tau}\varphi(d_2).}\qquad(\ast)$$
+Every derivative of $C$ contains the terms $S\varphi(d_1)\,\partial d_1 - Ke^{-r\tau}\varphi(d_2)\,\partial d_2$. By $(\ast)$ these reduce to $S\varphi(d_1)\,\partial(d_1-d_2) = S\varphi(d_1)\,\partial(\sigma\sqrt\tau)$.
+<ul>
+<li><b>Delta.</b> $\partial_S(d_1 - d_2) = 0$, so
+$$\Delta = \frac{\partial C}{\partial S} = \Phi(d_1) + \big[S\varphi(d_1)\partial_Sd_1 - Ke^{-r\tau}\varphi(d_2)\partial_Sd_2\big] = \mathbf{\Phi(d_1)}.$$</li>
+<li><b>Gamma.</b> $\partial_Sd_1 = \dfrac{1}{S\sigma\sqrt\tau}$, so
+$$\Gamma = \frac{\partial\Phi(d_1)}{\partial S} = \mathbf{\frac{\varphi(d_1)}{S\sigma\sqrt\tau}}.$$</li>
+<li><b>Vega.</b> $\partial_\sigma(d_1-d_2) = \sqrt\tau$; the $\Phi$ terms do not depend on $\sigma$ directly, so
+$$\mathcal V = \frac{\partial C}{\partial\sigma} = \mathbf{S\varphi(d_1)\sqrt\tau}.$$</li>
+<li><b>Theta</b> (with respect to calendar time $t$, so $\partial_t = -\partial_\tau$). Here $\partial_\tau(d_1-d_2) = \dfrac{\sigma}{2\sqrt\tau}$, and the discount factor contributes $\partial_\tau(-Ke^{-r\tau}) = rKe^{-r\tau}$:
+$$\frac{\partial C}{\partial\tau} = \frac{S\varphi(d_1)\sigma}{2\sqrt\tau} + rKe^{-r\tau}\Phi(d_2)\quad\Longrightarrow\quad\Theta = \mathbf{-\frac{S\varphi(d_1)\sigma}{2\sqrt\tau} - rKe^{-r\tau}\Phi(d_2)}.$$</li>
+<li><b>Rho.</b> $\partial_r(d_1-d_2) = 0$; the discount factor gives $\partial_r(-Ke^{-r\tau}) = \tau Ke^{-r\tau}$:
+$$\rho = \frac{\partial C}{\partial r} = \mathbf{K\tau e^{-r\tau}\Phi(d_2)}.$$</li>
+</ul>
+<b>Signs.</b> $\Delta\in(0,1)$, $\Gamma>0$, $\mathcal V>0$, $\Theta<0$, $\rho>0$.
+<br><b>Check with the PDE:</b> $\Theta + rS\Delta + \tfrac12\sigma^{2}S^{2}\Gamma = -rKe^{-r\tau}\Phi(d_2) + rS\Phi(d_1) = rC$ ✓.
+<br><b>Numbers for Q1(e)</b> ($S=80$, $K=85$, $\tau=1$): $\Delta = 0.50$, $\Gamma = 0.033$, $\mathcal V = 31.92$, $\Theta = -4.18$ per year, $\rho = 35.74$.</div>
+
+</body>
+</html>
