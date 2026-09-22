@@ -16,26 +16,26 @@
 
 <!-- ============================================================ -->
 <h2>Problem 1 &mdash; Distribution of $B(s)+B(t)$</h2>
-<div class="block"><b>Problem.</b> What is the distribution of $B(s)+B(t)$, $s\le t$?</div>
+<div class="block"><b>Problem.</b> What is the distribution of $B(s)+B(t)$, $s\le t$?<br><b>Formula:</b> §6.3, §6.2</div>
 <div class="block green"><b>Solution.</b> $B(s)+B(t)=2B(s)+(B(t)-B(s))$. Here $2B(s)\sim N(0,4s)$ and $B(t)-B(s)\sim N(0,t-s)$, and they are independent. So
 $$B(s)+B(t)\sim\mathbf{N(0,\,3s+t)}.$$</div>
 
 <!-- ============================================================ -->
 <h2>Problem 2 &mdash; Bridge between two known values</h2>
-<div class="block"><b>Problem.</b> Compute the conditional distribution of $B(s)$ given $B(t_1)=A$ and $B(t_2)=B$, where $0&lt;t_1&lt;s&lt;t_2$.</div>
+<div class="block"><b>Problem.</b> Compute the conditional distribution of $B(s)$ given $B(t_1)=A$ and $B(t_2)=B$, where $0&lt;t_1&lt;s&lt;t_2$.<br><b>Formula:</b> §9.5</div>
 <div class="block green"><b>Solution.</b> The distribution of $B(s)-A$ given the two values equals that of $B(s-t_1)$ given $B(0)=0$ and $B(t_2-t_1)=B-A$. By (10.4) this is normal with mean $\frac{s-t_1}{t_2-t_1}(B-A)$ and variance $\frac{s-t_1}{t_2-t_1}(t_2-s)$. So
 $$B(s)\mid\ldots\ \sim\ N\!\left(A+\frac{(s-t_1)(B-A)}{t_2-t_1},\ \frac{(s-t_1)(t_2-s)}{t_2-t_1}\right).$$</div>
 
 <!-- ============================================================ -->
 <h2>Problem 3 &mdash; $E[B(t_1)B(t_2)B(t_3)]$</h2>
-<div class="block"><b>Problem.</b> Compute $E[B(t_1)B(t_2)B(t_3)]$ for $t_1&lt;t_2&lt;t_3$.</div>
+<div class="block"><b>Problem.</b> Compute $E[B(t_1)B(t_2)B(t_3)]$ for $t_1&lt;t_2&lt;t_3$.<br><b>Formula:</b> §6.3, §9.2</div>
 <div class="block green"><b>Solution.</b>
 $$\begin{aligned}E[B(t_1)B(t_2)B(t_3)]&=E\big[B(t_1)B(t_2)\,E[B(t_3)\mid B(t_1),B(t_2)]\big]=E[B(t_1)B^2(t_2)]\\&=E\big[B(t_1)\,E[B^2(t_2)\mid B(t_1)]\big]\overset{(*)}=E\big[B(t_1)\{(t_2-t_1)+B^2(t_1)\}\big]\\&=E[B^3(t_1)]+(t_2-t_1)E[B(t_1)]=\mathbf 0 .\end{aligned}$$
 $(*)$: given $B(t_1)$, $B(t_2)\sim N(B(t_1),t_2-t_1)$. And $E[B^3(t)]=0$ because $B(t)$ is normal with mean 0.</div>
 
 <!-- ============================================================ -->
 <h2>Problem 4 &mdash; $T_a$ is finite but has infinite mean</h2>
-<div class="block"><b>Problem.</b> Show that $P\{T_a&lt;\infty\}=1$ and $E[T_a]=\infty$, $a\ne0$.</div>
+<div class="block"><b>Problem.</b> Show that $P\{T_a&lt;\infty\}=1$ and $E[T_a]=\infty$, $a\ne0$.<br><b>Formula:</b> §12.3, §12.5</div>
 <div class="block green"><b>Solution.</b>
 (a) By (10.6),
 $$P\{T_a&lt;\infty\}=\lim_{t\to\infty}P\{T_a\le t\}=\lim_{t\to\infty}\frac2{\sqrt{2\pi}}\int_{|a|/\sqrt t}^\infty e^{-y^2/2}dy=\frac2{\sqrt{2\pi}}\int_0^\infty e^{-y^2/2}dy=2P\{N(0,1)>0\}=1 .$$
@@ -46,20 +46,20 @@ and $\int^\infty t^{-1/2}dt=\infty$, so $E[T_a]=\infty$.</div>
 
 <!-- ============================================================ -->
 <h2>Problem 5 &mdash; $P\{T_1&lt;T_{-1}&lt;T_2\}$</h2>
-<div class="block"><b>Problem.</b> What is $P\{T_1&lt;T_{-1}&lt;T_2\}$?</div>
+<div class="block"><b>Problem.</b> What is $P\{T_1&lt;T_{-1}&lt;T_2\}$?<br><b>Formula:</b> §10.4</div>
 <div class="block green"><b>Solution.</b>
 $$\begin{aligned}P\{T_1&lt;T_{-1}&lt;T_2\}&=P\{\text{hit }1\text{ before }-1\}\times P\{\text{hit }-1\text{ before }2\mid\text{hit }1\text{ before }-1\}\\&=\tfrac12\,P\{\text{down }2\text{ before up }1\}=\tfrac12\cdot\tfrac13=\mathbf{\tfrac16}.\end{aligned}$$
 The second factor comes from restarting the BM when it first hits $1$.</div>
 
 <!-- ============================================================ -->
 <h2>Problem 6 &mdash; Not recovering the purchase price</h2>
-<div class="block"><b>Problem.</b> You own one share of a stock whose price follows standard BM. You bought it at $b+c$, $c>0$, and the present price is $b$. You will sell when the price reaches $b+c$ or after an additional time $t$, whichever comes first. What is the probability that you do not recover your purchase price?</div>
+<div class="block"><b>Problem.</b> You own one share of a stock whose price follows standard BM. You bought it at $b+c$, $c>0$, and the present price is $b$. You will sell when the price reaches $b+c$ or after an additional time $t$, whichever comes first. What is the probability that you do not recover your purchase price?<br><b>Formula:</b> §13.2</div>
 <div class="block green"><b>Solution.</b> You recover the price if and only if the BM goes up $c$ by time $t$. So
 $$P\{\text{not recover}\}=1-P\Big\{\max_{0\le s\le t}X(s)\ge c\Big\}=1-\frac2{\sqrt{2\pi}}\int_{c/\sqrt t}^\infty e^{-y^2/2}dy=2\Phi\!\left(\frac c{\sqrt t}\right)-1 .$$</div>
 
 <!-- ============================================================ -->
 <h2>Problem 7 &mdash; Maximum over $[t_1,t_2]$</h2>
-<div class="block"><b>Problem.</b> Compute an expression for $P\Big\{\max_{t_1\le s\le t_2}B(s)>x\Big\}$.</div>
+<div class="block"><b>Problem.</b> Compute an expression for $P\Big\{\max_{t_1\le s\le t_2}B(s)>x\Big\}$.<br><b>Formula:</b> §12.2, §13.2</div>
 <div class="block green"><b>Solution.</b> Let $M=\{\max_{t_1\le s\le t_2}X(s)>x\}$ and condition on $X(t_1)$:
 $$P(M)=\int_{-\infty}^\infty P(M\mid X(t_1)=y)\frac1{\sqrt{2\pi t_1}}e^{-y^2/2t_1}dy .$$
 Here $P(M\mid X(t_1)=y)=1$ for $y\ge x$. For $y&lt;x$, by the reflection principle,
@@ -71,7 +71,7 @@ $$P(M)=P\{X(t_1)\ge x\}+\int_{-\infty}^x2\,\bar\Phi\!\left(\frac{x-y}{\sqrt{t_2-
 <h2>Problem 8 &mdash; Random walk limit and gambler's ruin</h2>
 <div class="block"><b>Problem.</b> A random walk moves up or down $\sqrt{\Delta t}$ in each time step $\Delta t$, with probabilities $p$ and $1-p$, where $p=\tfrac12(1+\mu\sqrt{\Delta t})$.
 (a) Argue that as $\Delta t\to0$ the limit is a Brownian motion with drift rate $\mu$.
-(b) Using (a) and the gambler's ruin results (Section 4.5.1), compute the probability that a BM with drift rate $\mu$ goes up $A$ before going down $B$, $A,B>0$.</div>
+(b) Using (a) and the gambler's ruin results (Section 4.5.1), compute the probability that a BM with drift rate $\mu$ goes up $A$ before going down $B$, $A,B>0$.<br><b>Formula:</b> §4.2, §10.3</div>
 <div class="block green"><b>Solution.</b>
 (a) $X(t)=\sqrt{\Delta t}\sum_{i=1}^{[t/\Delta t]}X_i$ with $X_i=\pm1$ (up/down). Then $E[X_i]=2p-1=\mu\sqrt{\Delta t}$ and $\operatorname{Var}(X_i)=1-\mu^2\Delta t$, so
 $$E[X(t)]=\sqrt{\Delta t}\left[\tfrac t{\Delta t}\right]\mu\sqrt{\Delta t}\to\mu t,\qquad\operatorname{Var}(X(t))=\Delta t\left[\tfrac t{\Delta t}\right](1-\mu^2\Delta t)\to t .$$
@@ -82,20 +82,20 @@ $$\frac{1-e^{-2\mu B}}{1-e^{-2\mu(A+B)}}.$$</div>
 
 <!-- ============================================================ -->
 <h2>Problem 9 &mdash; Joint density of $X(s)$, $X(t)$</h2>
-<div class="block"><b>Problem.</b> Let $\{X(t)\}$ be a BM with drift coefficient $\mu$ and variance parameter $\sigma^2$. What is the joint density of $X(s)$ and $X(t)$, $s&lt;t$?</div>
+<div class="block"><b>Problem.</b> Let $\{X(t)\}$ be a BM with drift coefficient $\mu$ and variance parameter $\sigma^2$. What is the joint density of $X(s)$ and $X(t)$, $s&lt;t$?<br><b>Formula:</b> §8.2</div>
 <div class="block green"><b>Solution</b> <i>(not in source).</i> $X(s)\sim N(\mu s,\sigma^2s)$, and $X(t)-X(s)\sim N(\mu(t-s),\sigma^2(t-s))$ independently. By the change of variables $(x,y)\mapsto(x,y-x)$ (Jacobian 1),
 $$f_{X(s),X(t)}(x,y)=\frac1{\sqrt{2\pi\sigma^2s}}e^{-\frac{(x-\mu s)^2}{2\sigma^2s}}\cdot\frac1{\sqrt{2\pi\sigma^2(t-s)}}e^{-\frac{(y-x-\mu(t-s))^2}{2\sigma^2(t-s)}} .$$</div>
 
 <!-- ============================================================ -->
 <h2>Problem 10 &mdash; Conditional distribution given $X(s)=c$</h2>
-<div class="block"><b>Problem.</b> Let $\{X(t)\}$ be a BM with drift coefficient $\mu$ and variance parameter $\sigma^2$. What is the conditional distribution of $X(t)$ given $X(s)=c$ when (a) $s&lt;t$; (b) $t&lt;s$?</div>
+<div class="block"><b>Problem.</b> Let $\{X(t)\}$ be a BM with drift coefficient $\mu$ and variance parameter $\sigma^2$. What is the conditional distribution of $X(t)$ given $X(s)=c$ when (a) $s&lt;t$; (b) $t&lt;s$?<br><b>Formula:</b> §9.2, §9.4</div>
 <div class="block green"><b>Solution</b> <i>(not in source; same as <a href="brownian_motion_short_problems.html">BM Short Problems, Problem 5</a>).</i>
 (a) $N\big(c+\mu(t-s),\ \sigma^2(t-s)\big)$.
 (b) $N\!\left(\dfrac{tc}s,\ \dfrac{\sigma^2t(s-t)}s\right)$. The drift drops out once the endpoint is fixed.</div>
 
 <!-- ============================================================ -->
 <h2>Problem 11 &mdash; Multiplicative walk &rarr; GBM</h2>
-<div class="block"><b>Problem.</b> A process changes every $h$ time units. Its new value is its old value multiplied by $e^{\sigma\sqrt h}$ with probability $p=\tfrac12(1+\tfrac\mu\sigma\sqrt h)$, or by $e^{-\sigma\sqrt h}$ with probability $1-p$. Show that as $h\to0$ it converges to geometric Brownian motion with drift coefficient $\mu$ and variance parameter $\sigma^2$.</div>
+<div class="block"><b>Problem.</b> A process changes every $h$ time units. Its new value is its old value multiplied by $e^{\sigma\sqrt h}$ with probability $p=\tfrac12(1+\tfrac\mu\sigma\sqrt h)$, or by $e^{-\sigma\sqrt h}$ with probability $1-p$. Show that as $h\to0$ it converges to geometric Brownian motion with drift coefficient $\mu$ and variance parameter $\sigma^2$.<br><b>Formula:</b> §2.3, §4.2</div>
 <div class="block green"><b>Solution.</b> Let $X(t)$ be the value at $t=nh$. Let $X_i=1$ if the $i$-th change is up and $0$ otherwise. With $u=e^{\sigma\sqrt h}$ and $d=e^{-\sigma\sqrt h}$:
 $$X(t)=X(0)u^{\sum X_i}d^{n-\sum X_i}=X(0)d^n(u/d)^{\sum_{i=1}^nX_i},\qquad\log\frac{X(t)}{X(0)}=-\frac th\sigma\sqrt h+2\sigma\sqrt h\sum_{i=1}^{t/h}X_i .$$
 By the CLT this becomes normal as $h\to0$, and independent $X_i$ give independent increments. Also
@@ -108,7 +108,7 @@ using $p\to\tfrac12$.</div>
 (a) What should $c$ be for there to be no sure win?
 (b) If $c=4$, explain how you could guarantee a sure win.
 (c) If $c=10$, explain how you could guarantee a sure win.
-(d) Use the arbitrage theorem to verify your answer to (a).</div>
+(d) Use the arbitrage theorem to verify your answer to (a).<br><b>Formula:</b> §M4.5, §A1.2, §A2.3</div>
 <div class="block green"><b>Solution.</b> Buy $x$ units of stock and $y$ options. At time 1 the holdings are worth $150x+25y$ if the price is 150, and $25x$ if it is 25. With $y=-5x$ the value is $25x$ in both cases. The cost is $50x-5xc$, so the profit is
 $$25x-50x+5xc=x(5c-25).$$
 <ol type="a">
@@ -120,7 +120,7 @@ $$25x-50x+5xc=x(5c-25).$$
 
 <!-- ============================================================ -->
 <h2>Problem 13 &mdash; The remark after Example 10.2</h2>
-<div class="block"><b>Problem.</b> Verify the statement made in the remark following Example 10.2. (In that example, outcome $i$ of a race pays odds $o_i$, and betting $x_j\propto(1+o_j)^{-1}$ on every $j$, when $\sum_k(1+o_k)^{-1}&lt;1$, gives a sure win.)</div>
+<div class="block"><b>Problem.</b> Verify the statement made in the remark following Example 10.2. (In that example, outcome $i$ of a race pays odds $o_i$, and betting $x_j\propto(1+o_j)^{-1}$ on every $j$, when $\sum_k(1+o_k)^{-1}&lt;1$, gives a sure win.)<br><b>Formula:</b> §A2.3</div>
 <div class="block green"><b>Solution.</b> Take $x_j=\dfrac{(1+o_j)^{-1}}{1-\sum_k(1+o_k)^{-1}}$. If the outcome is $i$, the total winnings are
 $$x_io_i-\sum_{j\ne i}x_j=\frac{o_i(1+o_i)^{-1}-\sum_{j\ne i}(1+o_j)^{-1}}{1-\sum_k(1+o_k)^{-1}}=\frac{(1+o_i)(1+o_i)^{-1}-\sum_j(1+o_j)^{-1}}{1-\sum_k(1+o_k)^{-1}}=1 .$$
 This is the same whichever $i$ occurs, so the win is sure.</div>
@@ -129,7 +129,7 @@ This is the same whichever $i$ occurs, so the win is sure.</div>
 <h2>Problem 14 &mdash; Three-state arbitrage bounds</h2>
 <div class="block"><b>Problem.</b> A stock's price is 100 now, and at time 1 it will be 50, 100 or 200. An option to buy $y$ shares at time 1 for the (present-value) price $ky$ costs $cy$.
 (a) If $k=120$, show that an arbitrage opportunity occurs if and only if $c>80/3$.
-(b) If $k=80$, show that there is no arbitrage opportunity if and only if $20\le c\le40$.</div>
+(b) If $k=80$, show that there is no arbitrage opportunity if and only if $20\le c\le40$.<br><b>Formula:</b> §A2.3, §A2.4</div>
 <div class="block green"><b>Solution.</b> Buying the stock is a fair bet under $(p_1,p_2,1-p_1-p_2)$ on $(50,100,200)$ iff $100=50p_1+100p_2+200(1-p_1-p_2)$, i.e. $3p_1+2p_2=2$.
 <ol type="a">
 <li>The option ($k=120$) is also fair iff $c=80(1-p_1-p_2)$. Solving with $3p_1+2p_2=2$ gives $p_1=c/40$, $p_2=(80-3c)/80$, $1-p_1-p_2=c/80$. All three lie in $[0,1]$ iff $80\ge3c$. So arbitrage exists iff $c>80/3$.</li>
@@ -138,7 +138,7 @@ This is the same whichever $i$ occurs, so the win is sure.</div>
 
 <!-- ============================================================ -->
 <h2>Problem 15 &mdash; Black&ndash;Scholes cost at three strikes</h2>
-<div class="block"><b>Problem.</b> A stock is worth 100 now. The logarithm of its price follows a BM with drift coefficient $\mu=2$ and variance parameter $\sigma^2=1$. Give the Black&ndash;Scholes cost of an option to buy the stock at time 10 for a cost of (a) 100 per unit; (b) 120 per unit; (c) 80 per unit. The continuously compounded interest rate is 5 percent.</div>
+<div class="block"><b>Problem.</b> A stock is worth 100 now. The logarithm of its price follows a BM with drift coefficient $\mu=2$ and variance parameter $\sigma^2=1$. Give the Black&ndash;Scholes cost of an option to buy the stock at time 10 for a cost of (a) 100 per unit; (b) 120 per unit; (c) 80 per unit. The continuously compounded interest rate is 5 percent.<br><b>Formula:</b> not on the sheet &mdash; derived in the solution</div>
 <div class="block green"><b>Solution.</b> The drift $\mu$ does not enter the Black&ndash;Scholes price. Use $\alpha=0.05$, $\sigma=1$, $x_0=100$, $t=10$, and $C=x_0\Phi(\sigma\sqrt t+b)-Ke^{-\alpha t}\Phi(b)$ with $b=\dfrac{\alpha t-\sigma^2t/2-\log(K/x_0)}{\sigma\sqrt t}$.
 <ol type="a">
 <li>$K=100$: $b=(0.5-5-0)/\sqrt{10}=-1.423$, so
@@ -151,38 +151,38 @@ With $\sigma^2t=10$ the option is almost the stock itself, so the price barely m
 
 <!-- ============================================================ -->
 <h2>Problem 16 &mdash; Martingales have constant mean</h2>
-<div class="block"><b>Problem.</b> A process $\{Y(t)\}$ is a martingale if, for $s&lt;t$, $E[Y(t)\mid Y(u),0\le u\le s]=Y(s)$. If $\{Y(t)\}$ is a martingale, show that $E[Y(t)]=E[Y(0)]$.</div>
+<div class="block"><b>Problem.</b> A process $\{Y(t)\}$ is a martingale if, for $s&lt;t$, $E[Y(t)\mid Y(u),0\le u\le s]=Y(s)$. If $\{Y(t)\}$ is a martingale, show that $E[Y(t)]=E[Y(0)]$.<br><b>Formula:</b> §M2.4</div>
 <div class="block green"><b>Solution.</b> Taking expectations of the defining equation gives $E[Y(s)]=E\big[E[Y(t)\mid Y(u),0\le u\le s]\big]=E[Y(t)]$. So $E[Y(t)]$ is constant, equal to $E[Y(0)]$.</div>
 
 <!-- ============================================================ -->
 <h2>Problem 17 &mdash; BM is a martingale</h2>
-<div class="block"><b>Problem.</b> Show that standard Brownian motion is a martingale.</div>
+<div class="block"><b>Problem.</b> Show that standard Brownian motion is a martingale.<br><b>Formula:</b> §7.1</div>
 <div class="block green"><b>Solution.</b>
 $$E[B(t)\mid B(u),0\le u\le s]=E[B(s)\mid\cdot]+E[B(t)-B(s)\mid\cdot]=B(s)+E[B(t)-B(s)]=B(s),$$
 using independent increments.</div>
 
 <!-- ============================================================ -->
 <h2>Problem 18 &mdash; $B^2(t)-t$ is a martingale</h2>
-<div class="block"><b>Problem.</b> Show that $Y(t)=B^2(t)-t$ is a martingale. What is $E[Y(t)]$?<br><i>Hint.</i> First compute $E[Y(t)\mid B(u),0\le u\le s]$.</div>
+<div class="block"><b>Problem.</b> Show that $Y(t)=B^2(t)-t$ is a martingale. What is $E[Y(t)]$?<br><i>Hint.</i> First compute $E[Y(t)\mid B(u),0\le u\le s]$.<br><b>Formula:</b> §7.2</div>
 <div class="block green"><b>Solution.</b> By independent increments, $E[B^2(t)\mid B(u),0\le u\le s]=E[B^2(t)\mid B(s)]$. Given $B(s)$, $B(t)\sim N(B(s),t-s)$, so this equals $B^2(s)+t-s$. Hence
 $$E[B^2(t)-t\mid B(u),0\le u\le s]=B^2(s)-s .$$
 This depends only on $B^2(s)$. Conditioning on $B(u)$, $u\le s$, and using the above, $E[B^2(t)-t\mid B^2(u),0\le u\le s]=B^2(s)-s$. So it is a martingale, and $E[Y(t)]=E[Y(0)]=\mathbf0$.</div>
 
 <!-- ============================================================ -->
 <h2>Problem 19 &mdash; The exponential martingale</h2>
-<div class="block"><b>Problem.</b> Show that $Y(t)=\exp\{cB(t)-c^2t/2\}$ is a martingale for any constant $c$. What is $E[Y(t)]$?</div>
+<div class="block"><b>Problem.</b> Show that $Y(t)=\exp\{cB(t)-c^2t/2\}$ is a martingale for any constant $c$. What is $E[Y(t)]$?<br><b>Formula:</b> §7.3</div>
 <div class="block green"><b>Solution.</b> Knowing $Y(t)$ is equivalent to knowing $B(t)$. Given $B(s)$, $B(t)\sim N(B(s),t-s)$, so by the normal MGF
 $$E[Y(t)\mid Y(u),u\le s]=e^{-c^2t/2}E[e^{cB(t)}\mid B(s)]=e^{-c^2t/2}e^{cB(s)+(t-s)c^2/2}=e^{-c^2s/2}e^{cB(s)}=Y(s).$$
 So it is a martingale, and $E[Y(t)]=E[Y(0)]=\mathbf1$.</div>
 
 <!-- ============================================================ -->
 <h2>Problem 20 &mdash; Hitting the line $2-4t$</h2>
-<div class="block"><b>Problem.</b> Let $T=\min\{t:B(t)=2-4t\}$, the first time standard BM hits the line $2-4t$. Use the martingale stopping theorem to find $E[T]$.</div>
+<div class="block"><b>Problem.</b> Let $T=\min\{t:B(t)=2-4t\}$, the first time standard BM hits the line $2-4t$. Use the martingale stopping theorem to find $E[T]$.<br><b>Formula:</b> §10.7, §M6.5</div>
 <div class="block green"><b>Solution.</b> $E[B(T)]=E[B(0)]=0$, and $B(T)=2-4T$. So $2-4E[T]=0$, which gives $E[T]=\mathbf{1/2}$.</div>
 
 <!-- ============================================================ -->
 <h2>Problem 21 &mdash; First passage of BM with drift</h2>
-<div class="block"><b>Problem.</b> Let $X(t)=\sigma B(t)+\mu t$ with $\mu>0$, and for $x>0$ let $T=\min\{t:X(t)=x\}=\min\{t:B(t)=\tfrac{x-\mu t}\sigma\}$. Use the martingale stopping theorem to show that $E[T]=x/\mu$.</div>
+<div class="block"><b>Problem.</b> Let $X(t)=\sigma B(t)+\mu t$ with $\mu>0$, and for $x>0$ let $T=\min\{t:X(t)=x\}=\min\{t:B(t)=\tfrac{x-\mu t}\sigma\}$. Use the martingale stopping theorem to show that $E[T]=x/\mu$.<br><b>Formula:</b> §10.7, §M6.3</div>
 <div class="block green"><b>Solution.</b> $E[B(T)]=0$ with $B(T)=(x-\mu T)/\sigma$. So $E[(x-\mu T)/\sigma]=0$, which gives $E[T]=x/\mu$.</div>
 
 <!-- ============================================================ -->
@@ -190,7 +190,7 @@ So it is a martingale, and $E[Y(t)]=E[Y(0)]=\mathbf1$.</div>
 <div class="block"><b>Problem.</b> Let $X(t)=\sigma B(t)+\mu t$, and for $A,B>0$ let $p$ be the probability that $X$ hits $A$ before $-B$.
 (a) Let $T$ be the first time the process hits $A$ or $-B$. Use this $T$ and the martingale of Exercise 19 to show that $E[\exp\{c(X(T)-\mu T)/\sigma-c^2T/2\}]=1$.
 (b) Let $c=-2\mu/\sigma$ and show that $E[\exp\{-2\mu X(T)/\sigma^2\}]=1$.
-(c) Use (b) and the definition of $T$ to find $p$.<br><i>Hint.</i> What are the possible values of $\exp\{-2\mu X(T)/\sigma^2\}$?</div>
+(c) Use (b) and the definition of $T$ to find $p$.<br><i>Hint.</i> What are the possible values of $\exp\{-2\mu X(T)/\sigma^2\}$?<br><b>Formula:</b> §10.3, §7.3</div>
 <div class="block green"><b>Solution.</b>
 (a) By Problem 19 and the stopping theorem, $E[\exp\{cB(T)-c^2T/2\}]=E[\exp\{cB(0)\}]=1$. Substituting $B(T)=[X(T)-\mu T]/\sigma$ gives (a).<br>
 (b) With $c=-2\mu/\sigma$: $-2\mu[X(T)-\mu T]/\sigma^2-(2\mu/\sigma)^2T/2=-2\mu X(T)/\sigma^2$.<br>
@@ -199,19 +199,19 @@ $$p=\frac{1-e^{2\mu B/\sigma^2}}{e^{-2\mu A/\sigma^2}-e^{2\mu B/\sigma^2}} .$$</
 
 <!-- ============================================================ -->
 <h2>Problem 23 &mdash; Mean exit time with drift</h2>
-<div class="block"><b>Problem.</b> Let $X(t)=\sigma B(t)+\mu t$, and let $T$ be the first time $X$ hits $A$ or $-B$ ($A,B>0$). Use the martingale stopping theorem and Exercise 22(c) to find $E[T]$.</div>
+<div class="block"><b>Problem.</b> Let $X(t)=\sigma B(t)+\mu t$, and let $T$ be the first time $X$ hits $A$ or $-B$ ($A,B>0$). Use the martingale stopping theorem and Exercise 22(c) to find $E[T]$.<br><b>Formula:</b> §10.8</div>
 <div class="block green"><b>Solution.</b> $E[B(T)]=0$ with $B(T)=[X(T)-\mu T]/\sigma$ gives $E[X(T)]=\mu E[T]$. Now $E[X(T)]=pA-(1-p)B$ with $p$ from 22(c). So
 $$E[T]=\frac{A(1-e^{2\mu B/\sigma^2})-B(e^{-2\mu A/\sigma^2}-1)}{\mu(e^{-2\mu A/\sigma^2}-e^{2\mu B/\sigma^2})} .$$</div>
 
 <!-- ============================================================ -->
 <h2>Problem 24 &mdash; Variance of the first passage time</h2>
-<div class="block"><b>Problem.</b> Let $X(t)=\sigma B(t)+\mu t$ with $\mu>0$, $x>0$, and $T=\min\{t:X(t)=x\}$ (as in Exercise 21). Use the martingale of Exercise 18 and the result of Exercise 21 to show that $\operatorname{Var}(T)=x\sigma^2/\mu^3$.</div>
+<div class="block"><b>Problem.</b> Let $X(t)=\sigma B(t)+\mu t$ with $\mu>0$, $x>0$, and $T=\min\{t:X(t)=x\}$ (as in Exercise 21). Use the martingale of Exercise 18 and the result of Exercise 21 to show that $\operatorname{Var}(T)=x\sigma^2/\mu^3$.<br><b>Formula:</b> §7.2, §M6.3</div>
 <div class="block green"><b>Solution.</b> By the stopping theorem and Problem 18, $E[B^2(T)-T]=0$ with $B(T)=[X(T)-\mu T]/\sigma$. So $E[(X(T)-\mu T)^2/\sigma^2-T]=0$. Since $X(T)=x$, this gives $E[(x-\mu T)^2]=\sigma^2E[T]$. From Problem 21, $E[T]=x/\mu$, so $E[(x-\mu T)^2]=\operatorname{Var}(\mu T)$. Hence
 $$\operatorname{Var}(\mu T)=\sigma^2x/\mu\quad\Longrightarrow\quad\operatorname{Var}(T)=\sigma^2x/\mu^3 .$$</div>
 
 <!-- ============================================================ -->
 <h2>Problem 25 &mdash; Mean and variance of two It&ocirc; integrals</h2>
-<div class="block"><b>Problem.</b> Compute the mean and variance of (a) $\int_0^1t\,dB(t)$ and (b) $\int_0^1t^2\,dB(t)$.</div>
+<div class="block"><b>Problem.</b> Compute the mean and variance of (a) $\int_0^1t\,dB(t)$ and (b) $\int_0^1t^2\,dB(t)$.<br><b>Formula:</b> §I1.4, §I1.5</div>
 <div class="block green"><b>Solution.</b> Both means are $0$. By the It&ocirc; isometry:
 $$\operatorname{Var}\left[\int_0^1t\,dB\right]=\int_0^1t^2dt=\mathbf{\tfrac13},\qquad\operatorname{Var}\left[\int_0^1t^2\,dB\right]=\int_0^1t^4dt=\mathbf{\tfrac15}.$$</div>
 
@@ -220,7 +220,7 @@ $$\operatorname{Var}\left[\int_0^1t\,dB\right]=\int_0^1t^2dt=\mathbf{\tfrac13},\
 <div class="block"><b>Problem.</b> Let $Y(t)=tB(1/t)$ for $t>0$ and $Y(0)=0$.
 (a) What is the distribution of $Y(t)$?
 (b) Compute $\operatorname{Cov}(Y(s),Y(t))$.
-(c) Argue that $\{Y(t)\}$ is a standard Brownian motion process.</div>
+(c) Argue that $\{Y(t)\}$ is a standard Brownian motion process.<br><b>Formula:</b> §5.4, §5.3</div>
 <div class="block green"><b>Solution.</b>
 (a) Normal with $E[Y(t)]=tE[B(1/t)]=0$ and $\operatorname{Var}(Y(t))=t^2\cdot\tfrac1t=t$. So $Y(t)\sim N(0,t)$.<br>
 (b) For $s\le t$: $\operatorname{Cov}(sB(1/s),tB(1/t))=st\,\operatorname{Cov}(B(1/s),B(1/t))=st\cdot\tfrac1t=s$.<br>
@@ -229,24 +229,24 @@ $$\operatorname{Var}\left[\int_0^1t\,dB\right]=\int_0^1t^2dt=\mathbf{\tfrac13},\
 
 <!-- ============================================================ -->
 <h2>Problem 27 &mdash; Brownian scaling</h2>
-<div class="block"><b>Problem.</b> Let $Y(t)=B(a^2t)/a$ for $a>0$. Argue that $\{Y(t)\}$ is a standard Brownian motion process.</div>
+<div class="block"><b>Problem.</b> Let $Y(t)=B(a^2t)/a$ for $a>0$. Argue that $\{Y(t)\}$ is a standard Brownian motion process.<br><b>Formula:</b> §5.4</div>
 <div class="block green"><b>Solution.</b> $E[Y(t)]=\tfrac1aE[B(a^2t)]=0$. For $s&lt;t$: $\operatorname{Cov}(Y(s),Y(t))=\tfrac1{a^2}\operatorname{Cov}(B(a^2s),B(a^2t))=\tfrac1{a^2}a^2s=s$. $Y$ is clearly Gaussian, so it is BM.</div>
 
 <!-- ============================================================ -->
 <h2>Problem 28 &mdash; Independence of $B(s)-\frac stB(t)$ and $B(t)$</h2>
-<div class="block"><b>Problem.</b> For $s&lt;t$, argue that $B(s)-\frac stB(t)$ and $B(t)$ are independent.</div>
+<div class="block"><b>Problem.</b> For $s&lt;t$, argue that $B(s)-\frac stB(t)$ and $B(t)$ are independent.<br><b>Formula:</b> §1.9, §9.4</div>
 <div class="block green"><b>Solution.</b> $\operatorname{Cov}(B(s)-\tfrac stB(t),B(t))=s-\tfrac st\cdot t=0$. The pair is jointly Gaussian, and for jointly Gaussian variables zero covariance implies independence.</div>
 
 <!-- ============================================================ -->
 <h2>Problem 29 &mdash; Brownian bridge &rarr; BM</h2>
-<div class="block"><b>Problem.</b> Let $\{Z(t)\}$ be a Brownian bridge. Show that $Y(t)=(t+1)Z(t/(t+1))$ is a standard Brownian motion process.</div>
+<div class="block"><b>Problem.</b> Let $\{Z(t)\}$ be a Brownian bridge. Show that $Y(t)=(t+1)Z(t/(t+1))$ is a standard Brownian motion process.<br><b>Formula:</b> §9.3, §5.3</div>
 <div class="block green"><b>Solution.</b> $Y$ is Gaussian with $E[Y(t)]=0$. For $s\le t$, using $\operatorname{Cov}(Z(u),Z(v))=u(1-v)$ for $u\le v$:
 $$\operatorname{Cov}(Y(s),Y(t))=(s+1)(t+1)\frac s{s+1}\left[1-\frac t{t+1}\right]=s .$$
 It has the same mean and covariance as BM, and these determine a Gaussian process, so it is BM.</div>
 
 <!-- ============================================================ -->
 <h2>Problem 30 &mdash; Poisson increment covariance</h2>
-<div class="block"><b>Problem.</b> Let $X(t)=N(t+1)-N(t)$, where $\{N(t)\}$ is a Poisson process with rate $\lambda$. Compute $\operatorname{Cov}[X(t),X(t+s)]$.</div>
+<div class="block"><b>Problem.</b> Let $X(t)=N(t+1)-N(t)$, where $\{N(t)\}$ is a Poisson process with rate $\lambda$. Compute $\operatorname{Cov}[X(t),X(t+s)]$.<br><b>Formula:</b> not on the sheet &mdash; derived in the solution</div>
 <div class="block green"><b>Solution.</b> For $s&lt;1$, $N(t)$ is independent of $N(t+s+1)-N(t+s)$, so
 $$\operatorname{Cov}=\operatorname{Cov}(N(t+1),N(t+s+1))-\operatorname{Cov}(N(t+1),N(t+s))=\lambda(t+1)-\lambda(t+s)=\lambda(1-s),$$
 using $\operatorname{Cov}(N(s),N(t))=\lambda\min(s,t)$. For $s\ge1$ the two increments do not overlap, so they are independent and the covariance is $0$.
@@ -256,7 +256,7 @@ $$\operatorname{Cov}[X(t),X(t+s)]=\lambda(1-s)^+ .$$</div>
 <h2>Problem 31 &mdash; Time to the next Poisson event</h2>
 <div class="block"><b>Problem.</b> Let $\{N(t)\}$ be a Poisson process with rate $\lambda$, and let $Y(t)$ be the time from $t$ until the next event.
 (a) Argue that $\{Y(t)\}$ is a stationary process.
-(b) Compute $\operatorname{Cov}[Y(t),Y(t+s)]$.</div>
+(b) Compute $\operatorname{Cov}[Y(t),Y(t+s)]$.<br><b>Formula:</b> not on the sheet &mdash; derived in the solution</div>
 <div class="block green"><b>Solution.</b>
 (a) From any time $t$, the continuation of a Poisson process is again a Poisson process with rate $\lambda$.<br>
 (b) Condition on $Y(t)=y\sim\text{Exp}(\lambda)$. If $y&lt;s$, the next event happens before $t+s$ and the process restarts, so $E[Y(t)Y(t+s)\mid y]=y\cdot\tfrac1\lambda$. If $y>s$, then $Y(t+s)=y-s$. So
@@ -269,7 +269,7 @@ $$\operatorname{Cov}(Y(t),Y(t+s))=\mathbf{\frac{e^{-\lambda s}}{\lambda^2}}.$$</
 <h2>Problem 32 &mdash; Differences of a weakly stationary process</h2>
 <div class="block"><b>Problem.</b> Let $\{X(t),-\infty&lt;t&lt;\infty\}$ be weakly stationary with covariance function $R_X(s)=\operatorname{Cov}[X(t),X(t+s)]$.
 (a) Show that $\operatorname{Var}(X(t+s)-X(t))=2R_X(0)-2R_X(s)$.
-(b) If $Y(t)=X(t+1)-X(t)$, show that $\{Y(t)\}$ is also weakly stationary, with $R_Y(s)=2R_X(s)-R_X(s-1)-R_X(s+1)$.</div>
+(b) If $Y(t)=X(t+1)-X(t)$, show that $\{Y(t)\}$ is also weakly stationary, with $R_Y(s)=2R_X(s)-R_X(s-1)-R_X(s+1)$.<br><b>Formula:</b> not on the sheet &mdash; derived in the solution</div>
 <div class="block green"><b>Solution.</b>
 (a) $\operatorname{Cov}(X(t+s)-X(t),X(t+s)-X(t))=R(0)-R(s)-R(s)+R(0)=2R(0)-2R(s)$.<br>
 (b) $\operatorname{Cov}(X(t+1)-X(t),\,X(t+s+1)-X(t+s))=R_X(s)-R_X(s-1)-R_X(s+1)+R_X(s)$. This depends only on $s$, and the mean of $Y$ is constant (zero), so $Y$ is weakly stationary with that $R_Y$.</div>
@@ -279,7 +279,7 @@ $$\operatorname{Cov}(Y(t),Y(t+s))=\mathbf{\frac{e^{-\lambda s}}{\lambda^2}}.$$</
 <h2>Problem 33 &mdash; Random harmonic process</h2>
 <div class="block"><b>Problem.</b> Let $Y_1,Y_2$ be independent unit normals and, for a constant $w$, $X(t)=Y_1\cos wt+Y_2\sin wt$.
 (a) Show that $\{X(t)\}$ is weakly stationary.
-(b) Argue that $\{X(t)\}$ is stationary.</div>
+(b) Argue that $\{X(t)\}$ is stationary.<br><b>Formula:</b> not on the sheet &mdash; derived in the solution</div>
 <div class="block green"><b>Solution.</b>
 (a) $E[X(t)]=0$, and
 $$\operatorname{Cov}(X(t),X(t+s))=\cos wt\cos w(t+s)+\sin wt\sin w(t+s)=\cos(w(t+s)-wt)=\cos ws,$$
@@ -290,7 +290,7 @@ which depends only on $s$.<br>
 <h2>Problem 34 &mdash; Power spectral density</h2>
 <div class="block"><b>Problem.</b> Let $\{X(t)\}$ be weakly stationary with covariance function $R(s)=\operatorname{Cov}(X(t),X(t+s))$, and let $\tilde R(w)$ be its power spectral density.
 (i) Show that $\tilde R(w)=\tilde R(-w)$. It can be shown that $R(s)=\frac1{2\pi}\int_{-\infty}^\infty\tilde R(w)e^{iws}dw$.
-(ii) Use this to show that $\int_{-\infty}^\infty\tilde R(w)\,dw=2\pi E[X^2(t)]$.</div>
+(ii) Use this to show that $\int_{-\infty}^\infty\tilde R(w)\,dw=2\pi E[X^2(t)]$.<br><b>Formula:</b> not on the sheet &mdash; derived in the solution</div>
 <div class="block green"><b>Solution</b> <i>(not in source).</i>
 (i) $\tilde R(w)=\int_{-\infty}^\infty R(s)e^{-iws}ds$. $R$ is real and even: $R(-s)=\operatorname{Cov}(X(t),X(t-s))=\operatorname{Cov}(X(t-s),X(t))=R(s)$. Substituting $s\to-s$ gives $\tilde R(-w)=\int R(-s)e^{-iws}ds=\tilde R(w)$.<br>
 (ii) Put $s=0$ in the inversion formula: $R(0)=\frac1{2\pi}\int\tilde R(w)dw$, and $R(0)=\operatorname{Var}X(t)$. So $\int\tilde R(w)dw=2\pi\operatorname{Var}X(t)$, which equals $2\pi E[X^2(t)]$ when $EX(t)=0$.</div>

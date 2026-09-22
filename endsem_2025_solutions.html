@@ -15,20 +15,23 @@
 <div class="block">Calculator and statistical tables allowed. Numerical answers to at least two decimal places. Q1 answer-only (1&times;5); Q2 five short answers (3 marks each); Q3 (5+5); Q4 [10]; Q5 [10]. Notation throughout: $\Phi$ = standard normal cdf, $\varphi$ = its density.</div>
 
 <h2>Q1(a) &mdash; Variance of $\int_0^1 t^4\,dW_t$ [1]</h2>
+<p><b>Formula:</b> §I1.4, §I1.5</p>
 <div class="block green"><b>Answer.</b> By the It&ocirc; isometry (&sect;I1.4),
 $$\operatorname{Var}\Big(\int_0^1 t^4\,dW_t\Big) = \int_0^1 t^{8}\,dt = \frac19 = \mathbf{0.11}.$$
 The mean is $0$, and with a deterministic integrand the integral is $N(0,\tfrac19)$ (&sect;I1.5).</div>
 
 <h2>Q1(b) &mdash; $d(e^{t}W_t)$ [1]</h2>
+<p><b>Formula:</b> §I4.5, §I8.4</p>
 <div class="block green"><b>Answer (&sect;I4.5, &sect;I8.4).</b> $f(t,x) = e^{t}x$: $f_t = e^{t}x$, $f_x = e^{t}$, $f_{xx}=0$, so
 $$d(e^{t}W_t) = \mathbf{e^{t}W_t\,dt + e^{t}\,dW_t}.$$
 No It&ocirc; correction: $f$ is linear in $x$.</div>
 
 <h2>Q1(c) &mdash; Is $Y_t = e^{t}W_t$ a martingale? [1]</h2>
+<p><b>Formula:</b> §I5.1</p>
 <div class="block green"><b>Answer. No.</b> The drift $e^{t}W_t\,dt$ in (b) is not zero (&sect;I5.1). Directly: $E[Y_t\mid\mathcal F_s] = e^{t}W_s \ne e^{s}W_s = Y_s$ for $t>s$ whenever $W_s\ne0$.</div>
 
 <h2>Q1(d) &mdash; Hitting the line $2-3t$ [1]</h2>
-<div class="block"><b>Question.</b> $T = \min\{t: W_t = 2-3t\}$. Use the martingale stopping theorem to find $E(T)$.</div>
+<div class="block"><b>Question.</b> $T = \min\{t: W_t = 2-3t\}$. Use the martingale stopping theorem to find $E(T)$.<br><b>Formula:</b> §M6.5, §10.7, §M6.7</div>
 <div class="block green"><b>Answer.</b> $E(T) = \tfrac23 = \mathbf{0.67}$.
 <br><br>
 <b>Method (&sect;M6.5, &sect;10.7).</b> $W_T = 2-3T$. $W$ is a martingale with $W_0=0$, so OST gives $E[W_T]=0$:
@@ -36,12 +39,13 @@ $$E[2-3T] = 0 \;\Longrightarrow\; E(T) = \tfrac23 .$$
 Guard: OST needs $E[T]<\infty$. Here $W_t+3t$ is BM with drift $+3$ heading towards level $2$, so $T$ is the first passage of a positively drifting BM, whose mean $2/3$ is finite (&sect;M6.7).</div>
 
 <h2>Q1(e) &mdash; Black&ndash;Scholes call value [1]</h2>
-<div class="block"><b>Question.</b> $S_0=80$, $K=85$, $T=1$, $r=5\%$, $\sigma=0.15$. Value the European call.</div>
+<div class="block"><b>Question.</b> $S_0=80$, $K=85$, $T=1$, $r=5\%$, $\sigma=0.15$. Value the European call.<br><b>Formula:</b> not on the sheet &mdash; derived in the solution</div>
 <div class="block green"><b>Answer.</b> $C = \mathbf{4.39}$.
 $$d_1 = \frac{\ln(80/85) + (0.05 + 0.15^{2}/2)(1)}{0.15} = \frac{-0.06062 + 0.06125}{0.15} = 0.0042,\qquad d_2 = d_1 - 0.15 = -0.1458 .$$
 $$C = S_0\Phi(d_1) - Ke^{-rT}\Phi(d_2) = 80(0.5017) - 85e^{-0.05}(0.4420) = 40.13 - 35.74 = 4.39 .$$</div>
 
 <h2>Q2(a) &mdash; Interpreting delta, gamma, theta [3]</h2>
+<p><b>Formula:</b> not on the sheet &mdash; derived in the solution</p>
 <div class="block green"><b>Answer.</b> The Greeks are partial derivatives of the call price $C(S,t)$. Each one measures how sensitive the price is to one input.
 <ul>
 <li><b>Delta</b> $\Delta = \partial C/\partial S = \Phi(d_1)\in(0,1)$: the price change per Rs 1 move in the stock. It is also the number of shares in the replicating (hedge) portfolio, which is the basis of delta hedging. Deep in the money $\Delta\to1$; deep out of the money $\Delta\to0$.</li>
@@ -51,6 +55,7 @@ $$C = S_0\Phi(d_1) - Ke^{-rT}\Phi(d_2) = 80(0.5017) - 85e^{-0.05}(0.4420) = 40.1
 Derivations are in Q5.</div>
 
 <h2>Q2(b) &mdash; Put&ndash;call parity [3]</h2>
+<p><b>Formula:</b> §M4.6</p>
 <div class="block green"><b>Answer (&sect;M4.6).</b> Take a European call $C$ and put $P$ with the same underlying, strike $K$ and expiry $T$, and a continuously compounded rate $r$. Compare two portfolios:
 <ul>
 <li><b>A:</b> one call plus cash $Ke^{-rT}$ (which grows to $K$ at $T$). Value at $T$: $(S_T-K)^{+} + K = \max(S_T, K)$.</li>
@@ -61,6 +66,7 @@ $$\boxed{C + Ke^{-rT} = P + S_0}\qquad\text{i.e.}\qquad C - P = S_0 - Ke^{-rT}.$
 If, for example, $C + Ke^{-rT} > P + S_0$: sell A and buy B. This locks in the difference today, with zero net payoff at $T$. The argument uses no model for $S$. Discrete-time version: replace $e^{-rT}$ by $(1+r)^{-T}$.</div>
 
 <h2>Q2(c) &mdash; Black&ndash;Scholes market is arbitrage-free [3]</h2>
+<p><b>Formula:</b> §A2.3</p>
 <div class="block green"><b>Answer.</b> The market has a bond $dB = rB\,dt$ and a stock $dS = \mu S\,dt + \sigma S\,dW$, with $\sigma>0$.
 <ol>
 <li><b>Risk-neutral measure.</b> Let $\lambda = (\mu - r)/\sigma$ (the market price of risk). By Girsanov, $W^{Q}_t = W_t + \lambda t$ is a Brownian motion under an equivalent measure $Q$. Under $Q$, $dS = rS\,dt + \sigma S\,dW^{Q}$, so the discounted price $\tilde S_t = e^{-rt}S_t$ satisfies $d\tilde S = \sigma\tilde S\,dW^{Q}$. This has zero drift, so $\tilde S$ is a $Q$-martingale.</li>
@@ -70,6 +76,7 @@ If, for example, $C + Ke^{-rT} > P + S_0$: sell A and buy B. This locks in the d
 This is the continuous-time version of the arbitrage theorem (&sect;A2.3): an equivalent martingale measure exists, so there is no arbitrage.</div>
 
 <h2>Q2(d) &mdash; Straddle payoff [3]</h2>
+<p><b>Formula:</b> §A2.1</p>
 <div class="block green"><b>Answer.</b> Long one call and one put, both with strike $K$:
 $$\text{payoff}(S_T) = (S_T-K)^{+} + (K-S_T)^{+} = |S_T - K| .$$
 The graph is a V with its vertex at $(K, 0)$ and slopes $-1$ (left) and $+1$ (right). The payoff is $K$ at $S_T=0$ and unbounded as $S_T\to\infty$. After paying the premium $C+P$, the <b>profit</b> is the same V shifted down by $C+P$. It is negative between the breakevens $K\pm(C+P)$. A straddle bets on <b>volatility</b>, not direction: it pays if the stock moves far either way.
@@ -88,6 +95,7 @@ The graph is a V with its vertex at $(K, 0)$ and slopes $-1$ (left) and $+1$ (ri
 </svg></div>
 
 <h2>Q2(e) &mdash; Value at risk [3]</h2>
+<p><b>Formula:</b> not on the sheet &mdash; derived in the solution</p>
 <div class="block green"><b>Answer.</b> Let $L$ be the loss on a portfolio over a horizon $h$ (e.g. 1 day, 10 days). The <b>VaR at confidence level $\alpha$</b> (e.g. 99%) is the $\alpha$-quantile of $L$:
 $$\operatorname{VaR}_\alpha = \inf\{\ell : P(L\le\ell)\ge\alpha\},$$
 i.e. with probability $\alpha$ the loss over $h$ will not exceed $\operatorname{VaR}_\alpha$. Example: 1-day 99% VaR of Rs 10 lakh means that on 1 day in 100 we expect to lose more than Rs 10 lakh.
@@ -99,6 +107,7 @@ i.e. with probability $\alpha$ the loss over $h$ will not exceed $\operatorname{
 <b>Limitations.</b> VaR says nothing about how large the loss is beyond the quantile (tail blindness). It is not subadditive, so merging two portfolios can raise VaR, which penalises diversification. The normal method understates fat tails. Expected shortfall, $E[L\mid L\ge\operatorname{VaR}_\alpha]$, fixes the first two problems.</div>
 
 <h2>Q3(a) &mdash; Black&ndash;Scholes from the binomial model [5]</h2>
+<p><b>Formula:</b> §M4.2, §4.2</p>
 <div class="block green"><b>Answer.</b> Split $[0,T]$ into $n$ steps of length $\Delta = T/n$. Each step multiplies the stock by $u = e^{\sigma\sqrt\Delta}$ or $d = e^{-\sigma\sqrt\Delta}$, and the bond grows by $e^{r\Delta}$.
 <ol>
 <li><b>Binomial price</b> (&sect;M4.2): with $q = \dfrac{e^{r\Delta}-d}{u-d}$,
@@ -114,7 +123,7 @@ $$\boxed{C = S_0\Phi(d_1) - Ke^{-rT}\Phi(d_2),\qquad d_{1,2} = \frac{\ln(S_0/K) 
 <b>The Black&ndash;Scholes framework.</b> Assumptions: the stock follows GBM $dS = \mu S\,dt + \sigma S\,dW$ with constant $\mu,\sigma$; the risk-free rate $r$ is constant and the same for borrowing and lending; trading is continuous and frictionless (no costs or taxes, short selling allowed, shares divisible); no dividends; no arbitrage. Consequences: a call can be replicated by continuously rebalancing $\Phi(d_1)$ shares plus bonds. Its price solves the PDE $C_t + rSC_S + \tfrac12\sigma^{2}S^{2}C_{SS} = rC$ with $C(S,T) = (S-K)^{+}$. The drift $\mu$ does not appear, because pricing uses the risk-neutral measure (Q2(c)). The only unobservable input is $\sigma$, which in practice is backed out as implied volatility.</div>
 
 <h2>Q3(b) &mdash; Two-period put [5]</h2>
-<div class="block"><b>Question.</b> $u = 5/3$, $d = 1/3$, $r = 0$, $S_0 = 60$. Price a put with $T=2$, $K=80$.</div>
+<div class="block"><b>Question.</b> $u = 5/3$, $d = 1/3$, $r = 0$, $S_0 = 60$. Price a put with $T=2$, $K=80$.<br><b>Formula:</b> §M3.4, §A1.4</div>
 <div class="block green"><b>Answer.</b> $P_0 = \mathbf{41.67}$ $(=125/3)$.
 <br><br>
 <b>Method (&sect;M3.4, &sect;A1.4).</b> $d < 1 < u$, so the market is arbitrage-free, and
@@ -132,7 +141,7 @@ One line: $P_0 = \tfrac14(0) + \tfrac12(46.67) + \tfrac14(73.33) = 41.67$.</div>
 <div class="block warn">The put is European by default (the paper does not say American). If it were American, compare with immediate exercise at each node: at d, $80-20 = 60$ equals the continuation value $60$, so exercising early would change nothing here.</div>
 
 <h2>Q4 &mdash; Two-period call: price, replication, self-financing, put [10]</h2>
-<div class="block"><b>Question.</b> $T=2$, $u=1.35$, $d=0.6$, $r=0.15$, $S_0=400$. (i) Price a call with $K=500$. (ii) Construct a replicating portfolio. (iii) Verify directly that it is self-financing. (iv) Price the put with the same maturity and strike.</div>
+<div class="block"><b>Question.</b> $T=2$, $u=1.35$, $d=0.6$, $r=0.15$, $S_0=400$. (i) Price a call with $K=500$. (ii) Construct a replicating portfolio. (iii) Verify directly that it is self-financing. (iv) Price the put with the same maturity and strike.<br><b>Formula:</b> §A1.5, §M4.3, §M4.7, §M4.6</div>
 <div class="block green"><b>(i)</b> $d = 0.6 < 1.15 < 1.35 = u$, so the market is arbitrage-free, and
 $$q = \frac{1.15-0.6}{1.35-0.6} = \frac{0.55}{0.75} = \frac{11}{15} = 0.7333 .$$
 Terminal prices: $S_{uu} = 729$, $S_{ud} = 324$, $S_{dd} = 144$. Call payoffs: $229,\ 0,\ 0$.
@@ -161,6 +170,7 @@ $$P_0 = C_0 - S_0 + \frac{K}{(1+r)^{2}} = 93.12 - 400 + \frac{500}{1.3225} = 93.
 Tree check: put payoffs $0,\ 176,\ 356$; $P_u = 40.81$, $P_d = 194.78$; $P_0 = (0.7333(40.81)+0.2667(194.78))/1.15 = 71.19$ ✓.</div>
 
 <h2>Q5 &mdash; Deriving the Greeks of a European call [10]</h2>
+<p><b>Formula:</b> not on the sheet &mdash; derived in the solution</p>
 <div class="block green"><b>Answer.</b> Let $C = S\Phi(d_1) - Ke^{-r\tau}\Phi(d_2)$, with $\tau = T-t$, $d_{1,2} = \dfrac{\ln(S/K)+(r\pm\sigma^{2}/2)\tau}{\sigma\sqrt\tau}$ and $d_2 = d_1 - \sigma\sqrt\tau$.
 <br><br>
 <b>Key identity.</b> $\varphi(d_2) = \varphi(d_1)\,e^{d_1\sigma\sqrt\tau - \sigma^{2}\tau/2} = \varphi(d_1)\dfrac{S}{K}e^{r\tau}$, because $d_1\sigma\sqrt\tau - \tfrac12\sigma^{2}\tau = \ln(S/K) + r\tau$. Hence

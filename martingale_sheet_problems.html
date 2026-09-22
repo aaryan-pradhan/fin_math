@@ -14,6 +14,7 @@
 
 <!-- ============================================================ -->
 <h2>Warm-up &mdash; Markov and Chebyshev inequalities</h2>
+<p><b>Formula:</b> §E1.6</p>
 <div class="block def"><b>Markov.</b> For $X\ge0$ and $x>0$: $\displaystyle P(X\ge x)\le\frac{E(X)}x$.<br>
 <b>Chebyshev.</b> If $\xi$ has mean $\mu$ and variance $\sigma^2$, then $\displaystyle P(|\xi-\mu|\ge\epsilon)\le\frac{\sigma^2}{\epsilon^2}$ for any $\epsilon>0$.</div>
 <div class="block green"><b>Proof.</b>
@@ -22,38 +23,38 @@ For Chebyshev, apply Markov to $X=(\xi-\mu)^2$ with $x=\epsilon^2$:
 $$P\big((\xi-\mu)^2\ge\epsilon^2\big)\le\frac{E(\xi-\mu)^2}{\epsilon^2}\quad\Longrightarrow\quad P(|\xi-\mu|\ge\epsilon)\le\frac{\sigma^2}{\epsilon^2}.$$</div>
 
 <h3>Example 1 &mdash; Exponential</h3>
-<div class="block"><b>Problem.</b> $X\sim\text{Exp}$ with mean $E(X)=1$ and $x=0.5$. Compare $P(X>x)$ with the Markov bound $E(X)/x$.</div>
+<div class="block"><b>Problem.</b> $X\sim\text{Exp}$ with mean $E(X)=1$ and $x=0.5$. Compare $P(X>x)$ with the Markov bound $E(X)/x$.<br><b>Formula:</b> §E1.6</div>
 <div class="block green"><b>Solution.</b> $P(X>\tfrac12)=e^{-1/2}\approx0.607$, while the bound is $E(X)/x=1/\tfrac12=2$. The bound holds but is useless here (it exceeds 1).</div>
 
 <h3>Example 2 &mdash; Bernoulli</h3>
-<div class="block"><b>Problem.</b> $X\sim\text{Bernoulli}(p)$. Compare $P(X\ge1)$ with the Markov bound $E(X)/1$.</div>
+<div class="block"><b>Problem.</b> $X\sim\text{Bernoulli}(p)$. Compare $P(X\ge1)$ with the Markov bound $E(X)/1$.<br><b>Formula:</b> §E1.6</div>
 <div class="block green"><b>Solution.</b> $P(X\ge1)=P(X=1)=p$ and $E(X)/1=p$. The bound is attained, so Markov's inequality is sharp.</div>
 
 <!-- ============================================================ -->
 <h2>Problem 2.5.1 &mdash; Two steps ahead</h2>
 <div class="block"><b>Problem.</b> Use the law of total probability for conditional expectations, $E[E\{X\mid Y,Z\}\mid Z]=E[X\mid Z]$, to show
 $$E[X_{n+2}\mid X_0,\dots,X_n]=E\big[E\{X_{n+2}\mid X_0,\dots,X_{n+1}\}\mid X_0,\dots,X_n\big].$$
-Conclude that when $X_n$ is a martingale, $E[X_{n+2}\mid X_0,\dots,X_n]=X_n$.</div>
+Conclude that when $X_n$ is a martingale, $E[X_{n+2}\mid X_0,\dots,X_n]=X_n$.<br><b>Formula:</b> §E4.4, §M2.3</div>
 <div class="block green"><b>Solution</b> <i>(not in notes).</i> Apply the given identity with $X=X_{n+2}$, $Y=X_{n+1}$ and $Z=(X_0,\dots,X_n)$. Conditioning on $(Y,Z)$ is conditioning on $X_0,\dots,X_{n+1}$, which gives the displayed equation. If $X_n$ is a martingale, the inner expectation is $X_{n+1}$, so
 $$E[X_{n+2}\mid X_0,\dots,X_n]=E[X_{n+1}\mid X_0,\dots,X_n]=X_n .$$</div>
 
 <!-- ============================================================ -->
 <h2>Problem 2.5.2 &mdash; Product of doubled uniforms</h2>
-<div class="block"><b>Problem.</b> Let $U_1,U_2,\dots$ be independent, each uniform on $(0,1]$. Show that $X_0=1$ and $X_n=2^nU_1\cdots U_n$, $n=1,2,\dots$, is a martingale.</div>
+<div class="block"><b>Problem.</b> Let $U_1,U_2,\dots$ be independent, each uniform on $(0,1]$. Show that $X_0=1$ and $X_n=2^nU_1\cdots U_n$, $n=1,2,\dots$, is a martingale.<br><b>Formula:</b> §M2.1, §M2.5, §E4.5</div>
 <div class="block green"><b>Solution.</b> $X_{n+1}=2X_nU_{n+1}$. Knowing $X_0,\dots,X_n$ is the same as knowing $U_1,\dots,U_n$, and $U_{n+1}$ is independent of them:
 $$E(X_{n+1}\mid X_0,\dots,X_n)=2X_nE(U_{n+1}\mid U_1,\dots,U_n)=2X_nE(U_{n+1})=2X_n\cdot\tfrac12=X_n,$$
 with $E(U_{n+1})=\int_0^1u\,du=\tfrac12$. Also $E|X_n|=2^n2^{-n}=1&lt;\infty$. So $\{X_n\}$ is a martingale.</div>
 
 <!-- ============================================================ -->
 <h2>Problem 2.5.3 &mdash; Exponential sums</h2>
-<div class="block"><b>Problem.</b> Let $S_0=0$ and, for $n\ge1$, let $S_n=\epsilon_1+\dots+\epsilon_n$ be the sum of $n$ independent random variables, each exponential with mean $E[\epsilon]=1$. Show that $X_n=2^n\exp(-S_n)$, $n\ge0$, is a martingale.</div>
+<div class="block"><b>Problem.</b> Let $S_0=0$ and, for $n\ge1$, let $S_n=\epsilon_1+\dots+\epsilon_n$ be the sum of $n$ independent random variables, each exponential with mean $E[\epsilon]=1$. Show that $X_n=2^n\exp(-S_n)$, $n\ge0$, is a martingale.<br><b>Formula:</b> §M2.1, §E4.5</div>
 <div class="block green"><b>Solution.</b> $X_{n+1}=2X_ne^{-\epsilon_{n+1}}$, with $\epsilon_{n+1}$ independent of $\epsilon_1,\dots,\epsilon_n$:
 $$E(X_{n+1}\mid X_0,\dots,X_n)=2X_nE(e^{-\epsilon_{n+1}})=2X_n\int_0^\infty e^{-u}e^{-u}du=2X_n\cdot\tfrac12=X_n .$$</div>
 <div class="block warn">The handwritten note ends this line with "$=2X_n\cdot\frac12=1$". The value is $X_n$, not $1$.</div>
 
 <!-- ============================================================ -->
 <h2>Problem 2.5.4 &mdash; Bernoulli product</h2>
-<div class="block"><b>Problem.</b> Let $\xi_1,\xi_2,\dots$ be independent Bernoulli random variables with parameter $p$, $0&lt;p&lt;1$. Show that $X_0=1$ and $X_n=p^{-n}\xi_1\cdots\xi_n$, $n=1,2,\dots$, is a nonnegative martingale. What is the limit of $X_n$ as $n\to\infty$?</div>
+<div class="block"><b>Problem.</b> Let $\xi_1,\xi_2,\dots$ be independent Bernoulli random variables with parameter $p$, $0&lt;p&lt;1$. Show that $X_0=1$ and $X_n=p^{-n}\xi_1\cdots\xi_n$, $n=1,2,\dots$, is a nonnegative martingale. What is the limit of $X_n$ as $n\to\infty$?<br><b>Formula:</b> §M2.1, §E4.5</div>
 <div class="block green"><b>Solution.</b> $X_{n+1}=p^{-1}\xi_{n+1}X_n$. By independence of the $\xi_i$:
 $$E(X_{n+1}\mid X_0,\dots,X_n)=X_nE(p^{-1}\xi_{n+1}\mid\xi_1,\dots,\xi_n)=X_np^{-1}E(\xi_{n+1})=X_n .$$
 <b>Limit.</b> $\prod_{i=1}^n\xi_i=1$ w.p. $p^n$ and $0$ w.p. $1-p^n$, so $X_n=p^{-n}$ w.p. $p^n$ and $0$ w.p. $1-p^n$. As $n\to\infty$, $P(X_n=0)=1-p^n\to1$, and once $X_n=0$ it stays $0$. So
@@ -66,7 +67,7 @@ even though $EX_n=1$ for every $n$.</div>
 $$X_{n+1}=\begin{cases}X_n+1&\text{w.p. }\tfrac12,\\X_n-1&\text{w.p. }\tfrac12.\end{cases}$$
 (a) Show that $X_n$ is a nonnegative martingale.
 (b) Suppose $X_0=i>0$. Use the maximal inequality to bound $\Pr\{X_n\ge N\text{ for some }n\ge0\mid X_0=i\}$.<br>
-<i>Note.</i> $X_n$ is the fortune of a player in a fair game who wagers \$1 per bet and must quit when all money is lost ($X_n=0$): the gambler's ruin problem.</div>
+<i>Note.</i> $X_n$ is the fortune of a player in a fair game who wagers \$1 per bet and must quit when all money is lost ($X_n=0$): the gambler's ruin problem.<br><b>Formula:</b> §M2.1, §3.1</div>
 <div class="block green"><b>Solution.</b>
 (a) If $x_n>0$:
 $$E(X_{n+1}\mid X_0=x_0,\dots,X_n=x_n)=(x_n+1)\tfrac12+(x_n-1)\tfrac12=x_n .$$

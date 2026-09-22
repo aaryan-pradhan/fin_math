@@ -18,7 +18,7 @@ A hedge $(\Delta,b)$ holds $\Delta$ shares and $b$ bonds.</div>
 
 <!-- ============================================================ -->
 <h2>Problem 1 &mdash; Call price as a function of strike</h2>
-<div class="block"><b>Problem.</b> For a single-period binomial market, sketch the graph of the call price $C=C(K)$ as a function of the strike $K$. Which features of this function do you think will be common to the call prices in more general markets as well?</div>
+<div class="block"><b>Problem.</b> For a single-period binomial market, sketch the graph of the call price $C=C(K)$ as a function of the strike $K$. Which features of this function do you think will be common to the call prices in more general markets as well?<br><b>Formula:</b> §M4.2, §A1.4, §A2.1</div>
 <div class="block green"><b>Solution.</b> $C(K)$ (Example 13.3) is piecewise linear in $K$:
 <ul>
 <li>$C(0)=S_0$;</li>
@@ -35,7 +35,7 @@ Features common to all calls:
 
 <!-- ============================================================ -->
 <h2>Problem 2 &mdash; Straddle payoff</h2>
-<div class="block"><b>Problem.</b> A <em>straddle</em> is a portfolio of a call and a put on the same underlying stock, with the same strike and the same expiry. Plot the payoff function of the straddle, as a function of the terminal stock price, on one share of the stock.</div>
+<div class="block"><b>Problem.</b> A <em>straddle</em> is a portfolio of a call and a put on the same underlying stock, with the same strike and the same expiry. Plot the payoff function of the straddle, as a function of the terminal stock price, on one share of the stock.<br><b>Formula:</b> §A2.1</div>
 <div class="block green"><b>Solution.</b> The payoff is the sum of the call and put payoffs, (13.5) and (13.6):
 $$(s-K)^+ + (s-K)^- = |s-K|.$$
 It is a V-shape with its vertex at $s=K$: slope $-1$ to the left, slope $+1$ to the right.</div>
@@ -48,7 +48,7 @@ It is a V-shape with its vertex at $s=K$: slope $-1$ to the left, slope $+1$ to 
 <li>Which is cheaper: a bull spread or a call with strike $K_1$ (same stock, same expiry)? Explain.</li>
 <li>In a single-period binomial market with $S_0=5$, $S_1\in\{4,6\}$, $r=0.1$, $K_1=3$ and $K_2=5$, price the bull spread with the risk-neutral ("fair price") formula (13.11).</li>
 <li>Under the assumptions of (iii), construct a replicating portfolio for the bull spread and verify that it replicates the claim.</li>
-</ol></div>
+</ol><br><b>Formula:</b> §A2.1, §A1.4, §A1.5</div>
 <div class="block green"><b>Solution.</b>
 <ol type="i">
 <li>$g(s)=(s-K_1)^+-(s-K_2)^+$. It is piecewise linear: $0$ for $s\le K_1$, slope $1$ on $[K_1,K_2]$, and flat at $K_2-K_1$ for $s\ge K_2$. So $g(0)=0$ and $g(\infty)=K_2-K_1$.</li>
@@ -67,7 +67,7 @@ Check: $V_1(u)=\tfrac12\cdot6-\tfrac{10}{11}\cdot1.1=3-1=2=g(6)$ and $V_1(d)=\tf
 <li>Show that the market is arbitrage-free.</li>
 <li>A contingent claim $X$ has $X(\omega_1)=7$ and $X(\omega_2)=2$. Find its arbitrage-free value at $t=0$.</li>
 <li>Construct a replicating portfolio for $X$ and verify that its values at $t=0$ and $t=1$ equal the price from (ii) and the claim $X$.</li>
-</ol></div>
+</ol><br><b>Formula:</b> §M4.1, §A1.4, §A1.5</div>
 <div class="block green"><b>Solution.</b>
 <ol type="i">
 <li>Verify (13.2): $d=S_1(\omega_2)/S_0=\tfrac89$ and $u=S_1(\omega_1)/S_0=\tfrac43=\tfrac{12}9$, so $d<1+r=\tfrac{10}9<u$.</li>
@@ -84,7 +84,7 @@ $$V_1=\Delta S_1+b(1+r)=\begin{cases}\tfrac94\cdot\tfrac{20}3-\tfrac{36}5\cdot\t
 <li>sketch the graph of the put price $P=P(K)$ as a function of the strike $K$;</li>
 <li>price a put with strike $K=3.8$ on one share with $S_0=4$, if $r=5\%$ and $S_1\in\{3.6,\,4.6\}$;</li>
 <li>find the $t=0$ value of the call with the same strike.</li>
-</ol></div>
+</ol><br><b>Formula:</b> §M4.6, §A1.4</div>
 <div class="block green"><b>Solution.</b>
 <ol type="i">
 <li>The price was computed in Example 13.4. Like the call price in Problem 1, it is piecewise linear, with kinks at $dS_0$ and $uS_0$. Alternatively, put&ndash;call parity (13.15) expresses it through the call price: flip the Problem 1 plot upside down.</li>
@@ -99,7 +99,7 @@ $$P=\frac1{1.05}\left[0.6\,(4.6-3.8)^-+0.4\,(3.6-3.8)^-\right]=\frac{0.4\times0.
 <ol type="i">
 <li>Use Theorem 13.2 to verify (or disprove) that the market is arbitrage-free.</li>
 <li>Let $X$ be a contingent claim with values $X_d$, $X_m$, $X_u$, and assume $X_d&lt;X_m&lt;X_u$. Draw the set of all hedges $(\Delta,b)$ for the claim (as in Fig. 13.3 for the binomial market). Is there a perfect hedge (a replicating portfolio) for $X$?</li>
-</ol></div>
+</ol><br><b>Formula:</b> §A2.3, §A2.4</div>
 <div class="block green"><b>Solution.</b>
 <ol type="i">
 <li>NA is equivalent to the existence of $p_j^*>0$ with $\sum_{j=1}^3p_j^*=1$ and $S_0=\frac1{1+r}(p_1^*dS_0+p_2^*mS_0+p_3^*uS_0)$, i.e. $p_1^*d+p_2^*m+p_3^*u=1+r$. Divide by $p_1^*+p_3^*=1-p_2^*$:
@@ -118,7 +118,7 @@ $$S_1^1(\omega_1)=6,\ S_1^2(\omega_1)=6;\qquad S_1^1(\omega_2)=4,\ S_1^2(\omega_
 <li>Find the EMM $\mathbf P^*$ and use the Completeness Theorem 13.4 to prove or disprove that the market is complete.</li>
 <li>Price the call on one share of stock 1 with expiry $T=1$ and strike $K=5$.</li>
 <li>Find the strategy replicating the call from (iv). Do we really need stock 2 to replicate the call on stock 1?</li>
-</ol></div>
+</ol><br><b>Formula:</b> §A2.3, §A2.4</div>
 <div class="block green"><b>Solution.</b>
 <ol type="i">
 <li>The $t=1$ points are $(6,6)$, $(4,4)$ and $(2,7)$; the $t=0$ point is $(4,5)$.</li>
@@ -141,7 +141,7 @@ $$\begin{cases}6\Delta^1+6\Delta^2+b=1\\ 4\Delta^1+4\Delta^2+b=0\\ 2\Delta^1+7\D
 <li>Construct a replicating portfolio for this option.</li>
 <li>Verify directly that the replicating strategy from (ii) is self-financing.</li>
 <li>Price a call with the same maturity and strike.</li>
-</ol></div>
+</ol><br><b>Formula:</b> §M4.2, §M4.3, §M4.7, §M4.6</div>
 <div class="block green"><b>Solution.</b> $p^*=\dfrac{1.25-0.5}{1.75-0.5}=0.6$.
 <table>
 <tr><th>$t$</th><th>Stock</th><th>Put value</th></tr>
@@ -158,7 +158,7 @@ $$\begin{cases}6\Delta^1+6\Delta^2+b=1\\ 4\Delta^1+4\Delta^2+b=0\\ 2\Delta^1+7\D
 
 <!-- ============================================================ -->
 <h2>Problem 9 &mdash; Four-period binomial call</h2>
-<div class="block"><b>Problem.</b> A four-period binomial market has $u=4/3$, $d=2/3$ and $r=0$ (prices already discounted). With $S_0=81$, use the diagram method to price a call with maturity $T=4$ and strike $K=120$.</div>
+<div class="block"><b>Problem.</b> A four-period binomial market has $u=4/3$, $d=2/3$ and $r=0$ (prices already discounted). With $S_0=81$, use the diagram method to price a call with maturity $T=4$ and strike $K=120$.<br><b>Formula:</b> §M4.2</div>
 <div class="block green"><b>Solution.</b> $p^*=\dfrac{1-2/3}{4/3-2/3}=0.5$. The five terminal prices are $16, 32, 64, 128, 256$, with call payoffs $(S_4-120)^+=0,0,0,8,136$. Working backwards (equivalently, binomial weights $\binom4k/16$):
 $$C=\frac{4\cdot8+1\cdot136}{16}=\mathbf{10.5}.$$</div>
 
@@ -168,7 +168,7 @@ $$C=\frac{4\cdot8+1\cdot136}{16}=\mathbf{10.5}.$$</div>
 <ol type="i">
 <li>With continuously compounded rate $r=0.062$ and volatility $\sigma=0.2$, use the Black&ndash;Scholes formula to price the call with maturity one month later ($T=1/12$ year) and strike $K=18.50$.</li>
 <li>The real-life buy/sell prices of the option were $0.57/0.63$. Taking their mean as the market price, find the volatility for which the Black&ndash;Scholes formula comes closest to the market price. This value is the <em>implied volatility</em>.</li>
-</ol></div>
+</ol><br><b>Formula:</b> not on the sheet &mdash; derived in the solution</div>
 <div class="block green"><b>Solution.</b>
 <ol type="i">
 <li>$$d_1=\frac{\ln1+(0.062+0.02)/12}{0.2\sqrt{1/12}}=0.1184,\qquad d_2=d_1-0.2\sqrt{1/12}=0.0606,$$
@@ -179,7 +179,7 @@ $$C=18.5\,\Phi(0.1184)-18.5\,e^{-0.062/12}\,\Phi(0.0606)\approx\mathbf{0.474}.$$
 
 <!-- ============================================================ -->
 <h2>Problem 11 &mdash; Call and put at two maturities</h2>
-<div class="block"><b>Problem.</b> The current stock price is $S_0=100$, with volatility $40\%$ and continuously compounded rate $r=4\%$ (time unit one year). Use the Black&ndash;Scholes formula and put&ndash;call parity to price the call and put with strike $K=110$ and time to maturity (i) 18 months and (ii) one month. Comment on your findings, in particular on the prices in (ii).</div>
+<div class="block"><b>Problem.</b> The current stock price is $S_0=100$, with volatility $40\%$ and continuously compounded rate $r=4\%$ (time unit one year). Use the Black&ndash;Scholes formula and put&ndash;call parity to price the call and put with strike $K=110$ and time to maturity (i) 18 months and (ii) one month. Comment on your findings, in particular on the prices in (ii).<br><b>Formula:</b> §M4.6</div>
 <div class="block green"><b>Solution.</b> $P=C-S_0+Ke^{-rT}$.
 <ol type="i">
 <li>$T=1.5$: $C\approx\mathbf{17.95}$, $P\approx\mathbf{21.54}$.</li>

@@ -17,7 +17,7 @@
 (a) $E\left((W(t)-W(s))^2\right)$;
 (b) $E(W(s)\mid W(t)=x)$ for $0&lt;s&lt;t$;
 (c) $\operatorname{Cov}(W(s),W(t))$ for $0&lt;s&lt;t$;
-(d) $E(W(t)\mid W(s)=x)$ for $0&lt;s&lt;t$.</div>
+(d) $E(W(t)\mid W(s)=x)$ for $0&lt;s&lt;t$.<br><b>Formula:</b> §6.3, §6.1, §9.2, §9.4</div>
 <div class="block green"><b>Solution.</b>
 <ol type="a">
 <li>$W(t)-W(s)\sim N(0,t-s)$, so the answer is $\mathbf{t-s}$.</li>
@@ -27,22 +27,22 @@
 </ol></div>
 
 <h2>Problem 2 &mdash; Mean of GBM</h2>
-<div class="block"><b>Problem.</b> Let $\{Y(t),t\ge0\}$ be a geometric Brownian motion with $Y(0)=a$. Find $E(Y(t))$.</div>
+<div class="block"><b>Problem.</b> Let $\{Y(t),t\ge0\}$ be a geometric Brownian motion with $Y(0)=a$. Find $E(Y(t))$.<br><b>Formula:</b> §11.2, §1.2</div>
 <div class="block green"><b>Solution.</b> $Y(t)=ae^{X(t)}$, where $X$ is a BM with drift coefficient $\mu$ and variance parameter $\sigma^2$, so $X(t)\sim N(\mu t,\sigma^2t)$. By the normal MGF,
 $$E(Y(t))=a\,e^{\mu t+\sigma^2t/2}=\mathbf{a\,e^{t(\mu+\sigma^2/2)}}.$$</div>
 
 <h2>Problem 3 &mdash; Numerical GBM mean</h2>
-<div class="block"><b>Problem.</b> $\{Y(t)\}$ is a GBM with drift parameter $\mu=0.01$ and volatility $\sigma=0.2$. If $Y(0)=100$, find $E[Y(10)]$.</div>
+<div class="block"><b>Problem.</b> $\{Y(t)\}$ is a GBM with drift parameter $\mu=0.01$ and volatility $\sigma=0.2$. If $Y(0)=100$, find $E[Y(10)]$.<br><b>Formula:</b> §11.2</div>
 <div class="block green"><b>Solution.</b> By Problem 2: $100\,e^{10(0.01+0.02)}=100e^{0.3}\approx\mathbf{134.99}$. The source prints $134.98$, a rounding difference.</div>
 
 <h2>Problem 4 &mdash; Random walk &rarr; BM with drift</h2>
-<div class="block"><b>Problem.</b> A random walk moves up or down $\sqrt{\Delta t}$ in each time step $\Delta t$, with probabilities $p$ and $1-p$, where $p=\tfrac12(1+\mu\sqrt{\Delta t})$. Argue that as $\Delta t\to0$ the limit is a Brownian motion with drift rate $\mu$.</div>
+<div class="block"><b>Problem.</b> A random walk moves up or down $\sqrt{\Delta t}$ in each time step $\Delta t$, with probabilities $p$ and $1-p$, where $p=\tfrac12(1+\mu\sqrt{\Delta t})$. Argue that as $\Delta t\to0$ the limit is a Brownian motion with drift rate $\mu$.<br><b>Formula:</b> §4.2</div>
 <div class="block green"><b>Solution.</b> The source says "See class notes". The argument is the same as in <a href="brownian_motion_additional_problems.html">Brownian Motion Additional Problems, Problem 8(a)</a>. With $X(t)=\sqrt{\Delta t}\sum_{i\le t/\Delta t}X_i$, $X_i=\pm1$:
 $$EX_i=2p-1=\mu\sqrt{\Delta t},\qquad\operatorname{Var}X_i=1-\mu^2\Delta t,$$
 so $EX(t)\to\mu t$ and $\operatorname{Var}X(t)\to t$. The CLT gives normal limits, and independent steps give independent increments.</div>
 
 <h2>Problem 5 &mdash; Conditional distribution of BM with drift</h2>
-<div class="block"><b>Problem.</b> Let $\{X(t)\}$ be a BM with drift coefficient $\mu$ and variance parameter $\sigma^2$. What is the conditional distribution of $X(t)$ given $X(s)=c$ when (i) $s&lt;t$; (ii) $t&lt;s$?</div>
+<div class="block"><b>Problem.</b> Let $\{X(t)\}$ be a BM with drift coefficient $\mu$ and variance parameter $\sigma^2$. What is the conditional distribution of $X(t)$ given $X(s)=c$ when (i) $s&lt;t$; (ii) $t&lt;s$?<br><b>Formula:</b> §9.2, §9.4, §9.6</div>
 <div class="block green"><b>Solution.</b> Write $X(t)=\sigma B(t)+\mu t$.
 <ol type="i">
 <li>$s&lt;t$: $X(t)=c+[X(t)-X(s)]$, with the increment independent and $N(\mu(t-s),\sigma^2(t-s))$:

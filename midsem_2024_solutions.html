@@ -15,7 +15,7 @@
 <div class="block">Calculator and statistical tables allowed. Numerical answers to at least two decimal places. Q1 is answer-only (1&times;6; the answer grid lists a&ndash;j but only a&ndash;f are set); Q2 short notes (2&times;3); Q3&ndash;Q5 full working (3 marks each).</div>
 
 <h2>Q1(a) &mdash; No-sure-win option price [1]</h2>
-<div class="block"><b>Question.</b> A stock is presently selling at Rs 75 per share. After one period its price (in present-value terms) will be either Rs 200 or Rs 50. An option to purchase $y$ units at time 1 for the (present value) price $120y$ costs $cy$. What should $c$ be for there to be no sure win?</div>
+<div class="block"><b>Question.</b> A stock is presently selling at Rs 75 per share. After one period its price (in present-value terms) will be either Rs 200 or Rs 50. An option to purchase $y$ units at time 1 for the (present value) price $120y$ costs $cy$. What should $c$ be for there to be no sure win?<br><b>Formula:</b> §M4.5, §A1.3</div>
 <div class="block green"><b>Answer.</b> $c = \mathbf{13.33}$ $(=40/3)$.
 <br><br>
 <b>Method (&sect;M4.5, &sect;A1.3).</b> Prices are in present value, so $r=0$:
@@ -23,37 +23,40 @@ $$75 = 200p^{*} + 50(1-p^{*}) \;\Longrightarrow\; p^{*} = \tfrac16 .$$
 Payoff $(S_1-120)^+$ is $80$ (up) and $0$ (down), so $c = \tfrac16\cdot 80 = 13.33$. Any other $c$ admits a sure win (hedge: $x$ shares, $y=-\tfrac{150}{80}x$ options).</div>
 
 <h2>Q1(b) &mdash; Random walk as a martingale [1]</h2>
-<div class="block"><b>Question.</b> $X_0=0$, $X_n = Y_1+\dots+Y_n$ with $Y_j$ i.i.d., $E|Y_1|<\infty$. $\{X_n\}$ is a martingale if $E(Y_1) = \;?$</div>
+<div class="block"><b>Question.</b> $X_0=0$, $X_n = Y_1+\dots+Y_n$ with $Y_j$ i.i.d., $E|Y_1|<\infty$. $\{X_n\}$ is a martingale if $E(Y_1) = \;?$<br><b>Formula:</b> §M2.5</div>
 <div class="block green"><b>Answer.</b> $E(Y_1) = \mathbf{0}$.
 <br><br>
 <b>Method (&sect;M2.5).</b> $E[X_{n+1}\mid\mathcal F_n] = X_n + E[Y_{n+1}\mid\mathcal F_n] = X_n + E[Y_1]$ by independence, and this equals $X_n$ iff $E[Y_1]=0$.</div>
 
 <h2>Q1(c) &mdash; Two-barrier exit, zero drift [1]</h2>
-<div class="block"><b>Question.</b> $B(t)$ is Brownian motion from $0$ with $\mu=0$, $\sigma^{2}=1$. Find $P(B \text{ reaches } -2 \text{ before } 1)$.</div>
+<div class="block"><b>Question.</b> $B(t)$ is Brownian motion from $0$ with $\mu=0$, $\sigma^{2}=1$. Find $P(B \text{ reaches } -2 \text{ before } 1)$.<br><b>Formula:</b> §10.4</div>
 <div class="block green"><b>Answer.</b> $\mathbf{1/3 = 0.33}$.
 <br><br>
 <b>Method (&sect;10.4).</b> With zero drift, $B$ is a martingale; by OST $0 = -2\,p + 1\,(1-p)$, so $p = \dfrac{1}{1+2} = \dfrac13$. The nearer barrier (1) is the likelier one.</div>
 
 <h2>Q1(d) &mdash; Variance times covariance [1]</h2>
-<div class="block"><b>Question.</b> Find $\operatorname{Var}(W_4)\times\operatorname{Cov}(W_1,W_4)$.</div>
+<div class="block"><b>Question.</b> Find $\operatorname{Var}(W_4)\times\operatorname{Cov}(W_1,W_4)$.<br><b>Formula:</b> §6.1</div>
 <div class="block green"><b>Answer.</b> $4\times\min(1,4) = 4\times 1 = \mathbf{4}$ (&sect;6.1).</div>
 
 <h2>Q1(e) &mdash; $d\cos(W_t)$ [1]</h2>
-<div class="block"><b>Question.</b> Compute the stochastic differential $d\cos(W_t)$.</div>
+<div class="block"><b>Question.</b> Compute the stochastic differential $d\cos(W_t)$.<br><b>Formula:</b> §I4.3</div>
 <div class="block green"><b>Answer (&sect;I4.3).</b> $f(x)=\cos x$, $f'=-\sin x$, $f''=-\cos x$:
 $$d\cos(W_t) = \mathbf{-\sin(W_t)\,dW_t - \tfrac12\cos(W_t)\,dt}.$$</div>
 
 <h2>Q1(f) &mdash; Hitting is certain [1]</h2>
-<div class="block"><b>Question.</b> $T_a$ is the time for $W$ to hit $a$. Find $P(T_a<\infty)$.</div>
+<div class="block"><b>Question.</b> $T_a$ is the time for $W$ to hit $a$. Find $P(T_a<\infty)$.<br><b>Formula:</b> §12.5</div>
 <div class="block green"><b>Answer.</b> $\mathbf{1}$ (&sect;12.5): $P(T_a\le t) = 2\Phi(-|a|/\sqrt t)\to 2\Phi(0) = 1$. (Yet $E[T_a]=\infty$ for $a\ne0$.)</div>
 
 <h2>Q2(a) &mdash; Short note: call options [2]</h2>
+<p><b>Formula:</b> §A2.1, §A2.2</p>
 <div class="block green"><b>Answer (&sect;A2.1, &sect;A2.2).</b> A call gives the holder the <em>right, not the obligation</em>, to <b>buy</b> one unit of the underlying at strike $K$ at (European) or up to (American) maturity $T$. Payoff $(S_T-K)^{+}$: worthless if $S_T\le K$, unbounded upside. The buyer pays a premium $C$ today; the writer takes the obligation. No-arbitrage price in the binomial model: $C = (1+r)^{-T}E^{*}[(S_T-K)^{+}]$; in continuous time, Black&ndash;Scholes. Bounds: $\max(S_0 - Ke^{-rT},0)\le C\le S_0$. Used to bet on a rise with limited loss, or to cap the cost of a future purchase. On a non-dividend stock, American call = European call (early exercise never optimal).</div>
 
 <h2>Q2(b) &mdash; Short note: put options [2]</h2>
+<p><b>Formula:</b> §M4.6</p>
 <div class="block green"><b>Answer.</b> A put gives the right, not the obligation, to <b>sell</b> one unit at strike $K$. Payoff $(K-S_T)^{+}$, bounded above by $K$. Price $P = (1+r)^{-T}E^{*}[(K-S_T)^{+}]$; bounds $\max(Ke^{-rT}-S_0,0)\le P\le Ke^{-rT}$. Used as insurance on a held stock (protective put: floor at $K$). Linked to the call by <b>put&ndash;call parity</b> (&sect;M4.6): $C - P = S_0 - Ke^{-rT}$. Unlike the call, an American put can be worth strictly more than the European one: deep in the money, taking $K$ now and earning interest beats waiting.</div>
 
 <h2>Q2(c) &mdash; Short note: no-arbitrage principle [2]</h2>
+<p><b>Formula:</b> §A1.1, §A2.3</p>
 <div class="block green"><b>Answer (&sect;A1.1, &sect;A2.3).</b> An <b>arbitrage</b> is a self-financing strategy with $V_0 \le 0$, $V_T\ge0$ almost surely and $P(V_T>0)>0$: no cost, no risk of loss, positive chance of gain. The principle: in equilibrium no arbitrage exists, because traders exploiting it would move prices until it vanished. Consequences:
 <ul>
 <li><b>Law of one price:</b> two portfolios with the same payoff in every state have the same price today. Hence price of a claim = cost of its replicating portfolio.</li>
@@ -62,7 +65,7 @@ $$d\cos(W_t) = \mathbf{-\sin(W_t)\,dW_t - \tfrac12\cos(W_t)\,dt}.$$</div>
 </ul></div>
 
 <h2>Q3(a) &mdash; Dynamic programming and the optimality equation [3]</h2>
-<div class="block"><b>Question.</b> Explain dynamic programming in Markov decision processes. Explain the optimality equation and derive it using the total probability formula.</div>
+<div class="block"><b>Question.</b> Explain dynamic programming in Markov decision processes. Explain the optimality equation and derive it using the total probability formula.<br><b>Formula:</b> not on the sheet &mdash; derived in the solution</div>
 <div class="block green"><b>Answer.</b> An MDP has states $x$, actions $a\in A(x)$, one-step rewards $r(x,a)$ and transition law $P(y\mid x,a)$ that depends only on the current state and action (Markov). A policy picks an action at each stage; the goal is to maximise expected total reward over $n$ stages. <b>Dynamic programming</b> solves this backwards: whatever the first decision, the remaining decisions must be optimal for the state they start from (Bellman's principle of optimality). So the $n$-stage problem reduces to one decision plus an already-solved $(n-1)$-stage problem.
 <br><br>
 <b>Derivation.</b> Let $V_n(x)$ be the maximal expected reward with $n$ stages left from state $x$, $V_0$ the terminal reward. Fix a first action $a$. By total probability over the next state $y$,
@@ -72,7 +75,7 @@ $$V_n(x) = \max_{a\in A(x)}\Big\{ r(x,a) + \sum_{y}P(y\mid x,a)\,V_{n-1}(y)\Big\
 This is the <b>optimality equation</b>. Solve $V_1, V_2, \dots$ in turn; the maximising $a$ at each $(x,n)$ gives an optimal policy. Worked example: <a href="midsem_2025_solutions.html">Midsem 2025 Q3(b)</a>.</div>
 
 <h2>Q3(b) &mdash; Random walk converges to BM with drift [3]</h2>
-<div class="block"><b>Question.</b> In each $\Delta t$ the walk moves $+\sqrt{\Delta t}$ with probability $p = \tfrac12(1+\mu\sqrt{\Delta t})$ and $-\sqrt{\Delta t}$ with probability $1-p$. Argue that as $\Delta t\to0$ the limit is Brownian motion with drift $\mu$.</div>
+<div class="block"><b>Question.</b> In each $\Delta t$ the walk moves $+\sqrt{\Delta t}$ with probability $p = \tfrac12(1+\mu\sqrt{\Delta t})$ and $-\sqrt{\Delta t}$ with probability $1-p$. Argue that as $\Delta t\to0$ the limit is Brownian motion with drift $\mu$.<br><b>Formula:</b> §4.2</div>
 <div class="block green"><b>Answer (&sect;4.2).</b> Let $X_i = \pm1$ be the step signs, so $X(t) = \sqrt{\Delta t}\sum_{i=1}^{n}X_i$ with $n = t/\Delta t$ steps. Per step,
 $$E[X_i] = 2p-1 = \mu\sqrt{\Delta t},\qquad \operatorname{Var}(X_i) = 1-(2p-1)^{2} = 1-\mu^{2}\Delta t.$$
 Hence
@@ -81,7 +84,7 @@ As $\Delta t\to0$, $X(t)$ is a sum of $n\to\infty$ i.i.d. terms, so by the CLT $
 <div class="block warn">The $\sqrt{\Delta t}$ inside $p$ is essential: it makes the per-step bias $O(\sqrt{\Delta t})$, which after $t/\Delta t$ steps of size $\sqrt{\Delta t}$ gives a finite drift $\mu t$. A bias of order 1 would blow up.</div>
 
 <h2>Q4(a) &mdash; OU SDE as a stochastic integral [3]</h2>
-<div class="block"><b>Question.</b> Solve $dX_t = -X_t\,dt + dW_t$, $X_0 = x_0$, as a stochastic integral. Is it an OU process? Find $E(X_t)$ and $\operatorname{Var}(X_t)$.</div>
+<div class="block"><b>Question.</b> Solve $dX_t = -X_t\,dt + dW_t$, $X_0 = x_0$, as a stochastic integral. Is it an OU process? Find $E(X_t)$ and $\operatorname{Var}(X_t)$.<br><b>Formula:</b> §I7.1, §I7.3, §I1.5, §I1.4</div>
 <div class="block green"><b>Answer (&sect;I7.1, &sect;I7.3).</b> Integrating factor $e^{t}$: by the product rule (no correction, $e^{t}$ is deterministic),
 $$d(e^{t}X_t) = e^{t}X_t\,dt + e^{t}dX_t = e^{t}dW_t .$$
 Integrate from $0$ to $t$:
@@ -91,7 +94,7 @@ $$E(X_t) = \mathbf{x_0e^{-t}},\qquad \operatorname{Var}(X_t) = \int_0^{t}e^{-2(t
 by the It&ocirc; isometry (&sect;I1.4). As $t\to\infty$, $X_t\to N(0,\tfrac12)$.</div>
 
 <h2>Q4(b) &mdash; Exponential martingale [3]</h2>
-<div class="block"><b>Question.</b> $X_t := e^{W_t - t/2}$. (i) Is $X_t$ a martingale? (ii) Compute $dX_t$ by It&ocirc;.</div>
+<div class="block"><b>Question.</b> $X_t := e^{W_t - t/2}$. (i) Is $X_t$ a martingale? (ii) Compute $dX_t$ by It&ocirc;.<br><b>Formula:</b> §7.3, §I3.3, §I5.1</div>
 <div class="block green"><b>(i) Yes</b> (&sect;7.3). For $s<t$, $W_t-W_s\sim N(0,t-s)$ is independent of $\mathcal F_s$:
 $$E[X_t\mid\mathcal F_s] = e^{W_s - t/2}\,E\big[e^{W_t-W_s}\big] = e^{W_s-t/2}e^{(t-s)/2} = X_s .$$
 Also $E|X_t| = 1<\infty$ and $X_t$ is adapted.
@@ -101,7 +104,7 @@ $$dX_t = \big(-\tfrac12 X_t + \tfrac12 X_t\big)dt + X_t\,dW_t = \mathbf{X_t\,dW_
 Zero drift confirms (i) (&sect;I5.1).</div>
 
 <h2>Q5(a) &mdash; The single-period binomial market [3]</h2>
-<div class="block"><b>Question.</b> Derive and explain the single-period binomial market.</div>
+<div class="block"><b>Question.</b> Derive and explain the single-period binomial market.<br><b>Formula:</b> §M3, §M4, §A1</div>
 <div class="block green"><b>Answer (&sect;M3, &sect;M4, &sect;A1).</b> Two assets, two dates, $\Omega=\{\omega_1,\omega_2\}$: a bond $B_0 = 1$, $B_1 = 1+r$; a stock $S_0$, with $S_1 = uS_0$ on $\omega_1$ and $dS_0$ on $\omega_2$, $d<u$.
 <ol>
 <li><b>No arbitrage $\iff d < 1+r < u$.</b> If $1+r\le d$, borrow to buy stock: never lose, sometimes win. If $1+r\ge u$, short the stock and lend. Otherwise any portfolio that gains in one state loses in the other.</li>
@@ -113,7 +116,7 @@ $$\Delta = \frac{X_u - X_d}{(u-d)S_0},\qquad \beta = \frac{uX_d - dX_u}{(u-d)(1+
 </ol></div>
 
 <h2>Q5(b) &mdash; Numerical one-period market [3]</h2>
-<div class="block"><b>Question.</b> $S_0=5$, $B_0=1$, $S_1(\omega_1)=6$, $S_1(\omega_2)=40/9$, $r=1/9$. (i) Show the market is arbitrage-free. (ii) Price the claim $X(\omega_1)=6$, $X(\omega_2)=1$. (iii) Build the replicating portfolio and verify it at $t=0$ and $t=1$.</div>
+<div class="block"><b>Question.</b> $S_0=5$, $B_0=1$, $S_1(\omega_1)=6$, $S_1(\omega_2)=40/9$, $r=1/9$. (i) Show the market is arbitrage-free. (ii) Price the claim $X(\omega_1)=6$, $X(\omega_2)=1$. (iii) Build the replicating portfolio and verify it at $t=0$ and $t=1$.<br><b>Formula:</b> §M3.4, §A1.4, §A1.5</div>
 <div class="block green"><b>(i)</b> $u = 6/5 = 1.2$, $d = 8/9 = 0.889$, $1+r = 10/9 = 1.111$. Since $d < 1+r < u$, the market is arbitrage-free. Equivalently
 $$q = \frac{10/9 - 8/9}{6/5 - 8/9} = \frac{2/9}{14/45} = \frac57 = 0.7143\in(0,1).$$
 <b>(ii)</b>

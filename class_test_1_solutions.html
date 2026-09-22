@@ -32,12 +32,14 @@
 <div class="block warn">Set 3 Q9: the key prints $e^3(e^2-1)\approx 948.43$. The closed form is right, but its value is $\approx 128.34$. ($Var(W_2 + W_4) = 2 + 4 + 2\cdot 2 = 10$, so $Cov = e^5 - e^{1}e^{2} = e^3(e^2 - 1)$.)</div>
 
 <h2>Q1: Distribution of $\int_0^1 t\,dW_t$</h2>
+<p><b>Formula:</b> §I1.5, §I1.4</p>
 <div class="block">$$E\left[\int_0^1 t\,dW_t\right] = 0$$
 Itô isometry (deterministic integrand):
 $$Var = E\left[\left(\int_0^1 t\,dW_t\right)^2\right] = \int_0^1 t^2\,dt = \frac13$$
 So $\int_0^1 t\,dW_t \sim N(0, 1/3)$.</div>
 
 <h2>Q2: $E(W_2^2W_3^2)$</h2>
+<p><b>Formula:</b> §6.4, §6.3</p>
 <div class="block">Independent increments: $Z = W_3 - W_2$, $W_3 = W_2 + Z$.
 <ul>
 <li>$W_2\sim N(0,2)$, so $E(W_2^2) = 2$.</li>
@@ -53,6 +55,7 @@ $$E(W_2^2W_3^2) = E\left[W_2^2(W_2^2 + 2W_2Z + Z^2)\right] = E(W_2^4) + 2E(W_2^3
 $$E(W_2^2W_3^2) = 12 + 0 + 2 = 14$$</div>
 
 <h2>Q3: Is $X(t) = e^{-t}W(e^{2t})$ Gaussian?</h2>
+<p><b>Formula:</b> §5.3, §5.5</p>
 <div class="block def">Gaussian process: for every finite $t_1,\dots,t_n$, $(X(t_1),\dots,X(t_n))$ is multivariate Gaussian.</div>
 <div class="block"><ol>
 <li>$W$ is a Gaussian process.</li>
@@ -62,6 +65,7 @@ $$E(W_2^2W_3^2) = 12 + 0 + 2 = 14$$</div>
 Yes.</div>
 
 <h2>Q4: $4W_1 + 6W_3$</h2>
+<p><b>Formula:</b> §6.2, §1.6</p>
 <div class="block">Linear combination of jointly Gaussian variables, so normal.
 <ul>
 <li>Mean: $4E[W_1] + 6E[W_3] = 0$.</li>
@@ -71,6 +75,7 @@ $$\sigma^2 = 16(1) + 36(3) + 48(1) = 172$$</li>
 $4W_1 + 6W_3 \sim N(0, 172)$.</div>
 
 <h2>Q5: Is $Y_t = e^{t/2}\sin W_t$ a martingale?</h2>
+<p><b>Formula:</b> §7.4, §I4.3</p>
 <div class="block">Show $E[Y_t\mid\mathcal{F}_s] = Y_s$ for $0\le s\le t$.<br>
 <strong>1. Independent increments.</strong> $W_t = (W_t - W_s) + W_s$, $\sin(A+B) = \sin A\cos B + \cos A\sin B$:
 $$Y_t = e^{t/2}\left[\sin(W_t - W_s)\cos W_s + \cos(W_t - W_s)\sin W_s\right]$$
@@ -87,6 +92,7 @@ Yes.</div>
 <div class="block green">Same computation for $e^{ct}\sin W_t$ or $e^{ct}\cos W_t$ gives $e^{(c - 1/2)(t-s)}Y_s$: martingale iff $c = \tfrac12$. Hence Set 2/3 (with $e^t$): No.</div>
 
 <h2>Q6: GBM, $E[Y(10)]$</h2>
+<p><b>Formula:</b> §11.2, §1.2</p>
 <div class="block"><strong>Method 1 (SDE).</strong> $dY = \mu Y\,dt + \sigma Y\,dW$, solution $Y(t) = Y(0)\exp\left((\mu - \tfrac12\sigma^2)t + \sigma W(t)\right)$:
 $$E[Y(t)] = Y(0)e^{\mu t},\qquad E[Y(10)] = 5e^{0.1}\approx 5.5259$$
 <strong>Method 2 (exponent).</strong> $Y(t) = Y(0)e^{\mu t + \sigma W(t)}$:
@@ -95,12 +101,15 @@ $$E[Y(10)] = 5e^{0.55}\approx 8.6663$$
 Formula used in class: Method 2. Answer $5e^{0.55}$ (both accepted).</div>
 
 <h2>Q7: Wiener process is Gaussian</h2>
+<p><b>Formula:</b> §5.1, §5.3</p>
 <div class="block">True.</div>
 
 <h2>Q8: Martingale mean</h2>
+<p><b>Formula:</b> §M2.4</p>
 <div class="block">(c): the mean of a martingale is constant in time ($E[M_t] = E[E[M_t\mid\mathcal{F}_0]] = E[M_0]$).</div>
 
 <h2>Q9: $Cov(Y_1,Y_2)$, $Y_t = e^{W_t}$</h2>
+<p><b>Formula:</b> §6.5</p>
 <div class="block">$Cov(Y_1,Y_2) = E[Y_1Y_2] - E[Y_1]E[Y_2]$.<br>
 <strong>1.</strong> $E[e^{W_t}] = e^{t/2}$: $E[Y_1]E[Y_2] = e^{1/2}e^{1} = e^{3/2}$.<br>
 <strong>2.</strong> $E[Y_1Y_2] = E[e^{W_1 + W_2}]$, with $W_1 + W_2$ normal, mean $0$,
@@ -109,6 +118,7 @@ $$Var(W_1 + W_2) = 1 + 2 + 2\min(1,2) = 5 \quad\Rightarrow\quad E[e^{W_1 + W_2}]
 $$Cov(Y_1,Y_2) = e^{5/2} - e^{3/2} = e^{3/2}(e - 1)$$</div>
 
 <h2>Q10: Gambler's ruin (win 10 / lose 5)</h2>
+<p><b>Formula:</b> §3.1, §3.2</p>
 <div class="block"><strong>Gambler's ruin.</strong> Shift: lower barrier $0$, start $z = 5$, upper barrier $a = 15$, $p = q = \tfrac12$.
 <ul>
 <li>(a) $P_z = \frac{z}{a} = \frac{5}{15} = \frac13$.</li>
