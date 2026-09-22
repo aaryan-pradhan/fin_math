@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Martingale, BM and Ito Problems</title>
+<link rel="stylesheet" href="note.css">
+<script src="note.js"></script>
+</head>
+<body>
+
+<h1>Martingale, BM and It&ocirc; Problems</h1>
+<p class="lede">Elements of Stochastic Modelling, &sect;11.7 Problems 1&ndash;27 (assignment on MG, BM, SBM, stochastic calculus and SDE). Each problem is followed by its solution. Sources: <a href="Assignments--MG, BM, SBM, Sto. Calculus, SDE (2) (3).pdf">Assignments--MG, BM, SBM, Sto. Calculus, SDE (2) (3).pdf</a> (problems) and <a href="Solution assignment-- MG, BM, SBM, sto calculus, SDE (2).pdf">Solution assignment-- MG, BM, SBM, sto calculus, SDE (2).pdf</a> (solutions). Worked class solutions of Q19&ndash;21 are in <a href="the first time the BM crosses one of the two.pdf">the first time the BM crosses one of the two.pdf</a>, and of Q24, 26 and 27 in <a href="New Note (1).pdf">New Note (1).pdf</a>.</p>
+
+<div class="block def">Conditional expectation rules used below:
+<b>CE1</b> linearity;
+<b>CE2</b> pull out what is known: if $Y$ is $\mathcal G$-measurable, $E(YZ\mid\mathcal G)=YE(Z\mid\mathcal G)$;
+<b>CE3</b> independence: if $Z\perp\mathcal G$, $E(Z\mid\mathcal G)=EZ$;
+<b>CE4</b> tower: $\mathcal H\subset\mathcal G\Rightarrow E(E(Z\mid\mathcal G)\mid\mathcal H)=E(Z\mid\mathcal H)$.
+Theorem 11.2 is optional stopping, $EX_\tau=EX_0$. Theorem 11.6 gives the three BM martingales $W_t$, $W_t^2-t$ and $e^{uW_t-u^2t/2}$.</div>
+
+<!-- ============================================================ -->
+<h2>Problem 1 &mdash; Conditioning a random walk on $S_n$</h2>
+<div class="block"><b>Problem.</b> Let $X_1,X_2,\dots$ be i.i.d. with $EX_1=\mu$ and $\operatorname{Var}X_1=\sigma^2&lt;\infty$. Put $S_0:=0$ and $S_n:=S_{n-1}+X_n$, $n\ge1$. Compute
+(i) $E(S_{n+m}\mid S_n)$; (ii) $E(X_1\mid S_n)$, $n\ge1$; (iii) $E(S_{n+m}^2\mid S_n)$; (iv) $E(S_m\mid S_n)$, $m=0,1,\dots,n$.<br>
+<i>Hints.</i> (ii) By symmetry, $E(X_1\mid S_n)=E(X_2\mid S_n)$ ($n\ge2$), and so on. (iv) Use one of (i)&ndash;(iii).</div>
+<div class="block green"><b>Solution.</b>
+<ol type="i">
+<li>$E(S_{n+m}\mid S_n)\overset{\text{CE1}}=E(S_n\mid S_n)+E(X_{n+1}+\dots+X_{n+m}\mid S_n)\overset{\text{CE2,CE3}}=\mathbf{S_n+m\mu}$.</li>
+<li>$S_n=E(X_1+\dots+X_n\mid S_n)=\sum_{k\le n}E(X_k\mid S_n)=nE(X_1\mid S_n)$, so $E(X_1\mid S_n)=\mathbf{S_n/n}$.</li>
+<li>$$E(S_{n+m}^2\mid S_n)=S_n^2+2S_nE(X_{n+1}+\dots+X_{n+m})+E(X_{n+1}+\dots+X_{n+m})^2$$
+$$=S_n^2+2S_nm\mu+m\sigma^2+m^2\mu^2=\mathbf{(S_n+m\mu)^2+m\sigma^2}.$$</li>
+<li>$E(S_m\mid S_n)=\sum_{k\le m}E(X_k\mid S_n)=\mathbf{\tfrac mnS_n}$, by (ii).</li>
+</ol></div>
+
+<!-- ============================================================ -->
+<h2>Problem 2 &mdash; Poisson process conditional moments</h2>
+<div class="block"><b>Problem.</b> Let $\{N_t\}_{t\ge0}$ be a Poisson process with rate $\lambda>0$ and $\mathcal F_t=\sigma\{N_s,0\le s\le t\}$. Find
+(i) $E(N_{t+s}\mid\mathcal F_t)$, $s,t\ge0$;
+(ii) $E(N_{t+s}^2\mid\mathcal F_t)$;
+(iii) $E(N_s\mid\mathcal F_t)$ and $E(N_s^2\mid\mathcal F_t)$, $0\le s\le t$;
+(iv) $E(N_s\mid N_t)$ and $E(N_s^2\mid N_t)$, $0\le s\le t$.<br>
+<i>Hint.</i> It is not much different from the previous problem.</div>
+<div class="block green"><b>Solution.</b>
+<ol type="i">
+<li>$E(N_{t+s}\mid\mathcal F_t)=N_t+E(N_{t+s}-N_t)=\mathbf{N_t+\lambda s}$ (CE1&ndash;CE3).</li>
+<li>$\mathbf{(N_t+\lambda s)^2+\lambda s}$, by the argument of Problem 1(iii), using $EN_s=\operatorname{Var}N_s=\lambda s$.</li>
+<li>$E(N_s\mid\mathcal F_t)=N_s$ and $E(N_s^2\mid\mathcal F_t)=N_s^2$ by CE2, since $N_s$ (and so $N_s^2$) is $\mathcal F_t$-measurable.</li>
+<li>$(N_s\mid N_t=n)\sim\text{Bin}(n,s/t)$ (Example 2.5). So
+$$E(N_s\mid N_t)=\frac stN_t,\qquad E(N_s^2\mid N_t)=\frac{s(t-s)}{t^2}N_t+\frac{s^2}{t^2}N_t^2 .$$</li>
+</ol></div>
+
+<!-- ============================================================ -->
+<h2>Problem 3 &mdash; Which random times are stopping times?</h2>
+<div class="block"><b>Problem.</b> Let $\{X_t\}_{t=0,1,\dots,T}$ be a positive process adapted to $\mathbf F=\{\mathcal F_t\}$. In each case, say whether $\tau$ is a stopping time w.r.t. $\mathbf F$. In (iii)&ndash;(iv), if the condition is never met for $t\le T$, put $\tau:=T$. Explain, for example by expressing $\{\tau\le t\}$ in terms of the $X_k$.
+(i) $\tau:=m=$ const;
+(ii) $\tau:=\tau_1\wedge\tau_2$, where $\tau_1,\tau_2$ are STs;
+(iii) $\tau:=\min\{t\ge0:X_{t+1}/X_t>1\}$;
+(iv) $\tau:=\min\{t\ge0:\sum_{k=0}^tX_k>X_t^2\}$;
+(v) $\tau:=\max\{t\le T:X_t>10\}$.</div>
+<div class="block green"><b>Solution.</b>
+<ol type="i">
+<li>$\{\tau\le t\}=\Omega$ if $m\le t$ and $\emptyset$ if $m>t$. Both are in $\mathcal F_t$. <b>ST.</b></li>
+<li>$\{\tau_1\wedge\tau_2\le t\}=\{\tau_1\le t\}\cup\{\tau_2\le t\}\in\mathcal F_t$. <b>ST.</b> Likewise $\{\tau_1\vee\tau_2\le t\}=\{\tau_1\le t\}\cap\{\tau_2\le t\}$, so the maximum is also an ST.</li>
+<li>$\{\tau>t\}=\bigcap_{k=0}^t\{X_{k+1}/X_k\le1\}$. The last event involves $X_{t+1}$, which is in general not $\mathcal F_t$-measurable. <b>Not necessarily an ST</b> (it looks one step ahead).</li>
+<li>$\{\tau>t\}=\bigcap_{j=0}^t\{\sum_{k=0}^jX_k\le X_j^2\}\in\mathcal F_t$, so $\{\tau\le t\}\in\mathcal F_t$. <b>ST.</b></li>
+<li>$\{\tau=t\}=\{X_t>10\}\cap\left[\bigcap_{k=t+1}^{T}\{X_k\le10\}\right]$, and the bracket is in general $\notin\mathcal F_t$. <b>Not necessarily an ST</b> (a last-exit time).</li>
+</ol></div>
+<div class="block warn">The source prints the intersection in (v) as $\bigcap_{k=t+1}^{10}$. The upper index should be $T$: "no later visit above 10 up to the horizon".</div>
+
+<!-- ============================================================ -->
+<h2>Problem 4 &mdash; The L&eacute;vy martingale</h2>
+<div class="block"><b>Problem.</b> Let $Y$ be integrable ($E|Y|&lt;\infty$) on a filtered space $(\Omega,\mathcal F,\mathbf F=\{\mathcal F_t\}_{t\ge0},\mathbf P)$. Show that $X_t:=E(Y\mid\mathcal F_t)$ is an MG.</div>
+<div class="block green"><b>Solution.</b>
+<ul>
+<li>Adapted: by the definition of conditional expectation.</li>
+<li>Integrable: $E|X_t|\le E|Y|&lt;\infty$ (from CE4).</li>
+<li>MG property: for $0\le s&lt;t$, by CE4, $E(X_t\mid\mathcal F_s)=E(E(Y\mid\mathcal F_t)\mid\mathcal F_s)=E(Y\mid\mathcal F_s)=X_s$.</li>
+</ul></div>
+
+<!-- ============================================================ -->
+<h2>Problem 5 &mdash; Orthogonal increments</h2>
+<div class="block"><b>Problem.</b> Let $\{X_t\}_{t\ge0}$ be a square-integrable MG ($EX_t^2&lt;\infty$). Show that it has orthogonal increments: for any $0\le t_1\le t_2\le t_3\le t_4$, $E(X_{t_2}-X_{t_1})(X_{t_4}-X_{t_3})=0$.</div>
+<div class="block green"><b>Solution.</b> $X_{t_1}$ and $X_{t_2}$ are $\mathcal F_{t_3}$-measurable, so
+$$E(X_{t_2}-X_{t_1})(X_{t_4}-X_{t_3})=E\left[(X_{t_2}-X_{t_1})\,E(X_{t_4}-X_{t_3}\mid\mathcal F_{t_3})\right]=0,$$
+because $E(X_{t_4}-X_{t_3}\mid\mathcal F_{t_3})=X_{t_3}-X_{t_3}=0$. Square integrability makes the product's expectation exist (Cauchy&ndash;Bunyakovskii).</div>
+
+<!-- ============================================================ -->
+<h2>Problem 6 &mdash; $S_n^2-n\sigma^2$ is a martingale</h2>
+<div class="block"><b>Problem.</b> Let $S_0:=0$ and $S_n:=Y_1+\dots+Y_n$, with $Y_j$ i.i.d., $EY_j=0$ and $\operatorname{Var}Y_j=\sigma^2&lt;\infty$. Show that $X_n:=S_n^2-n\sigma^2$ is an MG (i) w.r.t. $\mathcal F_n=\sigma(Y_1,\dots,Y_n)$; (ii) w.r.t. its natural filtration $\mathcal F_n'=\sigma(X_1,\dots,X_n)$.<br>
+<i>Hint.</i> (ii) Use (i) and $\mathcal F_n'\subset\mathcal F_n$ (why does this hold?).</div>
+<div class="block green"><b>Solution.</b> The process is adapted. It is integrable: $E|X_n|\le ES_n^2+n\sigma^2=2n\sigma^2&lt;\infty$.
+<ol type="i">
+<li>$$E(X_{n+1}\mid\mathcal F_n)=E(S_n^2+2S_nY_{n+1}+Y_{n+1}^2\mid\mathcal F_n)-(n+1)\sigma^2=S_n^2+0+\sigma^2-(n+1)\sigma^2=X_n .$$</li>
+<li>Each $X_k=S_k^2-k\sigma^2$, $k\le n$, is a function of $Y_1,\dots,Y_n$, so $\mathcal F_n'\subset\mathcal F_n$. By CE4, $E(X_{n+1}\mid\mathcal F_n')=E[E(X_{n+1}\mid\mathcal F_n)\mid\mathcal F_n']=E(X_n\mid\mathcal F_n')=X_n$.</li>
+</ol></div>
+
+<!-- ============================================================ -->
+<h2>Problem 7 &mdash; Poisson martingales</h2>
+<div class="block"><b>Problem.</b> Let $\{N_t\}$ be a Poisson process with rate $\lambda>0$. Show that (i) $N_t-\lambda t$; (ii) $(N_t-\lambda t)^2-\lambda t$; (iii) $\exp\{uN_t-\lambda t(e^u-1)\}$ ($u$ a fixed real) are MGs w.r.t. $\mathcal F_t=\sigma(N_s,s\le t)$.</div>
+<div class="block green"><b>Solution.</b> Same as the proof of Theorem 11.6: write $N_t=N_s+(N_t-N_s)$ with the increment independent of $\mathcal F_s$ and $\sim\text{Poi}(\lambda(t-s))$.
+<ol type="i">
+<li>$E(N_t-\lambda t\mid\mathcal F_s)=N_s+\lambda(t-s)-\lambda t=N_s-\lambda s$.</li>
+<li>Let $M_t=N_t-\lambda t$ and $D=M_t-M_s$, so $ED=0$ and $ED^2=\lambda(t-s)$. Then $E(M_t^2\mid\mathcal F_s)=M_s^2+2M_s\cdot0+\lambda(t-s)$, so $E(M_t^2-\lambda t\mid\mathcal F_s)=M_s^2-\lambda s$.</li>
+<li>The Poisson MGF is $Ee^{u(N_t-N_s)}=e^{\lambda(t-s)(e^u-1)}$. So $E(e^{uN_t}\mid\mathcal F_s)=e^{uN_s}e^{\lambda(t-s)(e^u-1)}$, and multiplying by $e^{-\lambda t(e^u-1)}$ gives $e^{uN_s-\lambda s(e^u-1)}$.</li>
+</ol></div>
+
+<!-- ============================================================ -->
+<h2>Problem 8 &mdash; Symmetric walk between two barriers</h2>
+<div class="block"><b>Problem.</b> Let $S_0:=0$ and $S_n:=Y_1+\dots+Y_n$, with $Y_j$ i.i.d., $P(Y_1=1)=P(Y_1=-1)=\tfrac12$. Let $\tau:=\min\{n\ge0:S_n=a\text{ or }S_n=b\}$ for integers $a&lt;0&lt;b$. Use Theorem 11.2, without checking its conditions in detail, to (i) find the distribution of $S_\tau$; (ii) compute $E\tau$.<br>
+<i>Hints.</i> (i) Use the MG $X_n:=S_n$. (ii) Use (i) and the MG from Problem 6.</div>
+<div class="block green"><b>Solution.</b>
+<ol type="i">
+<li>$0=ES_0=ES_\tau=aP(S_\tau=a)+bP(S_\tau=b)=(a-b)P(S_\tau=a)+b$, so
+$$P(S_\tau=a)=\frac b{b-a},\qquad P(S_\tau=b)=\frac{-a}{b-a}.$$</li>
+<li>Apply Theorem 11.2 to $X_n=S_n^2-n$: $0=E(S_\tau^2-\tau)=\dfrac{a^2b}{b-a}+\dfrac{b^2(-a)}{b-a}-E\tau=-ab-E\tau$. So $E\tau=\mathbf{-ab}$.</li>
+</ol></div>
+
+<!-- ============================================================ -->
+<h2>Problem 9 &mdash; Martingale transforms and the doubling strategy</h2>
+<div class="block"><b>Problem.</b> In a fair game betting \$1 per play (win/lose w.p. $\tfrac12$, independently), $\{X_n:=$ fortune after $n$ plays$\}$ is an MG w.r.t. its history $\mathbf F$. Now let the stake on play $n$ be a bounded amount $Y_n$ chosen <em>before</em> the play, from the history up to play $n-1$. So $|Y_n|\le C_n&lt;\infty$ and $\{Y_n\}$ is predictable. The net gain after $n$ plays is
+$$Z_n:=\sum_{k=1}^nY_k(X_k-X_{k-1}),\qquad Z_0=0,$$
+the <em>martingale transform</em> of $X_n$ by $Y_n$.
+<ol type="i">
+<li>Show that $\{Z_n\}$ is an MG w.r.t. $\mathbf F$.</li>
+<li>The "martingale" strategy: start with a unit stake and double it after each loss; reset to one after each win. Represent the net gain $\{Z_n\}$ as a martingale transform by specifying $\{X_n\}$ and $\{Y_n\}$.</li>
+<li>Stop at the time $\tau$ of the first win. Find the distribution and expectation of $\tau$, and check whether Theorem 11.2 holds for $\{Z_n\}$ and $\tau$.</li>
+<li>Compute $E(Z_n;\tau>n)$ and check whether condition (11.11), sufficient for (11.9), holds.</li>
+</ol></div>
+<div class="block green"><b>Solution.</b>
+<ol type="i">
+<li>Adapted. Integrable: $|Z_n|\le\max_{j\le n}|X_j-X_{j-1}|\sum_{k\le n}|Y_k|\le\sum_{k\le n}C_k$. MG: $E(Z_{n+1}-Z_n\mid\mathcal F_n)=Y_{n+1}E(X_{n+1}-X_n\mid\mathcal F_n)=0$ by CE2.</li>
+<li>$X_n$ is the \$1-per-play fortune. $Y_1=1$, and for $n>1$, $Y_n=2Y_{n-1}$ if $X_{n-1}-X_{n-2}=-1$ (loss) and $Y_n=1$ if it was $+1$ (win).</li>
+<li>With $\xi_n:=X_n-X_{n-1}$ i.i.d. $\pm1$:
+$$P(\tau=n)=P(\xi_1=\dots=\xi_{n-1}=-1,\ \xi_n=1)=2^{-n},\quad n\ge1,$$
+a geometric distribution. $E\tau=\sum n2^{-n}=2$ (or via the GF $g_\tau(z)=z/(2-z)$, $g'_\tau(1)=2$). Theorem 11.2 <b>fails</b>: at the first win you always have $Z_\tau=1$, so $EZ_\tau=1\ne0=Z_0$.</li>
+<li>$E(Z_n;\tau>n)=E(Z_n;\xi_1=\dots=\xi_n=-1)=-\sum_{j=1}^n2^{j-1}\cdot2^{-n}=-(2^n-1)2^{-n}=2^{-n}-1\to-1\neq0$. Condition (11.11) is not satisfied.</li>
+</ol></div>
+
+<!-- ============================================================ -->
+<h2>Problem 10 &mdash; Up 1 / down 2 walk</h2>
+<div class="block"><b>Problem.</b> $S_0=0$, and each step goes up 1 w.p. $p=\tfrac67$ and down 2 w.p. $\tfrac17$.
+(i) Show that $X_n:=2^{-S_n}$ is an MG.
+(ii) Let $\tau:=\min\{n\ge0:X_n\le0.1\}$. Use Theorem 11.2 (without verifying its conditions) and the MG $Z_n:=S_n-ES_n$ to compute $E\tau$.<br>
+<i>Hint.</i> Express $\tau$ through $S_n$. What values can $S_\tau$ take? If $S_n>S_{n-1}$, then $S_n=S_{n-1}+1$.</div>
+<div class="block green"><b>Solution.</b>
+<ol type="i">
+<li>Use the natural filtration. Integrable since $0&lt;X_n\le2^{2n}$. With $Y_n:=S_n-S_{n-1}$:
+$$E(X_{n+1}\mid\mathcal F_n)=X_nE2^{-Y_{n+1}}=X_n\left(2^{-1}\cdot\tfrac67+2^2\cdot\tfrac17\right)=X_n .$$</li>
+<li>$\{X_n\le0.1\}=\{S_n\ge\log_210\}=\{S_n\ge4\}$ since $S_n$ is integer. So $\tau=\min\{n:S_n=4\}$: the walk moves up one step at a time, so it cannot jump over level 4, and it hits 4 w.p. 1 because $EY_1=\tfrac67-\tfrac27=\tfrac47>0$. Then
+$$0=EZ_\tau=E(S_\tau-\tfrac47\tau)=4-\tfrac47E\tau\quad\Longrightarrow\quad E\tau=\mathbf 7.$$</li>
+</ol></div>
+
+<!-- ============================================================ -->
+<h2>Problem 11 &mdash; Asymmetric simple walk</h2>
+<div class="block"><b>Problem.</b> A simple walk goes up 1 w.p. $p\in(0,1)$ and down 1 w.p. $q=1-p$, with $p\ne\tfrac12$.
+(i) Show that $X_n:=(q/p)^{S_n}$ is an MG.
+(ii) With $S_0=0$ and $\tau:=\min\{n\ge0:S_n=a\text{ or }S_n=b\}$, $a&lt;0&lt;b$ integers, use Theorem 11.2 and (i) to find the distribution of $S_\tau$. Then use Theorem 11.2 and $Z_n:=S_n-n(p-q)$ to compute $E\tau$.</div>
+<div class="block green"><b>Solution.</b>
+<ol type="i">
+<li>Natural filtration; bounded on each $n$. $E(X_{n+1}\mid\mathcal F_n)=X_nE(q/p)^{Y_{n+1}}=X_n\left((q/p)p+(q/p)^{-1}q\right)=X_n$.</li>
+<li>Let $r:=q/p$. $1=EX_\tau=r^aP(S_\tau=a)+r^bP(S_\tau=b)$ gives
+$$P(S_\tau=a)=\frac{r^b-1}{r^b-r^a},\qquad P(S_\tau=b)=1-P(S_\tau=a).$$
+From $0=EZ_\tau=ES_\tau-(2p-1)E\tau$:
+$$E\tau=\frac{b(1-r^a)+a(r^b-1)}{(2p-1)(r^b-r^a)} .$$</li>
+</ol></div>
+
+<!-- ============================================================ -->
+<h2>Problem 12 &mdash; Uniform samples are dense</h2>
+<div class="block"><b>Problem.</b> Show that $\{U_1,U_2,\dots\}$, where the $U_j$ are i.i.d. $U(0,1)$, is dense in $[0,1]$ with probability 1.<br>
+<i>Hint.</i> Use the Glivenko&ndash;Cantelli theorem (2.87).</div>
+<div class="block green"><b>Solution.</b> Suppose that for some $\omega$ the set is not dense. Then there are $t_1&lt;t_2$ in $[0,1]$ with $U_j(\omega)\notin(t_1,t_2)$ for all $j$, so the EDFs satisfy $F_n^*(t_1)=F_n^*(t_2)$ for every $n$. This contradicts (2.87), since the limit $F(t)=t$ has $F(t_1)\ne F(t_2)$. So such $\omega$ form a null set.</div>
+
+<!-- ============================================================ -->
+<h2>Problem 13 &mdash; Distribution of $2W_{t_1}-W_{t_2}$</h2>
+<div class="block"><b>Problem.</b> Find the distribution of $X:=2W_{t_1}-W_{t_2}$, $0&lt;t_1&lt;t_2$.</div>
+<div class="block green"><b>Solution.</b> $X$ is normal, as a linear transform of a Gaussian vector. $EX=0$ and
+$$\operatorname{Var}X=4EW_{t_1}^2-4EW_{t_1}W_{t_2}+EW_{t_2}^2=4t_1-4t_1+t_2=t_2 .$$
+So $X\sim\mathbf{N(0,t_2)}$. Alternatively, $X=W_{t_1}-(W_{t_2}-W_{t_1})$ is a sum of independent $N(0,t_1)$ and $N(0,t_2-t_1)$ terms.</div>
+
+<!-- ============================================================ -->
+<h2>Problem 14 &mdash; Distribution of $W_0+W_2-W_3+2W_4$</h2>
+<div class="block"><b>Problem.</b> Find the distribution of $X:=W_0+W_2-W_3+2W_4$.</div>
+<div class="block green"><b>Solution.</b> Normal with mean 0. By independent increments,
+$$X=2W_2+(W_3-W_2)+2(W_4-W_3)\sim N(0,\,4\cdot2+1+4\cdot1)=\mathbf{N(0,13)}.$$</div>
+
+<!-- ============================================================ -->
+<h2>Problem 15 &mdash; BM finite-dimensional density</h2>
+<div class="block"><b>Problem.</b> Derive the BM's FDD density $f_{t_1,\dots,t_k}(x_1,\dots,x_n)$ (see (11.22)) using (2.33). Use the fact that $(W_{t_1},\dots,W_{t_n})$ is a simple linear transformation of $(W_{t_1}-W_{t_0},\dots,W_{t_n}-W_{t_{n-1}})$, whose components are independent, so that the latter vector's density is just the product of the increment densities.</div>
+<div class="block green"><b>Solution.</b> In the notation of (2.33), $\mathbf X=(W_{t_1}-W_{t_0},\dots,W_{t_n}-W_{t_{n-1}})$, $\mathbf Y=(W_{t_1},\dots,W_{t_n})$ and $g(\mathbf x)=\mathbf xA$, with
+$$A=\begin{pmatrix}1&1&\cdots&1\\0&1&\cdots&1\\\vdots&&\ddots&\vdots\\0&0&\cdots&1\end{pmatrix}.$$
+$g^{-1}$ is linear with $|J|=|\det A|^{-1}=1$, so
+$$f_{\mathbf Y}(\mathbf y)=f_{\mathbf X}(g^{-1}(\mathbf y))=\prod_{j=1}^nf_{W_{t_j}-W_{t_{j-1}}}(x_j-x_{j-1}),$$
+which is (11.22).</div>
+
+<!-- ============================================================ -->
+<h2>Problem 16 &mdash; Matrix form of BM simulation</h2>
+<div class="block"><b>Problem.</b> The map from a standard normal $\mathbf Z\in\mathbb R^n$ to the BM values in the simulation algorithm on p.&nbsp;320 can be written as $(W_{t_1},\dots,W_{t_n})=\mathbf ZA$, $A\in\mathbb R^{n\times n}$. Specify $A$. How does the representation change if you simulate $(X_{t_1},\dots,X_{t_n})$ for the arithmetic BM (11.16) directly?</div>
+<div class="block green"><b>Solution.</b> As in Problem 15, but with the increments scaled:
+$$A=\begin{pmatrix}\sqrt{t_1-t_0}&\sqrt{t_1-t_0}&\cdots&\sqrt{t_1-t_0}\\0&\sqrt{t_2-t_1}&\cdots&\sqrt{t_2-t_1}\\\vdots&&\ddots&\vdots\\0&0&\cdots&\sqrt{t_n-t_{n-1}}\end{pmatrix}.$$
+For the arithmetic BM, multiply $A$ by $\sigma$ and add the drift vector $(\mu t_1,\dots,\mu t_n)$.</div>
+
+<!-- ============================================================ -->
+<h2>Problem 17 &mdash; Joint densities</h2>
+<div class="block"><b>Problem.</b> Compute the joint densities of (i) $(2W_3,W_5)$ and (ii) $(W_2,2W_3,W_5)$.</div>
+<div class="block green"><b>Solution.</b>
+<ol type="i">
+<li>$2W_3\sim N(0,12)$ and, by independent increments, $(W_5\mid2W_3=x)\sim N(x/2,2)$. By (2.80),
+$$f_{(2W_3,W_5)}(x,y)=\frac1{\sqrt{2\pi\cdot2}}e^{-(y-x/2)^2/4}\cdot\frac1{\sqrt{2\pi\cdot12}}e^{-x^2/24}=\frac1{4\pi\sqrt6}\exp\left\{-\frac{y^2}4+\frac{xy}4-\frac{5x^2}{48}\right\}.$$</li>
+<li>In the same way, $f_{(W_2,2W_3)}(x,y)=\dfrac1{4\pi\sqrt2}\exp\{-\tfrac{y^2}8+\tfrac{xy}2-\tfrac{3x^2}4\}$. By independent increments, $(W_5\mid W_2=x,2W_3=y)\sim N(y/2,2)$, so
+$$f_{(W_2,2W_3,W_5)}(x,y,z)=\frac1{\sqrt{4\pi}}e^{-(z-y/2)^2/4}f_{(W_2,2W_3)}(x,y)=\frac1{8\sqrt2\,\pi^{3/2}}\exp\left\{-\frac{3x^2}4+\frac{xy}2-\frac{3y^2}{16}+\frac{yz}4-\frac{z^2}4\right\}.$$</li>
+</ol></div>
+
+<!-- ============================================================ -->
+<h2>Problem 18 &mdash; Time inversion $tW_{1/t}$</h2>
+<div class="block"><b>Problem.</b> Use Theorem 11.4 to show that $\widetilde W_t:=tW_{1/t}$ is a standard BM, given that $W_t$ is.</div>
+<div class="block green"><b>Solution.</b> $E\widetilde W_t=0$. For $0&lt;s&lt;t$: $E\widetilde W_s\widetilde W_t=st\left(\tfrac1s\wedge\tfrac1t\right)=st\cdot\tfrac1t=s$. The process is Gaussian: $(\widetilde W_{t_1},\dots,\widetilde W_{t_n})$ is a linear transform of the Gaussian vector $(W_{1/t_1},\dots,W_{1/t_n})$. Theorem 11.4 gives the result.</div>
+
+<!-- ============================================================ -->
+<h2>Problem 19 &mdash; Exit through parabolic boundaries</h2>
+<div class="block"><b>Problem.</b> Let $\tau:=\min\{t>0:W_t=\pm\sqrt{a+bt}\}$ be the first time the BM crosses one of the two parabolic boundaries $\pm\sqrt{a+bt}$, where $a>0$ and $b\in(0,1)$. Use Theorems 11.6 and 11.2 to compute $E\tau$.</div>
+<div class="block green"><b>Solution.</b> Use the MG $Y_t:=W_t^2-t$. At $\tau$, $W_\tau^2=a+b\tau$, so
+$$0=EY_0=EY_\tau=E(W_\tau^2-\tau)=E(a+b\tau-\tau)=a-(1-b)E\tau\quad\Longrightarrow\quad E\tau=\frac a{1-b}.$$</div>
+
+<!-- ============================================================ -->
+<h2>Problem 20 &mdash; Crossing the line $2t-4$</h2>
+<div class="block"><b>Problem.</b> Let $\tau:=\min\{t>0:W_t\le2t-4\}$ be the first time the BM crosses the boundary $v_t:=2t-4$. Using the three BM martingales (Theorem 11.6) and Theorem 11.2 (without verifying its conditions), compute (i) $E\tau$; (ii) $\operatorname{Var}(\tau)$; (iii) the Laplace transform $l_\tau(s)=Ee^{-s\tau}$, $s\ge0$; (iv) $EW_\tau$ and $EW_\tau^2$.</div>
+<div class="block green"><b>Solution.</b> At $\tau$, $W_\tau=2\tau-4$.
+<ol type="i">
+<li>With $W_t$: $0=EW_\tau=E(2\tau-4)$, so $E\tau=\mathbf2$.</li>
+<li>With $W_t^2-t$: $0=E((2\tau-4)^2-\tau)=4E\tau^2-17E\tau+16=4E\tau^2-18$, so $E\tau^2=4.5$ and $\operatorname{Var}\tau=4.5-4=\mathbf{0.5}$.</li>
+<li>With $Z_t:=e^{uW_t-u^2t/2}$:
+$$1=Ee^{u(2\tau-4)-u^2\tau/2}=e^{-4u}Ee^{-(u^2/2-2u)\tau}=e^{-4u}Ee^{-s\tau},\qquad s:=\tfrac{u^2}2-2u .$$
+Solving, $u=2\pm\sqrt{2(s+2)}$. Take "$-$": we need $l_\tau(s)\le1$ for $s\ge0$, i.e. $u\le0$. So
+$$l_\tau(s)=\exp\{8-4\sqrt{2(s+2)}\}.$$</li>
+<li>By Theorem 11.2: $EW_\tau=\mathbf0$, and $EW_\tau^2=E\tau=\mathbf2$.</li>
+</ol></div>
+
+<!-- ============================================================ -->
+<h2>Problem 21 &mdash; Exit from $(a,b)$</h2>
+<div class="block"><b>Problem.</b> Let $\tau:=\min\{t>0:W_t=a\text{ or }W_t=b\}$, $a&lt;0&lt;b$. Using the three BM martingales and Theorem 11.2 (without verifying its conditions):
+(i) find the distribution of $W_\tau$;
+(ii) compute $E\tau$;
+(iii) compute $l_\tau(s)=Ee^{-s\tau}$, $s\ge0$, when $a=-1$, $b=1$;
+(iv) use (iii) to compute $E\tau$ when $a=-1$, $b=1$, and compare with (ii);
+(v) use (iii) to compute $\operatorname{Var}(\tau)$ when $a=-1$, $b=1$.</div>
+<div class="block green"><b>Solution.</b>
+<ol type="i">
+<li>$0=EW_\tau=aP(W_\tau=a)+b(1-P(W_\tau=a))$, so $P(W_\tau=a)=\dfrac b{b-a}$ and $P(W_\tau=b)=\dfrac{-a}{b-a}$.</li>
+<li>$E\tau=EW_\tau^2=a^2\dfrac b{b-a}+b^2\dfrac{-a}{b-a}=\mathbf{-ab}$ (see also (12.31)).</li>
+<li>Take $b=-a$ for this part. $1=EZ_\tau=E\left(e^{-u^2\tau/2}E(e^{uW_\tau}\mid\tau)\right)$. By symmetry $W_\tau=\pm a$ with equal probabilities, independently of $\tau$, so $1=\tfrac12(e^{au}+e^{-au})Ee^{-u^2\tau/2}$. With $s=u^2/2$:
+$$l_\tau(s)=\frac1{\cosh(\sqrt{2s}\,a)}\ \overset{a=1}=\ \frac1{\cosh\sqrt{2s}}.$$</li>
+<li>$-l_\tau'(s)=\dfrac{\sinh(\sqrt{2s}a)}{\cosh^2(\sqrt{2s}a)}\dfrac a{\sqrt{2s}}\to a^2$ as $s\to0$. So $E\tau=a^2=1$, which agrees with (ii) at $a=-b$.</li>
+<li>With $x^2=2s$, $\cosh x=1+s+\tfrac{s^2}6+\dots$, so $l_\tau(s)=1-s+\tfrac56s^2-\dots$. Hence $E\tau^2=2\cdot\tfrac56=\tfrac53$ and $\operatorname{Var}\tau=\tfrac53-1=\mathbf{\tfrac23}$.</li>
+</ol></div>
+<div class="block warn">The source leaves (v) as "DIY. Just keep differentiating"; the value $2/3$ above is worked out here.</div>
+
+<!-- ============================================================ -->
+<h2>Problem 22 &mdash; It&ocirc; isometry for simple processes</h2>
+<div class="block"><b>Problem.</b> Let $f_t$ and $g_t$ be simple processes on $[0,T]$ on a common filtered probability space with a BM $\{W_t\}$. Show by direct calculation that $EI_t(f)I_t(g)=\int_0^tEf_sg_s\,ds$, $t\in[0,T]$.</div>
+<div class="block green"><b>Solution.</b> Without loss of generality both use a common partition $0=t_0&lt;\dots&lt;t_n=T$: $f_t=X_k$ and $g_t=Y_k$ on $[t_{k-1},t_k)$, with $X_k,Y_k$ being $\mathcal F_{t_{k-1}}$-measurable. Then
+$$EI_t(f)I_t(g)=\sum_{k}\underbrace{E\,X_kY_k(W_{t_k}-W_{t_{k-1}})^2}_{A_k}+\sum_{j\ne k}\underbrace{E\,X_kY_j(W_{t_k}-W_{t_{k-1}})(W_{t_j}-W_{t_{j-1}})}_{B_{jk}} .$$
+By CE4, $A_k=E\left(X_kY_kE((W_{t_k}-W_{t_{k-1}})^2\mid\mathcal F_{t_{k-1}})\right)=(t_k-t_{k-1})EX_kY_k$. For $j&lt;k$, $B_{jk}=E\left(X_kY_j(W_{t_j}-W_{t_{j-1}})E(W_{t_k}-W_{t_{k-1}}\mid\mathcal F_{t_{k-1}})\right)=0$. So $EI_t(f)I_t(g)=\sum_k(t_k-t_{k-1})EX_kY_k=\int_0^tEf_sg_s\,ds$.<br><br>
+This is also an immediate consequence of the It&ocirc; isometry (Theorem 11.7(iii)). A linear map that preserves norms also preserves inner products: $\|u\|^2+\|v\|^2+2(u,v)=\|u+v\|^2=\|L(u+v)\|^2=\|u\|^2+\|v\|^2+2(Lu,Lv)$.</div>
+
+<!-- ============================================================ -->
+<h2>Problem 23 &mdash; The exponential martingale</h2>
+<div class="block"><b>Problem.</b> Let $g_t$ be non-random on $[0,T]$ with $\int_0^Tg_t^2dt&lt;\infty$. Use It&ocirc;'s formula to show that
+$$Y_t=\exp\left\{\int_0^tg_s\,dW_s-\frac12\int_0^tg_s^2\,ds\right\},\qquad t\in[0,T],$$
+is an MG.</div>
+<div class="block green"><b>Solution.</b> $Y_t=f(X_t)$ with $f(x)=e^x$ ($f'=f''=f$) and $dX_t=g_tdW_t-\tfrac12g_t^2dt$. By It&ocirc;,
+$$dY_t=f(X_t)\left(g_tdW_t-\tfrac12g_t^2dt\right)+\tfrac12f(X_t)g_t^2dt=Y_tg_t\,dW_t .$$
+There is no $dt$ term, so $Y$ is an MG (Remark 11.3).</div>
+
+<!-- ============================================================ -->
+<h2>Problem 24 &mdash; $d\cos(W_t)$</h2>
+<div class="block"><b>Problem.</b> Compute the stochastic differential $d\cos(W_t)$.</div>
+<div class="block green"><b>Solution.</b> $f(x)=\cos x$, $f'=-\sin x$, $f''=-\cos x$, and $(dW_t)^2=dt$:
+$$d\cos W_t=-\sin(W_t)\,dW_t-\tfrac12\cos(W_t)\,dt .$$</div>
+
+<!-- ============================================================ -->
+<h2>Problem 25 &mdash; $e^{-2X_t}$ with $X_t=t+W_t$</h2>
+<div class="block"><b>Problem.</b> Put $X_t:=t+W_t$. (i) Use It&ocirc;'s formula to compute $de^{-2X_t}$. (ii) Is $Y_t:=e^{-2X_t}$ a martingale? Explain.</div>
+<div class="block green"><b>Solution.</b>
+<ol type="i">
+<li>$f(x)=e^{-2x}$, $f'=-2f$, $f''=4f$, $dX_t=dt+dW_t$, $(dX_t)^2=dt$:
+$$df(X_t)=-2f(X_t)(dt+dW_t)+\tfrac12\cdot4f(X_t)\,dt=-2f(X_t)\,dW_t .$$</li>
+<li><b>Yes</b>: it has no drift (Remark 11.3).</li>
+</ol></div>
+
+<!-- ============================================================ -->
+<h2>Problem 26 &mdash; Solving a GBM SDE</h2>
+<div class="block"><b>Problem.</b> A risky asset follows $dS_t=0.2S_tdt+S_tdW_t$, $t\ge0$, $S_0=5$ (a special case of the Black&ndash;Scholes framework, Chapter 13).
+(i) It is suspected that the solution has the form $S_t=ce^{at+bW_t}$ for constants $a,b,c$. Use It&ocirc;'s formula to verify this and find $a$, $b$, $c$.
+(ii) Show that $X_t=1/S_t$ satisfies $dX_t=0.8X_tdt-X_tdW_t$, $X_0=0.2$.</div>
+<div class="block green"><b>Solution.</b>
+<ol type="i">
+<li>$f(t,x)=ce^{at+bx}$: $\partial_tf=af$, $\partial_xf=bf$, $\partial_{xx}f=b^2f$. So
+$$dS_t=\left(a+\tfrac{b^2}2\right)S_tdt+bS_tdW_t .$$
+Matching: $b=1$ and $a+\tfrac12=0.2$, so $a=-0.3$. $S_0=ce^0=5$ gives $c=5$. So $S_t=5e^{-0.3t+W_t}$.</li>
+<li>$X_t=0.2e^{0.3t-W_t}=f(t,W_t)$ with $\partial_tf=0.3f$, $\partial_xf=-f$, $\partial_{xx}f=f$:
+$$dX_t=0.3X_tdt-X_tdW_t+\tfrac12X_tdt=0.8X_tdt-X_tdW_t,\qquad X_0=0.2 .$$
+(Or apply It&ocirc; to $f(S)=1/S$: $-S^{-2}(0.2Sdt+SdW)+S^{-3}S^2dt=0.8X\,dt-X\,dW$.)</li>
+</ol></div>
+
+<!-- ============================================================ -->
+<h2>Problem 27 &mdash; Heston variance &rarr; volatility SDE</h2>
+<div class="block"><b>Problem.</b> The Heston stochastic-volatility model assumes the variance process follows $dV_t=(1-V_t)dt+2\sqrt{V_t}\,dW_t$, $V_0=1$.
+(i) Derive an SDE for the volatility process $Z_t=\sqrt{V_t}$ and find its initial condition $Z_0$.
+(ii) Show that $Z_t:=e^{-t/2}\left(1+\int_0^te^{s/2}dW_s\right)$ satisfies that SDE and initial condition.</div>
+<div class="block green"><b>Solution.</b>
+<ol type="i">
+<li>$f(x)=\sqrt x$, $f'=\tfrac12x^{-1/2}$, $f''=-\tfrac14x^{-3/2}$, and $(dV_t)^2=4V_tdt$:
+$$dZ_t=\tfrac12V_t^{-1/2}\left((1-V_t)dt+2\sqrt{V_t}dW_t\right)-\tfrac18V_t^{-3/2}\cdot4V_tdt=-\tfrac12Z_tdt+dW_t .$$
+This is an Ornstein&ndash;Uhlenbeck SDE ((11.46) with $\alpha=\sigma=1$), with $Z_0=\sqrt{V_0}=1$.</li>
+<li>$Z_t=X_tY_t$ with $X_t=e^{-t/2}$ ($dX_t=-\tfrac12X_tdt$) and $Y_t=1+\int_0^te^{s/2}dW_s$ ($dY_t=e^{t/2}dW_t$). Since $dX_tdY_t=0$, the product rule (Theorem 11.10) gives
+$$dZ_t=Y_tdX_t+X_tdY_t=-\tfrac12Z_tdt+dW_t,\qquad Z_0=e^0(1+0)=1 .$$</li>
+</ol></div>
+
+</body>
+</html>
