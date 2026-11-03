@@ -19,7 +19,7 @@ _Avoid_: index (that is the generated page), ordering
 **Formula Sheet**:
 A dense reference page of results across Notes, with no Socratic build-up; listed under the Reference Module.
 Every entry is a **Card**, and a Card is only complete with all three parts (see **Card**).
-Organised in Parts, each covering a set of Modules, in TOC order: Part I is Foundations, Expectation and Martingales (sections F, E, M); Part II is Random walks and Brownian motion (sections 1-14); Part III is Stochastic calculus (sections I); Part IV is Option pricing (sections A). A Part is added whole, never piecemeal.
+Organised in Parts, each covering a set of Modules, in TOC order: Part I is Foundations, Expectation and Martingales (sections F, E, M); Part II is Random walks and Brownian motion (sections 1-14); Part III is Stochastic calculus (sections I); Part IV is Option pricing (sections A); Part V is Discrete markets and Black–Scholes (sections D). A Part is added whole, never piecemeal.
 Section numbering is frozen once published, so cross-references never rot; a new Part gets a new prefix rather than renumbering the old one.
 _Avoid_: cheat sheet, summary note
 
@@ -28,6 +28,7 @@ One entry on the Formula Sheet. Three mandatory parts, in order:
 1. the formula,
 2. **Use when** — the cases and guards that decide whether this formula applies at all,
 3. **Paper / Trick** — a past-paper instance with its answer, or the one-line shortcut.
+Optional 4th part: a hidden **Proof** (`<details class="proof">`), for results an exam asks you to show.
 A formula with no guard and no instance is not a Card; it is a fact the reader cannot route to.
 _Avoid_: entry, item, block (a Block is the Note vocabulary, not the Sheet's)
 

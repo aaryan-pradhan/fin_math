@@ -15,4 +15,4 @@ open index.html     # macOS; opens in your default browser
 
 No server is needed. `index.html` links to every Note. MathJax loads from a CDN, so the equations need internet access.
 
-Adding a Note: write `<snake_case>.html` with the skeleton in the math-buddy skill, add its name to a Module in `toc.json`, run `python main.py`. Notes missing from `toc.json` show under "Unsorted".
+Adding a Note: write `<snake_case>.html` copying an existing Note's skeleton, add its name to a Module in `toc.json`, run `python main.py`. Notes missing from `toc.json` show under "Unsorted".
