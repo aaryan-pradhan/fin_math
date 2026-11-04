@@ -1,0 +1,21 @@
+p.87–92: The binomial market and single-period pricing
+
+p.87–92: The binomial market and single-period pricing
+
+0:00 Notation check
+0:51 The binomial market (p.87)
+1:19 Up or down (p.88)
+3:11 Single-period binomial market: the strategy (p.88)
+4:20 What a hedge is (p.88)
+5:17 Solving for b (p.89)
+6:13 The picture (p.89)
+7:59 The perfect hedge (p.89)
+9:52 The time-0 value (p.89–90)
+11:35 Why X* is the fair price (p.90)
+12:34 The stock under P* (p.90–91)
+13:30 No-arbitrage as an interval (p.91)
+14:20 Example: pricing a European call (p.91)
+14:59 The replicating portfolio (p.91–92)
+15:56 Pricing a European put (p.92)
+16:55 Extras from the slides (p.101)
+17:34 Doubts

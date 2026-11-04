@@ -1,0 +1,91 @@
+start	end	line	kind	text
+0.00	4.00	5	title	p.92–93: Put–call parity
+4.00	4.80	7	section	The setup (p.92)
+4.80	12.00	9	anim	payoff
+12.00	22.20	11	sentence	Take a call with price $C$ and a put with price $P$, both with the same strike $
+22.20	25.30	11	sentence	Same single-period binomial market as p.88–92.
+25.30	28.40	13	sentence	Build this portfolio:
+28.40	31.50	15	sentence	one share of the stock,
+31.50	35.17	16	sentence	one put on one share of the stock,
+35.17	40.77	17	sentence	a short position in one call on one share of the stock (p.93).
+40.77	49.05	19	sentence	Short means I sold the call: I receive $C$ today, and at $t = 1$ I must pay its 
+49.05	57.72	21	sentence	Recall from p.92: $x^- = \max(-x, 0)$, so the put pays $(S_1 - K)^-$ and the cal
+57.72	59.02	23	section	Value at t = 0 (p.93)
+59.02	67.30	25	sentence	I pay $S_0$ for the share and $P$ for the put, and I receive $C$ for the call I 
+67.30	69.50	27	equation	V_0 = S_0 + P - C
+69.50	70.80	29	section	Value at t = 1 (p.93)
+70.80	73.90	31	sentence	The share is worth $S_1$.
+73.90	77.18	31	sentence	The put pays me $(S_1 - K)^-$.
+77.18	81.23	31	sentence	The call I sold costs me $(S_1 - K)^+$:
+81.23	83.43	33	equation	V_1 = S_1 + (S_1 - K)^- - (S_1 - K)^+
+83.43	88.25	35	sentence	Now take out a minus sign from the last two terms:
+88.25	90.45	37	equation	V_1 = S_1 - \left((S_1 - K)^+ - (S_1 - K)^-\right)
+90.45	95.27	39	sentence	Now use $x^+ - x^- = x$ for any number $x$.
+95.27	98.37	39	sentence	Why?
+98.37	105.50	39	sentence	If $x \ge 0$, then $x^+ = x$ and $x^- = 0$, so the difference is $x$.
+105.50	114.17	39	sentence	If $x < 0$, then $x^+ = 0$ and $x^- = -x$, so the difference is $0 - (-x) = x$.
+114.17	117.27	39	sentence	With $x = S_1 - K$:
+117.27	119.47	41	equation	V_1 = S_1 - (S_1 - K) = K
+119.47	125.45	43	sentence	So the portfolio pays exactly $K$ at $t = 1$, whatever the stock does.
+125.45	135.67	45	numbers	Numbers. Use p.91: $S_0 = 1$, $K = 1$, $u = 1.75$, $d = 0.5$, $r = 0.25$, $C = 0
+135.67	142.43	45	numbers	Check $x^+ - x^- = x$: for $x = 0.75$, $0.75 - 0 = 0.75$.
+142.43	146.88	45	numbers	For $x = -0.5$, $0 - 0.5 = -0.5$.
+146.88	149.98	45	numbers	Good.
+149.98	153.08	47	sentence	As a table.
+153.08	159.07	47	sentence	Each row is a time, and at $t = 1$ an outcome (3 rows).
+159.07	164.67	47	sentence	Each column is a security: stock, put, call, plus the sum (4 columns).
+164.67	171.03	47	sentence	Each cell is holding $\times$ price; the call holding is $-1$ because I sold it.
+171.03	173.23	49	table	
+173.23	176.33	54	sentence	With the numbers:
+176.33	179.03	56	table	
+179.03	183.08	62	sentence	Both $t = 1$ sums are $1 = K$.
+183.08	187.52	62	sentence	When the stock goes up, the call eats the gain.
+187.52	191.57	62	sentence	When it goes down, the put fills the loss.
+191.57	192.87	64	section	Using no-arbitrage (p.93)
+192.87	200.00	66	sentence	Due to NA, today's value is the expected discounted value at $t = 1$, as on p.90
+200.00	202.20	68	equation	E\left(\frac{V_1}{1+r}\right) = V_0
+202.20	205.30	70	sentence	Now substitute $V_1 = K$.
+205.30	210.90	70	sentence	It's the same number in every outcome, so its expectation is just itself:
+210.90	213.10	72	equation	\frac{K}{1+r} = V_0
+213.10	221.77	74	sentence	This makes sense: the portfolio is a sure $K$ at $t = 1$, just like $\frac{K}{1+
+221.77	225.82	76	sentence	Now substitute $V_0 = S_0 + P - C$:
+225.82	228.02	78	equation	S_0 + P - C = \frac{K}{1+r}
+228.02	231.12	80	sentence	This is put–call parity.
+231.12	235.62	82	numbers	Numbers. $\frac{K}{1+r} = \frac{1}{1.25} = 0.8$.
+235.62	244.15	82	numbers	And the $t = 0$ sum in the table is $1 + 0.16 - 0.36 = 0.8$.
+244.15	247.25	82	numbers	Same.
+247.25	248.55	84	section	Getting the put from the call (p.93)
+248.55	251.65	86	sentence	Now solve for $P$.
+251.65	255.32	86	sentence	Add $C$ and subtract $S_0$ on both sides:
+255.32	257.52	88	equation	P = \frac{K}{1+r} - S_0 + C
+257.52	260.62	90	sentence	Now substitute the numbers:
+260.62	262.82	92	equation	P = \frac{1}{1.25} - 1 + 0.36 = 0.8 - 1 + 0.36 = 0.16
+262.82	269.57	94	sentence	This is the same $0.16$ we got on p.92 by pricing the put directly with $p^*$.
+269.57	276.70	94	sentence	So once I know the call price, parity gives me the put price with no extra work.
+276.70	277.50	96	section	Doubts
+277.50	279.70	98	question	In put–call parity, where is no-arbitrage used? Is the stock-and-bond hedge $(\D
+279.70	282.80	100	sentence	Yes, that's exactly the idea.
+282.80	288.78	100	sentence	Treat the portfolio "1 stock, 1 put, short 1 call" as a claim $X$.
+288.78	297.07	100	sentence	Its payoffs are $X_u = X_d = K$, because $x^+ - x^- = x$ holds for every value o
+297.07	301.88	100	sentence	So it pays $K$ in every outcome, not just in some.
+301.88	306.32	102	sentence	Now apply the perfect-hedge formulas (3) and (4) from p.89:
+306.32	308.52	104	equation	\Delta = \frac{X_u - X_d}{(u-d)S_0} = \frac{K - K}{(u-d)S_0} = 0
+308.52	310.72	106	equation	b = \frac{uX_d - dX_u}{(1+r)(u-d)} = \frac{K(u-d)}{(1+r)(u-d)} = \frac{K}{1+r}
+310.72	314.77	108	sentence	So the hedge is no stock and $\frac{K}{1+r}$ bonds.
+314.77	317.87	108	sentence	Its cost is $V_0 = \frac{K}{1+r}$.
+317.87	322.68	108	sentence	As a table (rows: outcomes, 2; columns: bond, stock, claim, 3):
+322.68	324.88	110	table	
+324.88	327.98	115	sentence	When are $\Delta$ and $b$ defined?
+327.98	338.58	115	sentence	Formulas (3) and (4) only divide by $(u - d)S_0$ and $1 + r$, so they work for a
+338.58	346.48	115	sentence	With $\Delta = 0$ here, $u$, $d$ and $p^*$ all drop out, and parity needs only $
+346.48	349.58	117	sentence	No-arbitrage is used in one step.
+349.58	360.18	117	sentence	The portfolio and its hedge pay the same $K$ in every outcome, so they must cost
+360.18	365.00	117	sentence	If not, buy the cheaper one and sell the dearer one.
+365.00	378.27	119	numbers	Numbers. $K = 1$, $r = 0.25$: $\Delta = 0$ and $b = \frac{1.75 \times 1 - 0.5 \t
+378.27	382.70	119	numbers	Now suppose the call traded at $0.40$ instead of $0.36$.
+382.70	389.70	119	numbers	Then the portfolio costs $1 + 0.16 - 0.40 = 0.76 < 0.8$.
+389.70	395.30	119	numbers	Buy it, and borrow $0.76$ in the bond, so $V_0 = 0$.
+395.30	402.05	119	numbers	Rows are time and outcome (3); columns are bond, stock, put, call, plus the sum 
+402.05	404.25	121	table	
+404.25	411.77	127	sentence	$V_0 = 0$, $V_1 = 0.05 > 0$ in both outcomes: an arbitrage, exactly as defined o
+411.77	415.43	127	sentence	No-arbitrage forbids this, so $C$ must be $0.36$.

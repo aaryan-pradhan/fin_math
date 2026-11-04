@@ -1,0 +1,46 @@
+start	end	line	kind	text
+0.00	4.00	6	title	Hitting Times, Reflection Principle & Running Maximum
+4.00	8.82	8	sentence	Wiener Process Stopping Times, Strong Markov Symmetry, and Running Max Distribut
+8.82	9.62	10	section	1. Hitting Time Definition
+9.62	15.98	12	sentence	For standard Brownian motion $W(t)$, the first passage time (hitting time) to le
+15.98	18.18	14	equation	T_a = \inf\{t \ge 0 : W(t) = a\}
+18.18	25.32	16	sentence	$T_a$ is a stopping time because its occurrence depends only on path history up 
+25.32	26.62	18	section	2. The Reflection Principle
+26.62	36.32	20	anim	reflection
+36.32	44.60	22	sentence	There are two equivalent ways to understand the Reflection Principle: **Analytic
+44.60	45.90	24	section	Method A: Analytical (Strong Markov Property)
+45.90	54.18	26	sentence	For $a > 0$, partition the probability of being above $a$ at time $t$ using the 
+54.18	56.38	28	equation	\mathbb{P}(W(t) \ge a) = \mathbb{P}(W(t) \ge a \mid T_a \le t)\mathbb{P}(T_a \le
+56.38	66.58	30	sentence	$\mathbb{P}(W(t) \ge a \mid T_a > t) = 0$ because if the path never hit $a$ by t
+66.58	72.18	32	sentence	By the **Strong Markov Property**, at the stopping time $T_a$, the process resta
+72.18	83.17	32	sentence	The post-$T_a$ increment process $B(u) = W(T_a + u) - W(T_a)$ for $u \ge 0$ is a
+83.17	89.92	34	sentence	By standard Gaussian symmetry, $B(t - T_a) \sim \mathcal{N}(0, t - T_a)$ is symm
+89.92	93.02	34	sentence	Thus:
+93.02	95.22	36	equation	\mathbb{P}(W(t) \ge a \mid T_a \le t) = \mathbb{P}(a + B(t - T_a) \ge a \mid T_a
+95.22	97.42	38	equation	\mathbb{P}(W(t) \ge a) = \frac{1}{2}\mathbb{P}(T_a \le t) \implies \mathbb{P}(T_
+97.42	98.72	40	section	Method B: Geometric (Path-wise Reflection)
+98.72	105.47	42	sentence	Let $\omega$ be a sample path that hits level $a$ at stopping time $T_a(\omega) 
+105.47	112.98	42	sentence	Define the **reflected path** $W^*(u)$ by reflecting the trajectory across the l
+112.98	115.18	44	equation	W^*(u) = \begin{cases} W(u) & \text{for } u \le T_a \\ 2a - W(u) & \text{for } u
+115.18	125.38	46	sentence	**Equiprobability:** Since standard Brownian motion increments are symmetric abo
+125.38	139.05	48	sentence	**Bijection:** Every path that hits $a$ and ends up above $a$ at time $t$ ($W(t)
+139.05	142.15	50	sentence	Thus:
+142.15	144.35	52	equation	\mathbb{P}(T_a \le t, W(t) \ge a) = \mathbb{P}(T_a \le t, W(t) < a)
+144.35	152.63	54	sentence	Since $\{W(t) \ge a\} \subset \{T_a \le t\}$, we can drop the $T_a \le t$ condit
+152.63	154.83	56	equation	\mathbb{P}(W(t) \ge a) = \mathbb{P}(T_a \le t, W(t) < a)
+154.83	163.88	58	sentence	The total probability of hitting $a$ by time $t$ is the sum of paths ending abov
+163.88	166.08	60	equation	\mathbb{P}(T_a \le t) = \mathbb{P}(T_a \le t, W(t) \ge a) + \mathbb{P}(T_a \le t
+166.08	167.38	62	section	3. Probability Distribution of $T_a$
+167.38	172.20	64	sentence	Using standard Gaussian integration with substitution $y = x / \sqrt{t}$:
+172.20	174.40	66	equation	\mathbb{P}(T_a \le t) = \frac{2}{\sqrt{2\pi}} \int_{|a|/\sqrt{t}}^{\infty} e^{-\
+174.40	180.38	68	sentence	Differentiating the CDF with respect to $t$ gives the PDF of $T_a$ (Lévy distrib
+180.38	182.58	70	equation	f(t) = \frac{|a|}{\sqrt{2\pi t^3}} e^{-\frac{a^2}{2t}} \quad (t > 0)
+182.58	183.88	72	section	4. The Running Maximum $M(t)$
+183.88	187.93	74	sentence	Define the running maximum up to time $t$ as:
+187.93	190.13	76	equation	M(t) = \max_{0 \le s \le t} W(s)
+190.13	198.42	78	sentence	The event that the maximum is at least $a$ is equivalent to the hitting time bei
+198.42	200.62	80	equation	\{M(t) \ge a\} \iff \{T_a \le t\}
+200.62	202.82	82	equation	\mathbb{P}(M(t) \ge a) = 2\mathbb{P}(W(t) \ge a) = 2\left[ 1 - \Phi\left(\frac{a
+202.82	204.12	84	section	5. Certain Hitting Time ($\mathbb{P}(T_a < \infty) = 1$)
+204.12	206.32	86	equation	\mathbb{P}(T_a < \infty) = \lim_{t \to \infty} \mathbb{P}(T_a \le t) = \lim_{t \
+206.32	213.45	88	sentence	Standard Brownian motion will hit any level $a$ almost surely, though the expect

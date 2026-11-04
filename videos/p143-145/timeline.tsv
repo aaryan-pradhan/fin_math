@@ -1,0 +1,74 @@
+start	end	line	kind	text
+0.00	4.00	5	title	p.143–145: The Black–Scholes framework
+4.00	4.80	7	section	The bond and the stock (p.143)
+4.80	13.00	9	anim	gbm_paths
+13.00	16.10	11	sentence	Now time is continuous.
+16.10	19.20	11	sentence	The bond is
+19.20	21.40	13	equation	B_t = e^{rt}, \quad t \in [0, T]
+21.40	25.07	15	sentence	Equivalently, $dB_t = rB_t\,dt$ with $B_0 = 1$.
+25.07	28.35	17	sentence	There is one risky asset, a stock.
+28.35	31.63	17	sentence	Its price $S_t$ satisfies the Black–Scholes SDE:
+31.63	33.83	19	equation	dS_t = \mu S_t\,dt + \sigma S_t\,dW_t, \quad t \in [0, T] \qquad (\star)
+33.83	42.50	21	sentence	Here $\mu \in \mathbb{R}$, $\sigma > 0$, $S_0 > 0$ is a constant, and $\{W_t\}$ 
+42.50	45.60	23	sentence	Divide by $S_t$:
+45.60	47.80	25	equation	\frac{dS_t}{S_t} = \mu\,dt + \sigma\,dW_t \qquad (1)
+47.80	55.32	27	sentence	In words: the return over a short time is a steady drift $\mu\,dt$ plus a random
+55.32	67.08	29	numbers	Numbers. With $\mu = 0.1$ and $\sigma = 0.2$, over $dt = 0.01$ the drift adds $0
+67.08	68.38	31	section	Solving the SDE with Itô's formula (p.143–144)
+68.38	71.48	33	sentence	Apply Itô's formula to $\ln S_t$.
+71.48	75.92	33	sentence	Its first derivative is $\frac{1}{S}$ and its second is $-\frac{1}{S^2}$:
+75.92	78.12	35	equation	d(\ln S_t) = \frac{1}{S_t}\,dS_t - \frac{1}{2S_t^2}(dS_t)^2
+78.12	84.87	37	sentence	From $(\star)$, $(dS_t)^2 = \sigma^2 S_t^2\,dt$, since $(dW_t)^2 = dt$ and the o
+84.87	87.07	39	equation	d(\ln S_t) = \frac{dS_t}{S_t} - \frac{1}{2S_t^2} \times \sigma^2 S_t^2\,dt
+87.07	90.17	41	sentence	Substitute (1) for $\frac{dS_t}{S_t}$:
+90.17	92.37	43	equation	d(\ln S_t) = \mu\,dt + \sigma\,dW_t - \frac{\sigma^2}{2}\,dt = \left(\mu - \frac
+92.37	96.42	45	sentence	Integrate from $0$ to $t$, using $W_0 = 0$:
+96.42	98.62	47	equation	\ln S_t - \ln S_0 = \left(\mu - \frac{\sigma^2}{2}\right)t + \sigma W_t
+98.62	101.72	49	sentence	Take $e$ to both sides:
+101.72	104.42	51	equation	S_t = S_0\, e^{\left(\mu - \frac{\sigma^2}{2}\right)t + \sigma W_t}, \quad t \in
+104.42	107.70	53	sentence	So the stock is a geometric BM.
+107.70	114.83	53	sentence	On p.133 the notes wrote $S_0e^{\mu t + \sigma W_t}$; that $\mu$ is this $\mu - 
+114.83	127.22	55	numbers	Numbers. $S_0 = 100$, $\mu = 0.1$, $\sigma = 0.2$, $t = 1$, and say $W_1 = 0$: $
+127.22	128.52	57	section	Two questions (p.144)
+128.52	131.62	59	sentence	Q1.
+131.62	134.72	59	sentence	Is the Black–Scholes market arbitrage-free?
+134.72	138.38	59	sentence	If yes, how do we price attainable claims?
+138.38	141.48	61	sentence	Q2.
+141.48	144.58	61	sentence	Is the Black–Scholes market complete?
+144.58	155.95	63	sentence	The answers to Q1 and Q2 are given in terms of EMMs on $(\Omega, \mathcal{F})$: 
+155.95	156.75	65	section	A family of candidate prices (p.144)
+156.75	159.85	67	sentence	Let
+159.85	162.05	69	equation	Z_t := S_0 \exp\left\{\int_0^t a_s\,ds + \sigma W_t\right\}, \quad t \in [0, T]
+162.05	167.65	71	sentence	where $\{a_t\}_{t \in [0,T]}$ is an adapted process on $(\Omega, \mathcal{F}, \m
+167.65	172.85	73	sentence	In words: $Z_t$ looks like $(\star_1)$, but the drift is left free.
+172.85	177.28	73	sentence	With $a_t = \mu - \frac{\sigma^2}{2}$ it is exactly $S_t$.
+177.28	180.38	75	sentence	Consider $\{e^{-rt}Z_t\}$.
+180.38	189.82	75	sentence	It is an Itô process, and it will be a MG iff the coefficient of the $dt$-term i
+189.82	194.63	77	sentence	The fact used here (boxed in the notes): an Itô process
+194.63	196.83	79	equation	X_t = X_0 + \int_0^t a_s\,ds + \int_0^t b_s\,dW_s, \quad t \in [0, T]
+196.83	202.43	81	sentence	is a MG iff $a_t = 0$ for all $t \in [0, T]$.
+202.43	208.42	83	numbers	Numbers. For $Z_t$ itself the drift $a_t$ is a constant like $0.03$ or $0.08$.
+208.42	212.08	83	numbers	Only one value will make $e^{-rt}Z_t$ a MG.
+212.08	213.38	85	section	The drift that makes it a martingale (p.145)
+213.38	216.48	87	sentence	Split $e^{-rt}Z_t$ into two factors:
+216.48	218.68	89	equation	e^{-rt}Z_t = \underbrace{\exp\left\{\int_0^t a_s\,ds\right\}}_{=: X_t} \times \u
+218.68	224.67	91	sentence	The notes leave out the constant $S_0$; it only scales everything, so nothing ch
+224.67	227.95	93	sentence	Use the product rule for Itô processes:
+227.95	230.15	95	equation	d(e^{-rt}Z_t) = Y_t\,dX_t + X_t\,dY_t + dX_t\,dY_t
+230.15	236.13	97	sentence	$X_t$ has no $dW$ part, so the ordinary chain rule gives $dX_t = a_tX_t\,dt$.
+236.13	243.27	97	sentence	Itô's formula on $e^{-rt + \sigma w}$ gives $dY_t = -rY_t\,dt + \sigma Y_t\,dW_t
+243.27	249.25	97	sentence	And $dX_t\,dY_t = 0$, because $dt \cdot dt = dt \cdot dW_t = 0$:
+249.25	251.45	99	equation	d(e^{-rt}Z_t) = Y_t a_t X_t\,dt + X_t\left(-rY_t\,dt + \sigma Y_t\,dW_t + \frac{
+251.45	254.55	101	sentence	Collect the $dt$ terms:
+254.55	256.75	103	equation	d(e^{-rt}Z_t) = X_tY_t\left(a_t - r + \frac{\sigma^2}{2}\right)dt + \sigma X_tY_
+256.75	261.57	105	sentence	As $X_tY_t > 0$, the coefficient of $dt$ is zero iff
+261.57	264.27	107	equation	a_t = r - \frac{\sigma^2}{2}, \quad t \in [0, T]
+264.27	269.08	109	sentence	In words: the stock has drift $\mu - \frac{\sigma^2}{2}$ under $P$.
+269.08	275.45	109	sentence	Under the EMM it has drift $r - \frac{\sigma^2}{2}$: the $\mu$ is replaced by $r
+275.45	282.83	111	numbers	Numbers. $r = 0.05$, $\sigma = 0.2$: $a_t = 0.05 - 0.02 = 0.03$.
+282.83	289.05	111	numbers	Check the $dt$ coefficient: $0.03 - 0.05 + 0.02 = 0$.
+289.05	290.35	113	section	The answer (p.145)
+290.35	295.95	115	sentence	According to the previous section (p.142–143), the Black–Scholes market is arbit
+295.95	302.32	115	sentence	So one can price any contingent claim $X$ in the market using the valuation form
+302.32	304.52	117	equation	P_t(X) = E^*\left(e^{-r(T-t)}X \mid \mathcal{F}_t\right)
+304.52	317.82	119	numbers	Numbers. For the call with $S_0 = K = 100$, $r = 0.05$, $\sigma = 0.2$, $T = 1$,

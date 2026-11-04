@@ -1,0 +1,7 @@
+Additive & Geometric Random Walks
+
+Additive & Geometric Random Walks
+
+0:00 Step 1: Additive Random Walk
+1:08 Step 2: Geometric (Exponential) Random Walk
+1:50 Step 3: Normal Log-Increments Case

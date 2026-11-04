@@ -1,0 +1,8 @@
+Brownian Bridge & Conditional Distributions
+
+Brownian Bridge & Conditional Distributions
+
+0:00 1. Reference Rules & Definitions
+0:48 2. Derivation of Standard Brownian Bridge [W(s) mid W(t) = B]
+1:10 3. General Brownian Motion Y(t) = sigma W(t)
+1:33 4. Application: Bicycle Race Model

@@ -1,0 +1,39 @@
+start	end	line	kind	text
+0.00	4.00	6	title	Geometric Brownian Motion (GBM) & Filtration Expectation
+4.00	8.05	8	sentence	Log-Normal Stock Modeling, Conditional Expectations, and Martingale Drift Correc
+8.05	8.85	10	section	1. Definition of Geometric Brownian Motion
+8.85	17.05	12	anim	gbm_paths
+17.05	24.18	14	sentence	Let $Y(t)$ be Brownian motion with drift $\mu$ and variance $\sigma^2$: $Y(t) \s
+24.18	27.28	14	sentence	The exponentiated process:
+27.28	29.48	16	equation	X(t) = e^{Y(t)}
+29.48	32.58	18	sentence	is called **Geometric Brownian Motion (GBM)**.
+32.58	36.25	20	sentence	Strictly positive: $X(t) > 0$ for all $t$.
+36.25	41.07	22	sentence	Log-Normal distribution: $\log X(t) = Y(t) \sim \mathcal{N}(\mu t, \sigma^2 t)$.
+41.07	42.37	24	section	2. Grounding Filtrations $\mathcal{F}_s$: Discrete vs Continuous
+42.37	54.50	26	sentence	**Discrete 3-Coin-Flip Example:** If wealth $X_3 = Y_1 + Y_2 + Y_3$ where $Y_i =
+54.50	56.70	28	equation	\mathbb{E}[X_3 \mid \mathcal{F}_1] = Y_1 + \mathbb{E}[Y_2] + \mathbb{E}[Y_3] = Y
+56.70	64.60	30	sentence	**Continuous Time:** $\mathcal{F}_s = \sigma(Y(u), 0 \le u \le s)$ represents th
+64.60	70.58	30	sentence	Any future increment $Y(t) - Y(s)$ (for $t > s$) is independent of $\mathcal{F}_
+70.58	71.88	32	section	3. Moment Generating Function & Derivation of $\mathbb{E}[X(t) \mid \mathcal{F}_
+71.88	77.48	34	sentence	For $Z \sim \mathcal{N}(m, v)$, its MGF gives $\mathbb{E}[e^Z] = e^{m + \frac{1}
+77.48	80.77	34	sentence	Since $Y(t) - Y(s) \sim \mathcal{N}(\mu(t-s), \sigma^2(t-s))$:
+80.77	82.97	36	equation	\mathbb{E}\left[ e^{Y(t) - Y(s)} \right] = \exp\left( \left(\mu + \frac{\sigma^2
+82.97	86.07	38	sentence	**Conditional Expectation:**
+86.07	88.27	40	equation	\mathbb{E}[X(t) \mid \mathcal{F}_s] = \mathbb{E}\left[ e^{Y(s)} e^{Y(t)-Y(s)} \;
+88.27	91.37	42	sentence	**Unconditional Expectation ($X(0) = x_0$):**
+91.37	93.57	44	equation	\mathbb{E}[X(t)] = x_0 \exp\left( \left(\mu + \frac{\sigma^2}{2}\right)t \right)
+93.57	94.87	46	section	4. Martingale Property & Itô Drift Correction
+94.87	99.68	48	sentence	GBM $X(t)$ is a **Martingale** ($\mathbb{E}[X(t) \mid \mathcal{F}_s] = X(s)$) if
+99.68	101.88	50	equation	\mu + \frac{\sigma^2}{2} = 0 \implies \mu = -\frac{\sigma^2}{2}
+101.88	109.78	52	sentence	The process $X(t) = \exp\left(-\frac{\sigma^2}{2}t + \sigma W(t)\right)$ is the 
+109.78	111.08	54	section	5. Stock Price Modeling via i.i.d. Relative Returns
+111.08	115.90	56	sentence	Let relative stock returns $Y_n = \frac{X_n}{X_{n-1}}$ be i.i.d. random variable
+115.90	118.10	58	equation	X_n = Y_n Y_{n-1} \dots Y_1 X_0 \implies \log X_n = \sum_{i=1}^n \log(Y_i) + \lo
+118.10	130.62	60	sentence	By the Central Limit Theorem (CLT), as $n \to \infty$, the sum $\sum \log Y_i$ c
+130.62	131.92	62	section	5. Jensen's Inequality: Why $\mu = -\frac{\sigma^2}{2}$ Cancels the Inflation
+131.92	135.97	64	sentence	Since $e^z$ is a **convex function**, Jensen's inequality states:
+135.97	138.17	66	equation	\mathbb{E}[e^Z] \ge e^{\mathbb{E}[Z]}
+138.17	141.83	68	sentence	For $Z \sim \mathcal{N}(0, \sigma^2 t)$ (mean 0):
+141.83	144.03	70	equation	\mathbb{E}[e^Z] = e^{\frac{\sigma^2 t}{2}} > 1
+144.03	151.17	72	sentence	Volatility $\sigma^2$ *inflates* the expectation above 1. The drift correction $
+151.17	153.37	74	table	

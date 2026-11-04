@@ -1,0 +1,39 @@
+start	end	line	kind	text
+0.00	4.00	5	title	p.142–143: Martingales and claim pricing
+4.00	4.80	7	section	The setting (p.142)
+4.80	7.90	9	sentence	The price process is
+7.90	10.10	11	equation	\{S_t := (S_t^1, \dots, S_t^n)\}_{t \ge 0}
+10.10	16.08	13	sentence	It is a stochastic process on $(\Omega, \mathcal{F}, P)$, with $n$ different ris
+16.08	19.75	15	sentence	There is also a bond, or bank account:
+19.75	21.95	17	equation	B_t = (1+r)^t \text{ in discrete time } t = 0, 1, 2, \dots, \qquad B_t = e^{rt} 
+21.95	25.05	19	sentence	with $r \ge 0$.
+25.05	29.48	21	sentence	A European contingent claim $X \ge 0$ has maturity $T$.
+29.48	35.85	21	sentence	Usually it is a function of the prices, $X = g(S_t)$ with $t \le T$.
+35.85	46.30	23	numbers	Numbers. A call on one stock with $K = 4$ and $T = 2$ is $X = g(S_2) = (S_2 - 4)
+46.30	47.60	25	section	The fair price (p.142)
+47.60	58.58	27	sentence	The "risk neutral" or "arbitrage free" price of a claim is the value of the self
+58.58	63.40	29	sentence	This is exactly what we did on the binomial tree (p.125–129).
+63.40	68.22	29	sentence	Here are the three key facts of the no-arbitrage pricing theory.
+68.22	69.02	31	section	Fact 1: an EMM means no arbitrage (p.142)
+69.02	75.00	33	sentence	Suppose there is an EMM $P^*$ on $(\Omega, \mathcal{F})$, and the discounted pri
+75.00	77.20	35	equation	S_t^* = (1+r)^{-t} S_t \text{ in discrete time}, \qquad S_t^* = e^{-rt} S_t \tex
+77.20	80.48	37	sentence	is a MG on $(\Omega, \mathcal{F}, P^*)$.
+80.48	83.58	37	sentence	Then the market is arbitrage free.
+83.58	90.33	39	sentence	In words: if some probabilities make every discounted stock a fair game, free mo
+90.33	95.15	39	sentence	That is Thm 2 (p.107), now for any number of periods.
+95.15	105.22	41	numbers	Numbers. On our tree, $p^* = 0.5$ and $E^*(S_1^*) = \frac{0.5 \times 8 + 0.5 \ti
+105.22	108.32	41	numbers	So that market is arbitrage free.
+108.32	109.62	43	section	Fact 2: the price of an attainable claim (p.143)
+109.62	116.77	45	anim	backward_values
+116.77	123.13	47	sentence	For an attainable claim $X$ with maturity $T$, its arbitrage-free price at time 
+123.13	125.33	49	equation	P_t(X) = E^*\left((1+r)^{t-T} X \mid \mathcal{F}_t\right) \text{ in discrete tim
+125.33	128.03	51	equation	P_t(X) = E^*\left(e^{-r(T-t)} X \mid \mathcal{F}_t\right) \text{ in continuous t
+128.03	137.47	53	sentence	In words: average the payoff under $P^*$, given everything known at time $t$, an
+137.47	142.67	55	sentence	At $t = 0$ nothing is known yet, so the conditioning drops:
+142.67	144.87	57	equation	P_0(X) = E^*\left((1+r)^{-T} X\right) \quad \text{or} \quad E^*\left(e^{-rT} X\r
+144.87	156.47	59	numbers	Numbers. On the tree, $P_0(X) = \frac{0.25 \times 12}{1.25^2} = 1.92$, and at th
+156.47	157.77	61	section	Fact 3: a unique EMM means a complete market (p.143)
+157.77	162.58	63	sentence	If the EMM $P^*$ is unique, then the market is complete.
+162.58	168.18	63	sentence	That is, any claim is attainable, and so it can always be priced.
+168.18	172.23	65	sentence	This is Thm 4 (p.111), stated for any market.
+172.23	183.45	67	numbers	Numbers. On the binomial tree $p^* = \frac{1+r-d}{u-d} = 0.5$ is the only choice

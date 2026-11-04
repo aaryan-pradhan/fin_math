@@ -1,0 +1,69 @@
+start	end	line	kind	text
+0.00	4.00	6	title	Stopped Process & Martingale Preservation
+4.00	7.10	8	sentence	My understanding, built from scratch.
+7.10	7.90	10	section	1. Motivating Question
+7.90	19.65	12	sentence	If $(X_t)$ is a martingale, can a clever stopping time $\tau$ give $E[X_\tau] > 
+19.65	20.45	14	section	2. The Stopped Process
+20.45	25.65	16	sentence	Define $Z_t = X_{t \wedge \tau}$ where $a \wedge b = \min(a,b)$.
+25.65	27.85	18	equation	Z_t = \begin{cases} X_t & \tau > t \text{ (still running)} \\ X_\tau & \tau \leq
+27.85	30.95	20	sentence	**Example:** $\tau(\omega)=2$, $T=4$:
+30.95	33.15	22	table	
+33.15	39.90	30	sentence	**With numbers.** Walk steps $+1, +1, -1, +1$, so $X = 0, 1, 2, 1, 2$.
+39.90	43.57	30	sentence	$\tau$ = first hit of 2 = 2.
+43.57	45.77	32	table	
+45.77	51.75	37	sentence	After $\tau$, $Z$ ignores what $X$ does: $X_3 = 1$, but $Z_3 = 2$.
+51.75	53.05	39	section	3. Explicit Formula
+53.05	55.25	41	equation	Z_{t+1} = \sum_{k=0}^{t} X_k \mathbf{1}_{\{\tau=k\}} + X_{t+1}\mathbf{1}_{\{\tau
+55.25	64.30	43	sentence	**Term 1:** Picks up $X_\tau$ if already stopped at some $k \leq t$. **Term 2:**
+64.30	80.28	45	sentence	**Trace for $\tau(\omega)=2$, computing $Z_3$:** Term 1: $X_0 \cdot 0 + X_1 \cdo
+80.28	81.58	47	section	4. Theorem: $(Z_t)$ is a Martingale
+81.58	84.87	49	sentence	**Proof of $E(Z_{t+1} \mid \mathcal{F}_t) = Z_t$:**
+84.87	87.07	51	equation	E(Z_{t+1} \mid \mathcal{F}_t) = E\!\left(\sum_{k=0}^t X_k \mathbf{1}_{\tau=k} + 
+87.07	97.67	53	sentence	**Term 1 pulls out:** Each $X_k$ ($k \leq t$) and $\mathbf{1}_{\tau=k}$ are $\ma
+97.67	100.77	53	sentence	$\mathcal{F}_t$.
+100.77	107.90	55	sentence	**Term 2:** $\mathbf{1}_{\tau>t} \in \mathcal{F}_t$ (since $\{\tau>t\} = \{\tau 
+107.90	110.10	57	equation	= \mathbf{1}_{\{\tau>t\}} \cdot E(X_{t+1} \mid \mathcal{F}_t) = \mathbf{1}_{\{\t
+110.10	113.20	59	sentence	**Combine:**
+113.20	115.40	61	equation	= \sum_{k=0}^t X_k \mathbf{1}_{\tau=k} + \mathbf{1}_{\{\tau>t\}} X_t = Z_t \chec
+115.40	121.38	63	sentence	**Numeric check.** Two-step walk, $\tau$ = first time $X = 1$, capped at 2.
+121.38	123.58	65	table	
+123.58	130.33	72	sentence	Atom $\{HH, HT\}$: $E[Z_2 \mid \mathcal{F}_1] = \tfrac12(1 + 1) = 1 = Z_1$ ✅ (fr
+130.33	137.47	74	sentence	Atom $\{TH, TT\}$: $E[Z_2 \mid \mathcal{F}_1] = \tfrac12(0 - 2) = -1 = Z_1$ ✅ (s
+137.47	143.45	76	sentence	$E[Z_2] = \tfrac14(1 + 1 + 0 - 2) = 0 = Z_0$ ✅
+143.45	144.75	78	section	5. Stopping Time — Coin Flip Grounding
+144.75	149.57	80	sentence	$\Omega = \{HHH, HHT, HTH, HTT, THH, THT, TTH, TTT\}$, $T=3$.
+149.57	163.62	82	sentence	✅ **Valid ST:** $\tau =$ "first time flip is H" $\{\tau=1\} = \{H\_ \_\} \in \ma
+163.62	175.37	84	sentence	❌ **Invalid ST:** $\tau =$ "last time flip is H" $\{\tau=1\} = \{HTT\}$ — at $t=
+175.37	178.47	84	sentence	Requires future info. ✗
+178.47	179.27	86	section	6. Key Consequence
+179.27	183.70	88	sentence	If $(X_t)$ is a martingale: no stopping strategy beats $E[X_0]$.
+183.70	185.90	90	equation	E[X_\tau] = E[Z_\tau] = E[Z_0] = E[X_0]
+185.90	190.72	92	sentence	You cannot exploit a fair game by choosing when to quit.
+190.72	192.02	94	section	Practice Questions
+192.02	198.38	96	sentence	**Q1.** $X = 0, -1, 0, 1, 2, 1$ for $t = 0, \ldots, 5$.
+198.38	201.67	96	sentence	$\tau$ = first time $X = 1$.
+201.67	204.77	96	sentence	Write $Z_0, \ldots, Z_5$.
+204.77	207.87	98	sentence	Answer
+207.87	210.97	100	sentence	$\tau = 3$.
+210.97	214.63	100	sentence	$Z = 0, -1, 0, 1, 1, 1$.
+214.63	222.53	102	sentence	**Q2.** Three-step walk, $\tau$ = first time $X = -1$, else 3. Enumerate all 8 p
+222.53	225.63	104	sentence	Answer
+225.63	230.45	106	sentence	Paths $T{\_}{\_}$ (4 of them): $\tau = 1$, $X_\tau = -1$.
+230.45	233.55	106	sentence	Total $-4$.
+233.55	244.15	108	sentence	$HHH$: 3. $HHT$: 1. $HTH$: $X = 1, 0, 1$, so 1. $HTT$: $X = 1, 0, -1$, so $\tau 
+244.15	250.13	110	sentence	$E[X_\tau] = \tfrac18(-4 + 3 + 1 + 1 - 1) = 0$ ✅
+250.13	257.65	112	sentence	**Q3.** Two-step walk. "Cheat" rule: $\tau = 1$ if toss 2 will be T, else $\tau 
+257.65	260.75	112	sentence	Compute $E[X_\tau]$.
+260.75	263.85	112	sentence	Why doesn't the theorem stop this?
+263.85	266.95	114	sentence	Answer
+266.95	270.23	116	sentence	$HH$: $\tau = 2$, $X = 2$.
+270.23	273.52	116	sentence	$HT$: $\tau = 1$, $X = 1$.
+273.52	276.80	116	sentence	$TH$: $\tau = 2$, $X = 0$.
+276.80	280.08	116	sentence	$TT$: $\tau = 1$, $X = -1$.
+280.08	285.68	116	sentence	$E[X_\tau] = \tfrac14(2 + 1 + 0 - 1) = 0.5 > 0$.
+285.68	295.88	116	sentence	This $\tau$ is not a stopping time: $\{\tau = 1\}$ depends on toss 2. The proof 
+295.88	302.25	118	sentence	**Q4.** In the formula for $Z_{t+1}$, with $\tau(\omega) = 5$, compute $Z_3$ ter
+302.25	305.35	120	sentence	Answer
+305.35	308.45	122	sentence	$Z_3 = \sum_{k=0}^{2} X_k\mathbf{1}_{\tau=k} + X_3\mathbf{1}_{\tau>2}$.
+308.45	314.05	122	sentence	All indicators $\mathbf{1}_{\tau=k}$ for $k \le 2$ are 0, and $\mathbf{1}_{\tau>
+314.05	317.33	122	sentence	So $Z_3 = X_3$: not yet stopped.

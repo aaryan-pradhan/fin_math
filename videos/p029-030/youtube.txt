@@ -1,0 +1,15 @@
+Gambler's Ruin Problem
+
+Gambler's Ruin Problem
+
+0:00 1. Problem Formulation
+1:28 2. Win Probability: First-Step Equation
+2:37 3. From the Equation to a Ratio of Differences
+3:05 4. Unrolling the Differences
+3:47 5. Summing the Geometric Series and Using PN = 1
+5:23 6. Win Probability as N to infty
+6:18 7. Expected Duration: First-Step Equation
+7:33 8. Fair Game: Ei = i(N - i)
+9:33 9. Unfair Game (p ne q)
+12:14 10. Martingale Check (Optimal Stopping)
+14:05 11. Expected Duration as N to infty

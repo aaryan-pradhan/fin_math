@@ -1,0 +1,89 @@
+start	end	line	kind	text
+0.00	4.00	6	title	Stochastic Differential Equations
+4.00	12.67	8	sentence	An Itô process whose coefficients depend on the process itself; solved (rarely) 
+12.67	13.47	10	section	Step 1: Ingredients
+13.47	16.75	12	sentence	Filtered space $(\Omega,\mathcal{F},\mathbb{F},P)$ with standard BM $W$.
+16.75	23.12	12	sentence	Two **non-random** functions $a, b : [0,T]\times\mathbb{R}\to\mathbb{R}$: fixed 
+23.12	26.22	14	sentence	$a(t,x) = -2x$: $a(3,4) = -8$.
+26.22	32.20	14	sentence	With a random input, $\omega\mapsto a(t, X_t(\omega))$ is a random variable (com
+32.20	35.87	14	sentence	$X_1(\omega_1)=5 \Rightarrow a=-10$; $X_1(\omega_2)=-1 \Rightarrow a = 2$.
+35.87	36.67	16	section	Step 2: SDE vs Itô process
+36.67	41.48	18	sentence	Itô process: $dX_t = a_t\,dt + b_t\,dW_t$, with $a_t, b_t$ *given*.
+41.48	44.58	18	sentence	Nothing to solve. **SDE**:
+44.58	46.78	20	equation	dX_t = a(t,X_t)\,dt + b(t,X_t)\,dW_t,\quad X_0 = x_0 \qquad (1)
+46.78	50.45	22	sentence	Coefficients built from the unknown $X$: an equation.
+50.45	55.27	24	sentence	$dX_t = W_t\,dt + dW_t$: Itô process ($a_t = W_t$ given).
+55.27	59.32	24	sentence	$dX_t = X_t^2\,dt + dW_t$: SDE ($a(t,x) = x^2$).
+59.32	60.62	26	section	Step 3: Solution
+60.62	65.05	28	sentence	An Itô process $X$ **solves (1)** if for all $t\in[0,T]$
+65.05	67.25	30	equation	X_t = x_0 + \int_0^t a(s,X_s)\,ds + \int_0^t b(s,X_s)\,dW_s \qquad (2)
+67.25	72.45	32	sentence	Check a candidate: plug into the RHS, evaluate, show RHS $=$ LHS.
+72.45	81.88	34	sentence	$dX_t = dt + 2\,dW_t$, $x_0 = 3$: $X_t = 3 + t + 2W_t$ since RHS $= 3 + t + 2W_t
+81.88	87.48	34	sentence	$dX_t = X_t\,dt$, $x_0=1$ ($b=0$): (2) is $X_t = 1 + \int_0^t X_s\,ds$.
+87.48	91.92	34	sentence	Candidate $e^t$: $1 + (e^t - 1) = e^t$. ✓
+91.92	95.02	36	sentence	Most SDEs have no closed-form solution.
+95.02	98.30	36	sentence	Existence is proved abstractly; solutions are simulated.
+98.30	99.60	38	section	Step 4: Toolkit
+99.60	105.20	40	sentence	**T1** $dt\cdot dt = 0$, $dt\cdot dW = 0$, $dW\cdot dW = dt$.
+105.20	109.63	42	sentence	**T2** $df(t,X_t) = \partial_t f\,dt + \partial_x f\,dX_t + \tfrac12\partial_{xx
+109.63	115.62	44	sentence	**T3** $f = g(t)x$: $d(g(t)X_t) = g'(t)X_t\,dt + g(t)\,dX_t$ (no correction, $\p
+115.62	122.37	46	sentence	**T4** $dY_t = h_t\,dt + k_t\,dW_t \iff Y_t = Y_0 + \int_0^t h_s\,ds + \int_0^t 
+122.37	131.80	48	sentence	**T5** Integrating factor for $dX_t = -rX_t\,dt + (\text{no }X)$: T3 with $g = e
+131.80	134.90	50	sentence	**T6** $\mathbb{E}\left[\int_0^t k_s\,dW_s\right] = 0$.
+134.90	138.57	52	sentence	**T7** Itô isometry: $\mathbb{E}\left[\left(\int_0^t k_s\,dW_s\right)^2\right] =
+138.57	147.62	54	sentence	**T8** $k$ deterministic $\Rightarrow \int_0^t k(s)\,dW_s \sim N\left(0, \int_0^
+147.62	152.82	56	sentence	**T9** $Q\sim N(0,v) \Rightarrow c + \sigma Q \sim N(c, \sigma^2 v)$.
+152.82	157.25	58	sentence	**T10** $df(X_t) = f'(X_t)\,dX_t + \tfrac12 f''(X_t)(dX_t)^2$, $(dX_t)^2$ via T1
+157.25	158.05	60	section	Step 5: Ornstein–Uhlenbeck process
+158.05	165.25	62	anim	ou_paths
+165.25	167.45	64	equation	dX_t = -rX_t\,dt + \sigma\,dW_t,\quad X_0 = x_0,\quad r,\sigma > 0 \qquad (3)
+167.45	170.55	66	sentence	$a(t,x) = -rx$, $b = \sigma$.
+170.55	174.60	66	sentence	Drift points toward $0$, stronger farther away: **mean reversion**.
+174.60	179.80	66	sentence	At $X_t = 0$ drift is $0$ but noise still moves $X$.
+179.80	185.40	68	sentence	$r=2$: $X_t = 5 \Rightarrow$ drift $-10$; $X_t = -5 \Rightarrow$ drift $+10$.
+185.40	192.15	70	sentence	Direct integration fails: $X_t = x_0 - r\int_0^t X_s\,ds + \sigma W_t$ still has
+192.15	195.25	72	sentence	T5.
+195.25	201.62	72	sentence	$f(t,x) = e^{rt}x$: $\partial_t f = re^{rt}x$, $\partial_x f = e^{rt}$, $\partia
+201.62	203.82	74	equation	d(e^{rt}X_t) = re^{rt}X_t\,dt + e^{rt}\,dX_t \qquad (5)
+203.82	208.63	76	sentence	Substitute (3): $re^{rt}X_t\,dt - re^{rt}X_t\,dt + \sigma e^{rt}\,dW_t = \sigma 
+208.63	211.73	76	sentence	T4:
+211.73	213.93	78	equation	e^{rt}X_t = x_0 + \sigma\int_0^t e^{rs}\,dW_s
+213.93	216.13	80	equation	X_t = x_0e^{-rt} + \sigma\int_0^t e^{-r(t-s)}\,dW_s
+216.13	217.43	82	section	Step 6: Distribution of OU
+217.43	220.53	84	sentence	$Q_t = \int_0^t e^{-r(t-s)}\,dW_s$.
+220.53	223.63	84	sentence	T6: $\mathbb{E}[Q_t] = 0$.
+223.63	226.73	84	sentence	T7:
+226.73	228.93	86	equation	\mathbb{E}[Q_t^2] = \int_0^t e^{-2r(t-s)}\,ds = e^{-2rt}\left[\frac{e^{2rs}}{2r}
+228.93	232.03	88	sentence	T8, T9:
+232.03	234.23	90	equation	X_t \sim N\left(x_0e^{-rt},\ \sigma^2_{r,t}\right),\qquad \sigma^2_{r,t} = \frac
+234.23	237.52	92	sentence	$t\to\infty$: $X_t \to N\left(0, \frac{\sigma^2}{2r}\right)$ in distribution.
+237.52	241.18	92	sentence	Start forgotten; variance bounded (BM's grows like $t$).
+241.18	246.78	94	sentence	$X$ is a Gaussian process when $X_0$ is Gaussian *and independent of $W$*.
+246.78	248.08	96	section	Step 7: Vasicek model
+248.08	250.28	98	equation	dr_t = a(b - r_t)\,dt + \sigma\,dW_t,\quad a,b,\sigma > 0
+250.28	253.38	100	sentence	$b$: long-run mean.
+253.38	256.48	100	sentence	$a$: reversion speed.
+256.48	265.15	102	sentence	$X_t = r_t - b$, $dX_t = dr_t = -aX_t\,dt + \sigma\,dW_t$: OU with $r\to a$, $x_
+265.15	268.25	102	sentence	By (6):
+268.25	270.45	104	equation	r_t \sim N\left(b + e^{-at}(r_0 - b),\ \frac{\sigma^2}{2a}\left(1 - e^{-2at}\rig
+270.45	275.27	106	sentence	Gaussian rates go negative: $P(r_t < 0) \to \Phi\left(-\frac{b\sqrt{2a}}{\sigma}
+275.27	276.57	108	section	Step 8: CIR model
+276.57	278.77	110	equation	dr_t = a(b - r_t)\,dt + \sigma\sqrt{r_t}\,dW_t,\quad a,b,\sigma,r_0 > 0
+278.77	287.05	112	sentence	Noise $\to 0$ as $r_t\to 0$, drift $ab>0$ pushes up: $r_t \ge 0$; strictly posit
+287.05	290.33	114	sentence	T5 does not close (noise contains $r$):
+290.33	292.53	116	equation	r_t = b + e^{-at}(r_0 - b) + \sigma\int_0^t e^{-a(t-s)}\sqrt{r_s}\,dW_s
+292.53	299.28	118	sentence	No closed form, but T6 gives $\mathbb{E}[r_t] = b + e^{-at}(r_0 - b)$, same as V
+299.28	302.38	118	sentence	Not normal.
+302.38	303.68	120	section	Step 9: Geometric BM
+303.68	306.97	122	sentence	$N_t$ asset price, $r$ rate, $\alpha$ volatility.
+306.97	310.07	122	sentence	Multiplicative noise:
+310.07	312.27	124	equation	dN_t = rN_t\,dt + \alpha N_t\,dW_t,\quad N_0 > 0 \qquad (6^*)
+312.27	318.25	126	sentence	$\frac{dN_t}{N_t} = r\,dt + \alpha\,dW_t$ (7) is notation for this, not division
+318.25	324.62	128	sentence	T10 with $f = \log x$, $f' = \frac1x$, $f'' = -\frac1{x^2}$; $(dN_t)^2 = \alpha^
+324.62	326.82	130	equation	d(\log N_t) = \frac{dN_t}{N_t} - \frac{(dN_t)^2}{2N_t^2} = \left(r - \frac{\alph
+326.82	329.92	132	sentence	T4, exponentiate:
+329.92	332.12	134	equation	N_t = N_0\exp\left\{\left(r - \frac{\alpha^2}{2}\right)t + \alpha W_t\right\}
+332.12	335.22	136	sentence	$\log N_t$ presumes $N_t > 0$.
+335.22	346.97	136	sentence	Close the gap by verifying: Itô on $e^{\mu t + \sigma W_t}$ gives drift $\mu + \
+346.97	351.40	138	sentence	$\mathbb{E}[N_t] = N_0e^{(r - \alpha^2/2)t}\,\mathbb{E}\left[e^{\alpha W_t}\righ
+351.40	357.38	138	sentence	Median $= N_0e^{(r - \alpha^2/2)t} <$ mean: rare large paths pull the mean up.

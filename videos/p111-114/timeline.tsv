@@ -1,0 +1,111 @@
+start	end	line	kind	text
+0.00	4.00	5	title	p.111–114: Thm 4, the completeness theorem
+4.00	4.80	7	section	Notation check
+4.80	14.62	9	sentence	The notes now write a stock's number as a superscript: $S_1^i(\omega_k)$ is the 
+14.62	20.60	9	sentence	That is the same as $S_{1,i}(\omega_k)$ from p.105, and it matches $S_n^i$ from 
+20.60	23.70	9	sentence	Everything else is as on p.109–111.
+23.70	32.37	11	sentence	Running example, same as before: bond, $n = 2$ stocks, $N = 3$ outcomes, $r = 0.
+32.37	39.50	11	sentence	Rows are outcomes (3), columns are the securities (3), each cell is the $t = 1$ 
+39.50	41.70	13	table	
+41.70	43.00	19	section	The statement (p.111)
+43.00	49.75	21	sentence	**Theorem 4 (the completeness theorem).** An arbitrage-free market is complete i
+49.75	53.42	23	sentence	From p.109–111: complete means every claim is attainable.
+53.42	61.32	23	sentence	So Thm 4 says: "I can hedge every claim" and "there is exactly one $p^*$" are th
+61.32	62.12	25	section	Observation 1: the EMM is the solution of a linear system (p.111–112)
+62.12	67.32	27	sentence	Using Thm 2, there is a $p^*$ such that $E^*\left(\frac{S_1}{1+r}\right) = S_0$.
+67.32	70.98	27	sentence	Write that out one stock at a time.
+70.98	77.35	27	sentence	Multiply both sides by $1 + r$, and write $E^*$ as the sum over outcomes.
+77.35	81.78	27	sentence	Add the condition that the $p_k^*$ add up to $1$.
+81.78	87.38	27	sentence	I get $n + 1$ equations in the $N$ unknowns $p_1^*, \dots, p_N^*$.
+87.38	94.90	27	sentence	One row per equation ($n + 1$ rows); the columns are the outcomes ($N$), plus th
+94.90	97.10	29	table	
+97.10	102.70	36	sentence	So if the EMM is unique, the above system has a unique solution.
+102.70	109.45	36	sentence	The notes take this to mean $n + 1 = N$: as many equations as unknowns.
+109.45	114.65	36	sentence	(Strictly, a unique solution needs at least $N$ equations that are independent.
+114.65	124.08	36	sentence	Any extra ones would just repeat the others, so after dropping them we have $n +
+124.08	126.28	38	equation	A = \begin{pmatrix} S_1^1(\omega_1) & S_1^1(\omega_2) & \cdots & S_1^1(\omega_N)
+126.28	130.72	40	sentence	is non-singular, $\det A \ne 0$, and hence $A^{-1}$ exists.
+130.72	135.15	40	sentence	Row $i$ of $A$ is stock $i$ across the outcomes.
+135.15	139.58	40	sentence	The last row is the $1$s from "sum $= 1$".
+139.58	142.68	40	sentence	Column $k$ is outcome $\omega_k$.
+142.68	147.13	42	numbers	Numbers. Here $n + 1 = 3 = N$.
+147.13	150.23	42	numbers	Plug the table into the system.
+150.23	155.43	42	numbers	Rows are equations (3), columns are outcomes (3), plus the right side:
+155.43	158.13	44	table	
+158.13	161.23	50	sentence	So
+161.23	163.43	52	equation	A = \begin{pmatrix} 2 & 0.5 & 0.5 \\ 1 & 2 & 1 \\ 1 & 1 & 1 \end{pmatrix}
+163.43	179.42	54	sentence	Expand $\det A$ along the first row: $2(2 \cdot 1 - 1 \cdot 1) - 0.5(1 \cdot 1 -
+179.42	186.17	54	sentence	So the solution is unique, and it is the $p^* = (0.5, 0.25, 0.25)$ from p.107.
+186.17	191.77	56	sentence	Check, plug it into each row: $2(0.5) + 0.5(0.25) + 0.5(0.25) = 1.25$.
+191.77	195.05	56	sentence	$0.5 + 0.5 + 0.25 = 1.25$.
+195.05	198.33	56	sentence	$0.5 + 0.25 + 0.25 = 1$.
+198.33	201.43	56	sentence	Same.
+201.43	202.73	58	section	Observation 2: hedging is the same matrix, transposed (p.112)
+202.73	214.48	60	sentence	We observe a claim $X = X(\omega)$ can be replicated when there exists a portfol
+214.48	221.62	60	sentence	One row per outcome ($N$ rows); the columns are the securities ($n + 1$), plus t
+221.62	223.82	62	table	
+223.82	226.92	68	sentence	Call this system $(✡_0)$.
+226.92	234.05	68	sentence	It is a system of $N$ linear equations for $n + 1$ unknowns $\Delta_1, \dots, \D
+234.05	237.33	68	sentence	Let's see why its matrix is $A^T$.
+237.33	242.15	68	sentence	Row $k$ of this system has coefficients $S_1^1(\omega_k), \dots, S_1^n(\omega_k)
+242.15	245.25	68	sentence	That is column $k$ of $A$.
+245.25	251.23	68	sentence	Rows of one are columns of the other, so the system matrix is $A^T$.
+251.23	254.33	70	numbers	Numbers. Our $A^T$ is
+254.33	256.53	72	equation	A^T = \begin{pmatrix} 2 & 1 & 1 \\ 0.5 & 2 & 1 \\ 0.5 & 1 & 1 \end{pmatrix}
+256.53	265.97	74	sentence	and its first row $(2, 1, 1)$ is exactly the $\omega_1$ row of the hedge table o
+265.97	267.27	76	section	Proof of $\Leftarrow$: unique EMM gives completeness (p.112–113)
+267.27	270.37	78	sentence	Suppose there is a unique EMM.
+270.37	273.47	78	sentence	From Obs.
+273.47	280.22	78	sentence	1, $n + 1 = N$ and $A$ is non-singular, and hence so is $A^T$, since
+280.22	282.42	80	equation	\det A = \det A^T
+282.42	287.23	82	sentence	$\therefore$ $(✡_0)$ has a unique solution for any right side $X$.
+287.23	296.28	82	sentence	That means for any claim $X$ there is a unique replicating strategy in the marke
+296.28	304.58	84	numbers	Numbers. Let's hedge the claim that was not attainable with one stock on p.111: 
+304.58	308.08	84	numbers	Write $\beta = b(1+r)$.
+308.08	311.18	84	numbers	Rows are outcomes (3):
+311.18	313.38	86	table	
+313.38	317.43	92	sentence	Subtract row $\omega_3$ from row $\omega_2$: $\Delta_2 = 1$.
+317.43	323.03	92	sentence	Subtract row $\omega_3$ from row $\omega_1$: $1.5\Delta_1 = 0$, so $\Delta_1 = 0
+323.03	331.32	92	sentence	Put both into row $\omega_3$: $1 + \beta = 0$, so $\beta = -1$ and $b = -\frac{1
+331.32	336.52	92	sentence	So the hedge is: one share of stock 2, and borrow $0.8$.
+336.52	342.50	92	sentence	Its cost is $V_0 = 0 + 1 \times 1 - 0.8 = 0.2$.
+342.50	348.10	94	sentence	Check, by Thm 3: $X^* = E^*\left(\frac{X}{1.25}\right) = \frac{0.25 \times 1}{1.
+348.10	351.20	94	sentence	Same.
+351.20	352.50	96	section	Proof of $\Rightarrow$: completeness gives a unique EMM (p.113)
+352.50	357.32	98	sentence	By Thm 2, for an NA market there is an EMM.
+357.32	363.30	98	sentence	We want to show: if the market is complete, then the EMM is unique.
+363.30	366.97	100	sentence	Assume there are two EMMs, $p^*$ and $\tilde{p}^*$.
+366.97	370.63	100	sentence	Due to completeness every claim $X$ is attainable.
+370.63	378.92	100	sentence	So by Thm 3, its price doesn't depend on the choice of EMM, and for any claim $X
+378.92	381.12	102	equation	E^*\left(\frac{X}{1+r}\right) = \tilde{E}^*\left(\frac{X}{1+r}\right)
+381.12	386.72	104	sentence	Write both sides as sums over outcomes and multiply by $1 + r$:
+386.72	388.92	106	equation	\sum_{k=1}^N p_k^* X(\omega_k) = \sum_{k=1}^N \tilde{p}_k^* X(\omega_k) \qquad (
+388.92	392.02	108	sentence	Now pick the claims cleverly.
+392.02	396.83	108	sentence	In this step $i$ counts outcomes, not stocks (the notes' choice).
+396.83	399.93	108	sentence	Take
+399.93	402.13	110	equation	X_i(\omega_k) := \delta_{ik} = \begin{cases} 1, & k = i \\ 0, & \text{o.w.} \end
+402.13	406.95	112	sentence	So $X_i$ pays $1$ in outcome $\omega_i$ and $0$ everywhere else.
+406.95	413.32	112	sentence	Rows are the claims ($N$), columns are the outcomes ($N$); the table is the iden
+413.32	416.02	114	table	
+416.02	419.12	121	sentence	Now the chain.
+419.12	424.32	121	sentence	The sum of $p_k^* \delta_{ik}$ keeps only the $k = i$ term.
+424.32	429.13	121	sentence	Then substitute $\delta_{ik} = X_i(\omega_k)$, then apply (6), then go back:
+429.13	431.33	123	equation	p_i^* = \sum_{k=1}^N p_k^* \delta_{ik} = \sum_{k=1}^N p_k^* X_i(\omega_k) = \sum
+431.33	434.43	125	sentence	(The notes end with $\tilde{p}_k^*$.
+434.43	439.63	125	sentence	It should be $\tilde{p}_i^*$, since only the $k = i$ term survives.)
+439.63	443.68	127	sentence	This holds for every $i = 1, \dots, N$.
+443.68	448.12	127	sentence	$\therefore$ $p^* = \tilde{p}^*$, meaning that the EMM is unique.
+448.12	456.03	129	numbers	Numbers. In our two-stock market, $X_2 = (0, 1, 0)$ is the claim we just hedged 
+456.03	463.18	129	numbers	Any EMM must price it at $0.2$, so $\frac{\tilde{p}_2^*}{1.25} = 0.2$, which for
+463.18	473.37	129	numbers	In the same way, $X_1 = (1, 0, 0)$ costs $0.4$ (p.110), so $\tilde{p}_1^* = 0.4 
+473.37	487.67	129	numbers	And $X_3$: the three claims together pay $1$ in every outcome, which is $0.8$ bo
+487.67	490.77	129	numbers	That is $p^*$ again.
+490.77	497.52	131	sentence	Check, the one-stock market of p.111: there $X_2$ is not attainable, so (6) fail
+497.52	501.95	131	sentence	Indeed $p^*$ priced it at $0.2$ and $q^*$ at $0.08$.
+501.95	505.23	131	sentence	Completeness is exactly what this proof needs.
+505.23	506.53	133	section	Remark (p.114)
+506.53	512.90	135	sentence	The market should be rich enough for us to be able to replicate arbitrary claims
+512.90	518.10	135	sentence	In pictures: enough independent payoff arrows to reach every point of $\mathbb{R
+518.10	518.90	137	section	Slides (p.115–124)
+518.90	522.00	139	sentence	The slides repeat p.105–114.
+522.00	528.75	139	sentence	The one extra, a shorter route for Step 2 of Thm 2, is merged into p105-109.

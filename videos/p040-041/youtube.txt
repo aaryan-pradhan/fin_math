@@ -1,0 +1,11 @@
+Hitting Times, Reflection Principle & Running Maximum
+
+Hitting Times, Reflection Principle & Running Maximum
+
+0:00 1. Hitting Time Definition
+0:25 2. The Reflection Principle
+0:44 Method A: Analytical (Strong Markov Property)
+1:37 Method B: Geometric (Path-wise Reflection)
+2:46 3. Probability Distribution of Ta
+3:02 4. The Running Maximum M(t)
+3:22 5. Certain Hitting Time (mathbbP(Ta < infty) = 1)

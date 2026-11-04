@@ -1,0 +1,33 @@
+start	end	line	kind	text
+0.00	4.00	6	title	Gaussian Processes, Standard Brownian Motion & MVN Conditioning
+4.00	4.80	8	section	1. Multivariate Normal (MVN) Distribution Properties
+4.80	18.47	10	sentence	**Definition:** A random vector $\mathbf{X} \in \mathbb{R}^n$ follows an $n$-dim
+18.47	19.27	12	section	Linear Transformation Property
+19.27	27.17	14	sentence	If $\mathbf{X} \sim \mathcal{N}_n(\boldsymbol{\mu}, \boldsymbol{\Sigma})$, then 
+27.17	29.37	16	equation	\mathbf{Y} = \mathbf{A}\mathbf{X} + \mathbf{c} \implies \mathbf{Y} \sim \mathcal
+29.37	30.67	18	section	Conditional Distribution of Partitioned MVN
+30.67	34.33	20	sentence	Partition a joint MVN vector into two sub-vectors:
+34.33	36.53	22	equation	\mathbf{X} = \begin{pmatrix} \mathbf{X}_1 \\ \mathbf{X}_2 \end{pmatrix} \sim \ma
+36.53	41.73	24	sentence	**Theorem:** The conditional distribution $\mathbf{X}_1 \mid \mathbf{X}_2 = \mat
+41.73	43.93	26	equation	\mathbf{X}_1 \mid \mathbf{X}_2 = \mathbf{x}_2 \sim \mathcal{N}(\boldsymbol{\mu}_
+43.93	49.53	28	sentence	**Conditional Expectation:** $\mathbb{E}[\mathbf{X}_1 \mid \mathbf{X}_2 = \mathb
+49.53	54.35	30	sentence	**Conditional Variance:** $\text{Var}(\mathbf{X}_1 \mid \mathbf{X}_2 = \mathbf{x
+54.35	55.65	32	section	2. Gaussian Process & Brownian Motion
+55.65	62.85	34	anim	bm_paths
+62.85	71.52	36	sentence	A stochastic process $\{W(t), t \ge 0\}$ is a **Gaussian Process** if every fini
+71.52	74.80	36	sentence	Standard Brownian Motion is fully defined by:
+74.80	78.08	38	sentence	**Mean function:** $m(t) = \mathbb{E}[W(t)] = 0$
+78.08	84.07	40	sentence	**Covariance function:** $K(s, t) = \text{Cov}(W(s), W(t)) = \min(s, t) = s \wed
+84.07	85.37	42	section	3. Conditional Expectations of Brownian Motion
+85.37	86.17	44	section	Case 1: Forward Expectation ($s < t$) — Martingale Property
+86.17	94.45	46	sentence	Using independent increments $W(t) = W(s) + [W(t) - W(s)]$, where the increment 
+94.45	96.65	48	equation	\mathbb{E}[W(t) \mid W(s)] = W(s) + \mathbb{E}[W(t) - W(s)] = W(s)
+96.65	97.95	50	section	Case 2: Backward Expectation & Interpolation ($s < t$)
+97.95	102.77	52	sentence	For $s < t$, the joint distribution of $(W(s), W(t))^T$ is:
+102.77	104.97	54	equation	\begin{pmatrix} W(s) \\ W(t) \end{pmatrix} \sim \mathcal{N}_2\left( \begin{pmatr
+104.97	110.17	56	sentence	Applying the MVN conditional parameters for scalars ($\mu_1=0, \mu_2=0, \Sigma_{
+110.17	113.27	58	sentence	**Conditional Mean:**
+113.27	115.47	60	equation	\mathbb{E}[W(s) \mid W(t)] = 0 + s \cdot t^{-1} (W(t) - 0) = \frac{s}{t} W(t)
+115.47	118.57	62	sentence	**Conditional Variance:**
+118.57	120.77	64	equation	\text{Var}(W(s) \mid W(t)) = s - s \cdot t^{-1} \cdot s = s - \frac{s^2}{t} = \f
+120.77	133.67	66	sentence	**Insight (Brownian Bridge):** Given $W(t)$, the value at an earlier time $s < t

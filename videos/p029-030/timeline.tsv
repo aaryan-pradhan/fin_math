@@ -1,0 +1,198 @@
+start	end	line	kind	text
+0.00	4.00	6	title	Gambler's Ruin Problem
+4.00	11.90	8	sentence	Win probability and expected duration, derived line by line: first-step analysis
+11.90	12.70	10	section	1. Problem Formulation
+12.70	20.90	12	anim	gamblers_ruin
+20.90	24.00	14	sentence	A gambler starts with Rs $i$.
+24.00	30.75	14	sentence	The opponent has Rs $N - i$, so the total wealth in play is Rs $N$.
+30.75	41.35	14	sentence	Each round is an independent bet $Z_n \in \{+1, -1\}$ with $P(Z_n = +1) = p$ and
+41.35	45.78	14	sentence	Wealth after $n$ rounds: $X_n = i + \sum_{k=1}^n Z_k$.
+45.78	49.45	14	sentence	State space $S = \{0, 1, \dots, N\}$.
+49.45	54.27	16	sentence	The game stops at $0$ (ruin) or at $N$ (target reached).
+54.27	57.37	16	sentence	These are absorbing states.
+57.37	61.80	18	sentence	$\{1, \dots, N-1\}$ are transient: the game is still running.
+61.80	67.78	20	sentence	$T_0$ = first time $X_n = 0$, $T_N$ = first time $X_n = N$.
+67.78	70.88	20	sentence	Game length $\tau = \min(T_0, T_N)$.
+70.88	76.87	22	sentence	CT-1 Q10 (win 10 / lose 5): shift so that "lost 5" is $0$.
+76.87	82.07	22	sentence	Then $i = 5$ and $N = 5 + 10 = 15$.
+82.07	88.43	22	sentence	Path $+1, +1, -1$ from $i = 5$: $X = 6, 7, 6$, still running.
+88.43	89.73	24	section	2. Win Probability: First-Step Equation
+89.73	98.02	26	sentence	$P_i = P(T_N < T_0 \mid X_0 = i)$, the probability of reaching $N$ before $0$ wh
+98.02	103.22	28	sentence	**Step 1: Boundaries.** Start at $0$: already ruined, so $P_0 = 0$.
+103.22	107.27	28	sentence	Start at $N$: already won, so $P_N = 1$.
+107.27	112.08	30	sentence	**Step 2: Condition on the first bet** (law of total probability):
+112.08	114.28	32	equation	P_i = P(\text{win} \mid Z_1 = +1)\,P(Z_1 = +1) + P(\text{win} \mid Z_1 = -1)\,P(
+114.28	119.88	34	sentence	**Step 3: Restart.** After the first bet you are at $i+1$ or $i-1$.
+119.88	130.08	34	sentence	The later bets are independent of $Z_1$ and have the same law, so the game from 
+130.08	132.28	36	equation	P(\text{win} \mid Z_1 = +1) = P_{i+1},\qquad P(\text{win} \mid Z_1 = -1) = P_{i-
+132.28	136.33	38	sentence	**Step 4: Combine**, for $1 \le i \le N-1$:
+136.33	138.53	40	equation	P_i = pP_{i+1} + qP_{i-1}
+138.53	145.67	42	sentence	$N = 3$, fair: $P_1 = \tfrac12P_2 + \tfrac12\cdot 0$ and $P_2 = \tfrac12\cdot 1 
+145.67	153.57	42	sentence	Substitute the second into the first: $P_1 = \tfrac14 + \tfrac14P_1$, so $\tfrac
+153.57	157.23	42	sentence	Then $P_2 = \tfrac12 + \tfrac16 = \tfrac23$.
+157.23	158.53	44	section	3. From the Equation to a Ratio of Differences
+158.53	167.58	46	sentence	**Step 1.** Since $p + q = 1$, write the left side as $P_i = (p + q)P_i = pP_i +
+167.58	169.78	48	equation	pP_i + qP_i = pP_{i+1} + qP_{i-1}
+169.78	175.77	50	sentence	**Step 2.** Move the $p$-terms to one side and the $q$-terms to the other:
+175.77	177.97	52	equation	pP_{i+1} - pP_i = qP_i - qP_{i-1} \implies p(P_{i+1} - P_i) = q(P_i - P_{i-1})
+177.97	183.17	54	sentence	**Step 3.** Divide by $p > 0$ and write $r = \tfrac{q}{p}$:
+183.17	185.37	56	equation	P_{i+1} - P_i = r\,(P_i - P_{i-1})
+185.37	186.67	58	section	4. Unrolling the Differences
+186.67	191.10	60	sentence	**Step 1.** Name the differences $d_k = P_{k+1} - P_k$.
+191.10	195.15	60	sentence	Step 3 of Section 3 says $d_k = r\,d_{k-1}$.
+195.15	198.25	62	sentence	**Step 2.** Apply it repeatedly:
+198.25	200.45	64	equation	d_k = r\,d_{k-1} = r^2d_{k-2} = \cdots = r^kd_0
+200.45	206.05	66	sentence	**Step 3.** $d_0 = P_1 - P_0 = P_1 - 0 = P_1$.
+206.05	209.15	66	sentence	So
+209.15	211.35	68	equation	d_k = r^kP_1
+211.35	217.33	70	sentence	**Step 4: Telescope.** Add the differences from $k = 0$ to $i - 1$.
+217.33	220.43	70	sentence	Every middle term cancels:
+220.43	222.63	72	equation	d_0 + d_1 + \cdots + d_{i-1} = (P_1 - P_0) + (P_2 - P_1) + \cdots + (P_i - P_{i-
+222.63	225.73	74	sentence	**Step 5.** Substitute $d_k = r^kP_1$:
+225.73	227.93	76	equation	P_i = P_1\sum_{k=0}^{i-1} r^k = P_1\left(1 + r + r^2 + \cdots + r^{i-1}\right)
+227.93	229.23	78	section	5. Summing the Geometric Series and Using $P_N = 1$
+229.23	232.52	80	sentence	**Step 1: Geometric sum** ($r \ne 1$).
+232.52	236.95	80	sentence	Let $S = 1 + r + \cdots + r^{i-1}$.
+236.95	241.38	80	sentence	Then $rS = r + r^2 + \cdots + r^i$.
+241.38	245.43	80	sentence	Subtract: $S - rS = 1 - r^i$, so
+245.43	247.63	82	equation	S = \frac{1 - r^i}{1 - r}
+247.63	252.83	84	sentence	If $r = 1$, every term is $1$, so $S = i$.
+252.83	260.35	86	sentence	**Step 2: When is $r = 1$?** $\tfrac{q}{p} = 1 \iff q = p \iff p = \tfrac12$.
+260.35	264.40	86	sentence	So $r = 1$ exactly for the fair game.
+264.40	270.77	88	sentence	**Step 3: Unfair ($r \ne 1$).** Put $i = N$ and use $P_N = 1$:
+270.77	272.97	90	equation	1 = P_1\frac{1 - r^N}{1 - r} \implies P_1 = \frac{1 - r}{1 - r^N}
+272.97	277.40	92	sentence	Substitute back into $P_i = P_1\frac{1 - r^i}{1 - r}$.
+277.40	280.50	92	sentence	The $(1 - r)$ cancels:
+280.50	282.70	94	equation	P_i = \frac{1 - r}{1 - r^N}\cdot\frac{1 - r^i}{1 - r} = \frac{1 - r^i}{1 - r^N}
+282.70	286.75	96	sentence	**Step 4: Fair ($r = 1$).** $P_i = iP_1$.
+286.75	291.95	96	sentence	At $i = N$: $1 = NP_1$, so $P_1 = \tfrac1N$ and
+291.95	294.15	98	equation	P_i = \frac{i}{N}
+294.15	300.13	100	sentence	Fair, $i = 5$, $N = 15$: $P_5 = \tfrac5{15} = \tfrac13$ (CT-1 Q10a).
+300.13	304.95	100	sentence	$N = 3$, $i = 1$: $\tfrac13$, which matches Section 2.
+304.95	309.38	102	sentence	$p = 0.4$, $q = 0.6$, so $r = 1.5$.
+309.38	315.37	102	sentence	With $i = 5$, $N = 10$: $1.5^5 = 7.594$ and $1.5^{10} = 57.665$.
+315.37	318.07	104	equation	P_5 = \frac{1 - 7.594}{1 - 57.665} = \frac{-6.594}{-56.665} \approx 0.1164
+318.07	323.67	106	sentence	A small house edge drops your chance from $0.5$ (fair) to about $0.12$.
+323.67	324.97	108	section	6. Win Probability as $N \to \infty$
+324.97	330.57	110	sentence	Playing against an infinitely rich casino: fix $i$ and let $N \to \infty$.
+330.57	335.38	112	sentence	**$p > \tfrac12$:** $r < 1$, so $r^N \to 0$ and
+335.38	337.58	114	equation	P_i \to \frac{1 - r^i}{1 - 0} = 1 - r^i
+337.58	340.68	116	sentence	**$p < \tfrac12$:** $r > 1$.
+340.68	346.67	116	sentence	Multiply the top and bottom by $-1$: $P_i = \frac{r^i - 1}{r^N - 1}$.
+346.67	352.27	116	sentence	The top is fixed and the bottom $\to \infty$, so $P_i \to 0$.
+352.27	356.32	118	sentence	**$p = \tfrac12$:** $P_i = \tfrac iN \to 0$.
+356.32	364.60	120	sentence	$p = 0.6$ ($r = \tfrac23$), $i = 5$: $P \to 1 - (\tfrac23)^5 = 1 - 0.132 = 0.868
+364.60	369.42	120	sentence	With a player edge you survive forever with probability about 87%.
+369.42	378.47	122	sentence	**Key Conclusion:** In any fair or unfavorable game ($p \le \tfrac12$) against a
+378.47	379.77	124	section	7. Expected Duration: First-Step Equation
+379.77	387.67	126	sentence	$E_i = \mathbb{E}[\tau \mid X_0 = i]$, the expected number of rounds until the g
+387.67	395.18	128	sentence	**Step 1: Boundaries.** At $0$ or $N$ no rounds are played: $E_0 = 0$ and $E_N =
+395.18	404.23	130	sentence	**Step 2: Split off the first round.** $\tau = 1 + \tau'$, where $\tau'$ is the 
+404.23	410.98	130	sentence	As in Section 2, $\tau'$ is the length of a fresh game from $i \pm 1$.
+410.98	414.27	132	sentence	**Step 3: Condition on the first bet:**
+414.27	416.47	134	equation	E_i = \mathbb{E}[1 + \tau' \mid Z_1 = +1]\,p + \mathbb{E}[1 + \tau' \mid Z_1 = -
+416.47	420.90	136	sentence	**Step 4: Expand** and use $p + q = 1$:
+420.90	423.10	138	equation	E_i = (p + q) + pE_{i+1} + qE_{i-1} = 1 + pE_{i+1} + qE_{i-1},\qquad 1 \le i \le
+423.10	426.20	140	sentence	$N = 3$, fair:
+426.20	428.40	142	equation	E_1 = 1 + \tfrac12E_2 + \tfrac12\cdot 0,\qquad E_2 = 1 + \tfrac12\cdot 0 + \tfra
+428.40	436.30	144	sentence	Substitute $E_2$ into $E_1$: $E_1 = 1 + \tfrac12 + \tfrac14E_1$, so $\tfrac34E_1
+436.30	439.97	144	sentence	Then $E_2 = 1 + 1 = 2$.
+439.97	444.40	146	sentence	Difference from $P_i$: the extra $+1$ makes the equation *inhomogeneous*.
+444.40	453.45	146	sentence	The ratio trick of Section 3 no longer gives a clean geometric pattern: $p(E_{i+
+453.45	454.75	148	section	8. Fair Game: $E_i = i(N - i)$
+454.75	461.12	150	sentence	**Step 1.** Put $p = q = \tfrac12$: $E_i = 1 + \tfrac12E_{i+1} + \tfrac12E_{i-1}
+461.12	464.22	150	sentence	Multiply by 2:
+464.22	466.42	152	equation	2E_i = 2 + E_{i+1} + E_{i-1}
+466.42	469.70	154	sentence	**Step 2.** Move everything to one side:
+469.70	471.90	156	equation	E_{i+1} - 2E_i + E_{i-1} = -2
+471.90	476.33	158	sentence	**Step 3.** Split $-2E_i = -E_i - E_i$ and group:
+476.33	478.53	160	equation	(E_{i+1} - E_i) - (E_i - E_{i-1}) = -2
+478.53	482.97	162	sentence	**Step 4.** Name the differences $D_k = E_{k+1} - E_k$.
+482.97	490.10	162	sentence	Step 3 says $D_i = D_{i-1} - 2$: each difference is 2 smaller than the one befor
+490.10	496.47	164	sentence	**Step 5.** Unroll: $D_1 = D_0 - 2$, $D_2 = D_0 - 4$, …, so
+496.47	498.67	166	equation	D_k = D_0 - 2k,\qquad D_0 = E_1 - E_0 = E_1 \quad\Rightarrow\quad D_k = E_1 - 2k
+498.67	501.95	168	sentence	**Step 6: Telescope**, as in Section 4:
+501.95	504.15	170	equation	E_i = E_i - E_0 = D_0 + D_1 + \cdots + D_{i-1} = \sum_{k=0}^{i-1}(E_1 - 2k)
+504.15	507.25	172	sentence	**Step 7.** Split the sum.
+507.25	514.00	172	sentence	There are $i$ copies of $E_1$, and $0 + 1 + \cdots + (i-1) = \frac{i(i-1)}{2}$:
+514.00	516.20	174	equation	E_i = iE_1 - 2\cdot\frac{i(i-1)}{2} = iE_1 - i(i-1)
+516.20	521.02	176	sentence	**Step 8: Use $E_N = 0$.** $NE_1 - N(N-1) = 0$.
+521.02	524.68	176	sentence	Divide by $N$: $E_1 = N - 1$.
+524.68	527.78	178	sentence	**Step 9: Substitute and simplify.**
+527.78	530.48	180	equation	E_i = i(N - 1) - i(i - 1) = iN - i - i^2 + i = iN - i^2 = i(N - i)
+530.48	534.15	182	sentence	**Verify in the recurrence.** Expand the two neighbours:
+534.15	536.35	184	equation	(i+1)(N-i-1) = i(N-i) + N - 2i - 1,\qquad (i-1)(N-i+1) = i(N-i) - N + 2i - 1
+536.35	542.33	186	sentence	Their sum is $2i(N-i) - 2$, and half of it is $i(N-i) - 1$.
+542.33	549.47	186	sentence	So $1 + \tfrac12E_{i+1} + \tfrac12E_{i-1} = 1 + i(N-i) - 1 = i(N-i) = E_i$ ✅
+549.47	553.90	188	sentence	$N = 3$, $i = 1$: $1\cdot 2 = 2$.
+553.90	557.00	188	sentence	Matches Section 7.
+557.00	563.37	190	sentence	CT-1 Q10: $i = 5$, $N = 15$, so $E_5 = 5\cdot 10 = 50$.
+563.37	568.57	192	sentence	$i = 50$, $N = 100$: $2500$ rounds for a ±50 swing.
+568.57	573.77	194	sentence	Rule: fair game, stop at $+A$ or $-B$ gives $\mathbb{E}[\tau] = AB$.
+573.77	575.07	196	section	9. Unfair Game ($p \ne q$)
+575.07	582.97	198	sentence	**Step 1: Structure of the solution.** Suppose $E$ and $E'$ both solve $E_i = 1 
+582.97	586.07	198	sentence	Subtract the two equations.
+586.07	591.67	198	sentence	The $1$ cancels, so $H = E - E'$ solves the *homogeneous* equation
+591.67	593.87	200	equation	H_i = pH_{i+1} + qH_{i-1}
+593.87	598.68	202	sentence	Hence **every solution = one particular solution + a homogeneous solution**.
+598.68	602.35	204	sentence	**Step 2: Homogeneous solutions.** Try $H_i = \lambda^i$:
+602.35	604.55	206	equation	\lambda^i = p\lambda^{i+1} + q\lambda^{i-1}
+604.55	611.30	208	sentence	Divide by $\lambda^{i-1}$: $\lambda = p\lambda^2 + q$, i.e. $p\lambda^2 - \lambd
+611.30	625.73	208	sentence	Factor, using $p + q = 1$: $(\lambda - 1)(p\lambda - q) = p\lambda^2 - (p+q)\lam
+625.73	629.02	208	sentence	They are distinct since $r \ne 1$.
+629.02	632.12	208	sentence	So
+632.12	634.32	210	equation	H_i = A\cdot 1^i + B\,r^i = A + Br^i
+634.32	637.60	212	sentence	(This is exactly the equation $P_i$ solves.
+637.60	645.88	212	sentence	$P_0 = 0$, $P_N = 1$ give $A = -B$ and $B = \frac{-1}{1 - r^N}$, which recovers 
+645.88	657.63	214	sentence	**Step 3: A particular solution.** A constant $c$ fails: $c = 1 + pc + qc = 1 + 
+657.63	660.73	214	sentence	So try $E_i = ci$:
+660.73	662.93	216	equation	ci = 1 + pc(i+1) + qc(i-1) = 1 + pci + pc + qci - qc = 1 + ci(p + q) + c(p - q) 
+662.93	667.37	218	sentence	Cancel $ci$: $0 = 1 + c(p - q)$, so
+667.37	669.57	220	equation	c = \frac{-1}{p - q} = \frac{1}{q - p}
+669.57	672.67	222	sentence	**Step 4: General solution.**
+672.67	674.87	224	equation	E_i = \frac{i}{q - p} + A + Br^i
+674.87	682.00	226	sentence	**Step 5: Use $E_0 = 0$.** $0 + A + B = 0$, so $A = -B$:
+682.00	684.70	228	equation	E_i = \frac{i}{q - p} + A(1 - r^i)
+684.70	687.80	230	sentence	**Step 6: Use $E_N = 0$.**
+687.80	690.00	232	equation	\frac{N}{q - p} + A(1 - r^N) = 0 \implies A = -\frac{N}{(q - p)(1 - r^N)}
+690.00	693.28	234	sentence	**Step 7: Substitute and factor out $\frac1{q-p}$.**
+693.28	695.48	236	equation	E_i = \frac{i}{q - p} - \frac{N}{q - p}\cdot\frac{1 - r^i}{1 - r^N} = \frac{1}{q
+695.48	699.53	238	sentence	**Step 8.** The fraction is $P_i$ from Section 5:
+699.53	701.73	240	equation	E_i = \frac{i - NP_i}{q - p}
+701.73	708.10	242	sentence	$p = 0.4$, $q = 0.6$, $r = 1.5$, $i = 5$, $N = 10$:
+708.10	711.20	244	sentence	$P_5 \approx 0.1164$ (Section 5).
+711.20	714.48	246	sentence	$NP_5 = 10 \times 0.1164 = 1.164$.
+714.48	718.53	248	sentence	$i - NP_5 = 5 - 1.164 = 3.836$.
+718.53	723.35	250	sentence	$q - p = 0.2$, so $E_5 = 3.836/0.2 \approx 19.18$.
+723.35	729.72	252	sentence	The fair game from the same start lasts $5\cdot 5 = 25$ rounds on average.
+729.72	734.15	252	sentence	With a house edge it ends sooner, mostly in ruin.
+734.15	735.45	254	section	10. Martingale Check (Optimal Stopping)
+735.45	738.55	256	sentence	**Fair: $P_i$.** $X_n$ is a MG.
+738.55	741.65	256	sentence	OST: $\mathbb{E}[X_\tau] = X_0 = i$.
+741.65	749.55	256	sentence	$X_\tau = N$ with probability $P_i$ and $0$ otherwise, so $NP_i = i$, i.e. $P_i 
+749.55	752.65	258	sentence	**Fair: $E_i$.**
+752.65	766.70	260	sentence	$X_n^2 - n$ is a MG: $\mathbb{E}[X_{n+1}^2 - (n+1) \mid \mathcal{F}_n] = X_n^2 +
+766.70	771.13	262	sentence	OST: $\mathbb{E}[X_\tau^2 - \tau] = X_0^2 - 0 = i^2$.
+771.13	775.95	264	sentence	$\mathbb{E}[X_\tau^2] = N^2\cdot\tfrac iN + 0^2\cdot(1 - \tfrac iN) = Ni$.
+775.95	780.38	266	sentence	$\mathbb{E}[\tau] = Ni - i^2 = i(N - i)$ ✅
+780.38	783.48	268	sentence	**Unfair: $P_i$.**
+783.48	793.30	270	sentence	$r^{X_n}$ is a MG: $\mathbb{E}[r^{Z}] = p\cdot\tfrac qp + q\cdot\tfrac pq = q + 
+793.30	806.20	272	sentence	OST: $r^N P_i + r^0(1 - P_i) = r^i$, so $P_i(r^N - 1) = r^i - 1$ and $P_i = \fra
+806.20	809.30	274	sentence	**Unfair: $E_i$.**
+809.30	821.82	276	sentence	$X_n - (p - q)n$ is a MG: $\mathbb{E}[X_{n+1} - (p-q)(n+1) \mid \mathcal{F}_n] =
+821.82	825.48	278	sentence	OST: $\mathbb{E}[X_\tau] - (p - q)\mathbb{E}[\tau] = i$.
+825.48	830.30	280	sentence	$\mathbb{E}[X_\tau] = NP_i$, so $(p - q)\mathbb{E}[\tau] = NP_i - i$.
+830.30	836.28	282	sentence	$\mathbb{E}[\tau] = \frac{NP_i - i}{p - q} = \frac{i - NP_i}{q - p}$ ✅
+836.28	845.33	284	sentence	($\tau$ is unbounded, but $X_{n\wedge\tau}$ stays in $[0, N]$ and $\mathbb{E}[\t
+845.33	846.13	286	section	11. Expected Duration as $N \to \infty$
+846.13	851.73	288	sentence	**Fair:** $E_i = i(N - i) \to \infty$ for fixed $i \ge 1$.
+851.73	857.33	288	sentence	Ruin is certain (Section 6), yet the *expected* time to ruin is infinite.
+857.33	861.77	288	sentence	Starting with Rs 1: ruin a.s., but $\mathbb{E}[T_0] = \infty$.
+861.77	865.43	290	sentence	**House edge** ($p < q$, $r > 1$):
+865.43	868.72	292	sentence	$NP_i = N\frac{r^i - 1}{r^N - 1}$.
+868.72	874.70	292	sentence	The top grows like $N$, the bottom like $r^N$ (exponentially), so $NP_i \to 0$.
+874.70	879.90	294	sentence	Hence $E_i = \frac{i - NP_i}{q - p} \to \frac{i}{q - p}$.
+879.90	887.03	296	sentence	Meaning: you lose $q - p$ per round on average, so losing Rs $i$ takes $i/(q-p)$
+887.03	891.85	298	sentence	Example: $p = 0.4$, $i = 5$: $5/0.2 = 25$ rounds.
+891.85	898.60	298	sentence	(With $N = 10$ it was $19.18$, shorter because the game could also end by winnin
+898.60	907.27	300	sentence	**Player edge** ($p > q$): $\tau = \infty$ with probability $1 - r^i > 0$ (Secti

@@ -1,0 +1,9 @@
+Conditional Expectation & σ-Fields
+
+Conditional Expectation & σ-Fields
+
+0:00 Step 1: Independence of Random Variables & σ-Fields
+1:09 Step 2: What is E(X mid mathcalG)?
+3:32 Step 3: Law of Iterated Expectations (Tower Property)
+4:25 Step 4: Operational Rules
+5:32 Practice Questions

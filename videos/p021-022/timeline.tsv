@@ -1,0 +1,92 @@
+start	end	line	kind	text
+0.00	4.00	6	title	Stopping Times
+4.00	11.90	8	sentence	Definition, equivalent characterisation, and the first-entry time example — all 
+11.90	12.70	10	section	Step 1: Definition
+12.70	24.45	12	sentence	A random variable $\tau : \Omega \to \{0, 1, 2, \ldots\} \cup \{\infty\}$ on a f
+24.45	26.65	14	equation	\{\tau \leq t\} \in \mathcal{F}_t \quad \text{for each } t = 0, 1, 2, \ldots \qq
+26.65	34.93	16	sentence	**Operational meaning:** At time $t$, using only information available up to $t$
+34.93	38.03	16	sentence	No future peeking.
+38.03	52.08	16	sentence	This captures decisions like "stop gambling" or "sell a block of shares at the s
+52.08	55.37	18	sentence	Three tosses, $\mathcal{F}_t$ = first $t$ tosses.
+55.37	59.03	18	sentence	Write $H{\_}{\_}$ for "all outcomes starting with H".
+59.03	62.70	20	sentence	$\tau$ = first H (or $\infty$ if none).
+62.70	66.37	20	sentence	$\{\tau \le 1\} = H{\_}{\_} \in \mathcal{F}_1$ ✅.
+66.37	70.80	20	sentence	$\{\tau \le 2\} = H{\_}{\_} \cup TH{\_} \in \mathcal{F}_2$ ✅.
+70.80	73.90	20	sentence	So it is a stopping time.
+73.90	81.80	22	sentence	$\tau = 5$ (constant): $\{\tau \le t\}$ is $\varnothing$ for $t < 5$ and $\Omega
+81.80	84.90	22	sentence	Both are in every $\mathcal{F}_t$ ✅
+84.90	90.10	24	sentence	$\tau = 1$ if toss 2 is H, else $\tau = 2$.
+90.10	94.15	24	sentence	Then $\{\tau \le 1\} = \{{\_}H{\_}\} \notin \mathcal{F}_1$ ❌.
+94.15	97.82	24	sentence	You would need toss 2 at time 1.
+97.82	99.12	26	section	Step 2: Equivalent Characterisation — (1) $\iff$ (2)
+99.12	103.55	28	sentence	Condition (2): $\{\tau = t\} \in \mathcal{F}_t$ for each $t$.
+103.55	106.65	30	sentence	**(1) $\implies$ (2):** Write
+106.65	108.85	32	equation	\{\tau = t\} = \{\tau \leq t\} \cap \{\tau \leq t-1\}^c
+108.85	112.13	34	sentence	$\{\tau \leq t\} \in \mathcal{F}_t$ by (1).
+112.13	120.80	34	sentence	$\{\tau \leq t-1\} \in \mathcal{F}_{t-1} \subseteq \mathcal{F}_t$ by (1), so its
+120.80	124.47	34	sentence	Their intersection $\in \mathcal{F}_t$ (closed under finite intersections).
+124.47	127.57	34	sentence	$\therefore \{\tau = t\} \in \mathcal{F}_t$.
+127.57	130.67	36	sentence	**(2) $\implies$ (1):** Write
+130.67	132.87	38	equation	\{\tau \leq t\} = \bigcup_{s=0}^{t} \{\tau = s\}
+132.87	137.68	40	sentence	Each $\{\tau = s\} \in \mathcal{F}_s \subseteq \mathcal{F}_t$ (filtration is nes
+137.68	142.88	40	sentence	Finite union of $\mathcal{F}_t$-sets $\in \mathcal{F}_t$ (σ-algebras are closed 
+142.88	146.17	40	sentence	$\therefore \{\tau \leq t\} \in \mathcal{F}_t$. ■
+146.17	149.27	42	sentence	$\tau$ = first H, three tosses:
+149.27	157.55	44	sentence	(1)⇒(2): $\{\tau = 2\} = \{\tau \le 2\} \setminus \{\tau \le 1\} = (H{\_}{\_} \c
+157.55	166.60	46	sentence	(2)⇒(1): $\{\tau \le 2\} = \{\tau = 0\} \cup \{\tau = 1\} \cup \{\tau = 2\} = \v
+166.60	176.03	48	sentence	Probabilities: $P(\tau = 1) = \tfrac12$, $P(\tau = 2) = \tfrac14$, $P(\tau = 3) 
+176.03	177.33	50	section	Step 3: Example — First Entry Time is a ST
+177.33	185.62	52	sentence	**Setup:** Let $(X_n)$ be a sequence of r.v.'s adapted to $(\mathcal{F}_n)$, and
+185.62	190.82	54	sentence	**Claim:** $\tau = \min\{n : X_n \in B\}$ is a stopping time.
+190.82	193.92	56	sentence	**Proof:** Use condition (2).
+193.92	197.02	56	sentence	For each $n$:
+197.02	199.22	58	equation	\{\tau = n\} = \{X_1 \notin B\} \cap \cdots \cap \{X_{n-1} \notin B\} \cap \{X_n
+199.22	202.32	60	sentence	Each piece lands in $\mathcal{F}_n$:
+202.32	209.45	62	sentence	$\{X_n \in B\} \in \mathcal{F}_n$: $X_n$ is $\mathcal{F}_n$-measurable (adapted)
+209.45	217.73	64	sentence	$\{X_k \notin B\} = \{X_k \in B^c\} \in \mathcal{F}_k \subseteq \mathcal{F}_n$ f
+217.73	220.83	66	sentence	Finite intersection of $\mathcal{F}_n$-sets $\in \mathcal{F}_n$.
+220.83	227.20	66	sentence	$\therefore \{\tau = n\} \in \mathcal{F}_n$ for each $n \implies \tau$ is a ST. 
+227.20	230.87	68	sentence	Random walk $X_0 = 0$, $B = \{2\}$.
+230.87	239.15	68	sentence	Path of steps $+1, -1, +1, +1, \ldots$ gives $X = 1, 0, 1, 2, \ldots$, so $\tau 
+239.15	245.13	68	sentence	At time 4 you check: "$X_1, X_2, X_3 \ne 2$ and $X_4 = 2$".
+245.13	253.80	68	sentence	That uses only the past ✅ Path $-1, -1, -1, \ldots$ (drifting away forever) neve
+253.80	257.85	68	sentence	This is why $\infty$ is allowed as a value.
+257.85	268.83	70	sentence	**Pitfall — "last exit time" is NOT a ST:** $\tau = \max\{n : X_n \in B\}$ requi
+268.83	275.58	70	sentence	At time $n$ you cannot determine this — so $\{\tau = n\} \notin \mathcal{F}_n$ i
+275.58	280.78	72	sentence	Three-step walk, $\tau$ = last $n \le 3$ with $X_n = 1$.
+280.78	286.38	74	sentence	Steps $+1, -1, -1$: $X = 1, 0, -1$, so $\tau = 1$.
+286.38	291.98	76	sentence	Steps $+1, -1, +1$: $X = 1, 0, 1$, so $\tau = 3$.
+291.98	297.58	78	sentence	Both start with $+1$, so they lie in the same atom of $\mathcal{F}_1$.
+297.58	302.02	78	sentence	Yet one has $\tau = 1$ and the other doesn't.
+302.02	305.30	78	sentence	So $\{\tau = 1\} \notin \mathcal{F}_1$ ❌
+305.30	306.60	80	section	Practice Questions
+306.60	309.70	82	sentence	**Q1.** $\tau_1, \tau_2$ are stopping times.
+309.70	315.68	82	sentence	Which are stopping times: $\min(\tau_1, \tau_2)$, $\max(\tau_1, \tau_2)$, $\tau_
+315.68	318.78	84	sentence	Answer
+318.78	325.15	86	sentence	$\min$: $\{\min \le t\} = \{\tau_1 \le t\} \cup \{\tau_2 \le t\} \in \mathcal{F}
+325.15	331.52	88	sentence	$\max$: $\{\max \le t\} = \{\tau_1 \le t\} \cap \{\tau_2 \le t\} \in \mathcal{F}
+331.52	338.65	90	sentence	$\tau_1 + 1$: $\{\tau_1 + 1 \le t\} = \{\tau_1 \le t-1\} \in \mathcal{F}_{t-1} \
+338.65	351.55	92	sentence	$\tau_1 - 1$: $\{\tau_1 - 1 \le t\} = \{\tau_1 \le t+1\} \in \mathcal{F}_{t+1}$,
+351.55	359.83	94	sentence	**Q2.** Three tosses, $\tau$ = first time two heads in a row have appeared (the 
+359.83	365.03	94	sentence	List $\{\tau = 2\}$ and $\{\tau = 3\}$, and give their probabilities.
+365.03	368.13	96	sentence	Answer
+368.13	372.57	98	sentence	$\{\tau = 2\} = HH{\_} = \{HHH, HHT\}$, probability $\tfrac14$.
+372.57	377.77	98	sentence	$\{\tau = 3\} = \{THH\}$, probability $\tfrac18$ ($HTH$ has no consecutive pair)
+377.77	386.43	98	sentence	The remaining 5 outcomes $HTH, HTT, THT, TTH, TTT$ have no $HH$, so $\tau = \inf
+386.43	390.48	98	sentence	Check: $\tfrac28 + \tfrac18 + \tfrac58 = 1$ ✅
+390.48	394.15	100	sentence	**Q3.** Walk steps $+1, +1, -1, +1, +1$.
+394.15	400.13	100	sentence	Find $\tau$ = first hit of 3, and $\sigma$ = first hit of $-1$.
+400.13	403.23	102	sentence	Answer
+403.23	408.05	104	sentence	$X = 1, 2, 1, 2, 3$, so $\tau = 5$.
+408.05	414.42	104	sentence	The path never reaches $-1$ in these 5 steps, so $\sigma > 5$ (possibly $\infty$
+414.42	421.55	106	sentence	**Q4.** Is "the time at which $X_n$ reaches its maximum over $n \le 10$" a stopp
+421.55	424.65	108	sentence	Answer
+424.65	427.75	110	sentence	No.
+427.75	436.03	110	sentence	To know that time $n$ is the maximum you need $X_{n+1}, \ldots, X_{10}$ to be sm
+436.03	439.32	110	sentence	Same flaw as the last exit time.
+439.32	443.75	112	sentence	**Q5.** $\tau = \min\{n : X_n \ge 2\} \wedge 10$.
+443.75	446.85	112	sentence	Stopping time?
+446.85	449.95	112	sentence	Bounded?
+449.95	453.05	114	sentence	Answer
+453.05	460.18	116	sentence	Yes: it is the min of a first-entry time and the constant 10, both stopping time
+460.18	466.17	116	sentence	It is bounded by 10, which is exactly what the Optimal Stopping Theorem needs.

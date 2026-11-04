@@ -1,0 +1,9 @@
+Conditional Probability & Independence
+
+Conditional Probability & Independence
+
+0:00 Step 1: Conditional Probability
+0:47 Step 2: Subsets & Disjoint Special Cases
+1:29 Step 3: Law of Total Probability
+2:14 Step 4: Pairwise vs. Mutual Independence
+3:32 Practice Questions

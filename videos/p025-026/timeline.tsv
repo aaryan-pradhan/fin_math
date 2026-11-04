@@ -1,0 +1,28 @@
+start	end	line	kind	text
+0.00	4.00	6	title	Wiener Process Axioms, Lévy Characterization & Random Walk Limit
+4.00	8.05	8	sentence	Constructing Brownian Motion from Axioms, Martingales, and Discrete Limits.
+8.05	8.85	10	section	1. Classical Definition of Wiener Process
+8.85	15.22	12	sentence	A stochastic process $\{W(t), t \ge 0\}$ is a **Standard Wiener Process** (Brown
+15.22	18.32	14	sentence	$W(0) = 0$ almost surely (a.s.).
+18.32	22.37	16	sentence	Sample paths $t \mapsto W(t, \omega)$ are continuous a.s.
+22.37	25.47	18	sentence	Increments are **independent** and **stationary**.
+25.47	31.83	20	sentence	For $0 \le s < t$, increments are Gaussian: $W(t) - W(s) \sim \mathcal{N}(0, t-s
+31.83	32.63	22	section	2. Lévy's Martingale Characterization
+32.63	40.92	24	sentence	Without assuming independent or Gaussian increments directly, a continuous proce
+40.92	46.52	26	sentence	$W(t)$ is a martingale wrt natural filtration $\mathcal{F}_t$: $\mathbb{E}[W(t) 
+46.52	53.65	28	sentence	$W(t)^2 - t$ is a martingale wrt $\mathcal{F}_t$: $\mathbb{E}[W(t)^2 - t \mid \m
+53.65	56.75	30	sentence	**Conditional Variance Derivation:**
+56.75	58.95	32	equation	\mathbb{E}\left[(W(t) - W(s))^2 \;\middle|\; \mathcal{F}_s\right] = \mathbb{E}[W
+58.95	60.25	34	section	3. Microscopic Random Walk Construction
+60.25	71.55	36	anim	walk
+71.55	78.30	38	sentence	Consider a discrete symmetric random walk with step size $\Delta x$ every time s
+78.30	80.50	40	equation	X(t) = \Delta x \sum_{i=1}^{\lfloor t / \Delta t \rfloor} X_i \quad \text{where 
+80.50	82.70	42	equation	\mathbb{E}[X(t)] = 0, \quad \text{Var}(X(t)) = (\Delta x)^2 \cdot \frac{t}{\Delt
+82.70	84.00	44	section	4. The Diffusion Scaling Limit & CLT
+84.00	93.70	46	anim	clt
+93.70	100.83	48	sentence	If $\Delta x = \Delta t \to 0$, $\text{Var}(X(t)) = t \Delta t \to 0$ (motion co
+100.83	106.82	48	sentence	To preserve non-zero variance as step size vanishes, we must scale spatial steps
+106.82	109.02	50	equation	\Delta x = \sigma \sqrt{\Delta t} \implies \text{Var}(X(t)) \to \sigma^2 t
+109.02	118.83	52	sentence	By the **Central Limit Theorem (CLT)**, as $\Delta t \to 0$ ($N = \frac{t}{\Delt
+118.83	124.82	52	sentence	Multiplying by $c = \sigma \sqrt{t}$ scales the variance by $c^2 = \sigma^2 t$:
+124.82	127.02	54	equation	X(t) = \sigma \sqrt{t} \cdot \left( \frac{S_N}{\sqrt{N}} \right) \xrightarrow{d}

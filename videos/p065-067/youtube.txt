@@ -1,0 +1,12 @@
+p.65–67: Pricing a call by a duplicating portfolio
+
+p.65–67: Pricing a call by a duplicating portfolio
+
+0:00 Stock and bond (p.65)
+0:44 The one-step tree (p.65–66)
+1:39 The classical way (p.66)
+2:21 Building a portfolio that copies the call (p.66)
+4:25 Price of the portfolio today (p.66)
+4:51 Checking the payoff at t = 1 (p.66–67)
+5:32 The fair price (p.67)
+6:56 Extras from the slides (p.85)

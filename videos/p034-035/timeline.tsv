@@ -1,0 +1,65 @@
+start	end	line	kind	text
+0.00	4.00	6	title	Multivariate Normal Distribution (MVN)
+4.00	4.80	8	section	1. Definition & Construction
+4.80	10.40	10	sentence	Let $Z_1, Z_2, \dots, Z_n \sim \text{NID}(0,1)$ be independent standard normal r
+10.40	23.30	10	sentence	A random vector $\mathbf{X} = (X_1, \dots, X_m)^T$ follows a **Multivariate Norm
+23.30	25.50	12	equation	\begin{pmatrix} X_1 \\ X_2 \\ \vdots \\ X_m \end{pmatrix} = \begin{pmatrix} a_{1
+25.50	28.60	14	sentence	**Matrix Representation:**
+28.60	30.80	16	equation	\mathbf{X} = \mathbf{A}\mathbf{Z} + \boldsymbol{\mu}
+30.80	36.78	18	sentence	where $\mathbf{A} \in \mathbb{R}^{m \times n}$, $\mathbf{Z} \sim \mathcal{N}(\ma
+36.78	40.07	20	sentence	**Running example.** $Z_1, Z_2$ independent $N(0,1)$, and
+40.07	42.27	22	equation	X_1 = Z_1 + 1,\qquad X_2 = Z_1 + Z_2
+42.27	44.47	24	equation	\mathbf{A} = \begin{pmatrix} 1 & 0 \\ 1 & 1 \end{pmatrix},\qquad \boldsymbol{\mu
+44.47	50.45	26	sentence	Sample: $Z_1 = 0.5$, $Z_2 = -1.2$ gives $X_1 = 1.5$, $X_2 = -0.7$.
+50.45	54.50	26	sentence	$X_1$ and $X_2$ share $Z_1$, so they move together.
+54.50	66.25	28	sentence	Brownian motion is MVN: $W_1 = Z_1$ and $W_3 = W_1 + (W_3 - W_1) = Z_1 + \sqrt2\
+66.25	68.95	30	equation	\mathbf{A} = \begin{pmatrix} 1 & 0 \\ 1 & \sqrt2 \end{pmatrix},\qquad \boldsymbo
+68.95	70.25	32	section	2. Mean and Covariance Structure
+70.25	75.07	34	sentence	The joint distribution of $\mathbf{X}$ is completely specified by two parameters
+75.07	79.12	36	sentence	**Mean Vector:** $\boldsymbol{\mu} = \mathbb{E}[\mathbf{X}] = (\mu_1, \dots, \mu
+79.12	84.72	38	sentence	**Covariance Matrix:** $\boldsymbol{\Sigma} = \text{Cov}(\mathbf{X}) = \mathbf{A
+84.72	87.82	40	sentence	Running example:
+87.82	90.02	42	equation	\boldsymbol{\Sigma} = \mathbf{A}\mathbf{A}^T = \begin{pmatrix} 1 & 0 \\ 1 & 1 \e
+90.02	93.12	44	sentence	Direct check:
+93.12	96.22	46	sentence	$Var(X_1) = Var(Z_1) = 1$
+96.22	99.50	48	sentence	$Var(X_2) = Var(Z_1) + Var(Z_2) = 2$
+99.50	105.10	50	sentence	$Cov(X_1, X_2) = Cov(Z_1 + 1, Z_1 + Z_2) = Var(Z_1) = 1$
+105.10	108.20	52	sentence	BM example:
+108.20	110.40	54	equation	\boldsymbol{\Sigma} = \begin{pmatrix} 1 & 0 \\ 1 & \sqrt2 \end{pmatrix}\begin{pm
+110.40	114.83	56	sentence	This matches $Var(W_t) = t$ and $Cov(W_s, W_t) = \min(s,t)$.
+114.83	116.13	58	section	Linear Combinations
+116.13	127.50	60	sentence	For any vector of fixed coefficients $\mathbf{t} = (t_1, \dots, t_m)^T$, the lin
+127.50	131.17	62	sentence	**Mean:** $\mathbb{E}[\mathbf{t}^T\mathbf{X}] = \mathbf{t}^T\boldsymbol{\mu} = \
+131.17	135.98	64	sentence	**Variance:** $\text{Var}(\mathbf{t}^T\mathbf{X}) = \mathbf{t}^T\boldsymbol{\Sig
+135.98	140.42	66	sentence	Running example, $\mathbf{t} = (1,1)^T$, $Y = X_1 + X_2$:
+140.42	144.08	68	sentence	Mean: $1\cdot 1 + 1\cdot 0 = 1$.
+144.08	150.83	70	sentence	Variance: $\mathbf{t}^T\boldsymbol{\Sigma}\mathbf{t} = \Sigma_{11} + \Sigma_{22}
+150.83	158.35	72	sentence	Direct check: $Y = 2Z_1 + Z_2 + 1$, so $Var(Y) = 4 + 1 = 5$ ✅
+158.35	161.45	74	sentence	So $Y \sim N(1, 5)$.
+161.45	164.73	76	sentence	BM, $\mathbf{t} = (4, 6)^T$ (CT-1 Q4):
+164.73	166.93	78	equation	Var(4W_1 + 6W_3) = 16\cdot 1 + 36\cdot 3 + 2\cdot 4\cdot 6\cdot 1 = 16 + 108 + 4
+166.93	170.22	80	sentence	So $4W_1 + 6W_3 \sim N(0, 172)$.
+170.22	171.52	82	section	3. 1D Normal Expectation Foundation
+171.52	179.80	84	sentence	To compute moment generating functions, we rely on the fundamental expectation f
+179.80	182.00	86	equation	\mathbb{E}[e^{kZ}] = \int_{-\infty}^{\infty} e^{kz} \frac{1}{\sqrt{2\pi}} e^{-\f
+182.00	189.52	88	sentence	**Key Identity:** For any univariate normal $Y \sim N(\mu_Y, \sigma_Y^2)$, writi
+189.52	191.72	90	equation	\mathbb{E}[e^Y] = \mathbb{E}[e^{\mu_Y + \sigma_Y Z}] = e^{\mu_Y} \mathbb{E}[e^{\
+191.72	195.38	92	sentence	$\mathbb{E}[e^{2Z}] = e^{\frac12\cdot 4} = e^2 \approx 7.39$.
+195.38	202.90	92	sentence	Compare $e^{\mathbb{E}[2Z]} = e^0 = 1$: the mean of $e^Y$ is not $e$ to the mean
+202.90	207.72	94	sentence	$Y \sim N(1, 4)$: $\mathbb{E}[e^Y] = e^{1 + 2} = e^3$.
+207.72	211.00	96	sentence	$W_t \sim N(0, t)$: $\mathbb{E}[e^{W_t}] = e^{t/2}$.
+211.00	214.10	96	sentence	For example $\mathbb{E}[e^{W_2}] = e$.
+214.10	215.40	98	section	4. Joint Moment Generating Function (MGF)
+215.40	219.07	100	sentence	The joint MGF of $\mathbf{X}$ is defined as:
+219.07	221.27	102	equation	\phi_{\mathbf{X}}(\mathbf{t}) = \mathbb{E}\left[ e^{\mathbf{t}^T\mathbf{X}} \rig
+221.27	230.32	104	sentence	By treating $Y = \mathbf{t}^T\mathbf{X}$ as a scalar normal random variable $Y \
+230.32	232.52	106	equation	\phi_{\mathbf{X}}(\mathbf{t}) = \exp\left( \mathbf{t}^T\boldsymbol{\mu} + \frac{
+232.52	235.62	108	sentence	**Expanded Summation Form:**
+235.62	237.82	110	equation	\phi(t_1, \dots, t_m) = \exp\left( \sum_{i=1}^m t_i \mu_i + \frac{1}{2} \sum_{i=
+237.82	244.95	112	sentence	Running example, $\boldsymbol{\mu} = (1, 0)$, $\boldsymbol{\Sigma} = \begin{pmat
+244.95	247.15	114	equation	\phi(t_1, t_2) = \exp\left(t_1 + \tfrac12\left(t_1^2 + 2t_2^2 + 2t_1t_2\right)\r
+247.15	251.58	116	sentence	At $\mathbf{t} = (1,1)$: $\exp\left(1 + \tfrac12\cdot 5\right) = e^{3.5}$.
+251.58	256.40	116	sentence	This is $\mathbb{E}[e^{X_1 + X_2}]$, i.e. $\mathbb{E}[e^Y]$ for $Y \sim N(1,5)$.
+256.40	267.77	118	sentence	BM (CT-1 Q9): $\mathbb{E}[e^{W_1 + W_2}]$ is the MGF of $(W_1, W_2)$ at $\mathbf
+267.77	269.97	120	equation	\mathbb{E}[e^{W_1 + W_2}] = e^{\frac12(1 + 2 + 2)} = e^{5/2}
+269.97	280.57	122	sentence	**Pitfall Alert:** In $\mathbf{t}^T\boldsymbol{\Sigma}\mathbf{t}$, remember that

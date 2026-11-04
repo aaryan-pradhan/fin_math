@@ -1,0 +1,9 @@
+Multivariate Normal Distribution (MVN)
+
+Multivariate Normal Distribution (MVN)
+
+0:00 1. Definition & Construction
+1:08 2. Mean and Covariance Structure
+1:54 Linear Combinations
+2:50 3. 1D Normal Expectation Foundation
+3:34 4. Joint Moment Generating Function (MGF)

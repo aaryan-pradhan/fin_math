@@ -1,0 +1,9 @@
+Standard Brownian Motion Density & The Diffusion Equation
+
+Standard Brownian Motion Density & The Diffusion Equation
+
+0:00 1. The Density of Standard Brownian Motion
+0:34 2. Time Derivative fracpartial fpartial t
+0:47 3. Spatial Derivatives fracpartial fpartial x and fracpartial2 f
+1:05 4. PDE Equivalence
+1:22 5. Key Summary

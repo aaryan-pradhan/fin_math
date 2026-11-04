@@ -1,0 +1,10 @@
+Geometric Brownian Motion (GBM) & Filtration Expectation
+
+Geometric Brownian Motion (GBM) & Filtration Expectation
+
+0:00 1. Definition of Geometric Brownian Motion
+0:41 2. Grounding Filtrations mathcalFs: Discrete vs Continuous
+1:10 3. Moment Generating Function & Derivation of mathbbE[X(t) mid mathcalF
+1:33 4. Martingale Property & Itô Drift Correction
+1:49 5. Stock Price Modeling via i.i.d. Relative Returns
+2:10 5. Jensen's Inequality: Why mu = -fracsigma22 Cancels the Inflation

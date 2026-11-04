@@ -1,0 +1,98 @@
+start	end	line	kind	text
+0.00	4.00	6	title	Starting Pieces — Probability Theory
+4.00	7.10	8	sentence	My understanding, built from scratch.
+7.10	7.90	10	section	1. The Outcome
+7.90	11.00	12	sentence	The experiment runs.
+11.00	14.10	12	sentence	One outcome is produced.
+14.10	17.20	12	sentence	Call it $\omega$.
+17.20	21.63	12	sentence	$\Omega$ = the set of all possible outcomes (sample space).
+21.63	24.73	12	sentence	$\omega \in \Omega$ always.
+24.73	27.83	14	sentence	Roll a die: $\Omega = \{1,2,3,4,5,6\}$.
+27.83	31.50	14	sentence	You roll a 4, so $\omega = 4$.
+31.50	36.70	16	sentence	Toss a coin twice: $\Omega = \{HH, HT, TH, TT\}$ (4 outcomes).
+36.70	40.75	16	sentence	You get heads then tails, so $\omega = HT$.
+40.75	46.35	18	sentence	Pick a point at random in $[0,1]$: $\Omega = [0,1]$ (infinitely many outcomes).
+46.35	49.45	18	sentence	You get $\omega = 0.37$.
+49.45	50.25	20	section	2. Events
+50.25	54.30	22	sentence	An **event** is just a subset $A \subseteq \Omega$.
+54.30	57.40	24	sentence	**$A$ happened** iff $\omega \in A$.
+57.40	64.15	24	sentence	(Did the actual outcome land inside the set?) **$A$ did not happen** iff $\omega
+64.15	67.25	26	sentence	Examples (coin toss forever):
+67.25	70.92	28	sentence	$A_H = \{\omega : \text{first toss is H}\}$
+70.92	74.97	30	sentence	$A_{HH} = \{\omega : \text{first two tosses are HH}\}$
+74.97	78.07	32	sentence	$\Omega$ = always happens.
+78.07	81.17	32	sentence	$\varnothing$ = never happens.
+81.17	84.27	34	sentence	Die, event $A = \{2,4,6\}$ ("even").
+84.27	88.70	36	sentence	Roll 4: $\omega = 4 \in A$, so $A$ happened.
+88.70	93.90	38	sentence	Roll 3: $\omega = 3 \notin A$, so $A$ did not happen.
+93.90	97.00	40	sentence	$A^c = \{1,3,5\}$ ("odd") happened instead.
+97.00	102.20	42	sentence	Two tosses, $A = \{\text{at least one H}\} = \{HH, HT, TH\}$.
+102.20	105.30	42	sentence	Outcome $TT$: $A$ did not happen.
+105.30	106.10	44	section	3. σ-field (Sigma-Algebra)
+106.10	113.62	46	sentence	A **σ-field** $\mathcal{F}$ is a collection of subsets of $\Omega$ that we are a
+113.62	116.72	48	sentence	Must satisfy:
+116.72	119.82	50	sentence	$\varnothing \in \mathcal{F}$
+119.82	127.72	52	sentence	$A \in \mathcal{F} \implies A^c \in \mathcal{F}$ (if you can ask "did $A$?", you
+127.72	132.15	54	sentence	$A_1, A_2, \ldots \in \mathcal{F} \implies \bigcup_i A_i \in \mathcal{F}$
+132.15	135.25	56	sentence	*Just accept these axioms.
+135.25	138.53	56	sentence	They exist so probability arithmetic never breaks.*
+138.53	144.13	58	sentence	Die, $\mathcal{F} = \{\varnothing,\ \{2,4,6\},\ \{1,3,5\},\ \Omega\}$ (you only 
+144.13	147.23	58	sentence	Check:
+147.23	150.33	60	sentence	$\varnothing \in \mathcal{F}$ ✅
+150.33	155.53	62	sentence	Complements: $\{2,4,6\}^c = \{1,3,5\} \in \mathcal{F}$, $\varnothing^c = \Omega 
+155.53	158.82	64	sentence	Unions: $\{2,4,6\}\cup\{1,3,5\} = \Omega \in \mathcal{F}$ ✅
+158.82	162.48	66	sentence	So it is a σ-field, with 4 events.
+162.48	165.58	68	sentence	Not a σ-field: $\{\varnothing, \{6\}, \Omega\}$.
+165.58	168.87	68	sentence	The complement $\{6\}^c = \{1,2,3,4,5\}$ is missing.
+168.87	173.68	70	sentence	Largest σ-field on the die: all subsets, $2^6 = 64$ events.
+173.68	176.78	70	sentence	Smallest: $\{\varnothing, \Omega\}$, 2 events.
+176.78	177.58	72	section	4. Special Events & Filtration
+177.58	182.02	74	sentence	At time $k$, you have seen $\omega_1, \omega_2, \ldots, \omega_k$.
+182.02	192.62	76	sentence	**$A$ is a special event at time $k$** if: knowing $\omega_1, \ldots, \omega_k$ 
+192.62	197.82	78	sentence	**$A$ is NOT special at time $k$** if: you need more tosses.
+197.82	200.92	78	sentence	You cannot decide yet.
+200.92	203.12	80	table	
+203.12	207.93	86	sentence	$\mathcal{F}_k$ = the set of ALL special events at time $k$.
+207.93	212.75	88	sentence	As $k$ grows, you see more → more events become special:
+212.75	214.95	90	equation	\mathcal{F}_0 \subset \mathcal{F}_1 \subset \mathcal{F}_2 \subset \cdots
+214.95	218.05	92	sentence	This chain is the **filtration**.
+218.05	221.33	92	sentence	It tracks your growing information over time.
+221.33	225.00	92	sentence	$\mathcal{F}_k$ represents all information available by time $k$.
+225.00	228.67	94	sentence	Two tosses, $\Omega = \{HH, HT, TH, TT\}$:
+228.67	232.72	96	sentence	$\mathcal{F}_0 = \{\varnothing, \Omega\}$: nothing seen yet, 2 events.
+232.72	238.32	98	sentence	$\mathcal{F}_1 = \{\varnothing,\ \{HH, HT\},\ \{TH, TT\},\ \Omega\}$: first toss
+238.32	244.68	100	sentence	$\mathcal{F}_2$ = all $2^4 = 16$ subsets: both tosses seen, so every event is de
+244.68	249.12	102	sentence	$\{HH\}$ ("both heads") is in $\mathcal{F}_2$ but not in $\mathcal{F}_1$.
+249.12	253.93	102	sentence	After seeing H first, you still can't tell $HH$ from $HT$.
+253.93	255.23	104	section	5. Probability Measure
+255.23	259.28	106	sentence	$P$ is a function: $P : \mathcal{F} \to [0,1]$.
+259.28	262.38	106	sentence	Input: an event.
+262.38	265.48	106	sentence	Output: a number.
+265.48	268.58	108	sentence	Two rules:
+268.58	271.68	110	sentence	$P(\Omega) = 1$
+271.68	276.88	112	sentence	If $A_1, A_2, \ldots$ are pairwise disjoint: $P\left(\bigcup_i A_i\right) = \sum
+276.88	279.98	114	sentence	Fair die, $P(\{k\}) = \tfrac16$.
+279.98	284.80	116	sentence	Rule 2: $P(\{2,4,6\}) = \tfrac16 + \tfrac16 + \tfrac16 = \tfrac12$.
+284.80	290.40	118	sentence	Complement: $\Omega = A \cup A^c$ disjoint, so $P(A^c) = 1 - P(A)$.
+290.40	294.45	118	sentence	$P(\text{not } 6) = 1 - \tfrac16 = \tfrac56$.
+294.45	300.43	120	sentence	$P(\varnothing) = 0$: $\Omega = \Omega \cup \varnothing$ gives $1 = 1 + P(\varno
+300.43	304.48	122	sentence	Biased coin: $P(\{H\}) = 0.7$ forces $P(\{T\}) = 0.3$.
+304.48	305.28	124	section	6. Probability Space
+305.28	308.57	126	sentence	$(\Omega, \mathcal{F}, P)$ — the three pieces:
+308.57	311.67	128	sentence	$\Omega$ — all possible outcomes
+311.67	316.48	130	sentence	$\mathcal{F}$ — the events we are allowed to assign probabilities to
+316.48	320.15	132	sentence	$P$ — the function that assigns those numbers
+320.15	323.25	134	sentence	One fair coin, written out completely:
+323.25	326.35	136	sentence	$\Omega = \{H, T\}$
+326.35	329.45	138	sentence	$\mathcal{F} = \{\varnothing, \{H\}, \{T\}, \{H,T\}\}$
+329.45	334.65	140	sentence	$P(\varnothing) = 0$, $P(\{H\}) = \tfrac12$, $P(\{T\}) = \tfrac12$, $P(\{H,T\}) 
+334.65	335.45	142	section	7. Almost Surely (a.s.)
+335.45	339.12	144	sentence	$P(A) = 1$ → $A$ occurs **almost surely**.
+339.12	342.22	144	sentence	NOT "surely."
+342.22	350.88	146	sentence	**Surely**: $A = \Omega$, impossible to be outside $A$. **Almost surely**: $P(A)
+350.88	354.93	148	sentence	Uniform point in $[0,1]$: $P([a,b]) = b - a$.
+354.93	358.03	150	sentence	$A = \{\omega \neq 0.5\}$.
+358.03	362.85	150	sentence	Then $P(\{0.5\}) = P([0.5, 0.5]) = 0$, so $P(A) = 1$.
+362.85	368.05	152	sentence	But $A \neq \Omega$: $\omega = 0.5$ is still a possible outcome.
+368.05	371.33	154	sentence	So $A$ holds almost surely, not surely.
+371.33	384.23	156	sentence	Coin tossed forever: $P(\text{first } n \text{ tosses all H}) = (\tfrac12)^n \to

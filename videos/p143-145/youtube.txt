@@ -1,0 +1,10 @@
+p.143–145: The Black–Scholes framework
+
+p.143–145: The Black–Scholes framework
+
+0:00 The bond and the stock (p.143)
+1:07 Solving the SDE with Itô's formula (p.143–144)
+2:07 Two questions (p.144)
+2:35 A family of candidate prices (p.144)
+3:32 The drift that makes it a martingale (p.145)
+4:49 The answer (p.145)

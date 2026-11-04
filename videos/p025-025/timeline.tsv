@@ -1,0 +1,26 @@
+start	end	line	kind	text
+0.00	4.00	6	title	Standard Brownian Motion Density & The Diffusion Equation
+4.00	9.60	8	sentence	Verification of the Heat/Diffusion PDE satisfied by the transition density of Wi
+9.60	10.40	10	section	1. The Density of Standard Brownian Motion
+10.40	19.40	12	anim	density_spread
+19.40	28.83	14	sentence	For fixed time $t > 0$, standard Brownian motion $W(t)$ is Gaussian distributed 
+28.83	32.50	14	sentence	Its probability density function $f_{W(t)}(x)$ is given by:
+32.50	34.70	16	equation	f(x, t) = \frac{1}{\sqrt{2\pi t}} e^{-\frac{x^2}{2t}}
+34.70	36.00	18	section	2. Time Derivative $\frac{\partial f}{\partial t}$
+36.00	40.05	20	sentence	Express $f(x, t) = \frac{1}{\sqrt{2\pi}} t^{-1/2} e^{-x^2 / (2t)}$.
+40.05	44.87	20	sentence	Applying the product rule and chain rule with respect to $t$:
+44.87	47.07	22	equation	\begin{aligned} \frac{\partial f}{\partial t} &= \frac{1}{\sqrt{2\pi}} \left[ \f
+47.07	48.37	24	section	3. Spatial Derivatives $\frac{\partial f}{\partial x}$ and $\frac{\partial^2 f}{
+48.37	51.47	26	sentence	**First derivative:**
+51.47	53.67	28	equation	\frac{\partial f}{\partial x} = \frac{1}{\sqrt{2\pi t}} e^{-\frac{x^2}{2t}} \lef
+53.67	57.72	30	sentence	**Second derivative:** Apply the product rule to $x e^{-\frac{x^2}{2t}}$:
+57.72	59.92	32	equation	\frac{\partial}{\partial x} \left[ x e^{-\frac{x^2}{2t}} \right] = 1 \cdot e^{-\
+59.92	63.02	34	sentence	Multiplying by $-\frac{1}{\sqrt{2\pi} t^{3/2}}$ yields:
+63.02	65.22	36	equation	\frac{\partial^2 f}{\partial x^2} = \frac{1}{\sqrt{2\pi}} e^{-\frac{x^2}{2t}} \l
+65.22	66.52	38	section	4. PDE Equivalence
+66.52	70.18	40	sentence	Comparing $\frac{\partial f}{\partial t}$ and $\frac{\partial^2 f}{\partial x^2}
+70.18	72.38	42	equation	\frac{\partial f}{\partial t} = \frac{1}{2} \frac{\partial^2 f}{\partial x^2}
+72.38	82.58	44	sentence	Hence, the probability density function $f_{W(t)}(x)$ of standard Brownian motio
+82.58	83.88	46	section	5. Key Summary
+83.88	89.08	48	sentence	Microscopic level: Sample paths $t \mapsto W(t, \omega)$ are non-differentiable 
+89.08	95.45	50	sentence	Macroscopic ensemble level: The probability density $f(x, t)$ evolves determinis

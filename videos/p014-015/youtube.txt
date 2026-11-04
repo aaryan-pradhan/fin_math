@@ -1,0 +1,10 @@
+Filtrations, Adapted Processes & Martingales
+
+Filtrations, Adapted Processes & Martingales
+
+0:00 Step 1: Filtrations & Adapted Stochastic Processes
+1:17 Step 2: Measurable Functions of Adapted Processes
+2:15 Step 3: Discrete-Time Martingale Definition
+3:17 Step 4: Rigorous Partition Proof for E[X mid mathcalG]
+4:32 Step 5: Concrete Coin-Flip Martingale Calculation
+5:32 Practice Questions

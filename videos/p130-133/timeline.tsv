@@ -1,0 +1,103 @@
+start	end	line	kind	text
+0.00	4.00	5	title	p.130–133: From the binomial call price to Black–Scholes
+4.00	4.80	7	section	Notation check
+4.80	7.90	9	sentence	Same symbols as p.125–129.
+7.90	19.65	9	sentence	For the small example we keep $S_0 = 4$, $u = 2$, $d = 0.5$, $r = 0.25$, $p^* = 
+19.65	23.70	9	sentence	From p.125–129 we already know this call costs $2.56$.
+23.70	24.50	11	section	The European call in the binomial model (p.130)
+24.50	31.90	13	anim	binomial_tree
+31.90	35.57	15	sentence	The call pays $g(S_T) = (S_T - K)^+$.
+35.57	38.85	15	sentence	Put this $g$ into the general formula.
+38.85	43.67	15	sentence	At $t = 0$ the price of the European call is
+43.67	45.87	17	equation	C = \frac{1}{(1+r)^T} \sum_{j=0}^{T} \binom{T}{j} (p^*)^j (1 - p^*)^{T-j} (u^j d
+45.87	51.07	19	sentence	The $(\cdot)^+$ is $0$ when the call ends out of the money.
+51.07	57.82	19	sentence	So only the paths with enough ups count, and for those the $^+$ can be dropped:
+57.82	60.02	21	equation	C = \frac{1}{(1+r)^T} \sum_{j=m}^{T} \binom{T}{j} (p^*)^j (1 - p^*)^{T-j} (u^j d
+60.02	61.32	23	section	How many ups are enough: $m$ (p.130)
+61.32	66.92	25	sentence	$m$ is the smallest number of ups with $u^j d^{T-j} S_0 > K$.
+66.92	70.02	25	sentence	Take logs:
+70.02	72.22	27	equation	\ln S_0 + j \ln u + (T - j) \ln d > \ln K
+72.22	75.50	29	sentence	Move everything without $j$ to the right:
+75.50	77.70	31	equation	j(\ln u - \ln d) > \ln K - \ln S_0 - T \ln d
+77.70	87.13	33	sentence	So $j$ must be bigger than the right side divided by $\ln u - \ln d$, and the sm
+87.13	89.33	35	equation	m := \left\lfloor \frac{\ln K - \ln S_0 - T \ln d}{\ln u - \ln d} \right\rfloor 
+89.33	99.78	37	numbers	Numbers. $\frac{0 - 3 \ln 0.5}{\ln 2 - \ln 0.5} = \frac{2.08}{1.39} = 1.5$, so $
+99.78	105.77	37	numbers	Indeed $2$ ups give $8 > 4$, but $1$ up gives $2 < 4$.
+105.77	107.07	39	section	Splitting into two binomial probabilities (p.130)
+107.07	111.12	41	sentence	Split $(u^j d^{T-j} S_0 - K)$ into two sums.
+111.12	115.55	41	sentence	In the first, move $u^j d^{T-j}$ next to the probabilities:
+115.55	117.75	43	equation	C = S_0 \sum_{j=m}^{T} \binom{T}{j} \left(\frac{u p^*}{1+r}\right)^j \left(\frac
+117.75	126.42	45	sentence	The notes write $\frac{d p^*}{1+r}$ in the second bracket; it should be $\frac{d
+126.42	129.52	47	sentence	Now call $\hat{p} = \frac{u p^*}{1+r}$.
+129.52	137.03	47	sentence	Then $\frac{d(1-p^*)}{1+r} = 1 - \hat{p}$, because $u p^* + d(1 - p^*) = 1 + r$ 
+137.03	140.32	47	sentence	So both sums are binomial tail probabilities:
+140.32	142.52	49	equation	C = S_0 \, P(\hat{U} \ge m) - \frac{K}{(1+r)^T} P(U^* \ge m) \qquad (\star)
+142.52	146.95	51	sentence	with $\hat{U} \sim B(T, \hat{p})$ and $U^* \sim B(T, p^*)$.
+146.95	154.47	51	sentence	(The notes write $B(n, \cdot)$; here the number of steps is $T$, and the slides 
+154.47	161.22	53	sentence	In words: the call is worth "stock times a probability" minus "discounted strike
+161.22	165.65	53	sentence	The second probability is just $P^*(\text{call ends in the money})$.
+165.65	170.72	55	numbers	Numbers. $\hat{p} = \frac{2 \times 0.5}{1.25} = 0.8$.
+170.72	178.48	55	numbers	$P(\hat{U} \ge 2) = 3(0.8)^2(0.2) + 0.8^3 = 0.896$ and $P(U^* \ge 2) = 0.5$.
+178.48	186.63	55	numbers	So $C = 4 \times 0.896 - \frac{4}{1.953} \times 0.5 = 3.584 - 1.024 = 2.56$.
+186.63	189.73	55	numbers	Same as before.
+189.73	191.03	57	section	Many small steps (p.130–131)
+191.03	198.17	59	sentence	Now fix the maturity $T > 0$ and split $[0, T]$ into $n$ small periods of length
+198.17	200.37	61	equation	\delta_n = \frac{T}{n}, \quad n \to \infty
+200.37	205.97	63	sentence	so trading happens at $t = 0, \delta_n, 2\delta_n, \dots, n\delta_n = T$.
+205.97	209.63	63	sentence	In each small period the binomial model moves:
+209.63	211.83	65	equation	S_{j\delta_n} = u_n S_{(j-1)\delta_n} \quad \text{or} \quad S_{j\delta_n} = d_n 
+211.83	216.27	67	sentence	with $u$, $d$, $r$ chosen to shrink with the step:
+216.27	218.47	69	equation	u_n = e^{\sigma\sqrt{\delta_n}} \simeq 1 + \sigma\sqrt{\delta_n}, \quad d_n = e^
+218.47	226.37	71	sentence	In words: each tiny step moves the price up or down by about $\sigma\sqrt{\delta
+226.37	233.12	71	sentence	Over the $n$ steps the bond grows by $(1 + r_n)^n = e^{r\delta_n n} = e^{rT}$.
+233.12	238.72	73	sentence	As on p.128, the price is $S_0$ times $e$ to a random walk:
+238.72	240.92	75	equation	S_n = S_0 e^{\sum_{i=1}^n Y_i} = S_0 e^{Z_n}
+240.92	244.02	77	sentence	with IID jumps
+244.02	246.22	79	equation	Y_{n,k} = \begin{cases} \ln u_n = \sigma\sqrt{T/n} & \text{w.p. } p_n^* \\ \ln d
+246.22	249.32	81	sentence	and
+249.32	252.02	83	equation	p_n^* = \frac{1 + r_n - d_n}{u_n - d_n} = \frac{e^{r\delta_n} - e^{-\sigma\sqrt{
+252.02	258.77	85	sentence	As $n \to \infty$, the call price at $t = 0$ is still given by $(\star)$.
+258.77	268.83	87	numbers	Numbers. $\sigma = 0.2$, $T = 1$, $n = 100$: $\delta_n = 0.01$, $u_n = e^{0.02} 
+268.83	271.93	87	numbers	Each step is about $\pm 2\%$.
+271.93	273.23	89	section	The limit of $p_n^*$ (p.132)
+273.23	276.90	91	sentence	Use $e^x \simeq 1 + x$ in $p_n^*$:
+276.90	279.10	93	equation	p_n^* \simeq \frac{1 + r\frac{T}{n} - 1 + \sigma\sqrt{\frac{T}{n}}}{1 + \sigma\s
+279.10	287.38	95	sentence	The notes write $\frac{r}{\sigma}$ at the end; dividing $r\sqrt{T/n}$ by $2\sigm
+287.38	293.37	95	sentence	So $p_n^* \to \frac{1}{2}$: with tiny steps, up and down become almost equally l
+293.37	296.47	95	sentence	Also
+296.47	298.67	97	equation	\hat{p}_n = \frac{u_n p_n^*}{1 + r_n}
+298.67	301.77	99	sentence	One small remark.
+301.77	310.05	99	sentence	If we keep one more term, $e^{-x} \simeq 1 - x + \frac{x^2}{2}$, the $r$ above b
+310.05	315.65	99	sentence	That extra $\frac{1}{2}\sigma^2$ is where the $\frac{1}{2}\sigma^2$ in the Black
+315.65	324.95	101	numbers	Numbers. $r = 0.05$, $\sigma = 0.2$, $n = 100$: $p_n^* \simeq 0.5 + \frac{0.05}{
+324.95	326.25	103	section	The CLT turns $(\star)$ into normals (p.132)
+326.25	336.95	105	anim	crr_clt
+336.95	343.70	107	sentence	$U^*$ and $\hat{U}$ are binomials with $n$ huge, so by the CLT they are nearly n
+343.70	350.07	107	sentence	$P(U \ge m) = 1 - \Phi\left(\frac{m - \text{mean}}{\text{sd}}\right)$, and $1 - 
+350.07	353.17	107	sentence	So
+353.17	355.87	109	equation	C = S_0 \left(1 - \Phi\left(\frac{m - n\hat{p}_n}{\sqrt{n\hat{p}_n(1 - \hat{p}_n
+355.87	358.07	111	equation	= S_0 \, \Phi\left(\frac{n\hat{p}_n - m}{\sqrt{n\hat{p}_n(1 - \hat{p}_n)}}\right
+358.07	361.73	113	sentence	The notes stop here and write the answer.
+361.73	364.83	113	sentence	Here is the idea in words.
+364.83	372.35	113	sentence	$U^* \ge m$ means the call ends in the money, $S_T > K$, that is $Z_n > \ln(K/S_
+372.35	382.55	113	sentence	Under $p_n^*$, the walk $Z_n$ has mean $\simeq (r - \frac{1}{2}\sigma^2)T$ and v
+382.55	385.65	113	sentence	Standardize:
+385.65	387.85	115	equation	P(Z_n > \ln(K/S_0)) \to \Phi\left(\frac{\ln(S_0/K) + (r - \frac{1}{2}\sigma^2)T}
+387.85	393.05	117	sentence	Under $\hat{p}_n$ the mean shifts to $(r + \frac{1}{2}\sigma^2)T$, which gives $
+393.05	397.10	117	sentence	And $(1+r)^T$ here means $(1 + r_n)^n = e^{rT}$.
+397.10	398.40	119	section	The Black–Scholes formula (p.132–133)
+398.40	406.60	121	anim	convergence
+406.60	409.70	123	sentence	So in the limit
+409.70	411.90	125	equation	C = S_0 \Phi(h) - K e^{-rT} \Phi(h - \sigma\sqrt{T})
+411.90	415.00	127	sentence	where
+415.00	417.20	129	equation	h := \frac{\ln(S_0/K) + (r + \frac{1}{2}\sigma^2)T}{\sigma\sqrt{T}}
+417.20	420.30	131	sentence	This is the Black–Scholes formula.
+420.30	432.82	131	sentence	It gives the price of a European call with maturity $T$ and strike price $K$, in
+432.82	435.02	133	equation	S_t = S_0 e^{\mu t + \sigma W_t}, \quad B_t = e^{rt}, \quad t \in [0, T]
+435.02	447.78	135	numbers	Numbers. $S_0 = K = 100$, $r = 0.05$, $\sigma = 0.2$, $T = 1$: $h = \frac{0 + 0.
+447.78	454.00	135	numbers	$C = 100\,\Phi(0.35) - 100e^{-0.05}\Phi(0.15) = 63.68 - 53.23 = 10.45$.
+454.00	455.30	137	section	Slides (p.134–141)
+455.30	458.40	139	sentence	The 8 slides repeat p.125–133.
+458.40	464.77	139	sentence	They confirm two fixes above: $\hat{U} \sim \text{Bin}(T, \hat{p})$, and $p_n^* 
+464.77	471.90	139	sentence	The last slide adds one phrase: the step to normals is "by applying the Central 
+471.90	475.00	139	sentence	Nothing else is new.

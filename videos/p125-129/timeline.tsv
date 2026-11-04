@@ -1,0 +1,212 @@
+start	end	line	kind	text
+0.00	4.00	5	title	p.125–129: Multiperiod binomial market
+4.00	4.80	7	section	Notation check
+4.80	12.70	9	sentence	The notes now use $t$ for time and write the strategy as $(\Delta_t, b_t)$: $\De
+12.70	16.37	9	sentence	That is $\Phi_t = (b_t, \Delta_t)$ from p.59.
+16.37	30.03	9	sentence	To keep the numbers easy, this file uses one small example throughout: $S_0 = 4$
+30.03	30.83	11	section	The model (p.125)
+30.83	36.43	13	anim	binomial_tree
+36.43	40.10	15	sentence	There is one risky asset with price $S_t$.
+40.10	43.38	15	sentence	Each period it goes up or down:
+43.38	45.58	17	equation	S_t = u S_{t-1} \quad \text{or} \quad S_t = d S_{t-1}
+45.58	48.68	19	sentence	and the bond is
+48.68	50.88	21	equation	B_t = (1+r)^t
+50.88	54.93	23	sentence	It's the one-period model of p.87, repeated $T$ times.
+54.93	60.13	25	numbers	Numbers. $4 \to 8$ or $2$, then $\to 16$, $4$ or $1$.
+60.13	64.57	25	numbers	Up-then-down and down-then-up both give $4$, so the tree recombines.
+64.57	65.87	27	section	Trading strategy (p.125)
+65.87	75.30	29	sentence	A trading strategy $(\Delta_t, b_t)$, $t = 1, 2, \dots, T$, is the shares and bo
+75.30	77.50	31	equation	\Delta_t = \Delta_t(S_0, \dots, S_{t-1}), \quad b_t = b_t(S_0, \dots, S_{t-1})
+77.50	86.55	33	sentence	In words: I pick what to hold for period $t$ at time $t - 1$, using only the pri
+86.55	87.85	35	section	Self-financing (p.125)
+87.85	90.95	37	sentence	The strategy is called self-financing if
+90.95	93.15	39	equation	\Delta_t S_t + b_t (1+r)^t = \Delta_{t+1} S_t + b_{t+1} (1+r)^t, \quad t = 1, 2,
+93.15	97.58	41	sentence	Left: what the old portfolio is worth at time $t$.
+97.58	102.02	41	sentence	Right: what the new one costs at the same prices.
+102.02	107.22	41	sentence	Equal means I only reshuffle, with no money added or taken out.
+107.22	110.32	41	sentence	So
+110.32	112.52	43	equation	t = 0: \quad V_0 = \Delta_1 S_0 + b_1
+112.52	114.72	45	equation	t = 1: \quad V_1 = \Delta_1 S_1 + b_1 (1+r) = \Delta_2 S_1 + b_2 (1+r)
+114.72	125.93	47	numbers	Numbers. At $t = 1$, $S_1 = 8$, the old portfolio $(0.8, -1.28)$ is worth $0.8 \
+125.93	131.15	47	numbers	The new one $(1, -2.56)$ costs $8 - 3.2 = 4.8$.
+131.15	134.25	47	numbers	Same.
+134.25	135.55	49	section	Pricing a claim by replication (p.125–126)
+135.55	142.68	51	sentence	To find the fair price of a claim $X = g(S_T)$, build a self-financing portfolio
+142.68	144.88	53	equation	V_t = \Delta_t S_t + b_t (1+r)^t, \quad V_0 = \Delta_1 S_0 + b_1
+144.88	150.08	55	sentence	that pays exactly the claim at the end, on every path $\omega$:
+150.08	152.28	57	equation	V_T(\omega) = \Delta_T(\omega) S_T(\omega) + b_T(\omega)(1+r)^T = X(\omega), \qu
+152.28	158.27	59	sentence	Same payoff on every path means same price today, else there is an arbitrage.
+158.27	161.93	59	sentence	So the fair price of $X$ is $V_0$.
+161.93	165.03	59	sentence	We assume
+165.03	167.23	61	equation	d < 1 + r < u
+167.23	175.15	63	numbers	Numbers. The call pays $g(s) = (s - 4)^+$: $12$, $0$, $0$ at $S_2 = 16, 4, 1$.
+175.15	178.25	63	numbers	And $0.5 < 1.25 < 2$.
+178.25	179.55	65	section	The last period (p.126)
+179.55	184.35	67	anim	fork
+184.35	189.17	69	sentence	Stand at $t = T - 1$ with $S_{T-1} = s$.
+189.17	195.15	69	sentence	Next the stock is $us$ or $ds$, and the claim pays $g(us)$ or $g(ds)$.
+195.15	199.97	69	sentence	I need $(\Delta_T, b_T)$ to pay the claim in both cases:
+199.97	202.17	71	equation	\Delta_T \, us + b_T (1+r)^T = g(us)
+202.17	204.37	73	equation	\Delta_T \, ds + b_T (1+r)^T = g(ds)
+204.37	207.47	75	sentence	Two equations, two unknowns.
+207.47	211.13	75	sentence	Subtracting them gives $\Delta_T$; eliminating $\Delta_T$ gives $b_T$:
+211.13	213.33	77	equation	\Delta_T(s) = \frac{g(us) - g(ds)}{us - ds} = \frac{V_T[us] - V_T[ds]}{us - ds}
+213.33	215.53	79	equation	b_T(s) = \frac{u\, g(ds) - d\, g(us)}{(1+r)^T (u - d)} = \frac{u V_T[ds] - d V_T
+215.53	221.13	81	sentence	Here $V_T[x] = g(x)$ is the value at $T$ when $S_T = x$.
+221.13	233.13	83	numbers	Numbers. At $s = 8$: $\Delta_2 = \frac{12 - 0}{16 - 4} = 1$ and $b_2 = \frac{0 -
+233.13	234.43	85	section	The value one step back is an $E^*$ (p.126)
+234.43	240.43	87	anim	backward_values
+240.43	244.87	89	sentence	The portfolio costs $V_{T-1}[s] = \Delta_T s + b_T (1+r)^{T-1}$.
+244.87	248.15	89	sentence	Plug in the two formulas and simplify:
+248.15	250.85	91	equation	V_{T-1}[s] = \frac{1}{1+r}\left[p^* g(us) + (1 - p^*) g(ds)\right] = E^*\left(\f
+250.85	253.95	93	sentence	where
+253.95	256.15	95	equation	p^* = \frac{1 + r - d}{u - d} \in (0, 1)
+256.15	263.28	97	sentence	So: the value today = the $p^*$-average of the two next values, divided by $1 + 
+263.28	268.10	97	sentence	That is the one-period rule of p.91, used at one node.
+268.10	273.93	99	numbers	Numbers. $p^* = \frac{1.25 - 0.5}{2 - 0.5} = 0.5$.
+273.93	281.70	99	numbers	At $s = 8$: $V_1[8] = \frac{0.5 \times 12 + 0.5 \times 0}{1.25} = 4.8$.
+281.70	285.38	99	numbers	At $s = 2$: $V_1[2] = 0$.
+285.38	286.68	101	section	One more step back (p.127)
+286.68	293.83	103	anim	backward_values
+293.83	298.27	105	sentence	Repeat the same step at $t = T - 2$.
+298.27	304.63	105	sentence	Now the "claim" to copy is $V_{T-1}$, the money I'll need at $T - 1$:
+304.63	307.33	107	equation	\Delta_{T-1}[s] = \frac{V_{T-1}[us] - V_{T-1}[ds]}{us - ds}, \quad b_{T-1}[s] = 
+307.33	309.53	109	equation	V_{T-2}[s] = E^*\left[\frac{V_{T-1}(S_{T-1})}{1+r} \,\Big|\, S_{T-2} = s\right] 
+309.53	313.20	111	sentence	Substituting $V_{T-1}$ gives an average over two steps.
+313.20	319.18	111	sentence	The middle price $uds$ is reached by two paths, hence the $\binom{2}{1} = 2$:
+319.18	321.38	113	equation	V_{T-2}[s] = \frac{1}{(1+r)^2} \sum_{j=0}^{2} \binom{2}{j} (p^*)^j (1 - p^*)^{2-
+321.38	324.67	115	sentence	Here $j$ is the number of ups.
+324.67	339.35	117	numbers	Numbers. At $s = 4$: $\Delta_1 = \frac{4.8 - 0}{8 - 2} = 0.8$, $b_1 = \frac{0 - 
+339.35	345.68	117	numbers	The sum gives the same: $\frac{0.25 \times 12}{1.5625} = 1.92$.
+345.68	346.98	119	section	The general formula (p.127)
+346.98	355.63	121	anim	pascal_paths
+355.63	358.73	123	sentence	Keep stepping back.
+358.73	362.02	123	sentence	For $t = 1, 2, \dots, T$:
+362.02	364.22	125	equation	\Delta_t[s] = \frac{V_t[us] - V_t[ds]}{us - ds}, \quad b_t[s] = \frac{u V_t[ds] 
+364.22	367.32	127	sentence	and
+367.32	370.02	129	equation	V_t[s] = \frac{1}{(1+r)^{T-t}} \sum_{j=0}^{T-t} \binom{T-t}{j} (p^*)^j (1 - p^*)
+370.02	375.22	131	sentence	In words: from time $t$ there are $T - t$ steps left.
+375.22	380.82	131	sentence	$j$ ups end at $u^j d^{T-t-j} s$, and that happens with binomial probability.
+380.82	384.87	131	sentence	So $V_t$ is the discounted $E^*$ of the payoff.
+384.87	387.97	131	sentence	The stock obeys the same rule:
+387.97	390.17	133	equation	S_t = E^*\left(\frac{S_{t+1}}{1+r} \,\Big|\, S_t = s_t\right)
+390.17	395.37	135	sentence	since $p^* u + (1 - p^*) d = 1 + r$.
+395.37	402.75	137	numbers	Numbers. $0.5 \times 2 + 0.5 \times 0.5 = 1.25 = 1 + r$.
+402.75	404.05	139	section	The discounted stock is a martingale (p.128)
+404.05	407.72	141	sentence	The next price depends only on today's, so
+407.72	409.92	143	equation	S_t = E^*\left(\frac{S_{t+1}}{1+r} \,\Big|\, S_0 = s_0, \dots, S_t = s_t\right)
+409.92	413.02	145	sentence	Divide by $(1+r)^t$.
+413.02	416.12	145	sentence	Under $p^*$ the discounted price
+416.12	418.32	147	equation	S_t^* = S_t (1+r)^{-t}
+418.32	421.42	149	sentence	is a MG:
+421.42	423.62	151	equation	E(S_{t+1}^* \mid S_0^*, \dots, S_t^*) = S_t^*, \quad t = 0, 1, \dots, T-1
+423.62	428.82	153	sentence	As in one period, $P^*$ is the only probability on the paths
+428.82	431.02	155	equation	\Omega = \{\omega = (v_1, \dots, v_T) : v_t = u \text{ or } d\}
+431.02	434.12	157	sentence	that makes $S_t^*$ a MG.
+434.12	441.50	159	numbers	Numbers. $E^*(S_1^*) = \frac{0.5 \times 8 + 0.5 \times 2}{1.25} = 4 = S_0^*$.
+441.50	442.80	161	section	The price at $t = 0$, and the random walk (p.128–129)
+442.80	452.70	163	anim	walk
+452.70	455.80	165	sentence	At $t = 0$:
+455.80	458.50	167	equation	V_0[s_0] = \frac{1}{(1+r)^T} \sum_{j=0}^{T} \binom{T}{j} (p^*)^j (1 - p^*)^{T-j}
+458.50	461.60	169	sentence	where
+461.60	463.80	171	equation	Z_n := Y_1 + \dots + Y_n, \quad Y_k = \begin{cases} \ln u & \text{w.p. } p^* \\ 
+463.80	467.47	173	sentence	is a random walk with IID jumps, and
+467.47	469.67	175	equation	S_n = S_0 e^{Z_n}, \quad \ln\left(\frac{S_n}{S_0}\right) = Z_n = \sum_{i=1}^n Y_
+469.67	479.10	177	sentence	In words: each step multiplies the price by $u$ or $d$, so each step adds $\ln u
+479.10	482.38	177	sentence	$j$ ups give $e^{Z_T} = u^j d^{T-j}$.
+482.38	485.67	177	sentence	So the log-price is a random walk.
+485.67	489.72	177	sentence	Next we let $T \to \infty$ to get Black–Scholes.
+489.72	498.40	179	numbers	Numbers. $\ln 2 = 0.69$ and $\ln 0.5 = -0.69$, so here $Z_n$ steps $\pm 0.69$ wi
+498.40	503.62	179	numbers	Up, down: $Z_2 = 0$ and $S_2 = 4e^0 = 4$.
+503.62	504.42	181	section	Doubts
+504.42	506.62	183	question	What does $V_T(\omega) = \Delta_T(\omega) S_T(\omega) + b_T(\omega)(1+r)^T = X(\
+506.62	515.67	185	sentence	At the end, I own $\Delta_T$ shares worth $S_T$ each and $b_T$ bonds worth $(1+r
+515.67	521.27	185	sentence	The equation says this equals the claim's payoff $X$ on every path $\omega$.
+521.27	529.94	185	sentence	Then the portfolio and the claim are the same thing, so they cost the same today
+529.94	539.75	185	sentence	The $\omega$ on $\Delta_T$ and $b_T$ is there because I choose them at $T - 1$, 
+539.75	549.82	187	numbers	Numbers. On the path up, up: $1 \times 16 - 2.56 \times 1.5625 = 16 - 4 = 12 = X
+549.82	552.52	189	question	In $\Delta_T\, us + b_T (1+r)^T = g(us)$, why $(1+r)^T$ and not $(1+r)$, if the 
+552.52	557.72	191	sentence	Because $b_T$ is a number of bonds, not an amount of money.
+557.72	562.15	191	sentence	One bond is worth $B_t = (1+r)^t$ at time $t$.
+562.15	568.90	191	sentence	So at $T - 1$ one bond costs $(1+r)^{T-1}$, and at $T$ it is worth $(1+r)^T$.
+568.90	573.34	191	sentence	My $b_T$ bonds are worth $b_T (1+r)^T$ at the end.
+573.34	576.62	193	sentence	Your intuition is right in money terms.
+576.62	585.29	193	sentence	The money in the bond at $T - 1$ is $b_T (1+r)^{T-1}$, and one period of interes
+585.29	587.49	195	equation	b_T (1+r)^{T-1} \times (1+r) = b_T (1+r)^T
+587.49	590.77	197	sentence	So only one period of growth happens.
+590.77	595.97	197	sentence	The other $(1+r)^{T-1}$ is just the bond's price when I bought it.
+595.97	599.47	199	numbers	Numbers. $b_2 = -2.56$ bonds.
+599.47	607.00	199	numbers	At $t = 1$ a bond costs $1.25$, so I have borrowed $2.56 \times 1.25 = 3.2$.
+607.00	614.54	199	numbers	One period later I owe $3.2 \times 1.25 = 4$, which is $2.56 \times 1.25^2 = 4$.
+614.54	617.64	199	numbers	Same.
+617.64	620.34	201	question	In $V_{T-1}[s] = E^*\left(\frac{g(S_T)}{1+r} \mid S_{T-1} = s\right)$, what is $
+620.34	626.70	203	sentence	$g$ is the payoff rule of the claim, and $S_T$ is the final stock price.
+626.70	631.14	203	sentence	So $g(S_T)$ is what the claim pays at the end.
+631.14	634.80	203	sentence	For a call, $g(x) = (x - K)^+$.
+634.80	645.40	205	sentence	In words, the line says: today's value is the average of tomorrow's two payoffs,
+645.40	652.15	205	sentence	From $s$ the price goes to $us$ (weight $p^*$) or to $ds$ (weight $1 - p^*$).
+652.15	661.59	205	sentence	Average the two payoffs $g(us)$ and $g(ds)$ with these weights, then divide by $
+661.59	668.72	205	sentence	That number is exactly what the copying portfolio $(\Delta_T, b_T)$ costs, so it
+668.72	672.22	207	numbers	Numbers. $s = 8$.
+672.22	675.90	207	numbers	Up: $S_T = 16$, $g(16) = 12$.
+675.90	679.59	207	numbers	Down: $S_T = 4$, $g(4) = 0$.
+679.59	684.42	207	numbers	Average: $0.5 \times 12 + 0.5 \times 0 = 6$.
+684.42	687.92	207	numbers	Discount: $\frac{6}{1.25} = 4.8$.
+687.92	696.07	207	numbers	The portfolio $\Delta_2 = 1$, $b_2 = -2.56$ costs $8 - 2.56 \times 1.25 = 4.8$.
+696.07	699.17	207	numbers	Same.
+699.17	701.87	209	question	How does the general formula $V_0[s_0] = \frac{1}{(1+r)^T} \sum_{j=0}^{T} \binom
+701.87	705.54	211	sentence	Read the tree as a list of paths.
+705.54	709.97	211	sentence	Each piece of the formula answers one question about them.
+709.97	713.07	213	sentence	Where does a path end?
+713.07	717.12	213	sentence	Each step multiplies the price by $u$ or $d$.
+717.12	724.64	213	sentence	A path with $j$ ups and $T - j$ downs ends at $u^j d^{T-j} s_0$, whatever the or
+724.64	727.74	213	sentence	So it pays $g(u^j d^{T-j} s_0)$.
+727.74	730.84	214	sentence	How likely is one such path?
+730.84	735.27	214	sentence	The steps are independent, so multiply: $(p^*)^j (1 - p^*)^{T-j}$.
+735.27	738.37	215	sentence	How many such paths are there?
+738.37	743.57	215	sentence	Choose which $j$ of the $T$ steps are the ups: $\binom{T}{j}$ ways.
+743.57	751.85	215	sentence	On the tree, the number of paths into a node is the sum of the paths into its tw
+751.85	758.99	215	sentence	That is Pascal's triangle $1 \mid 1\ 1 \mid 1\ 2\ 1 \mid 1\ 3\ 3\ 1$.
+758.99	765.35	216	sentence	Average: add over the end nodes, (number of paths) $\times$ (probability of each
+765.35	768.45	216	sentence	That is $E^*[g(S_T)]$.
+768.45	775.97	217	sentence	Discount: each step back divides by $1 + r$, and there are $T$ steps, so divide 
+775.97	779.07	219	sentence	Backward induction gives the same thing.
+779.07	782.17	219	sentence	One step back averages two nodes.
+782.17	791.60	219	sentence	Two steps back averages averages, and the middle node is reached from both sides
+791.60	795.65	219	sentence	Each step back is one row of Pascal's rule.
+795.65	806.25	219	sentence	From time $t$ there are $T - t$ steps left, so the formula for $V_t[s]$ is the s
+806.25	815.32	221	numbers	Numbers. $T = 3$, $S_0 = 4$, $u = 2$, $d = 0.5$, $p^* = 0.5$, call with $K = 4$.
+815.32	819.00	221	numbers	Each path has probability $0.5^3 = 0.125$.
+819.00	828.05	221	numbers	Rows are the end nodes (4), columns are $j$, end price, number of paths, payoff,
+828.05	830.25	223	table	
+830.25	834.30	230	sentence	$E^*[g(S_3)] = 5$, and $V_0 = \frac{5}{1.25^3} = 2.56$.
+834.30	838.35	230	sentence	Step-by-step backward induction on the tree gives $2.56$ too.
+838.35	841.05	232	question	How does $\frac{1}{(1+r)^T} \sum_{j=0}^{T} \binom{T}{j} (p^*)^j (1 - p^*)^{T-j} 
+841.05	844.15	234	sentence	Nothing new is computed.
+844.15	850.52	234	sentence	The right side is the left side, with the final price given a new name.
+850.52	853.62	234	sentence	Three small moves.
+853.62	857.29	236	sentence	Move 1: write the final price with $e$.
+857.29	861.72	236	sentence	Since $u = e^{\ln u}$ and $d = e^{\ln d}$,
+861.72	863.92	238	equation	u^j d^{T-j} s_0 = s_0 \, e^{j \ln u + (T - j) \ln d}
+863.92	867.20	240	sentence	Move 2: give the exponent a name.
+867.20	875.10	240	sentence	Let $Y_k = \ln u$ if step $k$ is up and $Y_k = \ln d$ if it is down.
+875.10	879.54	240	sentence	Add them up: $Z_T = Y_1 + \dots + Y_T$.
+879.54	889.35	240	sentence	With $j$ ups and $T - j$ downs, that sum is $j \ln u + (T - j) \ln d$, exactly t
+889.35	892.45	240	sentence	So the final price is
+892.45	894.65	242	equation	S_T = s_0 e^{Z_T}
+894.65	898.32	244	sentence	Move 3: read the sum as an expectation.
+898.32	903.52	244	sentence	The chance of exactly $j$ ups is $\binom{T}{j}(p^*)^j(1-p^*)^{T-j}$; that's the 
+903.52	907.95	244	sentence	An expectation is (value) $\times$ (probability), added over all cases.
+907.95	911.05	244	sentence	So the sum is
+911.05	913.25	246	equation	\sum_{j=0}^{T} P^*(j \text{ ups}) \, g(s_0 e^{Z_T}) = E^*\left[g(s_0 e^{Z_T})\ri
+913.25	918.45	248	sentence	The $\frac{1}{(1+r)^T}$ is a constant, so it can go inside the $E^*$.
+918.45	921.55	248	sentence	That is the right side.
+921.55	924.65	250	sentence	Why bother?
+924.65	931.40	250	sentence	A product of $u$'s and $d$'s is hard to work with, but a sum is easy.
+931.40	939.69	250	sentence	Taking logs turns the product into a sum: $\ln\left(\frac{S_T}{s_0}\right) = Z_T
+939.69	947.97	250	sentence	A sum of many small steps becomes a normal by the CLT, and that is how we will g
+947.97	953.19	252	numbers	Numbers. $T = 2$, $s_0 = 4$, $\ln 2 = 0.69$:
+953.19	959.17	254	sentence	$j = 2$: $Z_2 = 0.69 + 0.69 = 1.39$, $4 e^{1.39} = 16$.
+959.17	965.15	255	sentence	$j = 1$: $Z_2 = 0.69 - 0.69 = 0$, $4 e^0 = 4$.
+965.15	969.59	256	sentence	$j = 0$: $Z_2 = -1.39$, $4 e^{-1.39} = 1$.
+969.59	974.40	258	sentence	These are the same three end prices as in the tree.

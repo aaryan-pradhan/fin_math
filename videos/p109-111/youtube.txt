@@ -1,0 +1,12 @@
+p.109–111: Thm 3, the arbitrage pricing theorem
+
+p.109–111: Thm 3, the arbitrage pricing theorem
+
+0:00 Notation check
+0:41 The statement (p.109)
+1:29 Attainable claim (p.110)
+2:01 Proof of (1) (p.110)
+3:40 Proof of (2) (p.110–111)
+5:44 Why X* doesn't depend on the EMM (p.111)
+7:15 Not every claim is attainable (p.111)
+8:12 Complete market (p.111)

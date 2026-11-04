@@ -1,0 +1,107 @@
+start	end	line	kind	text
+0.00	4.00	6	title	Conditional Expectation & σ-Fields
+4.00	9.20	8	sentence	Rigorously connecting independence, sub-σ-fields, the Law of Iterated Expectatio
+9.20	10.00	10	section	Step 1: Independence of Random Variables & σ-Fields
+10.00	18.67	12	sentence	**Independent σ-Fields:** Two sub-σ-fields $\mathcal{G}, \mathcal{H} \subseteq \
+18.67	20.87	14	equation	P(A \cap B) = P(A)P(B)
+20.87	28.38	16	sentence	**Independent Random Variables:** $\xi$ and $\eta$ are independent $\iff$ their 
+28.38	30.58	18	equation	\sigma(\xi) = \{\xi^{-1}(B) \subseteq \Omega : B \in \mathcal{B}(\mathbb{R})\}
+30.58	33.68	20	sentence	Two tosses.
+33.68	38.12	20	sentence	$\xi = \mathbb{1}\{\text{toss 1 H}\}$, $\eta = \mathbb{1}\{\text{toss 2 H}\}$.
+38.12	43.72	22	sentence	$\sigma(\xi) = \{\varnothing, \{HH,HT\}, \{TH,TT\}, \Omega\}$ and $\sigma(\eta) 
+43.72	49.32	24	sentence	Check one pair: $P(\{HH,HT\} \cap \{HH,TH\}) = P(\{HH\}) = \tfrac14 = \tfrac12\c
+49.32	55.30	24	sentence	The other pairs work the same way (pairs involving $\varnothing$ or $\Omega$ are
+55.30	58.40	24	sentence	So they are independent.
+58.40	62.07	26	sentence	Dependent: $\xi$ and $S = \xi + \eta$.
+62.07	69.58	26	sentence	$P(\xi = 1, S = 0) = 0$, but $P(\xi = 1)P(S = 0) = \tfrac12\cdot\tfrac14 \ne 0$.
+69.58	70.88	28	section	Step 2: What is $E(X \mid \mathcal{G})$?
+70.88	75.70	30	sentence	**$E(X \mid \mathcal{G})$ is a RANDOM VARIABLE, not a single number.**
+75.70	82.45	32	sentence	$E(X \mid Y = y)$ is a single real number (the estimate when $Y(\omega) = y$).
+82.45	91.50	34	sentence	$E(X \mid Y) = E(X \mid \sigma(Y))$ is a random variable that assigns $E(X \mid 
+91.50	97.48	36	sentence	$E(X \mid \mathcal{G})$ is the general random variable for any sub-σ-field $\mat
+97.48	101.53	38	sentence	Two dice, $X$ = sum, $Y$ = first die.
+101.53	108.28	40	sentence	**Number:** $E(X \mid Y = 4) = 4 + E(\text{second}) = 4 + 3.5 = 7.5$.
+108.28	112.33	42	sentence	**Random variable:** $E(X \mid Y) = Y + 3.5$.
+112.33	116.38	42	sentence	If $\omega = (4, 1)$, its value is $7.5$.
+116.38	120.43	42	sentence	If $\omega = (2, 6)$, its value is $5.5$.
+120.43	126.42	44	sentence	**Formal Definition:** $Y = E(X \mid \mathcal{G})$ is the unique (a.s.) random v
+126.42	129.52	46	sentence	**$Y$ is $\mathcal{G}$-measurable:** $\sigma(Y) \subseteq \mathcal{G}$.
+129.52	138.18	46	sentence	$Y$ cannot see finer details than $\mathcal{G}$ allows and is forced to be const
+138.18	144.17	48	sentence	**Integral Matching (for all $G \in \mathcal{G}$):** $\int_G Y\, dP = \int_G X\,
+144.17	154.77	48	sentence	Since $Y$ is constant ($c_G$) on block $G$, this reduces to $c_G \cdot P(G) = \i
+154.77	161.13	48	sentence	Condition 2 forces $Y$ to equal the exact average of $X$ over each block $G$.
+161.13	172.50	50	sentence	**Unique (a.s.):** Any two random variables $Y_1, Y_2$ satisfying (1) & (2) must
+172.50	176.17	52	sentence	Die, $X = \omega$, $\mathcal{G} = \sigma(\text{odd}, \text{even})$.
+176.17	180.98	54	sentence	Measurability: $Y$ is constant on odd $\{1,3,5\}$ and on even $\{2,4,6\}$.
+180.98	187.35	56	sentence	Matching on $G$ = odd: $\int_G X\,dP = \tfrac16(1 + 3 + 5) = 1.5$.
+187.35	191.02	56	sentence	So $c_{\text{odd}}\cdot\tfrac12 = 1.5$, giving $c_{\text{odd}} = 3$.
+191.02	197.38	58	sentence	On even: $\tfrac16(2 + 4 + 6) = 2 = c_{\text{even}}\cdot\tfrac12$, giving $c_{\t
+197.38	202.98	60	sentence	$E(X \mid \mathcal{G}) = 3$ on odd outcomes and $4$ on even ones.
+202.98	212.03	60	sentence	Uniqueness: changing $Y$ on a probability-0 set changes nothing, but a die has n
+212.03	212.83	62	section	Step 3: Law of Iterated Expectations (Tower Property)
+212.83	218.43	64	sentence	**Theorem:** $E(E(X \mid Y)) = E(X)$ and generally $E(E(X \mid \mathcal{G})) = E
+218.43	221.53	66	sentence	**Proof via Joint Densities:**
+221.53	223.73	68	equation	\begin{aligned} E(E(X \mid Y)) &= \int_{-\infty}^{\infty} \left[\int_{-\infty}^{
+223.73	231.63	70	sentence	**Tail Probability Application:** Setting $X = \mathbb{1}_{\{X > t\}}$ gives $P(
+231.63	238.77	72	sentence	**Dice:** $E(E(X \mid Y)) = E(Y + 3.5) = 3.5 + 3.5 = 7 = E(X)$ ✅
+238.77	243.20	74	sentence	**Die, odd/even:** $\tfrac12(3) + \tfrac12(4) = 3.5 = E(X)$ ✅
+243.20	248.40	76	sentence	**Random coin:** bias $p \sim U[0,1]$, $X$ = heads in 10 tosses.
+248.40	253.22	76	sentence	$E(X \mid p) = 10p$, so $E(X) = E(10p) = 5$.
+253.22	259.97	78	sentence	**Tail:** lifetime $X \sim \text{Exp}(Y)$ with rate $Y = 1$ or $2$, each with pr
+259.97	265.57	78	sentence	$P(X > 1) = \tfrac12e^{-1} + \tfrac12e^{-2} \approx 0.184 + 0.068 = 0.252$.
+265.57	266.87	80	section	Step 4: Operational Rules
+266.87	269.97	82	sentence	**1.
+269.97	273.25	82	sentence	Linearity:** For constants $a, b \in \mathbb{R}$:
+273.25	275.45	84	equation	E(aX + bY \mid \mathcal{G}) = a\,E(X \mid \mathcal{G}) + b\,E(Y \mid \mathcal{G}
+275.45	278.55	86	sentence	**2.
+278.55	282.60	86	sentence	Taking Out What Is Known:** If $Z$ is $\mathcal{G}$-measurable:
+282.60	284.80	88	equation	E(Z \cdot X \mid \mathcal{G}) = Z \cdot E(X \mid \mathcal{G})
+284.80	287.90	90	sentence	**3.
+287.90	291.57	90	sentence	Independence Rule:** If $X$ is independent of $\mathcal{G}$:
+291.57	293.77	92	equation	E(X \mid \mathcal{G}) = E(X)
+293.77	297.05	94	sentence	Two dice $X_1, X_2$, $\mathcal{G} = \sigma(X_1)$:
+297.05	304.57	96	sentence	Linearity + known + independence: $E(X_1 + X_2 \mid X_1) = X_1 + E(X_2) = X_1 + 
+304.57	310.55	98	sentence	Take out what is known: $E(X_1X_2 \mid X_1) = X_1E(X_2 \mid X_1) = 3.5X_1$.
+310.55	313.83	98	sentence	If $X_1 = 2$, this is $7$.
+313.83	321.35	100	sentence	Squares: $E((X_1 + X_2)^2 \mid X_1) = X_1^2 + 2X_1E(X_2) + E(X_2^2) = X_1^2 + 7X
+321.35	326.95	102	sentence	Two extremes: if $X$ is $\mathcal{G}$-measurable, $E(X \mid \mathcal{G}) = X$ (f
+326.95	332.15	102	sentence	If $\mathcal{G} = \{\varnothing, \Omega\}$, $E(X \mid \mathcal{G}) = E(X)$ (no i
+332.15	333.45	104	section	Practice Questions
+333.45	336.55	106	sentence	**Q1.** Die, $\mathcal{G} = \sigma(\{1,2,3\}, \{4,5,6\})$.
+336.55	340.60	106	sentence	Find $E(X^2 \mid \mathcal{G})$ and check the tower property.
+340.60	343.70	108	sentence	Answer
+343.70	347.37	110	sentence	Low: $\tfrac{1 + 4 + 9}{3} = \tfrac{14}{3}$.
+347.37	351.03	110	sentence	High: $\tfrac{16 + 25 + 36}{3} = \tfrac{77}{3}$.
+351.03	355.08	110	sentence	Tower: $\tfrac12\left(\tfrac{14}3 + \tfrac{77}3\right) = \tfrac{91}{6} = E(X^2)$
+355.08	358.18	112	sentence	**Q2.** Two dice.
+358.18	361.85	112	sentence	Find $E(X_1 \mid X_1 + X_2 = 4)$.
+361.85	365.52	112	sentence	Guess the general formula for $E(X_1 \mid S)$.
+365.52	368.62	114	sentence	Answer
+368.62	376.13	116	sentence	The pairs with sum 4 are $(1,3), (2,2), (3,1)$, equally likely, so the average o
+376.13	384.42	116	sentence	By symmetry $E(X_1 \mid S) = E(X_2 \mid S)$, and the two add up to $E(S \mid S) 
+384.42	387.52	116	sentence	So $E(X_1 \mid S) = S/2$.
+387.52	390.62	118	sentence	**Q3.** Two dice.
+390.62	393.90	118	sentence	Find $E(\max(X_1, X_2) \mid X_1 = 5)$.
+393.90	397.00	120	sentence	Answer
+397.00	407.60	122	sentence	If $X_2 \le 5$ (probability $\tfrac56$), the max is 5. If $X_2 = 6$, it's 6. $E 
+407.60	410.70	124	sentence	**Q4.** Symmetric random walk.
+410.70	414.37	124	sentence	Find $E(S_5 \mid \mathcal{F}_3)$ and $E(S_5^2 \mid \mathcal{F}_3)$.
+414.37	417.47	126	sentence	Answer
+417.47	425.75	128	sentence	$S_5 = S_3 + D$ with $D = \xi_4 + \xi_5$ independent of $\mathcal{F}_3$, $E(D) =
+425.75	434.42	128	sentence	So $E(S_5 \mid \mathcal{F}_3) = S_3$ and $E(S_5^2 \mid \mathcal{F}_3) = S_3^2 + 
+434.42	438.85	130	sentence	**Q5.** The number of insurance claims is $N \sim \text{Poisson}(3)$.
+438.85	442.90	130	sentence	Each claim has mean Rs 100, independent of $N$.
+442.90	446.00	130	sentence	Find the expected total.
+446.00	449.10	132	sentence	Answer
+449.10	452.77	134	sentence	$E(\text{total} \mid N) = 100N$ (linearity + independence).
+452.77	455.87	134	sentence	Tower: $E(\text{total}) = E(100N) = 300$.
+455.87	458.97	136	sentence	**Q6.** Two dice.
+458.97	463.02	136	sentence	Are $X_1$ and $\mathbb{1}\{X_1 + X_2 = 7\}$ independent?
+463.02	466.12	138	sentence	Answer
+466.12	469.22	140	sentence	Yes, surprisingly.
+469.22	478.27	140	sentence	For every $k$, $P(\text{sum} = 7 \mid X_1 = k) = P(X_2 = 7 - k) = \tfrac16 = P(\
+478.27	483.47	140	sentence	(For sum $= 8$ it fails: $X_1 = 1$ makes 8 impossible.)
+483.47	489.45	142	sentence	**Q7.** $X$ is $\mathcal{G}$-measurable and $Z$ is independent of $\mathcal{G}$ 
+489.45	493.12	142	sentence	Simplify $E(3X + XZ + 5 \mid \mathcal{G})$.
+493.12	496.22	144	sentence	Answer
+496.22	503.35	146	sentence	$3X + X\,E(Z \mid \mathcal{G}) + 5 = 3X + 2X + 5 = 5X + 5$.

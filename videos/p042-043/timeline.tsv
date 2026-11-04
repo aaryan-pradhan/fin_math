@@ -1,0 +1,67 @@
+start	end	line	kind	text
+0.00	4.00	6	title	Joint Distribution of $W(t)$ and $M(t)$
+4.00	7.67	8	sentence	Brownian Motion · Running Maximum · Reflection Principle
+7.67	8.47	10	section	1. Setup
+8.47	12.13	12	sentence	**$W(t)$** — Standard Brownian motion at time $t$.
+12.13	17.33	12	sentence	A random variable with $W(0) = 0$ and $W(t) \sim \mathcal{N}(0, t)$.
+17.33	21.00	14	sentence	**$M(t)$** — Running maximum up to time $t$:
+21.00	23.20	16	equation	M(t) = \max_{0 \leq s \leq t} W(s)
+23.20	26.30	18	sentence	**Key constraints (always true):**
+26.30	31.90	20	sentence	$M(t) \geq W(t)$ — the max is always at least the current value.
+31.90	38.27	22	sentence	$M(t) \geq 0$ — because $W(0) = 0$, so the max is at least $0$.
+38.27	44.25	24	sentence	**Goal:** Compute $P(W(t) \in I,\ M(t) \in J)$ for arbitrary intervals $I$ and $
+44.25	45.55	26	section	2. Disjoint Case
+45.55	46.35	28	section	Case A: $I$ above $J$
+46.35	52.33	30	sentence	If $W(t) \in I$ with $I$ above $J$, then $W(t) > M(t)$ — impossible.
+52.33	54.53	32	equation	P(W(t) \in I,\ M(t) \in J) = 0
+54.53	55.83	34	section	Case B: $I$ below $J$ — Inclusion-Exclusion
+55.83	64.50	36	sentence	Let $I = (a, b]$, $J = (c, d]$ with $a < b \leq c < d$ and $c > 0$.
+64.50	67.60	36	sentence	Using rectangle inclusion-exclusion:
+67.60	69.80	38	equation	P(a < W(t) \leq b,\ c < M(t) \leq d)
+69.80	72.00	40	equation	= P(W(t)\!\leq\! b, M(t)\!\geq\! c) - P(W(t)\!\leq\! b, M(t)\!\geq\! d) - P(W(t)
+72.00	76.43	42	sentence	Each term is evaluated using the **Reflection Principle** (see §3):
+76.43	78.63	44	table	
+78.63	80.83	51	equation	P(a < W(t) \leq b,\ c < M(t) \leq d) = -\Phi\!\left(\tfrac{2c-b}{\sqrt{t}}\right
+80.83	82.13	53	section	3. The Reflection Principle
+82.13	91.83	55	anim	reflection
+91.83	93.13	57	section	Step 1: Hitting Time
+93.13	97.18	59	sentence	For $a > 0$, define the **first hitting time**:
+97.18	99.38	61	equation	\tau_a = \inf\{s \geq 0 : W(s) = a\}
+99.38	105.37	63	sentence	Key equivalence: $\{M(t) > a\} = \{\tau_a \leq t\}$, and $W(\tau_a) = a$ exactly
+105.37	106.67	65	section	Step 2: Strong Markov Property
+106.67	115.72	67	sentence	After $\tau_a$, the future increments $W(\tau_a + s) - W(\tau_a)$ are independen
+115.72	117.92	69	equation	W(t) = a + \tilde{W}(t - \tau_a) \quad \text{for } t > \tau_a
+117.92	119.22	71	section	Step 3: Reflected Path $W^*(t)$
+119.22	122.32	73	sentence	Define the **reflected process**:
+122.32	124.52	75	equation	W^*(t) = \begin{cases} W(t) & t \leq \tau_a \\ 2a - W(t) & t > \tau_a \end{cases
+124.52	129.72	77	sentence	After $\tau_a$: flip every value across the mirror line $W = a$.
+129.72	134.53	77	sentence	Since $\tilde{W}$ is symmetric, $-\tilde{W} \overset{d}{=} \tilde{W}$, so $W^*(t
+134.53	135.83	79	section	Step 4: The Bijection
+135.83	142.58	81	sentence	On $\{\tau_a \leq t\}$, reflecting $W(t) \leq a - y$ gives $W^*(t) \geq a + y$:
+142.58	144.78	83	equation	\{W(t) \leq a - y\} \cap \{\tau_a \leq t\} \;\longleftrightarrow\; \{W^*(t) \geq
+144.78	146.08	85	section	Step 5: Full Proof
+146.08	151.28	87	sentence	$P(W(t) \leq a-y,\ M(t) > a) = P(W(t)\leq a-y,\ \tau_a \leq t)$
+151.28	154.95	89	sentence	$= P(W^*(t) \geq a+y,\ \tau_a \leq t)$ [bijection]
+154.95	159.38	91	sentence	$= P(W(t) \geq a+y,\ \tau_a \leq t)$ [$W^* \overset{d}{=} W$]
+159.38	164.20	93	sentence	$= P(W(t) \geq a+y)$ [continuity + $a>0$ forces $\tau_a \leq t$]
+164.20	166.40	95	equation	P(W(t) \leq a - y,\ M(t) > a) = 1 - \Phi\!\left(\frac{a + y}{\sqrt{t}}\right)
+166.40	172.77	97	sentence	**Why $a > 0$ is essential:** $W(0) = 0 < a$ and $W(t) \geq a$.
+172.77	181.43	97	sentence	By continuity, the path *must* have crossed $a$ — so $\tau_a \leq t$ is automati
+181.43	192.42	97	sentence	For $a \leq 0$, the path starts at or above $a$, so $W(t) \geq a + y$ does *not*
+192.42	193.72	99	section	Corollary: Distribution of $M(t)$
+193.72	198.53	101	sentence	Setting $y = 0$ and adding the case $W(t) > a$:
+198.53	200.73	103	equation	P(M(t) > a) = 2\left(1 - \Phi\!\left(\frac{a}{\sqrt{t}}\right)\right), \quad a >
+200.73	202.03	105	section	4. Arbitrary Intervals $I$ and $J$
+202.03	202.83	107	section	Decomposition
+202.83	206.88	109	sentence	Split $I$ into disjoint and overlapping parts with $J$:
+206.88	209.08	111	equation	P(W(t) \in I,\ M(t) \in J) = \underbrace{P(W(t) \in I \setminus J,\ M(t) \in J)}
+209.08	210.38	113	section	The Overlapping Case
+210.38	215.98	115	sentence	Let $J' = I \cap J = (c, d]$ with $c \geq 0$.
+215.98	219.08	115	sentence	Since $M(t) \geq W(t)$:
+219.08	221.28	117	equation	P(M(t) \in J') = P(W(t) \in J',\ M(t) \in J') + P(W(t) \leq c,\ M(t) \in J')
+221.28	223.48	119	equation	P(W(t) \in J',\ M(t) \in J') = \underbrace{P(M(t) \in J')}_{\text{from corollary
+223.48	231.77	121	sentence	**Insight:** The overlapping case reduces entirely to the tools we already have 
+231.77	234.87	121	sentence	No new machinery needed.
+234.87	236.17	123	section	5. Architecture Summary
+236.17	236.97	125	section	6. Key Formulas at a Glance
+236.97	239.17	127	table	

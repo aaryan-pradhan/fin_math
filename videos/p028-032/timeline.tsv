@@ -1,0 +1,43 @@
+start	end	line	kind	text
+0.00	4.00	6	title	Brownian Motion with Drift & Exit Probabilities
+4.00	8.43	8	sentence	Continuous Gambler's Ruin, Rigorous Floor Limits, and First Passage Times.
+8.43	9.23	10	section	1. Definition of Brownian Motion with Drift
+9.23	17.43	12	anim	drift_barriers
+17.43	23.42	14	sentence	A stochastic process $\{X(t), t \ge 0\}$ is **Brownian Motion with drift $\mu$**
+23.42	25.62	16	equation	X(t) = \mu t + W(t)
+25.62	28.72	18	sentence	where $W(t)$ is standard Brownian motion.
+28.72	33.15	18	sentence	Thus $X(t) \sim \mathcal{N}(\mu t, t)$ with stationary, independent increments.
+33.15	34.45	20	section	2. Squeeze Theorem Proof for Random Walk Limit
+34.45	44.65	22	sentence	Set time step $\Delta t$, spatial step $\Delta x = \sqrt{\Delta t}$, and move ri
+44.65	51.02	22	sentence	Number of steps by time $t$ is $N(t) = \lfloor t / \Delta t \rfloor$.
+51.02	57.38	22	sentence	Using $\frac{t}{\Delta t} - 1 < \lfloor t / \Delta t \rfloor \le \frac{t}{\Delta
+57.38	59.58	24	equation	\mu t - \mu \Delta t < \mathbb{E}[X(t)] \le \mu t \implies \lim_{\Delta t \to 0}
+59.58	61.78	26	equation	\text{Var}(X(t)) = \Delta t (1 - \mu^2 \Delta t) \left\lfloor \frac{t}{\Delta t}
+61.78	63.08	28	section	3. Continuous to Discrete Coordinate Mapping
+63.08	68.68	30	sentence	Map continuous domain $[-B, A]$ to discrete grid $\{0, 1, \dots, N\}$ via:
+68.68	70.88	32	equation	g(x) = \left\lfloor \frac{x + B}{\Delta x} \right\rfloor
+70.88	74.17	34	sentence	Lower Barrier ($x = -B$) $\mapsto 0$
+74.17	79.37	36	sentence	Starting Point ($x$) $\mapsto i = \left\lfloor \frac{x + B}{\Delta x} \right\rfl
+79.37	85.35	38	sentence	Upper Barrier ($x = A$) $\mapsto N = \left\lfloor \frac{A + B}{\Delta x} \right\
+85.35	86.65	40	section	4. Floor Function Limit for Exit Probabilities
+86.65	92.63	42	sentence	Let $r = \frac{q}{p} = \frac{1 - \mu \Delta x}{1 + \mu \Delta x}$.
+92.63	96.68	42	sentence	Since $\lim_{\Delta x \to 0} r^{1/\Delta x} = e^{-2\mu}$:
+96.68	98.88	44	equation	r^{\frac{B}{\Delta x}} \le r^{\lfloor B/\Delta x \rfloor} < r^{-1} \cdot \left(r
+98.88	104.48	46	sentence	Substituting into discrete Gambler's Ruin $P(x) = \frac{1 - r^i}{1 - r^N}$ yield
+104.48	106.68	48	equation	P(x) = \mathbb{P}(X(t) \text{ hits } A \text{ before } -B \mid X(0) = x) = \frac
+106.68	107.98	50	section	5. Special Cases
+107.98	115.88	52	sentence	**Negative Drift ($\mu < 0$):** Letting $B \to \infty$, the probability of ever 
+115.88	118.08	54	equation	\mathbb{P}(\text{Max } \ge A) = e^{2\mu A}
+118.08	124.83	56	sentence	The maximum $M = \sup_{t \ge 0} X(t)$ is Exponentially distributed with rate $-2
+124.83	130.03	58	sentence	**Zero Drift ($\mu = 0$):** Taking $\mu \to 0$ via L'Hôpital's rule:
+130.03	132.23	60	equation	P(x) = \frac{x+B}{A+B}
+132.23	133.53	62	section	6. Application: Optimal Stock Option Exercise Threshold
+133.53	140.67	64	sentence	Suppose current stock price $X(0) = 0$ follows BM with negative drift $\mu = -d 
+140.67	146.27	64	sentence	We hold an option to buy one unit at fixed strike price $A$.
+146.27	153.40	64	sentence	If we set a rule to exercise as soon as stock price reaches target $x > A$:
+153.40	155.60	66	equation	\text{Gain upon exercise} = x - A, \qquad \mathbb{P}(\text{ever hits } x) = e^{2
+155.60	158.70	68	sentence	Expected gain function:
+158.70	160.90	70	equation	f(x) = (x - A) e^{-2dx}
+160.90	167.65	72	sentence	Setting derivative $f'(x) = e^{-2dx} [1 - 2d(x - A)] = 0$ gives the optimal targ
+167.65	169.85	74	equation	x^* = A + \frac{1}{2d}
+169.85	173.90	76	sentence	Maximum expected gain: $f(x^*) = \frac{1}{2d} e^{-2dA - 1}$.

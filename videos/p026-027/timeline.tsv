@@ -1,0 +1,30 @@
+start	end	line	kind	text
+0.00	4.00	6	title	Brownian Bridge & Conditional Distributions
+4.00	8.82	8	sentence	Master Reference Rules & Derivation of $[Y(s) \mid Y(t) = C]$.
+8.82	9.62	10	section	1. Reference Rules & Definitions
+9.62	16.37	12	sentence	**Rule 1 (Density Notation):** $f_t(x)$ is shorthand for $f_{W(t)}(x)$, the dens
+16.37	22.73	14	sentence	**Rule 2 (Bayes' Rule for Densities):** $f_{X \mid Y}(x \mid y) = \frac{f_{X, Y}
+22.73	29.87	16	sentence	**Rule 3 (Independent Increments):** For $s < t$, $f_{W(s), W(t)}(x, B) = f_{W(s
+29.87	37.38	18	sentence	**Rule 4 (Stationary Increments):** $W(t) - W(s) \sim \mathcal{N}(0, t-s) \impli
+37.38	42.20	20	sentence	**Rule 5 (Gaussian Density):** $f_v(z) = \frac{1}{\sqrt{2\pi v}} \exp\left( -\fr
+42.20	48.18	22	sentence	**Rule 6 (Completing the Square):** $f(x) = K \exp\left(-\frac{(x - \mu)^2}{2\si
+48.18	48.98	24	section	2. Derivation of Standard Brownian Bridge $[W(s) \mid W(t) = B]$
+48.98	57.18	26	anim	bridge
+57.18	60.28	28	sentence	Using Rules 2, 3, 4, 5:
+60.28	62.98	30	equation	f_{W(s) \mid W(t)}(x \mid B) = \frac{f_s(x) f_{t-s}(B - x)}{f_t(B)} = K_1 \exp\l
+62.98	66.08	32	sentence	Completing the square for $x$:
+66.08	68.28	34	equation	-\frac{x^2}{2s} - \frac{(B-x)^2}{2(t-s)} = -\frac{\left( x - \frac{s}{t}B \right
+68.28	70.48	36	equation	[W(s) \mid W(t) = B] \sim \mathcal{N}\left( \frac{s}{t}B, \;\; \frac{s(t-s)}{t} 
+70.48	71.78	38	section	3. General Brownian Motion $Y(t) = \sigma W(t)$
+71.78	76.98	40	sentence	For general Brownian motion $Y(t) = \sigma W(t) \sim \mathcal{N}(0, \sigma^2 t)$
+76.98	80.65	42	sentence	Condition $Y(t) = C \implies W(t) = \frac{C}{\sigma}$.
+80.65	86.63	44	sentence	$[Y(s) \mid Y(t) = C] = \sigma \left[ W(s) \;\middle|\; W(t) = \frac{C}{\sigma} 
+86.63	88.83	46	equation	\text{Mean: } \mu_Y = \sigma \left( \frac{s}{t} \frac{C}{\sigma} \right) = \frac
+88.83	91.03	48	equation	\text{Variance: } \text{Var}_Y = \sigma^2 \left( \frac{s(t-s)}{t} \right) = \sig
+91.03	93.23	50	equation	[Y(s) \mid Y(t) = C] \sim \mathcal{N}\left( \frac{s}{t}C, \;\; \sigma^2 \frac{s(
+93.23	94.53	52	section	4. Application: Bicycle Race Model
+94.53	101.67	54	sentence	Let $Y(t) = \sigma W(t)$ be the lead margin at $100t\%$ completion ($0 \le t \le
+101.67	107.27	56	sentence	**(i) Given midpoint lead $Y(1/2) = \sigma$, probability of winning ($Y(1) > 0$)
+107.27	109.47	58	equation	P\left( Y(1) - Y(1/2) > -\sigma \right) = P\left( Z > \frac{-\sigma}{\sigma/\sqr
+109.47	115.83	60	sentence	**(ii) Given winning margin $Y(1) = \sigma$, probability of leading at midpoint 
+115.83	118.03	62	equation	\left[ Y(1/2) \;\middle|\; Y(1) = \sigma \right] \sim \mathcal{N}\left( \frac{\s

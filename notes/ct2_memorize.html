@@ -1,0 +1,475 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CT-2 Memorize List</title>
+<script>MathJax = { tex: { inlineMath: [['$','$']] } };</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-chtml.js"></script>
+<style>
+:root { --bg:#0d1117; --panel:#161b22; --line:#30363d; --ink:#c9d1d9; --head:#f0f6fc; --dim:#8b949e; --cue:#58a6ff; --use:#d2a8ff; --warn:#f85149; --ok:#3fb950; }
+* { box-sizing: border-box; }
+body { margin:0 auto; max-width:860px; padding:24px 16px 80px; background:var(--bg); color:var(--ink); font:17px/1.65 -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+h1 { color:var(--head); margin:0 0 4px; font-size:26px; }
+h2 { color:var(--head); border-bottom:1px solid var(--line); padding-bottom:4px; margin-top:40px; font-size:20px; }
+.sub { color:var(--dim); font-size:14px; }
+.bar { position:sticky; top:0; background:var(--bg); padding:10px 0; border-bottom:1px solid var(--line); z-index:2; display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+button { background:var(--panel); color:var(--ink); border:1px solid var(--line); border-radius:6px; padding:6px 12px; font-size:14px; cursor:pointer; }
+.card { background:var(--panel); border:1px solid var(--line); border-left:4px solid var(--cue); border-radius:8px; padding:12px 16px; margin:14px 0; cursor:pointer; }
+.cue { color:var(--head); font-weight:600; }
+.cue b { color:var(--cue); margin-right:6px; }
+.ans { margin-top:8px; }
+.hide .ans { display:none; }
+.hide .card.open .ans { display:block; }
+.lab { display:block; font-size:12px; letter-spacing:.06em; text-transform:uppercase; margin-top:10px; color:var(--dim); }
+.f { background:#0b1520; border-radius:4px; padding:6px 10px; }
+.use { color:var(--use); }
+ol { margin:4px 0; padding-left:22px; }
+.cav { color:var(--warn); }
+.cav ul { margin:4px 0; padding-left:20px; }
+.eg { background:#0f2a1a; border-left:3px solid var(--ok); border-radius:4px; padding:8px 12px; margin-top:10px; font-size:15.5px; }
+.eg .lab { color:var(--ok); margin-top:0; }
+table { border-collapse:collapse; margin:6px 0; font-size:15px; width:100%; }
+td, th { border:1px solid var(--line); padding:4px 8px; text-align:left; vertical-align:top; }
+th { color:var(--dim); font-weight:500; }
+@media print {
+  :root { --bg:#fff; --panel:#fff; --line:#bbb; --ink:#111; --head:#000; --dim:#555; --cue:#0550ae; --use:#6f42c1; --warn:#b42318; --ok:#1a7f37; }
+  body { max-width:none; padding:0; font-size:12.5px; }
+  .bar { display:none; }
+  .hide .ans, .ans { display:block !important; }
+  .card { margin:8px 0; } .f, .eg, table, tr, li, .cue { break-inside:avoid; } .cue { break-after:avoid; }
+  .f { background:#f3f6fa; } .eg { background:#eef8f1; font-size:12px; }
+  table { font-size:11.5px; }
+  * { -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+}
+</style>
+</head>
+<body class="hide">
+<h1>CT-2 Memorize List</h1>
+<div class="sub">CT-2, Thu 5 Nov 2026, 9–10 am, NR321. The whole syllabus in 35 cards. Each card: <b>Formula</b> → <b>Use when</b> (how the question looks) → <b>How to plug</b> → <b>Caveats</b> (when it does NOT work) → <b>Example</b> (a past-paper question, worked step by step).</div>
+<div class="bar">
+  <button onclick="document.body.classList.toggle('hide')">Test mode / Read mode</button>
+  <span class="sub">Test mode: read the question, say the formula and the steps out loud, then tap to check.</span>
+</div>
+
+<!-- ============================== 1 ============================== -->
+<h2>1. Filtrations and martingales</h2>
+
+<div class="card"><div class="cue"><b>1</b>Filtration, adapted, measurable: what are they and how do I answer "is $Y$ $\mathcal F_n$-measurable?"</div><div class="ans">
+<span class="lab">Formula</span><div class="f">Filtration: $\mathcal F_s\subseteq\mathcal F_t$ for $s\le t$. Natural filtration: $\mathcal F_n=\sigma(X_1,\dots,X_n)$. Adapted: $X_t$ is $\mathcal F_t$-measurable for every $t$.</div>
+<span class="lab">Use when</span><div class="use">"Is $Y$ $\mathcal F_n$-measurable?", "Is the process adapted?", or as condition (i) of a martingale.</div>
+<span class="lab">How to plug</span><ol><li>Write $Y$ using the $X_k$'s.</li><li>Only $X_1,\dots,X_n$ appear → Yes. Any $X_{n+1}$ or later appears → No.</li></ol>
+<span class="lab">Caveats</span><div class="cav"><ul><li>Any function of adapted things is adapted ($S_n^2$, $e^{S_n}$, $\max_{k\le n}S_k$).</li><li>A future increment ($\xi_{n+1}$, $W_{t+h}-W_t$) is never $\mathcal F_n$- / $\mathcal F_t$-measurable.</li></ul></div>
+<div class="eg"><span class="lab">Example (practice)</span>$S_n=\xi_1+\dots+\xi_n$. Is $S_{n+1}$ $\mathcal F_n$-measurable?<br>Step 1: $S_{n+1}=S_n+\xi_{n+1}$. Step 2: $\xi_{n+1}$ is a future step → <b>No</b>. Is $S_n^2$? It uses only $\xi_1..\xi_n$ → <b>Yes</b>.</div>
+</div></div>
+
+<div class="card"><div class="cue"><b>2</b>Martingale: the definition, sub and super, and what follows from it.</div><div class="ans">
+<span class="lab">Formula</span><div class="f">(i) adapted, (ii) $E|X_t|&lt;\infty$, (iii) $E[X_{t+1}\mid\mathcal F_t]=X_t$.<br>Sub-MG: $E[X_{t+1}\mid\mathcal F_t]\ge X_t$ (goes up). Super-MG: $\le$ (goes down).<br>Consequences: $E[X_{t+s}\mid\mathcal F_t]=X_t$ and $E[X_t]=E[X_0]$ for all $t$.</div>
+<span class="lab">Use when</span><div class="use">"Is $X_n$ a martingale? (Yes/No)", "Which statement is TRUE?", "sub or super?".</div>
+<span class="lab">How to plug</span><ol><li>State (i) and (ii) in one line each.</li><li>Compute $E[X_{t+1}\mid\mathcal F_t]$ (card 3) and compare with $X_t$: equal → MG, bigger → sub, smaller → super.</li></ol>
+<span class="lab">Caveats</span><div class="cav"><ul><li>Constant mean is necessary, NOT sufficient: $E X_t=E X_0$ does not prove MG.</li><li>"Super" goes DOWN (the casino's game). Names are counter-intuitive.</li></ul></div>
+<div class="eg"><span class="lab">Example — CT-1'26 Q8 (all sets)</span>"Which statement is TRUE?" → pick the option "the mean of a martingale process is constant with respect to time", because $E[X_t]=E[X_0]$.</div>
+</div></div>
+
+<div class="card"><div class="cue"><b>3</b>How to compute $E[X_{n+1}\mid\mathcal F_n]$ in one line.</div><div class="ans">
+<span class="lab">Formula</span><div class="f">If $A$ is known at time $n$ and $B$ is independent of $\mathcal F_n$: $\;E[A\cdot B\mid\mathcal F_n]=A\cdot E[B]$, $\;E[A+B\mid\mathcal F_n]=A+E[B]$.</div>
+<span class="lab">Use when</span><div class="use">Every discrete "is it a martingale?" question.</div>
+<span class="lab">How to plug</span><ol><li>Write $X_{n+1}$ = (something known at $n$) combined with (the new step).</li><li>Pull the known part out.</li><li>Replace the new step by its mean.</li><li>Compare with $X_n$.</li></ol>
+<span class="lab">Caveats</span><div class="cav">Step 3 needs the new step to be independent of the past (iid steps: fine).</div>
+<div class="eg"><span class="lab">Example — CT-2'25 Q3</span>$X_n=2^nU_1\cdots U_n$, $U_i\sim U(0,1)$ iid. MG?<br>Step 1: $X_{n+1}=X_n\cdot 2U_{n+1}$. Step 2: $E[X_{n+1}\mid\mathcal F_n]=X_n\,E[2U_{n+1}]$. Step 3: $E[2U]=2\cdot\frac12=1$. Step 4: $=X_n$ → <b>Yes, MG</b>.</div>
+</div></div>
+
+<div class="card"><div class="cue"><b>4</b>Random-walk martingales: $S_n=Y_1+\dots+Y_n$, $Y_i$ iid with mean $\mu$, variance $\sigma^2$.</div><div class="ans">
+<span class="lab">Formula</span><table><tr><th>Process</th><th>Martingale when</th></tr>
+<tr><td>$S_n$</td><td>$\mu=0$</td></tr>
+<tr><td>$S_n-n\mu$</td><td>always</td></tr>
+<tr><td>$(S_n-n\mu)^2-n\sigma^2$</td><td>always (so $S_n^2-n\sigma^2$ when $\mu=0$)</td></tr>
+<tr><td>$X_0Y_1Y_2\cdots Y_n$</td><td>$E[Y]=1$</td></tr>
+<tr><td>$e^{\theta S_n}/\big(E[e^{\theta Y}]\big)^n$</td><td>always</td></tr></table>
+<span class="lab">Use when</span><div class="use">"$X_n$ is a martingale if $E(Y_1)=$ __", walk or product of iid steps.</div>
+<span class="lab">How to plug</span><ol><li>Decide: sum or product.</li><li>Find $\mu=E[Y]$ (and $\sigma^2$ if squared).</li><li>Read the row's condition.</li></ol>
+<span class="lab">Caveats</span><div class="cav"><ul><li>$S_n^2-n\sigma^2$ needs $\mu=0$; otherwise centre first.</li><li>If $\mu&gt;0$, $S_n$ is a sub-MG; if $\mu&lt;0$, super-MG.</li></ul></div>
+<div class="eg"><span class="lab">Example — Midsem'24 Q1(b)</span>"$X_n=\sum_{i\le n}Y_i$ is a martingale if $E(Y_1)=$ __" → sum, row 1 → <b>$0$</b>.</div>
+</div></div>
+
+<!-- ============================== 2 ============================== -->
+<h2>2. Brownian motion and related processes</h2>
+
+<div class="card"><div class="cue"><b>5</b>Wiener process: axioms, and the 4-point test "is $X(t)$ a Wiener process?".</div><div class="ans">
+<span class="lab">Formula</span><div class="f">Axioms: $W(0)=0$; independent increments; $W(t)-W(s)\sim N(0,t-s)$; continuous paths.<br>Test: (1) $X(0)=0$, (2) Gaussian, (3) $E X(t)=0$, (4) $\operatorname{Cov}(X_s,X_t)=\min(s,t)$.</div>
+<span class="lab">Use when</span><div class="use">"Short note on the Wiener process"; T/F "$V(t)=\dots$ is a Wiener process".</div>
+<span class="lab">How to plug</span><ol><li>Check $X(0)=0$ first (quickest fail).</li><li>Gaussian? (card 6: $f(t)W(g(t))$ always is.)</li><li>Compute the covariance and compare with $\min(s,t)$.</li></ol>
+<span class="lab">Caveats</span><div class="cav">Covariance $e^{-\lambda|t-s|}$ (depends on $|t-s|$ only) means stationary OU, NOT Wiener.</div>
+<div class="eg"><span class="lab">Example — Midsem'25 Q2</span>"Short note on the Wiener process" → write the 4 axioms, then add $\operatorname{Cov}(W_s,W_t)=\min(s,t)$ and "paths continuous but nowhere differentiable".</div>
+</div></div>
+
+<div class="card"><div class="cue"><b>6</b>⭐ Master formula: $X(t)=f(t)\,W(g(t))$ with $f,g$ deterministic. Gaussian? Covariance? Wiener?</div><div class="ans">
+<span class="lab">Formula</span><div class="f">Always Gaussian, mean $0$, $\quad\operatorname{Cov}(X_s,X_t)=f(s)f(t)\min\big(g(s),g(t)\big)$.<br>Wiener $\iff$ that equals $\min(s,t)$ and $X(0)=0$.</div>
+<span class="lab">Use when</span><div class="use">"Is $X(t)=e^{-t}W(e^{2t})$ Gaussian?", "Is $\frac1cW(c^2t)$ / $tW(1/t)$ a Wiener process?", "Cov of $X$?".</div>
+<span class="lab">How to plug</span><ol><li>Read off $f$ and $g$.</li><li>Gaussian question → Yes immediately.</li><li>Wiener question → compute $f(s)f(t)\min(g(s),g(t))$ and $X(0)=f(0)W(g(0))$.</li></ol>
+<table><tr><th>$X(t)$</th><th>$f$, $g$</th><th>Cov</th><th>Wiener?</th></tr>
+<tr><td>$\frac1cW(c^2t)$</td><td>$\frac1c$, $c^2t$</td><td>$\min(s,t)$</td><td>Yes</td></tr>
+<tr><td>$tW(1/t)$</td><td>$t$, $\frac1t$</td><td>$\frac{st}{\max(s,t)}=\min(s,t)$</td><td>Yes</td></tr>
+<tr><td>$e^{-\lambda t}W(e^{2\lambda t})$</td><td>$e^{-\lambda t}$, $e^{2\lambda t}$</td><td>$e^{-\lambda|t-s|}$</td><td>No (OU)</td></tr></table>
+<span class="lab">Caveats</span><div class="cav"><ul><li>$f$ and $g$ must be non-random (no $W$ inside them), and $g\ge0$.</li><li>Gaussian ≠ Wiener: $e^{-t}W(e^{2t})$ has $X(0)=W(1)\neq0$.</li></ul></div>
+<div class="eg"><span class="lab">Example — CT-1'26 Q3</span>"$X(t)=e^{-t}W(e^{2t})$ is a Gaussian process (Yes/No)" → Step 1: $f=e^{-t}$, $g=e^{2t}$, both deterministic. Step 2: → <b>Yes</b>, no computation.</div>
+</div></div>
+
+<div class="card"><div class="cue"><b>7</b>The 4 transforms of BM that are again standard BM.</div><div class="ans">
+<span class="lab">Formula</span><div class="f">$\frac1cW(c^2t)$ (scaling), $\;-W(t)$ (symmetry), $\;tW(1/t)$ with $0$ at $t=0$ (time inversion), $\;W(T)-W(T-t)$ on $[0,T]$ (time reversal).</div>
+<span class="lab">Use when</span><div class="use">T/F "… is also a Wiener process".</div>
+<span class="lab">How to plug</span><ol><li>Match the expression to a row → True.</li><li>No match → run card 6 / card 5 test.</li></ol>
+<span class="lab">Caveats</span><div class="cav">$cW(t)$ with $c\ne\pm1$ is NOT standard BM (variance $c^2t$). Scaling needs the $\frac1c$ outside AND $c^2$ inside.</div>
+<div class="eg"><span class="lab">Example — Midsem'25 Q1(e)</span>"$V(t)=\frac1cW(c^2t)$, $c&gt;0$, is a Wiener process (T/F)" → scaling row → <b>True</b>. Check: $V(0)=0$, $\operatorname{Cov}=\frac1{c^2}\min(c^2s,c^2t)=\min(s,t)$ ✓.</div>
+</div></div>
+
+<div class="card"><div class="cue"><b>8</b>Lévy's characterization and the path facts (short notes).</div><div class="ans">
+<span class="lab">Formula</span><div class="f">Lévy: $X$ continuous, $X_0=0$, $X_t$ and $X_t^2-t$ both MGs $\Rightarrow$ standard BM.<br>Paths: continuous, nowhere differentiable; quadratic variation $\sum(\Delta W)^2\to t$, i.e. $(dW)^2=dt$; total variation $=\infty$; Markov.</div>
+<span class="lab">Use when</span><div class="use">"Short note", "explain quadratic variation", "prove the limit is BM".</div>
+<span class="lab">How to plug</span><ol><li>Write the facts as sentences.</li><li>Add the reason: $\Delta W\sim\sqrt{\Delta t}$, so $(\Delta W)^2\sim\Delta t$ survives.</li></ol>
+<span class="lab">Caveats</span><div class="cav">Quadratic variation is finite ($=t$) while total variation is infinite: don't mix them up.</div>
+<div class="eg"><span class="lab">Example — Endsem-style</span>"Explain quadratic variation of BM" → $\sum_j(W_{t_j}-W_{t_{j-1}})^2\to t$ as the mesh $\to0$, so $(dW)^2=dt$; this is why Itô's formula has the extra $\frac12f''\,dt$ term.</div>
+</div></div>
+
+<div class="card"><div class="cue"><b>9</b>⭐ Distribution of any linear combination $\sum a_iW_{t_i}$.</div><div class="ans">
+<span class="lab">Formula</span><div class="f">$$\textstyle\sum_i a_iW_{t_i}\sim N\Big(0,\ \sum_i a_i^2t_i+2\sum_{i&lt;j}a_ia_j\min(t_i,t_j)\Big)$$
+Two terms: $\operatorname{Var}(aW_s+bW_t)=a^2s+b^2t+2ab\min(s,t)$. $\operatorname{Corr}(W_s,W_t)=\sqrt{s/t}$, $s\le t$.</div>
+<span class="lab">Use when</span><div class="use">"$4W_1+6W_3\sim$ ?", "$\operatorname{Var}(\dots)$", "$\operatorname{Cov}(W_1,W_4)$".</div>
+<span class="lab">How to plug</span><ol><li>List coefficients $a_i$ and times $t_i$.</li><li>Square terms: $a_i^2t_i$.</li><li>Cross terms: $2a_ia_j\times$(smaller time).</li><li>Add → variance; mean is $0$.</li></ol>
+<span class="lab">Caveats</span><div class="cav">Mean $0$ only for standard BM from $0$. With drift $\mu t$ or start $x_0$, add those to the mean (variance unchanged).</div>
+<div class="eg"><span class="lab">Example — CT-1'26 Q4</span>$4W_1+6W_3\sim$? → Step 1: $a=(4,6)$, $t=(1,3)$. Step 2: $16(1)+36(3)=124$. Step 3: $2(4)(6)\min(1,3)=48$. Step 4: <b>$N(0,172)$</b>.<br>Midsem'25 Q1(d): $W_1-W_2+3W_4$ → squares $1+2+36=39$; cross $2[(-1)(1)+(3)(1)+(-3)(2)]=-8$ → <b>$N(0,31)$</b>.</div>
+</div></div>
+
+<div class="card"><div class="cue"><b>10</b>⭐ Any mixed moment $E[g(W_s)h(W_t)]$, $s&lt;t$: increment splitting.</div><div class="ans">
+<span class="lab">Formula</span><div class="f">$W_t=W_s+\Delta$, $\;\Delta\sim N(0,t-s)$ independent of $W_s$.<br>Even powers of a normal (double factorial): if $X\sim N(0,v)$,
+$$E[X^{2k}]=(2k-1)!!\,v^k,\qquad (2k-1)!!=1\cdot3\cdot5\cdots(2k-1)=\frac{(2k)!}{2^k\,k!},\qquad E[X^{2k+1}]=0$$
+<table><tr><th>$k$</th><th>$E[Z^{2k}]$, $Z\sim N(0,1)$</th><th>$E[W_t^{2k}]$</th><th>$E[\Delta^{2k}]$, $\Delta\sim N(0,t-s)$</th></tr>
+<tr><td>$1$</td><td>$1!!=1$</td><td>$t$</td><td>$t-s$</td></tr>
+<tr><td>$2$</td><td>$3!!=1\cdot3=3$</td><td>$3t^2$</td><td>$3(t-s)^2$</td></tr>
+<tr><td>$3$</td><td>$5!!=1\cdot3\cdot5=15$</td><td>$15t^3$</td><td>$15(t-s)^3$</td></tr>
+<tr><td>$4$</td><td>$7!!=1\cdot3\cdot5\cdot7=105$</td><td>$105t^4$</td><td>$105(t-s)^4$</td></tr></table>
+Results: $E[W_sW_t]=\min(s,t)$, $\;E[W_s^2W_t^2]=s(2s+t)$ for $s\le t$.</div>
+<span class="lab">Use when</span><div class="use">"Compute $E(W_2^2W_3^2)$", "$E[W_2W_3^3]$", any product of BM at two times.</div>
+<span class="lab">How to plug</span><ol><li>Let $s$ = the smaller time. Write $W_t=W_s+\Delta$.</li><li>Expand the product.</li><li>Delete terms with an odd power of $\Delta$ or of $W_s$.</li><li>Use independence: $E[W_s^k\Delta^m]=E[W_s^k]E[\Delta^m]$.</li></ol>
+<span class="lab">Caveats</span><div class="cav">$s$ must be the SMALLER time; $\Delta$ is "later minus earlier".</div>
+<div class="eg"><span class="lab">Example — CT-1'26 Q2</span>$E(W_2^2W_3^2)$ → $s=2$, $\Delta=W_3-W_2\sim N(0,1)$.<br>$E[W_2^2(W_2+\Delta)^2]=E W_2^4+2E[W_2^3]E\Delta+E W_2^2\,E\Delta^2=3(4)+0+2(1)=$ <b>$14$</b>. Shortcut: $s(2s+t)=2(7)=14$ ✓.</div>
+</div></div>
+
+<div class="card"><div class="cue"><b>11</b>⭐ Exponential of a normal: $E[e^X]$ and $\operatorname{Cov}(e^{W_s},e^{W_t})$.</div><div class="ans">
+<span class="lab">Formula</span><div class="f">$X\sim N(m,v)\Rightarrow E[e^X]=e^{m+v/2}$, $\;\operatorname{Var}(e^X)=e^{2m+v}(e^v-1)$.<br>$$\operatorname{Cov}(e^{W_s},e^{W_t})=e^{(s+t)/2}\big(e^{\min(s,t)}-1\big)$$</div>
+<span class="lab">Use when</span><div class="use">Any $E[e^{\dots}]$ with BM inside; "$Y_t=e^{W_t}$, find $\operatorname{Cov}(Y_1,Y_2)$".</div>
+<span class="lab">How to plug</span><ol><li>Write the exponent as a normal: find its mean $m$ and variance $v$ (card 9).</li><li>$E[e^X]=e^{m+v/2}$.</li><li>For Cov: $E[e^{W_s+W_t}]-E[e^{W_s}]E[e^{W_t}]$.</li></ol>
+<span class="lab">Caveats</span><div class="cav">Exponent must be normal (a linear combination of $W$'s). $E[e^{W_t^2}]$ is NOT this formula.</div>
+<div class="eg"><span class="lab">Example — CT-1'26 Q9</span>$Y_t=e^{W_t}$, $\operatorname{Cov}(Y_1,Y_2)$ → $s=1$, $t=2$: $e^{(1+2)/2}(e^{1}-1)=$ <b>$e^{3/2}(e-1)$</b>.<br>Rebuild: $W_1+W_2\sim N(0,1+2+2)=N(0,5)$, so $E[e^{W_1+W_2}]=e^{5/2}$; minus $e^{1/2}e^{1}=e^{3/2}$; $e^{5/2}-e^{3/2}=e^{3/2}(e-1)$ ✓.</div>
+</div></div>
+
+<div class="card"><div class="cue"><b>12</b>⭐ Is $f(t,W_t)$ a martingale? The one test.</div><div class="ans">
+<span class="lab">Formula</span><div class="f">$$f(t,W_t)\text{ is a MG}\iff\partial_tf+\tfrac12\partial_{ww}f=0$$
+Family $e^{\lambda t}g(W_t)$: MG $\iff\lambda g+\frac12g''=0$. For $\sin$, $\cos$: $\lambda=\frac12$ exactly.</div>
+<table><tr><th>$f(t,W_t)$</th><th>$\partial_tf+\frac12\partial_{ww}f$</th><th>MG?</th></tr>
+<tr><td>$W_t$, $W_t^2-t$, $W_t^3-3tW_t$</td><td>$0$</td><td>Yes</td></tr>
+<tr><td>$e^{\lambda W_t-\lambda^2t/2}$</td><td>$0$</td><td>Yes</td></tr>
+<tr><td>$e^{t/2}\sin W_t$, $e^{t/2}\cos W_t$</td><td>$0$</td><td>Yes</td></tr>
+<tr><td>$e^{W_t}$, $e^{t}W_t$, $e^{t}\cos W_t$</td><td>$\ne0$</td><td>No</td></tr></table>
+<span class="lab">Use when</span><div class="use">"Is $Y_t=\dots$ a martingale? (Yes/No)" with $Y$ a function of $t$ and $W_t$.</div>
+<span class="lab">How to plug</span><ol><li>Compute $\partial_tf$ and $\partial_{ww}f$.</li><li>Form $\partial_tf+\frac12\partial_{ww}f$.</li><li>Zero → Yes. Not zero → No.</li></ol>
+<span class="lab">Caveats</span><div class="cav"><ul><li>Only for functions of $(t,W_t)$. For a general Itô process use card 25 (drift of $dX$).</li><li>Watch negated statements: "$|W_t|^2-t$ is NOT a MG" is <b>False</b>.</li></ul></div>
+<div class="eg"><span class="lab">Example — CT-1'26 Q5</span>"Is $Y_t=e^{t/2}\sin W_t$ a MG?" → Step 1: $\partial_tf=\frac12f$, $\partial_{ww}f=-f$. Step 2: $\frac12f-\frac12f=0$. Step 3: <b>Yes</b>. (Set with $e^t\cos W_t$: $f-\frac12f\ne0$ → No.)</div>
+</div></div>
+
+<div class="card"><div class="cue"><b>13</b>⭐ $E[h(W_t)\mid\mathcal F_s]$, $s&lt;t$ (future given present).</div><div class="ans">
+<span class="lab">Formula</span><div class="f">$W_t=W_s+\Delta$, $\Delta\sim N(0,t-s)$ independent of $\mathcal F_s$: treat $W_s$ as a constant, average over $\Delta$.
+<table><tr><th>$h$</th><th>$E[h(W_t)\mid\mathcal F_s]$</th></tr>
+<tr><td>$W_t$</td><td>$W_s$</td></tr>
+<tr><td>$W_t^2$</td><td>$W_s^2+(t-s)$</td></tr>
+<tr><td>$e^{\lambda W_t}$</td><td>$e^{\lambda W_s+\lambda^2(t-s)/2}$</td></tr></table></div>
+<span class="lab">Use when</span><div class="use">"Find $E[W_3^2\mid\mathcal F_1]$", "filtration expectation".</div>
+<span class="lab">How to plug</span><ol><li>Write $W_t=W_s+\Delta$.</li><li>Expand; $W_s$ is a constant.</li><li>$E\Delta=0$, $E\Delta^2=t-s$, $E e^{\lambda\Delta}=e^{\lambda^2(t-s)/2}$.</li></ol>
+<span class="lab">Caveats</span><div class="cav">Only for a LATER time given an earlier one. Given the future ($W_t=b$, want $W_s$, $s&lt;t$): card 16.</div>
+<div class="eg"><span class="lab">Example (sheet)</span>$E[W_3^2\mid\mathcal F_1]$ → $\Delta=W_3-W_1\sim N(0,2)$: $E[(W_1+\Delta)^2\mid\mathcal F_1]=W_1^2+0+2=$ <b>$W_1^2+2$</b>.</div>
+</div></div>
+
+<div class="card"><div class="cue"><b>14</b>⭐ Distribution of $\int_0^Tf(t)\,dW_t$, and the Itô isometry.</div><div class="ans">
+<span class="lab">Formula</span><div class="f">$$f\text{ deterministic}:\quad\int_0^Tf(t)\,dW_t\sim N\Big(0,\ \int_0^Tf(t)^2\,dt\Big)$$
+Isometry (any adapted $H$): $E\big[(\int_0^TH\,dW)^2\big]=\int_0^TE[H_t^2]\,dt$. Mean always $0$. Shortcut: $\int_0^1t^kdW_t\sim N(0,\frac{1}{2k+1})$.</div>
+<span class="lab">Use when</span><div class="use">"Compute the distribution of $\int_0^1t\,dW_t$", "$\operatorname{Var}(\int\dots dW)$".</div>
+<span class="lab">How to plug</span><ol><li>Check the integrand has no $W$ in it.</li><li>Square it, integrate $dt$ → the variance.</li><li>Answer $N(0,\text{that})$.</li></ol>
+<span class="lab">Caveats</span><div class="cav">Integrand containing $W$ (e.g. $\int W\,dW$): mean $0$ and isometry still hold, but it is NOT normal ($\int_0^tW\,dW=\frac12W_t^2-\frac t2$).</div>
+<div class="eg"><span class="lab">Example — CT-1'26 Q1 / CT-2'25 Q7</span>$\int_0^1t\,dW_t$ → $f=t$ deterministic; $\int_0^1t^2dt=\frac13$ → <b>$N(0,\frac13)$</b>. CT-2'25: $\int_0^1t^2dW_t$ → $\int_0^1t^4dt=\frac15$ → <b>$N(0,\frac15)$</b>.</div>
+</div></div>
+
+<div class="card"><div class="cue"><b>15</b>Probabilities for $W_t$ (and BM started at $x_0$); the heat equation.</div><div class="ans">
+<span class="lab">Formula</span><div class="f">$P(W_t\le x)=\Phi\big(\frac{x}{\sqrt t}\big)$; density $\frac{1}{\sqrt{2\pi t}}e^{-x^2/(2t)}$. General $X\sim N(m,v)$: $P(X\le x)=\Phi\big(\frac{x-m}{\sqrt v}\big)$.<br>Transition density $p(t;x,y)=\frac{1}{\sqrt{2\pi t}}e^{-(y-x)^2/(2t)}$ solves $\partial_tp=\frac12\partial_{yy}p$.</div>
+<span class="lab">Use when</span><div class="use">"$P(W(4)&gt;3)$", "BM started at 5, $P(W(1)&lt;7)$", "show the density solves the heat equation".</div>
+<span class="lab">How to plug</span><ol><li>Find the mean $m$ (start point, drift) and variance $v$ ($t$, or $\sigma^2t$).</li><li>Standardize: $\frac{x-m}{\sqrt v}$.</li><li>Look up $\Phi$.</li></ol>
+<span class="lab">Caveats</span><div class="cav">Divide by $\sqrt t$, NEVER by $t$. This is the most common lost mark.</div>
+<div class="eg"><span class="lab">Example (sheet)</span>$P(W(4)&gt;3)$ → $m=0$, $\sqrt v=2$: $1-\Phi(\frac32)=$ <b>$0.0668$</b>. BM from $5$: $P(W(1)&lt;7)=\Phi(\frac{7-5}{1})=\Phi(2)=$ <b>$0.9772$</b>.</div>
+</div></div>
+
+<div class="card"><div class="cue"><b>16</b>⭐ Conditioning on a value of BM: forward, backward (bridge), pinned.</div><div class="ans">
+<span class="lab">Formula</span><div class="f">$(X,Y)$ jointly normal: $X\mid Y{=}y\sim N\Big(\mu_X+\frac{\operatorname{Cov}}{\operatorname{Var}Y}(y-\mu_Y),\ \operatorname{Var}X-\frac{\operatorname{Cov}^2}{\operatorname{Var}Y}\Big)$</div>
+<table><tr><th>Given</th><th>Law</th></tr>
+<tr><td>forward: $W_t\mid W_s{=}a$, $s&lt;t$</td><td>$N(a,\ t-s)$</td></tr>
+<tr><td>backward: $W_s\mid W_t{=}b$, $s&lt;t$</td><td>$N\big(\frac stb,\ \frac{s(t-s)}t\big)$</td></tr>
+<tr><td>pinned $W_0{=}a$, $W_t{=}b$</td><td>$N\big(a+\frac st(b-a),\ \frac{s(t-s)}t\big)$</td></tr>
+<tr><td>$Y=\sigma W$, $Y_t{=}b$</td><td>same mean, variance $\times\sigma^2$</td></tr></table>
+<span class="lab">⭐ Most general: $Y_t=x_0+\mu t+\sigma W_t$, two known values, $t$ in between</span><div class="f">$s_1&lt;t&lt;s_2$, $\;Y_{s_1}=a_1$, $\;Y_{s_2}=a_2$:
+$$Y_t\mid(Y_{s_1}{=}a_1,\,Y_{s_2}{=}a_2)\ \sim\ N\Big(\underbrace{\tfrac{s_2-t}{s_2-s_1}}_{\text{weight on }a_1}a_1+\underbrace{\tfrac{t-s_1}{s_2-s_1}}_{\text{weight on }a_2}a_2,\ \ \sigma^2\,\frac{(t-s_1)(s_2-t)}{s_2-s_1}\Big)$$
+The drift $\mu$ and the start $x_0$ do NOT appear: once both ends are pinned, the drift is already inside $a_1$ and $a_2$. Plain $W$ is $x_0=0$, $\mu=0$, $\sigma=1$.
+<table><tr><th>What is known</th><th>Law of $Y_t$</th></tr>
+<tr><td>two values, $s_1&lt;t&lt;s_2$</td><td>formula above</td></tr>
+<tr><td>only the start ($Y_0=x_0$)</td><td>$N(x_0+\mu t,\ \sigma^2t)$</td></tr>
+<tr><td>latest known $Y_{s}=a$, $t&gt;s$ (forward)</td><td>$N\big(a+\mu(t-s),\ \sigma^2(t-s)\big)$, here $\mu$ DOES matter</td></tr>
+<tr><td>start $x_0$ and $Y_{s_2}=a_2$, $t&lt;s_2$</td><td>formula above with $s_1=0$, $a_1=x_0$</td></tr></table></div>
+<div class="use"><b>Intuition: a weighted average.</b> The mean is an average of the two known values, and the two weights add to $1$. Each value gets the weight of the distance to the OTHER end. So the closer $t$ is to $s_1$, the more $a_1$ counts. At $t=s_1$ the weights are $(1,0)$ and you get $a_1$; at $t=s_2$ you get $a_2$; at the midpoint it's $\frac{a_1+a_2}2$. On a graph, it's the straight line joining $(s_1,a_1)$ and $(s_2,a_2)$, read at $t$.<br>
+<b>Variance</b> = $\sigma^2$ × (distance to the left end) × (distance to the right end) ÷ (gap). It is $0$ at both ends (you know the value there) and largest at the midpoint, where it is $\sigma^2\frac{s_2-s_1}4$.<br>
+<b>Only the nearest known values matter</b> (Markov): any value known before $s_1$ or after $s_2$ is irrelevant. Every row of the table above is this formula: backward is $s_1=0$, $a_1=0$; pinned is $s_1=0$.</div>
+<div class="cav"><ul><li>$t$ must lie BETWEEN the two known times. If $t&gt;s_2$, only the latest value counts: forward row $N\big(a_2+\mu(t-s_2),\ \sigma^2(t-s_2)\big)$.</li><li>Between two known values, drop $\mu$; going forward past the last known value, keep $\mu$.</li><li>Check whether they gave $\sigma$ or $\sigma^2$.</li><li>Not for GBM: there, take logs first ($\ln Y$ is BM with drift), apply this to $\ln Y$, then convert back.</li></ul></div>
+<div class="eg"><span class="lab">Example (practice)</span>$W_1=2$, $W_5=10$; law of $W_2$? → $s_1=1$, $s_2=5$, gap $4$. Weights: on $a_1$: $\frac{5-2}{4}=\frac34$; on $a_2$: $\frac{2-1}4=\frac14$. Mean $\frac34(2)+\frac14(10)=1.5+2.5=$ <b>$4$</b>. Variance $\frac{(1)(3)}4=$ <b>$0.75$</b>. So $W_2\sim N(4,\,0.75)$.<br>Check with the straight line: slope $\frac{10-2}{4}=2$ per unit time, so at $t=2$: $2+2(1)=4$ ✓.<br>
+With drift and volatility: $Y_t=2t+3W_t$, $Y_1=5$, $Y_5=13$, law of $Y_2$? → same weights $\frac34,\frac14$: mean $3.75+3.25=$ <b>$7$</b> (the drift $2$ is not used); variance $9\cdot\frac{1\cdot3}4=$ <b>$6.75$</b>.<br>
+Sheet: $Y=3W$, $Y_{10}=12$, law of $Y_4$ → $s_1=0$, $a_1=0$: mean $\frac4{10}(12)=$ <b>$4.8$</b>, variance $9\cdot\frac{4\cdot6}{10}=$ <b>$21.6$</b>.</div>
+Bridge $B(s)=W(s)-\frac stW(t)$: $\operatorname{Cov}(B_u,B_v)=\min(u,v)-\frac{uv}t$.
+<span class="lab">Use when</span><div class="use">"Given $W(3)=2$, find $E[W(1)]$ / $P(W(1)&lt;x)$", "Brownian bridge".</div>
+<span class="lab">How to plug</span><ol><li>Which time is known: earlier (forward) or later (backward)?</li><li>Pick the row; plug $s$, $t$, the known value.</li><li>For a probability, standardize with card 15.</li></ol>
+<span class="lab">Caveats</span><div class="cav">Forward: mean stays, variance grows. Backward: mean is the straight line, variance is $0$ at both ends. Don't swap them.</div>
+<div class="eg"><span class="lab">Example (sheet)</span>"Given $W(3)=2$, find $E[W(1)]$" → backward, $s=1$, $t=3$, $b=2$: mean $\frac13(2)=$ <b>$\frac23$</b>, variance $\frac{1\cdot2}{3}=\frac23$. "Given $W(1)=2$, $E[W(3)]$" → forward → <b>$2$</b>.</div>
+</div></div>
+
+<div class="card"><div class="cue"><b>17</b>⭐ BM with drift $X_t=\mu t+\sigma W_t$: which barrier first, max ever, exit time, best exercise level.</div><div class="ans">
+<span class="lab">Formula</span><div class="f">$X_t\sim N(\mu t,\sigma^2t)$. Let $\theta=2\mu/\sigma^2$. Up barrier $A&gt;0$, down barrier $-B&lt;0$, start $0$.</div>
+<table><tr><th>Question</th><th>Formula</th></tr>
+<tr><td>$P(\text{hit }A\text{ before }-B)$, $\mu\ne0$</td><td>$\dfrac{1-e^{-\theta B}}{1-e^{-\theta(A+B)}}$</td></tr>
+<tr><td>same, $\mu=0$</td><td>$\frac{B}{A+B}$; and $P(-B\text{ first})=\frac{A}{A+B}$</td></tr>
+<tr><td>$P(\max_{t\ge0}X_t\ge a)$, $\mu&lt;0$</td><td>$e^{-2|\mu|a/\sigma^2}$ ($=1$ if $\mu\ge0$)</td></tr>
+<tr><td>$E[\text{exit time}]$, $\mu=0$</td><td>$AB/\sigma^2$</td></tr>
+<tr><td>option to buy at $K$, drift $-\mu$: when to exercise</td><td>first time price hits $x^*=K+\frac{\sigma^2}{2\mu}$</td></tr>
+<tr><td>$T=\min\{t:W_t=a+bt\}$, $ab&lt;0$</td><td>$E[T]=-a/b$ (OST: $E W_T=0$)</td></tr></table>
+<span class="lab">Use when</span><div class="use">"Reaches $-2$ before $1$", "drift coefficient $-1$… when to exercise", "$W_t=2-3t$".</div>
+<span class="lab">How to plug</span><ol><li>Read $\mu$ and $\sigma^2$ (careful which one they gave).</li><li>Shift so the start is $0$: start $x$ with barriers $a&lt;x&lt;b$ → $A=b-x$, $B=x-a$.</li><li>$\mu=0$ or not? Pick the row.</li></ol>
+<span class="lab">Caveats</span><div class="cav"><ul><li>$\mu=0$ makes the exponential formula $0/0$: use $\frac{B}{A+B}$.</li><li>"Volatility $\sigma=0.3$" is $\sigma$, not $\sigma^2$.</li><li>Sloping line needs $ab&lt;0$, else $E[T]=\infty$.</li></ul></div>
+<div class="eg"><span class="lab">Example — Midsem'24 Q1(c)</span>$\mu=0$, $\sigma^2=1$: $P(\text{reaches }-2\text{ before }1)$ → $A=1$, $B=2$, $\mu=0$ row: $\frac{A}{A+B}=$ <b>$\frac13$</b>.<br>Midsem'25 Q1(a): buy at $K=100$, drift $-1$ ($\mu=1,\sigma=1$) → $x^*=100+\frac12=$ <b>$100.5$</b>. Endsem'25 Q1(d): $W_t=2-3t$ → $0=2-3E[T]$ → <b>$\frac23$</b>.</div>
+</div></div>
+
+<div class="card"><div class="cue"><b>18</b>⭐ GBM master: mean, moments, conditional mean, MG condition, median, $P(Y_t&gt;K)$.</div><div class="ans">
+<span class="lab">Formula</span><div class="f">$\ln Y_t=\ln Y_0+mt+\sigma W_t\sim N(\ln Y_0+mt,\ \sigma^2t)$, where</div>
+<table><tr><th>How it is given</th><th>$m$</th><th>$E[Y_t]$</th></tr>
+<tr><td>(R) $Y_t=Y_0e^{\mu t+\sigma W_t}$, "log of price is BM with drift $\mu$"</td><td>$\mu$</td><td>$Y_0e^{(\mu+\sigma^2/2)t}$</td></tr>
+<tr><td>(S) $dY=\mu Y\,dt+\sigma Y\,dW$, "expected return $\mu$"</td><td>$\mu-\frac{\sigma^2}2$</td><td>$Y_0e^{\mu t}$</td></tr></table>
+<div class="f">$E[Y_t^n]=Y_0^ne^{(nm+n^2\sigma^2/2)t}$; $\;\operatorname{Var}=E[Y_t]^2(e^{\sigma^2t}-1)$; $\;E[Y_t\mid\mathcal F_s]$: replace $Y_0\to Y_s$, $t\to t-s$;<br>MG $\iff m+\frac{\sigma^2}2=0$; median $Y_0e^{mt}$; $\;P(Y_t&gt;K)=1-\Phi\Big(\frac{\ln(K/Y_0)-mt}{\sigma\sqrt t}\Big)$.</div>
+<span class="lab">Use when</span><div class="use">"GBM with drift $\mu$ and volatility $\sigma$, $Y(0)=5$, find $E[Y(10)]$", "is the price a martingale", "probability price exceeds $K$".</div>
+<span class="lab">How to plug</span><ol><li>Decide (R) or (S) from the wording; if unclear, do both.</li><li>Get $m$.</li><li>Plug into the line you need.</li></ol>
+<span class="lab">Caveats</span><div class="cav"><ul><li>"Drift parameter $\mu$" is ambiguous: write BOTH answers, labelled. The CT-1 key accepted either.</li><li>$P(Y_t&gt;K)$: take logs first, then standardize.</li></ul></div>
+<div class="eg"><span class="lab">Example — CT-1'26 Q6</span>$\mu=0.01$, $\sigma=0.3$, $Y(0)=5$, $E[Y(10)]$ → (R): $5e^{(0.01+0.045)10}=$ <b>$5e^{0.55}$</b>; (S): $5e^{0.01\cdot10}=$ <b>$5e^{0.1}$</b>.<br>Midsem'25 Q1(b): $\mu=0.01$, $\sigma=0.2$, $Y_0=10$, $t=100$ → (R) $10e^{(0.01+0.02)100}=10e^{3}$; (S) $10e^{1}$.</div>
+</div></div>
+
+<div class="card"><div class="cue"><b>19</b>⭐ Running max $M_t$ and hitting time $\tau_a$.</div><div class="ans">
+<span class="lab">Formula</span><div class="f">$\{\tau_a\le t\}=\{M_t\ge a\}$ ($a&gt;0$), and $M_t\overset d=|W_t|$.</div>
+<table><tr><th>Quantity</th><th>Value</th></tr>
+<tr><td>$P(M_t\ge a)=P(\tau_a\le t)$ (cdf of $\tau_a$)</td><td>$2\big(1-\Phi(\frac{a}{\sqrt t})\big)$</td></tr>
+<tr><td>pdf of $\tau_a$</td><td>$\frac{|a|}{\sqrt{2\pi}\,t^{3/2}}e^{-a^2/(2t)}$</td></tr>
+<tr><td>$P(\tau_a&lt;\infty)$, $E[\tau_a]$</td><td>$1$, $\;\infty$</td></tr>
+<tr><td>$E[M_t]$, $E[M_t^2]$</td><td>$\sqrt{2t/\pi}$, $\;t$</td></tr>
+<tr><td>$E[e^{-\lambda\tau_a}]$</td><td>$e^{-a\sqrt{2\lambda}}$</td></tr>
+<tr><td>$P(\min_{u\le t}W_u\le-a)$</td><td>same as $P(M_t\ge a)$</td></tr></table>
+<span class="lab">Use when</span><div class="use">"Find the cdf and pdf of $\tau_a$", "$P(T_a&lt;\infty)$", "expected highest level reached".</div>
+<span class="lab">How to plug</span><ol><li>Max question ↔ hitting-time question: rewrite to whichever row you know.</li><li>Plug $a$ and $\sqrt t$.</li><li>pdf: differentiate the cdf.</li></ol>
+<span class="lab">Caveats</span><div class="cav"><ul><li>For $a&lt;0$ use $|a|$ (symmetry).</li><li>These are for $M$ alone. If $W_t$ also appears: card 20.</li></ul></div>
+<div class="eg"><span class="lab">Example — Midsem'25 Q5(a), Midsem'24 Q1(f)</span>cdf of $\tau_a$ → $2(1-\Phi(a/\sqrt t))$; pdf by $\frac{d}{dt}$; at $a=2$, $t=4$: $\frac{2}{\sqrt{2\pi}\cdot8}e^{-1/2}=$ <b>$0.0605$</b>. "$P(T_a&lt;\infty)$" → <b>$1$</b>.</div>
+</div></div>
+
+<div class="card"><div class="cue"><b>20</b>⭐ Joint $(W_t,M_t)$: $P(a&lt;W_t\le b,\ c&lt;M_t\le d)$.</div><div class="ans">
+<span class="lab">Formula</span><div class="f">$G(b,c):=P(W_t\le b,\ M_t\ge c)=\begin{cases}\Phi(\frac b{\sqrt t}) &amp; c\le0\\ 1-\Phi(\frac{2c-b}{\sqrt t}) &amp; c&gt;0,\ b\le c\\ 1+\Phi(\frac b{\sqrt t})-2\Phi(\frac c{\sqrt t}) &amp; 0&lt;c&lt;b\end{cases}$
+$$P=[G(b,c)-G(a,c)]-[G(b,d)-G(a,d)]$$</div>
+<span class="lab">Use when</span><div class="use">"$P(1&lt;W(4)&lt;3,\ 2&lt;M(4)&lt;3)$", barrier-option probabilities.</div>
+<span class="lab">How to plug</span><ol><li>First: $a\ge d$ or $d\le0$ → answer $0$.</li><li>Compute the four $G$'s, choosing the branch by comparing $b$ with $c$ each time.</li><li>Combine.</li></ol>
+<span class="lab">Caveats</span><div class="cav">The $b&gt;c$ case is NOT zero and NOT the reflection formula: use branch 3.</div>
+<div class="eg"><span class="lab">Example — Midsem'25 Q5(b)</span>$P(1&lt;W_4&lt;3,\ 2&lt;M_4&lt;3)$, $\sqrt t=2$, $a=1,b=3,c=2,d=3$.<br>$G(3,2)$: $b&gt;c$ → $1+\Phi(1.5)-2\Phi(1)=.2505$. $G(1,2)=1-\Phi(\frac{4-1}2)=.0668$. $G(3,3)=1-\Phi(1.5)=.0668$. $G(1,3)=1-\Phi(2.5)=.0062$.<br>$[.2505-.0668]-[.0668-.0062]=$ <b>$0.1231$</b>.</div>
+</div></div>
+
+<!-- ============================== 3 ============================== -->
+<h2>3. Itô's formula</h2>
+
+<div class="card"><div class="cue"><b>21</b>⭐ Itô's formula (general) and the multiplication table.</div><div class="ans">
+<span class="lab">Formula</span><div class="f">$dt\cdot dt=0,\quad dt\cdot dW=0,\quad dW\cdot dW=dt$. For $dX=a\,dt+b\,dW$: $(dX)^2=b^2\,dt$.
+$$df(t,X_t)=\partial_tf\,dt+\partial_xf\,dX_t+\tfrac12\partial_{xx}f\,b^2\,dt$$
+For $X=W$: $\;df=\big(\partial_tf+\frac12\partial_{xx}f\big)dt+\partial_xf\,dW$.<br>Product: $d(XY)=X\,dY+Y\,dX+b_Xb_Y\,dt$.</div>
+<span class="lab">Use when</span><div class="use">"Compute $dY_t$", "derive Itô's formula", every SDE question.</div>
+<span class="lab">How to plug</span><ol><li>Identify $a$ and $b$ of $dX$ (for $W$: $a=0$, $b=1$).</li><li>Compute $\partial_tf$, $\partial_xf$, $\partial_{xx}f$.</li><li>Plug; collect the $dt$ part (drift) and the $dW$ part (diffusion).</li></ol>
+<span class="lab">Caveats</span><div class="cav"><ul><li>No $\partial_{tt}$ term. Only the $x$-variable gets the $\frac12$ correction.</li><li>If $f$ is linear in $x$ (e.g. $g(t)W_t$), the correction is $0$.</li></ul></div>
+<div class="eg"><span class="lab">Example — Midsem'25 Q2(b)</span>"Derive Itô's formula" [2 marks] → Taylor: $df=f_t\,dt+f_x\,dX+\frac12f_{xx}(dX)^2+\dots$; table: $(dW)^2=dt$ because $\Delta W\sim\sqrt{\Delta t}$; $dt^2$, $dt\,dW$ and higher orders vanish → the formula.</div>
+</div></div>
+
+<div class="card"><div class="cue"><b>22</b>⭐ The differential dictionary.</div><div class="ans">
+<span class="lab">Formula</span><table><tr><th>$Y_t$</th><th>$dY_t$</th></tr>
+<tr><td>$g(W)$ (any)</td><td>$g'(W)\,dW+\frac12g''(W)\,dt$</td></tr>
+<tr><td>$W^n$</td><td>$nW^{n-1}dW+\frac12n(n-1)W^{n-2}dt$; $\;d(W^2)=2W\,dW+dt$</td></tr>
+<tr><td>$\sin W$</td><td>$\cos W\,dW-\frac12\sin W\,dt$</td></tr>
+<tr><td>$\cos W$</td><td>$-\sin W\,dW-\frac12\cos W\,dt$</td></tr>
+<tr><td>$e^{\sigma W}$</td><td>$\sigma e^{\sigma W}dW+\frac{\sigma^2}2e^{\sigma W}dt$</td></tr>
+<tr><td>$e^{\sigma W-\sigma^2t/2}$</td><td>$\sigma Y\,dW$ (zero drift)</td></tr>
+<tr><td>$e^{\lambda t}g(W)$</td><td>$e^{\lambda t}\big(\lambda g+\frac12g''\big)dt+e^{\lambda t}g'(W)\,dW$</td></tr>
+<tr><td>$g(t)W$ ($tW$, $e^tW$)</td><td>$g'(t)W\,dt+g(t)\,dW$</td></tr>
+<tr><td>$e^{\mu t+\sigma W}$</td><td>$(\mu+\frac{\sigma^2}2)Y\,dt+\sigma Y\,dW$</td></tr></table>
+<span class="lab">Use when</span><div class="use">1-mark "compute $d\sin(W_t)$", "$d(e^tW_t)$".</div>
+<span class="lab">How to plug</span><ol><li>Match the row.</li><li>For $g(W)$: diffusion $=g'$, drift $=\frac12g''$. Two derivatives, done.</li></ol>
+<span class="lab">Caveats</span><div class="cav">Ordinary calculus forgets the $\frac12g''\,dt$. Never drop it (except when $g''=0$).</div>
+<div class="eg"><span class="lab">Example — CT-2'25 Q8, Endsem'25 Q1(b)</span>$d\sin W_t$ → $g'=\cos$, $\frac12g''=-\frac12\sin$ → <b>$\cos W_t\,dW_t-\frac12\sin W_t\,dt$</b>.<br>$d(e^tW_t)$ → row $g(t)W$, $g=e^t$ → <b>$e^tW_t\,dt+e^t\,dW_t$</b>.</div>
+</div></div>
+
+<div class="card"><div class="cue"><b>23</b>⭐ Evaluate any Itô integral $\int_0^tg(s,W_s)\,dW_s$ using Itô's formula.</div><div class="ans">
+<span class="lab">Formula</span><div class="f">Pick $F(t,x)$ with $\partial_xF=g$. Itô (card 21, $X=W$): $\;dF=\partial_tF\,dt+\partial_xF\,dW+\tfrac12\partial_{xx}F\,dt$. Integrate from $0$ to $t$ and move things across:
+$$\int_0^tg(s,W_s)\,dW_s=F(t,W_t)-F(0,0)-\int_0^t\Big(\partial_sF+\tfrac12\partial_{xx}F\Big)(s,W_s)\,ds$$</div>
+<span class="lab">Use when</span><div class="use">"Evaluate / compute $\int_0^tW_s\,dW_s$", "$\int_0^ts\,dW_s$", "$\int_0^tW_s^2\,dW_s$", "$\int e^{W_s}dW_s$", "show $\int\dots dW=\dots$".</div>
+<span class="lab">How to plug</span><ol>
+<li>Name the integrand $g(s,x)$: replace $W_s$ by $x$.</li>
+<li>Antiderivative in $x$ only (treat $s$ as a constant): $F=\int g\,dx$.</li>
+<li>Compute $\partial_sF$ and $\frac12\partial_{xx}F$.</li>
+<li>Write: answer $=F(t,W_t)-F(0,0)-\int_0^t(\partial_sF+\frac12\partial_{xx}F)\,ds$.</li></ol>
+<table><tr><th>Integral</th><th>$F(s,x)$</th><th>$\partial_sF+\frac12\partial_{xx}F$</th><th>Answer</th></tr>
+<tr><td>$\int_0^tW_s\,dW_s$</td><td>$\frac{x^2}2$</td><td>$0+\frac12$</td><td>$\frac12W_t^2-\frac12t$</td></tr>
+<tr><td>$\int_0^ts\,dW_s$</td><td>$sx$</td><td>$x+0$</td><td>$tW_t-\int_0^tW_s\,ds$</td></tr>
+<tr><td>$\int_0^tW_s^2\,dW_s$</td><td>$\frac{x^3}3$</td><td>$0+x$</td><td>$\frac13W_t^3-\int_0^tW_s\,ds$</td></tr>
+<tr><td>$\int_0^te^{W_s}dW_s$</td><td>$e^x$</td><td>$\frac12e^x$</td><td>$e^{W_t}-1-\frac12\int_0^te^{W_s}ds$</td></tr>
+<tr><td>$\int_0^t\cos W_s\,dW_s$</td><td>$\sin x$</td><td>$-\frac12\sin x$</td><td>$\sin W_t+\frac12\int_0^t\sin W_s\,ds$</td></tr>
+<tr><td>$\int_0^te^{W_s-s/2}dW_s$</td><td>$e^{x-s/2}$</td><td>$-\frac12F+\frac12F=0$</td><td>$e^{W_t-t/2}-1$</td></tr>
+<tr><td>$\int_0^tf(s)\,dW_s$, $f$ deterministic</td><td>$f(s)x$</td><td>$f'(s)x$</td><td>$f(t)W_t-\int_0^tf'(s)W_s\,ds$ (integration by parts)</td></tr></table>
+<span class="lab">Caveats</span><div class="cav"><ul>
+<li>Itô's formula is $df=\partial_tf\,dt+\partial_xf\,dX+\frac12\partial_{xx}f\,(dX)^2$: the $\frac12$ is only on the second-derivative term, never on $\partial_xf\,dX$.</li>
+<li>The leftover $\int_0^t(\dots)\,ds$ is an ordinary $ds$-integral of the path. If it doesn't vanish, leave it in the answer; that is a complete answer.</li>
+<li>$F(0,0)$ uses $W_0=0$. Don't drop the constant (e.g. $e^{0}=1$).</li>
+<li>For a variance, don't evaluate: use the isometry (card 14). The integral is the LEFT-endpoint limit $\lim\sum g(t_{i-1})(W_{t_i}-W_{t_{i-1}})$; a midpoint rule gives a different (Stratonovich) integral.</li></ul></div>
+<div class="eg"><span class="lab">Example — the classic (Endsem/Midsem short question)</span>Evaluate $\int_0^tW_s\,dW_s$.<br>Step 1: $g=x$. Step 2: $F=\frac{x^2}2$. Step 3: $\partial_sF=0$, $\frac12\partial_{xx}F=\frac12$. Step 4: $\frac{W_t^2}2-0-\int_0^t\frac12\,ds=$ <b>$\frac12W_t^2-\frac12t$</b>.<br>Check: mean $\frac t2-\frac t2=0$ ✓ (every Itô integral has mean $0$).<br>Endsem'25 Q1(a): $\operatorname{Var}\big(\int_0^1t^4dW_t\big)$ → isometry, not this card: $\int_0^1t^8dt=$ <b>$\frac19$</b>.</div>
+</div></div>
+
+<!-- ============================== 4 ============================== -->
+<h2>4. SDEs and interest rate models</h2>
+
+<div class="card"><div class="cue"><b>24</b>⭐ Mean and variance of a solution of $dX=a(t,X)\,dt+b(t,X)\,dW$ without solving it.</div><div class="ans">
+<span class="lab">Formula</span><div class="f">$$\frac{d}{dt}E[X_t]=E[a(t,X_t)],\qquad\frac{d}{dt}E[X_t^2]=E\big[2X_ta+b^2\big]$$then $\operatorname{Var}=E[X^2]-(E X)^2$.</div>
+<span class="lab">Use when</span><div class="use">"Find $E(X_t)$ and $\operatorname{Var}(X_t)$" for a given SDE.</div>
+<span class="lab">How to plug</span><ol><li>Read $a$, $b$, $x_0$.</li><li>Mean ODE: $m'=E[a]$, $m(0)=x_0$; solve.</li><li>Second moment ODE: plug $a$, $b$, replace $E[X]$ by $m(t)$; integrate.</li><li>Subtract $m^2$.</li></ol>
+<span class="lab">Caveats</span><div class="cav">Closes only if $a$ is linear in $X$ and $b^2$ linear/constant in $X$. If $a=X^2$, $E[X^2]\ne m^2$ and the ODE does not close.</div>
+<div class="eg"><span class="lab">Example — Midsem'25 Q4(a)</span>$dX=dt+2\sqrt X\,dW$, $X_0=0$. → $a=1$, $b^2=4X$.<br>Mean: $m'=1$ → $E X_t=$ <b>$t$</b>. Second moment: $\frac{d}{dt}EX^2=E[2X(1)+4X]=6t$ → $EX^2=3t^2$. Variance: $3t^2-t^2=$ <b>$2t^2$</b>.</div>
+</div></div>
+
+<div class="card"><div class="cue"><b>25</b>⭐ Is an Itô process a martingale? And $E[f(W_t)]$ through a martingale.</div><div class="ans">
+<span class="lab">Formula</span><div class="f">$dX=a\,dt+b\,dW$ is a MG $\iff a\equiv0$.<br>If $\lambda f+\frac12f''=0$, then $e^{\lambda t}f(W_t)$ is a MG, so $E[f(W_t)]=f(0)\,e^{-\lambda t}$.</div>
+<span class="lab">Use when</span><div class="use">"Is $Y_t$ a martingale?"; "using part (i), evaluate $E[\cos W_t]$".</div>
+<span class="lab">How to plug</span><ol><li>Apply Itô (card 21) to get $dY$.</li><li>Read the $dt$ coefficient: $0$ → MG.</li><li>For $E[f(W_t)]$: MG ⇒ $E[Y_t]=Y_0$, then divide by $e^{\lambda t}$.</li></ol>
+<span class="lab">Caveats</span><div class="cav">Zero drift needs the right $\lambda$ exactly (for $\sin,\cos$: $\frac12$).</div>
+<div class="eg"><span class="lab">Example — Midsem'25 Q4(b)</span>$X_t=e^{t/2}\cos W_t$. (i) $dX$: $f_t=\frac12f$, $f_x=-e^{t/2}\sin x$, $f_{xx}=-f$ → $dX=$ <b>$-e^{t/2}\sin W_t\,dW_t$</b> (drift $0$). (ii) MG → $e^{t/2}E[\cos W_t]=\cos0=1$ → $E[\cos W_t]=$ <b>$e^{-t/2}$</b>.<br>Endsem'25 Q1(c): is $e^tW_t$ a MG? drift $e^tW_t\ne0$ → <b>No</b>.</div>
+</div></div>
+
+<div class="card"><div class="cue"><b>26</b>"Show $X_t=\dots$ solves the SDE", and when is the solution Gaussian?</div><div class="ans">
+<span class="lab">Formula</span><div class="f">Verify: Itô on the candidate, rewrite in terms of $X_t$, compare with the SDE, check $X_0$.<br>Gaussian $\iff$ the $dW$ coefficient contains no $X$.</div>
+<span class="lab">Use when</span><div class="use">"Show that $X_t=W_t^2$ is a solution", "is $X_t$ normally distributed?".</div>
+<span class="lab">How to plug</span><ol><li>Compute $dX_t$ of the candidate.</li><li>Replace every $W$-expression by $X$.</li><li>Match $dt$ and $dW$ parts; check $X_0$.</li></ol>
+<span class="lab">Caveats</span><div class="cav">Gaussian: BM with drift, OU, Vasicek. Not Gaussian: GBM (log-normal), CIR, $dX=dt+2\sqrt X\,dW$.</div>
+<div class="eg"><span class="lab">Example — Midsem'25 Q4(a)</span>Show $X_t=W_t^2$ solves $dX=dt+2\sqrt X\,dW$, $X_0=0$ → Itô: $d(W_t^2)=dt+2W_t\,dW_t$. With $X_t=W_t^2$, $\sqrt{X_t}=|W_t|$, so $2W_t\,dW_t$ matches $2\sqrt{X_t}\,dW_t$ ✓ (the paper's accepted answer); $X_0=W_0^2=0$ ✓.</div>
+</div></div>
+
+<div class="card"><div class="cue"><b>27</b>⭐ Linear SDE master $dX=\kappa(b-X)\,dt+\sigma\,dW$: OU, Vasicek, CIR.</div><div class="ans">
+<span class="lab">Formula</span><div class="f">Multiply by $e^{\kappa t}$ (integrating factor):
+$$X_t=b+(x_0-b)e^{-\kappa t}+\sigma\int_0^te^{-\kappa(t-s)}dW_s$$
+$$X_t\sim N\Big(b+(x_0-b)e^{-\kappa t},\ \tfrac{\sigma^2}{2\kappa}(1-e^{-2\kappa t})\Big)\xrightarrow{t\to\infty}N\big(b,\tfrac{\sigma^2}{2\kappa}\big)$$</div>
+<table><tr><th>Model</th><th>Read off</th></tr>
+<tr><td>OU $dX=-rX\,dt+\sigma dW$</td><td>$b=0$, $\kappa=r$</td></tr>
+<tr><td>Vasicek $dr=\kappa(b-r)dt+\sigma dW$</td><td>as is; rates can go negative</td></tr>
+<tr><td>CIR $dr=\kappa(b-r)dt+\sigma\sqrt r\,dW$</td><td>same MEAN only; not normal; $r\ge0$; Feller $2\kappa b\ge\sigma^2$ ⇒ $r&gt;0$</td></tr>
+<tr><td>$dX=\mu dt+\sigma dW$</td><td>$X_t=x_0+\mu t+\sigma W_t\sim N(x_0+\mu t,\sigma^2t)$</td></tr></table>
+<span class="lab">Use when</span><div class="use">"Express $X_t$ as a stochastic integral", "is it OU?", "mean and variance", "Vasicek/CIR".</div>
+<span class="lab">How to plug</span><ol><li>Rewrite the drift as $\kappa(b-X)$; read $\kappa$, $b$, $\sigma$, $x_0$.</li><li>Plug into the solution / mean / variance.</li></ol>
+<span class="lab">Caveats</span><div class="cav">Works only if the noise has no $X$. For CIR only the mean formula holds (use card 24).</div>
+<div class="eg"><span class="lab">Example — Midsem'24 Q4(a)</span>$dX=-X\,dt+dW$, $X_0=x_0$ → $\kappa=1$, $b=0$, $\sigma=1$.<br>$X_t=$ <b>$x_0e^{-t}+\int_0^te^{-(t-s)}dW_s$</b>; OU? <b>Yes</b> (mean-reverting to $0$); $E X_t=$ <b>$x_0e^{-t}$</b>; $\operatorname{Var}=$ <b>$\frac12(1-e^{-2t})$</b>.</div>
+</div></div>
+
+<div class="card"><div class="cue"><b>28</b>GBM SDE $dN=rN\,dt+\alpha N\,dW$: solution, mean, median.</div><div class="ans">
+<span class="lab">Formula</span><div class="f">Itô on $\ln N$: $d\ln N=(r-\frac{\alpha^2}2)dt+\alpha\,dW$, so
+$$N_t=N_0\exp\Big\{\big(r-\tfrac{\alpha^2}2\big)t+\alpha W_t\Big\},\qquad E N_t=N_0e^{rt},\quad\text{median }N_0e^{(r-\alpha^2/2)t}$$</div>
+<span class="lab">Use when</span><div class="use">"Solve $dN=rN\,dt+\alpha N\,dW$", "is $e^{W_t-t/2}$ a martingale".</div>
+<span class="lab">How to plug</span><ol><li>Read $r$ and $\alpha$.</li><li>Write the exponent $(r-\frac{\alpha^2}2)t+\alpha W_t$.</li><li>MG $\iff r=0$ (equivalently exponent $=\alpha W_t-\frac{\alpha^2}2t$).</li></ol>
+<span class="lab">Caveats</span><div class="cav">Taking $\ln$ needs $N_0&gt;0$. Log-normal, not normal.</div>
+<div class="eg"><span class="lab">Example — Midsem'24 Q4(b)</span>Is $X_t=e^{W_t-t/2}$ a MG? → it is GBM with $r=0$, $\alpha=1$: $dX=X_t\,dW_t$, zero drift → <b>Yes</b>.</div>
+</div></div>
+
+<!-- ============================== 5 ============================== -->
+<h2>5. No-arbitrage, forwards, calls and puts</h2>
+
+<div class="card"><div class="cue"><b>29</b>Arbitrage: definition, NA condition, the arbitrage theorem.</div><div class="ans">
+<span class="lab">Formula</span><div class="f">Arbitrage: $V_0=0$ (or $\le0$), $V_T\ge0$ in EVERY state, $V_T&gt;0$ in some state.<br>Theorem: no arbitrage $\iff$ a risk-neutral (EMM) probability exists. Binomial: NA $\iff d&lt;1+r&lt;u$.</div>
+<span class="lab">Use when</span><div class="use">"Show the market is arbitrage-free", "define arbitrage", "find the arbitrage".</div>
+<span class="lab">How to plug</span><ol><li>Compute $u=S_u/S_0$, $d=S_d/S_0$, $1+r$.</li><li>Check $d&lt;1+r&lt;u$ → arbitrage-free.</li><li>If $1+r\ge u$: short stock, lend. If $1+r\le d$: borrow, buy stock.</li></ol>
+<span class="lab">Caveats</span><div class="cav">"Every state" means with probability 1, not on average. No real probability enters.</div>
+<div class="eg"><span class="lab">Example — Endsem'25 Q5(b)(i)</span>$S_0=5$, $S_1\in\{6,\frac{40}9\}$, $r=\frac19$ → $u=\frac65$, $d=\frac89$, $1+r=\frac{10}9$; $\frac89&lt;\frac{10}9&lt;\frac65$ ✓ → <b>arbitrage-free</b>.</div>
+</div></div>
+
+<div class="card"><div class="cue"><b>30</b>⭐ Payoffs, forward price, put–call parity, American vs European.</div><div class="ans">
+<span class="lab">Formula</span><table><tr><th>Contract</th><th>Payoff at $T$</th></tr>
+<tr><td>long forward at $K$</td><td>$S_T-K$ (obligation, can be negative)</td></tr>
+<tr><td>call</td><td>$(S_T-K)^+$</td></tr>
+<tr><td>put</td><td>$(K-S_T)^+$</td></tr></table>
+<div class="f">Fair forward price $K=S_0(1+r)^T$ (or $S_0e^{rT}$). Value today of a forward at $K$: $S_0-K(1+r)^{-T}$.
+$$C-P=S_0-K(1+r)^{-T}\quad(\text{continuous: }S_0-Ke^{-rT})$$</div>
+<span class="lab">Use when</span><div class="use">"Find $K$ so the forward costs nothing", "price the put" after the call, "short note American vs European".</div>
+<span class="lab">How to plug</span><ol><li>Forward: $K=S_0(1+r)^T$.</li><li>Have $C$, need $P$: $P=C-S_0+K(1+r)^{-T}$.</li></ol>
+<span class="lab">Caveats</span><div class="cav"><ul><li>Parity: European only, same $K$, same $T$.</li><li>American call = European call only with no dividends ($r\ge0$). American put can be strictly dearer.</li></ul></div>
+<div class="eg"><span class="lab">Example — Midsem'25 Q2(a)</span>"Short note on American and European calls" → European: exercise only at $T$. American: at any stopping time $\le T$, so American $\ge$ European. With no dividends early exercise of a call is never optimal, so they are equal; for a put it can be optimal.<br>Forward: $S_0=100$, $r=5\%$, $T=1$ → $K=$ <b>$105$</b>.</div>
+</div></div>
+
+<div class="card"><div class="cue"><b>31</b>⭐ The "no sure win" option price $c^*$ (prices given as present values).</div><div class="ans">
+<span class="lab">Formula</span><div class="f">$$p=\frac{S_0-S_d}{S_u-S_d},\qquad c^*=p\,(S_u-K)^++(1-p)(S_d-K)^+$$No sure win $\iff c=c^*$; arbitrage $\iff c\ne c^*$.</div>
+<span class="lab">Use when</span><div class="use">"Price $50$ goes to $25$ or $100$; option to buy at $K$ costs $c$ per share; for which $c$ is there no sure win?" (3 papers in a row).</div>
+<span class="lab">How to plug</span><ol><li>$p$ from the stock.</li><li>Option payoffs in both states.</li><li>$c^*$ = weighted average.</li></ol>
+<span class="lab">Caveats</span><div class="cav"><ul><li>Prices already present values → no discounting. If an $r$ is given, use card 32 instead.</li><li>Never use the real-world probability.</li></ul></div>
+<div class="eg"><span class="lab">Example — Midsem'25 Q1(c)</span>$50\to\{25,100\}$, $K=85$ → Step 1: $p=\frac{50-25}{100-25}=\frac13$. Step 2: payoffs $15$ and $0$. Step 3: $c^*=\frac13(15)=$ <b>$5$</b>.<br>CT-2'25 Q5: $40\to\{25,100\}$, $K=75$ → $p=\frac15$, payoff $25$ → $c=$ <b>$5$</b>.</div>
+</div></div>
+
+<!-- ============================== 6 ============================== -->
+<h2>6. Binomial and finite markets</h2>
+
+<div class="card"><div class="cue"><b>32</b>⭐ One-period binomial: NA, $p^*$, price, replicating portfolio.</div><div class="ans">
+<span class="lab">Formula</span><div class="f">$$d&lt;1+r&lt;u,\qquad p^*=\frac{1+r-d}{u-d},\qquad V_0=\frac{p^*V_u+(1-p^*)V_d}{1+r}$$
+$$\Delta=\frac{V_u-V_d}{(u-d)S_0},\qquad B=\frac{uV_d-dV_u}{(1+r)(u-d)},\qquad V_0=\Delta S_0+B$$</div>
+<span class="lab">Use when</span><div class="use">"Price the call/put", "construct the replicating portfolio $(\Delta,B)$".</div>
+<span class="lab">How to plug</span><ol><li>$u=S_u/S_0$, $d=S_d/S_0$; check NA.</li><li>$p^*$.</li><li>Payoffs $V_u$, $V_d$.</li><li>$V_0$ by the formula; $\Delta$, $B$; check $\Delta S_0+B=V_0$.</li></ol>
+<span class="lab">Caveats</span><div class="cav"><ul><li>Never use the real $p$ for prices.</li><li>$\Delta&lt;0$ for a put; $B&lt;0$ means borrowing.</li><li>$E[S_t]=S_0(pu+(1-p)d)^t$ uses the REAL $p$ (that's a different question).</li></ul></div>
+<div class="eg"><span class="lab">Example — CT-2'25 Q1</span>Put, $K=225$, $S_0=200$, $u=1.25$, $d=0.25$, $r=0.15$.<br>$p^*=\frac{1.15-0.25}{1.25-0.25}=0.9$. $V_u=(225-250)^+=0$, $V_d=(225-50)^+=175$.<br>$V_0=\frac{0.9(0)+0.1(175)}{1.15}=$ <b>$15.22$</b>. $\Delta=\frac{0-175}{1(200)}=$ <b>$-0.875$</b>, $B=\frac{1.25(175)-0}{1.15}=$ <b>$190.22$</b>. Check: $-175+190.22=15.22$ ✓.</div>
+</div></div>
+
+<div class="card"><div class="cue"><b>33</b>⭐ Multi-period binomial: backward induction, hedge at each node, self-financing.</div><div class="ans">
+<span class="lab">Formula</span><div class="f">At node $S_{t-1}=s$:
+$$V_{t-1}[s]=\frac{p^*V_t[us]+(1-p^*)V_t[ds]}{1+r},\qquad V_T=g(S_T)$$
+$\Delta_t(s)=\dfrac{V_t[us]-V_t[ds]}{us-ds}$, $\;b_t(s)=\dfrac{uV_t[ds]-dV_t[us]}{(1+r)^t(u-d)}$ (number of bonds, bond price $(1+r)^t$).<br>Self-financing: $\Delta_tS_t+b_t(1+r)^t=\Delta_{t+1}S_t+b_{t+1}(1+r)^t$.<br>Direct: $V_0=\frac{1}{(1+r)^T}\sum_{j=0}^T\binom Tj(p^*)^j(1-p^*)^{T-j}g(u^jd^{T-j}S_0)$.</div>
+<span class="lab">Use when</span><div class="use">"$T=2$ or $3$ periods, price the option and give the strategy at each node", "verify self-financing".</div>
+<span class="lab">How to plug</span><ol><li>Draw the tree; leaves $S_0u^jd^{T-j}$.</li><li>Payoffs at the leaves.</li><li>Step back one period at a time with the $V_{t-1}$ formula.</li><li>At each node: $\Delta_t$, $b_t$.</li></ol>
+<span class="lab">Caveats</span><div class="cav"><ul><li>$b_t$ counts bonds, its cash value is $b_t(1+r)^t$.</li><li>Path-dependent payoffs: don't recombine the tree.</li></ul></div>
+<div class="eg"><span class="lab">Example (sheet)</span>$S_0=100$, $u=2$, $d=\frac12$, $r=\frac14$, call $K=100$, $T=2$.<br>$p^*=\frac{1.25-0.5}{1.5}=\frac12$. Leaves $400,100,25$ → payoffs $300,0,0$. $V_1[200]=\frac{\frac12(300)}{1.25}=120$, $V_1[50]=0$. $V_0=\frac{\frac12(120)}{1.25}=$ <b>$48$</b>. Direct: $\frac{\frac14(300)}{1.5625}=48$ ✓.</div>
+</div></div>
+
+<div class="card"><div class="cue"><b>34</b>⭐ Finite single-period market: EMM, Theorems 2, 3, 4.</div><div class="ans">
+<span class="lab">Formula</span><div class="f">EMM: all $p_k^*&gt;0$, $\sum p_k^*=1$, and for each stock $i$: $\sum_kp_k^*S_1^i(\omega_k)=(1+r)S_0^i$.</div>
+<table><tr><th>Thm</th><th>Statement</th></tr>
+<tr><td>2</td><td>NA $\iff$ an EMM exists $\iff S_0\in D_0$ (strictly inside the hull of discounted payoffs)</td></tr>
+<tr><td>3</td><td>$E^*[\frac{V_1}{1+r}]=V_0$ for any strategy; attainable $X$: price $X^*=E^*[\frac{X}{1+r}]$, same for every EMM</td></tr>
+<tr><td>4</td><td>complete $\iff$ EMM unique (needs states $N$ = assets $n+1$, $\det A\ne0$)</td></tr></table>
+<span class="lab">Use when</span><div class="use">"Find all EMMs", "is the market arbitrage-free / complete?", "price the claim", 3 or more branches from one node.</div>
+<span class="lab">How to plug</span><ol><li>Unknowns $p_1^*..p_N^*$: one equation per stock + sum $=1$.</li><li>Solve; keep only all-positive solutions. None → arbitrage. One → complete. A line → incomplete.</li><li>Price $X$: compute $E^*[\frac{X}{1+r}]$ with the free parameter left in. It cancels → attainable, one price; it doesn't → a price interval.</li></ol>
+<span class="lab">Caveats</span><div class="cav">Incomplete market: no single price for a non-attainable claim, only an interval.</div>
+<div class="eg"><span class="lab">Example (sheet)</span>$100\to\{300,200,50\}$, $K=150$, $r=0$ → stock: $300p_1+200p_2+50p_3=100$, sum $=1$ → $p_2=\frac{1-5p_1}3$, $p_1\in(0,\frac15)$ (a line: incomplete). Call: $c=150p_1+50p_2=\frac{200p_1+50}3$ → $c\in$ <b>$(\frac{50}3,30)$</b>.</div>
+</div></div>
+
+<!-- ============================== 7 ============================== -->
+<h2>7. Martingales and claim pricing</h2>
+
+<div class="card"><div class="cue"><b>35</b>⭐ The three facts of claim pricing, and Black–Scholes.</div><div class="ans">
+<span class="lab">Formula</span><div class="f">(1) EMM with discounted price a MG $\Rightarrow$ NA. (2) Attainable $X$: $P_t(X)=E^*\big[(1+r)^{t-T}X\mid\mathcal F_t\big]$ (continuous: $e^{-r(T-t)}$). (3) EMM unique $\Rightarrow$ complete.<br>Black–Scholes: under $P^*$ the drift $\mu\to r$, $S_t=S_0e^{(r-\sigma^2/2)t+\sigma W_t^*}$.
+$$C=S_0\Phi(d_1)-Ke^{-rT}\Phi(d_2),\quad d_1=\frac{\ln(S_0/K)+(r+\frac{\sigma^2}2)T}{\sigma\sqrt T},\quad d_2=d_1-\sigma\sqrt T$$</div>
+<span class="lab">Use when</span><div class="use">"Short note on martingales and claim pricing", "is the BS market arbitrage-free / complete?", "price a call with BS".</div>
+<span class="lab">How to plug</span><ol><li>Find the EMM ($p^*$, or $\mu\to r$).</li><li>Price = discounted $E^*$ of the payoff.</li><li>BS: $d_1$, $d_2$, two $\Phi$ look-ups; put by parity.</li></ol>
+<span class="lab">Caveats</span><div class="cav"><ul><li>The real drift $\mu$ never appears in a price.</li><li>Binomial discounts with $(1+r)^{-T}$, BS with $e^{-rT}$. Don't mix.</li></ul></div>
+<div class="eg"><span class="lab">Example (sheet)</span>$S_0=K=100$, $r=0.05$, $\sigma=0.2$, $T=1$ → $d_1=\frac{0+0.07}{0.2}=0.35$, $d_2=0.15$; $C=100(0.6368)-95.12(0.5596)=$ <b>$10.45$</b>; put $=10.45-100+95.12=$ <b>$5.57$</b>.</div>
+</div></div>
+
+<script>document.addEventListener('click', e => { const c = e.target.closest('.card'); if (c && document.body.classList.contains('hide')) c.classList.toggle('open'); });</script>
+</body>
+</html>

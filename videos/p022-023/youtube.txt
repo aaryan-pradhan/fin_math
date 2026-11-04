@@ -1,0 +1,11 @@
+Stopped Process & Martingale Preservation
+
+Stopped Process & Martingale Preservation
+
+0:00 1. Motivating Question
+0:19 2. The Stopped Process
+0:51 3. Explicit Formula
+1:20 4. Theorem: (Zt) is a Martingale
+2:23 5. Stopping Time — Coin Flip Grounding
+2:58 6. Key Consequence
+3:10 Practice Questions

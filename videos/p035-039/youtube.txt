@@ -1,0 +1,10 @@
+Gaussian Processes, Standard Brownian Motion & MVN Conditioning
+
+Gaussian Processes, Standard Brownian Motion & MVN Conditioning
+
+0:00 1. Multivariate Normal (MVN) Distribution Properties
+0:18 Linear Transformation Property
+0:29 Conditional Distribution of Partitioned MVN
+0:54 2. Gaussian Process & Brownian Motion
+1:24 3. Conditional Expectations of Brownian Motion
+1:36 Case 2: Backward Expectation & Interpolation (s < t)

@@ -1,0 +1,116 @@
+start	end	line	kind	text
+0.00	4.00	5	title	p.109–111: Thm 3, the arbitrage pricing theorem
+4.00	4.80	7	section	Notation check
+4.80	16.17	9	sentence	Same symbols as p.105–109: $\Delta = (\Delta_1, \dots, \Delta_n)$ shares, $b$ bo
+16.17	22.92	9	sentence	One new letter: $X$ is a claim, meaning a payoff $X(\omega)$ paid at $t = 1$.
+22.92	34.67	11	sentence	Running example, same as before: $n = 2$ stocks, $N = 3$ outcomes, $r = 0.25$, a
+34.67	39.48	11	sentence	Rows are time and outcome (4), columns are the securities (3):
+39.48	41.68	13	table	
+41.68	42.98	20	section	The statement (p.109)
+42.98	55.12	22	sentence	**Theorem 3 (the arbitrage pricing theorem).** In a single-period arbitrage-free
+55.12	57.32	24	equation	E^*\left(\frac{V_1}{1+r}\right) = V_0 \qquad (1)
+57.32	66.37	26	sentence	In particular, if $X$ is an attainable claim in the market, then its time $t = 0
+66.37	68.57	28	equation	X^* := E^*\left(\frac{X}{1+r}\right) \qquad (2)
+68.57	74.17	30	sentence	where the RHS does not depend on the choice of the EMM $p^*$.
+74.17	79.77	32	sentence	So Thm 2 said each discounted stock is a fair game under $P^*$.
+79.77	89.97	32	sentence	Thm 3 says every portfolio built from them is a fair game too, and that gives us
+89.97	91.27	34	section	Attainable claim (p.110)
+91.27	99.17	36	sentence	A claim is considered attainable if there exists a self-financing strategy that 
+99.17	102.45	36	sentence	The strategy is called a hedging strategy.
+102.45	114.97	38	sentence	In one period, "self-financing" just means: I pick $(\Delta, b)$ at $t = 0$, hol
+114.97	121.33	38	sentence	So $X$ is attainable when some $(\Delta, b)$ has $V_1(\omega) = X(\omega)$ for e
+121.33	122.13	40	section	Proof of (1) (p.110)
+122.13	125.23	42	sentence	Take any strategy $(\Delta, b)$.
+125.23	131.98	42	sentence	Start from the left side of (1) and substitute $V_1 = \Delta \cdot S_1 + b(1+r)$
+131.98	134.18	44	equation	E^*\left(\frac{V_1}{1+r}\right) = E^*\left(\frac{\Delta \cdot S_1 + b(1+r)}{1+r}
+134.18	137.28	46	sentence	Split the fraction.
+137.28	147.10	46	sentence	The bond part is $\frac{b(1+r)}{1+r} = b$, a fixed number, and the expectation o
+147.10	149.30	48	equation	= E^*\left(\frac{\Delta \cdot S_1}{1+r}\right) + b
+149.30	154.50	50	sentence	$\Delta$ is a fixed vector, so I move it outside the expectation:
+154.50	156.70	52	equation	= \Delta \cdot E^*\left(\frac{S_1}{1+r}\right) + b
+156.70	161.13	54	sentence	Now use Thm 2. Under an EMM, $E^*\left(\frac{S_1}{1+r}\right) = S_0$:
+161.13	163.33	56	equation	= \Delta \cdot S_0 + b
+163.33	167.77	58	sentence	And that is exactly the value at $t = 0$:
+167.77	169.97	60	equation	= V_0 \qquad (3)
+169.97	173.07	62	sentence	$\therefore$ (1) holds.
+173.07	181.10	64	numbers	Numbers. Take $\Delta = (1, 1)$ and $b = 1$: one of each stock and one bond.
+181.10	187.08	64	numbers	Rows are time and outcome (4), columns are the securities plus the sum (4).
+187.08	190.18	64	numbers	Each cell is holding $\times$ price:
+190.18	192.38	66	table	
+192.38	195.48	73	sentence	So $V_0 = 3$.
+195.48	208.77	73	sentence	Now the left side of (1): $E^*(V_1) = 0.5 \times 4.25 + 0.25 \times 3.75 + 0.25 
+208.77	217.43	75	sentence	Check, line (3) instead: $\Delta \cdot S_0 + b = 1 \times 1 + 1 \times 1 + 1 = 3
+217.43	220.53	75	sentence	Same.
+220.53	221.83	77	section	Proof of (2) (p.110–111)
+221.83	228.20	79	sentence	Now suppose $X$ is an attainable claim, i.e., for some portfolio $(\Delta, b)$ o
+228.20	230.40	81	equation	V_1(\omega) = X(\omega), \quad \omega \in \Omega \qquad (4)
+230.40	233.50	83	sentence	(1) & (4) imply that
+233.50	235.70	85	equation	V_0 = E^*\left(\frac{V_1}{1+r}\right) = E^*\left(\frac{X}{1+r}\right) = X^* \qqu
+235.70	238.80	87	sentence	The first equality is (1).
+238.80	243.62	87	sentence	The second substitutes $V_1 = X$ from (4), outcome by outcome.
+243.62	251.90	87	sentence	The notes write "(1) & (2)" here, but it's (1) and (4) that are used: (2) is wha
+251.90	255.00	89	sentence	Which proves (2).
+255.00	258.10	89	sentence	Why is $V_0$ the right price?
+258.10	272.15	89	sentence	If $X$ were sold at $t = 0$ for anything other than $V_0$, I could sell the dear
+272.15	278.13	89	sentence	At $t = 1$ the two pay the same in every outcome and cancel.
+278.13	282.18	89	sentence	That's an arbitrage, so the price must be $V_0$.
+282.18	292.78	91	numbers	Numbers. Take a call on stock 1 with strike $1$: $X = (S_1^1 - 1)^+$, so $X = (1
+292.78	295.88	91	numbers	First find the hedge.
+295.88	299.93	91	numbers	One row per outcome (3), unknowns $\Delta_1$, $\Delta_2$, $b$:
+299.93	302.13	93	table	
+302.13	306.18	99	sentence	Subtract row $\omega_3$ from row $\omega_2$: $\Delta_2 = 0$.
+306.18	311.78	99	sentence	Subtract row $\omega_3$ from row $\omega_1$: $1.5\Delta_1 = 1$, so $\Delta_1 = \
+311.78	317.77	99	sentence	Put both into row $\omega_3$: $\frac{1}{3} + 1.25b = 0$, so $b = -\frac{4}{15}$.
+317.77	322.97	101	sentence	The hedge, rows time and outcome (4), columns securities plus sum (4):
+322.97	325.67	103	table	
+325.67	333.18	110	sentence	The $t = 1$ sums are $(1, 0, 0) = X$, so (4) holds, and $V_0 = 0.4$.
+333.18	341.85	112	sentence	Check, by (2) directly: $X^* = E^*\left(\frac{X}{1.25}\right) = 0.5 \times \frac
+341.85	344.95	112	sentence	Same.
+344.95	346.25	114	section	Why $X^*$ doesn't depend on the EMM (p.111)
+346.25	351.85	116	sentence	The value of $X^*$ does not depend on the choice of EMM $p^*$.
+351.85	359.37	116	sentence	This follows from (5), as the LHS in that relation is one and the same for any E
+359.37	366.12	116	sentence	$V_0 = \Delta \cdot S_0 + b$ is built from today's prices and the hedge only.
+366.12	369.22	116	sentence	No $p^*$ appears in it.
+369.22	373.27	116	sentence	So every EMM must give the same right side.
+373.27	379.25	118	numbers	Numbers. Our running market has only one EMM, so let's make one with many.
+379.25	386.40	118	numbers	Drop stock 2: one stock with $S_0 = 1$ and payoffs $(2, 0.5, 0.5)$, same bond.
+386.40	396.85	118	numbers	An EMM needs $p_1^* \times 1.6 + (p_2^* + p_3^*) \times 0.4 = 1$ and $p_1^* + p_
+396.85	409.77	118	numbers	Substitute $p_2^* + p_3^* = 1 - p_1^*$: $1.2 p_1^* + 0.4 = 1$, so $p_1^* = 0.5$,
+409.77	417.15	118	numbers	Two of them: $p^* = (0.5, 0.25, 0.25)$ and $q^* = (0.5, 0.1, 0.4)$.
+417.15	424.67	120	sentence	The call $X = (1, 0, 0)$ is still attainable here: the hedge above used $\Delta_
+424.67	427.95	120	sentence	Under $p^*$: $0.5 \times 0.8 = 0.4$.
+427.95	431.23	120	sentence	Under $q^*$: $0.5 \times 0.8 = 0.4$.
+431.23	435.67	120	sentence	Same, because $X$ is $0$ wherever the two EMMs disagree.
+435.67	436.97	122	section	Not every claim is attainable (p.111)
+436.97	442.17	124	sentence	Thm 3 provides one with the arbitrage-free price for any attainable claim.
+442.17	449.30	124	sentence	It turns out that, in the general case, not all claims are attainable in a finan
+449.30	452.40	126	numbers	Numbers. Same one-stock market.
+452.40	457.62	126	numbers	Take $X = (0, 1, 0)$: pays $1$ only in $\omega_2$.
+457.62	464.37	126	numbers	The stock pays $0.5$ in both $\omega_2$ and $\omega_3$, and the bond pays $1.25$
+464.37	473.42	126	numbers	So any $(\Delta_1, b)$ pays the same in $\omega_2$ and $\omega_3$, and can't pro
+473.42	476.52	126	numbers	Not attainable.
+476.52	485.58	126	numbers	And now (2) gives no single answer: under $p^*$, $0.25 \times 0.8 = 0.2$; under 
+485.58	488.68	126	numbers	Different.
+488.68	492.35	126	numbers	That's why Thm 3 only prices attainable claims.
+492.35	493.65	128	section	Complete market (p.111)
+493.65	500.78	130	sentence	A market with the property that any claim is attainable in it is said to be comp
+500.78	503.88	132	sentence	Single-period NA binomial market is complete.
+503.88	506.98	132	sentence	Let's see why.
+506.98	510.27	132	sentence	Any claim is a pair $(X(u), X(d))$.
+510.27	513.37	132	sentence	To hedge it I need
+513.37	515.57	134	equation	\Delta S_1(u) + b(1+r) = X(u)
+515.57	517.77	136	equation	\Delta S_1(d) + b(1+r) = X(d)
+517.77	522.20	138	sentence	Subtract the second from the first, and $b$ drops out:
+522.20	524.40	140	equation	\Delta = \frac{X(u) - X(d)}{S_1(u) - S_1(d)}
+524.40	528.45	142	sentence	This works for any claim, since $S_1(u) \ne S_1(d)$.
+528.45	531.55	142	sentence	Then $b$ comes from either equation.
+531.55	538.32	144	numbers	Numbers, from p.91: $S_0 = 1$, $S_1(u) = 1.75$, $S_1(d) = 0.5$, $r = 0.25$.
+538.32	541.82	144	numbers	Take $X = (1, 0)$.
+541.82	547.27	144	numbers	$\Delta = \frac{1 - 0}{1.75 - 0.5} = 0.8$.
+547.27	555.03	144	numbers	From the down equation: $0.8 \times 0.5 + 1.25b = 0$, so $b = -0.32$.
+555.03	560.22	144	numbers	$V_0 = 0.8 - 0.32 = 0.48$.
+560.22	567.73	146	sentence	Check by (2) with $p^* = 0.6$: $X^* = \frac{0.6 \times 1 + 0.4 \times 0}{1.25} =
+567.73	570.83	146	sentence	Same.
+570.83	574.50	148	sentence	So: two outcomes and one stock, always complete.
+574.50	577.78	148	sentence	Three outcomes and one stock, not complete.
+577.78	581.07	148	sentence	Thm 4, next, gives the exact rule.

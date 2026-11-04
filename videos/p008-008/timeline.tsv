@@ -1,0 +1,89 @@
+start	end	line	kind	text
+0.00	4.00	6	title	Expectation & Integration
+4.00	9.20	8	sentence	The Lebesgue integral construction: from integrable r.v.s through indicators to 
+9.20	10.00	10	section	Step 1: Integrable Random Variables
+10.00	14.82	12	sentence	A random variable $\xi : \Omega \to \mathbb{R}$ is **integrable** if:
+14.82	17.02	14	equation	\int_\Omega |\xi|\, dP < \infty
+17.02	21.45	16	sentence	When this holds, the **expectation** exists and is defined as:
+21.45	23.65	18	equation	E(\xi) = \int_\Omega \xi\, dP
+23.65	30.78	20	sentence	The family of all integrable r.v.s on $(\Omega, \mathcal{F}, P)$ is denoted $L^1
+30.78	40.22	22	sentence	**Fair die**, $\xi(\omega) = \omega$: $E|\xi| = \tfrac16(1 + \cdots + 6) = 3.5 <
+40.22	45.03	24	sentence	**Any bounded r.v.** ($|\xi| \le M$) is integrable: $E|\xi| \le M$.
+45.03	56.02	26	sentence	**St Petersburg:** $P(\xi = 2^k) = 2^{-k}$ for $k = 1, 2, \ldots$ Then $E|\xi| =
+56.02	59.12	26	sentence	Not integrable.
+59.12	60.42	28	section	Step 2: Why Absolute Value?
+60.42	68.70	30	sentence	**Pitfall:** Every r.v. decomposes as $\xi = \xi^+ - \xi^-$ where $\xi^+ = \max(
+68.70	73.90	30	sentence	Both $\int \xi^+\, dP$ and $\int \xi^-\, dP$ exist in $[0, \infty]$.
+73.90	79.10	32	sentence	If both are $+\infty$, then $E(\xi) = \infty - \infty$ — **undefined**.
+79.10	92.38	34	sentence	Requiring $\int |\xi|\, dP < \infty$ forces **both** $\int \xi^+\, dP < \infty$ 
+92.38	96.05	36	sentence	**Finite case.** Die, $\xi = \omega - 3.5$:
+96.05	98.25	38	table	
+98.25	105.38	44	sentence	$E\xi^+ = \tfrac{4.5}{6} = 0.75$ and $E\xi^- = 0.75$, so $E\xi = 0.75 - 0.75 = 0
+105.38	110.98	46	sentence	**$\infty - \infty$ case.** $P(\xi = 2^k) = P(\xi = -2^k) = 2^{-k-1}$.
+110.98	117.73	46	sentence	Then $E\xi^+ = \sum 2^k 2^{-k-1} = \sum \tfrac12 = \infty$, and likewise $E\xi^-
+117.73	122.17	46	sentence	The distribution is symmetric, yet $E\xi$ is *undefined*, not 0.
+122.17	123.47	48	section	Step 3: Indicator Random Variables
+123.47	127.90	50	sentence	For any event $A \in \mathcal{F}$, the **indicator function** is:
+127.90	130.10	52	equation	\mathbb{1}_A(\omega) = \begin{cases} 1 & \omega \in A \\ 0 & \omega \in \Omega \
+130.10	133.20	54	sentence	Its expectation:
+133.20	135.40	56	equation	E(\mathbb{1}_A) = \int_\Omega \mathbb{1}_A\, dP = \int_A 1\, dP + \int_{\Omega \
+135.40	141.00	58	sentence	The integrand is 0 outside $A$, so only the measure of $A$ survives.
+141.00	146.60	58	sentence	This works for any $\Omega$ (discrete or uncountable) — no $\omega$-by-$\omega$ 
+146.60	153.35	60	sentence	Die, $A = \{5, 6\}$: $\mathbb{1}_A = 0,0,0,0,1,1$, so $E\mathbb{1}_A = \tfrac26 
+153.35	159.33	62	sentence	Uniform $U$ on $[0,1]$, $A = \{0.2 \le U \le 0.5\}$: $E\mathbb{1}_A = 0.3$.
+159.33	164.93	62	sentence	There's nothing to sum $\omega$ by $\omega$ (uncountably many), and none is need
+164.93	166.23	64	section	Step 4: Simple Functions
+166.23	174.13	66	sentence	A **simple function** $\eta : \Omega \to \mathbb{R}$ is a finite linear combinat
+174.13	176.33	68	equation	\eta = \sum_{i=1}^{n} \eta_i \mathbb{1}_{A_i}
+176.33	182.32	70	sentence	where $\eta_1, \ldots, \eta_n \in \mathbb{R}$ and $A_1, \ldots, A_n$ are pairwis
+182.32	190.60	72	sentence	**Why disjoint?** Each $\omega$ lands in at most one $A_i$, so $\eta(\omega) = \
+190.60	196.20	72	sentence	(Disjointness is *not* needed for linearity of the integral — that always holds.
+196.20	199.87	72	sentence	It's needed for the representation to be unambiguous.)
+199.87	203.53	74	sentence	**Do the $A_i$ need to cover $\Omega$?** No.
+203.53	209.13	74	sentence	If $\omega \notin \bigcup A_i$, every indicator is 0, so $\eta(\omega) = 0$.
+209.13	212.23	76	sentence	Die, $\eta = 10\cdot\mathbb{1}_{\{1,2\}} + 5\cdot\mathbb{1}_{\{3\}}$:
+212.23	214.43	78	table	
+214.43	218.48	82	sentence	$\{4,5,6\}$ is not covered, so $\eta = 0$ there.
+218.48	222.92	82	sentence	Non-disjoint: $\mathbb{1}_{\{1,2\}} + \mathbb{1}_{\{2,3\}}$ equals 2 at $\omega 
+222.92	228.52	82	sentence	It's still a fine function, but its disjoint form is $1\cdot\mathbb{1}_{\{1,3\}}
+228.52	229.82	84	section	Step 5: Expectation of Simple Functions
+229.82	232.92	86	sentence	By linearity of the integral:
+232.92	235.12	88	equation	E(\eta) = \int_\Omega \eta\, dP = \sum_{i=1}^{n} \eta_i \int_\Omega \mathbb{1}_{
+235.12	238.40	90	sentence	This is the weighted sum of probabilities.
+238.40	245.92	90	sentence	The construction ladder: indicators → simple functions → (approximate arbitrary 
+245.92	251.12	92	sentence	Die $\eta$ above: $E\eta = 10\cdot\tfrac26 + 5\cdot\tfrac16 = \tfrac{25}6 \appro
+251.12	258.63	92	sentence	Check $\omega$ by $\omega$: $\tfrac16(10 + 10 + 5 + 0 + 0 + 0) = \tfrac{25}6$ ✅
+258.63	267.68	94	sentence	**Approximating $U$ (uniform on $[0,1]$) from below.** $\eta_n = \lfloor 2^nU \r
+267.68	272.12	96	sentence	$n = 1$: values $0, \tfrac12$, each with probability $\tfrac12$.
+272.12	275.22	96	sentence	$E\eta_1 = 0.25$.
+275.22	279.65	98	sentence	$n = 2$: values $0, \tfrac14, \tfrac12, \tfrac34$, each $\tfrac14$.
+279.65	282.75	98	sentence	$E\eta_2 = 0.375$.
+282.75	287.57	100	sentence	In general $E\eta_n = \tfrac12(1 - 2^{-n}) \uparrow \tfrac12 = EU$.
+287.57	288.87	102	section	Practice Questions
+288.87	291.97	104	sentence	**Q1.** Fair die.
+291.97	295.07	104	sentence	Compute $E(\xi^2)$ as a simple-function expectation.
+295.07	298.17	106	sentence	Answer
+298.17	307.22	108	sentence	$\xi^2 = \sum_{k=1}^6 k^2\mathbb{1}_{\{k\}}$, so $E = \tfrac16(1 + 4 + 9 + 16 + 
+307.22	313.58	110	sentence	**Q2.** $P(\xi = k) = \tfrac{c}{k^2}$, $k = 1, 2, \ldots$, with $c = 6/\pi^2$.
+313.58	316.68	110	sentence	Is $\xi$ integrable?
+316.68	319.78	112	sentence	Answer
+319.78	324.22	114	sentence	$E|\xi| = \sum k\cdot\tfrac{c}{k^2} = c\sum\tfrac1k = \infty$ (harmonic series).
+324.22	328.27	114	sentence	Not integrable, even though $P$ is a valid distribution.
+328.27	334.25	116	sentence	**Q3.** $U$ uniform on $[0,1]$, $\eta = 2\cdot\mathbb{1}\{U < 0.3\} - 1\cdot\mat
+334.25	337.35	116	sentence	Find $E\eta$.
+337.35	340.45	118	sentence	Answer
+340.45	343.55	120	sentence	$2(0.3) + (-1)(0.3) = 0.3$.
+343.55	347.22	122	sentence	**Q4.** Die, $A = \{1,2,3\}$, $B = \{3,4\}$.
+347.22	350.32	122	sentence	Find $E(\mathbb{1}_A + \mathbb{1}_B)$ two ways.
+350.32	353.42	124	sentence	Answer
+353.42	357.47	126	sentence	Linearity (no disjointness needed): $\tfrac12 + \tfrac13 = \tfrac56$.
+357.47	361.90	126	sentence	Pointwise values $1, 1, 2, 1, 0, 0$: $\tfrac56$ ✅
+361.90	366.33	128	sentence	**Q5.** For the dyadic approximation $\eta_3$ of $U$, compute $E\eta_3$.
+366.33	369.43	130	sentence	Answer
+369.43	380.80	132	sentence	Values $\tfrac k8$, $k = 0..7$, each with probability $\tfrac18$: $E = \tfrac1{6
+380.80	384.85	134	sentence	**Q6.** $X \sim \text{Exp}(1)$, $\xi = X - 1$.
+384.85	388.90	134	sentence	Compute $E\xi^+$ and $E\xi^-$, and check $E\xi = 0$.
+388.90	392.00	136	sentence	Answer
+392.00	395.10	138	sentence	$E\xi^+ = \int_1^\infty (x-1)e^{-x}\,dx = e^{-1}$.
+395.10	401.08	138	sentence	$E\xi^- = \int_0^1 (1-x)e^{-x}\,dx = (1 - e^{-1}) - (1 - 2e^{-1}) = e^{-1}$.
+401.08	406.68	138	sentence	So $E\xi = e^{-1} - e^{-1} = 0 = EX - 1$ ✅

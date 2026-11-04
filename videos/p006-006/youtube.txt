@@ -1,0 +1,7 @@
+Distribution Measure & Cumulative Distribution Function
+
+Distribution Measure & Cumulative Distribution Function
+
+0:00 Step 1: The Push-Forward Measure Pxi
+1:13 Step 2: Cumulative Distribution Function Fxi(x)
+2:18 Step 3: Properties of Distribution Functions

@@ -1,0 +1,9 @@
+Binomial Market Model & Martingale Properties
+
+Binomial Market Model & Martingale Properties
+
+0:00 Step 1: Binomial Market Model & Natural Filtration
+1:48 Step 2: Martingale, Submartingale & Supermartingale
+2:47 Step 3: Multi-Step Expectation Theorem
+3:22 Step 4: Corollary — Constant Unconditional Mean
+4:15 Practice Questions

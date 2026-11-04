@@ -1,0 +1,16 @@
+p.125–129: Multiperiod binomial market
+
+p.125–129: Multiperiod binomial market
+
+0:00 Notation check
+0:30 The model (p.125)
+1:04 Trading strategy (p.125)
+1:26 Self-financing (p.125)
+2:14 Pricing a claim by replication (p.125–126)
+2:58 The last period (p.126)
+3:53 The value one step back is an E* (p.126)
+4:45 One more step back (p.127)
+5:45 The general formula (p.127)
+6:42 The discounted stock is a martingale (p.128)
+7:21 The price at t = 0, and the random walk (p.128–129)
+8:23 Doubts

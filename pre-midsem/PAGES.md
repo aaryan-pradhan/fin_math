@@ -1,0 +1,34 @@
+# Pre-midsem page map (lecture PDF pages -> Euclidean note)
+
+- p001-003.md  <-  notes/starting_pieces.html
+- p003-004.md  <-  notes/almost_surely.html
+- p004-004.md  <-  notes/random_variables.html
+- p005-005.md  <-  notes/doob_dynkin_lemma.html
+- p006-006.md  <-  notes/distribution_functions.html
+- p006-007.md  <-  notes/densities_and_joint_distributions.html
+- p008-008.md  <-  notes/expectation_and_integration.html
+- p008-009.md  <-  notes/change_of_variables_expectation.html
+- p010-010.md  <-  notes/conditional_probability_and_independence.html
+- p010-013.md  <-  notes/conditional_expectation_and_sigma_fields.html
+- p014-015.md  <-  notes/filtrations_and_martingales.html
+- p015-016.md  <-  notes/binomial_model_and_martingale_properties.html
+- p017-019.md  <-  notes/brownian_motion_and_canonical_martingales.html
+- p020-020.md  <-  notes/additive_and_geometric_random_walks.html
+- p021-022.md  <-  notes/stopping_times.html
+- p022-023.md  <-  notes/stopped_process_martingale.html
+- p023-024.md  <-  notes/optimal_stopping_theorem.html
+- p024-024.md  <-  notes/gambling_strategies.html  (not in the PDF pages; placed after optimal stopping)
+- p025-025.md  <-  notes/brownian_motion_density_and_diffusion.html
+- p025-026.md  <-  notes/wiener_process_axioms_levy_and_random_walk.html
+- p026-027.md  <-  notes/brownian_bridge_and_conditional_distributions.html
+- p028-032.md  <-  notes/brownian_motion_with_drift_and_exit_probabilities.html
+- p029-030.md  <-  notes/gamblers_ruin_problem_derivation.html
+- p033-034.md  <-  notes/geometric_brownian_motion.html
+- p034-035.md  <-  notes/multivariate_distribution.html
+- p035-039.md  <-  notes/gaussian_processes_and_mvn_conditioning.html
+- p040-041.md  <-  notes/brownian_motion_hitting_times_and_maximum.html
+- p042-043.md  <-  notes/joint_distribution_of_bm_and_maximum.html
+- p044-046.md  <-  notes/ito_integral.html
+- p046-049.md  <-  notes/ito_formula.html
+- p050-054.md  <-  notes/stochastic_differential_equations.html
+- skipped: notes/arbitrage_and_risk_neutral_pricing.html (same content as post-midsem p059-063)

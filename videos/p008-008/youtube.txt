@@ -1,0 +1,10 @@
+Expectation & Integration
+
+Expectation & Integration
+
+0:00 Step 1: Integrable Random Variables
+0:59 Step 2: Why Absolute Value?
+2:02 Step 3: Indicator Random Variables
+2:44 Step 4: Simple Functions
+3:48 Step 5: Expectation of Simple Functions
+4:47 Practice Questions

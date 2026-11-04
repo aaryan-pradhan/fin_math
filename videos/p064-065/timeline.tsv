@@ -1,0 +1,94 @@
+start	end	line	kind	text
+0.00	4.00	5	title	p.64–65: Forwards, futures, calls, puts and derivative securities
+4.00	4.80	7	section	Forwards (p.64)
+4.80	7.90	9	sentence	Let's define the first contract.
+7.90	23.10	9	sentence	Forwards are contracts that give the market participant the right to buy or sell
+23.10	26.77	11	sentence	There are two sides to such a contract:
+26.77	30.43	13	sentence	Long position: entering into a contract to buy.
+30.43	33.72	14	sentence	Short position: entering into a sale contract.
+33.72	36.82	16	sentence	Example.
+36.82	43.57	16	sentence	Today I agree to buy one share at $T = 1$ year for $K = 100$.
+43.57	46.67	16	sentence	I hold the long position.
+46.67	52.27	16	sentence	The person who agrees to sell it to me holds the short position.
+52.27	57.87	16	sentence	If the share is worth $120$ at $T$, I still pay only $100$.
+57.87	61.92	16	sentence	If it is worth $90$, I still pay $100$.
+61.92	62.72	18	section	Forwards vs futures (p.64)
+62.72	66.38	20	sentence	Forwards and futures involve hedging for their settlement.
+66.38	73.13	20	sentence	That is, the market participant has both the right and the obligation to buy or 
+73.13	76.23	22	sentence	Notice the word obligation.
+76.23	82.22	22	sentence	In my example above, when the share is worth $90$, I can't walk away.
+82.22	85.88	22	sentence	I must pay $100$, so I lose $10$.
+85.88	88.98	24	sentence	The difference between the two:
+88.98	92.08	26	sentence	Futures are traded on financial markets.
+92.08	97.68	27	sentence	Forwards are based on an individual agreement between the participants, without 
+97.68	98.48	29	section	The plus notation (p.64)
+98.48	102.15	31	sentence	Before options, we need one piece of notation:
+102.15	104.35	33	equation	x^+ = \begin{cases} x, & \text{if } x > 0 \\ 0, & \text{if } x \le 0 \end{cases}
+104.35	107.45	35	sentence	That is,
+107.45	109.65	37	equation	x^+ = \max(x, 0)
+109.65	114.33	39	numbers	Numbers: $(5)^+ = \max(5, 0) = 5$.
+114.33	119.02	39	numbers	And $(-3)^+ = \max(-3, 0) = 0$.
+119.02	123.83	39	numbers	So $x^+$ keeps positive numbers and turns everything else into $0$.
+123.83	129.43	41	sentence	We will write $(S_t)$ for the price of the stock at time $t$.
+129.43	130.73	43	section	European call (p.64)
+130.73	136.93	45	anim	payoff
+136.93	140.60	47	sentence	A call option gives the right to buy.
+140.60	147.35	47	sentence	In a European call, I can buy only at the fixed time $T$, at price $K$.
+147.35	151.78	49	sentence	The value of a European call at time $T$ is
+151.78	153.98	51	equation	X = (S_T - K)^+
+153.98	157.08	53	sentence	Let's see why.
+157.08	161.52	53	sentence	At time $T$ the share costs $S_T$ in the market.
+161.52	171.33	53	sentence	If $S_T > K$, I use my right: I buy at $K$, and the share is worth $S_T$, so I g
+171.33	177.70	53	sentence	If $S_T \le K$, buying at $K$ makes no sense, so I don't use it.
+177.70	180.80	53	sentence	I gain $0$.
+180.80	184.08	53	sentence	That is exactly $\max(S_T - K, 0)$.
+184.08	190.45	55	sentence	The picture in the notes: the stock path starts at $S_0$, below the line $K$.
+190.45	193.55	55	sentence	It wiggles up.
+193.55	198.75	55	sentence	At time $T$ I read off $S_T$ and compare it with $K$.
+198.75	203.57	55	sentence	Only the value at $T$ matters, not the path before it.
+203.57	207.07	57	numbers	Numbers with $K = 100$:
+207.07	211.50	59	sentence	$S_T = 120$: $X = (120 - 100)^+ = 20$.
+211.50	216.70	60	sentence	$S_T = 90$: $X = (90 - 100)^+ = (-10)^+ = 0$.
+216.70	221.13	62	sentence	So a call is like a forward without the obligation.
+221.13	227.12	62	sentence	When $S_T = 90$, the forward lost $10$, but the call just pays $0$.
+227.12	228.42	64	section	American call (p.65)
+228.42	235.55	66	sentence	The American call gives the buyer the right to buy a security at any time $\tau$
+235.55	237.75	68	equation	\tau \in [0, T]
+237.75	240.85	70	sentence	at a price $K$.
+240.85	244.13	72	sentence	So now I choose when to buy.
+244.13	248.18	72	sentence	If I buy at time $\tau$, the value is
+248.18	250.38	74	equation	X = (S_\tau - K)^+
+250.38	257.52	76	sentence	The picture: the time axis runs from $0$ to $T$, and $\tau$ can be anywhere in b
+257.52	261.02	78	numbers	Numbers with $K = 100$.
+261.02	268.93	78	numbers	Say the stock is at $130$ at $\tau = 0.5$ and falls to $95$ by $T = 1$.
+268.93	275.32	78	numbers	If I exercise at $\tau = 0.5$, I get $(130 - 100)^+ = 30$.
+275.32	282.85	78	numbers	A European call would only see $S_T = 95$, so it gives $(95 - 100)^+ = 0$.
+282.85	284.15	80	section	Put option (p.65)
+284.15	290.35	82	anim	payoff
+290.35	294.02	84	sentence	A put option gives the right to sell.
+294.02	299.62	84	sentence	With a European put, I can sell at time $T$ at price $K$.
+299.62	302.72	84	sentence	Its value is
+302.72	304.92	86	equation	X = (K - S_T)^+
+304.92	308.02	88	sentence	Same reasoning, flipped.
+308.02	316.68	88	sentence	If $S_T < K$, I buy the share in the market for $S_T$ and sell it through the pu
+316.68	319.78	88	sentence	I gain $K - S_T$.
+319.78	325.77	88	sentence	If $S_T \ge K$, selling at $K$ makes no sense, so I gain $0$.
+325.77	329.27	90	numbers	Numbers with $K = 100$:
+329.27	333.70	92	sentence	$S_T = 90$: $X = (100 - 90)^+ = 10$.
+333.70	338.90	93	sentence	$S_T = 120$: $X = (100 - 120)^+ = (-20)^+ = 0$.
+338.90	345.27	95	sentence	So the put pays when the price falls, and the call pays when it rises.
+345.27	346.57	97	section	Derivative security in general (p.65)
+346.57	350.62	99	sentence	Now let's put all of these under one definition.
+350.62	358.13	99	sentence	Mathematically, a derivative security (or contingent claim) with maturity (expir
+358.13	360.33	101	equation	X = X(\omega) = g(S_T(\omega)) \ge 0
+360.33	364.38	103	sentence	of the underlying asset price $S_T$ at time $T$.
+364.38	368.05	105	sentence	Here $\omega$ is the outcome of the randomness.
+368.05	371.72	105	sentence	Fix $\omega$, and you get one price $S_T(\omega)$.
+371.72	375.77	105	sentence	Feed it into $g$, and you get one payoff.
+375.77	379.82	105	sentence	Since $g$ never goes below zero, $X \ge 0$.
+379.82	382.92	107	sentence	Our two options fit this:
+382.92	386.20	109	sentence	European call: $g(s) = (s - K)^+$.
+386.20	389.48	110	sentence	European put: $g(s) = (K - s)^+$.
+389.48	397.38	112	sentence	The financial interpretation of $X$ is that the contract will pay its owner the 
+397.38	404.92	114	numbers	Numbers. Take $K = 100$ and suppose that in outcome $\omega$ the price is $S_T(\
+404.92	416.13	114	numbers	Then the call pays $g(120) = (120 - 100)^+ = 20$ at $T$, and the put pays $(100 

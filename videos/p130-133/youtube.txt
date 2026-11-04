@@ -1,0 +1,13 @@
+p.130–133: From the binomial call price to Black–Scholes
+
+p.130–133: From the binomial call price to Black–Scholes
+
+0:00 Notation check
+0:23 The European call in the binomial model (p.130)
+1:00 How many ups are enough: m (p.130)
+1:45 Splitting into two binomial probabilities (p.130)
+3:09 Many small steps (p.130–131)
+4:31 The limit of pn* (p.132)
+5:24 The CLT turns (star) into normals (p.132)
+6:37 The Black–Scholes formula (p.132–133)
+7:34 Slides (p.134–141)

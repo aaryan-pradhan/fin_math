@@ -1,0 +1,11 @@
+p.64–65: Forwards, futures, calls, puts and derivative securities
+
+p.64–65: Forwards, futures, calls, puts and derivative securities
+
+0:00 Forwards (p.64)
+1:01 Forwards vs futures (p.64)
+1:37 The plus notation (p.64)
+2:09 European call (p.64)
+3:47 American call (p.65)
+4:42 Put option (p.65)
+5:45 Derivative security in general (p.65)

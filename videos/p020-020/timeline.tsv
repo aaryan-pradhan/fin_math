@@ -1,0 +1,33 @@
+start	end	line	kind	text
+0.00	4.00	6	title	Additive & Geometric Random Walks
+4.00	10.37	8	sentence	Rigorously deriving the martingale conditions for discrete additive random walks
+10.37	11.17	10	section	Step 1: Additive Random Walk
+11.17	21.07	12	anim	walk
+21.07	26.67	14	sentence	**Definition:** Let $(Y_j)_{j \geq 1}$ be i.i.d. random variables with $E[|Y_1|]
+26.67	35.33	14	sentence	Define $X_0 = 0$ and $X_n = \sum_{j=1}^{n} Y_j$ for $n \geq 1$, with natural fil
+35.33	38.43	16	sentence	**Derivation of $E[X_{n+1} \mid \mathcal{F}_n]$:**
+38.43	41.53	18	sentence	**Split:** $X_{n+1} = X_n + Y_{n+1}$.
+41.53	46.73	20	sentence	**Linearity:** $E[X_{n+1} \mid \mathcal{F}_n] = E[X_n \mid \mathcal{F}_n] + E[Y_
+46.73	52.33	22	sentence	**Measurability & Independence:** Since $X_n$ is $\mathcal{F}_n$-measurable and 
+52.33	54.53	24	equation	E[X_{n+1} \mid \mathcal{F}_n] = X_n + E[Y_1]
+54.53	57.63	26	sentence	**Conclusion:**
+57.63	61.30	28	sentence	$(X_n)$ is a **martingale** $\iff E[Y_1] = 0$.
+61.30	64.97	30	sentence	$(X_n)$ is a **submartingale** $\iff E[Y_1] \geq 0$.
+64.97	68.63	32	sentence	$(X_n)$ is a **supermartingale** $\iff E[Y_1] \leq 0$.
+68.63	69.93	34	section	Step 2: Geometric (Exponential) Random Walk
+69.93	75.92	36	sentence	**Definition:** Let $(Y_j)_{j \geq 1}$ be i.i.d. random variables and $X_0 > 0$ 
+75.92	79.02	36	sentence	Define the geometric random walk:
+79.02	81.22	38	equation	X_n = X_0 e^{Y_1 + \cdots + Y_n} = X_{n-1} e^{Y_n} \quad (n \geq 1)
+81.22	84.88	40	sentence	with natural filtration $\mathcal{F}_n = \sigma(Y_1, \ldots, Y_n)$.
+84.88	87.98	42	sentence	**Derivation of $E[X_{n+1} \mid \mathcal{F}_n]$:**
+87.98	91.27	44	sentence	**Product Form:** $X_{n+1} = X_n \cdot e^{Y_{n+1}}$.
+91.27	98.78	46	sentence	**Taking Out What Is Known:** Since $X_n$ is $\mathcal{F}_n$-measurable: $E[X_{n
+98.78	102.45	48	sentence	**Independence Rule:** Since $Y_{n+1}$ is independent of $\mathcal{F}_n$:
+102.45	104.65	50	equation	E[X_{n+1} \mid \mathcal{F}_n] = X_n \cdot E[e^{Y_1}] = X_n \cdot \phi_Y(1)
+104.65	110.25	52	sentence	**Conclusion:** $(X_n)$ is a **martingale** $\iff E[e^{Y_1}] = 1$ (i.e. $\phi_Y(
+110.25	111.55	54	section	Step 3: Normal Log-Increments Case
+111.55	117.92	56	sentence	**Special Case (Log-Normal):** If $Y_j \sim \mathcal{N}(\mu, \sigma^2)$ i.i.d., 
+117.92	120.12	58	equation	E[e^{Y_1}] = e^{\mu + \frac12 \sigma^2}
+120.12	124.55	60	sentence	For $X_n = X_0 e^{\sum Y_j}$ to be a martingale:
+124.55	126.75	62	equation	e^{\mu + \frac12 \sigma^2} = 1 \implies \mu = -\tfrac12 \sigma^2
+126.75	134.27	64	sentence	This exact drift correction ($\mu = -\tfrac12\sigma^2$) appears fundamentally in

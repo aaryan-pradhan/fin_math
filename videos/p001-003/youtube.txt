@@ -1,0 +1,11 @@
+Starting Pieces — Probability Theory
+
+Starting Pieces — Probability Theory
+
+0:00 1. The Outcome
+0:49 2. Events
+1:45 3. σ-field (Sigma-Algebra)
+2:56 4. Special Events & Filtration
+4:13 5. Probability Measure
+5:04 6. Probability Space
+5:34 7. Almost Surely (a.s.)

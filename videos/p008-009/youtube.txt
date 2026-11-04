@@ -1,0 +1,10 @@
+Change of Variables for Expectation
+
+Change of Variables for Expectation
+
+0:00 Theorem Statement
+1:00 Step 1: Simple Functions (Base Case)
+1:28 Step 2: Non-Negative Borel Functions (MCT)
+2:18 Step 3: General Integrable Functions
+2:50 Step 4: Concrete Applications
+3:37 Practice Questions

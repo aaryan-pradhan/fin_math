@@ -1,0 +1,12 @@
+p.111–114: Thm 4, the completeness theorem
+
+p.111–114: Thm 4, the completeness theorem
+
+0:00 Notation check
+0:41 The statement (p.111)
+1:01 Observation 1: the EMM is the solution of a linear system (p.111–112)
+3:21 Observation 2: hedging is the same matrix, transposed (p.112)
+4:25 Proof of Leftarrow: unique EMM gives completeness (p.112–113)
+5:51 Proof of Rightarrow: completeness gives a unique EMM (p.113)
+8:25 Remark (p.114)
+8:38 Slides (p.115–124)

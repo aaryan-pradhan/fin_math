@@ -1,0 +1,212 @@
+start	end	line	kind	text
+0.00	4.00	5	title	p.86–87: General discrete model, self-financing strategies and no-arbitrage
+4.00	4.80	7	section	The securities (p.86)
+4.80	8.47	9	sentence	Now we go from one stock to many.
+8.47	12.90	9	sentence	Let's write the prices at time $n$ as a vector:
+12.90	15.10	11	equation	S_n = (S_n^0, S_n^1, \dots, S_n^d)
+15.10	18.77	13	sentence	This is the development of $d$ equity securities.
+18.77	23.97	13	sentence	Here $S_n^i$ is the price of stock number $i$ at time $n$.
+23.97	27.07	15	sentence	Security number $0$ is special.
+27.07	30.17	15	sentence	It is the bond:
+30.17	32.37	17	equation	S_n^0 = (1+r)^n
+32.37	40.28	19	numbers	Numbers. Take $d = 1$, $r = 0.05$, and one stock with $S_0^1 = 100$, $S_1^1 = 13
+40.28	43.38	19	numbers	Then
+43.38	45.58	21	equation	S_0 = (1, 100), \quad S_1 = (1.05, 130)
+45.58	49.63	23	sentence	Let's lay all the prices out as a table.
+49.63	52.73	23	sentence	Each row is a time $n$.
+52.73	61.78	23	sentence	Each column is a security $i$, so there are $d + 1$ columns: the bond ($i = 0$) 
+61.78	63.98	25	table	
+63.98	68.03	31	sentence	Row $n$ of this table is the vector $S_n$.
+68.03	72.08	31	sentence	Column $i$ is the price history of security $i$.
+72.08	78.83	33	sentence	This is the layout for every table in these notes: rows are time, columns are se
+78.83	91.35	33	sentence	When a cell needs two numbers (shares and price), both go inside the cell as sha
+91.35	100.78	35	sentence	Our numbers, with $d = 1$ (so 2 columns), and one more time step where the stock
+100.78	103.48	37	table	
+103.48	104.78	43	section	Portfolio and trading strategy (p.86)
+104.78	109.60	45	sentence	A portfolio describes the proportions of the different securities in it.
+109.60	112.70	47	sentence	A trading strategy
+112.70	114.90	49	equation	\Phi = (\Phi_n) = (\Phi_n^0, \dots, \Phi_n^d)
+114.90	118.57	51	sentence	describes the development of the portfolio over time.
+118.57	124.55	51	sentence	Here $\Phi_n^i$ is the number of shares of security number $i$ at time $n$.
+124.55	130.92	53	numbers	Numbers. Take the duplicating portfolio from p.66: $0.4$ shares and a bond amoun
+130.92	135.37	53	numbers	Since $S_0^0 = 1$, that's $-30.48$ units of bond.
+135.37	138.47	53	numbers	So
+138.47	140.67	55	equation	\Phi_1 = (-30.48, \ 0.4)
+140.67	145.87	57	sentence	The strategy is a table of the same shape as the prices.
+145.87	148.97	57	sentence	Each row is a time $n$.
+148.97	153.40	57	sentence	Each column is a security $i$ ($d + 1$ columns).
+153.40	157.07	57	sentence	The entry is how many shares I hold.
+157.07	159.27	59	table	
+159.27	162.37	65	sentence	Row $n$ is the vector $\Phi_n$.
+162.37	167.18	65	sentence	Our numbers (2 columns; $\Phi_2$ comes from the self-financing step below):
+167.18	169.38	67	table	
+169.38	170.68	72	section	Value of the portfolio (p.86)
+170.68	178.20	74	sentence	The value of the portfolio at time $n$ is: for each security, shares times price
+178.20	181.30	74	sentence	That's a dot product:
+181.30	183.50	76	equation	V_n(\Phi) = \Phi_n \cdot S_n
+183.50	185.70	78	equation	V_n(\Phi) = \sum_{i=0}^{d} \Phi_n^i S_n^i
+185.70	192.83	80	sentence	In the tables: take row $n$ of the strategy table and row $n$ of the price table
+192.83	195.93	80	sentence	Multiply them column by column.
+195.93	199.03	80	sentence	Add across.
+199.03	205.40	82	sentence	Now a cell has to hold three things: the shares, the price, and their product.
+205.40	208.50	82	sentence	That's the extra dimension.
+208.50	214.87	82	sentence	So each cell reads shares $\times$ price $=$ value, and the sum column gives $V_
+214.87	220.85	82	sentence	Rows are times, columns are the $d + 1$ securities, plus the sum column:
+220.85	223.05	84	table	
+223.05	228.27	88	numbers	Numbers. Value $\Phi_1$ at the time-1 prices $S_1 = (1.05, 130)$.
+228.27	233.48	88	numbers	One row ($n = 1$), 2 security columns, plus the sum:
+233.48	235.68	90	table	
+235.68	238.38	94	equation	\Phi_1 \cdot S_1 = (-30.48)(1.05) + (0.4)(130) = -32 + 52 = 20
+238.38	242.82	96	sentence	That's the call payoff from p.67, as it should be.
+242.82	244.12	98	section	Self-financing (p.86)
+244.12	247.22	100	sentence	$\Phi$ is called self-financing if
+247.22	249.42	102	equation	\Phi_n \cdot S_n = \Phi_{n+1} \cdot S_n
+249.42	252.52	104	sentence	Let's read this.
+252.52	255.80	104	sentence	At time $n$ the prices are $S_n$.
+255.80	261.00	104	sentence	On the left, I value my old holding $\Phi_n$ at these prices.
+261.00	268.90	104	sentence	On the right, I value my new holding $\Phi_{n+1}$, the one I switch to now, at t
+268.90	272.00	104	sentence	They must be equal.
+272.00	276.05	106	sentence	So changes to the portfolio result only from regroupings.
+276.05	279.72	106	sentence	No additional capital is required for the change.
+279.72	282.82	106	sentence	No withdrawal of value takes place.
+282.82	291.35	108	numbers	Numbers. At time $1$, prices $S_1 = (1.05, 130)$, I hold $\Phi_1 = (-30.48, 0.4)
+291.35	294.45	108	numbers	Now I regroup.
+294.45	300.05	108	numbers	I sell $0.1$ share, which brings in $0.1 \times 130 = 13$.
+300.05	306.82	108	numbers	I put that $13$ into the bond, which buys $13 / 1.05 = 12.38$ units.
+306.82	309.92	108	numbers	So
+309.92	312.12	110	equation	\Phi_2 = (-30.48 + 12.38, \ 0.4 - 0.1) = (-18.10, \ 0.3)
+312.12	315.22	112	sentence	Check self-financing.
+315.22	320.82	112	sentence	Time $n$ now needs two rows: one before I trade and one after.
+320.82	325.63	112	sentence	Both rows use the same prices $S_n$; only the holding changes.
+325.63	328.92	112	sentence	Columns are the securities, plus the sum:
+328.92	331.12	114	table	
+331.12	335.93	119	sentence	Self-financing says the two numbers in the sum column are equal.
+335.93	339.60	119	sentence	With our numbers (2 rows, 2 security columns):
+339.60	342.30	121	table	
+342.30	345.40	126	sentence	The second row, written out:
+345.40	347.60	128	equation	\Phi_2 \cdot S_1 = (-18.10)(1.05) + (0.3)(130) = -19 + 39 = 20
+347.60	350.70	130	sentence	Same $20$.
+350.70	353.80	130	sentence	Nothing added, nothing taken out.
+353.80	355.10	132	section	Chronology: what happens when (p.86)
+355.10	358.20	134	sentence	Let's fix the timeline, using days.
+358.20	361.87	134	sentence	Time $n$ is the end of day $n$.
+361.87	369.38	134	sentence	The subscript on $\Phi$ tells you which day you hold it for: $\Phi_n$ is held du
+369.38	374.20	134	sentence	I choose it at the end of day $n - 1$.
+374.20	377.30	136	sentence	What does "trading" mean here?
+377.30	383.67	136	sentence	It means changing how many units of each security I hold: buying some, selling s
+383.67	388.48	136	sentence	That is, changing the vector of holdings from $\Phi_n$ to $\Phi_{n+1}$.
+388.48	391.58	138	sentence	When does it happen?
+391.58	396.02	138	sentence	Only at the instants $n = 0, 1, 2, \dots$.
+396.02	401.62	138	sentence	The model sees prices only at these instants, one price per security, $S_n^i$.
+401.62	406.43	138	sentence	It says nothing about prices between $n$ and $n + 1$.
+406.43	415.87	138	sentence	So the "day" is just the gap between two snapshots: I can't trade in it, and I d
+415.87	420.68	138	sentence	Every trade at time $n$ happens at the snapshot prices $S_n$.
+420.68	426.28	140	sentence	So at the end of day $n$, I do two things in order.
+426.28	432.65	140	sentence	First, the prices $S_n$ come out and I value what I held all day, $\Phi_n$.
+432.65	441.70	140	sentence	Then, at those same prices $S_n$, I trade out of $\Phi_n$ into $\Phi_{n+1}$, and
+441.70	444.80	142	sentence	Here is the general timeline.
+444.80	453.85	142	sentence	Same layout as every table: each row is a moment in time (5 rows), each column i
+453.85	456.95	142	sentence	Each cell is holding $\times$ price.
+456.95	462.55	142	sentence	During a day nobody trades, so those rows only show what I hold:
+462.55	464.75	144	table	
+464.75	468.03	152	sentence	Now read the definitions off this table:
+468.03	474.78	154	sentence	$V_n(\Phi) = \Phi_n \cdot S_n$ is row 2: the day-$n$ holding at the day-$n$ clos
+474.78	481.53	155	sentence	Self-financing, $\Phi_n \cdot S_n = \Phi_{n+1} \cdot S_n$, says row 2 sum $=$ ro
+481.53	485.97	155	sentence	The trade at the end of day $n$ only regroups.
+485.97	489.07	155	sentence	Same prices, same total.
+489.07	495.82	156	sentence	The prices change only between row 3 and row 5, while I sit still holding $\Phi_
+495.82	504.48	156	sentence	That's why the gain over day $n + 1$ will be $\Phi_{n+1} \cdot (S_{n+1} - S_n)$,
+504.48	511.63	158	numbers	Numbers, with our running example ($n = 1$; 5 rows, 2 security columns, plus the
+511.63	513.83	160	table	
+513.83	517.50	168	sentence	Rows 2 and 3 both say $20$: self-financing.
+517.50	525.78	168	sentence	From row 3 to row 5 the value goes $20 \to 25.05$, a gain of $5.05$, only becaus
+525.78	527.08	170	section	Increase in value (p.87)
+527.08	531.13	172	sentence	The increase in value from $n$ to $n+1$ is
+531.13	533.33	174	equation	\Delta V_n(\Phi) = V_{n+1}(\Phi) - V_n(\Phi)
+533.33	537.77	176	sentence	Now substitute $V = \Phi \cdot S$ at each time:
+537.77	539.97	178	equation	\Delta V_n(\Phi) = \Phi_{n+1} \cdot S_{n+1} - \Phi_n \cdot S_n
+539.97	545.95	180	sentence	Now, if $\Phi$ is self-financing, I replace $\Phi_n \cdot S_n$ by $\Phi_{n+1} \c
+545.95	548.15	182	equation	\Delta V_n(\Phi) = \Phi_{n+1} \cdot S_{n+1} - \Phi_{n+1} \cdot S_n
+548.15	554.90	184	sentence	Now take $\Phi_{n+1}$ out as a common factor, and write $\Delta S_n = S_{n+1} - 
+554.90	557.10	186	equation	\Delta V_n(\Phi) = \Phi_{n+1} \cdot \Delta S_n
+557.10	562.30	188	sentence	So for a self-financing strategy, the value changes only because prices move.
+562.30	565.97	188	sentence	It equals my holding times the price change.
+565.97	579.25	188	sentence	On the timeline: $V_{n+1} - V_n$ is row 5 minus row 2. Self-financing lets me sw
+579.25	582.35	190	numbers	Numbers. Continue the example.
+582.35	590.50	190	numbers	Say at time $2$ the stock is $150$, so $S_2 = (1.05^2, 150) = (1.1025, 150)$.
+590.50	593.60	190	numbers	Then
+593.60	595.80	192	equation	\Delta S_1 = S_2 - S_1 = (0.0525, \ 20)
+595.80	599.85	194	sentence	Now apply the formula with $\Phi_2 = (-18.10, 0.3)$.
+599.85	604.67	194	sentence	Same layout: rows are times, columns are securities, plus the sum.
+604.67	609.87	194	sentence	Rows 3 and 5 of the timeline, then their difference (3 rows):
+609.87	612.57	196	table	
+612.57	620.85	202	sentence	The holding is the same in every row of a column, so the change row is holding $
+620.85	623.95	202	sentence	With our numbers:
+623.95	626.15	204	table	
+626.15	628.35	210	equation	\Delta V_1 = (-18.10)(0.0525) + (0.3)(20) = -0.95 + 6 = 5.05
+628.35	631.45	212	sentence	Check it directly.
+631.45	636.27	212	sentence	$V_2 = (-18.10)(1.1025) + (0.3)(150) = -19.95 + 45 = 25.05$.
+636.27	639.37	212	sentence	And $V_1 = 20$.
+639.37	642.47	212	sentence	So $V_2 - V_1 = 5.05$.
+642.47	645.57	212	sentence	Same.
+645.57	646.87	214	section	No-arbitrage principle (p.87)
+646.87	651.30	216	sentence	The no-arbitrage principle says there is no arbitrage strategy $\Phi$.
+651.30	655.35	216	sentence	That is, there is no strategy $\Phi$ such that
+655.35	657.55	218	equation	V_0(\Phi) = 0, \quad V_n(\Phi) \ge 0 \quad \text{and} \quad P(V_n(\Phi) > 0) > 0
+657.55	660.65	220	sentence	Let's read the three parts.
+660.65	663.75	220	sentence	I start with nothing.
+663.75	667.03	220	sentence	I can never end up below zero.
+667.03	671.47	220	sentence	And there is some chance I end up above zero.
+671.47	674.57	220	sentence	That's free money with no risk.
+674.57	677.67	222	sentence	Or, equivalently,
+677.67	679.87	224	equation	V_0(\Phi) \le 0, \quad V_n(\Phi) \ge 0 \quad \text{and} \quad P(V_n(\Phi) > 0) >
+679.87	682.97	226	sentence	Why is this the same?
+682.97	687.40	226	sentence	If $V_0(\Phi) < 0$, I am paid $-V_0$ to start.
+687.40	690.68	226	sentence	I put that money in the bond.
+690.68	696.28	226	sentence	Now my starting value is $0$, and my final value is even bigger.
+696.28	699.57	226	sentence	So I'm back in the first form.
+699.57	705.95	228	numbers	Numbers. Take Example 1 from p.60, where $r = 0$ and $C = 20$.
+705.95	709.62	228	numbers	Buy 1 share, sell 3 options: cost $40$.
+709.62	716.00	228	numbers	Borrow that $40$ in the bond, so $V_0 = 40 - 40 = 0$.
+716.00	724.30	228	numbers	At time $1$ the holding is worth $50$ and I repay $40$, so $V_1 = 10$ in both ca
+724.30	729.90	228	numbers	Then $V_1 \ge 0$ and $P(V_1 > 0) = 1 > 0$.
+729.90	733.00	228	numbers	That's an arbitrage strategy.
+733.00	737.83	228	numbers	The principle says the price $C = 20$ can't happen.
+737.83	739.13	230	section	Extras from the slides (p.97)
+739.13	743.57	232	sentence	The slide states the no-arbitrage principle a little more precisely.
+743.57	749.17	232	sentence	There is no **self-financing** strategy $\Phi$ that creates a riskless profit fr
+749.17	756.68	232	sentence	So the strategies ruled out are self-financing ones: money can't be added or tak
+756.68	759.78	234	sentence	Why does this matter?
+759.78	762.88	234	sentence	Without self-financing, "profit" is meaningless.
+762.88	773.08	234	sentence	If I could add $5$ at time $1$, then $V_1$ would rise by $5$ with no risk, but t
+773.08	785.60	234	sentence	Numbers: in our example, $V_0 = 9.52$ grew to $V_1 = 20$ and then $V_2 = 25.05$,
+785.60	786.40	236	section	Doubts
+786.40	788.60	238	question	In what order do things happen? Is $\Phi_n$ the position I end day $n$ with, whi
+788.60	791.70	240	sentence	Almost.
+791.70	799.98	240	sentence	$\Phi_n$ is the position I hold during day $n$; I chose it at the end of day $n 
+799.98	809.03	240	sentence	At the end of day $n$, the prices $S_n$ come out, and I value $\Phi_n$ at them: 
+809.03	816.17	240	sentence	Then I trade, at the same $S_n$, into $\Phi_{n+1}$, which I hold through day $n 
+816.17	819.83	240	sentence	Self-financing means this trade doesn't change the total.
+819.83	827.73	240	sentence	Numbers: at the end of day $1$, $\Phi_1 = (-30.48, 0.4)$ is worth $20$ at $S_1 =
+827.73	836.02	240	sentence	I switch to $\Phi_2 = (-18.10, 0.3)$, which is also worth $20$ at $S_1$, and hol
+836.02	840.07	240	sentence	See the timeline tables in "Chronology: what happens when".
+840.07	842.77	242	question	What is "trading" here, and when does it happen? Does the price stay the same al
+842.77	849.13	244	sentence	Trading means changing the holding vector from $\Phi_n$ to $\Phi_{n+1}$: buying 
+849.13	856.27	244	sentence	It happens only at the instants $n = 0, 1, 2, \dots$, at the snapshot prices $S_
+856.27	861.08	244	sentence	The model has no price between $n$ and $n + 1$.
+861.08	868.98	244	sentence	It isn't saying the price is flat all day; it just never looks there, and you ca
+868.98	879.97	244	sentence	Numbers: at time $1$, I sell $0.1$ stock at $S_1^1 = 130$, getting $13$, and buy
+879.97	883.07	244	sentence	Both trades use time-1 prices.
+883.07	890.58	244	sentence	The next time I can trade, or see a price, is time $2$, at $S_2 = (1.1025, 150)$
+890.58	893.28	246	question	Is $\Delta V_n(\Phi)$ the increase in value over the next day, day $n + 1$?
+893.28	896.38	248	sentence	Yes.
+896.38	907.37	248	sentence	$\Delta V_n = V_{n+1} - V_n$ runs from the snapshot at time $n$ to the snapshot 
+907.37	910.47	248	sentence	The subscript is the start time.
+910.47	920.67	248	sentence	The holding that earns it is $\Phi_{n+1}$, the one held during day $n + 1$, whic
+920.67	929.33	248	sentence	Numbers: $\Delta V_1 = 25.05 - 20 = 5.05$ is the gain over day $2$, earned by $\
+929.33	932.03	250	question	Is $V_0(\Phi)$ the value of the portfolio at time $0$, just as $V_n(\Phi)$ is th
+932.03	935.13	252	sentence	Yes.
+935.13	945.33	252	sentence	$V_n(\Phi) = \Phi_n \cdot S_n$ is the value at the time-$n$ snapshot, before tra
+945.33	955.53	252	sentence	Time $0$ is the start: $V_0(\Phi) = \Phi_0 \cdot S_0 = \Phi_1 \cdot S_0$ is what
+955.53	961.52	252	sentence	That's why the no-arbitrage condition starts from $V_0(\Phi) = 0$: I put in noth
+961.52	974.03	252	sentence	Numbers: setting up $\Phi_1 = (-30.48, 0.4)$ at $S_0 = (1, 100)$ costs $V_0 = -3

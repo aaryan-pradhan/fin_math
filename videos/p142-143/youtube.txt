@@ -1,0 +1,9 @@
+p.142–143: Martingales and claim pricing
+
+p.142–143: Martingales and claim pricing
+
+0:00 The setting (p.142)
+0:46 The fair price (p.142)
+1:08 Fact 1: an EMM means no arbitrage (p.142)
+1:48 Fact 2: the price of an attainable claim (p.143)
+2:36 Fact 3: a unique EMM means a complete market (p.143)

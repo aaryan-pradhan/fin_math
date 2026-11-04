@@ -1,0 +1,312 @@
+start	end	line	kind	text
+0.00	4.00	5	title	p.105–109: Finite single-period market and the no-arbitrage theorem
+4.00	4.80	7	section	Notation check
+4.80	13.85	9	sentence	Same symbols as p.88: $\Delta$ is the number of shares, $b$ the number of bonds,
+13.85	23.28	9	sentence	The one change: now there can be $n$ stocks, so $\Delta = (\Delta_1, \dots, \Del
+23.28	27.33	9	sentence	The notes mark vectors with a small $\sim$ underneath.
+27.33	35.23	11	sentence	Tables keep the same layout: rows are time or outcome, columns are securities (b
+35.23	38.33	11	sentence	Each cell is holding $\times$ price.
+38.33	39.13	13	section	Recap: the binomial case (p.105)
+39.13	42.42	15	sentence	Let's start from what we already know.
+42.42	47.62	15	sentence	In the single-period binomial market, the NA (no-arbitrage) condition has the fo
+47.62	49.82	17	equation	S_0 \in \left(\frac{S_1(d)}{1+r}, \frac{S_1(u)}{1+r}\right)
+49.82	58.87	19	sentence	and this is the same as saying there exists an EMM (equivalent martingale measur
+58.87	61.07	21	equation	S_0 = p^* \frac{S_1(u)}{1+r} + (1 - p^*) \frac{S_1(d)}{1+r} = E^*\left(\frac{S_1
+61.07	64.35	23	sentence	(The notes write $S_1(d)$ in both terms.
+64.35	68.40	23	sentence	The first one should be $S_1(u)$, as on p.91.)
+68.40	77.32	25	numbers	Numbers, from p.91: $0.6 \times 1.4 + 0.4 \times 0.4 = 0.84 + 0.16 = 1 = S_0$.
+77.32	83.68	27	sentence	Now we want the same result for a market with more outcomes and more stocks.
+83.68	84.98	29	section	The finite market (p.105)
+84.98	89.80	31	sentence	There are two times, $t = 0$ and $t = 1$.
+89.80	93.47	31	sentence	At $t = 1$ the possible outcomes are
+93.47	95.67	33	equation	\Omega = \{\omega_1, \dots, \omega_N\}, \quad N < \infty
+95.67	100.87	35	sentence	There are $n + 1$ traded assets in the market: $n$ stocks,
+100.87	103.07	37	equation	S_t = (S_{t,1}, \dots, S_{t,n})
+103.07	106.17	39	sentence	and $1$ bond (bank account),
+106.17	108.37	41	equation	B_t = (1+r)^t, \quad t = 0, 1
+108.37	116.67	43	numbers	Numbers. Let's build a running example with $n = 2$ stocks, $N = 3$ outcomes and
+116.67	123.05	43	numbers	Each row is a time, and at $t = 1$ an outcome (4 rows).
+123.05	126.33	43	numbers	Each column is a security (3 columns):
+126.33	128.53	45	table	
+128.53	132.97	52	sentence	We'll often need the discounted stock prices $y_k = \frac{S_1(\omega_k)}{1+r}$.
+132.97	136.07	52	sentence	Divide each stock price by $1.25$.
+136.07	140.12	52	sentence	Rows are outcomes (3), columns are the stocks (2):
+140.12	142.82	54	table	
+142.82	146.48	60	sentence	Each $y_k$ is a point in the plane.
+146.48	150.92	60	sentence	These three points will be the corners of a triangle.
+150.92	152.22	62	section	Convex set (p.105)
+152.22	163.97	64	sentence	A set $D \subset \mathbb{R}^m$ is called convex if, for any $\underset{\sim}{x}_
+163.97	166.17	66	equation	\beta \underset{\sim}{x}_1 + (1 - \beta) \underset{\sim}{x}_2 \in D, \quad \beta
+166.17	173.30	68	sentence	As $\beta$ goes from $1$ to $0$, the point slides along the segment from $x_1$ t
+173.30	181.07	70	numbers	Numbers. Take $x_1 = y_1 = (1.6, 0.8)$ and $x_2 = y_2 = (0.4, 1.6)$.
+181.07	190.75	70	numbers	With $\beta = 0.5$, I get $0.5 \times (1.6, 0.8) + 0.5 \times (0.4, 1.6) = (1.0,
+190.75	195.18	70	numbers	A triangle is convex: every such point stays inside it.
+195.18	196.48	72	section	Convex hull (p.105–106)
+196.48	204.08	74	anim	region
+204.08	213.13	76	sentence	The convex hull of a set $B \subset \mathbb{R}^m$, written $\text{conv}(B)$, is 
+213.13	218.73	78	sentence	For a finite set $B := \{y_1, \dots, y_N\} \subset \mathbb{R}^m$ one has
+218.73	221.43	80	equation	D := \text{conv}(B) = \left\{x \in \mathbb{R}^m : x = \sum_{j=1}^N \alpha_j y_j,
+221.43	230.87	82	sentence	So the convex hull is all the weighted averages of the points, with weights that
+230.87	239.15	84	numbers	Numbers. For our three points, $\text{conv}\{y_1, y_2, y_3\}$ is the filled tria
+239.15	243.20	84	numbers	Weights $(1, 0, 0)$ give the corner $y_1$ itself.
+243.20	244.50	86	section	Relative interior (p.106)
+244.50	253.10	88	anim	region
+253.10	257.92	90	sentence	Denote by $D_0$ the relative interior of the convex hull $D$.
+257.92	263.12	90	sentence	It is the same formula, but every weight must be strictly positive:
+263.12	265.32	92	equation	D_0 = \left\{x \in \mathbb{R}^m : x = \sum_{j=1}^N \alpha_j y_j, \ \alpha_j > 0,
+265.32	271.30	94	sentence	If some weight is $0$, the point sits on an edge or a corner.
+271.30	274.97	94	sentence	So $D_0$ is the triangle without its edges.
+274.97	278.07	96	numbers	Numbers.
+278.07	282.88	98	sentence	$(1, 1) = 0.5 y_1 + 0.25 y_2 + 0.25 y_3$.
+282.88	287.70	98	sentence	Check the first coordinate: $0.8 + 0.1 + 0.1 = 1$.
+287.70	291.75	98	sentence	The second: $0.4 + 0.4 + 0.2 = 1$.
+291.75	296.18	98	sentence	All weights are $> 0$, so $(1, 1) \in D_0$.
+296.18	301.38	99	sentence	$(0.4, 1.2) = 0 \cdot y_1 + 0.5 y_2 + 0.5 y_3$.
+301.38	308.90	99	sentence	One weight is $0$, so this point is in $D$ (on the left edge) but not in $D_0$.
+308.90	310.20	101	section	Hyperplane (p.106)
+310.20	317.33	103	sentence	By a hyperplane in $\mathbb{R}^m$ one means a flat set (linear manifold) of dime
+317.33	320.43	103	sentence	In $\mathbb{R}^2$ that's a line.
+320.43	324.87	103	sentence	Analytically, a hyperplane can be given by one linear equation:
+324.87	327.07	105	equation	L := \{\underset{\sim}{x} = (x_1, \dots, x_m) \in \mathbb{R}^m : \underset{\sim}
+327.07	335.73	107	sentence	where $\underset{\sim}{a} \cdot \underset{\sim}{x} = \sum_{j=1}^m x_j a_j$, $c \
+335.73	344.42	109	numbers	Numbers. With $a = (1, 1)$ and $c = 2$, the hyperplane is the line $x_1 + x_2 = 
+344.42	350.42	109	numbers	The point $(1, 1)$ is on it, since $1 + 1 = 2$.
+350.42	351.72	111	section	The normal vector (p.106)
+351.72	357.92	113	anim	region
+357.92	361.20	115	sentence	The vector $\underset{\sim}{a}$ is orthogonal to $L$.
+361.20	364.30	115	sentence	Let's see why.
+364.30	367.40	115	sentence	Take any $x_1, x_2 \in L$.
+367.40	372.60	115	sentence	Then $a \cdot x_1 = c$ and $a \cdot x_2 = c$.
+372.60	375.70	115	sentence	Subtract the two:
+375.70	377.90	117	equation	\underset{\sim}{a} \cdot (\underset{\sim}{x}_1 - \underset{\sim}{x}_2) = 0
+377.90	382.72	119	sentence	So $a$ is perpendicular to every direction that lies inside $L$.
+382.72	388.32	121	sentence	Now fix one point $x_0 \in L$, so $c = a \cdot x_0$.
+388.32	394.68	121	sentence	Substitute this $c$ into $a \cdot x = c$ and move it to the left.
+394.68	398.35	121	sentence	The equation for $L$ can be written as
+398.35	400.55	123	equation	\underset{\sim}{a} \cdot (\underset{\sim}{x} - \underset{\sim}{x}_0) = 0
+400.55	407.68	125	sentence	The three pictures in the notes show $c < 0$, $c = 0$ and $c > 0$.
+407.68	413.67	125	sentence	The value of $c$ only decides where $L$ sits relative to the origin $0$.
+413.67	418.10	125	sentence	In every picture, the arrow $a$ is perpendicular to $L$.
+418.10	426.02	127	numbers	Numbers. $x_1 = (2, 0)$ and $x_2 = (0, 2)$ both lie on $x_1 + x_2 = 2$.
+426.02	434.55	127	numbers	Their difference is $(2, -2)$, and $(1, 1) \cdot (2, -2) = 2 - 2 = 0$.
+434.55	437.65	127	numbers	Perpendicular, as promised.
+437.65	438.95	129	section	The half-space (p.106)
+438.95	445.70	131	sentence	The open half-space on the side of $L$ where $\underset{\sim}{a}$ is pointing ca
+445.70	447.90	133	equation	H_L(\underset{\sim}{a}) := \{x \in \mathbb{R}^m : \underset{\sim}{a} \cdot (\und
+447.90	451.18	135	sentence	On $L$ the dot product is $0$.
+451.18	455.62	135	sentence	On the side the arrow points to, it is positive.
+455.62	458.72	135	sentence	On the other side, negative.
+458.72	463.17	137	numbers	Numbers. $a = (1, 1)$, $x_0 = (1, 1)$.
+463.17	472.08	137	numbers	Take the point $(1.6, 0.8)$: $(1, 1) \cdot (0.6, -0.2) = 0.6 - 0.2 = 0.4 > 0$.
+472.08	475.18	137	numbers	So $(1.6, 0.8)$ is in $H_L(a)$.
+475.18	476.48	139	section	Thm 1: the separation theorem (p.107)
+476.48	486.08	141	anim	region
+486.08	493.60	143	sentence	**Theorem 1 (separation theorem).** Assume that $D \subset \mathbb{R}^m$ is a co
+493.60	504.20	143	sentence	Then for any point $x_0 \notin D_0$, there exists a hyperplane $L$ with a normal
+504.20	509.40	145	sentence	In other words, there exists a vector $a \in \mathbb{R}^m$ such that
+509.40	511.60	147	equation	\underset{\sim}{a} \cdot (\underset{\sim}{x} - \underset{\sim}{x}_0) > 0, \quad 
+511.60	523.73	149	sentence	In words: if a point is not inside the convex set, I can draw a line through tha
+523.73	528.95	151	numbers	Numbers. Take $x_0 = (2, 2)$, which is outside our triangle.
+528.95	532.45	151	numbers	Try $a = (-1, -1)$.
+532.45	542.13	151	numbers	Then $a \cdot (y - x_0) = -(y_1 + y_2) + 4$ for a point $y$ with coordinates $(y
+542.13	545.23	151	numbers	At the three corners:
+545.23	549.28	153	sentence	$(1.6, 0.8)$: $-2.4 + 4 = 1.6 > 0$
+549.28	553.33	154	sentence	$(0.4, 1.6)$: $-2.0 + 4 = 2.0 > 0$
+553.33	557.38	155	sentence	$(0.4, 0.8)$: $-1.2 + 4 = 2.8 > 0$
+557.38	562.58	157	sentence	Every point of the triangle is a weighted average of the corners.
+562.58	570.10	157	sentence	The dot product is linear, so it's the same weighted average of $1.6$, $2.0$, $2
+570.10	574.15	157	sentence	So the whole triangle is on the positive side.
+574.15	575.45	159	section	Thm 2 in plain words, before we state it (p.107)
+575.45	579.12	161	sentence	Before the formal statement, let's say it simply.
+579.12	582.22	161	sentence	Two words come first.
+582.22	590.50	163	sentence	An arbitrage is free money: a portfolio that costs $0$ today, never loses, and w
+590.50	604.55	165	sentence	An EMM (equivalent martingale measure) is a set of made-up probabilities $p_k^* 
+604.55	606.75	167	equation	S_0 = \sum_{k=1}^N p_k^* \frac{S_1(\omega_k)}{1+r}
+606.75	609.85	169	sentence	These are not the real chances.
+609.85	613.90	169	sentence	They are just weights that make the prices balance.
+613.90	620.27	171	sentence	Thm 2 says: free money is impossible exactly when such fair-game weights can be 
+620.27	624.33	173	numbers	Numbers. Take one stock with $r = 0.25$.
+624.33	632.63	173	numbers	Tomorrow it is worth $2$ or $0.5$, which is $\frac{2}{1.25} = 1.6$ or $\frac{0.5
+632.63	635.73	173	numbers	Let's look for $p^*$ with
+635.73	637.93	175	equation	1.6 p^* + 0.4 (1 - p^*) = S_0
+637.93	641.60	177	sentence	Expand: $0.4 + 1.2 p^* = S_0$, so
+641.60	643.80	179	equation	p^* = \frac{S_0 - 0.4}{1.2}
+643.80	652.47	181	sentence	Rows are three possible prices today (3), and columns are $S_0$, $p^*$, whether 
+652.47	655.17	183	table	
+655.17	660.37	189	sentence	So fair weights exist exactly when $p^* \in (0, 1)$, that is,
+660.37	662.57	191	equation	0.4 < S_0 < 1.6
+662.57	669.32	193	sentence	Today's price must sit strictly between the worst and the best outcome, measured
+669.32	672.98	193	sentence	That's the binomial condition from the recap above.
+672.98	680.50	193	sentence	With more stocks and outcomes, "between" becomes "inside the triangle" $D_0$, an
+680.50	688.02	195	sentence	Check: at $S_0 = 1$, $1.6 \times 0.5 + 0.4 \times 0.5 = 0.8 + 0.2 = 1$.
+688.02	691.12	195	sentence	Same.
+691.12	692.42	197	section	Thm 2: NA if and only if an EMM exists (p.107)
+692.42	705.32	199	sentence	**Theorem 2.** A finite single-period financial market is arbitrage-free if and 
+705.32	707.52	201	equation	E^*\left(\frac{\underset{\sim}{S}_1}{1+r}\right) = \underset{\sim}{S}_0
+707.52	713.12	203	sentence	That is, the process $\{\underset{\sim}{S}_t (1+r)^{-t}\}_{t=0,1}$ is a (vector-
+713.12	716.22	205	sentence	Let's read the martingale part.
+716.22	721.42	205	sentence	At $t = 0$ the discounted price is $S_0 (1+r)^0 = S_0$.
+721.42	728.55	205	sentence	At $t = 1$ it is $\frac{S_1}{1+r}$. "Martingale" says: the expected value tomorr
+728.55	734.77	207	numbers	Numbers. Take $p^* = (0.5, 0.25, 0.25)$ on $(\omega_1, \omega_2, \omega_3)$.
+734.77	739.20	207	numbers	Rows are outcomes (3), plus a last row for $E^*$.
+739.20	742.30	207	numbers	Columns are the stocks (2).
+742.30	748.28	207	numbers	Each cell is $p_k^* \times y_k$, and the last row adds down the column:
+748.28	750.48	209	table	
+750.48	755.68	216	sentence	So $E^*\left(\frac{S_1}{1+r}\right) = (1, 1) = S_0$, and every $p_k^* > 0$.
+755.68	761.28	216	sentence	This $P^*$ is an EMM, so by Thm 2 our market is arbitrage-free.
+761.28	762.58	218	section	The plan of the proof (p.107)
+762.58	770.10	220	sentence	Let's prove it for $n = 2$: $S_t = (S_{t,1}, S_{t,2})$, $t = 0, 1$, two risky as
+770.10	773.20	220	sentence	Set
+773.20	775.40	222	equation	D := \text{conv}\left\{\frac{S_1(\omega_1)}{1+r}, \dots, \frac{S_1(\omega_N)}{1+
+775.40	778.68	224	sentence	In our example, $D$ is the triangle.
+778.68	781.78	224	sentence	There are two possibilities: either
+781.78	785.83	226	sentence	(I) $S_0 \in D_0$, or (II) $S_0 \notin D_0$.
+785.83	790.27	228	sentence	We will prove NA $\iff$ $\exists$ EMM in three steps:
+790.27	793.55	230	sentence	Step 1 shows $\exists$ EMM $\iff$ (I).
+793.55	796.83	231	sentence	Step 2 proves $\exists$ EMM $\Rightarrow$ NA.
+796.83	799.93	232	sentence	Step 3 proves NA $\Rightarrow$ (I).
+799.93	803.03	234	sentence	Why is that enough?
+803.03	814.40	234	sentence	Chain them: NA $\Rightarrow$ (I) by Step 3, (I) $\Rightarrow$ EMM by Step 1, and
+814.40	815.70	236	section	Step 1: an EMM is the same as (I) (p.108)
+815.70	824.75	238	sentence	From the definition of $D_0$, the statement $S_0 \in D_0$ says there are weights
+824.75	826.95	240	equation	S_0 = \sum_{k=1}^N p_k^* \frac{S_1(\omega_k)}{1+r} =: E^*\left(\frac{S_1}{1+r}\r
+826.95	834.47	242	sentence	But positive weights adding to $1$ are just a probability on $\Omega$ with $P^*(
+834.47	839.28	242	sentence	And the equation says the discounted stocks are fair under it.
+839.28	842.38	242	sentence	That is an EMM.
+842.38	845.48	242	sentence	Thus $\exists$ EMM $\iff$ (I).
+845.48	859.02	244	numbers	Numbers. The one equation $(1, 1) = 0.5 y_1 + 0.25 y_2 + 0.25 y_3$ says both thi
+859.02	868.07	246	sentence	In the right panel of the first picture, this is the purple square: $S_0 = (1, 1
+868.07	869.37	248	section	Step 2: an EMM rules out arbitrage (p.108)
+869.37	872.47	250	sentence	Proof by contradiction.
+872.47	876.52	250	sentence	Suppose that an EMM exists, but NA does not.
+876.52	880.95	252	sentence	So there is an arbitrage opportunity $(\underset{\sim}{\Delta}, b)$, with value
+880.95	883.15	254	equation	V_t = \underset{\sim}{\Delta} \cdot \underset{\sim}{S}_t + b B_t
+883.15	886.25	256	sentence	An arbitrage starts from nothing:
+886.25	888.45	258	equation	V_0 = \underset{\sim}{\Delta} \cdot \underset{\sim}{S}_0 + b = 0
+888.45	891.55	260	sentence	so that
+891.55	893.75	262	equation	b = -\underset{\sim}{\Delta} \cdot \underset{\sim}{S}_0
+893.75	898.95	264	sentence	Now substitute this $b$ into $V_1$, using $B_1 = 1 + r$:
+898.95	901.15	266	equation	V_1(\omega) = \underset{\sim}{\Delta} \cdot \underset{\sim}{S}_1(\omega) + b(1+r
+901.15	904.25	268	sentence	Being an arbitrage means
+904.25	906.45	270	equation	V_1(\omega) \ge 0 \ \forall \omega, \quad V_1(\omega) > 0 \text{ for at least on
+906.45	909.55	272	sentence	However, this means the following.
+909.55	914.75	272	sentence	Start from $\Delta \cdot S_0$ and use Step 1, $S_0 = E^*\left(\frac{S_1}{1+r}\ri
+914.75	917.45	274	equation	\underset{\sim}{\Delta} \cdot \underset{\sim}{S}_0 = \underset{\sim}{\Delta} \cd
+917.45	923.05	276	sentence	$\Delta$ is a fixed vector, so I can move it inside the expectation:
+923.05	925.25	278	equation	\underset{\sim}{\Delta} \cdot \underset{\sim}{S}_0 = E^*\left(\frac{\underset{\s
+925.25	928.35	280	sentence	Now look at $(\circledast)$.
+928.35	938.17	280	sentence	Dividing it by $1 + r$ says $\frac{\Delta \cdot S_1(\omega_k)}{1+r} \ge \Delta \
+938.17	943.37	280	sentence	Every $p_k^* > 0$, so that strict part survives in the sum:
+943.37	945.57	282	equation	\sum_{k=1}^N p_k^* \frac{\underset{\sim}{\Delta} \cdot \underset{\sim}{S}_1(\ome
+945.57	949.23	284	sentence	The last step used $\sum_k p_k^* = 1$.
+949.23	954.43	284	sentence	Putting the two lines together: $\Delta \cdot S_0 > \Delta \cdot S_0$.
+954.43	957.53	284	sentence	That is a contradiction.
+957.53	960.63	284	sentence	$\therefore$ $\exists$ EMM $\Rightarrow$ NA.
+960.63	966.62	286	numbers	Numbers. Let's try to build an arbitrage in our market and watch it fail.
+966.62	977.46	286	numbers	Take $\Delta = (1, -1)$: buy stock 1, short stock 2. Then $b = -\Delta \cdot S_0
+977.46	983.45	286	numbers	Rows are time and outcome (4), columns are the securities plus the sum (4):
+983.45	986.15	288	table	
+986.15	990.59	295	sentence	It wins in $\omega_1$ but loses in $\omega_2$ and $\omega_3$.
+990.59	1000.42	295	sentence	Check the average: $E^*\left(\frac{V_1}{1.25}\right) = 0.5 \times 0.8 + 0.25 \ti
+1000.42	1008.72	295	sentence	An average of $0$ with positive weights can't come from numbers that are all $\g
+1008.72	1012.01	295	sentence	That's the whole proof, in one example.
+1012.01	1015.30	297	sentence	The slides (p.120) give a shorter route.
+1015.30	1023.21	297	sentence	Substitute $b = -\Delta \cdot S_0$ and pull out $1 + r$: $V_1(\omega) = (1+r)\De
+1023.21	1031.12	297	sentence	Take $E^*$ of $\frac{V_1}{1+r}$ and use Step 1: $E^*\left(\frac{V_1}{1+r}\right)
+1031.12	1040.18	297	sentence	But an arbitrage has $V_1 \ge 0$ everywhere and $> 0$ in some outcome with $p_k^
+1040.18	1043.28	297	sentence	Contradiction.
+1043.28	1044.58	299	section	Step 3: no-arbitrage forces (I) (p.108–109)
+1044.58	1054.18	301	anim	region
+1054.18	1057.47	303	sentence	This also we will prove by contradiction.
+1057.47	1060.76	303	sentence	Suppose NA holds, but (I) does not.
+1060.76	1064.82	305	sentence	The latter means that (II) holds: $S_0 \notin D_0$.
+1064.82	1071.96	305	sentence	Then by the separation theorem there is a straight line $L$ through $S_0$ separa
+1071.96	1075.06	305	sentence	Denote by
+1075.06	1077.26	307	equation	\underset{\sim}{\Delta} := (\Delta_1, \Delta_2)
+1077.26	1082.09	309	sentence	a normal vector to $L$, "pointing" in the direction of $D_0$.
+1082.09	1085.19	309	sentence	Then we have
+1085.19	1087.39	311	equation	\underset{\sim}{\Delta} \cdot (\underset{\sim}{x} - \underset{\sim}{S}_0) > 0, \
+1087.39	1094.15	313	sentence	The notes jump from points of $D_0$ to the corners $\frac{S_1(\omega)}{1+r}$, so
+1094.15	1102.06	313	sentence	The corners sit at the edge of $D_0$: points of $D_0$ come as close to them as I
+1102.06	1108.42	313	sentence	So at each corner the dot product can't be negative, though it might be $0$.
+1108.42	1117.49	313	sentence	And it can't be $0$ at every corner, since then every weighted average, includin
+1117.49	1120.59	313	sentence	So
+1120.59	1122.79	315	equation	\underset{\sim}{\Delta} \cdot \left(\frac{\underset{\sim}{S}_1(\omega)}{1+r} - \
+1122.79	1125.89	317	sentence	Now multiply by $1 + r$.
+1125.89	1135.33	317	sentence	This becomes $\Delta \cdot S_1(\omega) - \Delta \cdot S_0 (1+r)$, which is exact
+1135.33	1138.43	317	sentence	So it is $(\circledast)$ again.
+1138.43	1141.53	319	sentence	But this is an arbitrage opportunity.
+1141.53	1144.63	319	sentence	That contradicts NA.
+1144.63	1147.73	319	sentence	$\therefore$ NA $\Rightarrow$ (I).
+1147.73	1154.50	321	numbers	Numbers. Keep the same $S_1$, but now let $S_0 = (2, 2)$, outside the triangle.
+1154.50	1161.66	321	numbers	From Thm 1, $\Delta = (-1, -1)$ points towards the triangle: short one of each s
+1161.66	1170.96	321	numbers	Then $b = -\Delta \cdot S_0 = -(-2 - 2) = 4$, so I put $4$ in the bond.
+1170.96	1176.94	321	numbers	Rows are time and outcome (4), columns are the securities plus the sum (4):
+1176.94	1179.64	323	table	
+1179.64	1184.86	330	sentence	$V_0 = 0$, and $V_1 > 0$ in every outcome: an arbitrage.
+1184.86	1190.06	330	sentence	Check against Thm 1: there the dot products were $1.6$, $2.0$, $2.8$.
+1190.06	1193.16	330	sentence	Times $1.25$ that's $2$, $2.5$, $3.5$.
+1193.16	1196.26	330	sentence	Same.
+1196.26	1205.32	332	sentence	This is the separation picture again, now read as a market: $x_0$ is $S_0$, and 
+1205.32	1215.15	332	sentence	Today's price sits outside the triangle of discounted outcomes, and the arrow po
+1214.92	1215.72	334	section	Doubts
+1215.72	1217.92	336	question	In the binomial case, why does no-arbitrage mean $S_0 \in \left(\frac{S_1(d)}{1+
+1217.92	1221.97	338	sentence	Let's take the two parts one at a time.
+1221.97	1225.07	340	sentence	First, rewrite the interval.
+1225.07	1230.67	340	sentence	Substitute $S_1(d) = dS_0$ and $S_1(u) = uS_0$, then multiply through by $\frac{
+1230.67	1232.87	342	equation	\frac{dS_0}{1+r} < S_0 < \frac{uS_0}{1+r} \iff d < 1 + r < u
+1232.87	1241.92	344	sentence	So the condition just says the bond's growth $1 + r$ must sit strictly between t
+1241.92	1245.59	344	sentence	Let's see what goes wrong if it doesn't.
+1245.59	1250.02	344	sentence	I use $S_0 = 1$ and $u = 1.75$ throughout.
+1250.02	1253.30	346	sentence	Case 1: $1 + r \ge u$.
+1253.30	1260.05	346	sentence	The bond does at least as well as the stock even in the stock's best case.
+1260.05	1265.25	346	sentence	So I short the stock and put the money in the bond.
+1265.25	1270.85	346	sentence	Take $r = 0.8$, $d = 0.5$: short 1 share, buy 1 bond.
+1270.85	1276.84	346	sentence	Rows are time and outcome (3); columns are bond, stock and the sum (3):
+1276.84	1279.04	348	table	
+1279.04	1283.48	354	sentence	I start with $0$ and end positive in both outcomes.
+1283.48	1286.58	354	sentence	Arbitrage.
+1286.58	1289.88	356	sentence	Case 2: $1 + r \le d$.
+1289.88	1296.24	356	sentence	The stock does at least as well as the bond even in its worst case.
+1296.24	1300.69	356	sentence	So I borrow in the bond and buy the stock.
+1300.69	1305.91	356	sentence	Take $r = 0.25$, $d = 1.3$: borrow 1, buy 1 share.
+1305.91	1309.01	356	sentence	Same layout:
+1309.01	1311.71	358	table	
+1311.71	1314.81	364	sentence	Again an arbitrage.
+1314.81	1318.87	366	sentence	Case 3: $d < 1 + r < u$.
+1318.87	1324.85	366	sentence	Start from nothing with $\Delta$ shares and $b = -\Delta S_0$ in the bond.
+1324.85	1334.30	366	sentence	Then $V_1 = \Delta(S_1 - (1+r)S_0)$, which is $\Delta(u - (1+r))S_0$ in the up o
+1334.30	1342.98	366	sentence	The two brackets have opposite signs, so whatever $\Delta$ I pick, I win in one 
+1342.98	1346.08	366	sentence	No arbitrage.
+1346.08	1355.91	366	sentence	With $r = 0.25$, $d = 0.5$, $\Delta = 1$: up gives $1.75 - 1.25 = 0.5$, down giv
+1355.91	1360.35	368	sentence	Second part: why is this the same as an EMM?
+1360.35	1370.18	368	sentence	A number lies strictly between two others exactly when it is a weighted average 
+1370.18	1373.28	368	sentence	Solve for that weight:
+1373.28	1375.48	370	equation	p^* = \frac{S_0 - \frac{S_1(d)}{1+r}}{\frac{S_1(u)}{1+r} - \frac{S_1(d)}{1+r}} =
+1375.48	1384.93	372	sentence	If $S_0$ is inside the interval, $p^* \in (0, 1)$, so it is a real probability t
+1384.93	1387.13	374	equation	S_0 = p^* \frac{S_1(u)}{1+r} + (1 - p^*) \frac{S_1(d)}{1+r} = E^*\left(\frac{S_1
+1387.13	1396.58	376	sentence	That is the EMM: under $p^*$, the discounted stock price is a fair game, and tod
+1396.58	1407.18	376	sentence	If $S_0$ is outside the interval, the same formula gives $p^* > 1$ or $p^* < 0$,
+1407.18	1418.02	378	numbers	Numbers. With $r = 0.25$, $d = 0.5$, the interval is $(0.4, 1.4)$ and $p^* = \fr
+1418.02	1430.52	378	numbers	In Case 1 ($r = 0.8$), $p^* = \frac{1.8 - 0.5}{1.75 - 0.5} = 1.04 > 1$: not a pr
+1430.52	1441.89	380	sentence	So "$S_0$ is inside the interval", "$d < 1 + r < u$", "there is an EMM" and "no 
+1441.89	1449.80	380	sentence	Thm 2 is this same fact for many stocks and outcomes, with the interval replaced
+1449.80	1452.50	382	question	What is the one idea behind the proof of Thm 2?
+1452.50	1458.48	384	sentence	Everything rests on one translation: the profit of a portfolio is a dot product.
+1458.48	1461.58	384	sentence	Let's see why.
+1461.58	1472.95	384	sentence	I buy $\Delta$ shares, paying $\Delta \cdot S_0$, and I borrow all of that from 
+1472.95	1479.71	384	sentence	In outcome $\omega_k$ the shares are worth $\Delta \cdot S_1(\omega_k)$, and I r
+1479.71	1485.31	384	sentence	Divide the profit by $1 + r$ to get it in today's money:
+1485.31	1487.51	386	equation	\frac{V_1(\omega_k)}{1+r} = \underset{\sim}{\Delta} \cdot (y_k - \underset{\sim}
+1487.51	1493.11	388	sentence	Here $y_k - S_0$ is the arrow from $S_0$ to the corner $y_k$.
+1493.11	1505.24	388	sentence	A dot product is positive when the two arrows point to the same side of the line
+1505.24	1515.46	388	sentence	So an arbitrage is a direction $\Delta$ whose line through $S_0$ has every corne
+1515.46	1519.14	390	sentence	That is when the three steps become pictures.
+1519.14	1530.51	390	sentence	If $S_0$ is strictly inside the triangle, every line through it has corners on b
+1530.51	1542.64	390	sentence	If $S_0$ is not strictly inside, the separation theorem gives a line through $S_
+1542.64	1550.55	390	sentence	And "strictly inside" means positive weights with $S_0 = \sum p_k^* y_k$, which 
+1550.55	1555.78	392	numbers	Numbers. Left picture: $S_0 = (1, 1)$, $\Delta = (1, -1)$.
+1555.78	1567.40	392	numbers	The profits are $(1, -1) \cdot (0.6, -0.2) = 0.8$, $(1, -1) \cdot (-0.6, 0.6) = 
+1567.40	1575.17	392	numbers	Check against the Step 2 table: $(1, -1.5, -0.5) \div 1.25 = (0.8, -1.2, -0.4)$.
+1575.17	1578.27	392	numbers	Same.
+1578.27	1586.96	392	numbers	Right picture: $S_0 = (2, 2)$, $\Delta = (-1, -1)$, profits $1.6$, $2.0$, $2.8$,

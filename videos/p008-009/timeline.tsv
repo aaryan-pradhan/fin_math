@@ -1,0 +1,88 @@
+start	end	line	kind	text
+0.00	4.00	6	title	Change of Variables for Expectation
+4.00	9.20	8	sentence	Transferring integration from abstract $\Omega$ to $\mathbb{R}$ via the push-for
+9.20	10.00	10	section	Theorem Statement
+10.00	17.52	12	sentence	For any Borel function $h : \mathbb{R} \to \mathbb{R}$ such that $h(\xi)$ is int
+17.52	19.72	14	equation	E(h(\xi)) = \int_\Omega h(\xi(\omega))\, dP(\omega) = \int_{\mathbb{R}} h(x)\, d
+19.72	25.70	16	sentence	where $P_\xi(A) = P(\xi \in A)$ is the push-forward (distribution) measure on $(
+25.70	30.13	18	sentence	Two tosses, $\xi$ = number of heads, $h(x) = x^2$.
+30.13	33.23	18	sentence	Compute $E(\xi^2)$ both ways:
+33.23	40.37	20	sentence	**On $\Omega$** (sum over outcomes): $HH \to 4$, $HT \to 1$, $TH \to 1$, $TT \to
+40.37	45.18	20	sentence	$E = \tfrac14(4 + 1 + 1 + 0) = 1.5$.
+45.18	51.93	22	sentence	**On $\mathbb{R}$** (sum over values, weighted by $P_\xi$): $0^2\cdot\tfrac14 + 
+51.93	57.13	24	sentence	The $\mathbb{R}$ version groups $HT$ and $TH$, which share $\xi = 1$.
+57.13	60.80	24	sentence	You never need $\Omega$ once you know $P_\xi$.
+60.80	62.10	26	section	Step 1: Simple Functions (Base Case)
+62.10	68.47	28	sentence	Let $h(x) = \sum_{i=1}^{n} h_i \mathbb{1}_{A_i}(x)$ be a simple function over di
+68.47	71.57	28	sentence	Evaluating at $\xi(\omega)$:
+71.57	73.77	30	equation	h(\xi(\omega)) = \sum_{i=1}^{n} h_i \mathbb{1}_{A_i}(\xi(\omega)) = \sum_{i=1}^{
+73.77	76.87	32	sentence	Taking expectation:
+76.87	79.07	34	equation	E(h(\xi)) = \sum_{i=1}^{n} h_i P(\xi \in A_i) = \sum_{i=1}^{n} h_i P_\xi(A_i) = 
+79.07	86.58	36	sentence	Same $\xi$, $h = 3\cdot\mathbb{1}_{[1,\infty)} - 1\cdot\mathbb{1}_{(-\infty, 1)}
+86.58	88.78	38	equation	E(h(\xi)) = 3\,P_\xi([1,\infty)) - 1\,P_\xi((-\infty,1)) = 3\cdot\tfrac34 - \tfr
+88.78	90.08	40	section	Step 2: Non-Negative Borel Functions (MCT)
+90.08	98.75	42	sentence	For any $h \geq 0$, construct a sequence of simple functions $0 \leq h_1 \leq h_
+98.75	103.57	42	sentence	By Step 1, $E(h_n(\xi)) = \int_{\mathbb{R}} h_n(x)\, dP_\xi(x)$ for every $n$.
+103.57	109.55	42	sentence	By the **Monotone Convergence Theorem (MCT)**, we pass the limit inside both int
+109.55	111.75	44	equation	\lim_{n\to\infty} E(h_n(\xi)) = E(h(\xi)) \qquad \text{and} \qquad \lim_{n\to\in
+111.75	116.57	46	sentence	Hence, $E(h(\xi)) = \int_{\mathbb{R}} h(x)\, dP_\xi(x)$ holds for all non-negati
+116.57	119.67	48	sentence	$\xi \sim \text{Exp}(1)$, $h(x) = x$.
+119.67	122.95	48	sentence	Truncations $h_n = \min(x, n) \uparrow x$.
+122.95	125.15	50	equation	E\min(\xi, n) = \int_0^n P(\xi > t)\,dt = \int_0^n e^{-t}\,dt = 1 - e^{-n}
+125.15	128.25	52	sentence	$n = 1$: $0.632$.
+128.25	131.35	52	sentence	$n = 3$: $0.950$.
+131.35	134.45	52	sentence	$n = 10$: $0.99995$.
+134.45	138.88	52	sentence	These increase to $1 = E\xi$, exactly as MCT promises.
+138.88	140.18	54	section	Step 3: General Integrable Functions
+140.18	148.47	56	sentence	Decompose $h = h^+ - h^-$ where $h^+ = \max(h, 0) \geq 0$ and $h^- = \max(-h, 0)
+148.47	152.90	56	sentence	Since $h(\xi)$ is integrable, both $E(h^+(\xi))$ and $E(h^-(\xi))$ are finite.
+152.90	156.00	56	sentence	Applying Step 2 to both parts:
+156.00	158.20	58	equation	E(h(\xi)) = E(h^+(\xi)) - E(h^-(\xi)) = \int_{\mathbb{R}} h^+\, dP_\xi - \int_{\
+158.20	162.63	60	sentence	$\xi$ uniform on $[-1, 2]$ (density $\tfrac13$), $h(x) = x$:
+162.63	164.83	62	equation	\int h^+\,dP_\xi = \int_0^2 \tfrac x3\,dx = \tfrac23,\qquad \int h^-\,dP_\xi = \
+164.83	170.43	64	sentence	$E\xi = \tfrac23 - \tfrac16 = \tfrac12$, the midpoint of $[-1, 2]$ ✅
+170.43	171.73	66	section	Step 4: Concrete Applications
+171.73	174.83	68	sentence	**1.
+174.83	180.03	68	sentence	Continuous Case:** If $\xi$ has density $f_\xi$, then $dP_\xi(x) = f_\xi(x)\, dx
+180.03	182.23	70	equation	E(h(\xi)) = \int_{-\infty}^{\infty} h(x) f_\xi(x)\, dx
+182.23	185.33	72	sentence	**2.
+185.33	189.77	72	sentence	Discrete Case:** If $\xi$ takes discrete values $\{x_1, x_2, \ldots\}$:
+189.77	191.97	74	equation	E(h(\xi)) = \sum_i h(x_i) P(\xi = x_i)
+191.97	196.40	76	sentence	$U$ uniform on $[0,1]$: $E(U^2) = \int_0^1 x^2\,dx = \tfrac13$.
+196.40	201.22	78	sentence	$Z \sim N(0,1)$: $E(e^Z) = \int e^x\frac{1}{\sqrt{2\pi}}e^{-x^2/2}\,dx = e^{1/2}
+201.22	207.20	80	sentence	Die: $E(1/\xi) = \tfrac16\left(1 + \tfrac12 + \cdots + \tfrac16\right) = \tfrac{
+207.20	210.30	80	sentence	Not $1/E\xi = 1/3.5 \approx 0.286$.
+210.30	213.40	82	sentence	$E(h(\xi)) \ne h(E\xi)$ in general.
+213.40	217.83	82	sentence	Apply $h$ inside the integral, to each value, before averaging.
+217.83	219.13	84	section	Practice Questions
+219.13	222.23	86	sentence	**Q1.** $\xi$ uniform on $[0, 2]$.
+222.23	225.33	86	sentence	Find $E(\xi^3)$.
+225.33	228.43	88	sentence	Answer
+228.43	231.53	90	sentence	$\int_0^2 x^3\cdot\tfrac12\,dx = \tfrac12\cdot\tfrac{16}{4} = 2$.
+231.53	234.63	92	sentence	**Q2.** $\xi \sim \text{Exp}(1)$.
+234.63	237.73	92	sentence	Find $E(e^{\xi/2})$.
+237.73	240.83	92	sentence	What about $E(e^{\xi})$?
+240.83	243.93	94	sentence	Answer
+243.93	247.22	96	sentence	$\int_0^\infty e^{x/2}e^{-x}\,dx = \int_0^\infty e^{-x/2}\,dx = 2$.
+247.22	253.20	96	sentence	For $E(e^\xi)$: $\int_0^\infty e^{x}e^{-x}\,dx = \int_0^\infty 1\,dx = \infty$, 
+253.20	256.30	98	sentence	**Q3.** $\xi \sim \text{Poisson}(2)$.
+256.30	259.40	98	sentence	Find $E[\xi(\xi - 1)]$.
+259.40	262.50	100	sentence	Answer
+262.50	267.70	102	sentence	$\sum_{k\ge 2} k(k-1)e^{-2}\frac{2^k}{k!} = 4\sum_{k\ge 2} e^{-2}\frac{2^{k-2}}{
+267.70	270.80	102	sentence	(In general $\lambda^2$.)
+270.80	273.90	104	sentence	**Q4.** $Z \sim N(0,1)$.
+273.90	277.00	104	sentence	Find $E|Z|$.
+277.00	280.10	106	sentence	Answer
+280.10	284.53	108	sentence	$2\int_0^\infty x\frac{1}{\sqrt{2\pi}}e^{-x^2/2}\,dx = \frac{2}{\sqrt{2\pi}}\lef
+284.53	287.63	110	sentence	**Q5.** $U$ uniform on $[0,1]$.
+287.63	291.68	110	sentence	Compare $E(U^2)$ with $(EU)^2$, and $E\sqrt U$ with $\sqrt{EU}$.
+291.68	294.78	112	sentence	Answer
+294.78	298.83	114	sentence	$E(U^2) = \tfrac13 > \tfrac14 = (EU)^2$ (convex $h$).
+298.83	305.20	114	sentence	$E\sqrt U = \int_0^1 x^{1/2}\,dx = \tfrac23 \approx 0.667 < \sqrt{0.5} \approx 0
+305.20	308.30	114	sentence	This is Jensen's inequality.
+308.30	311.58	116	sentence	**Q6.** Two fair dice, $S$ = sum.
+311.58	315.25	116	sentence	Compute $E(\mathbb{1}\{S \ge 10\})$ and $E(S\cdot\mathbb{1}\{S \ge 10\})$.
+315.25	318.35	118	sentence	Answer
+318.35	322.40	120	sentence	$P(S = 10, 11, 12) = \tfrac{3}{36}, \tfrac2{36}, \tfrac1{36}$.
+322.40	325.50	120	sentence	First: $\tfrac6{36} = \tfrac16$.
+325.50	331.10	120	sentence	Second: $\tfrac{10\cdot 3 + 11\cdot 2 + 12\cdot 1}{36} = \tfrac{64}{36} \approx 

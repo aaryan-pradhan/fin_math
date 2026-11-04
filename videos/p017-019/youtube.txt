@@ -1,0 +1,8 @@
+Standard Brownian Motion & Canonical Martingales
+
+Standard Brownian Motion & Canonical Martingales
+
+0:00 Step 1: Definition of Standard Brownian Motion (SBM / Wiener Process)
+0:49 Step 2: Martingale 1 — The Linear Process Wt
+1:14 Step 3: Martingale 2 — The Quadratic Process Wt2 - t
+1:52 Step 4: Martingale 3 — The Exponential Process euWt - frac12 u2 t

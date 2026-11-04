@@ -1,0 +1,49 @@
+start	end	line	kind	text
+0.00	4.00	6	title	Distribution Measure & Cumulative Distribution Function
+4.00	8.43	8	sentence	Un-rushed breakdown of push-forward probability measures and distribution functi
+8.43	9.23	10	section	Step 1: The Push-Forward Measure $P_\xi$
+9.23	20.98	12	sentence	Every random variable $\xi : \Omega \to \mathbb{R}$ on $(\Omega, \mathcal{F}, P)
+20.98	23.18	14	equation	P_\xi(B) = P(\xi \in B) = P(\{\omega \in \Omega : \xi(\omega) \in B\})
+23.18	26.47	16	sentence	**Interpretation:** $P_\xi$ is the "distribution" of $\xi$.
+26.47	33.60	16	sentence	It transports probability measure $P$ from abstract sample space $\Omega$ to set
+33.60	37.27	18	sentence	Two fair tosses, $\xi$ = number of heads.
+37.27	40.55	18	sentence	Push each outcome's $\tfrac14$ onto its value:
+40.55	42.75	20	table	
+42.75	47.57	25	sentence	Any Borel set: $P_\xi([0.5, 10]) = P_\xi(\{1\}) + P_\xi(\{2\}) = \tfrac34$.
+47.57	50.67	25	sentence	$P_\xi((-\infty, 0)) = 0$.
+50.67	53.77	27	sentence	Different $\Omega$, same distribution.
+53.77	56.87	27	sentence	Uniform point $\omega \in [0,1]$, and
+56.87	59.07	29	equation	\eta(\omega) = \begin{cases} 0 & \omega < 0.25 \\ 1 & 0.25 \le \omega < 0.75 \\ 
+59.07	63.12	31	sentence	$P_\eta(\{0\}) = 0.25$, $P_\eta(\{1\}) = 0.5$, $P_\eta(\{2\}) = 0.25$.
+63.12	68.72	31	sentence	This is the same as $P_\xi$ above, even though $\Omega$ is completely different.
+68.72	73.92	31	sentence	$P_\xi$ only records values and their probabilities, not which $\Omega$ produced
+73.92	75.22	33	section	Step 2: Cumulative Distribution Function $F_\xi(x)$
+75.22	80.42	35	anim	plot
+80.42	84.85	37	sentence	The function $F_\xi : \mathbb{R} \to [0, 1]$ defined by:
+84.85	87.05	39	equation	F_\xi(x) = P(\xi \leq x) = P_\xi((-\infty, x])
+87.05	90.72	41	sentence	is called the **distribution function (d.f.)** of $\xi$.
+90.72	96.70	43	sentence	Number of heads in two tosses: add up the mass at values $\le x$.
+96.70	98.90	45	equation	F_\xi(x) = \begin{cases} 0 & x < 0 \\ \tfrac14 & 0 \le x < 1 \\ \tfrac34 & 1 \le
+98.90	105.27	47	sentence	$F_\xi(-3) = 0$, $F_\xi(0.5) = \tfrac14$, $F_\xi(1) = \tfrac34$, $F_\xi(1.99) = 
+105.27	115.87	49	sentence	Uniform on $[0,1]$: $F(x) = 0$ for $x < 0$, $F(x) = x$ for $0 \le x \le 1$, $F(x
+115.87	119.15	49	sentence	$F(0.3) = P(U \le 0.3) = 0.3$.
+119.15	122.25	49	sentence	No jumps.
+122.25	127.85	51	sentence	Interval probabilities from $F$: $P(a < \xi \le b) = F(b) - F(a)$.
+127.85	133.05	51	sentence	Heads: $P(0 < \xi \le 2) = 1 - \tfrac14 = \tfrac34$.
+133.05	138.25	51	sentence	Uniform: $P(0.2 < U \le 0.7) = 0.7 - 0.2 = 0.5$.
+138.25	139.55	53	section	Step 3: Properties of Distribution Functions
+139.55	143.22	55	sentence	Every distribution function $F_\xi$ satisfies three core properties:
+143.22	155.73	57	sentence	**Non-Decreasing:** If $x_1 < x_2$, then $F_\xi(x_1) \leq F_\xi(x_2)$. *Proof:* 
+155.73	170.55	59	sentence	**Right-Continuous:** $\lim_{h \downarrow 0} F_\xi(x + h) = F_\xi(x)$. *Proof:* 
+170.55	175.75	59	sentence	By continuity of measure from above, $\lim P(A_n) = P(\{\xi \leq x\})$.
+175.75	178.85	61	sentence	**Limits at $\pm\infty$:**
+178.85	181.05	63	equation	\lim_{x \to -\infty} F_\xi(x) = 0 \qquad \text{and} \qquad \lim_{x \to +\infty} 
+181.05	184.33	65	sentence	Checking all three on the heads $F_\xi$:
+184.33	188.00	67	sentence	Non-decreasing: $0 \to \tfrac14 \to \tfrac34 \to 1$.
+188.00	191.10	67	sentence	It never goes down.
+191.10	199.38	69	sentence	Right-continuous at the jump $x = 1$: from the right, $F(1.1) = F(1.01) = F(1.00
+199.38	203.05	69	sentence	From the left, $F(0.99) = \tfrac14 \ne F(1)$.
+203.05	206.15	69	sentence	Left limits can differ from $F(x)$.
+206.15	209.25	71	sentence	$F(-1000) = 0$, $F(1000) = 1$.
+209.25	216.77	73	sentence	Jump size = point mass: $F(1) - F(1^-) = \tfrac34 - \tfrac14 = \tfrac12 = P(\xi 
+216.77	225.82	75	sentence	$\le$ vs $<$ matters when there is a jump: $P(\xi \le 1) = \tfrac34$ but $P(\xi 

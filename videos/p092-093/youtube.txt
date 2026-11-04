@@ -1,0 +1,10 @@
+p.92–93: Put–call parity
+
+p.92–93: Put–call parity
+
+0:00 The setup (p.92)
+0:57 Value at t = 0 (p.93)
+1:09 Value at t = 1 (p.93)
+3:11 Using no-arbitrage (p.93)
+4:07 Getting the put from the call (p.93)
+4:36 Doubts

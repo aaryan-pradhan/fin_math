@@ -1,0 +1,10 @@
+Brownian Motion with Drift & Exit Probabilities
+
+Brownian Motion with Drift & Exit Probabilities
+
+0:00 1. Definition of Brownian Motion with Drift
+0:33 2. Squeeze Theorem Proof for Random Walk Limit
+1:01 3. Continuous to Discrete Coordinate Mapping
+1:25 4. Floor Function Limit for Exit Probabilities
+1:46 5. Special Cases
+2:12 6. Application: Optimal Stock Option Exercise Threshold

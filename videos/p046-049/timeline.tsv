@@ -1,0 +1,68 @@
+start	end	line	kind	text
+0.00	4.00	6	title	Itô's Formula
+4.00	10.75	8	sentence	Chain rule for Itô processes: Taylor to second order, because $(dW)^2 = dt$ does
+10.75	11.55	10	section	Step 1: Itô process
+11.55	17.15	12	sentence	On a filtered probability space $(\Omega,\mathcal{F},\mathbb{F},P)$ with BM $W$,
+17.15	19.35	14	equation	X_t = X_0 + \int_0^t a_s\,ds + \int_0^t b_s\,dW_s,\quad t\in[0,T]
+19.35	22.45	16	sentence	$X_0$ is $\mathcal{F}_0$-measurable.
+22.45	30.73	18	sentence	$a$ (drift), $b$ (noise coefficient) are $\mathbb{F}$-adapted: may be random, bu
+30.73	35.93	20	sentence	$\int_0^T |a_s|\,ds < \infty$ and $\int_0^T \mathbb{E}[b_s^2]\,ds < \infty$ (tec
+35.93	39.60	22	sentence	Shorthand (stochastic differential): $dX_t = a_t\,dt + b_t\,dW_t$.
+39.60	42.70	22	sentence	It means only the integral equation.
+42.70	45.80	24	sentence	$X=W$: $a=0$, $b=1$.
+45.80	48.90	24	sentence	$X_t=\int_0^t s\,dW_s$: $a=0$, $b_s=s$.
+48.90	57.95	24	sentence	From $\int_0^t W\,dW = \tfrac12W_t^2 - \tfrac12t$: $W_t^2 = \int_0^t 1\,ds + \in
+57.95	59.25	26	section	Step 2: Multiplication table
+59.25	61.45	28	equation	dt\cdot dt = 0,\qquad dt\cdot dW = 0,\qquad dW\cdot dW = dt
+61.45	68.20	30	sentence	Each is shorthand for a limit of sums over a uniform partition ($\Delta t = t/n$
+68.20	70.40	32	table	
+70.40	78.30	38	sentence	Reason: $\Delta W$ has size $\sqrt{\Delta t}$, so $(\Delta W)^2 \sim \Delta t$ s
+78.30	80.50	40	equation	(dX_t)^2 = (a\,dt + b\,dW)^2 = a^2(dt)^2 + 2ab\,dt\,dW + b^2(dW)^2 = b_t^2\,dt
+80.50	81.80	42	section	Step 3: Itô's formula
+81.80	85.08	44	sentence	$f$ twice continuously differentiable, $Y_t = f(X_t)$.
+85.08	89.13	44	sentence	Taylor: $f(x) \approx f(a) + f'(a)(x-a) + \tfrac12 f''(a)(x-a)^2$.
+89.13	92.23	44	sentence	With $x-a = dX_t$:
+92.23	94.43	46	equation	dY_t = f'(X_t)\,dX_t + \tfrac12 f''(X_t)\,(dX_t)^2 = f'(X_t)\,dX_t + \tfrac12 f'
+94.43	98.10	48	sentence	Ordinary calculus drops the second-order term since $(dx)^2=0$.
+98.10	102.15	48	sentence	Here $(dX)^2 = b^2\,dt \ne 0$, so it stays.
+102.15	106.58	48	sentence	Third order and up vanish ($dW^3 = dt\,dW = 0$).
+106.58	111.78	50	sentence	$f(x)=x^2$, $X=W$: $d(W_t^2) = 2W_t\,dW_t + \tfrac12\cdot 2\,dt = dt + 2W_t\,dW_
+111.78	114.88	50	sentence	Matches Step 1.
+114.88	118.55	52	sentence	$f(x)=x^3$, $X=W$: $d(W_t^3) = 3W_t^2\,dW_t + 3W_t\,dt$, i.e.
+118.55	120.75	54	equation	W_t^3 = 3\int_0^t W_s\,ds + 3\int_0^t W_s^2\,dW_s
+120.75	122.05	56	section	Step 4: Time-dependent $f(t, X_t)$
+122.05	129.57	58	sentence	Two-variable Taylor, then the table: $(dt)^2 = 0$, $dt\,dX = a(dt)^2 + b\,dt\,dW
+129.57	132.67	58	sentence	Only three terms survive:
+132.67	134.87	60	equation	dY_t = \partial_t f(t,X_t)\,dt + \partial_x f(t,X_t)\,dX_t + \tfrac12\,\partial_
+134.87	138.92	62	sentence	Second derivative only in $x$: only $x$ carries $dW$.
+138.92	146.82	64	sentence	$Y_t = W_t^2 - t$, $f = x^2 - t$: $dY = -dt + 2W_t\,dW_t + dt = 2W_t\,dW_t$.
+146.82	151.25	64	sentence	No drift, consistent with $W_t^2 - t$ being a martingale.
+151.25	159.92	66	sentence	$f = tx$: $\partial_t f = x$, $\partial_x f = t$, $\partial_{xx} f = 0$, so $d(t
+159.92	164.73	66	sentence	No Itô correction when $\partial_{xx} f = 0$: ordinary product rule.
+164.73	166.03	68	section	Step 5: Geometric Brownian motion
+166.03	174.23	70	anim	gbm_paths
+174.23	185.98	72	sentence	$Z_t = e^{\mu t + \sigma W_t}$, $f(t,x) = e^{\mu t + \sigma x}$: $\partial_t f =
+185.98	188.68	74	equation	dZ_t = \mu Z_t\,dt + \sigma Z_t\,dW_t + \tfrac12\sigma^2 Z_t\,dt = \left(\mu + \
+188.68	192.73	76	sentence	Do not drop the $\tfrac12$: the term is $\tfrac12\partial_{xx}f\,(dW)^2$.
+192.73	197.17	76	sentence	It is the source of $\mu + \tfrac{\sigma^2}{2}$ in $\mathbb{E}[Z_t]$.
+197.17	203.15	78	sentence	Zero drift iff $\mu = -\tfrac{\sigma^2}{2}$: the exponential martingale $e^{-\si
+203.15	209.13	78	sentence	(Strictly, zero drift gives a local martingale; true martingale needs integrabil
+209.13	210.43	80	section	Step 6: Product rule
+210.43	218.33	82	sentence	$X, Y$ Itô processes on a common filtered space, $dX = a_1\,dt + b_1\,dW$, $dY =
+218.33	225.08	82	sentence	Itô on $f(x,y) = xy$ ($\partial_{xy} f = 1$, $\partial_{xx} f = \partial_{yy} f 
+225.08	227.28	84	equation	d(X_tY_t) = X_t\,dY_t + Y_t\,dX_t + dX_t\,dY_t,\qquad dX\,dY = b_1 b_2\,dt
+227.28	230.38	86	sentence	$X=Y=W$: $d(W^2) = 2W\,dW + dt$.
+230.38	233.48	86	sentence	Matches Step 1.
+233.48	240.23	88	sentence	$Z_t = W_t e^{W_t}$, $X = W$, $Y = e^{W_t}$, $dY = \tfrac12 e^{W_t}\,dt + e^{W_t
+240.23	242.43	90	equation	dZ_t = \left(1 + \tfrac12 W_t\right)e^{W_t}\,dt + (1 + W_t)\,e^{W_t}\,dW_t
+242.43	248.03	92	sentence	Check via $f(x) = xe^x$, $f' = (1+x)e^x$, $f'' = (2+x)e^x$: same result.
+248.03	249.33	94	section	Step 7: Quotient rule
+249.33	259.53	96	sentence	Itô on $f(x,y) = x/y$: $\partial_x f = \tfrac1y$, $\partial_y f = -\tfrac{x}{y^2
+259.53	261.73	98	equation	d\left(\frac{X_t}{Y_t}\right) = \frac{dX_t}{Y_t} - \frac{X_t}{Y_t^2}\,dY_t + \fr
+261.73	266.93	100	sentence	$X = 1$, $Y = e^{W_t}$: $d(e^{-W_t}) = \tfrac12 e^{-W_t}\,dt - e^{-W_t}\,dW_t$.
+266.93	270.98	100	sentence	Check: GBM with $\mu = 0$, $\sigma = -1$.
+270.98	272.28	102	section	Summary: three forms
+272.28	275.57	104	sentence	$f(x)$: $df(X) = f'\,dX + \tfrac12 f''\,b^2\,dt$
+275.57	280.38	106	sentence	$f(t,x)$: $df = \partial_t f\,dt + \partial_x f\,dX + \tfrac12\partial_{xx} f\,b
+280.38	287.52	108	sentence	$f(x,y)$: $df = \partial_x f\,dX + \partial_y f\,dY + \tfrac12\left[\partial_{xx
+287.52	295.03	110	sentence	Recipe: Taylor to second order, then $dt\cdot dt = 0$, $dt\cdot dW = 0$, $dW\cdo

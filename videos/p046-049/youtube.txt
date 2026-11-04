@@ -1,0 +1,12 @@
+Itô's Formula
+
+Itô's Formula
+
+0:00 Step 1: Itô process
+0:57 Step 2: Multiplication table
+1:20 Step 3: Itô's formula
+2:00 Step 4: Time-dependent f(t, Xt)
+2:44 Step 5: Geometric Brownian motion
+3:29 Step 6: Product rule
+4:08 Step 7: Quotient rule
+4:30 Summary: three forms

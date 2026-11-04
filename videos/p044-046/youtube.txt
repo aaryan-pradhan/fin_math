@@ -1,0 +1,11 @@
+Itô Integral
+
+Itô Integral
+
+0:00 Step 1: Definition
+1:03 Step 2: Summation by parts
+1:18 Step 3: Pathwise formula
+1:46 Step 4: Mean zero
+2:06 Step 5: Itô's isometry
+2:47 Step 6: Algebra trick for int W,dW
+3:04 Step 7: Sum of squared increments to t

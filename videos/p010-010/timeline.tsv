@@ -1,0 +1,83 @@
+start	end	line	kind	text
+0.00	4.00	6	title	Conditional Probability & Independence
+4.00	8.82	8	sentence	Measure-theoretic definition of conditioning, law of total probability, and mutu
+8.82	9.62	10	section	Step 1: Conditional Probability
+9.62	14.05	12	sentence	For events $A, B \in \mathcal{F}$ with $P(B) \neq 0$:
+14.05	16.25	14	equation	P(A \mid B) = \frac{P(A \cap B)}{P(B)}
+16.25	28.00	16	sentence	**Sample Space Rescaling:** Conditioning on $B$ discards all outcomes $\omega \n
+28.00	31.10	18	sentence	**Die, told "even".** $B = \{2,4,6\}$.
+31.10	37.85	18	sentence	The new weights are $\tfrac13$ each on $2, 4, 6$, and $0$ on $1, 3, 5$.
+37.85	40.05	20	equation	P(\{6\} \mid B) = \frac{P(\{6\})}{P(B)} = \frac{1/6}{1/2} = \frac13,\qquad P(\{\
+40.05	47.18	22	sentence	**Two dice.** $P(\text{sum} = 8 \mid \text{first} = 3) = \frac{P(\{(3,5)\})}{P(\
+47.18	48.48	24	section	Step 2: Subsets & Disjoint Special Cases
+48.48	54.08	26	sentence	**Subset Ordering:** If $A \subseteq B$, then $A \cap B = A$, so:
+54.08	58.13	28	sentence	$P(A \mid B) = P(A) / P(B)$ (not 1!)
+58.13	64.50	30	sentence	$P(B \mid A) = P(A) / P(A) = 1$ (knowing $A$ happened guarantees $B$ happened).
+64.50	70.48	32	sentence	**Disjoint Events:** If $A \cap B = \varnothing$, then $P(A \mid B) = 0$.
+70.48	81.08	34	sentence	Die, $A = \{6\} \subseteq B = \{2,4,6\}$: $P(A \mid B) = \frac{1/6}{1/2} = \frac
+81.08	86.68	34	sentence	Disjoint: $A = \{1\}$, $B$ = even gives $P(A \mid B) = 0$.
+86.68	89.78	34	sentence	Knowing "even" rules out 1.
+89.78	90.58	36	section	Step 3: Law of Total Probability
+90.58	98.48	38	sentence	Let $\{B_1, B_2, \ldots\}$ be a countable partition of $\Omega$ (pairwise disjoi
+98.48	103.68	38	sentence	Slicing $A$ into disjoint components $A = \bigcup (A \cap B_i)$ yields:
+103.68	105.88	40	equation	P(A) = \sum_{i=1}^{\infty} P(A \cap B_i) = \sum_{i=1}^{\infty} P(A \mid B_i)\, P
+105.88	113.02	42	sentence	**Two coins.** Pick a fair coin or a two-headed coin with probability $\tfrac12$
+113.02	115.22	44	equation	P(H) = P(H \mid \text{fair})\tfrac12 + P(H \mid \text{2-headed})\tfrac12 = \tfra
+115.22	121.20	46	sentence	**Factory.** Machine $M_1$ makes 60% of items (2% defective), $M_2$ makes 40% (5
+121.20	123.40	48	equation	P(D) = 0.02(0.6) + 0.05(0.4) = 0.012 + 0.020 = 0.032
+123.40	129.77	50	sentence	Reverse the conditioning (Bayes): $P(M_2 \mid D) = \frac{P(D \cap M_2)}{P(D)} = 
+129.77	134.58	50	sentence	$M_2$ makes only 40% of items but 62.5% of the defects.
+134.58	135.88	52	section	Step 4: Pairwise vs. Mutual Independence
+135.88	143.40	54	sentence	**Two Events:** $A, B$ are independent if $P(A \cap B) = P(A)P(B) \iff P(A \mid 
+143.40	148.60	56	sentence	**Mutual Independence:** For $n$ events $A_1, \ldots, A_n$, pairwise independenc
+148.60	155.35	56	sentence	They must satisfy the product rule for **every sub-collection** of size $k \in \
+155.35	157.55	58	equation	P(A_{i_1} \cap \cdots \cap A_{i_k}) = P(A_{i_1}) \cdots P(A_{i_k})
+157.55	164.68	60	sentence	This requires $2^n - n - 1$ equations in total (e.g., 4 equations for $n = 3$).
+164.68	169.12	62	sentence	**Independent, not obviously.** Die, $A = \{1,2\}$, $B$ = even.
+169.12	175.10	62	sentence	$P(A \cap B) = P(\{2\}) = \tfrac16$ and $P(A)P(B) = \tfrac13\cdot\tfrac12 = \tfr
+175.10	178.38	62	sentence	Knowing "even" leaves $P(A) = \tfrac13$ unchanged.
+178.38	181.48	64	sentence	**Pairwise but not mutual.** Two dice.
+181.48	186.68	64	sentence	$A$ = first even, $B$ = second even, $C$ = sum even.
+186.68	189.78	64	sentence	Each has probability $\tfrac12$.
+189.78	193.45	66	sentence	$P(A \cap B) = \tfrac14 = \tfrac12\cdot\tfrac12$ ✅
+193.45	197.50	68	sentence	$P(A \cap C) = P(\text{both even}) = \tfrac14$ ✅
+197.50	200.60	70	sentence	$P(B \cap C) = \tfrac14$ ✅
+200.60	206.20	72	sentence	$P(A \cap B \cap C) = P(\text{both even}) = \tfrac14 \ne \tfrac18$ ❌
+206.20	212.18	74	sentence	Any two of them tell you the third, so they are not mutually independent.
+212.18	213.48	76	section	Practice Questions
+213.48	216.58	78	sentence	**Q1.** Two tosses.
+216.58	222.95	78	sentence	Find $P(\text{both H} \mid \text{at least one H})$ and $P(\text{both H} \mid \te
+222.95	226.05	80	sentence	Answer
+226.05	229.33	82	sentence	$\frac{1/4}{3/4} = \tfrac13$ and $\frac{1/4}{1/2} = \tfrac12$.
+229.33	234.53	82	sentence	The information differs: "at least one" leaves 3 outcomes, "first" leaves 2.
+234.53	237.63	84	sentence	**Q2.** A disease has prevalence 1%.
+237.63	244.38	84	sentence	The test detects 99% of sick people and gives false positives for 5% of healthy 
+244.38	247.48	84	sentence	You test positive.
+247.48	250.58	84	sentence	$P(\text{sick})$?
+250.58	253.68	86	sentence	Answer
+253.68	258.50	88	sentence	$P(+) = 0.99(0.01) + 0.05(0.99) = 0.0099 + 0.0495 = 0.0594$.
+258.50	261.78	88	sentence	$P(\text{sick} \mid +) = 0.0099/0.0594 \approx 0.167$.
+261.78	267.77	88	sentence	Only about 17%: most positives are false because healthy people vastly outnumber
+267.77	272.97	90	sentence	**Q3.** Can two disjoint events with $P(A), P(B) > 0$ be independent?
+272.97	276.07	92	sentence	Answer
+276.07	279.17	94	sentence	No.
+279.17	283.22	94	sentence	$P(A \cap B) = 0$ but $P(A)P(B) > 0$.
+283.22	288.42	94	sentence	Disjoint means that learning $A$ rules $B$ out, which is maximal dependence.
+288.42	292.08	96	sentence	**Q4.** Die, $A = \{1,2,3\}$, $B = \{3,4\}$.
+292.08	295.18	96	sentence	Independent?
+295.18	298.28	98	sentence	Answer
+298.28	303.88	100	sentence	$P(A \cap B) = P(\{3\}) = \tfrac16$ and $P(A)P(B) = \tfrac12\cdot\tfrac13 = \tfr
+303.88	306.98	100	sentence	Yes.
+306.98	310.08	102	sentence	**Q5.** $A, B$ independent.
+310.08	313.18	102	sentence	Show $A$ and $B^c$ are independent.
+313.18	316.28	104	sentence	Answer
+316.28	324.57	106	sentence	$P(A \cap B^c) = P(A) - P(A \cap B) = P(A) - P(A)P(B) = P(A)(1 - P(B)) = P(A)P(B
+324.57	330.55	108	sentence	**Q6.** How many product equations must be checked for mutual independence of 4 
+330.55	333.65	110	sentence	Answer
+333.65	339.25	112	sentence	$2^4 - 4 - 1 = 11$: six pairs, four triples, one quadruple.
+339.25	343.30	114	sentence	**Q7.** Urn with 3 red and 2 blue balls.
+343.30	346.40	114	sentence	Draw two without replacement.
+346.40	349.50	114	sentence	$P(\text{2nd red})$?
+349.50	352.60	116	sentence	Answer
+352.60	360.50	118	sentence	Law of total probability over the 1st draw: $P = \tfrac24\cdot\tfrac35 + \tfrac3
+360.50	363.78	118	sentence	Same as the first draw, by symmetry.

@@ -1,0 +1,21 @@
+p.105–109: Finite single-period market and the no-arbitrage theorem
+
+p.105–109: Finite single-period market and the no-arbitrage theorem
+
+0:00 Notation check
+0:38 Recap: the binomial case (p.105)
+1:23 The finite market (p.105)
+2:30 Convex set (p.105)
+3:15 Convex hull (p.105–106)
+4:03 Relative interior (p.106)
+5:08 Hyperplane (p.106)
+5:50 The normal vector (p.106)
+7:17 The half-space (p.106)
+7:55 Thm 1: the separation theorem (p.107)
+9:34 Thm 2 in plain words, before we state it (p.107)
+11:31 Thm 2: NA if and only if an EMM exists (p.107)
+12:41 The plan of the proof (p.107)
+13:34 Step 1: an EMM is the same as (I) (p.108)
+14:28 Step 2: an EMM rules out arbitrage (p.108)
+17:23 Step 3: no-arbitrage forces (I) (p.108–109)
+20:14 Doubts

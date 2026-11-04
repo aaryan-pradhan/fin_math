@@ -1,0 +1,16 @@
+Joint Distribution of $W(t)$ and $M(t)$
+
+Joint Distribution of $W(t)$ and $M(t)$
+
+0:00 1. Setup
+0:44 2. Disjoint Case
+0:54 Case B: I below J — Inclusion-Exclusion
+1:20 3. The Reflection Principle
+1:31 Step 1: Hitting Time
+1:45 Step 2: Strong Markov Property
+1:57 Step 3: Reflected Path W*(t)
+2:14 Step 4: The Bijection
+2:24 Step 5: Full Proof
+3:12 Corollary: Distribution of M(t)
+3:29 The Overlapping Case
+3:54 5. Architecture Summary

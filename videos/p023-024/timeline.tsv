@@ -1,0 +1,95 @@
+start	end	line	kind	text
+0.00	4.00	6	title	Optimal Stopping Theorem
+4.00	7.10	8	sentence	My understanding, built from scratch.
+7.10	7.90	10	section	1. Theorem Statement
+7.90	15.42	12	sentence	**Given:** $(X_t)$ martingale, $\tau$ bounded ST ($\tau \leq c$ a.s. for some co
+15.42	20.23	14	sentence	*In plain terms:* No stopping strategy can beat a fair game.
+20.23	23.90	14	sentence	Expected value at exit = starting value, always.
+23.90	34.50	16	sentence	⚠️ **Bounded is essential.** Unbounded $\tau$ (e.g. doubling strategy: "quit whe
+34.50	37.60	16	sentence	The theorem doesn't apply.
+37.60	42.80	18	sentence	**Unbounded counterexample.** Symmetric walk from 0, $\tau$ = first hit of $+1$.
+42.80	50.32	18	sentence	The walk hits $+1$ a.s., so $X_\tau = 1$ always and $E[X_\tau] = 1 \ne 0 = E[X_0
+50.32	56.68	18	sentence	The catch: $E[\tau] = \infty$, and on the way the walk can sink arbitrarily low.
+56.68	63.82	20	sentence	**Doubling, capped at 10 rounds (bounded).** Bet 1, 2, 4, … and quit at the firs
+63.82	70.95	22	sentence	A win at round $k$ nets $2^{k-1} - (1 + 2 + \cdots + 2^{k-2}) = +1$.
+70.95	74.05	22	sentence	Probability $1 - (\tfrac12)^{10} = \tfrac{1023}{1024}$.
+74.05	80.03	24	sentence	Losing all 10 rounds costs $1 + 2 + \cdots + 512 = 1023$.
+80.03	83.13	24	sentence	Probability $\tfrac1{1024}$.
+83.13	86.80	26	sentence	$E = \tfrac{1023}{1024}(1) - \tfrac{1}{1024}(1023) = 0$ ✅.
+86.80	92.00	26	sentence	A frequent small win is paid for by a rare huge loss.
+92.00	92.80	28	section	2. Proof
+92.80	99.17	30	sentence	**Step 1:** By the stopped process theorem, $Z_t = X_{t \wedge \tau}$ is a MG.
+99.17	102.45	32	sentence	**Step 2:** Every MG has constant mean.
+102.45	105.73	32	sentence	By tower property + MG property iterated:
+105.73	107.93	34	equation	E[Z_t] = E[Z_0] = E[X_0] \quad \forall\, t
+107.93	111.03	36	sentence	**Step 3:** Set $t = c$.
+111.03	117.78	36	sentence	Since $\tau \leq c$ a.s.: $c \wedge \tau = \tau$ a.s., so $Z_c = X_\tau$ a.s.
+117.78	120.88	38	sentence	**Step 4:** Combine:
+120.88	123.08	40	equation	E[X_\tau] = E[Z_c] = E[X_0] \qquad \square
+123.08	124.38	42	section	3. Coin Flip Verification ($T=3$)
+124.38	127.48	44	sentence	$X_0=0$, flips $\pm 1$.
+127.48	131.92	44	sentence	Rule: stop first time $X_t = 1$, else at $t=3$.
+131.92	134.12	46	table	
+134.12	137.78	54	sentence	$E[X_\tau] = \frac{1}{8}(1+1+1+1+1-1-1-3) = 0 = E[X_0]$ ✓
+137.78	139.08	56	section	4. BM Application: Finding $E[\tau]$
+139.08	145.83	58	sentence	$\tau = \min\{t : W(t) = 2 - 4t\}$ — first time BM hits moving line.
+145.83	148.93	60	sentence	**Step 1:** $W(t)$ is MG, $W(0)=0$.
+148.93	152.03	60	sentence	Apply optimal stopping:
+152.03	154.23	62	equation	E[W(\tau)] = 0
+154.23	159.05	64	sentence	**Step 2:** At $\tau$ by definition: $W(\tau) = 2 - 4\tau$.
+159.05	162.15	64	sentence	Substitute:
+162.15	164.35	66	equation	E[2 - 4\tau] = 0
+164.35	167.45	68	sentence	**Step 3:** Linearity of expectation:
+167.45	169.65	70	equation	2 - 4E[\tau] = 0 \implies \boxed{E[\tau] = \tfrac{1}{2}}
+169.65	175.25	72	sentence	*The trick:* optimal stopping converts an unknown distribution of $\tau$ into on
+175.25	178.35	74	sentence	**Gambler's ruin with OST** (CT-1 Q10).
+178.35	182.02	74	sentence	Walk from 0, stop at $+10$ or $-5$.
+182.02	188.77	74	sentence	($\tau$ is not bounded, but $X_{t\wedge\tau}$ stays in $[-5, 10]$, so taking the
+188.77	193.58	76	sentence	MG $X_n$: $10p - 5(1-p) = 0$, so $p = \tfrac13$.
+193.58	199.18	78	sentence	MG $X_n^2 - n$: $E[\tau] = E[X_\tau^2] = 100\cdot\tfrac13 + 25\cdot\tfrac23 = 50
+199.18	200.48	80	section	5. Sub/Super-MG Extension
+200.48	204.15	82	sentence	The stopped process inherits the type of $(X_t)$.
+204.15	207.82	82	sentence	Proof: identical, replacing $=$ with $\leq$ or $\geq$.
+207.82	210.02	84	table	
+210.02	213.12	90	sentence	**Super-MG proof sketch:**
+213.12	215.32	92	equation	E[Z_{t+1} \mid \mathcal{F}_t] = \sum_{k=0}^t X_k \mathbf{1}_{\tau=k} + \mathbf{1
+215.32	216.62	94	section	Summary
+216.62	224.90	96	sentence	**Optimal Stopping = 4-line proof** Stopped process is MG → constant mean → eval
+224.90	228.57	98	sentence	Heavy lifting done by the stopped process theorem.
+228.57	231.67	98	sentence	This theorem is just applying it.
+231.67	232.47	100	section	Practice Questions
+232.47	236.90	102	sentence	**Q1.** Symmetric walk from 0, stop at $+3$ or $-2$.
+236.90	240.00	102	sentence	Find $P(\text{hit } +3)$ and $E[\tau]$.
+240.00	243.10	104	sentence	Answer
+243.10	247.15	106	sentence	$3p - 2(1-p) = 0$, so $p = \tfrac25$.
+247.15	251.97	106	sentence	$E[\tau] = 9\cdot\tfrac25 + 4\cdot\tfrac35 = \tfrac{18 + 12}{5} = 6$.
+251.97	255.25	106	sentence	Shortcut: $E[\tau] = AB = 3\cdot 2$.
+255.25	259.68	108	sentence	**Q2.** $\tau = \min\{t : W(t) = 3 - 6t\}$.
+259.68	262.78	108	sentence	Find $E[\tau]$.
+262.78	265.88	110	sentence	Answer
+265.88	271.48	112	sentence	$E[W(\tau)] = 0$, so $E[3 - 6\tau] = 0$, giving $E[\tau] = \tfrac12$.
+271.48	277.85	114	sentence	**Q3.** Try the same method on $\tau = \min\{t : W(t) = 1 + 2t\}$.
+277.85	280.95	114	sentence	What goes wrong?
+280.95	284.05	116	sentence	Answer
+284.05	290.80	118	sentence	You'd get $1 + 2E[\tau] = 0$, so $E[\tau] = -\tfrac12 < 0$, which is impossible.
+290.80	297.55	118	sentence	The line runs away upward, BM may never catch it, and $P(\tau = \infty) > 0$.
+297.55	301.98	118	sentence	OST needs $\tau$ bounded (or a limit argument that holds).
+301.98	305.65	118	sentence	Always check the hypotheses before doing the algebra.
+305.65	308.93	120	sentence	**Q4.** Doubling strategy capped at 5 rounds.
+308.93	312.60	120	sentence	Distribution of the final wealth and its mean?
+312.60	315.70	122	sentence	Answer
+315.70	319.37	124	sentence	$+1$ with probability $1 - \tfrac1{32} = \tfrac{31}{32}$.
+319.37	322.47	124	sentence	$-(1+2+4+8+16) = -31$ with probability $\tfrac1{32}$.
+322.47	325.75	124	sentence	Mean $= \tfrac{31}{32} - \tfrac{31}{32} = 0$.
+325.75	332.50	126	sentence	**Q5.** Symmetric walk, $\tau$ = first exit from $(-2, 2)$, i.e. first time $|X_
+332.50	335.60	126	sentence	Find $E[\tau]$.
+335.60	338.70	128	sentence	Answer
+338.70	341.80	130	sentence	$X_\tau^2 = 4$ always.
+341.80	346.23	130	sentence	MG $X_n^2 - n$ gives $E[\tau] = E[X_\tau^2] = 4$.
+346.23	353.75	130	sentence	Sanity check: after 2 steps you're at $\pm2$ with probability $\tfrac12$, otherw
+353.75	358.57	130	sentence	So $E[\tau] = 2 + \tfrac12E[\tau]$, giving $E[\tau] = 4$ ✅
+358.57	364.17	132	sentence	**Q6.** $X_n$ is a super-MG (house edge), $X_0 = 100$, $\tau \le 50$.
+364.17	367.27	132	sentence	What can you say about $E[X_\tau]$?
+367.27	370.37	134	sentence	Answer
+370.37	373.47	136	sentence	$E[X_\tau] \le 100$.
+373.47	378.67	136	sentence	The stopped process is a super-MG, so its mean can only fall.

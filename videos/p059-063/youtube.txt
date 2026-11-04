@@ -1,0 +1,19 @@
+p.59–63: Pricing a stock option by arbitrage, and the arbitrage theorem
+
+p.59–63: Pricing a stock option by arbitrage, and the arbitrage theorem
+
+0:00 Money now vs money later (p.59)
+0:47 The one-period stock and the option (p.59)
+1:50 Buying stock and options together (p.59)
+2:28 Make the holding the same in both cases (p.60)
+3:29 Cost and gain (p.60)
+4:31 Example 1: C = 20 (p.60)
+5:15 Example 2: C = 15 (p.60–61)
+6:13 What arbitrage means (p.61)
+6:45 Same answer through probabilities (p.61)
+8:10 Pricing the option with p = 1/3 (p.62)
+9:05 Three outcomes (p.62)
+11:05 The arbitrage theorem: setup (p.62–63)
+13:21 The arbitrage theorem: statement (p.63)
+14:59 Extras from the slides (p.82–83)
+15:41 Doubts

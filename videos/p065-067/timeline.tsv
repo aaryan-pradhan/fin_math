@@ -1,0 +1,118 @@
+start	end	line	kind	text
+0.00	4.00	5	title	p.65–67: Pricing a call by a duplicating portfolio
+4.00	4.80	7	section	Stock and bond (p.65)
+4.80	8.47	9	sentence	Now we have two things in our market.
+8.47	11.57	9	sentence	The stock price is $S_t$.
+11.57	16.38	9	sentence	The bond price is $B_t$, with interest rate $r \ge 0$.
+16.38	19.48	9	sentence	The bond grows like
+19.48	21.68	11	equation	B_t = (1+r)^t B_0
+21.68	25.37	13	numbers	Numbers: $B_0 = 100$, $r = 0.05$.
+25.37	31.58	13	numbers	At $t = 1$, $B_1 = 1.05 \cdot 100 = 105$.
+31.58	37.80	13	numbers	At $t = 2$, $B_2 = 1.05^2 \cdot 100 = 110.25$.
+37.80	40.90	13	numbers	The bond has no risk.
+40.90	44.00	13	numbers	You always know what it pays.
+44.00	45.30	15	section	The one-step tree (p.65–66)
+45.30	50.75	17	anim	branches
+50.75	54.03	19	sentence	The stock starts at $S_0 = 100$.
+54.03	57.13	19	sentence	At time $1$:
+57.13	59.33	21	equation	S_1^a = 130 \text{ with } p = 0.4
+59.33	61.53	23	equation	S_1^b = 80 \text{ with } 1 - p = 0.6
+61.53	65.97	25	sentence	The times are $T = 0$ and $T = 1$.
+65.97	71.95	27	sentence	We sell a European call at $T = 1$ with strike $K = 110$.
+71.95	76.00	27	sentence	Its price today is $C_0$, the thing we want.
+76.00	79.10	27	sentence	Its payoff is
+79.10	81.30	29	equation	X = (S_1 - K)^+
+81.30	86.50	31	sentence	There is also a risk-free investment at interest rate $r = 0.05$.
+86.50	89.78	33	sentence	Let's work out $X$ in each case.
+89.78	94.60	33	sentence	If $S_1 = 130$: $X = (130 - 110)^+ = 20$.
+94.60	99.42	33	sentence	If $S_1 = 80$: $X = (80 - 110)^+ = 0$.
+99.42	100.72	35	section	The classical way (p.66)
+100.72	105.92	37	sentence	The first idea: take the expected payoff, then discount it to today.
+105.92	109.97	39	sentence	At $t = 1$, take the expectation under $p$:
+109.97	112.17	41	equation	E_p(X) = 20 \times 0.4 + 0 \times 0.6 = 8
+112.17	116.60	43	sentence	Now discount by one period, dividing by $1 + r$.
+116.60	121.42	43	sentence	So the value of the call at $t = 0$ is
+121.42	123.62	45	equation	C_0 = \frac{1}{1+r} E_p(X)
+123.62	127.67	47	sentence	Now substitute $E_p(X) = 8$ and $r = 0.05$:
+127.67	129.87	49	equation	C_0 = \frac{8}{1.05} = 7.62
+129.87	132.97	51	sentence	But the Black–Scholes answer is
+132.97	135.17	53	equation	C_0^{BS} = 9.52
+135.17	138.27	55	sentence	They don't match.
+138.27	141.93	55	sentence	Let's see which one is right, and why.
+141.93	143.23	57	section	Building a portfolio that copies the call (p.66)
+143.23	149.98	59	sentence	Let's determine a portfolio which at $T = 1$ has the same payoff as the call.
+149.98	153.08	61	sentence	A portfolio is a pair
+153.08	155.28	63	equation	\underset{\sim}{\Pi} = (\Delta, B)
+155.28	162.03	65	sentence	where $\Delta$ is the number of stock shares, and $B$ is the amount in the bond.
+162.03	166.85	67	sentence	The notes give the answer $\Delta = 0.4$, $B = -30.48$.
+166.85	174.75	67	sentence	(The notes write $-30.98$ in one place, but every later line uses $-30.48$, and 
+174.75	177.85	67	sentence	So $-30.48$ is the right value.)
+177.85	180.95	69	sentence	Where do these come from?
+180.95	185.00	69	sentence	The notes jump here, so let's fill it in.
+185.00	190.20	69	sentence	At $t = 1$ the portfolio is worth $\Delta S_1 + B(1+r)$.
+190.20	194.25	69	sentence	I want this to equal $X$ in both cases.
+194.25	197.35	71	sentence	Let's put it in a table.
+197.35	202.17	71	sentence	Each row is an outcome at $t = 1$ (2 rows).
+202.17	211.22	71	sentence	The columns are what one share is worth, what one unit of bond is worth, and the
+211.22	213.42	73	table	
+213.42	220.93	78	sentence	Each row gives one equation: $\Delta \times$ (stock column) $+ \, B \times$ (bon
+220.93	224.98	80	sentence	If $S_1 = 130$, I want $X = 20$:
+224.98	227.18	82	equation	130\Delta + 1.05B = 20
+227.18	231.23	84	sentence	If $S_1 = 80$, I want $X = 0$:
+231.23	233.43	86	equation	80\Delta + 1.05B = 0
+233.43	237.10	88	sentence	Now subtract the second equation from the first.
+237.10	240.20	88	sentence	The $B$ terms cancel:
+240.20	242.40	90	equation	50\Delta = 20
+242.40	245.50	92	sentence	Now divide by $50$:
+245.50	247.70	94	equation	\Delta = 0.4
+247.70	251.75	96	sentence	Now substitute $\Delta = 0.4$ into the second equation:
+251.75	253.95	98	equation	32 + 1.05B = 0
+253.95	257.23	100	sentence	Now subtract $32$ and divide by $1.05$:
+257.23	259.93	102	equation	B = -\frac{32}{1.05} = -30.48
+259.93	265.92	104	sentence	A negative $B$ means I borrow $30.48$ at rate $r$, instead of lending it.
+265.92	267.22	106	section	Price of the portfolio today (p.66)
+267.22	273.20	108	sentence	At $t = 0$ the stock costs $100$ and the bond holding costs $B$.
+273.20	276.30	108	sentence	So
+276.30	278.50	110	equation	V_0(\Pi) = \Delta \times 100 + B
+278.50	282.17	112	sentence	Now substitute $\Delta = 0.4$, $B = -30.48$:
+282.17	284.37	114	equation	V_0(\Pi) = 40 - 30.48 = 9.52
+284.37	291.88	116	sentence	In words: I buy $0.4$ shares for $40$, using $30.48$ of borrowed money and $9.52
+291.88	293.18	118	section	Checking the payoff at t = 1 (p.66–67)
+293.18	300.32	120	sentence	At $t = 1$ the shares are worth $\Delta S_1$, and the bond has grown to $B(1+r)$
+300.32	303.42	120	sentence	So
+303.42	305.62	122	equation	V_1(\Pi) = \Delta S_1 + B(1+r)
+305.62	312.37	124	sentence	Now substitute $\Delta = 0.4$, $B = -30.48$, $1 + r = 1.05$, for each case:
+312.37	314.57	126	equation	V_1(\Pi) = \begin{cases} 0.4 \times 130 - 30.48 \times 1.05, & S_1 = 130 \\ 0.4 
+314.57	317.67	128	sentence	Now multiply out.
+317.67	324.42	128	sentence	$0.4 \times 130 = 52$, $0.4 \times 80 = 32$, and $30.48 \times 1.05 \approx 32$:
+324.42	326.62	130	equation	V_1(\Pi) = \begin{cases} 52 - 32 = 20, & \text{if } S_1 = 130 \\ 32 - 32 = 0, & 
+326.62	329.90	132	sentence	And that is exactly the call's payoff:
+329.90	332.10	134	equation	V_1(\Pi) = X = (S_1 - K)^+
+332.10	333.40	136	section	The fair price (p.67)
+333.40	338.60	138	sentence	The portfolio and the call pay the same thing in every case.
+338.60	344.58	138	sentence	So the price of the duplicating portfolio must equal the price of the call.
+344.58	347.68	138	sentence	Here
+347.68	349.88	140	equation	\underset{\sim}{\Pi} = (\Delta, B) = (0.4, -30.48)
+349.88	357.02	142	sentence	So the fair price of the call at $t = 0$ is the price of the portfolio:
+357.02	359.22	144	equation	C_0^{BS} = 100 \times 0.4 - 30.48
+359.22	361.42	146	equation	C_0^{BS} = 40 - 30.48 = 9.52
+361.42	368.17	148	sentence	If one were to price the call differently, then a risk-free profit (arbitrage) w
+368.17	371.83	148	sentence	This price is based on the no-arbitrage principle.
+371.83	375.50	150	sentence	Let's see that arbitrage with the classical price.
+375.50	379.17	150	sentence	Suppose the market sells the call at $7.62$.
+379.17	387.07	150	sentence	I buy the call for $7.62$, and I do the opposite of $\Pi$: short $0.4$ shares an
+387.07	390.17	150	sentence	That brings in $9.52$.
+390.17	394.22	150	sentence	So today I pocket $9.52 - 7.62 = 1.90$.
+394.22	401.73	152	sentence	At $t = 1$, the call pays me $X$, and closing my reversed portfolio costs me exa
+401.73	404.83	152	sentence	Net: $0$, in both cases.
+404.83	408.12	152	sentence	So I keep the $1.90$ for sure.
+408.12	411.40	152	sentence	That's why $7.62$ is the wrong price.
+411.40	416.60	152	sentence	Notice that $p = 0.4$ never entered the portfolio calculation at all.
+416.60	417.90	154	section	Extras from the slides (p.85)
+417.90	424.27	156	sentence	The slide calls the two prices $S_1^u = 130$ (up) and $S_1^d = 80$ (down).
+424.27	427.55	156	sentence	It calls $9.52$ the unique no-arbitrage price.
+427.55	430.83	158	sentence	The slide also writes $B = -30.98$.
+430.83	433.93	158	sentence	That's a typo.
+433.93	437.98	158	sentence	Check it: $0.4(100) - 30.98 = 9.02$, not $9.52$.
+437.98	443.18	158	sentence	And $0.4(130) - 30.98(1.05) = 52 - 32.53 = 19.47$, not $20$.
+443.18	448.38	158	sentence	With $B = -30.48$ both lines come out right, so keep $-30.48$.
