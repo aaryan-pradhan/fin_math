@@ -1,0 +1,174 @@
+\chapter{The fundamental theorems (finite market)}
+\label{ch:fundamental}
+
+\begin{question}
+In a one-period market with finitely many outcomes and several stocks, when is there no arbitrage, what is the fair price of a claim, and when can every claim be copied?
+\end{question}
+
+\begin{whatfor}
+\begin{itemize}
+  \item Introduces convex sets, convex hulls and hyperplanes, and states the separation theorem.
+  \item Theorem~2: no arbitrage $\iff$ there is an equivalent martingale measure (EMM).
+  \item Theorem~3: the fair price of a claim that can be copied is $\E_{P^*}\big(\frac{X}{1+r}\big)$, the same for every EMM.
+  \item Theorem~4: every claim can be copied (the market is complete) $\iff$ the EMM is unique.
+\end{itemize}
+\skipline{fs:fundamental}
+\end{whatfor}
+
+\begin{prereq}
+From Chapters~17--19: arbitrage, risk-neutral probability, contingent claim, bond, trading strategy, portfolio value, perfect hedge, $p^*$. From Part~0: probability on a finite set, matrices.
+\end{prereq}
+
+%=====================================================================
+\section{The finite market}
+
+\begin{setup}[A finite single-period market]
+Outcomes $\Omega=\{\omega_1,\dots,\omega_N\}$, each with positive real-world probability. Times $t=0,1$. A bond $B_t=(1+r)^t$ and $n$ stocks with prices $S_t=(S_t^1,\dots,S_t^n)$; $S_0$ is known, $S_1(\omega_k)$ depends on the outcome. A portfolio $(\Delta,b)$ holds $\Delta=(\Delta_1,\dots,\Delta_n)$ shares and $b$ bonds; $V_t=\Delta\cdot S_t+bB_t$.
+\end{setup}
+
+\begin{definition}[Equivalent martingale measure]
+An \dfn{equivalent martingale measure} (EMM) is a probability $P^*$ on $\Omega$ with $P^*(\{\omega_k\})=p^*_k>0$ for every $k$ and
+\[
+  \E_{P^*}\Big(\frac{S_1}{1+r}\Big)=\sum_{k=1}^Np^*_k\frac{S_1(\omega_k)}{1+r}=S_0 .
+\]
+Every discounted stock price is a fair game under $P^*$.
+\end{definition}
+
+\begin{example}[One stock: when is there an EMM?]
+\label{ex:one-stock-emm}
+$r=0.25$; tomorrow the stock is worth $2$ or $0.5$, i.e.\ $1.6$ or $0.4$ in today's money. We need $1.6p^*+0.4(1-p^*)=S_0$, so $p^*=\frac{S_0-0.4}{1.2}$.
+\begin{itemize}
+  \item $S_0=1$: $p^*=0.5$, an EMM.
+  \item $S_0=2$: $p^*=\frac43>1$, none. Arbitrage: short the stock, bank $2$, get $2.5$, repay at most $2$.
+  \item $S_0=0.3$: $p^*<0$, none. Arbitrage: borrow $0.3$, buy the stock, owe $0.375$, hold at least $0.5$.
+\end{itemize}
+\end{example}
+
+%=====================================================================
+\section{Convex sets and the separation theorem}
+
+\begin{definition}[Convex set; convex hull; relative interior]
+A set $D\subseteq\R^m$ is a \dfn{convex set} if with any two points it contains the segment between them: $\beta x_1+(1-\beta)x_2\in D$ for $x_1,x_2\in D$, $\beta\in(0,1)$. The \dfn{convex hull} of points $y_1,\dots,y_N$ is
+\[
+  \operatorname{conv}\{y_1,\dots,y_N\}=\Big\{\sum_j\alpha_jy_j:\ \alpha_j\ge0,\ \sum_j\alpha_j=1\Big\},
+\]
+the smallest convex set containing them. Its \dfn{relative interior} $D_0$ is the same set with all $\alpha_j>0$.
+\end{definition}
+
+\begin{definition}[Hyperplane; half-space]
+A \dfn{hyperplane} through $x_0$ with normal vector $a\ne0$ is $L=\{x\in\R^m:a\cdot(x-x_0)=0\}$; the open \dfn{half-space} on the side of $a$ is $\{x:a\cdot(x-x_0)>0\}$. In $\R^2$, a hyperplane is a line.
+\end{definition}
+
+\begin{theorem}[Theorem~1: separation theorem]
+\label{thm:separation}
+Let $D\subseteq\R^m$ be convex with relative interior $D_0$. For any point $x_0\notin D_0$ there is a hyperplane through $x_0$ with normal $a$ such that $a\cdot(x-x_0)>0$ for all $x\in D_0$: the whole of $D_0$ lies strictly on one side.
+\end{theorem}
+\noproof
+
+\begin{pic}
+\begin{tikzpicture}[scale=2.3]
+  \draw[-{Latex}] (0,0)--(2,0) node[right] {\scriptsize stock 1}; \draw[-{Latex}] (0,0)--(0,1.9) node[above] {\scriptsize stock 2};
+  \fill[thmc!15,draw=thmc,thick] (1.6,0.8)--(0.4,1.6)--(0.4,0.8)--cycle;
+  \foreach \p/\l/\a in {(1.6,0.8)/{y_1}/east,(0.4,1.6)/{y_2}/east,(0.4,0.8)/{y_3}/north east} \fill \p circle (0.6pt) node[anchor=\a,font=\scriptsize] {$\l$};
+  \fill[defc] (1,1) circle (0.8pt) node[above right,font=\scriptsize,defc] {$S_0=(1,1)$};
+  \fill[trapc] (1.6,1.5) circle (0.8pt) node[right,font=\scriptsize,trapc] {$S_0'$};
+  \draw[trapc,dashed] (1.0,1.9)--(1.9,0.85);
+  \node[trapc,font=\scriptsize,align=left] at (1.55,1.95) {separating line};
+\end{tikzpicture}
+\picnote{Two stocks, three outcomes; the points $y_k=S_1(\omega_k)/(1+r)$ span a triangle (their convex hull). $S_0$ inside the triangle: an EMM exists ($S_0$ is a weighted average of the $y_k$ with positive weights). $S_0'$ outside: a line separates it from the triangle, and its normal is an arbitrage portfolio.}
+\end{pic}
+
+%=====================================================================
+\section{Theorem 2: no arbitrage if and only if an EMM exists}
+
+\begin{theorem}[Theorem~2]
+\label{thm:ftap}
+A finite single-period market is arbitrage-free if and only if there is an EMM.
+\end{theorem}
+\begin{proof}
+Write $y_k=\frac{S_1(\omega_k)}{1+r}$ and $D=\operatorname{conv}\{y_1,\dots,y_N\}$.
+\begin{steps}
+  \item \emph{An EMM means $S_0\in D_0$.} The EMM equation says $S_0=\sum_kp^*_ky_k$ with all $p^*_k>0$, $\sum p^*_k=1$: exactly the definition of $D_0$.
+  \item \emph{An EMM rules out arbitrage.} Take a portfolio with $V_0=\Delta\cdot S_0+b=0$, so $b=-\Delta\cdot S_0$. Then $\frac{V_1(\omega_k)}{1+r}=\Delta\cdot(y_k-S_0)$. If $V_1\ge0$ everywhere and $>0$ somewhere, averaging with the positive weights $p^*_k$ gives $\sum_kp^*_k\Delta\cdot(y_k-S_0)>0$. But this equals $\Delta\cdot(\sum_kp^*_ky_k-S_0)=\Delta\cdot(S_0-S_0)=0$. Contradiction.
+  \item \emph{No arbitrage forces an EMM.} Suppose $S_0\notin D_0$. By Theorem~1 there is $a$ with $a\cdot(x-S_0)>0$ for $x\in D_0$; hence $a\cdot(y_k-S_0)\ge0$ for every $k$ (the $y_k$ are limits of points of $D_0$), and $>0$ for at least one $k$ (else all of $D$ would lie in the hyperplane). The portfolio $\Delta=a$, $b=-a\cdot S_0$ has $V_0=0$ and $V_1(\omega_k)=(1+r)a\cdot(y_k-S_0)$: an arbitrage. \qedhere
+\end{steps}
+\end{proof}
+
+For one stock with two outcomes, $D$ is the segment $\big[\frac{dS_0}{1+r},\frac{uS_0}{1+r}\big]$ and $D_0$ its interior: no arbitrage $\iff d<1+r<u$, as in Chapter~19.
+
+%=====================================================================
+\section{Theorem 3: pricing}
+
+\begin{definition}[Attainable claim; complete market]
+A claim $X$ is \dfn{attainable} if some portfolio copies it: $V_1(\omega_k)=X(\omega_k)$ for every $k$. The market is a \dfn{complete market} if every claim is attainable.
+\end{definition}
+
+\begin{theorem}[Theorem~3: arbitrage pricing]
+\label{thm:pricing}
+In an arbitrage-free market with EMM $P^*$:
+\begin{enumerate}[label=(\alph*)]
+  \item the discounted value of any portfolio is a martingale: $\E_{P^*}\big(\frac{V_1}{1+r}\big)=V_0$;
+  \item the fair price of an attainable claim is $X^*=\E_{P^*}\big(\frac{X}{1+r}\big)$, and it is the same for every EMM.
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+Linearity of $\E_{P^*}$.
+\begin{steps}
+  \item (a) $\E_{P^*}\big(\frac{\Delta\cdot S_1+b(1+r)}{1+r}\big)=\Delta\cdot\E_{P^*}\big(\frac{S_1}{1+r}\big)+b=\Delta\cdot S_0+b=V_0$.
+  \item (b) If $(\Delta,b)$ copies $X$, then $V_1=X$, and the fair price is the cost $V_0=\E_{P^*}\big(\frac{X}{1+r}\big)$ by (a). The cost $V_0$ does not depend on which EMM we used, so neither does $X^*$. \qedhere
+\end{steps}
+\end{proof}
+
+\paragraph{Copying is a linear system.} $(\Delta,b)$ copies $X$ exactly when, for each outcome $k$, $\sum_i\Delta_iS_1^i(\omega_k)+b(1+r)=X(\omega_k)$: $N$ equations in the $n+1$ unknowns $\Delta_1,\dots,\Delta_n,b$. Finding an EMM is the system $\sum_kp^*_kS_1^i(\omega_k)=(1+r)S_0^i$ ($i=1,\dots,n$), $\sum_kp^*_k=1$: $n+1$ equations in the $N$ unknowns $p^*_k$. Its matrix
+\[
+  A=\begin{pmatrix}S_1^1(\omega_1)&\cdots&S_1^1(\omega_N)\\ \vdots&&\vdots\\ S_1^n(\omega_1)&\cdots&S_1^n(\omega_N)\\ 1&\cdots&1\end{pmatrix}
+\]
+is, up to scaling the last row by $1+r$, the transpose of the copying system's matrix.
+
+%=====================================================================
+\section{Theorem 4: completeness}
+
+\begin{theorem}[Theorem~4: completeness]
+\label{thm:complete}
+An arbitrage-free market is complete if and only if the EMM is unique.
+\end{theorem}
+\begin{proof}
+Both directions use the two linear systems.
+\begin{steps}
+  \item ($\Leftarrow$) A unique EMM means the EMM system has exactly one solution: after dropping repeated equations, $A$ is square ($n+1=N$) with $\det A\ne0$. Then the copying system, whose matrix is the transpose up to scaling a column, also has $\det\ne0$, so it can be solved for every right-hand side $X$: the market is complete.
+  \item ($\Rightarrow$) If the market is complete, every claim has the price $\E_{P^*}(X/(1+r))$, the same for any two EMMs $P^*$, $\tilde P^*$. Take $X_i=\ind{\omega=\omega_i}$ (pays $1$ in outcome $i$ only): $\frac{p^*_i}{1+r}=\frac{\tilde p^*_i}{1+r}$. So $p^*_i=\tilde p^*_i$ for every $i$. \qedhere
+\end{steps}
+\end{proof}
+
+\begin{example}[Two stocks, three outcomes]
+\label{ex:two-stocks}
+$r=0.25$, $S_0=(1,1)$; stock~1 ends at $(2,0.5,0.5)$, stock~2 at $(1,2,1)$ in outcomes $\omega_1,\omega_2,\omega_3$.
+\begin{steps}
+  \item EMM system: $2p_1+0.5p_2+0.5p_3=1.25$, $p_1+2p_2+p_3=1.25$, $p_1+p_2+p_3=1$. $\det A=1.5\ne0$, so $p^*=(0.5,0.25,0.25)$, unique: complete.
+  \item Price the claim paying $1$ if stock~1 ends at $2$ (that is, in $\omega_1$): $X^*=\frac{0.5\cdot1}{1.25}=0.4$.
+  \item Copy it: $2\Delta_1+\Delta_2+1.25b=1$, $0.5\Delta_1+2\Delta_2+1.25b=0$, $0.5\Delta_1+\Delta_2+1.25b=0$ give $\Delta=(\frac23,0)$, $b=-\frac{4}{15}$. Cost $\frac23-\frac4{15}=0.4$.
+\end{steps}
+\end{example}
+
+With one stock and three outcomes ($n+1=2<N=3$), the EMMs form a whole segment and claims like a call get an interval of no-arbitrage prices (Chapter~17).
+
+%=====================================================================
+\formulasheet{fs:fundamental}
+
+\begin{mastercard}[label=card:finite]{Pricing in a finite one-period market}
+Outcomes $\omega_1,\dots,\omega_N$; $n$ stocks with prices $S_0^i$ today and $S_1^i(\omega_k)$ tomorrow; discount factor $D=\frac1{1+r}$ ($D=1$ for present-value prices); a claim pays $X(\omega_k)$. Solve for the risk-neutral weights $p^*_k$, then price:
+\[
+  \boxed{\begin{gathered}S_0^i=D\sum_{k=1}^Np^*_k\,S_1^i(\omega_k)\ \ (i=1,\dots,n),\qquad \sum_kp^*_k=1,\ \ p^*_k>0;\\
+  X^*=D\sum_kp^*_k\,X(\omega_k);\qquad \text{copy: }\ \sum_i\Delta_iS_1^i(\omega_k)+b\,(1+r)=X(\omega_k)\ \ \text{for all }k.\end{gathered}}
+\]
+No solution $p^*$ $\iff$ arbitrage (Theorem~2). Unique $p^*$ $\iff$ complete (Theorem~4). Several $p^*$: each attainable claim still has one price; other claims get an interval.
+\begin{plugrows}
+  \plugrow{One stock, two outcomes (up/down)}{$N=2$, $n=1$, $S_1=uS_0$ or $dS_0$}{$p^*=\dfrac{1+r-d}{u-d}$; $X^*=D[p^*X_u+(1-p^*)X_d]$; $\Delta=\dfrac{X_u-X_d}{(u-d)S_0}$, $b=\dfrac{uX_d-dX_u}{(1+r)(u-d)}$}{$d<1+r<u$}{$S_0=1$, $u=1.75$, $d=0.5$, $r=0.25$, $K=1$: $p^*=0.6$, call $0.36$, $\Delta=0.6$, $b=-0.24$; put $0.16$}
+  \plugrow{Prices in present value}{$D=1$, two prices $S_u,S_d$}{$p^*=\dfrac{S_0-S_d}{S_u-S_d}$; call $=p^*(S_u-K)^+$}{$S_d<S_0<S_u$}{$100\to200/50$, $K=150$: $\frac{50}3$; $75\to200/50$, $K=120$: $13.33$; $50\to100/25$, $K=85$: $5$}
+  \plugrow{The real-world probability}{not used anywhere}{the price is the same whatever $p$ is}{the discounted real-world expectation is \emph{not} the price}{$100\to130/80$, $r=0.05$, $K=110$: $p^*=0.5$, $C=9.52$ (the real $p=0.4$ would wrongly give $7.62$)}
+  \plugrow{No $p^*$ in $(0,1)$: build the arbitrage}{solution outside $(0,1)$ or no solution}{short what is dear, buy what is cheap; for a mispriced claim, hedge it with $\Delta$ shares}{any price other than $X^*$}{$r=0.25$, stock $\to2$ or $0.5$, $S_0=2$: short the stock, bank $2.5$, owe at most $2$; option at $C=20$ ($100\to200/50$, $K=150$): sell 3, buy 1 share, gain $10$}
+  \plugrow{More outcomes than securities}{$N>n+1$: one $p^*_k$ left free}{interval of no-arbitrage prices: let the free weight range so that all $p^*_k>0$}{incomplete market}{$100\to300/200/50$, $K=150$, $D=1$: $C\in(16.67,\,30)$}
+  \plugrow{Several stocks}{solve the $(n+1)\times N$ system; $\det A\ne0$ means a unique EMM}{$p^*$, then $X^*$ and the copy}{$n+1=N$ for completeness}{two stocks, three outcomes (above): $p^*=(0.5,0.25,0.25)$; claim $1$ in $\omega_1$: $X^*=0.4$, $\Delta=(\frac23,0)$, $b=-\frac4{15}$}
+  \plugrow{Betting form (arbitrage theorem)}{wager returns $r_i(j)$; $p$ with $\sum_jp_jr_i(j)=0$ for all $i$}{either such $p$ exists, or a betting scheme wins in every outcome}{finitely many outcomes}{$C=20$: stock row $(100,-50)$, option row $(30,-20)$, scheme $(1,-3)$ wins $10$ in both}
+\end{plugrows}
+\end{mastercard}
