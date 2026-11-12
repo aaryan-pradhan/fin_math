@@ -161,53 +161,20 @@ Any rectangle probability $P\big(W(t)\in(a,b],\,M(t)\in(c,d]\big)$ with $b\le c$
 %=====================================================================
 \formulasheet{fs:hitting}
 
-\begin{card}{1. Hitting time \texorpdfstring{$T_a$}{Ta}}
-\Formula
-$P(T_a\le t)=2\big[1-\Phi\big(\frac{|a|}{\sqrt t}\big)\big]$; density $\frac{|a|}{\sqrt{2\pi t^3}}e^{-a^2/2t}$; $P(T_a<\infty)=1$; $\E_PT_a=\infty$.
-\UseWhen
-``Probability the BM reaches $a$ by time $t$'', ``distribution / density of the first passage time''.
-\HowTo
-\begin{enumerate}
-  \item Compute $2P(W(t)\ge|a|)$.
-  \item For the density, differentiate in $t$.
-\end{enumerate}
-\Caveats
-\cav{Use $|a|$ for negative levels. Do not apply optional stopping to $T_a$ alone (mean infinite).}
-\begin{cardex}
-$P(T_2\le4)=2(1-\Phi(1))\approx0.317$.
-\end{cardex}
-\end{card}
-
-\begin{card}{2. Running maximum}
-\Formula
-$P(M(t)\ge a)=2\big[1-\Phi\big(\frac a{\sqrt t}\big)\big]$, $a>0$; $M(t)\eqd|W(t)|$.
-\UseWhen
-``Probability the maximum over $[0,t]$ exceeds $a$''.
-\HowTo
-\begin{enumerate}
-  \item $\{M(t)\ge a\}=\{T_a\le t\}$.
-  \item Double the one-time tail.
-\end{enumerate}
-\Caveats
-\cav{The factor $2$: the maximum is above $a$ twice as often as the endpoint.}
-\begin{cardex}
-$P(M(1)\ge1)\approx0.317$ vs $P(W(1)\ge1)\approx0.159$.
-\end{cardex}
-\end{card}
-
-\begin{card}{3. Reflection principle and the joint law}
-\Formula
-$P(W(t)\le a-y,\ M(t)\ge a)=1-\Phi\big(\frac{a+y}{\sqrt t}\big)$; \;$P(W(t)\le w,M(t)\ge m)=1-\Phi\big(\frac{2m-w}{\sqrt t}\big)$, $w\le m$, $m\ge0$.
-\UseWhen
-``Probability the BM hits $m$ but ends below $w$'', joint questions about $W(t)$ and $M(t)$.
-\HowTo
-\begin{enumerate}
-  \item Check the guard $w\le m$ (else use the overlap split).
-  \item Reflect: replace ``ends below $w$'' by ``ends above $2m-w$''.
-\end{enumerate}
-\Caveats
-\cav{If $w>m$, write $\{W\le w\}=\{W\le m\}\cup\{m<W\le w\}$; on the second part $M\ge W>m$ holds automatically.}
-\begin{cardex}
-$P(W(1)\le0,M(1)\ge1)=1-\Phi(2)\approx0.0228$.
-\end{cardex}
-\end{card}
+\begin{mastercard}[label=card:G]{The joint law of $W_t$ and its maximum $M_t$}
+Memorise one function, $G(b,c)=P(W_t\le b,\ M_t\ge c)$ with $M_t=\max_{s\le t}W_s$:
+\[
+  \boxed{\begin{gathered}G(b,c)=\begin{cases}\Phi\big(\frac{b}{\sqrt t}\big),&c\le0,\\[0.5ex] 1-\Phi\big(\frac{2c-b}{\sqrt t}\big),&c>0,\ b\le c,\\[0.5ex] 1+\Phi\big(\frac b{\sqrt t}\big)-2\Phi\big(\frac c{\sqrt t}\big),&0<c<b;\end{cases}\\[1ex]
+  P\big(a<W_t\le b,\ c<M_t\le d\big)=\big[G(b,c)-G(a,c)\big]-\big[G(b,d)-G(a,d)\big].\end{gathered}}
+\]
+The middle case is the reflection principle (a path that reaches $c$ and ends at or below $b$ has an equally likely mirror image ending at or above $2c-b$). The first case holds because $M_t\ge0$ always; the last because $\{W_t>b\}$ already forces $M_t\ge c$.
+\begin{plugrows}
+  \plugrow{Maximum above a level; hitting time}{$b=\infty$; and $\{T_c\le t\}=\{M_t\ge c\}$, $T_c$ = first time $W=c$}{$P(M_t\ge c)=P(T_c\le t)=2\big[1-\Phi\big(\frac{|c|}{\sqrt t}\big)\big]$}{for $c<0$ use the symmetry $W\to-W$}{$P(M_1\ge1)\approx0.317$; $P(T_2\le4)\approx0.317$; $P(T_2\le16)\approx0.617$}
+  \plugrow{Density of the hitting time}{differentiate the previous row in $t$}{$f_{T_c}(t)=\dfrac{|c|}{\sqrt{2\pi t^3}}e^{-c^2/2t}$}{$t>0$}{peak of $f_{T_1}$ at $t=\frac13$}
+  \plugrow{Will it hit? How long on average?}{$t\to\infty$ in the first row}{$P(T_c<\infty)=1$, but $\E_PT_c=\infty$ (tail $\sim t^{-3/2}$)}{$c\ne0$; so optional stopping cannot be used on $T_c$ alone}{$P(T_1\le100)=2(1-\Phi(0.1))\approx0.920$: still short of $1$ after a long time}
+  \plugrow{Reached $c$ but ended low}{middle case}{$P(W_t\le b,M_t\ge c)=1-\Phi\big(\frac{2c-b}{\sqrt t}\big)$}{$c>0$, $b\le c$ (the guard)}{$P(W_1\le0,M_1\ge1)=1-\Phi(2)\approx0.023$}
+  \plugrow{A rectangle}{four values of $G$; check the case at each}{the box}{use the right case for every corner}{$t=4$: $P(1<W\le3,\ 2<M\le3)\approx0.1231$ (wrong case at a corner gives $0.1811$)}
+  \plugrow{Not recovering a loss}{need the maximum to reach $c$ within $t$}{$P(\text{never up }c)=1-P(M_t\ge c)=2\Phi\big(\frac c{\sqrt t}\big)-1$}{$c>0$}{$c=1$, $t=4$: $0.383$}
+  \plugrow{Scaled or later windows}{$Y=\sigma W$: divide levels by $\sigma$; window $[t_1,t_2]$: condition on $W_{t_1}=y$ and restart}{$P(\max_{[t_1,t_2]}W>x)=P(W_{t_1}\ge x)+\int_{-\infty}^x2\big[1-\Phi\big(\frac{x-y}{\sqrt{t_2-t_1}}\big)\big]\frac{e^{-y^2/2t_1}}{\sqrt{2\pi t_1}}dy$}{$\sigma>0$; the motion restarts at $t_1$}{$Y=2W$: $P(\max_{s\le1}Y_s\ge2)=P(M_1\ge1)\approx0.317$}
+\end{plugrows}
+\end{mastercard}

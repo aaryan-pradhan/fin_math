@@ -10,7 +10,7 @@ What is the joint distribution of Brownian motion at several times, and what do 
   \item Writes the joint density of $W(t_1),\dots,W(t_n)$ as a product over increments.
   \item Finds the law of $W(s)$ given $W(t)=B$: for $s<t$ it is $N\big(\frac stB,\frac{s(t-s)}{t}\big)$; for $s>t$ it is $N(B,s-t)$.
 \end{itemize}
-\skipline{fs:joint}
+\par\smallskip\textbf{Skipping this chapter?} Its results are rows of the card on the law of $Y_t$, in the formula sheet on page~\pageref{fs:drift}.
 \end{whatfor}
 
 \begin{prereq}
@@ -126,41 +126,3 @@ The lead of rider A over rider B when a fraction $t$ of the race is done is mode
   \]
 \end{steps}
 \end{example}
-
-%=====================================================================
-\formulasheet{fs:joint}
-
-\begin{card}{1. Joint density of Brownian motion}
-\Formula
-$f(x_1,\dots,x_n)=f_{t_1}(x_1)f_{t_2-t_1}(x_2-x_1)\cdots f_{t_n-t_{n-1}}(x_n-x_{n-1})$, \;$f_t(x)=\frac{1}{\sqrt{2\pi t}}e^{-x^2/2t}$.
-\UseWhen
-``Write the joint density of $W(t_1),\dots,W(t_n)$'', probabilities about several times.
-\HowTo
-\begin{enumerate}
-  \item Order the times; switch to increments.
-  \item Multiply the normal densities of the increments.
-\end{enumerate}
-\Caveats
-\cav{The values $W(t_k)$ are \emph{not} independent; the increments are.}
-\begin{cardex}
-$(W(1),W(3))$: $f_1(x)f_2(y-x)$. $P(W(1)>0,W(3)>W(1))=\frac14$.
-\end{cardex}
-\end{card}
-
-\begin{card}{2. Conditioning on \texorpdfstring{$W(t)=B$}{W(t)=B}}
-\Formula
-$s<t$: $[W(s)\given W(t)=B]\sim N\big(\frac stB,\frac{s(t-s)}{t}\big)$. \;$s>t$: $N(B,s-t)$. \;$Y=\sigma W$: $[Y(s)\given Y(t)=C]\sim N\big(\frac stC,\sigma^2\frac{s(t-s)}t\big)$.
-\UseWhen
-``Given the final value, what about earlier?'' (backward) or ``given now, later?'' (forward).
-\HowTo
-\begin{enumerate}
-  \item Backward ($s<t$): mean on the straight line, variance $\frac{s(t-s)}t$.
-  \item Forward ($s>t$): add an independent $N(0,s-t)$.
-  \item Standardise and read $\Phi$.
-\end{enumerate}
-\Caveats
-\cav{$\sigma$ cancels in the conditional mean but not in the variance.}
-\begin{cardex}
-Race, $Y=\sigma W$: given $Y(\frac12)=\sigma$, $P(Y(1)>0)=\Phi(\sqrt2)\approx0.921$; given $Y(1)=\sigma$, $P(Y(\frac12)>0)=\Phi(1)\approx0.841$.
-\end{cardex}
-\end{card}
