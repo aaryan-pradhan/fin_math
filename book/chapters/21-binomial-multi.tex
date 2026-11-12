@@ -1,0 +1,128 @@
+\chapter{The multiperiod binomial market}
+\label{ch:binomial-multi}
+
+\begin{question}
+Over many periods the stock moves up or down each period. How do we price a claim and copy it, step by step through the tree?
+\end{question}
+
+\begin{whatfor}
+\begin{itemize}
+  \item Self-financing strategies over $T$ periods.
+  \item Prices any claim $g(S_T)$ by working backwards through the tree, one period at a time.
+  \item Gets the closed formula: a binomial average of the payoff under $p^*$, discounted; and shows the discounted stock is a martingale under $P^*$.
+\end{itemize}
+\skipline{fs:binomial-multi}
+\end{whatfor}
+
+\begin{prereq}
+From Chapters~19--20: binomial market, trading strategy, self-financing, perfect hedge, $p^*=\frac{1+r-d}{u-d}$, EMM, fair price. From Part~1: martingale. From Part~0: the binomial distribution.
+\end{prereq}
+
+%=====================================================================
+\section{Strategies over many periods}
+
+\begin{setup}[The $T$-period binomial market]
+Bond $B_t=(1+r)^t$; stock $S_t=uS_{t-1}$ or $dS_{t-1}$, $t=1,\dots,T$, with $d<1+r<u$. An outcome is a path $\omega=(v_1,\dots,v_T)$, $v_t\in\{u,d\}$, and $S_t=v_1\cdots v_tS_0$. A claim pays $X=g(S_T)$ at $T$.
+\end{setup}
+
+A strategy holds $\Delta_t$ shares and $b_t$ bonds during period $t$, chosen at time $t-1$ from $S_0,\dots,S_{t-1}$. Its value is $V_t=\Delta_tS_t+b_t(1+r)^t$, with $V_0=\Delta_1S_0+b_1$. It is self-financing (Chapter~19) when rebalancing costs nothing:
+\[
+  \Delta_tS_t+b_t(1+r)^t=\Delta_{t+1}S_t+b_{t+1}(1+r)^t,\qquad t=1,\dots,T-1 .
+\]
+It copies $X$ if $V_T=X$ on every path.
+
+%=====================================================================
+\section{Backward induction}
+
+\begin{theorem}[Pricing in the $T$-period tree]
+\label{thm:multi}
+Write $V_t[s]$ for the value at time $t$ when $S_t=s$. Then $V_T[s]=g(s)$ and, going backwards,
+\[
+  V_t[s]=\frac{1}{1+r}\Big[p^*V_{t+1}[us]+(1-p^*)V_{t+1}[ds]\Big]=\E_{P^*}\Big(\frac{V_{t+1}}{1+r}\Bigm|S_t=s\Big),
+\]
+with the copying holding over period $t+1$
+\[
+  \Delta_{t+1}[s]=\frac{V_{t+1}[us]-V_{t+1}[ds]}{us-ds},\qquad b_{t+1}[s]=\frac{uV_{t+1}[ds]-dV_{t+1}[us]}{(1+r)^{t+1}(u-d)} .
+\]
+In closed form,
+\[
+  \begin{aligned}
+  V_t[s]&=\frac{1}{(1+r)^{T-t}}\sum_{j=0}^{T-t}\binom{T-t}{j}(p^*)^j(1-p^*)^{T-t-j}\,g\big(u^jd^{T-t-j}s\big)\\
+  &=\E_{P^*}\Big(\frac{g(S_T)}{(1+r)^{T-t}}\Bigm|S_t=s\Big).
+  \end{aligned}
+\]
+The fair price of $X$ is $V_0[S_0]$.
+\end{theorem}
+\begin{proof}
+Each period is the one-period problem of Chapter~19.
+\begin{steps}
+  \item \emph{Last period.} At time $T-1$ with $S_{T-1}=s$, copy $g$ over one period: $\Delta_Tus+b_T(1+r)^T=g(us)$ and $\Delta_Tds+b_T(1+r)^T=g(ds)$. Solving gives the formulas with $t+1=T$, and the cost is $V_{T-1}[s]=\frac{1}{1+r}[p^*g(us)+(1-p^*)g(ds)]$, as in Chapter~19 (one bond costs $(1+r)^{T-1}$ at time $T-1$ and is worth $(1+r)^T$ at $T$).
+  \item \emph{One step further back.} $V_{T-1}[\cdot]$ is now a known function of $S_{T-1}$: treat it as a new claim with expiry $T-1$ and repeat. The value received at time $T-1$ is exactly the cost of the next holding, so the strategy is self-financing.
+  \item \emph{Closed form.} After $T-t$ backward steps, each path with $j$ ups and $T-t-j$ downs ends at $u^jd^{T-t-j}s$ and carries weight $(p^*)^j(1-p^*)^{T-t-j}$; there are $\binom{T-t}{j}$ such paths. \qedhere
+\end{steps}
+\end{proof}
+
+\begin{example}[A two-period call]
+\label{ex:two-period}
+$S_0=100$, $u=1.2$, $d=0.8$, $r=0.05$, $T=2$, call with $K=100$; $p^*=\frac{1.05-0.8}{0.4}=0.625$.
+\begin{steps}
+  \item Time 2: $S_2=144,96,64$; payoffs $44,0,0$.
+  \item Time 1: $V_1[120]=\frac{0.625\cdot44}{1.05}\approx26.19$, $V_1[80]=0$.
+  \item Time 0: $V_0=\frac{0.625\cdot26.19}{1.05}\approx15.59$. Closed form: $\frac{0.625^2\cdot44}{1.05^2}=15.59$.
+  \item Hedge at time 0: $\Delta_1=\frac{26.19-0}{120-80}\approx0.655$ shares and $V_0-\Delta_1S_0\approx-49.89$ in the bond. After an up-move, rebalance to $\Delta_2=\frac{44-0}{144-96}\approx0.917$ shares and $26.19-0.917\cdot120\approx-83.81$ in the bond. Self-financing check: before rebalancing, $0.655\cdot120-49.89\cdot1.05=26.19$.
+\end{steps}
+\end{example}
+
+\begin{pic}
+\begin{tikzpicture}[x=3.4cm,y=1.25cm,every node/.style={font=\small}]
+  \node[draw,rounded corners,align=center] (a) at (0,0) {$S=100$\\ $V=15.59$};
+  \node[draw,rounded corners,align=center,fill=defc!8] (b) at (1,1) {$S=120$\\ $V=26.19$};
+  \node[draw,rounded corners,align=center,fill=trapc!6] (c) at (1,-1) {$S=80$\\ $V=0$};
+  \node[draw,rounded corners,align=center] (d) at (2,2) {$S=144$\\ $V=44$};
+  \node[draw,rounded corners,align=center] (e) at (2,0) {$S=96$\\ $V=0$};
+  \node[draw,rounded corners,align=center] (f) at (2,-2) {$S=64$\\ $V=0$};
+  \draw[-{Latex}] (a)--node[below right,font=\scriptsize]{$p^*=0.625$}(b); \draw[-{Latex}] (a)--node[below,font=\scriptsize]{$0.375$}(c);
+  \draw[-{Latex}] (b)--(d); \draw[-{Latex}] (b)--(e); \draw[-{Latex}] (c)--(e); \draw[-{Latex}] (c)--(f);
+  \node[thmc,font=\scriptsize] at (0,0.75) {$\Delta_1=0.655$};
+  \node[thmc,font=\scriptsize] at (1,1.75) {$\Delta_2=0.917$};
+  \draw[-{Latex},prec,thick] (2.45,-2.6)--(-0.2,-2.6) node[midway,below,font=\scriptsize] {values are filled in backwards, from the payoffs};
+\end{tikzpicture}
+\picnote{The two-period tree of \cref{ex:two-period}. Each node's value is the discounted $p^*$-average of the two values to its right; each node's $\Delta$ is the change in value divided by the change in stock price.}
+\end{pic}
+
+%=====================================================================
+\section{The discounted stock is a martingale}
+
+\begin{result}[Martingales under $P^*$]
+\label{res:multi-mg}
+Under $P^*$ the moves are independent, up with probability $p^*$. The discounted stock $S_t^*=(1+r)^{-t}S_t$ and the discounted value $(1+r)^{-t}V_t$ of any self-financing strategy are martingales; so $V_0=\E_{P^*}\big((1+r)^{-T}X\big)$ for any copied $X$.
+\end{result}
+\begin{proof}
+$\E_{P^*}(S_{t+1}\given\F_t)=S_t(p^*u+(1-p^*)d)=(1+r)S_t$, so $\E_{P^*}(S^*_{t+1}\given\F_t)=S^*_t$ (the one-step test of Chapter~5). The value: $V_{t+1}-V_t=\Delta_{t+1}(S_{t+1}-S_t)+b_{t+1}((1+r)^{t+1}-(1+r)^t)$ by self-financing, and discounting turns this into $\Delta_{t+1}(S^*_{t+1}-S^*_t)$, a stake chosen from the past on a martingale (Chapter~7).
+\end{proof}
+
+\paragraph{The price as an exponential of a random walk.} Write $S_T=S_0e^{Z_T}$ with $Z_T=Y_1+\dots+Y_T$, where $Y_k=\ln u$ (prob.\ $p^*$) or $\ln d$ (prob.\ $1-p^*$) independently. Then
+\[
+  V_0=\E_{P^*}\Big(\frac{g(S_0e^{Z_T})}{(1+r)^T}\Big).
+\]
+Chapter~22 lets the number of periods grow with $u,d$ shrinking, and $Z_T$ becomes normal.
+
+%=====================================================================
+\formulasheet{fs:binomial-multi}
+
+\begin{mastercard}[label=card:tree]{Pricing and hedging in the $T$-period binomial tree}
+$S_t=uS_{t-1}$ or $dS_{t-1}$, bond $(1+r)^t$, $p^*=\frac{1+r-d}{u-d}$, claim $g(S_T)$; $V_t[s]$ = value at time $t$ when $S_t=s$:
+\[
+  \boxed{\begin{gathered}V_t[s]=\frac{1}{(1+r)^{T-t}}\sum_{j=0}^{T-t}\binom{T-t}{j}(p^*)^j(1-p^*)^{T-t-j}g\big(u^jd^{T-t-j}s\big)\\=\frac{p^*V_{t+1}[us]+(1-p^*)V_{t+1}[ds]}{1+r};\\
+  \text{hold over period }t+1:\quad \Delta=\frac{V_{t+1}[us]-V_{t+1}[ds]}{us-ds}\ \text{shares},\qquad V_t[s]-\Delta s\ \text{in the bond}.\end{gathered}}
+\]
+\begin{plugrows}
+  \plugrow{Price today}{$t=0$, $s=S_0$; either the sum or the backward step at every node}{$V_0$}{$d<1+r<u$; European claims $g(S_T)$}{$S_0=100$, $u=1.2$, $d=0.8$, $r=0.05$, $T=2$, $K=100$: call $15.59$}
+  \plugrow{One period}{$T=1$}{the one-step formulas: Card~20.1, row 1}{one period}{$S_0=1$, $u=1.75$, $d=0.5$, $r=0.25$, $K=1$: $0.36$}
+  \plugrow{A call: only the ``in the money'' terms}{$g=(s-K)^+$; $m$ = least $j$ with $u^jd^{T-j}S_0>K$}{$C=S_0\sum_{j\ge m}\binom Tj\hat p^{\,j}(1-\hat p)^{T-j}-\dfrac{K}{(1+r)^T}\sum_{j\ge m}\binom Tj(p^*)^j(1-p^*)^{T-j}$, $\hat p=\dfrac{up^*}{1+r}$}{call, $g$ increasing; $\hat p$ is again a probability}{same: $m=2$, $\hat p=\frac{1.2\cdot0.625}{1.05}=0.714$: $100(0.510)-\frac{100}{1.1025}(0.391)=15.59$}
+  \plugrow{A put}{$g=(K-s)^+$, or Card~19.2 (parity)}{$P=C-S_0+K(1+r)^{-T}$}{European}{same: $P=15.59-100+90.70=6.29$}
+  \plugrow{The hedge at a node}{the second line of the box}{shares and bond money held over the next period}{use values one step ahead}{time $0$: $\Delta_1=0.655$, bond $-49.89$; after an up-move: $\Delta_2=0.917$, bond $-83.81$}
+  \plugrow{Is the strategy self-financing?}{value of the old holding at the new price $=$ value of the new holding}{yes for the backward-induction hedge}{compare at the same price}{$0.655\cdot120-49.89\cdot1.05=26.19=V_1[120]$}
+  \plugrow{A discounted martingale}{$\E_{P^*}(S_{t+1}\given\F_t)=(1+r)S_t$}{$(1+r)^{-t}S_t$ and $(1+r)^{-t}V_t$ are $P^*$-martingales}{self-financing strategies}{$0.625(120)+0.375(80)=105=1.05\cdot100$}
+\end{plugrows}
+\end{mastercard}
