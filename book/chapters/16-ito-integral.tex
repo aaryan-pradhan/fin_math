@@ -1,0 +1,233 @@
+\chapter{The Itô integral}
+\label{ch:ito-integral}
+
+\begin{question}
+What does $\int_a^b f(t)\,dW(t)$ mean when $W$ has no derivative, and how is it distributed?
+\end{question}
+
+\begin{whatfor}
+\begin{itemize}
+  \item Defines the Itô integral as a limit of left-endpoint sums.
+  \item For a non-random $f$: it is $N\big(0,\int_a^bf^2\,dt\big)$ (Itô isometry), with a pathwise formula by integration by parts.
+  \item Shows that the squared increments of $W$ add up to $t$, and so $\int_0^tW\,dW=\frac12W_t^2-\frac12t$.
+  \item For random, adapted integrands: mean $0$, the isometry, and the martingale property.
+\end{itemize}
+\skipline{fs:ito-integral}
+\end{whatfor}
+
+\begin{prereq}
+From Part~0: Riemann sums and integrals, variance of sums of independent variables, sums of independent normals, CE1--CE4. From Chapters~5--13: filtration, adapted, martingale, Wiener process, independent increments, normal moments, Gaussian processes.
+\end{prereq}
+
+%=====================================================================
+\section{The integral of a non-random function}
+
+Brownian paths are too rough to have a derivative, so ``$dW(t)=W'(t)\,dt$'' makes no sense. We build the integral directly from sums, as Riemann did.
+
+\begin{definition}[Itô integral of a non-random function]
+\label{def:ito-det}
+Let $f$ be a non-random function with a continuous derivative on $[a,b]$. For a partition $a=t_0<t_1<\dots<t_n=b$,
+\[
+  \int_a^bf(t)\,dW(t)=\lim_{n\to\infty}\sum_{i=1}^nf(t_{i-1})\big(W(t_i)-W(t_{i-1})\big),
+\]
+the limit taken as the largest gap $\max_i(t_i-t_{i-1})\to0$. This is the \dfn{Itô integral}. The integrand is always evaluated at the \emph{left} end of each interval.
+\end{definition}
+
+\begin{pic}
+\begin{tikzpicture}
+\begin{axis}[width=10.5cm,height=4.8cm,xmin=0,xmax=1,xlabel={$t$},xtick={0,0.25,0.5,0.75,1},legend style={font=\scriptsize,at={(0.02,0.98)},anchor=north west},legend columns=2]
+  \addplot[prec,thick] table[x=t,y=w1] {figs/bm3.dat}; \addlegendentry{$W(t)$}
+  \addplot[thmc,very thick,const plot] coordinates {(0,0)(0.25,0.25)(0.5,0.5)(0.75,0.75)(1,0.75)}; \addlegendentry{$f(t_{i-1})$ held over $[t_{i-1},t_i)$}
+  \addplot[defc,very thick,domain=0:1,dashed] {x}; \addlegendentry{$f(t)=t$}
+\end{axis}
+\end{tikzpicture}
+\picnote{The sum freezes $f$ at the left end of each interval and multiplies by the increment of $W$ over that interval. The value used is fixed \emph{before} the increment happens.}
+\end{pic}
+
+\begin{result}[Pathwise formula]
+\label{res:ito-parts}
+For non-random $f$ with continuous derivative,
+\[
+  \int_a^bf(t)\,dW(t)=f(b)W(b)-f(a)W(a)-\int_a^bW(t)\,f'(t)\,dt .
+\]
+\end{result}
+\begin{proof}
+Summation by parts, then an ordinary integral.
+\begin{steps}
+  \item Expanding and regrouping (all middle terms cancel),
+  \[
+    \sum_{i=1}^nf(t_{i-1})\big(W(t_i)-W(t_{i-1})\big)=f(b)W(b)-f(a)W(a)-\sum_{i=1}^nW(t_i)\big(f(t_i)-f(t_{i-1})\big).
+  \]
+  \item The last sum has increments of the smooth $f$; for each path it is a Riemann sum converging to $\int_a^bW(t)f'(t)\,dt$. \qedhere
+\end{steps}
+\end{proof}
+
+For example, $\int_0^1t\,dW(t)=W(1)-\int_0^1W(t)\,dt$: no $dW$ left, just calculus on the path.
+
+\begin{theorem}[Mean, Itô isometry, normality]
+\label{thm:isometry}
+For non-random $f$,
+\[
+  \E_P\Big[\int_a^bf\,dW\Big]=0,\qquad
+  \Var\Big(\int_a^bf\,dW\Big)=\E_P\Big[\Big(\int_a^bf\,dW\Big)^2\Big]=\int_a^bf^2(t)\,dt,
+\]
+and $\displaystyle\int_a^bf(t)\,dW(t)\sim N\Big(0,\int_a^bf^2(t)\,dt\Big)$. The middle identity is the \dfn{Itô isometry}.
+\end{theorem}
+\begin{proof}
+Compute on the sums, then let $n\to\infty$.
+\begin{steps}
+  \item Each term $f(t_{i-1})\Delta W_i$ has mean $f(t_{i-1})\cdot0=0$.
+  \item The increments $\Delta W_i=W(t_i)-W(t_{i-1})\sim N(0,t_i-t_{i-1})$ are independent, so variances add:
+  \[
+    \Var\Big(\sum_if(t_{i-1})\Delta W_i\Big)=\sum_if^2(t_{i-1})(t_i-t_{i-1})\to\int_a^bf^2\,dt .
+  \]
+  \item Each sum is a combination of independent normals, hence normal; limits of normals with converging means and variances are normal. \qedhere
+\end{steps}
+\end{proof}
+
+\begin{example}[Two distributions]
+\label{ex:ito-dist}
+Two integrals of powers of $t$.
+\begin{itemize}
+  \item $X=\int_0^ts\,dW_s\sim N\big(0,\int_0^ts^2ds\big)=N\big(0,\frac{t^3}{3}\big)$. With $t=1$: $N(0,\frac13)$.
+  \item $\Var\big(\int_0^1t^4\,dW_t\big)=\int_0^1t^8\,dt=\frac19$.
+\end{itemize}
+\end{example}
+
+The isometry needs $f$ non-random here. $\int_0^tW_s\,dW_s$ is \emph{not} $N\big(0,\int_0^tW_s^2ds\big)$: that ``variance'' would itself be random.
+
+%=====================================================================
+\section{The squared increments add up to \texorpdfstring{$t$}{t}}
+
+\begin{theorem}[Quadratic variation]
+\label{thm:qv}
+For the uniform partition of $[0,t]$ into $n$ pieces,
+\[
+  \sum_{j=1}^n\big(W(t_j)-W(t_{j-1})\big)^2\;\longrightarrow\;t\qquad(n\to\infty).
+\]
+\end{theorem}
+\begin{proof}
+Each increment is $\sqrt{t/n}\,Z_j$ with $Z_j$ independent $N(0,1)$, so the sum is $t\cdot\frac1n\sum_{j=1}^nZ_j^2$. Its mean is $t\,\E_PZ^2=t$ and its variance is $t^2\cdot\frac1n\Var(Z^2)=\frac{2t^2}{n}\to0$. A quantity with mean $t$ and vanishing variance tends to $t$ (by Chebyshev).
+\end{proof}
+
+\begin{intuition}
+An increment over a short time $\Delta t$ has size about $\sqrt{\Delta t}$, so its square has size $\Delta t$: the squares do not vanish when added up, they add up to the elapsed time. For a smooth function the squared increments are of size $(\Delta t)^2$ and add up to $0$. This single fact is the source of every ``extra term'' in stochastic calculus.
+\end{intuition}
+
+\begin{pic}
+\begin{tikzpicture}
+\begin{axis}[width=10cm,height=4.6cm,xmin=0,xmax=1,ymin=0,xlabel={$t$},legend style={font=\scriptsize,at={(0.02,0.98)},anchor=north west}]
+  \addplot[defc,very thick] table[x=t,y=qv] {figs/ito.dat}; \addlegendentry{$\sum(\Delta W)^2$ up to $t$ (one path, $n=400$)}
+  \addplot[prec,dashed,domain=0:1] {x}; \addlegendentry{the line $t$}
+\end{axis}
+\end{tikzpicture}
+\picnote{Along a single path, the running sum of squared increments climbs steadily along the line $t$, not like a random walk.}
+\end{pic}
+
+\begin{theorem}[$\int W\,dW$]
+\label{thm:wdw}
+$\displaystyle\int_0^tW_s\,dW_s=\frac12W_t^2-\frac12t .$
+\end{theorem}
+\begin{proof}
+An algebra identity, then \cref{thm:qv}.
+\begin{steps}
+  \item For numbers, $a(b-a)=\frac12(b^2-a^2)-\frac12(b-a)^2$. Sum it with $a=W(t_{k-1})$, $b=W(t_k)$; the first part telescopes ($W_0=0$):
+  \[
+    \sum_{k=1}^nW(t_{k-1})\big(W(t_k)-W(t_{k-1})\big)=\frac12W_t^2-\frac12\sum_{k=1}^n\big(W(t_k)-W(t_{k-1})\big)^2 .
+  \]
+  \item The last sum tends to $t$. \qedhere
+\end{steps}
+\end{proof}
+
+Ordinary calculus would give $\frac12W_t^2$. The extra $-\frac12t$ is forced: the left side has mean $0$ (next section), and $\E_P\big(\frac12W_t^2\big)=\frac t2$.
+
+\begin{pic}
+\begin{tikzpicture}
+\begin{axis}[width=10cm,height=4.6cm,xmin=0,xmax=1,xlabel={$t$},legend style={font=\scriptsize,at={(0.02,0.98)},anchor=north west},legend columns=1]
+  \addplot[thmc,very thick] table[x=t,y=iwdw] {figs/ito.dat}; \addlegendentry{left sums $\sum W\Delta W$}
+  \addplot[trapc,thick,dashed] table[x=t,y expr=0.5*\thisrow{w}^2-0.5*\thisrow{t}] {figs/ito.dat}; \addlegendentry{$\frac12W_t^2-\frac12t$}
+  \addplot[prec,thick,dotted] table[x=t,y expr=0.5*\thisrow{w}^2] {figs/ito.dat}; \addlegendentry{$\frac12W_t^2$ (ordinary calculus: wrong)}
+\end{axis}
+\end{tikzpicture}
+\picnote{On one path, the Itô sums follow $\frac12W_t^2-\frac12t$, not $\frac12W_t^2$. The gap is half the quadratic variation.}
+\end{pic}
+
+%=====================================================================
+\section{Random integrands}
+
+The same left-endpoint sums define $\int_0^tb_s\,dW_s$ when the integrand $b_s$ is random, as long as it is \emph{adapted} (it uses only the path up to time $s$) and $\int_0^T\E_P(b_s^2)\,ds<\infty$. The left endpoint is what makes this work: $b_{t_{i-1}}$ is known before the increment $\Delta W_i$ happens.
+
+\begin{theorem}[The Itô integral of an adapted integrand]
+\label{thm:ito-mg}
+For adapted $b$ with $\int_0^T\E_P(b_s^2)\,ds<\infty$, the process $I_t=\int_0^tb_s\,dW_s$ satisfies
+\[
+  \E_P(I_t)=0,\qquad \E_P(I_t^2)=\int_0^t\E_P(b_s^2)\,ds,
+\]
+and $(I_t)$ is a martingale.
+\end{theorem}
+\begin{proof}
+On the sums; the limits are the technical part we skip.
+\begin{steps}
+  \item One term: $b_{t_{i-1}}$ is $\F_{t_{i-1}}$-measurable and $\Delta W_i$ is independent of $\F_{t_{i-1}}$. CE2--CE3: $\E_P\big(b_{t_{i-1}}\Delta W_i\given\F_{t_{i-1}}\big)=b_{t_{i-1}}\cdot0=0$. This gives mean $0$ and, conditioning at time $s$, the martingale property of the sums.
+  \item Squares: $\E_P\big(b_{t_{i-1}}^2\Delta W_i^2\given\F_{t_{i-1}}\big)=b_{t_{i-1}}^2(t_i-t_{i-1})$. Cross terms $i<j$: condition on $\F_{t_{j-1}}$, everything but $\Delta W_j$ is known, and $\E_P\Delta W_j=0$.
+  \item So $\E_P\big(\sum_ib_{t_{i-1}}\Delta W_i\big)^2=\sum_i\E_P(b_{t_{i-1}}^2)(t_i-t_{i-1})\to\int_0^t\E_P(b_s^2)\,ds$. \qedhere
+\end{steps}
+\end{proof}
+
+\begin{example}[Checking $\int W\,dW$]
+$\E_P\big(\int_0^tW\,dW\big)=0$ agrees with $\E_P\big(\frac12W_t^2-\frac12t\big)=0$. The isometry: $\E_P\big(\int_0^tW\,dW\big)^2=\int_0^t\E_P(W_s^2)\,ds=\int_0^ts\,ds=\frac{t^2}2$; directly, $\Var\big(\frac12W_t^2\big)=\frac14(3t^2-t^2)=\frac{t^2}{2}$.
+\end{example}
+
+%=====================================================================
+\formulasheet{fs:ito-integral}
+
+\begin{card}{1. Itô integral of a non-random function}
+\Formula
+$\displaystyle\int_a^bf\,dW\sim N\Big(0,\int_a^bf^2\,dt\Big)$; \;$\int_a^bf\,dW=f(b)W(b)-f(a)W(a)-\int_a^bW f'\,dt$.
+\UseWhen
+``Find the distribution / variance of $\int_0^1t^k\,dW_t$''.
+\HowTo
+\begin{enumerate}
+  \item Check $f$ is non-random.
+  \item Mean $0$; variance $\int f^2$.
+\end{enumerate}
+\Caveats
+\cav{Square $f$ inside the integral; do not square the integral of $f$. Not for random integrands like $W_s$.}
+\begin{cardex}
+$\int_0^1t\,dW_t\sim N(0,\frac13)$; $\Var\int_0^1t^4dW_t=\frac19$; $\int_0^ts\,dW_s\sim N(0,\frac{t^3}3)$.
+\end{cardex}
+\end{card}
+
+\begin{card}{2. Quadratic variation and \texorpdfstring{$\int W\,dW$}{int W dW}}
+\Formula
+$\sum(\Delta W)^2\to t$, i.e.\ $(dW)^2=dt$. \;$\int_0^tW\,dW=\frac12W_t^2-\frac12t$.
+\UseWhen
+``Evaluate $\int_0^tW\,dW$'', ``why the extra term?''.
+\HowTo
+\begin{enumerate}
+  \item Use $a(b-a)=\frac12(b^2-a^2)-\frac12(b-a)^2$ on each term.
+  \item Telescope; the squared increments add to $t$.
+\end{enumerate}
+\Caveats
+\cav{Without $-\frac12t$ the mean would be $\frac t2\ne0$.}
+\begin{cardex}
+$\E_P\big(\int_0^2W\,dW\big)^2=\int_0^2s\,ds=2$.
+\end{cardex}
+\end{card}
+
+\begin{card}{3. Adapted integrands}
+\Formula
+$b$ adapted, $\int\E_Pb^2<\infty$: $\int_0^tb\,dW$ is a martingale, mean $0$, $\E_P\big(\int_0^tb\,dW\big)^2=\int_0^t\E_P(b_s^2)\,ds$.
+\UseWhen
+``Is $\int_0^tb_s\,dW_s$ a martingale?'', ``$\E_P$ / second moment of a stochastic integral''.
+\HowTo
+\begin{enumerate}
+  \item Check $b$ uses only the past.
+  \item Mean $0$; second moment = $\int$ of $\E_Pb^2$.
+\end{enumerate}
+\Caveats
+\cav{Normality needs non-random $b$.}
+\begin{cardex}
+$\E_P\big(\int_0^1W_s^2\,dW_s\big)^2=\int_0^1\E_PW_s^4\,ds=\int_0^13s^2ds=1$.
+\end{cardex}
+\end{card}

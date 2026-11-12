@@ -29,3 +29,7 @@ for m in (10, 100, 1000):
 # integrated Brownian motion Z(t) = int_0^t W(s) ds for the three paths above
 Z = np.cumsum(W * (1 / n), axis=1) - W * (1 / n) / 2
 write('ibm', [t, *W, *Z], 't w1 w2 w3 z1 z2 z3')
+
+# quadratic variation sum (dW)^2 and the left-point sum W dW along path w1
+dW = np.diff(W[0]); qv = np.concatenate([[0], np.cumsum(dW**2)]); iwdw = np.concatenate([[0], np.cumsum(W[0][:-1] * dW)])
+write('ito', [t, W[0], qv, iwdw], 't w qv iwdw')
