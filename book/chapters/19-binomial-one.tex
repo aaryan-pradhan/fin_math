@@ -1,0 +1,205 @@
+\chapter{The single-period binomial market}
+\label{ch:binomial-one}
+
+\begin{question}
+In a market with a stock that goes up or down and a bond, when is there no free lunch, and what is the fair price of any claim?
+\end{question}
+
+\begin{whatfor}
+\begin{itemize}
+  \item Sets up a general discrete market: securities, trading strategies, portfolio value, self-financing, the no-arbitrage principle.
+  \item In the binomial market, finds the cheapest hedge of a claim and shows its cost is an expected value under the risk-neutral probability $p^*=\frac{1+r-d}{u-d}$.
+  \item Proves put--call parity.
+\end{itemize}
+\skipline{fs:binomial-one}
+\end{whatfor}
+
+\begin{prereq}
+From Chapters~17--18: arbitrage, risk-neutral probability, call, put, contingent claim, bond, stock-and-bond portfolio. From Part~1: filtration, martingale, the binomial tree.
+\end{prereq}
+
+%=====================================================================
+\section{A general discrete market}
+
+\begin{setup}[Securities]
+There are $d+1$ securities with prices $S_n=(S_n^0,S_n^1,\dots,S_n^d)$ at times $n=0,1,\dots,T$. Security $0$ is the bond, $S_n^0=(1+r)^n$; the others are risky.
+\end{setup}
+
+\begin{definition}[Trading strategy; value]
+A \dfn{trading strategy} is a sequence $\Phi=(\Phi_n)$ of holdings $\Phi_n=(\Phi_n^0,\dots,\Phi_n^d)$, where $\Phi_n^i$ is the number of units of security $i$ held during period $n$ (from time $n-1$ to time $n$). It is chosen at time $n-1$, so $\Phi_n$ is $\F_{n-1}$-measurable. The \dfn{portfolio value} at time $n$ is
+\[
+  V_n(\Phi)=\Phi_n\cdot S_n=\sum_{i=0}^d\Phi_n^iS_n^i .
+\]
+\end{definition}
+
+\begin{definition}[Self-financing]
+A strategy is \dfn{self-financing} if rebalancing at time $n$ neither adds nor removes money:
+\[
+  \Phi_n\cdot S_n=\Phi_{n+1}\cdot S_n\qquad\text{for every }n .
+\]
+\end{definition}
+
+\begin{result}[Gains of a self-financing strategy]
+\label{res:gains}
+For a self-financing strategy, the change of value over period $n+1$ is the holding times the price change:
+\[
+  V_{n+1}(\Phi)-V_n(\Phi)=\Phi_{n+1}\cdot(S_{n+1}-S_n),\qquad\text{so}\qquad V_n=V_0+\sum_{k=0}^{n-1}\Phi_{k+1}\cdot(S_{k+1}-S_k).
+\]
+\end{result}
+\begin{proof}
+$V_{n+1}-V_n=\Phi_{n+1}\cdot S_{n+1}-\Phi_n\cdot S_n=\Phi_{n+1}\cdot S_{n+1}-\Phi_{n+1}\cdot S_n$, using self-financing for the second term. Add up the periods.
+\end{proof}
+
+\begin{example}[A self-financing trade]
+$S_0=(1,100)$, $S_1=(1.05,130)$ after an up-move. Holding $\Phi_1=(-30.48,0.4)$ (borrow $30.48$, own $0.4$ shares) is worth $\Phi_1\cdot S_1=-32+52=20$ at time $1$. Rebalancing to $\Phi_2=(-18.10,0.3)$ costs $\Phi_2\cdot S_1=-19.00+39=20$: the same, so the trade is self-financing (sell $0.1$ share for $13$, repay $12.38$ of the loan). If next $S_2=(1.1025,150)$, the gain is $\Phi_2\cdot(S_2-S_1)=-18.10(0.0525)+0.3(20)=5.05$.
+\end{example}
+
+\begin{definition}[Arbitrage; no-arbitrage principle]
+An \dfn{arbitrage strategy} is a self-financing $\Phi$ with $V_0(\Phi)\le0$, $V_T(\Phi)\ge0$ and $P(V_T(\Phi)>0)>0$: it costs nothing, can never lose, and may win. The \dfn{no-arbitrage principle} says no such strategy exists.
+\end{definition}
+
+%=====================================================================
+\section{The binomial market}
+
+\begin{setup}[Binomial market]
+A bond $B_t=(1+r)^t$ and a stock with $S_t=uS_{t-1}$ or $S_t=dS_{t-1}$, $t=1,\dots,T$, where $0<d<u$. A claim with expiry $T$ pays $X=g(S_T)$. This chapter takes $T=1$; Chapter~21 takes any $T$.
+\end{setup}
+
+\begin{result}[No arbitrage in the binomial market]
+\label{res:binomial-na}
+The binomial market is arbitrage-free if and only if $d<1+r<u$.
+\end{result}
+\begin{proof}
+One direction here; Chapter~20 gives the other.
+\begin{steps}
+  \item If $1+r\le d$: borrow $S_0$ and buy one share. Today: $V_0=0$. At time $1$ the share is worth at least $dS_0\ge(1+r)S_0$, the debt: $V_1\ge0$, and $V_1>0$ after an up-move. Arbitrage.
+  \item If $u\le1+r$: short one share and lend $S_0$. At time $1$ you have $(1+r)S_0\ge uS_0\ge S_1$: arbitrage again.
+  \item So no arbitrage forces $d<1+r<u$. For the converse, Chapter~20 shows that a probability making the discounted stock a martingale rules out arbitrage, and $p^*$ below is such a probability. \qedhere
+\end{steps}
+\end{proof}
+
+%=====================================================================
+\section{Hedging a claim in one period}
+
+A portfolio $(\Delta,b)$ holds $\Delta$ shares and $b$ bonds ($B_0=1$). Its value is $V_0=\Delta S_0+b$ today and $V_1=\Delta S_1+b(1+r)$ tomorrow. Write $X_u=g(uS_0)$, $X_d=g(dS_0)$.
+
+\begin{definition}[Hedge; perfect hedge]
+$(\Delta,b)$ is a \dfn{hedge} of $X$ if $V_1\ge X$ in both states:
+\[
+  \Delta uS_0+b(1+r)\ge X_u,\qquad \Delta dS_0+b(1+r)\ge X_d .
+\]
+It is a \dfn{perfect hedge} if both hold with equality.
+\end{definition}
+
+\begin{pic}
+\begin{tikzpicture}
+\begin{axis}[width=8.5cm,height=5.4cm,xmin=0,xmax=1.2,ymin=-0.7,ymax=0.7,xlabel={$\Delta$},ylabel={$b$},samples=2,domain=0:1.2]
+  \addplot[draw=none,fill=thmc!12] coordinates {(0,0.6)(0.6,-0.24)(1.2,-0.48)(1.2,0.7)(0,0.7)} --cycle;
+  \addplot[defc,very thick] {-1.4*x+0.6}; \node[defc,font=\scriptsize,anchor=west] at (axis cs:0.05,0.6) {(1): $b\ge-1.4\Delta+0.6$};
+  \addplot[trapc,very thick] {-0.4*x}; \node[trapc,font=\scriptsize,anchor=north] at (axis cs:1.0,-0.42) {(2): $b\ge-0.4\Delta$};
+  \addplot[only marks,mark=*] coordinates {(0.6,-0.24)};
+  \node[font=\scriptsize,anchor=south west] at (axis cs:0.62,-0.22) {perfect hedge $(0.6,-0.24)$};
+  \node[thmc,font=\scriptsize] at (axis cs:0.9,0.35) {all hedges};
+\end{axis}
+\end{tikzpicture}
+\picnote{Hedges of the call in the example below ($S_0=1$, $u=1.75$, $d=0.5$, $r=0.25$, $K=1$). Each state gives a half-plane; the hedges are their intersection. The cheapest one, $V_0=\Delta S_0+b$ smallest, is the corner where both hold with equality.}
+\end{pic}
+
+\begin{theorem}[The perfect hedge and its price]
+\label{thm:perfect-hedge}
+If $d<1+r<u$, the perfect hedge is
+\[
+  \Delta=\frac{X_u-X_d}{(u-d)S_0},\qquad b=\frac{uX_d-dX_u}{(1+r)(u-d)},
+\]
+and its cost is
+\[
+  X^*=V_0=\frac{1}{1+r}\big[p^*X_u+(1-p^*)X_d\big]=\E_{P^*}\Big(\frac{X}{1+r}\Big),\qquad p^*=\frac{1+r-d}{u-d}\in(0,1).
+\]
+$X^*$ is the fair (no-arbitrage) price of $X$.
+\end{theorem}
+\begin{proof}
+Solve the two equations, then rearrange the cost.
+\begin{steps}
+  \item Subtract the equations: $\Delta(u-d)S_0=X_u-X_d$. Substitute back: $b(1+r)=X_u-\Delta uS_0=\frac{(u-d)X_u-u(X_u-X_d)}{u-d}=\frac{uX_d-dX_u}{u-d}$.
+  \item The cost:
+  \[
+    \begin{aligned}
+    V_0=\Delta S_0+b&=\frac{X_u-X_d}{u-d}+\frac{uX_d-dX_u}{(1+r)(u-d)}\\
+    &=\frac{1}{1+r}\Big[\frac{1+r-d}{u-d}X_u+\frac{u-(1+r)}{u-d}X_d\Big].
+    \end{aligned}
+  \]
+  \item $d<1+r<u$ gives $0<p^*<1$. Any other price than $V_0$ lets you sell the dearer of (claim, hedge) and buy the cheaper: a sure profit. \qedhere
+\end{steps}
+\end{proof}
+
+\begin{result}[The discounted stock is a martingale under $P^*$]
+\label{res:disc-mg}
+$\E_{P^*}\big(\frac{S_1}{1+r}\big)=S_0$, and no arbitrage holds exactly when $S_0$ lies strictly between $\frac{dS_0}{1+r}$ and $\frac{uS_0}{1+r}$.
+\end{result}
+\begin{proof}
+$p^*uS_0+(1-p^*)dS_0=\frac{(1+r-d)u+(u-1-r)d}{u-d}S_0=(1+r)S_0$. And $S_0$ is a weighted average, with weights $p^*$, $1-p^*$ in $(0,1)$, of the two discounted prices exactly when it lies strictly between them.
+\end{proof}
+
+\begin{example}[A call and a put]
+\label{ex:call-put}
+$S_0=1$, $u=1.75$, $d=0.5$, $r=0.25$, $K=1$.
+\begin{steps}
+  \item $p^*=\frac{1.25-0.5}{1.75-0.5}=0.6$.
+  \item Call: $X_u=0.75$, $X_d=0$. $C=\frac{1}{1.25}(0.6\cdot0.75)=0.36$. Hedge: $\Delta=\frac{0.75}{1.25}=0.6$, $b=\frac{0-0.5\cdot0.75}{1.25\cdot1.25}=-0.24$. Check: $0.6\cdot1.75-0.24\cdot1.25=0.75$ and $0.6\cdot0.5-0.3=0$.
+  \item Put: $X_u=0$, $X_d=0.5$. $P=\frac{1}{1.25}(0.4\cdot0.5)=0.16$.
+\end{steps}
+\end{example}
+
+%=====================================================================
+\section{Put--call parity}
+
+\begin{theorem}[Put--call parity]
+\label{thm:parity}
+For a European call and put on the same stock with the same strike $K$ and expiry $T$, in an arbitrage-free market,
+\[
+  S_0+P-C=\frac{K}{(1+r)^T}.
+\]
+\end{theorem}
+\begin{proof}
+Hold one share, one put, and sell one call.
+\begin{steps}
+  \item At $T$ it is worth $S_T+(S_T-K)^--(S_T-K)^+=S_T-(S_T-K)=K$ in every state, because $x^+-x^-=x$.
+  \item A sure $K$ at time $T$ is worth $K(1+r)^{-T}$ today (a bond); any other price is an arbitrage. Today the holding costs $S_0+P-C$. \qedhere
+\end{steps}
+\end{proof}
+
+In \cref{ex:call-put}: $P=\frac{1}{1.25}-1+0.36=0.16$, as computed directly.
+
+%=====================================================================
+\formulasheet{fs:binomial-one}
+
+The one-period price, hedge and $p^*$ of this chapter are Card~21.1 with $T=1$ (and Card~20.1 for markets with more states or assets).
+
+\begin{mastercard}[label=card:selffin]{Value and gains of a trading strategy}
+Holdings $\Phi_n$ (chosen at $n-1$), prices $S_n$ (bond $S_n^0=(1+r)^n$ included):
+\[
+  \boxed{\begin{gathered}V_n=\Phi_n\cdot S_n;\\ \text{self-financing}\iff\Phi_n\cdot S_n=\Phi_{n+1}\cdot S_n\iff V_n=V_0+\sum_{k<n}\Phi_{k+1}\cdot(S_{k+1}-S_k);\\
+  \text{arbitrage: self-financing with }V_0\le0,\ V_T\ge0,\ P(V_T>0)>0.\end{gathered}}
+\]
+\begin{plugrows}
+  \plugrow{Value of a holding}{dot product of units and prices}{$V_n$}{all securities, bond included}{$\Phi=(-30.48,0.4)$, $S=(1.05,130)$: $V=-32+52=20$}
+  \plugrow{Is a trade self-financing?}{value before and after at the same prices}{equal $\Rightarrow$ yes}{at the time-$n$ prices}{$\Phi_2=(-18.10,0.3)$ at $S_1$: $-19+39=20$: yes}
+  \plugrow{Gain over a period}{$\Phi_{n+1}\cdot(S_{n+1}-S_n)$}{$V_{n+1}-V_n$}{self-financing}{$-18.10(0.0525)+0.3(20)=5.05$}
+  \plugrow{Is it an arbitrage?}{check the three conditions}{yes / no}{all three needed}{borrow $40$, buy 1 share, sell 3 options at $20$ ($100\to200/50$, $K=150$, $r=0$): $V_0=0$, $V_1=10$}
+  \plugrow{No arbitrage in the binomial market}{compare $1+r$ with $d$ and $u$}{arbitrage-free $\iff d<1+r<u$; else borrow-and-buy ($1+r\le d$) or short-and-lend ($u\le1+r$)}{one stock, two states, one period}{$u=1.1$, $d=0.95$, $r=0.1$: $1+r\ge u$, short the stock}
+\end{plugrows}
+\end{mastercard}
+
+\begin{mastercard}[label=card:parity]{Put--call parity}
+Same stock, strike $K$, expiry $T$; $D_T$ = today's value of $1$ paid at $T$ ($(1+r)^{-T}$ in discrete time, $e^{-rT}$ in continuous time):
+\[
+  \boxed{\;S_0+P-C=K\,D_T,\qquad\text{at time }t:\ S_t+P_t-C_t=K\,D_{T-t}.\;}
+\]
+\begin{plugrows}
+  \plugrow{Put from call}{$P=C-S_0+KD_T$}{$P$}{European options, no dividends}{$S_0=1$, $K=1$, $r=0.25$, $T=1$, $C=0.36$: $P=0.36-1+0.8=0.16$}
+  \plugrow{Call from put}{$C=P+S_0-KD_T$}{$C$}{same}{$P=0.16$: $C=0.16+1-0.8=0.36$}
+  \plugrow{Continuous time}{$D_T=e^{-rT}$}{$C-P=S_0-Ke^{-rT}$}{}{$S_0=80$, $K=85$, $r=0.05$, $T=1$: $C-P=80-85e^{-0.05}\approx-0.85$}
+  \plugrow{Prices violate parity}{compare $S_0+P-C$ with $KD_T$}{buy the cheap side (stock $+$ put $-$ call, or the bond), sell the dear side: sure profit equal to the gap}{}{$S_0+P-C=0.85$ but $KD_T=0.8$: sell share and put, buy call, lend $0.8$: gain $0.05$}
+  \plugrow{Straddle price}{call $+$ put}{$C+P=2C-S_0+KD_T$}{same $K$, $T$}{$2(0.36)-1+0.8=0.52$}
+\end{plugrows}
+\end{mastercard}
