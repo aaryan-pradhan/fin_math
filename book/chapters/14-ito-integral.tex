@@ -182,18 +182,18 @@ $\E_P\big(\int_0^tW\,dW\big)=0$ agrees with $\E_P\big(\frac12W_t^2-\frac12t\big)
 \formulasheet{fs:ito-integral}
 
 \begin{mastercard}[label=card:itoint]{The Itô integral $\int_0^tb_s\,dW_s$}
-For adapted integrands $b$, $c$ with $\int_0^t\E_P(b_s^2)\,ds<\infty$ (and the same for $c$):
+$\int_0^tb\,dW$ is the limit of $\sum b_{t_{i-1}}(W_{t_i}-W_{t_{i-1}})$: each term is a known value times a fresh increment of mean $0$ (\cref{card:freeze}). So, for adapted $b,c$ with $\int_0^t\E_P(b_s^2)\,ds<\infty$:
 \[
-  \boxed{\begin{gathered}\E_P\int_0^tb\,dW=0,\qquad \E_P\Big[\int_0^tb\,dW\int_0^tc\,dW\Big]=\int_0^t\E_P(b_sc_s)\,ds,\\ \Big(\int_0^tb\,dW\Big)_{t\ge0}\text{ is a martingale};\\
-  b\ \text{non-random}:\quad \int_0^tb\,dW\sim N\Big(0,\int_0^tb_s^2\,ds\Big),\qquad \int_0^tb\,dW=b_tW_t-\int_0^tW_s\,b'_s\,ds.\end{gathered}}
+  \boxed{\;\E_P\int_0^tb\,dW=0,\qquad \E_P\Big[\int_0^tb\,dW\int_0^tc\,dW\Big]=\int_0^t\E_P(b_sc_s)\,ds.\;}
 \]
-The integral is the limit of left-endpoint sums $\sum b_{t_{i-1}}(W_{t_i}-W_{t_{i-1}})$, and $\sum(\Delta W)^2\to t$ (written $(dW)^2=dt$).
+The squared increments add up to $t$: $\sum(\Delta W)^2\to t$, written $(dW)^2=dt$.
 \begin{plugrows}
-  \plugrow{Distribution, non-random integrand}{second line}{$N\big(0,\int b^2\big)$}{$b$ has no $W$ in it}{$\int_0^1t\,dW\sim N(0,\frac13)$; $\int_0^1t^k\,dW\sim N(0,\frac1{2k+1})$; $\int_0^ts\,dW_s\sim N(0,\frac{t^3}3)$}
+  \plugrow{Distribution, non-random integrand}{$c=b$; a fixed combination of normal increments is normal (\cref{card:mvn})}{$\int_0^tb\,dW\sim N\big(0,\int_0^tb_s^2\,ds\big)$}{$b$ has no $W$ in it}{$\int_0^1t\,dW\sim N(0,\frac13)$; $\int_0^1t^k\,dW\sim N(0,\frac1{2k+1})$; $\int_0^ts\,dW_s\sim N(0,\frac{t^3}3)$}
   \plugrow{Variance or second moment (Itô isometry)}{$c=b$}{$\E_P\big(\int_0^tb\,dW\big)^2=\int_0^t\E_P(b_s^2)\,ds$}{any adapted $b$}{$\Var\int_0^1t^4dW=\frac19$; $\E_P(\int_0^1W^2dW)^2=\int_0^13s^2ds=1$}
-  \plugrow{Covariance of two integrals}{the middle formula}{$\Cov\big(\int b\,dW,\int c\,dW\big)=\int\E_P(bc)$}{same $W$, same interval}{$\Cov(\int_0^1t\,dW,\int_0^1dW)=\int_0^1t\,dt=\frac12$}
+  \plugrow{Covariance of two integrals}{the box with $b$ and $c$}{$\Cov\big(\int b\,dW,\int c\,dW\big)=\int\E_P(bc)$}{same $W$, same interval}{$\Cov(\int_0^1t\,dW,\int_0^1dW)=\int_0^1t\,dt=\frac12$}
   \plugrow{$\int W\,dW$}{use $a(b-a)=\frac12(b^2-a^2)-\frac12(b-a)^2$ in the sums}{$\int_0^tW\,dW=\frac12W_t^2-\frac12t$}{Itô (left endpoints)}{mean $0$; $\E_P(\int_0^tW\,dW)^2=\frac{t^2}2$}
-  \plugrow{Pathwise form}{second formula of line two}{no $dW$ left, ordinary calculus on the path}{$b$ non-random and smooth}{$\int_0^1t\,dW=W_1-\int_0^1W\,dt$}
+  \plugrow{Pathwise form}{sum by parts in the sums}{$\int_0^tb\,dW=b_tW_t-\int_0^tW_s\,b'_s\,ds$: no $dW$ left}{$b$ non-random and smooth}{$\int_0^1t\,dW=W_1-\int_0^1W\,dt$}
   \plugrow{Is $\int b\,dW$ normal?}{check whether $b$ is random}{normal only for non-random $b$}{mean $0$ and the isometry still hold for random $b$}{$\int_0^tW\,dW$ is \textbf{not} normal}
+  \plugrow{As a process in $t$}{each new term has mean $0$ given the past (the box from time $s$)}{$\big(\int_0^tb\,dW\big)_{t\ge0}$ is a martingale}{$\int_0^t\E_P(b_s^2)\,ds<\infty$}{$\E_P\big(\int_0^tW\,dW\given\F_s\big)=\int_0^sW\,dW$}
 \end{plugrows}
 \end{mastercard}
