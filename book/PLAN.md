@@ -78,7 +78,7 @@ Needs must appear in an earlier row's Introduces, or in "Before you start".
 | 9 | Brownian motion from random walks | 25–26 | 6 | scaling limit, density of W(t), heat equation, BM with variance σ² | written |
 | 10 | Joint and conditional laws of Brownian motion | 26–27 | 9 | joint density, conditional law W(s)∣W(t) | written |
 | 11 | Drift and gambler's ruin | 27–32 | 7, 9 | BM with drift, gambler's ruin, exit probabilities | written |
-| 12 | Geometric Brownian motion | 32–34 | 11 | GBM, its mean, log-normal | todo |
+| 12 | Geometric Brownian motion | 32–34 | 11 | GBM, its mean, log-normal | written |
 | 13 | Gaussian processes and the Brownian bridge | 34–39 | 10 | MVN, joint mgf, Gaussian process, cov min(s,t), Brownian bridge, integrated BM | todo |
 | 14 | Hitting times and the maximum | 40–43 | 13, 7 | T_a law, reflection principle, M(t), joint law of W and M | todo |
 | 15 | Problems: Brownian motion | — | 14 | — | todo |

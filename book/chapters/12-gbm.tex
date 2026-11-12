@@ -1,0 +1,137 @@
+\chapter{Geometric Brownian motion}
+\label{ch:gbm}
+
+\begin{question}
+Stock prices cannot go negative and move by percentages, not by fixed amounts. Which process models them, and what is its expected value?
+\end{question}
+
+\begin{whatfor}
+\begin{itemize}
+  \item Defines geometric Brownian motion $X(t)=e^{Y(t)}$, with $Y$ a Brownian motion with drift.
+  \item Computes $\E_P\big(X(t)\given\F_s\big)$, the mean, the variance, and when it is a martingale.
+  \item Explains why i.i.d.\ percentage returns lead to it.
+\end{itemize}
+\skipline{fs:gbm}
+\end{whatfor}
+
+\begin{prereq}
+From Part~0: $\E_Pe^{\xi}=e^{\mu+\sigma^2/2}$ for normal $\xi$, CE2--CE3. From Chapters~6, 9, 11: Wiener process, independent increments, Brownian motion with drift and with variance parameter, central limit theorem, geometric random walk.
+\end{prereq}
+
+%=====================================================================
+\section{Definition and conditional mean}
+
+\begin{definition}[Geometric Brownian motion]
+\label{def:gbm}
+Let $Y(t)=\mu t+\sigma W(t)$ be a Brownian motion with drift $\mu$ and variance parameter $\sigma^2$, so $Y(t)\sim N(\mu t,\sigma^2t)$. The process
+\[
+  X(t)=X(0)\,e^{Y(t)}
+\]
+is a \dfn{geometric Brownian motion} (GBM). It is always positive, and $\ln X(t)-\ln X(0)=Y(t)$ is normal: $X(t)$ is \dfn{log-normal}.
+\end{definition}
+
+\begin{theorem}[Conditional mean of GBM]
+\label{thm:gbm-mean}
+With $\F_s=\sigma\big(X(u),0\le u\le s\big)$ and $s<t$,
+\[
+  \E_P\big(X(t)\given\F_s\big)=X(s)\,e^{(t-s)(\mu+\frac12\sigma^2)},\qquad
+  \E_P\big(X(t)\big)=X(0)\,e^{t(\mu+\frac12\sigma^2)} .
+\]
+\end{theorem}
+\begin{proof}
+Split off the future increment of $Y$, as always.
+\begin{steps}
+  \item $X(t)=X(s)\,e^{Y(t)-Y(s)}$. Knowing $X(u)$ for $u\le s$ is knowing $Y(u)$ for $u\le s$, and $Y(t)-Y(s)$ is independent of that.
+  \item CE2, CE3: $\E_P\big(X(t)\given\F_s\big)=X(s)\,\E_P\,e^{Y(t)-Y(s)}$.
+  \item $Y(t)-Y(s)\sim N\big(\mu(t-s),\sigma^2(t-s)\big)$, so by the exponential moment its mean is $e^{\mu(t-s)+\frac12\sigma^2(t-s)}$.
+  \item Take $\E_P$ with $s=0$ for the unconditional mean. \qedhere
+\end{steps}
+\end{proof}
+
+\begin{result}[Variance; martingale condition]
+\label{res:gbm-var}
+With $X(0)=x_0$:
+\begin{enumerate}[label=(\alph*)]
+  \item $\Var X(t)=x_0^2\,e^{2\mu t+\sigma^2t}\big(e^{\sigma^2t}-1\big)$;
+  \item $X$ is a martingale if and only if $\mu=-\frac12\sigma^2$; it is a submartingale if $\mu>-\frac12\sigma^2$ and a supermartingale if $\mu<-\frac12\sigma^2$.
+\end{enumerate}
+\end{result}
+\begin{proof}
+(a) $X(t)^2=x_0^2e^{2Y(t)}$ with $2Y(t)\sim N(2\mu t,\,4\sigma^2t)$. So $\E_PX(t)^2=x_0^2e^{2\mu t+2\sigma^2t}$; subtract $(\E_PX(t))^2=x_0^2e^{2\mu t+\sigma^2t}$. (b) The factor $e^{(t-s)(\mu+\sigma^2/2)}$ in \cref{thm:gbm-mean} is $1$, $>1$ or $<1$ accordingly.
+\end{proof}
+
+\begin{intuition}
+Even if the exponent $Y$ has no drift, $X=e^Y$ drifts upward on average: up-moves of $e^Y$ are bigger than down-moves ($e^{1}-1>1-e^{-1}$). The correction $\mu=-\frac12\sigma^2$ cancels exactly this inflation; with it, $X(t)=x_0e^{\sigma W(t)-\frac12\sigma^2t}$ is the exponential martingale of Chapter~6.
+\end{intuition}
+
+\begin{pic}
+\begin{tikzpicture}
+\begin{axis}[width=10cm,height=4.8cm,xmin=0,xmax=1,ymin=0,xlabel={$t$},ylabel={$X(t)$},legend style={font=\scriptsize,at={(0.02,0.98)},anchor=north west},legend columns=2]
+  \addplot[defc,thick] table[x=t,y expr={exp(0.5*\thisrow{t}+0.6*\thisrow{w1})}] {figs/bm3.dat}; \addlegendentry{paths}
+  \addplot[defc,thick,forget plot] table[x=t,y expr={exp(0.5*\thisrow{t}+0.6*\thisrow{w2})}] {figs/bm3.dat};
+  \addplot[defc,thick,forget plot] table[x=t,y expr={exp(0.5*\thisrow{t}+0.6*\thisrow{w3})}] {figs/bm3.dat};
+  \addplot[trapc,very thick,dashed,domain=0:1] {exp(0.68*x)}; \addlegendentry{$\E_PX(t)=e^{0.68t}$}
+\end{axis}
+\end{tikzpicture}
+\picnote{Three GBM paths with $x_0=1$, $\mu=0.5$, $\sigma=0.6$. They stay positive; the mean grows at rate $\mu+\frac12\sigma^2=0.68$, faster than the drift $\mu=0.5$ of the exponent.}
+\end{pic}
+
+%=====================================================================
+\section{Why stock prices are modelled this way}
+
+Let $X_n$ be a stock's price on day $n$. Suppose the daily ratios $Y_n=\frac{X_n}{X_{n-1}}$ are i.i.d.: today's percentage change does not depend on the past and has the same law every day. Then
+\[
+  X_n=Y_nY_{n-1}\cdots Y_1\,X_0,\qquad \ln X_n=\sum_{i=1}^n\ln Y_i+\ln X_0 .
+\]
+The $\ln Y_i$ are i.i.d., so $\ln X_n$ is a random walk; suitably scaled (central limit theorem, Chapter~9) it approximates a Brownian motion with drift. Hence $X_n$ approximates a geometric Brownian motion. This is the discrete version: the geometric random walk of Chapter~6.
+
+\begin{example}[An expected price]
+\label{ex:gbm-price}
+$X(t)=5e^{Y(t)}$ with $\mu=0.01$ and $\sigma=0.3$. Then
+\[
+  \E_P\,X(10)=5\,e^{10(0.01+0.045)}=5e^{0.55}\approx8.67,
+\]
+while the median price is $5e^{\mu\cdot10}=5e^{0.1}\approx5.53$: half the paths end below it.
+\end{example}
+
+\begin{remark}[Two meanings of ``drift'']
+\label{rem:two-mu}
+In Chapter~18, GBM reappears as the solution of $dX_t=\mu X_t\,dt+\sigma X_t\,dW_t$. \emph{There} $\mu$ is the drift of $X$ itself and $\E_PX(t)=x_0e^{\mu t}$. \emph{Here} $\mu$ is the drift of the exponent $\ln X$. The two are linked by $\mu_{\text{here}}=\mu_{\text{there}}-\frac12\sigma^2$. Always check which $\mu$ a question means.
+\end{remark}
+
+%=====================================================================
+\formulasheet{fs:gbm}
+
+\begin{card}{1. Geometric Brownian motion: mean and conditional mean}
+\Formula
+$X(t)=x_0e^{Y(t)}$, $Y(t)\sim N(\mu t,\sigma^2t)$: $\E_P(X(t)\given\F_s)=X(s)e^{(t-s)(\mu+\sigma^2/2)}$, $\E_PX(t)=x_0e^{t(\mu+\sigma^2/2)}$, $\Var X(t)=x_0^2e^{2\mu t+\sigma^2t}(e^{\sigma^2t}-1)$.
+\UseWhen
+``$X=e^{Y}$, $Y$ BM with drift $\mu$, variance $\sigma^2$: find $\E_P X(t)$ / $\E_P(X(t)\given X(u),u\le s)$.''
+\HowTo
+\begin{enumerate}
+  \item Split $X(t)=X(s)e^{Y(t)-Y(s)}$.
+  \item Use $\E_Pe^{N(m,v)}=e^{m+v/2}$ with $m=\mu(t-s)$, $v=\sigma^2(t-s)$.
+\end{enumerate}
+\Caveats
+\cav{Which $\mu$? If GBM is given by the SDE $dX=\mu X\,dt+\sigma X\,dW$, then $\E_PX(t)=x_0e^{\mu t}$ instead.}
+\begin{cardex}
+$\mu=0.01$, $\sigma=0.3$, $X(0)=5$: $\E_PX(10)=5e^{0.55}\approx8.67$ (exponent convention), or $5e^{0.1}$ (SDE convention).
+\end{cardex}
+\end{card}
+
+\begin{card}{2. When is GBM a martingale?}
+\Formula
+MG $\iff\mu=-\frac12\sigma^2$: $X(t)=x_0e^{\sigma W(t)-\frac12\sigma^2t}$. Sub-MG if $\mu>-\frac12\sigma^2$; super-MG if $\mu<-\frac12\sigma^2$.
+\UseWhen
+``Is $e^{Y(t)}$ a martingale?'', ``choose $\mu$ so that it is''.
+\HowTo
+\begin{enumerate}
+  \item Compute the growth rate $\mu+\frac12\sigma^2$ of the mean.
+  \item Zero $\Rightarrow$ MG.
+\end{enumerate}
+\Caveats
+\cav{$\mu=0$ gives a \emph{sub}martingale, not a martingale.}
+\begin{cardex}
+$\sigma=0.2$: martingale iff $\mu=-0.02$.
+\end{cardex}
+\end{card}

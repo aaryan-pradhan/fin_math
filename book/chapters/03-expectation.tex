@@ -164,9 +164,9 @@ Write $\varphi(x)=\frac{1}{\sqrt{2\pi}}e^{-x^2/2}$ for the standard normal densi
 \end{steps}
 \end{proof}
 
-\begin{example}[A log-normal mean]
+\begin{example}[The mean of $e^{\xi}$]
 \label{ex:lognormal}
-$\xi\sim N(0.1,\,0.04)$, so $\mu=0.1$, $\sigma^2=0.04$. Then $\E_P(e^{\xi})=e^{0.1+0.02}=e^{0.12}\approx1.1275$, larger than $e^{\E_P\xi}=e^{0.1}\approx1.1052$. The extra $\frac12\sigma^2$ is the price of randomness inside a convex function; it returns in geometric Brownian motion and Black--Scholes.
+$\xi\sim N(0.1,\,0.04)$, so $\mu=0.1$, $\sigma^2=0.04$. Then $\E_P(e^{\xi})=e^{0.1+0.02}=e^{0.12}\approx1.1275$, larger than $e^{\E_P\xi}=e^{0.1}\approx1.1052$. The extra $\frac12\sigma^2$ is the price of randomness inside a convex function; it returns in the stock-price models of Parts~2 and~4.
 \end{example}
 
 %=====================================================================
@@ -266,7 +266,7 @@ $\Var\xi=2$, $\Var\eta=3$, $\Cov=1$: $\Var(2\xi-\eta)=4\cdot2+3-4\cdot1=7$.
 \Formula
 $Z\sim N(0,1)$: $\E_PZ=\E_PZ^3=0$, $\E_PZ^2=1$, $\E_PZ^4=3$, $\E_Pe^{uZ}=e^{u^2/2}$. $\xi\sim N(\mu,\sigma^2)$: $\E_Pe^{u\xi}=e^{u\mu+u^2\sigma^2/2}$; $\E_Pe^{\xi}=e^{\mu+\sigma^2/2}$.
 \UseWhen
-$\E_P$ of a power or an exponential of a normal; log-normal means; later, Brownian motion and option prices.
+$\E_P$ of a power or an exponential of a normal; later, Brownian motion and option prices.
 \HowTo
 \begin{enumerate}
   \item Write the exponent as $u\xi$ with $\xi$ normal; read off $\mu$ and $\sigma^2$.
