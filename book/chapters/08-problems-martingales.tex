@@ -1,0 +1,201 @@
+\chapter{Problems: martingales and stopping}
+\label{ch:prob-mg}
+
+\begin{question}
+Can you recognise a martingale on sight, and turn optional stopping into numbers?
+\end{question}
+
+\begin{whatfor}
+\begin{itemize}
+  \item Products of independent factors: when they are martingales, and where they end up.
+  \item Optional stopping with the martingales $W_t$, $W_t^2-t$ and $e^{uW_t-u^2t/2}$: expected exit times, their variances, exit probabilities and Laplace transforms.
+\end{itemize}
+\skipline{fs:prob-mg}
+\end{whatfor}
+
+\begin{prereq}
+Chapters~5--7: martingale, the three martingales of $W$, random walk, stopping time, optional stopping theorem and its two recipes. From Part~0: CE1--CE4, independence, the normal exponential moment.
+\end{prereq}
+
+Every problem is solved in steps. The patterns are collected on the formula sheet at the end.
+
+%=====================================================================
+\section{Products of independent factors}
+
+The test for a product $X_{n+1}=X_n\cdot(\text{new factor})$ is always the same: take out $X_n$ (CE2), replace the new factor by its mean (CE3), and compare the mean with $1$.
+
+\begin{problem}[Doubled uniforms]
+$U_1,U_2,\ldots$ independent, uniform on $(0,1]$. Show that $X_0=1$, $X_n=2^nU_1\cdots U_n$ is a martingale.
+\begin{steps}
+  \item $X_{n+1}=2X_n\,U_{n+1}$, and knowing $X_0,\dots,X_n$ is knowing $U_1,\dots,U_n$; $U_{n+1}$ is independent of them.
+  \item $\E_P(X_{n+1}\given\F_n)=2X_n\,\E_P(U_{n+1})=2X_n\int_0^1u\,du=2X_n\cdot\tfrac12=X_n$.
+  \item Integrable: $X_n\ge0$ and $\E_PX_n=2^n\,2^{-n}=1$. Adapted: $X_n$ is a function of $U_1,\dots,U_n$. So $(X_n)$ is a martingale.
+\end{steps}
+\end{problem}
+
+\begin{problem}[Exponential sums]
+$\epsilon_1,\epsilon_2,\ldots$ independent exponential with mean $1$, $S_n=\epsilon_1+\dots+\epsilon_n$, $S_0=0$. Show that $X_n=2^ne^{-S_n}$ is a martingale.
+\begin{steps}
+  \item $X_{n+1}=2X_n\,e^{-\epsilon_{n+1}}$ with $\epsilon_{n+1}$ independent of the past.
+  \item $\E_P(e^{-\epsilon})=\int_0^\infty e^{-u}e^{-u}\,du=\frac12$.
+  \item So $\E_P(X_{n+1}\given\F_n)=2X_n\cdot\frac12=X_n$; and $\E_PX_n=2^n2^{-n}=1$.
+\end{steps}
+\end{problem}
+
+\begin{problem}[A martingale that goes to zero]
+$\xi_1,\xi_2,\ldots$ independent Bernoulli$(p)$, $0<p<1$. Show that $X_0=1$, $X_n=p^{-n}\xi_1\cdots\xi_n$ is a non-negative martingale, and find $\lim_nX_n$.
+\begin{steps}
+  \item $X_{n+1}=p^{-1}\xi_{n+1}X_n$, so $\E_P(X_{n+1}\given\F_n)=X_n\,p^{-1}\E_P(\xi_{n+1})=X_n\,p^{-1}p=X_n$.
+  \item The product $\xi_1\cdots\xi_n$ is $1$ with probability $p^n$ (all ones) and $0$ otherwise. So $X_n=p^{-n}$ with probability $p^n$ and $X_n=0$ with probability $1-p^n$.
+  \item Once some $\xi_k=0$, $X$ stays at $0$ forever. $P(X_n=0)=1-p^n\to1$, so $X_n\to0$ with probability $1$.
+\end{steps}
+Yet $\E_PX_n=p^{-n}p^n=1$ for every $n$. The mean stays at $1$ only because of a tiny chance of a huge value: the expectation of the limit ($0$) is not the limit of the expectations ($1$).
+\end{problem}
+
+\begin{problem}[The absorbed fair walk]
+If $X_n=0$ then $X_{n+1}=0$; if $X_n>0$ then $X_{n+1}=X_n\pm1$ with probability $\frac12$ each. $X_0=i>0$. (a) Show that $(X_n)$ is a non-negative martingale. (b) Find the probability of reaching $N\ge i$ before $0$.
+\begin{steps}
+  \item (a) If $X_n=x>0$: $\E_P(X_{n+1}\given\F_n)=\frac12(x+1)+\frac12(x-1)=x$. If $X_n=0$: $X_{n+1}=0=X_n$. The walk starts at $i\ge0$ and stops at $0$, so it stays $\ge0$.
+  \item (b) Stop at $\tau$ = first time $X$ hits $0$ or $N$. The stopped walk stays in $[0,N]$, so optional stopping gives $i=\E_PX_\tau=N\cdot P(\text{reach }N)+0$.
+  \item Hence $P(\text{reach }N\text{ before }0)=\dfrac iN$. This is the gambler's ruin of a fair game, which Chapter~11 meets again.
+\end{steps}
+\end{problem}
+
+%=====================================================================
+\section{Optional stopping for Brownian motion}
+
+In each problem, $W$ is a standard Brownian motion and the stopping time is a first hitting time. The stopped martingales stay bounded, so optional stopping applies (as in Chapter~7).
+
+\begin{problem}[Hitting a rising line from above]
+\label{ex:p-rising}
+$\tau=\min\{t:W_t=2t-4\}$, the first time $W$ comes down to the rising line $2t-4$. Find $\E_P(\tau)$, $\Var(\tau)$, $\E_P(W_\tau)$, $\E_P(W_\tau^2)$ and the Laplace transform $\ell(s)=\E_P(e^{-s\tau})$, $s\ge0$.
+\begin{steps}
+  \item MG $W$: $0=\E_PW_\tau=\E_P(2\tau-4)$, so $\E_P(\tau)=2$ and $\E_P(W_\tau)=0$.
+  \item MG $W^2-t$: $0=\E_P(W_\tau^2)-\E_P(\tau)$, so $\E_P(W_\tau^2)=\E_P(\tau)=2$.
+  \item Substitute $W_\tau=2\tau-4$:
+  \[
+    \begin{aligned}
+    2&=\E_P(2\tau-4)^2=4\E_P(\tau^2)-16\E_P(\tau)+16=4\E_P(\tau^2)-16,\\
+    \E_P(\tau^2)&=4.5,\qquad\Var(\tau)=4.5-2^2=0.5 .
+    \end{aligned}
+  \]
+  \item MG $Z_t=e^{uW_t-\frac12u^2t}$: $1=\E_PZ_\tau=\E_P\,e^{u(2\tau-4)-\frac12u^2\tau}=e^{-4u}\,\E_P\,e^{-(\frac12u^2-2u)\tau}$.
+  \item Choose $u$ with $\frac12u^2-2u=s$, i.e.\ $u=2\pm\sqrt{4+2s}$. Take the root $u=2-\sqrt{4+2s}\le0$ (for it, $Z$ stays bounded while $W_t\ge2t-4$). Then
+  \[
+    \ell(s)=\E_P(e^{-s\tau})=e^{4u}=\exp\big\{8-4\sqrt{2(s+2)}\big\}.
+  \]
+  Check: $\ell(0)=e^{8-8}=1$.
+\end{steps}
+\end{problem}
+
+\begin{pic}
+\begin{tikzpicture}
+\begin{axis}[width=10cm,height=4.6cm,xmin=0,xmax=3,ymin=-4.3,ymax=2.5,xlabel={$t$},legend style={font=\scriptsize,at={(0.02,0.98)},anchor=north west},legend columns=2]
+  \addplot[defc,thick] table[x expr=3*\thisrow{t},y expr=sqrt(3)*\thisrow{w2}] {figs/bm3.dat}; \addlegendentry{$W_t$}
+  \addplot[trapc,very thick,domain=0:3] {2*x-4}; \addlegendentry{$2t-4$}
+\end{axis}
+\end{tikzpicture}
+\picnote{The rising line starts at $-4$, below $W_0=0$, and climbs at speed $2$. It catches the path at $\tau$; on average after $\E_P(\tau)=2$, with variance $0.5$.}
+\end{pic}
+
+\begin{problem}[Parabolic boundaries]
+$\tau=\min\{t:W_t=\pm\sqrt{a+bt}\}$ with $a>0$ and $0<b<1$: the first time $W$ hits either of the two curves. Find $\E_P(\tau)$.
+\begin{steps}
+  \item At $\tau$, $W_\tau^2=a+b\tau$ (on either curve).
+  \item MG $W^2-t$: $0=\E_P(W_\tau^2)-\E_P(\tau)=a+b\E_P(\tau)-\E_P(\tau)$.
+  \item So $\E_P(\tau)=\dfrac{a}{1-b}$. For $a=1$, $b=\frac12$: $\E_P(\tau)=2$.
+\end{steps}
+\end{problem}
+
+\begin{pic}
+\begin{tikzpicture}
+\begin{axis}[width=10cm,height=4.6cm,xmin=0,xmax=3,ymin=-2.4,ymax=2.4,xlabel={$t$},samples=100]
+  \addplot[trapc,very thick,domain=0:3] {sqrt(1+0.5*x)};
+  \addplot[trapc,very thick,domain=0:3] {-sqrt(1+0.5*x)};
+  \addplot[defc,thick] table[x expr=3*\thisrow{t},y expr=sqrt(3)*\thisrow{w1}] {figs/bm3.dat};
+  \node[trapc,font=\scriptsize] at (axis cs:2.4,2.05) {$+\sqrt{1+t/2}$};
+  \node[trapc,font=\scriptsize] at (axis cs:2.4,-2.05) {$-\sqrt{1+t/2}$};
+\end{axis}
+\end{tikzpicture}
+\picnote{The two curves open slowly. Squaring removes the sign, which is why $W^2-t$ is the right martingale.}
+\end{pic}
+
+\begin{problem}[Two levels]
+$\tau=\min\{t:W_t=a\text{ or }W_t=b\}$ with $a<0<b$. Find the distribution of $W_\tau$ and $\E_P(\tau)$.
+\begin{steps}
+  \item $W_\tau$ takes only the values $a$ and $b$. MG $W$: $0=a\,P(W_\tau=a)+b\,(1-P(W_\tau=a))$, so
+  \[
+    P(W_\tau=a)=\frac{b}{b-a},\qquad P(W_\tau=b)=\frac{-a}{b-a}.
+  \]
+  \item MG $W^2-t$: $\E_P(\tau)=\E_P(W_\tau^2)=a^2\dfrac{b}{b-a}+b^2\dfrac{-a}{b-a}=\dfrac{ab(a-b)}{b-a}=-ab$.
+\end{steps}
+With $a=-2$, $b=1$: $P(W_\tau=-2)=\frac13$ (the nearer level is the likelier one) and $\E_P(\tau)=2$.
+\end{problem}
+
+\begin{problem}[Win 10 or lose 5]
+A fair game pays $+1$ or $-1$ each round. You start at $0$ and stop when your winnings first reach $+10$ or $-5$. Find the probability of quitting a winner and the expected number of rounds.
+\begin{steps}
+  \item MG $X_n$: $10p-5(1-p)=0$, so $p=\frac13$.
+  \item MG $X_n^2-n$: $\E_P(\tau)=100\cdot\frac13+25\cdot\frac23=50=10\cdot5$.
+\end{steps}
+\end{problem}
+
+\begin{problem}[Read the negation]
+True or false: ``$|W_t|^2-t$ is \emph{not} a martingale.'' Since $|W_t|^2=W_t^2$, this is the canonical martingale $W_t^2-t$. The statement is \textbf{false}.
+\end{problem}
+
+%=====================================================================
+\formulasheet{fs:prob-mg}
+
+\begin{card}{1. Product of independent factors}
+\Formula
+$X_n=c^n\,\eta_1\cdots\eta_n$ ($\eta_i$ i.i.d., $\ge0$) is a MG $\iff c\,\E_P(\eta)=1$.
+\UseWhen
+``Show $X_n=2^nU_1\cdots U_n$ / $2^ne^{-S_n}$ / $p^{-n}\xi_1\cdots\xi_n$ is a martingale.''
+\HowTo
+\begin{enumerate}
+  \item $X_{n+1}=X_n\cdot c\,\eta_{n+1}$.
+  \item $\E_P(X_{n+1}\given\F_n)=X_n\cdot c\,\E_P\eta$; check $c\,\E_P\eta=1$.
+  \item Integrable: $\E_PX_n=(c\,\E_P\eta)^n=1$.
+\end{enumerate}
+\Caveats
+\cav{Such a MG can still go to $0$ a.s.\ (Bernoulli product): constant mean does not stop it collapsing.}
+\begin{cardex}
+$\E_PU=\frac12$, $\E_Pe^{-\epsilon}=\frac12$, $\E_P\xi=p$: so $c=2,2,p^{-1}$ respectively.
+\end{cardex}
+\end{card}
+
+\begin{card}{2. Exit times with \texorpdfstring{$W$}{W} and \texorpdfstring{$W^2-t$}{W squared minus t}}
+\Formula
+At $\tau$, write $W_\tau$ in terms of $\tau$; then $\E_PW_\tau=0$ and $\E_PW_\tau^2=\E_P\tau$. Levels $a<0<b$: $P(W_\tau=a)=\frac{b}{b-a}$, $\E_P\tau=-ab$. Curves $\pm\sqrt{a+bt}$: $\E_P\tau=\frac a{1-b}$. Line $W_\tau=\alpha+\beta\tau$: $\E_P\tau=-\alpha/\beta$.
+\UseWhen
+``Compute $\E_P(\tau)$, $\Var(\tau)$, $\E_P(W_\tau^2)$'' for a hitting time.
+\HowTo
+\begin{enumerate}
+  \item Write the boundary at $\tau$.
+  \item Use $W$ for the first moment, $W^2-t$ for the second; expand and solve.
+\end{enumerate}
+\Caveats
+\cav{The curve must be hit a.s.; check the sign of your answer.}
+\begin{cardex}
+$W_\tau=2\tau-4$: $\E_P\tau=2$; $\E_P(2\tau-4)^2=2$ gives $\E_P\tau^2=4.5$, $\Var\tau=0.5$.
+\end{cardex}
+\end{card}
+
+\begin{card}{3. Laplace transform with the exponential martingale}
+\Formula
+$1=\E_P\,e^{uW_\tau-\frac12u^2\tau}$; substitute the boundary, choose $u$ so the coefficient of $\tau$ is $-s$.
+\UseWhen
+``Find $\E_P(e^{-s\tau})$''.
+\HowTo
+\begin{enumerate}
+  \item Substitute $W_\tau$ (a line in $\tau$).
+  \item Solve $\frac12u^2-(\text{slope})u=s$ for $u$; pick the root that keeps $Z$ bounded before $\tau$.
+  \item Read off $\E_P(e^{-s\tau})$ and check it is $1$ at $s=0$.
+\end{enumerate}
+\Caveats
+\cav{The wrong root gives a value $>1$ or the wrong limit at $s=0$.}
+\begin{cardex}
+$W_\tau=2\tau-4$: $u=2-\sqrt{4+2s}$, $\E_Pe^{-s\tau}=e^{8-4\sqrt{2(s+2)}}$.
+\end{cardex}
+\end{card}

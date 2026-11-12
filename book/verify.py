@@ -28,6 +28,12 @@ T = hit_line(2, 4)
 check("Ch7 E[T], line 2-4t", T, 0.5)
 check("Ch7 E[T^2], line 2-4t", T**2, 9 / 32)
 
+# Ch 8: W hits the rising line 2t-4 (= -W hits 4-2t): E tau = 2, E tau^2 = 4.5, Laplace at s=1
+T = hit_line(4, 2, tmax=12)
+check("Ch8 E[tau], line 2t-4", T, 2.0)
+check("Ch8 E[tau^2], line 2t-4", T**2, 4.5)
+check("Ch8 E[exp(-tau)], line 2t-4", np.exp(-T), np.exp(8 - 4 * np.sqrt(6)))
+
 # Ch 7: fair walk stopped at +10 or -5: P(+10 first) = 1/3, E tau = 50
 def ruin(A, B, n=20000):
     x = np.zeros(n, int); tau = np.zeros(n, int); alive = np.ones(n, bool)
