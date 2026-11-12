@@ -89,4 +89,21 @@ for _ in range(1000):
 check("Ch18 OU mean X_1", x, 2 * np.exp(-2))
 check("Ch18 OU E[X_1^2]", x**2, (1 - np.exp(-4)) / 4 + 4 * np.exp(-4))
 
+# Ch 8: up 1 w.p. 6/7, down 2 w.p. 1/7, tau = first time S >= 4: E tau = 7
+s = np.zeros(40000, int); tau = np.zeros(40000); alive = np.ones(40000, bool)
+while alive.any():
+    s[alive] += np.where(rng.random(alive.sum()) < 6 / 7, 1, -2); tau[alive] += 1; alive &= s < 4
+check("Ch8 up1/down2 E[tau]", tau, 7.0)
+
+# Ch 8: exit of W from (-1,1): E tau^2 = 5/3 (bridge-corrected two-sided exit)
+x = np.zeros(40000); T = np.zeros(40000); alive = np.ones(40000, bool); dt = 1e-3; t_ = 0.0
+while alive.any():
+    xn = x + rng.normal(0, np.sqrt(dt), x.size)
+    pu = np.exp(-2 * np.maximum(1 - x, 0) * np.maximum(1 - xn, 0) / dt)
+    pd = np.exp(-2 * np.maximum(x + 1, 0) * np.maximum(xn + 1, 0) / dt)
+    out = alive & ((np.abs(xn) >= 1) | (rng.random(x.size) < pu) | (rng.random(x.size) < pd))
+    T[out] = t_ + dt / 2; alive &= ~out; x = xn; t_ += dt
+check("Ch8 exit(-1,1) E[tau]", T, 1.0)
+check("Ch8 exit(-1,1) E[tau^2]", T**2, 5 / 3)
+
 raise SystemExit(1 if fails else 0)

@@ -145,6 +145,93 @@ True or false: ``$|W_t|^2-t$ is \emph{not} a martingale.'' Since $|W_t|^2=W_t^2$
 \end{problem}
 
 %=====================================================================
+\section{More conditional expectations, stopping times and transforms}
+
+\begin{problem}[Conditioning a random walk on its current value]
+$X_1,X_2,\ldots$ i.i.d.\ with mean $\mu$ and variance $\sigma^2$; $S_0=0$, $S_n=S_{n-1}+X_n$. Compute (i) $\E_P(S_{n+m}\given S_n)$; (ii) $\E_P(X_1\given S_n)$; (iii) $\E_P(S_{n+m}^2\given S_n)$; (iv) $\E_P(S_m\given S_n)$ for $m\le n$.
+\begin{steps}
+  \item (i) $S_{n+m}=S_n+(X_{n+1}+\dots+X_{n+m})$, the bracket independent of $S_n$: $\E_P(S_{n+m}\given S_n)=S_n+m\mu$.
+  \item (ii) By symmetry every $X_k$, $k\le n$, has the same conditional mean given $S_n$, and they add up to $\E_P(S_n\given S_n)=S_n$. So $\E_P(X_1\given S_n)=S_n/n$.
+  \item (iii) Square the split: $S_n^2+2S_n\,m\mu+\E_P(X_{n+1}+\dots+X_{n+m})^2=(S_n+m\mu)^2+m\sigma^2$.
+  \item (iv) $\E_P(S_m\given S_n)=\sum_{k\le m}\E_P(X_k\given S_n)=\frac mnS_n$.
+\end{steps}
+\end{problem}
+
+\begin{problem}[Which random times are stopping times?]
+$(X_t)_{t=0,\dots,T}$ is positive and adapted. (If the condition never holds, put $\tau=T$.) Decide for: (i) $\tau=m$, a constant; (ii) $\tau_1\wedge\tau_2$ for stopping times $\tau_1,\tau_2$; (iii) $\tau=\min\{t:X_{t+1}/X_t>1\}$; (iv) $\tau=\min\{t:\sum_{k=0}^tX_k>X_t^2\}$; (v) $\tau=\max\{t\le T:X_t>10\}$.
+\begin{steps}
+  \item (i) $\{\tau\le t\}$ is $\Omega$ or $\varnothing$: a stopping time.
+  \item (ii) $\{\tau_1\wedge\tau_2\le t\}=\{\tau_1\le t\}\cup\{\tau_2\le t\}\in\F_t$: a stopping time.
+  \item (iii) $\{\tau=t\}$ needs $X_{t+1}$, one step into the future: not a stopping time.
+  \item (iv) $\{\tau>t\}=\bigcap_{j\le t}\big\{\sum_{k\le j}X_k\le X_j^2\big\}\in\F_t$: a stopping time.
+  \item (v) $\{\tau=t\}=\{X_t>10\}\cap\bigcap_{k=t+1}^T\{X_k\le10\}$ needs the future: not a stopping time (a last exit).
+\end{steps}
+\end{problem}
+
+\begin{problem}[Every integrable random variable gives a martingale]
+Let $\E_P|Y|<\infty$. Show that $X_t=\E_P(Y\given\F_t)$ is a martingale.
+\begin{steps}
+  \item Adapted by definition; integrable since $\E_P|X_t|\le\E_P|Y|$.
+  \item For $s<t$, the tower rule: $\E_P(X_t\given\F_s)=\E_P\big[\E_P(Y\given\F_t)\given\F_s\big]=\E_P(Y\given\F_s)=X_s$.
+\end{steps}
+Read it as: your best guess of a fixed future quantity, updated as information arrives, is a fair game.
+\end{problem}
+
+\begin{problem}[Martingale increments are uncorrelated]
+$(X_t)$ is a martingale with $\E_PX_t^2<\infty$. Show $\E_P\big[(X_{t_2}-X_{t_1})(X_{t_4}-X_{t_3})\big]=0$ for $t_1\le t_2\le t_3\le t_4$.
+\begin{steps}
+  \item $X_{t_2}-X_{t_1}$ is known at time $t_3$; condition on $\F_{t_3}$ and take it out (CE2).
+  \item $\E_P\big(X_{t_4}-X_{t_3}\given\F_{t_3}\big)=X_{t_3}-X_{t_3}=0$. So the product has mean $0$.
+\end{steps}
+\end{problem}
+
+\begin{problem}[The doubling strategy as a transform]
+On a fair $\pm1$ game, start with stake $1$, double after each loss, return to $1$ after a win. Let $\tau$ be the time of the first win. Find the law of $\tau$, $\E_P\tau$, and the wealth $Z_\tau$. Does optional stopping hold?
+\begin{steps}
+  \item $P(\tau=n)=P(\text{$n-1$ losses, then a win})=2^{-n}$, so $\E_P\tau=\sum_nn2^{-n}=2$.
+  \item At the first win, after losing $1+2+\dots+2^{n-2}=2^{n-1}-1$, you win $2^{n-1}$: $Z_\tau=1$ always.
+  \item So $\E_PZ_\tau=1\ne0=Z_0$: optional stopping fails, although $\E_P\tau<\infty$. The stakes are unbounded: before $\tau$ the loss $1-2^n$ is unbounded, which is what the theorem rules out.
+\end{steps}
+\end{problem}
+
+\begin{problem}[Up one, down two]
+Each step goes up $1$ with probability $\frac67$ and down $2$ with probability $\frac17$; $S_0=0$. (i) Show $X_n=2^{-S_n}$ is a martingale. (ii) Let $\tau=\min\{n:X_n\le0.1\}$. Find $\E_P\tau$.
+\begin{steps}
+  \item (i) $\E_P(X_{n+1}\given\F_n)=X_n\,\E_P2^{-Y}=X_n\big(2^{-1}\cdot\frac67+2^{2}\cdot\frac17\big)=X_n\big(\frac37+\frac47\big)=X_n$.
+  \item (ii) $X_n\le0.1\iff S_n\ge\log_210\approx3.32\iff S_n\ge4$. The walk goes up one step at a time, so it reaches $4$ exactly: $S_\tau=4$.
+  \item Each step has mean $\frac67-\frac27=\frac47$, so $S_n-\frac47n$ is a martingale. Optional stopping: $0=4-\frac47\E_P\tau$, so $\E_P\tau=7$.
+\end{steps}
+\end{problem}
+
+\begin{problem}[The unfair walk between two barriers]
+Steps $+1$ with probability $p\ne\frac12$, $-1$ with probability $q$; $r=q/p$; $\tau$ is the exit time from $(a,b)$, $a<0<b$. Find the law of $S_\tau$ and $\E_P\tau$.
+\begin{steps}
+  \item $r^{S_n}$ is a martingale: $\E_Pr^{Y}=r\,p+r^{-1}q=q+p=1$.
+  \item Optional stopping: $1=r^aP(S_\tau=a)+r^b\big(1-P(S_\tau=a)\big)$, so $P(S_\tau=a)=\dfrac{r^b-1}{r^b-r^a}$.
+  \item $S_n-n(p-q)$ is a martingale: $\E_P\tau=\dfrac{\E_PS_\tau}{p-q}=\dfrac{a\,P(S_\tau=a)+b\,P(S_\tau=b)}{p-q}$.
+\end{steps}
+This is the gambler's ruin of Chapter~11, shifted to start at $0$.
+\end{problem}
+
+\begin{problem}[Exit from $(-1,1)$: Laplace transform and variance]
+$\tau$ = first time $|W_t|=1$. Find $\E_Pe^{-s\tau}$, $\E_P\tau$ and $\Var\tau$.
+\begin{steps}
+  \item $W_\tau=\pm1$ with probability $\frac12$ each, independent of $\tau$ (by symmetry). MG $e^{uW_t-u^2t/2}$: $1=\frac12(e^u+e^{-u})\,\E_Pe^{-u^2\tau/2}$.
+  \item With $s=u^2/2$: $\E_Pe^{-s\tau}=\dfrac{1}{\cosh\sqrt{2s}}$.
+  \item Expand: $\cosh\sqrt{2s}=1+s+\frac{s^2}{6}+\dots$, so $\dfrac1{\cosh\sqrt{2s}}=1-s+\frac56s^2-\dots$. Matching with $1-s\,\E_P\tau+\frac{s^2}{2}\E_P\tau^2-\dots$: $\E_P\tau=1$, $\E_P\tau^2=\frac53$, $\Var\tau=\frac23$.
+\end{steps}
+\end{problem}
+
+\begin{problem}[Martingales of the Poisson process]
+A \dfn{Poisson process} $(N_t)$ with rate $\lambda>0$ has $N_0=0$, independent increments, and $N_t-N_s\sim\text{Poisson}\big(\lambda(t-s)\big)$; recall $\E_Pe^{u\,\text{Poisson}(m)}=e^{m(e^u-1)}$, mean and variance $m$. Show that $N_t-\lambda t$, $(N_t-\lambda t)^2-\lambda t$ and $e^{uN_t-\lambda t(e^u-1)}$ are martingales, and find $\E_P(N_{t+s}\given\F_t)$ and $\E_P(N_{t+s}^2\given\F_t)$.
+\begin{steps}
+  \item Split $N_{t+s}=N_t+D$ with $D\sim\text{Poisson}(\lambda s)$ independent of $\F_t$: $\E_P(N_{t+s}\given\F_t)=N_t+\lambda s$, and $\E_P(N_{t+s}^2\given\F_t)=N_t^2+2N_t\lambda s+\lambda s+\lambda^2s^2=(N_t+\lambda s)^2+\lambda s$.
+  \item Subtracting the means gives the first two martingales, exactly as for $W_t$ and $W_t^2-t$.
+  \item $\E_P(e^{uN_{t+s}}\given\F_t)=e^{uN_t}e^{\lambda s(e^u-1)}$; multiply by $e^{-\lambda(t+s)(e^u-1)}$ for the third.
+\end{steps}
+\end{problem}
+
+%=====================================================================
 \formulasheet{fs:prob-mg}
 
 \begin{card}{1. Product of independent factors}
