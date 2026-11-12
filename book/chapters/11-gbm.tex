@@ -103,19 +103,18 @@ In Chapter~16, GBM reappears as the solution of $dX_t=\mu X_t\,dt+\sigma X_t\,dW
 \formulasheet{fs:gbm}
 
 \begin{mastercard}[label=card:gbm]{Geometric Brownian motion: everything from one normal}
-Every question about $Y_t=Y_0e^{(\cdot)}$ is a question about the normal variable $\ln Y_t$:
+$Y_t=Y_0e^{mt+\sigma W_t}$. Every question about $Y_t$ is a question about the normal variable $\ln Y_t$; answer it with \cref{card:normal-mgf} (moments) or \cref{card:normal-prob} (probabilities):
 \[
-  \boxed{\begin{gathered}\ln Y_t=\ln Y_0+m\,t+\sigma W_t\sim N(\ln Y_0+mt,\ \sigma^2t),\\
-  \E_P\big(Y_t^n\given\F_s\big)=Y_s^n\,e^{(nm+\frac12n^2\sigma^2)(t-s)},\qquad P(Y_t>K)=\Phi\Big(\frac{\ln(Y_0/K)+mt}{\sigma\sqrt t}\Big).\end{gathered}}
+  \boxed{\;\ln Y_t\given\F_s\ \sim\ N\big(\ln Y_s+m(t-s),\ \sigma^2(t-s)\big)\qquad(s=0:\ N(\ln Y_0+mt,\ \sigma^2t)).\;}
 \]
-\textbf{Which $m$?} If you are told ``$Y_t=Y_0e^{\mu t+\sigma W_t}$'' or ``the log of the price is BM with drift $\mu$'', then $m=\mu$. If you are told the SDE $dY=\mu Y\,dt+\sigma Y\,dW$ or ``expected return $\mu$'', then $m=\mu-\frac12\sigma^2$.
+\textbf{Which $m$?} Told ``$Y_t=Y_0e^{\mu t+\sigma W_t}$'' or ``the log of the price is BM with drift $\mu$'': $m=\mu$. Told the SDE $dY=\mu Y\,dt+\sigma Y\,dW$ or ``expected return $\mu$'': $m=\mu-\frac12\sigma^2$.
 \begin{plugrows}
-  \plugrow{Mean}{$n=1$, $s=0$}{$\E_PY_t=Y_0e^{(m+\sigma^2/2)t}$}{read $m$ correctly}{$Y_0=5$, $\mu=0.01$, $\sigma=0.3$, $t=10$: $5e^{0.55}\approx8.67$ (exponent form) or $5e^{0.1}\approx5.53$ (SDE form)}
-  \plugrow{Variance}{$n=2$ minus the square of $n=1$}{$\Var Y_t=(\E_PY_t)^2\big(e^{\sigma^2t}-1\big)$}{either form, once $m$ is read}{$Y_0=1$, $m=0$, $\sigma=1$, $t=1$: $e(e-1)\approx4.67$}
-  \plugrow{Conditional mean}{$n=1$}{$\E_P(Y_t\given\F_s)=Y_s\,e^{(m+\sigma^2/2)(t-s)}$}{$s<t$}{$m=0.01$, $\sigma=0.2$: $\E_P(Y_{10}\given\F_0)=100e^{0.3}\approx134.99$ from $Y_0=100$}
+  \plugrow{Mean}{$\E_Pe^{\ln Y_t}$: \cref{card:normal-mgf} with $u=1$, $s=0$}{$\E_PY_t=Y_0e^{(m+\sigma^2/2)t}$}{read $m$ correctly}{$Y_0=5$, $\mu=0.01$, $\sigma=0.3$, $t=10$: $5e^{0.55}\approx8.67$ (exponent form) or $5e^{0.1}\approx5.53$ (SDE form)}
+  \plugrow{Variance}{$u=2$ minus the square of $u=1$}{$\Var Y_t=(\E_PY_t)^2\big(e^{\sigma^2t}-1\big)$}{either form, once $m$ is read}{$Y_0=1$, $m=0$, $\sigma=1$, $t=1$: $e(e-1)\approx4.67$}
+  \plugrow{Conditional moments}{$u=n$, from time $s$}{$\E_P(Y_t^n\given\F_s)=Y_s^n\,e^{(nm+\frac12n^2\sigma^2)(t-s)}$; $n=1$: $Y_s\,e^{(m+\sigma^2/2)(t-s)}$}{$s<t$}{$m=0.01$, $\sigma=0.2$: $\E_P(Y_{10}\given\F_0)=100e^{0.3}\approx134.99$ from $Y_0=100$}
   \plugrow{Martingale?}{conditional mean $=Y_s$}{MG $\iff m+\frac12\sigma^2=0$; sub if $>0$; super if $<0$}{$s<t$}{$\sigma=0.2$: MG iff $m=-0.02$; SDE form: MG iff $\mu=0$}
   \plugrow{Median}{$\ln Y_t$ is symmetric about its mean}{$Y_0e^{mt}$, below the mean}{$\sigma>0$}{$Y_0=100$, $m=0.08$, $\sigma=0.2$, $t=1$: median $108.33$, mean $110.52$}
-  \plugrow{Probability above a level}{the box}{$P(Y_t>K)$}{$K>0$}{same: $P(Y_1>110)=\Phi(-0.0766)\approx0.470$}
+  \plugrow{Probability above a level}{standardise $\ln Y_t>\ln K$ (\cref{card:normal-prob})}{$P(Y_t>K)=\Phi\Big(\dfrac{\ln(Y_0/K)+mt}{\sigma\sqrt t}\Big)$}{$K>0$}{same: $P(Y_1>110)=\Phi(-0.0766)\approx0.470$}
   \plugrow{Given known values of the price}{take logs, apply Card~\ref{card:Ylaw} to $\ln Y$, exponentiate}{e.g.\ $\ln Y_t\given\ln Y_s$ is $N(\ln Y_s+m(t-s),\sigma^2(t-s))$}{work with $\ln Y$, never with $Y$}{$m=0$, $\sigma=0.2$, $Y_1=110$: $\ln Y_2\given Y_1\sim N(\ln110,\,0.04)$, so $P(Y_2>110\given Y_1=110)=\frac12$}
 \end{plugrows}
 \end{mastercard}
