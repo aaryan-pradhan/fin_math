@@ -188,19 +188,17 @@ $u=1.2$, $d=0.8$: $p=\frac{1-0.8}{1.2-0.8}=\frac12$.
 %=====================================================================
 \formulasheet{fs:martingales}
 
-\begin{mastercard}[label=card:onestep]{The one-step martingale test}
-Split the next value into the part known at time $n$ and a fresh part $\xi_{n+1}$ independent of the past, and average the fresh part (\cref{card:freeze}). Compare with $X_n$:
+\begin{mastercard}[label=card:onestep]{The martingale test}
+Work out the left side with \cref{card:freeze} (the known part stays, the fresh part is averaged), then compare with $X_n$:
 \[
-  \boxed{\begin{gathered}X_{n+1}=X_n+\xi_{n+1}:\quad \E_P(X_{n+1}\given\F_n)=X_n+\E_P\xi;\\
-  X_{n+1}=X_n\,\xi_{n+1}:\quad \E_P(X_{n+1}\given\F_n)=X_n\,\E_P\xi;\\
-  \text{martingale: }=X_n,\qquad\text{sub: }\ge X_n,\qquad\text{super: }\le X_n.\end{gathered}}
+  \boxed{\;\E_P(X_{n+1}\given\F_n)=X_n\quad(\text{sub: }\ge X_n,\ \text{super: }\le X_n)\qquad\Longrightarrow\qquad\E_PX_n=\E_PX_0.\;}
 \]
 \begin{plugrows}
   \plugrow{Add a fresh step}{$X_{n+1}=X_n+\xi_{n+1}$}{$X_n+\E_P\xi$: martingale iff $\E_P\xi=0$, sub iff $\E_P\xi>0$}{$\xi_{n+1}$ independent of the past, $\E_P|\xi|<\infty$}{$\xi=\pm1$ with $P(+1)=0.6$: $X_n+0.2$, sub}
-  \plugrow{Multiply by a fresh factor (binomial stock)}{$S_{n+1}=S_n\xi_{n+1}$, $\xi\in\{u,d\}$, $P(u)=p$}{$S_n(pu+(1-p)d)$: martingale iff $p=\dfrac{1-d}{u-d}$; $\E_PS_t=S_0\,(pu+(1-p)d)^t$}{$d<1<u$ for such a $p$ in $(0,1)$}{$u=1.2$, $d=0.8$: $p=\frac12$; with $p=0.6$, $\E_PS_2=100(1.04)^2=108.16$}
-  \plugrow{A function of the process}{split first, then apply the function: $S_{n+1}^2=S_n^2\,\xi_{n+1}^2$}{$S_n^2\,\E_P\xi^2$; a convex function of a martingale is usually a sub-martingale}{as above}{binomial, $p=\frac12$: $\E_P(S_{n+1}^2\given\F_n)=1.04\,S_n^2$, sub}
-  \plugrow{A rule that depends on the state}{split separately in each state}{check $=X_n$ in every state}{every state}{fair walk stopped at $0$: $X_n>0$: $\frac12(X_n+1)+\frac12(X_n-1)=X_n$; $X_n=0$: stays $0$: martingale}
-  \plugrow{Many steps ahead; the mean}{apply the test $s$ times (tower, \cref{card:freeze})}{$\E_P(X_{n+s}\given\F_n)=X_n$; $\E_PX_n=\E_PX_0$}{martingale; constant mean is necessary, not sufficient}{binomial, $p=\frac12$: $\E_PS_2=\frac14144+\frac1296+\frac1464=100$}
+  \plugrow{Multiply by a fresh factor (binomial stock)}{$S_{n+1}=S_n\xi_{n+1}$, $\xi\in\{u,d\}$, $P(u)=p$}{$S_n(pu+(1-p)d)$: martingale iff $\E_P\xi=1$, i.e.\ $p=\dfrac{1-d}{u-d}$; $\E_PS_t=S_0\,(pu+(1-p)d)^t$}{$d<1<u$ for such a $p$ in $(0,1)$}{$u=1.2$, $d=0.8$: $p=\frac12$; with $p=0.6$, $\E_PS_2=100(1.04)^2=108.16$}
+  \plugrow{The square of the process}{$S_{n+1}^2=S_n^2\,\xi_{n+1}^2$}{$S_n^2\,\E_P\xi^2$; a convex function of a martingale is usually a sub-martingale}{as above}{binomial, $p=\frac12$: $\E_P(S_{n+1}^2\given\F_n)=1.04\,S_n^2$, sub}
+  \plugrow{A rule that depends on the state}{the step in each state}{check $=X_n$ in every state}{every state}{fair walk stopped at $0$: $X_n>0$: $\frac12(X_n+1)+\frac12(X_n-1)=X_n$; $X_n=0$: stays $0$: martingale}
+  \plugrow{Many steps ahead; the mean}{apply the box $s$ times}{$\E_P(X_{n+s}\given\F_n)=X_n$; $\E_PX_n=\E_PX_0$}{martingale; a constant mean is necessary, not sufficient}{binomial, $p=\frac12$: $\E_PS_2=\frac14144+\frac1296+\frac1464=100$}
   \plugrow{Is it adapted / integrable?}{adapted: \cref{card:measurable} with the information $\F_n$; integrable: $\E_P|X_n|<\infty$}{both needed before the test}{a future increment $X_{n+1}-X_n$ is never known at time $n$}{binomial: on $A_u$, $S_2-S_1=\pm24$, so not known at time $1$}
 \end{plugrows}
 \end{mastercard}
