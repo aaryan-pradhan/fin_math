@@ -93,8 +93,8 @@
 
 % ---------- formula sheets (SKILL.md §2a) ----------
 % A card: one general formula, then numbered plug-in rows. \begin{mastercard}[label=card:x]{Title} \[\boxed{...}\] \begin{plugrows} \plugrow{..}{..}{..}{..}{..} \end{plugrows} \end{mastercard}
-\newtcolorbox[auto counter,number within=chapter,crefname={Card}{Cards}]{mastercard}[2][]{slm,colback=white,colframe=defc!75,
-  title={$\bigstar$\ Card~\thetcbcounter: #2},fonttitle=\bfseries,coltitle=white,colbacktitle=defc!80,#1}
+\newtcolorbox[auto counter,number within=chapter,list inside=cards,crefname={Card}{Cards}]{mastercard}[2][]{slm,colback=white,colframe=defc!75,
+  title={$\bigstar$\ Card~\thetcbcounter: #2},fonttitle=\bfseries,coltitle=white,colbacktitle=defc!80,list text={#2},#1}
 \newlist{plugrows}{enumerate}{1}
 \setlist[plugrows]{label=\textbf{Row \arabic*.},ref=\arabic*,leftmargin=*,align=left,itemsep=0.55em,topsep=0.4em}
 % \plugrow{given / situation}{what to plug}{result}{valid when}{numbers}
