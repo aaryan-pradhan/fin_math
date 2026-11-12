@@ -86,12 +86,12 @@ Numbering after the 2026-11-12 restructure: problem chapters moved to the final 
 | 15 | Itô processes and Itô's formula | 46–49, 68–70 | written |
 | 16 | Stochastic differential equations | 50–54, 70–72 | written |
 | 17 | Arbitrage and risk-neutral pricing | 59–63, 77–85 | written |
-| 18 | Derivatives and replication | 64–67 | todo |
-| 19 | The single-period binomial market | 86–93, 94–104 | todo |
-| 20 | The fundamental theorems (finite market) | 105–114, 115–124 | todo |
-| 21 | The multiperiod binomial market | 125–129, 134–138 | todo |
-| 22 | From binomial to Black–Scholes | 130–133, 139–141 | todo |
-| 23 | Martingale pricing in continuous time | 142–145 | todo |
+| 18 | Derivatives and replication | 64–67 | written |
+| 19 | The single-period binomial market | 86–93, 94–104 | written |
+| 20 | The fundamental theorems (finite market) | 105–114, 115–124 | written |
+| 21 | The multiperiod binomial market | 125–129, 134–138 | written |
+| 22 | From binomial to Black–Scholes | 130–133, 139–141 | written |
+| 23 | Martingale pricing in continuous time | 142–145 | written |
 | P | Problems: probability and martingales (90) | 55–58, 73–76 + sheets | written (card → plug → answer) |
 | P | Problems: Brownian motion (91) | sheets, papers | written |
 | P | Problems: Itô calculus and SDEs (92) | sheets, papers | written |
