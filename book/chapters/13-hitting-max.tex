@@ -15,7 +15,7 @@ How long does Brownian motion take to reach a level $a$, and how high does it cl
 \end{whatfor}
 
 \begin{prereq}
-From Part~0: total probability, $\Phi$ and its symmetry, densities. From Chapters~6--12: Wiener process, independent increments, stopping times, the symmetry of $N(0,t)$, conditional laws of Brownian motion.
+From Part~0: total probability, $\Phi$ and its symmetry, densities. From \crefrange{ch:first-mg}{ch:gaussian}: Wiener process, independent increments, stopping times, the symmetry of $N(0,t)$, conditional laws of Brownian motion.
 \end{prereq}
 
 %=====================================================================
@@ -70,7 +70,7 @@ $P(T_a<\infty)=1$, yet $\E_P(T_a)=\infty$ for every $a\ne0$.
 $P(T_a<\infty)=\lim_{t\to\infty}2\big[1-\Phi(|a|/\sqrt t)\big]=2\big[1-\Phi(0)\big]=1$. For the mean, $t\,f_{T_a}(t)=\frac{|a|}{\sqrt{2\pi}}t^{-1/2}e^{-a^2/(2t)}$, which behaves like $t^{-1/2}$ for large $t$; its integral to $\infty$ diverges.
 \end{proof}
 
-Compare Chapter~7: Brownian motion surely hits the level $1$, but the walk to it can take so long that the average waiting time is infinite. This is why optional stopping fails for $T_1$ alone.
+Compare \cref{ch:stopping}: Brownian motion surely hits the level $1$, but the walk to it can take so long that the average waiting time is infinite. This is why optional stopping fails for $T_1$ alone.
 
 \begin{pic}
 \begin{tikzpicture}

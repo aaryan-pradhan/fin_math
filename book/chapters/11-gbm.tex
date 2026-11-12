@@ -15,7 +15,7 @@ Stock prices cannot go negative and move by percentages, not by fixed amounts. W
 \end{whatfor}
 
 \begin{prereq}
-From Part~0: $\E_Pe^{\xi}=e^{\mu+\sigma^2/2}$ for normal $\xi$, CE2--CE3. From Chapters~6, 8, 11: Wiener process, independent increments, Brownian motion with drift and with variance parameter, central limit theorem, geometric random walk.
+From Part~0: $\E_Pe^{\xi}=e^{\mu+\sigma^2/2}$ for normal $\xi$, CE2--CE3. From \cref{ch:first-mg,ch:bm-walks,ch:drift}: Wiener process, independent increments, Brownian motion with drift and with variance parameter, central limit theorem, geometric random walk.
 \end{prereq}
 
 %=====================================================================
@@ -61,7 +61,7 @@ With $X(0)=x_0$:
 \end{proof}
 
 \begin{intuition}
-Even if the exponent $Y$ has no drift, $X=e^Y$ drifts upward on average: up-moves of $e^Y$ are bigger than down-moves ($e^{1}-1>1-e^{-1}$). The correction $\mu=-\frac12\sigma^2$ cancels exactly this inflation; with it, $X(t)=x_0e^{\sigma W(t)-\frac12\sigma^2t}$ is the exponential martingale of Chapter~6.
+Even if the exponent $Y$ has no drift, $X=e^Y$ drifts upward on average: up-moves of $e^Y$ are bigger than down-moves ($e^{1}-1>1-e^{-1}$). The correction $\mu=-\frac12\sigma^2$ cancels exactly this inflation; with it, $X(t)=x_0e^{\sigma W(t)-\frac12\sigma^2t}$ is the exponential martingale of \cref{ch:first-mg}.
 \end{intuition}
 
 \begin{pic}
@@ -83,7 +83,7 @@ Let $X_n$ be a stock's price on day $n$. Suppose the daily ratios $Y_n=\frac{X_n
 \[
   X_n=Y_nY_{n-1}\cdots Y_1\,X_0,\qquad \ln X_n=\sum_{i=1}^n\ln Y_i+\ln X_0 .
 \]
-The $\ln Y_i$ are i.i.d., so $\ln X_n$ is a random walk; suitably scaled (central limit theorem, Chapter~8) it approximates a Brownian motion with drift. Hence $X_n$ approximates a geometric Brownian motion. This is the discrete version: the geometric random walk of Chapter~6.
+The $\ln Y_i$ are i.i.d., so $\ln X_n$ is a random walk; suitably scaled (central limit theorem, \cref{ch:bm-walks}) it approximates a Brownian motion with drift. Hence $X_n$ approximates a geometric Brownian motion. This is the discrete version: the geometric random walk of \cref{ch:first-mg}.
 
 \begin{example}[An expected price]
 \label{ex:gbm-price}

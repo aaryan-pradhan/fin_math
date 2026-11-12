@@ -15,7 +15,7 @@ In continuous time, with a stock driven by Brownian motion, what is the fair pri
 \end{whatfor}
 
 \begin{prereq}
-From Chapters~20--22: EMM, attainable claim, complete market, fair price, the Black--Scholes formula as a limit. From Parts~2--3: geometric Brownian motion, Itô's formula, the product rule, the martingale test.
+From \crefrange{ch:fundamental}{ch:black-scholes}: EMM, attainable claim, complete market, fair price, the Black--Scholes formula as a limit. From Parts~2--3: geometric Brownian motion, Itô's formula, the product rule, the martingale test.
 \end{prereq}
 
 %=====================================================================
@@ -42,7 +42,7 @@ In this market:
 \end{theorem}
 \noproof
 
-For finite one-period markets these are Theorems~2--4 of Chapter~20, which we proved.
+For finite one-period markets these are Theorems~2--4 of \cref{ch:fundamental}, which we proved.
 
 %=====================================================================
 \section{The Black--Scholes market}
@@ -52,7 +52,7 @@ A bond $B_t=e^{rt}$ and a stock with
 \[
   dS_t=\mu S_t\,dt+\sigma S_t\,dW_t,\qquad t\in[0,T],
 \]
-i.e.\ $\frac{dS_t}{S_t}=\mu\,dt+\sigma\,dW_t$: mean return $\mu$, volatility $\sigma>0$. By Chapter~16, $S_t=S_0e^{(\mu-\frac12\sigma^2)t+\sigma W_t}$.
+i.e.\ $\frac{dS_t}{S_t}=\mu\,dt+\sigma\,dW_t$: mean return $\mu$, volatility $\sigma>0$. By \cref{ch:sde}, $S_t=S_0e^{(\mu-\frac12\sigma^2)t+\sigma W_t}$.
 \end{setup}
 
 \begin{theorem}[The EMM of the Black--Scholes market]
@@ -93,7 +93,7 @@ Write $S_T=S_0e^{(r-\frac12\sigma^2)T+\sigma\sqrt TZ}$ with $Z\sim N(0,1)$ under
 \begin{steps}
   \item $S_T>K\iff Z>-(h-\sigma\sqrt T)$. So $\E_{P^*}\big(K\ind{S_T>K}\big)=K\,\Phi(h-\sigma\sqrt T)$.
   \item $\E_{P^*}\big(S_T\ind{S_T>K}\big)=S_0e^{rT}\int_{-(h-\sigma\sqrt T)}^\infty e^{\sigma\sqrt Tz-\frac12\sigma^2T}\varphi(z)\,dz$. Completing the square, $e^{\sigma\sqrt Tz-\frac12\sigma^2T}\varphi(z)=\varphi(z-\sigma\sqrt T)$, so the integral is $P(Z>-h)=\Phi(h)$.
-  \item $C=e^{-rT}\big[S_0e^{rT}\Phi(h)-K\Phi(h-\sigma\sqrt T)\big]$. The same as the limit of Chapter~22. \qedhere
+  \item $C=e^{-rT}\big[S_0e^{rT}\Phi(h)-K\Phi(h-\sigma\sqrt T)\big]$. The same as the limit of \cref{ch:black-scholes}. \qedhere
 \end{steps}
 \end{proof}
 

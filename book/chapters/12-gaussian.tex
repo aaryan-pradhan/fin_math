@@ -15,7 +15,7 @@ Brownian motion at many times at once: what is the joint law, and which processe
 \end{whatfor}
 
 \begin{prereq}
-From Part~0: covariance and its rules, independence, sums of independent normals, the normal exponential moment, CE1--CE4, matrices. From Chapters~6, 8, 10: Wiener process, independent increments, conditional law of $W(s)$ given $W(t)$.
+From Part~0: covariance and its rules, independence, sums of independent normals, the normal exponential moment, CE1--CE4, matrices. From \cref{ch:first-mg,ch:joint}: Wiener process, independent increments, conditional law of $W(s)$ given $W(t)$.
 \end{prereq}
 
 %=====================================================================
@@ -49,9 +49,9 @@ So an MVN distribution is completely determined by its means and covariances.
 \begin{proof}
 Everything reduces to one normal variable.
 \begin{steps}
-  \item $\sum_it_iX_i=\sum_j\big(\sum_it_ia_{ij}\big)Z_j+\sum_it_i\mu_i$ is a constant plus a combination of independent normals, hence normal (\cref{res:normal-sum}). Its mean and variance follow from the rules of Chapter~3.
+  \item $\sum_it_iX_i=\sum_j\big(\sum_it_ia_{ij}\big)Z_j+\sum_it_i\mu_i$ is a constant plus a combination of independent normals, hence normal (\cref{res:normal-sum}). Its mean and variance follow from the rules of \cref{ch:expectation}.
   \item For (b), apply $\E_Pe^{Y}=e^{\E_PY+\frac12\Var Y}$ to $Y=\sum_it_iX_i$.
-  \item The joint exponential moment depends only on the means and covariances, and (as in Chapter~4) it determines the joint distribution. \qedhere
+  \item The joint exponential moment depends only on the means and covariances, and (as in \cref{ch:cond}) it determines the joint distribution. \qedhere
 \end{steps}
 \end{proof}
 
@@ -76,7 +76,7 @@ If $(X,Y)$ is MVN, then $X$ given $Y=y$ is normal with
 Let $c=\Cov(X,Y)/\Var Y$ and $R=X-cY$. Then $\Cov(R,Y)=\Cov(X,Y)-c\Var Y=0$, and $(R,Y)$ is MVN, so $R$ is independent of $Y$. Given $Y=y$, $X=cy+R$ with $R\sim N(\mu_X-c\mu_Y,\ \Var X-c^2\Var Y)$.
 \end{proof}
 
-For $(W(s),W(t))$ with $s<t$ this gives back Chapter~9: $\Cov=s$, $\Var W(t)=t$, so the mean is $\frac stW(t)$ and the variance $s-\frac{s^2}{t}=\frac{s(t-s)}{t}$.
+For $(W(s),W(t))$ with $s<t$ this gives back \cref{ch:joint}: $\Cov=s$, $\Var W(t)=t$, so the mean is $\frac stW(t)$ and the variance $s-\frac{s^2}{t}=\frac{s(t-s)}{t}$.
 
 %=====================================================================
 \section{Gaussian processes}
@@ -143,7 +143,7 @@ The \dfn{Brownian bridge} is standard Brownian motion on $[0,1]$ conditioned on 
 The Brownian bridge is a Gaussian process with mean $0$ and covariance $K(s,t)=s(1-t)$ for $s\le t$. The process $Z(t)=W(t)-t\,W(1)$, $0\le t\le1$, has the same mean and covariance, so it is a Brownian bridge.
 \end{theorem}
 \begin{proof}
-Use the conditional law of Chapter~9 and the tower rule.
+Use the conditional law of \cref{ch:joint} and the tower rule.
 \begin{steps}
   \item Mean: $\E_P\big(W(s)\given W(1)=0\big)=s\cdot0=0$.
   \item Covariance, $s<t<1$: by the tower rule, conditioning first on $W(t)$,
@@ -176,7 +176,7 @@ Use the conditional law of Chapter~9 and the tower rule.
   \addplot[only marks,mark=*] coordinates {(0,0)(1,0)};
 \end{axis}
 \end{tikzpicture}
-\picnote{Three Brownian bridges, made from the Brownian paths of Chapter~6 by subtracting $tW(1)$. All are pinned to $0$ at both ends; the shaded band is $\pm\sqrt{t(1-t)}$, one standard deviation.}
+\picnote{Three Brownian bridges, made from the Brownian paths of \cref{ch:first-mg} by subtracting $tW(1)$. All are pinned to $0$ at both ends; the shaded band is $\pm\sqrt{t(1-t)}$, one standard deviation.}
 \end{pic}
 
 %=====================================================================

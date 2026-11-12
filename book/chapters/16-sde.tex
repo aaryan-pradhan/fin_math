@@ -16,7 +16,7 @@ If the drift and the noise of a process depend on the process itself, can we sol
 \end{whatfor}
 
 \begin{prereq}
-From Part~0: normal distribution, $\Phi$. From Chapters~11--15: geometric Brownian motion, Gaussian process, Itô integral of a non-random function is $N(0,\int f^2)$, Itô isometry, mean $0$ of Itô integrals, Itô process, Itô's formula, product rule.
+From Part~0: normal distribution, $\Phi$. From \crefrange{ch:gbm}{ch:ito-formula}: geometric Brownian motion, Gaussian process, Itô integral of a non-random function is $N(0,\int f^2)$, Itô isometry, mean $0$ of Itô integrals, Itô process, Itô's formula, product rule.
 \end{prereq}
 
 %=====================================================================
@@ -133,7 +133,7 @@ Take logarithms with Itô.
     d(\ln N_t)=\frac{dN_t}{N_t}-\frac{1}{2N_t^2}\alpha^2N_t^2\,dt=\Big(r-\frac{\alpha^2}2\Big)dt+\alpha\,dW_t .
   \]
   \item Integrate: $\ln N_t-\ln N_0=\big(r-\frac{\alpha^2}{2}\big)t+\alpha W_t$; exponentiate.
-  \item Check (this also covers the assumption $N_t>0$ made by taking $\ln$): by the GBM example of Chapter~15, $e^{\mu t+\sigma W_t}$ has $dt$-coefficient $(\mu+\frac{\sigma^2}{2})$ times itself; here $\mu+\frac{\sigma^2}2=r$.
+  \item Check (this also covers the assumption $N_t>0$ made by taking $\ln$): by the GBM example of \cref{ch:ito-formula}, $e^{\mu t+\sigma W_t}$ has $dt$-coefficient $(\mu+\frac{\sigma^2}{2})$ times itself; here $\mu+\frac{\sigma^2}2=r$.
   \item Mean: $\E_PN_t=N_0e^{(r-\alpha^2/2)t}\E_Pe^{\alpha W_t}=N_0e^{(r-\alpha^2/2)t}e^{\alpha^2t/2}=N_0e^{rt}$. \qedhere
 \end{steps}
 \end{proof}

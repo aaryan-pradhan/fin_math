@@ -16,7 +16,7 @@ How does partial information change our best guess of a random quantity, and whe
 \end{whatfor}
 
 \begin{prereq}
-From Chapters~1--3: $\sigma$-field, atoms, filtration, random variable, $\sigma(\xi)$, density, joint density, expectation $\E_P$, variance, covariance, the normal exponential moment.
+From \crefrange{ch:spaces}{ch:expectation}: $\sigma$-field, atoms, filtration, random variable, $\sigma(\xi)$, density, joint density, expectation $\E_P$, variance, covariance, the normal exponential moment.
 \end{prereq}
 
 %=====================================================================
@@ -84,7 +84,7 @@ Let $\xi,\eta$ be independent and $f,g$ Borel functions with $f(\xi),g(\eta)$ in
 In particular $\Cov(\xi,\eta)=0$ and $\Var(\xi+\eta)=\Var\xi+\Var\eta$. If $\xi,\eta$ have densities, they are independent exactly when the joint density factorises: $f_{\xi,\eta}(x,y)=f_\xi(x)f_\eta(y)$.
 \end{result}
 \begin{proof}
-For indicators, $f=\ind{A}$, $g=\ind{B}$, the claim is $P(\xi\in A,\eta\in B)=P(\xi\in A)P(\eta\in B)$, the definition. It extends to step functions by linearity, and to the rest by the limits of Chapter~3.
+For indicators, $f=\ind{A}$, $g=\ind{B}$, the claim is $P(\xi\in A,\eta\in B)=P(\xi\in A)P(\eta\in B)$, the definition. It extends to step functions by linearity, and to the rest by the limits of \cref{ch:expectation}.
 \end{proof}
 
 \begin{result}[Sums of independent normals]

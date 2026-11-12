@@ -15,7 +15,7 @@ What happens to the binomial price of a call when each period becomes tiny and t
 \end{whatfor}
 
 \begin{prereq}
-From Chapter~21: the $T$-period binomial price and the split of the call into ``in the money'' terms. From Chapters~8 and~11: the central limit theorem and geometric Brownian motion. From Part~0: $\Phi$.
+From \cref{ch:binomial-multi}: the $T$-period binomial price and the split of the call into ``in the money'' terms. From \cref{ch:bm-walks,ch:gbm}: the central limit theorem and geometric Brownian motion. From Part~0: $\Phi$.
 \end{prereq}
 
 %=====================================================================
@@ -25,7 +25,7 @@ In a $T$-period tree the call pays $(u^jd^{T-j}S_0-K)^+$ after $j$ up-moves. It 
 \[
   m=\Big\lfloor\frac{\ln K-\ln S_0-T\ln d}{\ln u-\ln d}\Big\rfloor+1 .
 \]
-Splitting the two terms of $(u^jd^{T-j}S_0-K)$ in Chapter~21's formula,
+Splitting the two terms of $(u^jd^{T-j}S_0-K)$ in \cref{ch:binomial-multi}'s formula,
 \[
   C=S_0\,P(\hat U\ge m)-\frac{K}{(1+r)^T}\,P(U^*\ge m),\qquad U^*\sim B(T,p^*),\quad \hat U\sim B(T,\hat p),\quad \hat p=\frac{up^*}{1+r}. \tag{$\star$}
 \]
@@ -42,7 +42,7 @@ After $n$ steps, $S_T=S_0e^{Z_n}$ with $Z_n=Y_1+\dots+Y_n$, $Y_k=\pm\sigma\sqrt{
 \[
   p_n^*=\frac{e^{r\delta_n}-e^{-\sigma\sqrt{\delta_n}}}{e^{\sigma\sqrt{\delta_n}}-e^{-\sigma\sqrt{\delta_n}}}\approx\frac12+\frac{r}{2\sigma}\sqrt{\delta_n}\quad\Big(\text{more precisely }\tfrac12+\tfrac{r-\sigma^2/2}{2\sigma}\sqrt{\delta_n}\Big).
 \]
-This is the walk of Chapter~8 with drift: under $P^*$, $Z_n$ has mean $n\sigma\sqrt{\delta_n}(2p^*_n-1)\to(r-\frac12\sigma^2)T$ and variance $\to\sigma^2T$, so by the central limit theorem
+This is the walk of \cref{ch:bm-walks} with drift: under $P^*$, $Z_n$ has mean $n\sigma\sqrt{\delta_n}(2p^*_n-1)\to(r-\frac12\sigma^2)T$ and variance $\to\sigma^2T$, so by the central limit theorem
 \[
   Z_n\ \longrightarrow\ N\big((r-\tfrac12\sigma^2)T,\ \sigma^2T\big)\quad\text{under }P^*.
 \]

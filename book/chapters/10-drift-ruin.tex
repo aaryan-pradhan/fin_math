@@ -15,7 +15,7 @@ A gambler wins each bet with probability $p$. What is the chance of reaching a t
 \end{whatfor}
 
 \begin{prereq}
-From Part~0: total probability, independence, geometric sums. From Chapters~6--8: Wiener process, exponential martingale $e^{uW_t-u^2t/2}$, random walk, optional stopping theorem and its exit recipe, the scaled random walk ($\Delta x=\sqrt{\Delta t}$).
+From Part~0: total probability, independence, geometric sums. From \crefrange{ch:first-mg}{ch:bm-walks}: Wiener process, exponential martingale $e^{uW_t-u^2t/2}$, random walk, optional stopping theorem and its exit recipe, the scaled random walk ($\Delta x=\sqrt{\Delta t}$).
 \end{prereq}
 
 %=====================================================================
@@ -38,7 +38,7 @@ It is a fair Brownian motion riding on a straight line of slope $\mu$.
 \picnote{A Brownian motion with drift $\mu=1.5$ wanders around the line $\mu t$; its spread around the line grows like $\sqrt t$.}
 \end{pic}
 
-\paragraph{From an unfair random walk.} Take the scaled walk of Chapter~8 with $\Delta x=\sqrt{\Delta t}$, but let each step go right with probability $p=\frac12\big(1+\mu\sqrt{\Delta t}\big)$. Then each step $X_i=\pm1$ has
+\paragraph{From an unfair random walk.} Take the scaled walk of \cref{ch:bm-walks} with $\Delta x=\sqrt{\Delta t}$, but let each step go right with probability $p=\frac12\big(1+\mu\sqrt{\Delta t}\big)$. Then each step $X_i=\pm1$ has
 \[
   \E_P(X_i)=2p-1=\mu\sqrt{\Delta t},\qquad \Var(X_i)=1-(2p-1)^2=1-\mu^2\Delta t,
 \]
@@ -118,8 +118,8 @@ Let $D_i=\E_P(\tau\given X_0=i)$, where $\tau$ is the number of bets played. The
 \begin{proof}
 Use optional stopping with two martingales; the stopped walk stays in $[0,N]$.
 \begin{steps}
-  \item Each bet has mean $p-q$, so $X_n-n(p-q)$ is a martingale (Chapter~5). At $\tau$, $X_\tau=N$ with probability $P_i$, else $0$. Optional stopping: $N P_i-(p-q)D_i=i$; solve for $D_i$.
-  \item For $p=\frac12$ that equation is empty ($0\cdot D_i$); use the martingale $(X_n-i)^2-n$ instead, as in the exit recipe of Chapter~7: $D_i=\E_P(X_\tau-i)^2=(N-i)^2\frac iN+i^2\frac{N-i}{N}=i(N-i)$. \qedhere
+  \item Each bet has mean $p-q$, so $X_n-n(p-q)$ is a martingale (\cref{ch:martingales}). At $\tau$, $X_\tau=N$ with probability $P_i$, else $0$. Optional stopping: $N P_i-(p-q)D_i=i$; solve for $D_i$.
+  \item For $p=\frac12$ that equation is empty ($0\cdot D_i$); use the martingale $(X_n-i)^2-n$ instead, as in the exit recipe of \cref{ch:stopping}: $D_i=\E_P(X_\tau-i)^2=(N-i)^2\frac iN+i^2\frac{N-i}{N}=i(N-i)$. \qedhere
 \end{steps}
 \end{proof}
 
@@ -147,10 +147,10 @@ For $\mu=0$ it is $\frac{B}{A+B}$.
 \begin{proof}
 Find a martingale that is a function of $B(t)$ alone.
 \begin{steps}
-  \item $e^{-2\mu B(t)}=e^{-2\mu W(t)-2\mu^2t}=e^{uW(t)-\frac12u^2t}$ with $u=-2\mu$: the exponential martingale of Chapter~6.
+  \item $e^{-2\mu B(t)}=e^{-2\mu W(t)-2\mu^2t}=e^{uW(t)-\frac12u^2t}$ with $u=-2\mu$: the exponential martingale of \cref{ch:first-mg}.
   \item Let $\tau$ be the exit time and $p$ the probability of exiting at $A$. The stopped martingale is bounded, so optional stopping gives $1=\E_Pe^{-2\mu B(\tau)}=p\,e^{-2\mu A}+(1-p)\,e^{2\mu B}$.
   \item Solve: $p=\dfrac{e^{2\mu B}-1}{e^{2\mu B}-e^{-2\mu A}}$; multiply top and bottom by $e^{-2\mu B}$ for the first form.
-  \item For $\mu=0$, $B(t)=W(t)$ and the recipe of Chapter~7 gives $\frac{B}{A+B}$ (also the limit $\mu\to0$). \qedhere
+  \item For $\mu=0$, $B(t)=W(t)$ and the recipe of \cref{ch:stopping} gives $\frac{B}{A+B}$ (also the limit $\mu\to0$). \qedhere
 \end{steps}
 \end{proof}
 
@@ -193,7 +193,7 @@ A stock price, measured from today's level, moves as $B(t)=\mu t+W(t)$ with $\mu
 %=====================================================================
 \formulasheet{fs:drift}
 
-Exits, the gambler's ruin and ``will it ever reach $b$'' are rows 1--4 of Card~\ref{card:ost} (beneath Chapter~7), with $\kappa(u)=u\mu+\frac12u^2\sigma^2$. This sheet holds the law of the process itself.
+Exits, the gambler's ruin and ``will it ever reach $b$'' are rows 1--4 of Card~\ref{card:ost} (beneath \cref{ch:stopping}), with $\kappa(u)=u\mu+\frac12u^2\sigma^2$. This sheet holds the law of the process itself.
 
 \begin{mastercard}[label=card:Ylaw]{The law of $Y_t=x_0+\mu t+\sigma W_t$ given any known values}
 Only the nearest known value on each side of $t$ matters. With known values $Y_{s_1}=a_1$ before $t$ and $Y_{s_2}=a_2$ after $t$ ($s_1<t<s_2$):

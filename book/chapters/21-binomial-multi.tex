@@ -15,7 +15,7 @@ Over many periods the stock moves up or down each period. How do we price a clai
 \end{whatfor}
 
 \begin{prereq}
-From Chapters~19--20: binomial market, trading strategy, self-financing, perfect hedge, $p^*=\frac{1+r-d}{u-d}$, EMM, fair price. From Part~1: martingale. From Part~0: the binomial distribution.
+From \crefrange{ch:binomial-one}{ch:fundamental}: binomial market, trading strategy, self-financing, perfect hedge, $p^*=\frac{1+r-d}{u-d}$, EMM, fair price. From Part~1: martingale. From Part~0: the binomial distribution.
 \end{prereq}
 
 %=====================================================================
@@ -25,7 +25,7 @@ From Chapters~19--20: binomial market, trading strategy, self-financing, perfect
 Bond $B_t=(1+r)^t$; stock $S_t=uS_{t-1}$ or $dS_{t-1}$, $t=1,\dots,T$, with $d<1+r<u$. An outcome is a path $\omega=(v_1,\dots,v_T)$, $v_t\in\{u,d\}$, and $S_t=v_1\cdots v_tS_0$. A claim pays $X=g(S_T)$ at $T$.
 \end{setup}
 
-A strategy holds $\Delta_t$ shares and $b_t$ bonds during period $t$, chosen at time $t-1$ from $S_0,\dots,S_{t-1}$. Its value is $V_t=\Delta_tS_t+b_t(1+r)^t$, with $V_0=\Delta_1S_0+b_1$. It is self-financing (Chapter~19) when rebalancing costs nothing:
+A strategy holds $\Delta_t$ shares and $b_t$ bonds during period $t$, chosen at time $t-1$ from $S_0,\dots,S_{t-1}$. Its value is $V_t=\Delta_tS_t+b_t(1+r)^t$, with $V_0=\Delta_1S_0+b_1$. It is self-financing (\cref{ch:binomial-one}) when rebalancing costs nothing:
 \[
   \Delta_tS_t+b_t(1+r)^t=\Delta_{t+1}S_t+b_{t+1}(1+r)^t,\qquad t=1,\dots,T-1 .
 \]
@@ -54,9 +54,9 @@ In closed form,
 The fair price of $X$ is $V_0[S_0]$.
 \end{theorem}
 \begin{proof}
-Each period is the one-period problem of Chapter~19.
+Each period is the one-period problem of \cref{ch:binomial-one}.
 \begin{steps}
-  \item \emph{Last period.} At time $T-1$ with $S_{T-1}=s$, copy $g$ over one period: $\Delta_Tus+b_T(1+r)^T=g(us)$ and $\Delta_Tds+b_T(1+r)^T=g(ds)$. Solving gives the formulas with $t+1=T$, and the cost is $V_{T-1}[s]=\frac{1}{1+r}[p^*g(us)+(1-p^*)g(ds)]$, as in Chapter~19 (one bond costs $(1+r)^{T-1}$ at time $T-1$ and is worth $(1+r)^T$ at $T$).
+  \item \emph{Last period.} At time $T-1$ with $S_{T-1}=s$, copy $g$ over one period: $\Delta_Tus+b_T(1+r)^T=g(us)$ and $\Delta_Tds+b_T(1+r)^T=g(ds)$. Solving gives the formulas with $t+1=T$, and the cost is $V_{T-1}[s]=\frac{1}{1+r}[p^*g(us)+(1-p^*)g(ds)]$, as in \cref{ch:binomial-one} (one bond costs $(1+r)^{T-1}$ at time $T-1$ and is worth $(1+r)^T$ at $T$).
   \item \emph{One step further back.} $V_{T-1}[\cdot]$ is now a known function of $S_{T-1}$: treat it as a new claim with expiry $T-1$ and repeat. The value received at time $T-1$ is exactly the cost of the next holding, so the strategy is self-financing.
   \item \emph{Closed form.} After $T-t$ backward steps, each path with $j$ ups and $T-t-j$ downs ends at $u^jd^{T-t-j}s$ and carries weight $(p^*)^j(1-p^*)^{T-t-j}$; there are $\binom{T-t}{j}$ such paths. \qedhere
 \end{steps}
@@ -98,7 +98,7 @@ $S_0=100$, $u=1.2$, $d=0.8$, $r=0.05$, $T=2$, call with $K=100$; $p^*=\frac{1.05
 Under $P^*$ the moves are independent, up with probability $p^*$. The discounted stock $S_t^*=(1+r)^{-t}S_t$ and the discounted value $(1+r)^{-t}V_t$ of any self-financing strategy are martingales; so $V_0=\E_{P^*}\big((1+r)^{-T}X\big)$ for any copied $X$.
 \end{result}
 \begin{proof}
-$\E_{P^*}(S_{t+1}\given\F_t)=S_t(p^*u+(1-p^*)d)=(1+r)S_t$, so $\E_{P^*}(S^*_{t+1}\given\F_t)=S^*_t$ (the one-step test of Chapter~5). The value: $V_{t+1}-V_t=\Delta_{t+1}(S_{t+1}-S_t)+b_{t+1}((1+r)^{t+1}-(1+r)^t)$ by self-financing, and discounting turns this into $\Delta_{t+1}(S^*_{t+1}-S^*_t)$, a stake chosen from the past on a martingale (Chapter~7).
+$\E_{P^*}(S_{t+1}\given\F_t)=S_t(p^*u+(1-p^*)d)=(1+r)S_t$, so $\E_{P^*}(S^*_{t+1}\given\F_t)=S^*_t$ (the one-step test of \cref{ch:martingales}). The value: $V_{t+1}-V_t=\Delta_{t+1}(S_{t+1}-S_t)+b_{t+1}((1+r)^{t+1}-(1+r)^t)$ by self-financing, and discounting turns this into $\Delta_{t+1}(S^*_{t+1}-S^*_t)$, a stake chosen from the past on a martingale (\cref{ch:stopping}).
 \end{proof}
 
 \paragraph{The price as an exponential of a random walk.} Write $S_T=S_0e^{Z_T}$ with $Z_T=Y_1+\dots+Y_T$, where $Y_k=\ln u$ (prob.\ $p^*$) or $\ln d$ (prob.\ $1-p^*$) independently. Then
@@ -118,9 +118,9 @@ $S_t=uS_{t-1}$ or $dS_{t-1}$, bond $(1+r)^t$, $p^*=\frac{1+r-d}{u-d}$, claim $g(
 \]
 \begin{plugrows}
   \plugrow{Price today}{$t=0$, $s=S_0$; either the sum or the backward step at every node}{$V_0$}{$d<1+r<u$; European claims $g(S_T)$}{$S_0=100$, $u=1.2$, $d=0.8$, $r=0.05$, $T=2$, $K=100$: call $15.59$}
-  \plugrow{One period}{$T=1$}{the one-step formulas: Card~20.1, row 1}{one period}{$S_0=1$, $u=1.75$, $d=0.5$, $r=0.25$, $K=1$: $0.36$}
+  \plugrow{One period}{$T=1$}{the one-step formulas: \cref{card:finite}, row 1}{one period}{$S_0=1$, $u=1.75$, $d=0.5$, $r=0.25$, $K=1$: $0.36$}
   \plugrow{A call: only the ``in the money'' terms}{$g=(s-K)^+$; $m$ = least $j$ with $u^jd^{T-j}S_0>K$}{$C=S_0\sum_{j\ge m}\binom Tj\hat p^{\,j}(1-\hat p)^{T-j}-\dfrac{K}{(1+r)^T}\sum_{j\ge m}\binom Tj(p^*)^j(1-p^*)^{T-j}$, $\hat p=\dfrac{up^*}{1+r}$}{call, $g$ increasing; $\hat p$ is again a probability}{same: $m=2$, $\hat p=\frac{1.2\cdot0.625}{1.05}=0.714$: $100(0.510)-\frac{100}{1.1025}(0.391)=15.59$}
-  \plugrow{A put}{$g=(K-s)^+$, or Card~19.2 (parity)}{$P=C-S_0+K(1+r)^{-T}$}{European}{same: $P=15.59-100+90.70=6.29$}
+  \plugrow{A put}{$g=(K-s)^+$, or \cref{card:parity} (parity)}{$P=C-S_0+K(1+r)^{-T}$}{European}{same: $P=15.59-100+90.70=6.29$}
   \plugrow{The hedge at a node}{the second line of the box}{shares and bond money held over the next period}{use values one step ahead}{time $0$: $\Delta_1=0.655$, bond $-49.89$; after an up-move: $\Delta_2=0.917$, bond $-83.81$}
   \plugrow{Is the strategy self-financing?}{value of the old holding at the new price $=$ value of the new holding}{yes for the backward-induction hedge}{compare at the same price}{$0.655\cdot120-49.89\cdot1.05=26.19=V_1[120]$}
   \plugrow{A discounted martingale}{$\E_{P^*}(S_{t+1}\given\F_t)=(1+r)S_t$}{$(1+r)^{-t}S_t$ and $(1+r)^{-t}V_t$ are $P^*$-martingales}{self-financing strategies}{$0.625(120)+0.375(80)=105=1.05\cdot100$}

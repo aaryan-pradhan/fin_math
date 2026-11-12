@@ -16,7 +16,7 @@ In a one-period market with finitely many outcomes and several stocks, when is t
 \end{whatfor}
 
 \begin{prereq}
-From Chapters~17--19: arbitrage, risk-neutral probability, contingent claim, bond, trading strategy, portfolio value, perfect hedge, $p^*$. From Part~0: probability on a finite set, matrices.
+From \crefrange{ch:arbitrage}{ch:binomial-one}: arbitrage, risk-neutral probability, contingent claim, bond, trading strategy, portfolio value, perfect hedge, $p^*$. From Part~0: probability on a finite set, matrices.
 \end{prereq}
 
 %=====================================================================
@@ -94,7 +94,7 @@ Write $y_k=\frac{S_1(\omega_k)}{1+r}$ and $D=\operatorname{conv}\{y_1,\dots,y_N\
 \end{steps}
 \end{proof}
 
-For one stock with two outcomes, $D$ is the segment $\big[\frac{dS_0}{1+r},\frac{uS_0}{1+r}\big]$ and $D_0$ its interior: no arbitrage $\iff d<1+r<u$, as in Chapter~19.
+For one stock with two outcomes, $D$ is the segment $\big[\frac{dS_0}{1+r},\frac{uS_0}{1+r}\big]$ and $D_0$ its interior: no arbitrage $\iff d<1+r<u$, as in \cref{ch:binomial-one}.
 
 %=====================================================================
 \section{Theorem 3: pricing}
@@ -150,7 +150,7 @@ $r=0.25$, $S_0=(1,1)$; stock~1 ends at $(2,0.5,0.5)$, stock~2 at $(1,2,1)$ in ou
 \end{steps}
 \end{example}
 
-With one stock and three outcomes ($n+1=2<N=3$), the EMMs form a whole segment and claims like a call get an interval of no-arbitrage prices (Chapter~17).
+With one stock and three outcomes ($n+1=2<N=3$), the EMMs form a whole segment and claims like a call get an interval of no-arbitrage prices (\cref{ch:arbitrage}).
 
 %=====================================================================
 \formulasheet{fs:fundamental}
