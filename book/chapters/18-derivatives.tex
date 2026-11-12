@@ -124,11 +124,11 @@ A claim with expiry $T$ pays $X=g(S_T)$; a portfolio of claims pays the sum of t
   x^+-x^-=x,\qquad |x|=x^++x^-.\end{gathered}}
 \]
 \begin{plugrows}
-  \plugrow{European call / put}{$g(s)=(s-K)^+$ / $(K-s)^+$}{pays only if $S_T$ ends above / below $K$}{exercise at $T$ only}{$K=100$: $S_T=120$ gives call $20$, put $0$; $S_T=90$: call $0$, put $10$}
-  \plugrow{Forward (long / short)}{$g(s)=s-K$ / $K-s$}{can be negative: an obligation, not a claim ($X\ge0$ fails)}{both sides must trade at $T$}{$K=100$, $S_T=90$: long loses $10$}
-  \plugrow{Call minus put}{$x^+-x^-=x$ with $x=S_T-K$}{$(S_T-K)^+-(K-S_T)^+=S_T-K$: call $-$ put $=$ forward}{same $K$, $T$}{the basis of put--call parity (Card~19.2)}
-  \plugrow{Straddle}{one call plus one put}{$|S_T-K|$}{same $K$, $T$}{$K=100$: $S_T=70$ or $130$ both pay $30$}
-  \plugrow{Spread}{long call at $K_1$, short call at $K_2>K_1$}{$(S_T-K_1)^+-(S_T-K_2)^+$, between $0$ and $K_2-K_1$}{$K_1<K_2$, same $T$}{$K_1=100$, $K_2=120$, $S_T=130$: $30-10=20$}
-  \plugrow{American call}{exercise at a chosen time $\tau\le T$}{$(S_\tau-K)^+$}{$\tau$ a stopping time}{$K=100$, exercised at $\tau=0.5$ when $S=130$: pays $30$}
+  \plugrow{European call / put}{\pstep{Box: $X=g(S_T)$; call $(S_T-K)^+$, put $(K-S_T)^+$.}\pstep{$x^+=\max(x,0)$: the call pays $S_T-K$ when positive, else $0$; the put pays $K-S_T$ when positive.}}{the call pays only if $S_T$ ends above $K$, the put only if below}{exercise at $T$ only}{$K=100$: $S_T=120$: call $(20)^+=20$, put $(-20)^+=0$; $S_T=90$: call $0$, put $10$}
+  \plugrow{Forward (long / short)}{\pstep{Box: $X=g(S_T)$.}\pstep{A forward obliges both sides to trade at $K$: long gets $g(s)=s-K$, short gets $K-s$.}\pstep{No ${}^+$: the value can be negative.}}{an obligation, not a claim ($X\ge0$ fails)}{both sides must trade at $T$}{$K=100$, $S_T=90$: long gets $90-100=-10$, a loss of $10$}
+  \plugrow{Call minus put}{\pstep{Box: $x^+-x^-=x$.}\pstep{Put $x=S_T-K$: $x^+$ is the call, $x^-=(K-S_T)^+$ is the put.}\pstep{Payoffs add (box): long call $+$ short put pays $x$.}}{$(S_T-K)^+-(K-S_T)^+=S_T-K$: call $-$ put $=$ forward}{same $K$, $T$}{$K=100$, $S_T=120$: $20-0=20=120-100$; $S_T=90$: $0-10=-10=90-100$}
+  \plugrow{Straddle}{\pstep{Box: $|x|=x^++x^-$.}\pstep{Put $x=S_T-K$: call $+$ put $=x^++x^-$.}}{$|S_T-K|$}{same $K$, $T$}{$K=100$: $S_T=70$: $0+30=30$; $S_T=130$: $30+0=30$}
+  \plugrow{Spread}{\pstep{Payoffs add (box): long call at $K_1$, short call at $K_2$.}\pstep{$(S_T-K_1)^+-(S_T-K_2)^+$: $0$ below $K_1$, $S_T-K_1$ between, $K_2-K_1$ above $K_2$.}}{$(S_T-K_1)^+-(S_T-K_2)^+$, between $0$ and $K_2-K_1$}{$K_1<K_2$, same $T$}{$K_1=100$, $K_2=120$, $S_T=130$: $(30)^+-(10)^+=20=K_2-K_1$}
+  \plugrow{American call}{\pstep{Box: $X=g(S_T)$, call $g(s)=(s-K)^+$; replace the expiry $T$ by an exercise time $\tau\le T$ the holder chooses.}\pstep{$\tau$ may use only what is known so far: a stopping time (\cref{card:st}).}}{$(S_\tau-K)^+$}{$\tau$ a stopping time}{$K=100$, exercised at $\tau=0.5$ when $S=130$: $(130-100)^+=30$}
 \end{plugrows}
 \end{mastercard}
