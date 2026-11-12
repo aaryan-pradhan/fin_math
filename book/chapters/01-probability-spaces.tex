@@ -322,11 +322,11 @@ A finite $\sigma$-field is fixed by its atoms $G_1,\dots,G_k$: its smallest non-
   \boxed{\;\F=\Big\{\textstyle\bigcup_{i\in I}G_i\Big\},\qquad |\F|=2^k,\qquad P\Big(\textstyle\bigcup_{i\in I}G_i\Big)=\sum_{i\in I}P(G_i).\;}
 \]
 \begin{plugrows}
-  \plugrow{Is a given collection a $\sigma$-field?}{find its smallest non-empty sets; check they are disjoint, cover $\Omega$, and that every union of them is in the list}{yes exactly when the list is all unions of some disjoint sets that cover $\Omega$}{finite $\Omega$; check complements first, they fail most often}{die, $\{\varnothing,\{6\},\Omega\}$: $\{6\}^c$ missing, so \textbf{no}}
-  \plugrow{How many events?}{count the atoms $k$}{$2^k$}{always (finite)}{die, even/odd: $k=2$, $4$ events; all subsets: $k=6$, $64$}
-  \plugrow{Information after $n$ coin tosses, $\F_n$}{atoms = the $2^n$ sets of sequences sharing the first $n$ tosses}{$|\F_n|=2^{2^n}$; $\F_0\subseteq\F_1\subseteq\cdots$ (a filtration)}{tosses observed one by one}{$\F_1$: atoms $A_H,A_T$, $4$ events; $\F_2$: $16$ events}
-  \plugrow{Smallest / largest $\sigma$-field}{$k=1$ / $k=|\Omega|$}{$\{\varnothing,\Omega\}$ / all subsets}{finite $\Omega$}{die: $2$ and $64$ events}
-  \plugrow{Probability of an event in $\F$}{write it as a union of atoms}{add the atoms' probabilities}{atoms disjoint}{fair die, $\{1,2,3,5\}=\{1,3,5\}\cup\{2\}$: $\frac12+\frac16=\frac23$}
+  \plugrow{Is a given collection a $\sigma$-field?}{\pstep{Box: a $\sigma$-field is exactly all unions $\bigcup_{i\in I}G_i$ of its atoms (disjoint, covering $\Omega$).}\pstep{From the list: take its smallest non-empty sets as candidate atoms.}\pstep{Check they are disjoint and cover $\Omega$.}\pstep{Check every union of them is in the list (complements first: they fail most often).}}{yes exactly when the list is all unions of some disjoint sets that cover $\Omega$}{finite $\Omega$}{die, list $\{\varnothing,\{6\},\Omega\}$: smallest non-empty sets $\{6\},\Omega$ are not disjoint; the complement $\{6\}^c=\{1,\dots,5\}$ is missing, so \textbf{no}}
+  \plugrow{How many events?}{\pstep{Box: $|\F|=2^k$.}\pstep{From the atoms: $k$ = their number.}\pstep{Substitute $k$.}}{$2^k$ events (each atom is in or out of the union)}{always (finite)}{die, even/odd: $k=2$, $2^2=4$ events; all subsets: $k=6$, $2^6=64$}
+  \plugrow{Information after $n$ coin tosses, $\F_n$}{\pstep{Box: $|\F|=2^k$.}\pstep{From ``what is seen'': the atoms are the sets of sequences sharing the first $n$ tosses, so $k=2^n$.}\pstep{Substitute: $|\F_n|=2^{k}=2^{2^n}$.}\pstep{Each atom of $\F_n$ is a union of atoms of $\F_{n+1}$, so $\F_n\subseteq\F_{n+1}$.}}{$|\F_n|=2^{2^n}$; $\F_0\subseteq\F_1\subseteq\cdots$ (a filtration)}{tosses observed one by one}{$\F_1$: $k=2^1=2$ atoms $A_H,A_T$, $2^2=4$ events; $\F_2$: $k=4$, $2^4=16$ events}
+  \plugrow{Smallest / largest $\sigma$-field}{\pstep{Box: $|\F|=2^k$, events = unions of atoms.}\pstep{Smallest: one atom, $G_1=\Omega$, so $k=1$.}\pstep{Largest: every outcome is an atom, so $k=|\Omega|$.}}{$\{\varnothing,\Omega\}$ ($2^1=2$ events) / all subsets ($2^{|\Omega|}$ events)}{finite $\Omega$}{die: $2^1=2$ and $2^6=64$ events}
+  \plugrow{Probability of an event in $\F$}{\pstep{Box: $P\big(\bigcup_{i\in I}G_i\big)=\sum_{i\in I}P(G_i)$.}\pstep{From the event: write it as a union of atoms, which gives $I$.}\pstep{Substitute: add the probabilities of those atoms.}}{$P(\text{event})=\sum$ of its atoms' probabilities}{atoms disjoint}{fair die, atoms $\{1,3,5\},\{2\},\{4\},\{6\}$: $\{1,2,3,5\}=\{1,3,5\}\cup\{2\}$, so $P=\frac36+\frac16=\frac12+\frac16=\frac23$}
 \end{plugrows}
 \end{mastercard}
 
@@ -336,11 +336,11 @@ For any events $A_1,\dots,A_n$:
   \boxed{\begin{gathered}P\Big(\bigcup_{i=1}^nA_i\Big)=\sum_iP(A_i)-\sum_{i<j}P(A_i\cap A_j)+\sum_{i<j<k}P(A_i\cap A_j\cap A_k)-\cdots\;\le\;\sum_iP(A_i).\end{gathered}}
 \]
 \begin{plugrows}
-  \plugrow{Disjoint events}{all intersections $=0$}{$P(\bigcup A_i)=\sum P(A_i)$}{pairwise disjoint (also for countably many)}{die, $P(\{1\}\cup\{2\})=\frac16+\frac16=\frac13$}
-  \plugrow{Complement}{$n=2$, $A_1=A$, $A_2=A^c$ (disjoint, union $\Omega$)}{$P(A^c)=1-P(A)$; with $A=\Omega$: $P(\varnothing)=0$}{always}{$P(\text{not }6)=1-\frac16=\frac56$}
-  \plugrow{Two events}{$n=2$}{$P(A\cup B)=P(A)+P(B)-P(A\cap B)$}{always}{die, $A=\{1,2\}$, $B=\{2,3\}$: $\frac13+\frac13-\frac16=\frac12$}
-  \plugrow{Upper bound (union bound)}{drop every term after the first sum}{$P(\bigcup A_i)\le\sum P(A_i)$}{always; exact iff overlaps have probability 0}{same $A,B$: $\frac12\le\frac23$}
-  \plugrow{Subset}{$B=A\cup(B\setminus A)$, disjoint}{$A\subseteq B\Rightarrow P(A)\le P(B)$}{always}{$P(\{6\})\le P(\text{even})$: $\frac16\le\frac12$}
+  \plugrow{Disjoint events}{\pstep{Box: $P(\bigcup A_i)=\sum P(A_i)-\sum_{i<j}P(A_i\cap A_j)+\cdots$.}\pstep{From ``disjoint'': every intersection is $\varnothing$, so every $P(A_i\cap A_j)=0$, and so on.}\pstep{Substitute: only the first sum is left.}}{$P(\bigcup A_i)=\sum P(A_i)$}{pairwise disjoint (also for countably many)}{die: $P(\{1\}\cup\{2\})=\frac16+\frac16-0=\frac13$}
+  \plugrow{Complement}{\pstep{Box with $n=2$: $P(A_1\cup A_2)=P(A_1)+P(A_2)-P(A_1\cap A_2)$.}\pstep{From the complement: $A_1=A$, $A_2=A^c$, so $A_1\cup A_2=\Omega$ and $A_1\cap A_2=\varnothing$.}\pstep{Substitute: $1=P(A)+P(A^c)-0$.}\pstep{With $A=\Omega$: $P(\varnothing)=1-1=0$.}}{$P(A^c)=1-P(A)$; $P(\varnothing)=0$}{always}{$P(\text{not }6)=1-P(6)=1-\frac16=\frac56$}
+  \plugrow{Two events}{\pstep{Box with $n=2$: the first sum has two terms, the second sum one term, no more terms.}}{$P(A\cup B)=P(A)+P(B)-P(A\cap B)$}{always}{die, $A=\{1,2\}$, $B=\{2,3\}$, $A\cap B=\{2\}$: $\frac26+\frac26-\frac16=\frac36=\frac12$}
+  \plugrow{Upper bound (union bound)}{\pstep{Box, right-hand end: $P(\bigcup A_i)\le\sum_iP(A_i)$.}\pstep{The terms after the first sum only remove overlaps counted twice.}}{$P(\bigcup A_i)\le\sum P(A_i)$}{always; exact iff overlaps have probability 0}{same $A,B$: $P(A\cup B)=\frac12\le P(A)+P(B)=\frac13+\frac13=\frac23$}
+  \plugrow{Subset}{\pstep{Disjoint case (row 1): $P(A\cup C)=P(A)+P(C)$ for disjoint $A,C$.}\pstep{From $A\subseteq B$: $B=A\cup(B\setminus A)$, and $A$, $B\setminus A$ are disjoint.}\pstep{Substitute: $P(B)=P(A)+P(B\setminus A)\ge P(A)$.}}{$A\subseteq B\Rightarrow P(A)\le P(B)$}{always}{$\{6\}\subseteq\{\text{even}\}$: $P(\{6\})=\frac16\le P(\text{even})=\frac36=\frac12$}
 \end{plugrows}
 \end{mastercard}
 
@@ -350,9 +350,9 @@ If the sets only grow ($A_n\uparrow$) or only shrink ($A_n\downarrow$), probabil
   \boxed{\begin{gathered}P\Big(\lim_{n\to\infty}A_n\Big)=\lim_{n\to\infty}P(A_n),\\ \lim A_n=\bigcup_nA_n\ (\uparrow)\ \text{ or }\ \bigcap_nA_n\ (\downarrow).\end{gathered}}
 \]
 \begin{plugrows}
-  \plugrow{Growing sets}{$\lim A_n=\bigcup A_n$}{$P(\bigcup A_n)=\lim P(A_n)$}{$A_1\subseteq A_2\subseteq\cdots$}{$A_n=[0,1-\frac1n]$, uniform: $P([0,1))=\lim(1-\frac1n)=1$}
-  \plugrow{Shrinking sets}{$\lim A_n=\bigcap A_n$}{$P(\bigcap A_n)=\lim P(A_n)$}{$A_1\supseteq A_2\supseteq\cdots$}{$A_n$ = first $n$ tosses all $H$: $P(\text{all }H)=\lim2^{-n}=0$}
-  \plugrow{Infinitely often (Borel--Cantelli)}{$B_n=\bigcup_{i\ge n}A_i\downarrow\limsup A_n$, and $P(B_n)\le\sum_{i\ge n}P(A_i)$}{if $\sum_iP(A_i)<\infty$: $P(A_n\text{ i.o.})=0$; a.s.\ only finitely many $A_n$ happen}{convergent sum; a divergent sum proves nothing}{$A_i=[0,1/i^2]$: $\sum\frac1{i^2}=\frac{\pi^2}6<\infty$, so $P=0$ (indeed $\limsup=\{0\}$)}
-  \plugrow{Almost surely}{show the exceptional set $A^c$ has $P(A^c)=0$ (often by a shrinking limit)}{$A$ holds a.s.\ $\iff P(A)=1$}{a.s.\ allows outcomes in $A^c$; on a finite $\Omega$ with all $P(\omega)>0$ a.s.\ = surely}{uniform on $[0,1]$: $\omega\ne0.5$ a.s.\ since $P(\{0.5\})=0$}
+  \plugrow{Growing sets}{\pstep{Box: $P(\lim A_n)=\lim P(A_n)$.}\pstep{From ``growing'': $\lim A_n=\bigcup_nA_n$.}\pstep{Substitute.}}{$P(\bigcup A_n)=\lim P(A_n)$}{$A_1\subseteq A_2\subseteq\cdots$}{uniform on $[0,1]$, $A_n=[0,1-\frac1n]$: $\bigcup A_n=[0,1)$, so $P([0,1))=\lim(1-\frac1n)=1-0=1$}
+  \plugrow{Shrinking sets}{\pstep{Box: $P(\lim A_n)=\lim P(A_n)$.}\pstep{From ``shrinking'': $\lim A_n=\bigcap_nA_n$.}\pstep{Substitute.}}{$P(\bigcap A_n)=\lim P(A_n)$}{$A_1\supseteq A_2\supseteq\cdots$}{$A_n$ = ``first $n$ tosses all $H$'', $P(A_n)=2^{-n}$: $P(\text{all }H)=\lim2^{-n}=0$}
+  \plugrow{Infinitely often (Borel--Cantelli)}{\pstep{Box, shrinking case: $P(\bigcap_nB_n)=\lim P(B_n)$.}\pstep{From ``infinitely often'': $B_n=\bigcup_{i\ge n}A_i$ shrinks to $\{A_n\text{ i.o.}\}$.}\pstep{Union bound (\cref{card:incl-excl}, row 4): $P(B_n)\le\sum_{i\ge n}P(A_i)$.}\pstep{Substitute: $P(A_n\text{ i.o.})=\lim P(B_n)\le\lim\sum_{i\ge n}P(A_i)=0$, the tail of a convergent sum.}}{if $\sum_iP(A_i)<\infty$: $P(A_n\text{ i.o.})=0$; a.s.\ only finitely many $A_n$ happen}{convergent sum; a divergent sum proves nothing}{$A_i=[0,1/i^2]$, $P(A_i)=\frac1{i^2}$: $\sum\frac1{i^2}=\frac{\pi^2}6\approx1.645<\infty$, so $P(A_n\text{ i.o.})=0$ (indeed the limit set is $\{0\}$)}
+  \plugrow{Almost surely}{\pstep{Definition: $A$ holds a.s.\ when $P(A)=1$, i.e.\ $P(A^c)=0$ (\cref{card:incl-excl}, row 2).}\pstep{From the problem: find the exceptional set $A^c$.}\pstep{Show $P(A^c)=0$, often as a shrinking limit (row 2).}}{$A$ holds a.s.\ $\iff P(A)=1$}{a.s.\ allows outcomes in $A^c$; on a finite $\Omega$ with all $P(\omega)>0$ a.s.\ = surely}{uniform on $[0,1]$, $A=\{\omega\ne0.5\}$: $A^c=\{0.5\}=\bigcap_n[0.5-\frac1n,0.5+\frac1n]$, $P=\lim\frac2n=0$, so $\omega\ne0.5$ a.s.}
 \end{plugrows}
 \end{mastercard}
