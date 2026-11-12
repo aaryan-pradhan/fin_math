@@ -25,8 +25,8 @@
 \newcommand{\formulasheet}[1]{\section*{Formula sheet}\label{#1}\addcontentsline{toc}{section}{Formula sheet}}
 
 % One formula-sheet card: Formula -> Use when -> How to plug -> Caveats -> Example.
-\newtcolorbox{card}[1]{slm,colback=white,colframe=defc!70,title={#1},fonttitle=\bfseries\small}
-\newcommand{\cardhead}[2]{\par\smallskip{\scriptsize\sffamily\bfseries\color{#1}#2}\par\nobreak\smallskip}
+\newtcolorbox{card}[1]{slm,unbreakable,colback=white,colframe=defc!70,title={#1},fonttitle=\bfseries\small,before upper={\setlength{\parskip}{0.25em}\setlist{nosep,leftmargin=1.6em}}}
+\newcommand{\cardhead}[2]{\par\vspace{0.3em}{\scriptsize\sffamily\bfseries\color{#1}#2}\par\nobreak}
 \newcommand{\Formula}{\cardhead{prec}{FORMULA}}
 \newcommand{\UseWhen}{\cardhead{prec}{USE WHEN}\color{exc}}
 \newcommand{\HowTo}{\color{black}\cardhead{prec}{HOW TO PLUG}}

@@ -13,7 +13,9 @@
 \include{chapters/00-front}
 
 \mainmatter
-% \part{...} and one \include{chapters/NN-slug} per chapter, in PLAN.md order
+\renewcommand{\thepart}{\arabic{part}}\setcounter{part}{-1}
+\part{Probability review (skip if revised)}
+\include{chapters/01-probability-spaces}
 
 \backmatter
 \printindex

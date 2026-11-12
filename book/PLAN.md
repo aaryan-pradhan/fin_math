@@ -67,7 +67,7 @@ One LaTeX book, one PDF (`build/main.pdf`), that replaces everything else in `fi
 Needs must appear in an earlier row's Introduces, or in "Before you start".
 | # | Title | PDF pages | Needs | Introduces | Status |
 |---|---|---|---|---|---|
-| 1 | Probability spaces | 1–4 | sets, series | σ-field, Borel sets, probability measure, continuity of P, almost surely, Borel–Cantelli, filtration (first look) | todo |
+| 1 | Probability spaces | 1–4 | sets, series | σ-field, Borel sets, probability measure, continuity of P, almost surely, Borel–Cantelli, filtration (first look) | written |
 | 2 | Random variables and distributions | 4–7 | 1 | random variable, σ(ξ), Borel function, Doob–Dynkin, distribution, d.f., density, discrete, joint density, normal | todo |
 | 3 | Expectation | 7–9, 55 | 2 | integrable, E as integral, indicator, step function, E h(ξ), normal mgf, Markov/Chebyshev | todo |
 | 4 | Independence and conditional expectation | 9–13 | 3 | conditional prob, total prob, independence (events, r.v.s, σ-fields), E(X∣𝒢), CE1–CE4, tower | todo |
