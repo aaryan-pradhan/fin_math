@@ -85,6 +85,36 @@ $X(t)=\mu t+\sigma B(t)$. Find the law of $X(t)$ given $X(s)=c$ when (i) $s<t$ a
 The drift cancels: once both ends are fixed, the slope $\mu$ no longer matters. Check with $c=0$: a path pinned at $0$ at both ends has mean $0$.
 \end{problem}
 
+
+\begin{problem}[Two more combinations]
+Find the distributions of $2W_{t_1}-W_{t_2}$ ($t_1<t_2$) and of $W_0+W_2-W_3+2W_4$.
+\begin{steps}
+  \item $2W_{t_1}-W_{t_2}=W_{t_1}-(W_{t_2}-W_{t_1})$: independent $N(0,t_1)$ and $N(0,t_2-t_1)$, so $N(0,\,t_2)$.
+  \item $W_0=0$, and in increments $W_2-W_3+2W_4=2W_2+(W_3-W_2)+2(W_4-W_3)$, so the variance is $4\cdot2+1+4\cdot1=13$: $N(0,13)$.
+\end{steps}
+\end{problem}
+
+\begin{problem}[A joint density]
+Find the joint density of $(2W_3,W_5)$.
+\begin{steps}
+  \item $2W_3\sim N(0,12)$, and given $2W_3=x$, $W_5=\frac x2+(W_5-W_3)\sim N\big(\frac x2,2\big)$.
+  \item Multiply marginal and conditional densities:
+  \[
+    f(x,y)=\frac{1}{\sqrt{2\pi\cdot12}}e^{-x^2/24}\cdot\frac{1}{\sqrt{2\pi\cdot2}}e^{-(y-x/2)^2/4}
+    =\frac{1}{4\pi\sqrt6}\exp\Big\{-\frac{5x^2}{48}+\frac{xy}{4}-\frac{y^2}{4}\Big\}.
+  \]
+\end{steps}
+\end{problem}
+
+\begin{problem}[Time inversion]
+Show that $\tilde W_t=t\,W_{1/t}$ (with $\tilde W_0=0$) is a standard Brownian motion.
+\begin{steps}
+  \item Gaussian: any vector $(\tilde W_{t_1},\dots,\tilde W_{t_n})$ is a linear transformation of $(W_{1/t_1},\dots,W_{1/t_n})$. Mean $0$.
+  \item For $s<t$: $\Cov(\tilde W_s,\tilde W_t)=st\min\big(\frac1s,\frac1t\big)=st\cdot\frac1t=s=\min(s,t)$.
+  \item By the characterisation of Chapter~13 (with continuity, which we accept at $t=0$), $\tilde W$ is a standard Brownian motion.
+\end{steps}
+\end{problem}
+
 %=====================================================================
 \section{Recognising processes}
 
