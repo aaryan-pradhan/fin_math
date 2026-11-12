@@ -1,0 +1,185 @@
+\chapter{Brownian motion from random walks}
+\label{ch:bm-walks}
+
+\begin{question}
+Where does the Wiener process come from, and why are its increments normal with variance equal to the elapsed time?
+\end{question}
+
+\begin{whatfor}
+\begin{itemize}
+  \item Builds Brownian motion as the limit of a fair random walk with tiny steps, and finds the one scaling that works: step size $\sigma\sqrt{\Delta t}$.
+  \item Gives the density of $W(t)$ and shows that it solves the heat (diffusion) equation.
+  \item Defines Brownian motion with variance parameter $\sigma^2$.
+\end{itemize}
+\skipline{fs:bm-walks}
+\end{whatfor}
+
+\begin{prereq}
+From Part~0: normal distribution, density, mean and variance of sums, independence. From Chapter~6: Wiener process, random walk, martingales $W_t$ and $W_t^2-t$.
+\end{prereq}
+
+%=====================================================================
+\section{A random walk with small steps}
+
+Picture a particle on a line. Every $\Delta t$ units of time it jumps a distance $\Delta x$ to the right or to the left, with probability $\frac12$ each, independently of the past.
+
+\begin{setup}[The scaled random walk]
+Let $X_1,X_2,\ldots$ be independent with $P(X_i=+1)=P(X_i=-1)=\frac12$ ($+1$ = step right). The position at time $t$ is
+\[
+  B(t)=\Delta x\,\big(X_1+X_2+\dots+X_{[t/\Delta t]}\big),\qquad B(0)=0,
+\]
+where $[t/\Delta t]$ is the number of whole steps made by time $t$.
+\end{setup}
+
+Each step has $\E_P(X_i)=0$ and $\Var(X_i)=\E_PX_i^2=1$. By independence,
+\[
+  \E_P\,B(t)=0,\qquad \Var\big(B(t)\big)=(\Delta x)^2\Big[\frac{t}{\Delta t}\Big].
+\]
+
+\paragraph{Choosing the step size.} Now let $\Delta t\to0$. The variance $(\Delta x)^2\,t/\Delta t$ decides what happens:
+\begin{itemize}
+  \item $\Delta x=\Delta t$: the variance is $t\,\Delta t\to0$; the particle stops moving.
+  \item $\Delta x=\sqrt{\Delta t}$\,: the variance is exactly $t$ in the limit; a sensible random motion.
+  \item $\Delta x\gg\sqrt{\Delta t}$: the variance blows up.
+\end{itemize}
+So we take $\Delta x=\sigma\sqrt{\Delta t}$ for a constant $\sigma>0$, giving $\Var\,B(t)\to\sigma^2t$.
+
+\begin{pic}
+\begin{tikzpicture}
+\begin{axis}[width=11cm,height=5cm,xmin=0,xmax=1,xlabel={$t$},ylabel={$B(t)$},legend style={font=\scriptsize,at={(0.5,1.02)},anchor=south},legend columns=3]
+  \addplot[trapc,thick,const plot] table[x=t,y=x] {figs/scaled10.dat}; \addlegendentry{$\Delta t=\frac1{10}$}
+  \addplot[thmc,thick,const plot] table[x=t,y=x] {figs/scaled100.dat}; \addlegendentry{$\Delta t=\frac1{100}$}
+  \addplot[defc,thick] table[x=t,y=x] {figs/scaled1000.dat}; \addlegendentry{$\Delta t=\frac1{1000}$}
+\end{axis}
+\end{tikzpicture}
+\picnote{Random walks with step $\Delta x=\sqrt{\Delta t}$. As the steps shrink, the staircase becomes a continuous, very rough curve: a Brownian path. In each case $\Var B(1)\approx1$.}
+\end{pic}
+
+\paragraph{The limit is normal.} For fixed $t$, $B(t)$ is $\Delta x$ times a sum of $N=[t/\Delta t]$ independent, identical steps. The central limit theorem, which we use without proof, says that a sum of $N$ independent, identically distributed steps with mean $0$ and variance $1$, divided by $\sqrt N$, has a distribution that approaches $N(0,1)$ as $N\to\infty$. Since $B(t)=\sigma\sqrt{\Delta t}\sqrt N\cdot\frac{X_1+\dots+X_N}{\sqrt N}$ and $\sqrt{\Delta t\,N}\to\sqrt t$,
+\[
+  B(t)\;\longrightarrow\;\sigma\sqrt t\cdot N(0,1)=N(0,\sigma^2t).
+\]
+
+The other properties pass to the limit too:
+\begin{itemize}
+  \item $B(0)=0$;
+  \item steps in disjoint time intervals are different coins, so the increments over disjoint intervals are independent;
+  \item the increment over $(s,t]$ involves about $(t-s)/\Delta t$ steps, so its law depends only on $t-s$ and tends to $N(0,\sigma^2(t-s))$.
+\end{itemize}
+These are the rules of the next definition. With $\sigma=1$ they are the rules of the Wiener process (Chapter~6).
+
+\begin{definition}[Brownian motion with variance parameter $\sigma^2$]
+\label{def:bm-sigma}
+A process $(B(t))_{t\ge0}$ is a \dfn{Brownian motion with variance parameter} $\sigma^2$ if (1) $B(0)=0$; (2) its paths are continuous a.s.; (3) it has stationary and independent increments; (4) $B(t)\sim N(0,\sigma^2t)$ for every $t>0$. Then $W(t)=B(t)/\sigma$ is a standard Brownian motion, and $B(t)=\sigma W(t)$.
+\end{definition}
+
+\begin{remark}
+Two more facts about Brownian paths, which we state without proof: they are continuous but nowhere differentiable (they wiggle at every scale, as the picture suggests), and a continuous process $W$ with $W(0)=0$ is a standard Brownian motion if and only if both $W_t$ and $W_t^2-t$ are martingales (\dfn{L\'evy's characterisation}).
+\end{remark}
+
+%=====================================================================
+\section{The density of $W(t)$ and the heat equation}
+
+Since $W(t)\sim N(0,t)$, its density is
+\[
+  f(x,t)=f_{W(t)}(x)=\frac{1}{\sqrt{2\pi t}}\,e^{-x^2/(2t)},\qquad x\in\R,\ t>0 .
+\]
+
+\begin{pic}
+\begin{tikzpicture}
+\begin{axis}[width=10cm,height=4.6cm,xmin=-4,xmax=4,ymin=0,ymax=0.85,xlabel={$x$},ylabel={$f(x,t)$},samples=120,legend style={font=\scriptsize}]
+  \addplot[trapc,very thick,domain=-4:4] {exp(-x^2/(2*0.25))/sqrt(2*pi*0.25)}; \addlegendentry{$t=0.25$}
+  \addplot[thmc,very thick,domain=-4:4] {exp(-x^2/2)/sqrt(2*pi)}; \addlegendentry{$t=1$}
+  \addplot[defc,very thick,domain=-4:4] {exp(-x^2/(2*3))/sqrt(2*pi*3)}; \addlegendentry{$t=3$}
+\end{axis}
+\end{tikzpicture}
+\picnote{The density of $W(t)$ spreads out like heat from a point: at time $t$ its standard deviation is $\sqrt t$, and the total area stays $1$.}
+\end{pic}
+
+\begin{result}[The heat equation]
+\label{res:heat}
+The density $f(x,t)$ of $W(t)$ satisfies the \dfn{heat equation} (diffusion equation)
+\[
+  \frac{\partial f}{\partial t}=\frac12\,\frac{\partial^2f}{\partial x^2}.
+\]
+\end{result}
+\begin{proof}
+Differentiate both sides and compare.
+\begin{steps}
+  \item Write $f=\frac{1}{\sqrt{2\pi}}t^{-1/2}e^{-x^2/(2t)}$. In $t$ (product rule):
+  \[
+    \frac{\partial f}{\partial t}=\frac{1}{\sqrt{2\pi}}\Big(-\frac12t^{-3/2}+t^{-1/2}\frac{x^2}{2t^2}\Big)e^{-x^2/(2t)}
+    =\frac{1}{2\sqrt{2\pi}}\Big(\frac{x^2}{t^{5/2}}-\frac{1}{t^{3/2}}\Big)e^{-x^2/(2t)} .
+  \]
+  \item In $x$: $\dfrac{\partial f}{\partial x}=-\dfrac{x}{t}f$, and then
+  \[
+    \frac{\partial^2f}{\partial x^2}=-\frac1tf+\frac{x^2}{t^2}f=\frac{1}{\sqrt{2\pi}}\Big(\frac{x^2}{t^{5/2}}-\frac{1}{t^{3/2}}\Big)e^{-x^2/(2t)} .
+  \]
+  \item The first is half the second. \qedhere
+\end{steps}
+\end{proof}
+
+\begin{intuition}
+One path is rough and unpredictable. But the cloud of all paths spreads out smoothly and predictably, exactly like heat along a rod.
+\end{intuition}
+
+\begin{example}[A probability for Brownian motion with variance parameter]
+$B(t)$ has variance parameter $\sigma^2=4$. Then $B(3)\sim N(0,12)$, and
+\[
+  P\big(B(3)>2\big)=1-\Phi\Big(\frac{2}{\sqrt{12}}\Big)=1-\Phi(0.577)\approx0.282 .
+\]
+\end{example}
+
+%=====================================================================
+\formulasheet{fs:bm-walks}
+
+\begin{card}{1. Brownian motion as a scaled random walk}
+\Formula
+$B(t)=\Delta x\sum_{i\le t/\Delta t}X_i$, $X_i=\pm1$: $\E_PB(t)=0$, $\Var B(t)=(\Delta x)^2\frac{t}{\Delta t}$. With $\Delta x=\sigma\sqrt{\Delta t}$ and $\Delta t\to0$: $B(t)\sim N(0,\sigma^2t)$ (central limit theorem).
+\UseWhen
+``Explain how Brownian motion arises from a random walk'', ``why $\sqrt{\Delta t}$?''
+\HowTo
+\begin{enumerate}
+  \item Compute mean and variance of the walk.
+  \item Show only $\Delta x\propto\sqrt{\Delta t}$ keeps the variance finite and non-zero.
+  \item Invoke the central limit theorem for normality.
+\end{enumerate}
+\Caveats
+\cav{$\Delta x=\Delta t$ collapses the motion to $0$.}
+\begin{cardex}
+$\Delta t=0.01$, $\sigma=2$: $\Delta x=0.2$; after $t=1$ (100 steps) $\Var=0.04\cdot100=4=\sigma^2t$.
+\end{cardex}
+\end{card}
+
+\begin{card}{2. Density of \texorpdfstring{$W(t)$}{W(t)} and the heat equation}
+\Formula
+$f(x,t)=\dfrac{1}{\sqrt{2\pi t}}e^{-x^2/(2t)}$ solves $\dfrac{\partial f}{\partial t}=\dfrac12\dfrac{\partial^2f}{\partial x^2}$.
+\UseWhen
+``Show the density of SBM satisfies the diffusion equation.''
+\HowTo
+\begin{enumerate}
+  \item $f_t=\frac{1}{2\sqrt{2\pi}}(x^2t^{-5/2}-t^{-3/2})e^{-x^2/2t}$.
+  \item $f_x=-\frac xtf$, $f_{xx}=(\frac{x^2}{t^2}-\frac1t)f$; compare.
+\end{enumerate}
+\Caveats
+\cav{The $\frac12$ is the diffusion coefficient of \emph{standard} BM; for $\sigma W$ it is $\frac12\sigma^2$.}
+\begin{cardex}
+At $x=0$, $t=1$: $f_t=-\frac{1}{2\sqrt{2\pi}}$ and $f_{xx}=-\frac{1}{\sqrt{2\pi}}$; indeed $f_t=\frac12f_{xx}$.
+\end{cardex}
+\end{card}
+
+\begin{card}{3. Brownian motion with variance parameter \texorpdfstring{$\sigma^2$}{sigma squared}}
+\Formula
+$B(t)=\sigma W(t)$: $B(t)\sim N(0,\sigma^2t)$, $B(t)-B(s)\sim N(0,\sigma^2(t-s))$, independent increments.
+\UseWhen
+Any BM that is not standard: ``variance parameter $\sigma^2$''.
+\HowTo
+\begin{enumerate}
+  \item Divide by $\sigma$ to get a standard BM, or standardise with $\sigma\sqrt t$.
+\end{enumerate}
+\Caveats
+\cav{Standard deviation of $B(t)$ is $\sigma\sqrt t$, not $\sigma t$.}
+\begin{cardex}
+$\sigma^2=4$: $P(B(3)>2)=1-\Phi(2/\sqrt{12})\approx0.282$.
+\end{cardex}
+\end{card}
