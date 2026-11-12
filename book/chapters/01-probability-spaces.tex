@@ -317,9 +317,9 @@ The lemma goes one way only. A divergent sum tells you nothing on its own: $A_i=
 \formulasheet{fs:spaces}
 
 \begin{mastercard}[label=card:atoms]{Events of a finite $\sigma$-field}
-A finite $\sigma$-field $\F$ on $\Omega$ is fixed by its atoms $G_1,\dots,G_k$ (its smallest non-empty events; they are disjoint and cover $\Omega$):
+A finite $\sigma$-field is fixed by its atoms $G_1,\dots,G_k$: its smallest non-empty events, disjoint and covering $\Omega$. Every event is a union of atoms:
 \[
-  \boxed{\begin{gathered}\F=\Big\{\bigcup_{i\in I}G_i:\ I\subseteq\{1,\dots,k\}\Big\},\\ |\F|=2^k,\\ P\Big(\bigcup_{i\in I}G_i\Big)=\sum_{i\in I}P(G_i).\end{gathered}}
+  \boxed{\;\F=\Big\{\textstyle\bigcup_{i\in I}G_i\Big\},\qquad |\F|=2^k,\qquad P\Big(\textstyle\bigcup_{i\in I}G_i\Big)=\sum_{i\in I}P(G_i).\;}
 \]
 \begin{plugrows}
   \plugrow{Is a given collection a $\sigma$-field?}{find its smallest non-empty sets; check they are disjoint, cover $\Omega$, and that every union of them is in the list}{yes exactly when the list is all unions of some disjoint sets that cover $\Omega$}{finite $\Omega$; check complements first, they fail most often}{die, $\{\varnothing,\{6\},\Omega\}$: $\{6\}^c$ missing, so \textbf{no}}
