@@ -351,5 +351,6 @@ If $\xi\sim N(\mu,\sigma^2)$, standardise by subtracting the mean and dividing b
   \plugrow{$P(\xi>x)$}{$a=x$, $b=\infty$}{$1-\Phi\big(\frac{x-\mu}{\sigma}\big)=\Phi\big(\frac{\mu-x}{\sigma}\big)$}{always}{same: $P(\xi>-1)=\Phi(1)\approx0.841$}
   \plugrow{Within $k$ standard deviations}{$a=\mu-k\sigma$, $b=\mu+k\sigma$}{$2\Phi(k)-1$}{always}{$k=1$: $0.683$; $k=2$: $0.954$}
   \plugrow{Building a normal}{$\xi=\mu+\sigma Z$, $Z\sim N(0,1)$}{$N(\mu,\sigma^2)$, density $\frac{1}{\sqrt{2\pi\sigma^2}}e^{-(x-\mu)^2/2\sigma^2}$}{$\sigma>0$}{$3+2Z\sim N(3,4)$}
+  \plugrow{Quantile (value at risk)}{solve $P(\xi\le q)=\alpha$: $\frac{q-\mu}{\sigma}=z_\alpha$, where $\Phi(z_\alpha)=\alpha$}{$q=\mu+z_\alpha\sigma$; for a loss $\xi$ this $q$ is its value at risk at level $\alpha$}{$0<\alpha<1$; $z_{0.95}=1.645$, $z_{0.99}=2.326$}{loss $\xi\sim N(1,4^2)$: $q_{0.99}=1+2.326\cdot4\approx10.31$}
 \end{plugrows}
 \end{mastercard}

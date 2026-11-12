@@ -201,5 +201,7 @@ Same stock, strike $K$, expiry $T$; $D_T$ = today's value of $1$ paid at $T$ ($(
   \plugrow{Continuous time}{$D_T=e^{-rT}$}{$C-P=S_0-Ke^{-rT}$}{}{$S_0=80$, $K=85$, $r=0.05$, $T=1$: $C-P=80-85e^{-0.05}\approx-0.85$}
   \plugrow{Prices violate parity}{compare $S_0+P-C$ with $KD_T$}{buy the cheap side (stock $+$ put $-$ call, or the bond), sell the dear side: sure profit equal to the gap}{}{$S_0+P-C=0.85$ but $KD_T=0.8$: sell share and put, buy call, lend $0.8$: gain $0.05$}
   \plugrow{Straddle price}{call $+$ put}{$C+P=2C-S_0+KD_T$}{same $K$, $T$}{$2(0.36)-1+0.8=0.52$}
+  \plugrow{Bounds on option prices}{$P\ge0$ in the box; a call pays less than a share, a put less than $K$}{$\max(S_0-KD_T,0)\le C\le S_0$ and $\max(KD_T-S_0,0)\le P\le KD_T$}{European options, no dividends}{$S_0=80$, $K=85$, $r=0.05$, $T=1$: $KD_T=80.85$, so $0\le C\le80$ and $0.85\le P\le80.85$}
+  \plugrow{American call on a stock without dividends}{the call bound at time $t$: $C_t\ge S_t-KD_{T-t}\ge S_t-K$}{exercising early (worth $S_t-K$) never beats keeping the call, so the American call costs the same as the European one}{$r\ge0$, no dividends; false for puts, which can be worth exercising early}{$S_t=130$, $K=100$, $r=0.05$, $T-t=0.5$: $C_t\ge130-97.53=32.47>30$}
 \end{plugrows}
 \end{mastercard}
