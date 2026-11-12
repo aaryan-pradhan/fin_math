@@ -1,0 +1,35 @@
+% This book's own notation and boxes (loaded by preamble.tex).
+\usepackage{tikz,pgfplots}
+\usetikzlibrary{arrows.meta,positioning,calc,decorations.pathreplacing,patterns}
+\pgfplotsset{compat=1.18,
+  every axis/.append style={axis lines=left,tick label style={font=\scriptsize},label style={font=\small},
+    every axis plot/.append style={thick}}}
+\newcommand{\F}{\mathcal F}
+\newcommand{\G}{\mathcal G}
+\newcommand{\B}{\mathcal B}
+\newcommand{\FF}{\mathbb F}
+\newcommand{\N}{\mathbb N}
+\newcommand{\eqd}{\overset{d}{=}}
+\newcommand{\pos}[1]{\left(#1\right)^{+}}
+
+% A picture and its note stay together on one page.
+\newenvironment{pic}{\par\smallskip\noindent\begin{minipage}{\linewidth}\centering}{\end{minipage}\par\smallskip}
+\newcommand{\picnote}[1]{\par\smallskip{\small\color{prec}#1}}
+
+% Proofs are optional reading.
+\renewcommand{\proofname}{Proof (optional reading)}
+\newcommand{\noproof}{\par{\small\itshape The proof needs mathematics beyond this book, so it is left out. Nothing later depends on it.}\par}
+
+% Skip line (inside the whatfor box) and the formula sheet that ends every chapter.
+\newcommand{\skipline}[1]{\par\smallskip\textbf{Skipping this chapter?} Read its formula sheet on page~\pageref{#1} and move on.}
+\newcommand{\formulasheet}[1]{\section*{Formula sheet}\label{#1}\addcontentsline{toc}{section}{Formula sheet}}
+
+% One formula-sheet card: Formula -> Use when -> How to plug -> Caveats -> Example.
+\newtcolorbox{card}[1]{slm,colback=white,colframe=defc!70,title={#1},fonttitle=\bfseries\small}
+\newcommand{\cardhead}[2]{\par\smallskip{\scriptsize\sffamily\bfseries\color{#1}#2}\par\nobreak\smallskip}
+\newcommand{\Formula}{\cardhead{prec}{FORMULA}}
+\newcommand{\UseWhen}{\cardhead{prec}{USE WHEN}\color{exc}}
+\newcommand{\HowTo}{\color{black}\cardhead{prec}{HOW TO PLUG}}
+\newcommand{\Caveats}{\cardhead{prec}{CAVEATS}}
+\newtcolorbox{cardex}{enhanced,colback=thmc!6,colframe=thmc!6,borderline west={2pt}{0pt}{thmc!70},arc=0pt,left=6pt,right=4pt,top=3pt,bottom=3pt,before skip=6pt,after skip=2pt,title={\scriptsize\sffamily\bfseries EXAMPLE},coltitle=thmc!80!black,colbacktitle=thmc!6,before upper={\setlength{\parskip}{0.4em}}}
+\newcommand{\cav}[1]{{\color{trapc}#1}}
