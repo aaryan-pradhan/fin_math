@@ -1,0 +1,231 @@
+\chapter{Itô processes and Itô's formula}
+\label{ch:ito-formula}
+
+\begin{question}
+What is the chain rule when the inner function is random and rough, like $f(W_t)$ or $f(t,X_t)$?
+\end{question}
+
+\begin{whatfor}
+\begin{itemize}
+  \item Defines Itô processes and the stochastic differential $dX_t=a_t\,dt+b_t\,dW_t$.
+  \item Gives the multiplication table $dt\,dt=0$, $dt\,dW=0$, $dW\,dW=dt$.
+  \item Proves Itô's formula for $f(X_t)$ and $f(t,X_t)$, and the product and quotient rules.
+  \item Turns it into a martingale test: an Itô process is a martingale exactly when its $dt$-term is $0$.
+\end{itemize}
+\skipline{fs:ito-formula}
+\end{whatfor}
+
+\begin{prereq}
+From Part~0: Taylor series, partial derivatives. From Chapters~6--16: Wiener process, its martingales, geometric Brownian motion, the Itô integral, quadratic variation $\sum(\Delta W)^2\to t$, Itô integrals of adapted integrands are martingales.
+\end{prereq}
+
+%=====================================================================
+\section{Itô processes}
+
+\begin{definition}[Itô process; stochastic differential]
+\label{def:ito-process}
+On a filtered probability space with a standard Brownian motion $(W_t)_{t\in[0,T]}$, an \dfn{Itô process} is a process
+\[
+  X_t=X_0+\int_0^ta_s\,ds+\int_0^tb_s\,dW_s,\qquad t\in[0,T],
+\]
+where $X_0$ is known at time $0$, and the \textbf{drift}\index{drift} $a_t$ and the \dfn{diffusion coefficient} $b_t$ are adapted processes with $\int_0^T|a_s|\,ds<\infty$ and $\int_0^T\E_P(b_s^2)\,ds<\infty$. We write this in short as the \dfn{stochastic differential}
+\[
+  dX_t=a_t\,dt+b_t\,dW_t .
+\]
+\end{definition}
+
+The short form means nothing more than the integral equation. Examples: $W$ itself ($a=0$, $b=1$); $X_t=\int_0^ts\,dW_s$ ($a=0$, $b_s=s$); and, by $\int_0^tW\,dW=\frac12W_t^2-\frac t2$, $W_t^2=\int_0^t1\,ds+\int_0^t2W_s\,dW_s$, i.e.\ $d(W_t^2)=dt+2W_t\,dW_t$.
+
+\begin{result}[Multiplication table]
+\label{res:table}
+In stochastic differentials,
+\[
+  dt\cdot dt=0,\qquad dt\cdot dW_t=0,\qquad dW_t\cdot dW_t=dt .
+\]
+Consequently, for $dX_t=a_t\,dt+b_t\,dW_t$: $(dX_t)^2=b_t^2\,dt$, and for a second process $dY_t=\alpha_t\,dt+\beta_t\,dW_t$: $dX_t\,dY_t=b_t\beta_t\,dt$.
+\end{result}
+\begin{proof}
+Each rule is a statement about sums over a uniform partition of $[0,t]$ with $\Delta t=t/n$.
+\begin{steps}
+  \item $\sum(\Delta t)^2=n\frac{t^2}{n^2}=\frac{t^2}{n}\to0$.
+  \item $\sum\Delta t\,\Delta W_k=\frac tn\,W_t\to0$.
+  \item $\sum(\Delta W_k)^2\to t$ (quadratic variation, Chapter~16).
+  \item Expand $(a\,dt+b\,dW)^2=a^2(dt)^2+2ab\,dt\,dW+b^2(dW)^2=b^2\,dt$. \qedhere
+\end{steps}
+\end{proof}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{@{}c|cc@{}}
+$\times$ & $dt$ & $dW_t$ \\ \hline
+$dt$ & $0$ & $0$ \\
+$dW_t$ & $0$ & $dt$
+\end{tabular}
+\end{center}
+
+%=====================================================================
+\section{Itô's formula}
+
+\begin{theorem}[Itô's formula]
+\label{thm:ito}
+Let $dX_t=a_t\,dt+b_t\,dW_t$ and let $f(t,x)$ have continuous partial derivatives $\partial_tf$, $\partial_xf$, $\partial_{xx}f$. Then $Y_t=f(t,X_t)$ is an Itô process with
+\[
+  \boxed{\;dY_t=\partial_tf\,dt+\partial_xf\,dX_t+\tfrac12\,\partial_{xx}f\,(dX_t)^2
+  =\Big(\partial_tf+a_t\,\partial_xf+\tfrac12b_t^2\,\partial_{xx}f\Big)dt+b_t\,\partial_xf\,dW_t,\;}
+\]
+all derivatives evaluated at $(t,X_t)$. For $f$ of $x$ alone: $df(X_t)=f'(X_t)\,dX_t+\frac12f''(X_t)\,b_t^2\,dt$.
+\end{theorem}
+\begin{proof}
+Taylor's formula to second order, then the multiplication table.
+\begin{steps}
+  \item Over a small step, Taylor gives
+  \[
+    \begin{aligned}
+    \Delta Y&=\partial_tf\,\Delta t+\partial_xf\,\Delta X+\tfrac12\partial_{tt}f\,(\Delta t)^2\\
+    &\quad+\partial_{tx}f\,\Delta t\,\Delta X+\tfrac12\partial_{xx}f\,(\Delta X)^2+\text{(third order)}.
+    \end{aligned}
+  \]
+  \item Sum over the steps of a partition. By the table, $(\Delta t)^2$ and $\Delta t\,\Delta X=a(\Delta t)^2+b\,\Delta t\,\Delta W$ add up to $0$, and so do all third-order terms (they are at most of size $(\Delta t)^{3/2}$).
+  \item What survives is $(\Delta X)^2$, which adds up like $b^2\Delta t$ because $\sum(\Delta W)^2\to t$. This is the one term ordinary calculus drops; here it stays.
+  \item Substitute $dX=a\,dt+b\,dW$ and collect the $dt$ and $dW$ terms. \qedhere
+\end{steps}
+\end{proof}
+
+\begin{intuition}
+Ordinary chain rule plus one correction, $\frac12f''\times(\text{squared noise})\,dt$. The correction is there because $(dW)^2=dt$ is not negligible. Only the $x$-variable carries noise, so only $\partial_{xx}f$ appears.
+\end{intuition}
+
+\begin{example}[First uses]
+\label{ex:ito-first}
+With $X=W$ ($a=0$, $b=1$):
+\begin{itemize}
+  \item $f(x)=\frac12x^2$: $d\big(\frac12W_t^2\big)=W_t\,dW_t+\frac12dt$, the result of Chapter~16 again.
+  \item $f(x)=x^3$: $d(W_t^3)=3W_t^2\,dW_t+3W_t\,dt$, so $W_t^3=3\int_0^tW_s\,ds+3\int_0^tW_s^2\,dW_s$.
+  \item $f(x)=\cos x$: $d\cos W_t=-\sin W_t\,dW_t-\frac12\cos W_t\,dt$.
+  \item $f(t,x)=x^2-t$: $d(W_t^2-t)=-dt+2W_t\,dW_t+dt=2W_t\,dW_t$, no $dt$-term.
+  \item $f(t,x)=tx$: $d(tW_t)=W_t\,dt+t\,dW_t$ ($\partial_{xx}f=0$: no correction).
+\end{itemize}
+\end{example}
+
+\begin{example}[Geometric Brownian motion]
+\label{ex:ito-gbm}
+$Z_t=e^{\mu t+\sigma W_t}=f(t,W_t)$ with $f=e^{\mu t+\sigma x}$: $\partial_tf=\mu f$, $\partial_xf=\sigma f$, $\partial_{xx}f=\sigma^2f$. So
+\[
+  dZ_t=\mu Z_t\,dt+\sigma Z_t\,dW_t+\tfrac12\sigma^2Z_t\,dt=\Big(\mu+\frac{\sigma^2}2\Big)Z_t\,dt+\sigma Z_t\,dW_t .
+\]
+The $dt$-coefficient is $(\mu+\frac12\sigma^2)Z_t$: the growth rate of the mean found in Chapter~12.
+\end{example}
+
+%=====================================================================
+\section{Product and quotient rules}
+
+\begin{result}[Product and quotient rules]
+\label{res:product}
+For Itô processes $X,Y$ driven by the same $W$:
+\[
+  \begin{aligned}
+  d(X_tY_t)&=X_t\,dY_t+Y_t\,dX_t+dX_t\,dY_t,\\
+  d\Big(\frac{X_t}{Y_t}\Big)&=\frac{dX_t}{Y_t}-\frac{X_t}{Y_t^2}\,dY_t+\frac{X_t}{Y_t^3}(dY_t)^2-\frac{1}{Y_t^2}\,dX_t\,dY_t .
+  \end{aligned}
+\]
+\end{result}
+\begin{proof}
+Itô's formula in two variables: Taylor to second order in $(x,y)$, with $(dX)^2$, $dX\,dY$, $(dY)^2$ from the table. For $f=xy$: $\partial_{xy}f=1$, the other second derivatives vanish. For $f=x/y$: $\partial_xf=\frac1y$, $\partial_yf=-\frac x{y^2}$, $\partial_{xx}f=0$, $\partial_{xy}f=-\frac1{y^2}$, $\partial_{yy}f=\frac{2x}{y^3}$.
+\end{proof}
+
+\begin{example}[$W_te^{W_t}$ by the product rule]
+$X=W$, $Y=e^{W_t}$ with $dY=e^{W_t}dW_t+\frac12e^{W_t}dt$, and $dX\,dY=e^{W_t}dt$:
+\[
+  d\big(W_te^{W_t}\big)=W_t\Big(e^{W_t}dW_t+\tfrac12e^{W_t}dt\Big)+e^{W_t}dW_t+e^{W_t}dt=\Big(1+\tfrac12W_t\Big)e^{W_t}dt+(1+W_t)e^{W_t}dW_t .
+\]
+Check with $f(x)=xe^x$, $f'=(1+x)e^x$, $f''=(2+x)e^x$: the same.
+\end{example}
+
+%=====================================================================
+\section{The martingale test}
+
+\begin{theorem}[Zero drift means martingale]
+\label{thm:drift-zero}
+Let $dX_t=a_t\,dt+b_t\,dW_t$ with $\int_0^T\E_P(b_s^2)\,ds<\infty$. Then $X$ is a martingale on $[0,T]$ if and only if $a_t=0$ for all $t$ (a.s.).
+\end{theorem}
+\begin{proof}
+If $a=0$, $X_t=X_0+\int_0^tb\,dW$, a martingale by Chapter~16. Conversely, if $X$ is a martingale then so is $X_t-\int_0^tb\,dW=X_0+\int_0^ta_s\,ds$; a martingale whose paths are smooth (no $dW$ part) cannot move on average without moving surely, which forces $a=0$. We accept this last step.
+\end{proof}
+
+So: \emph{to test whether $g(t,W_t)$ is a martingale, compute its $dt$-coefficient $\partial_tg+\frac12\partial_{xx}g$ and check that it is $0$.}
+
+\begin{example}[Which are martingales?]
+\label{ex:mg-test}
+Each line computes the $dt$-coefficient $\partial_tg+\frac12\partial_{xx}g$ of $g(t,W_t)$.
+\begin{itemize}
+  \item $e^{t/2}\sin W_t$: $\frac12e^{t/2}\sin x-\frac12e^{t/2}\sin x=0$. A martingale.
+  \item $e^{t}\cos W_t$: $e^t\cos x-\frac12e^t\cos x=\frac12e^t\cos x\ne0$. Not a martingale.
+  \item $e^tW_t$: $e^tx+0\ne0$. Not a martingale.
+  \item $e^{uW_t-u^2t/2}$: $-\frac{u^2}2g+\frac12u^2g=0$. A martingale (Chapter~6 again).
+\end{itemize}
+\end{example}
+
+\begin{example}[Verifying a guessed solution]
+\label{ex:guess}
+A price satisfies $dS_t=0.2\,S_t\,dt+S_t\,dW_t$, $S_0=5$. Guess $S_t=c\,e^{at+bW_t}$ and find $a,b,c$.
+\begin{steps}
+  \item By Itô (as for GBM): $dS_t=\big(a+\frac12b^2\big)S_t\,dt+b\,S_t\,dW_t$.
+  \item Match: $b=1$ and $a+\frac12=0.2$, so $a=-0.3$. At $t=0$: $c=S_0=5$.
+  \item So $S_t=5e^{-0.3t+W_t}$. Then $X_t=1/S_t=0.2e^{0.3t-W_t}$ has, by Itô, $dX_t=(0.3+\frac12)X_t\,dt-X_t\,dW_t=0.8X_t\,dt-X_t\,dW_t$, $X_0=0.2$.
+\end{steps}
+\end{example}
+
+%=====================================================================
+\formulasheet{fs:ito-formula}
+
+\begin{card}{1. Itô's formula}
+\Formula
+$df(t,X_t)=\partial_tf\,dt+\partial_xf\,dX_t+\frac12\partial_{xx}f\,(dX_t)^2$, with $(dX)^2=b^2dt$. For $X=W$: $df(t,W_t)=\big(\partial_tf+\frac12\partial_{xx}f\big)dt+\partial_xf\,dW_t$.
+\UseWhen
+``Compute $d(\cdot)$'', ``find the SDE satisfied by $Y_t=f(t,X_t)$''.
+\HowTo
+\begin{enumerate}
+  \item Write $Y=f(t,X)$; compute $\partial_tf$, $\partial_xf$, $\partial_{xx}f$.
+  \item Plug in; replace $(dX)^2$ by $b^2dt$.
+  \item Rewrite in terms of $Y$ if asked.
+\end{enumerate}
+\Caveats
+\cav{Never drop $\frac12f''(dX)^2$. The second derivative is only in $x$.}
+\begin{cardex}
+$d\cos W_t=-\sin W_t\,dW_t-\frac12\cos W_t\,dt$. $d(e^tW_t)=e^tW_t\,dt+e^t\,dW_t$.
+\end{cardex}
+\end{card}
+
+\begin{card}{2. Multiplication table, product and quotient}
+\Formula
+$dt\,dt=dt\,dW=0$, $dW\,dW=dt$. $d(XY)=X\,dY+Y\,dX+dX\,dY$. $d(X/Y)=\frac{dX}{Y}-\frac{X}{Y^2}dY+\frac{X}{Y^3}(dY)^2-\frac1{Y^2}dX\,dY$.
+\UseWhen
+Products like $W_te^{W_t}$, $e^{-rt}S_t$; ratios.
+\HowTo
+\begin{enumerate}
+  \item Write $dX$ and $dY$.
+  \item Multiply out the cross term with the table.
+\end{enumerate}
+\Caveats
+\cav{If one factor is non-random ($e^{-rt}$), $dX\,dY=0$.}
+\begin{cardex}
+$d(W_te^{W_t})=(1+\frac12W_t)e^{W_t}dt+(1+W_t)e^{W_t}dW_t$.
+\end{cardex}
+\end{card}
+
+\begin{card}{3. Martingale test by Itô}
+\Formula
+$g(t,W_t)$ is a MG $\iff\partial_tg+\frac12\partial_{xx}g=0$.
+\UseWhen
+``Is $e^{t/2}\sin W_t$ / $e^tW_t$ / $W_t^3-3tW_t$ a martingale?''
+\HowTo
+\begin{enumerate}
+  \item Compute the $dt$-coefficient.
+  \item Zero $\Rightarrow$ MG; non-zero $\Rightarrow$ not. If MG, $\E_Pg(t,W_t)=g(0,0)$.
+\end{enumerate}
+\Caveats
+\cav{Zero drift needs $\int\E_P b^2<\infty$ to give a true martingale (fine for all examples here).}
+\begin{cardex}
+$e^{t/2}\sin W_t$: yes. $e^{t/2}\cos W_t$: yes, so $\E_P\cos W_t=e^{-t/2}$. $e^t\cos W_t$: no. $W_t^3-3tW_t$: $-3x+3x=0$, yes.
+\end{cardex}
+\end{card}
