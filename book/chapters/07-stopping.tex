@@ -220,87 +220,46 @@ A frequent small win is paid for by a rare huge loss. If the stake could be chos
 %=====================================================================
 \formulasheet{fs:stopping}
 
-\begin{card}{1. Is \texorpdfstring{$\tau$}{tau} a stopping time?}
-\Formula
-$\{\tau\le t\}\in\F_t$ for all $t$ $\iff$ $\{\tau=t\}\in\F_t$ for all $t$. First entry $\min\{n:X_n\in B\}$: yes. Last exit, time of the maximum: no. $\tau_1\wedge\tau_2$, $\tau_1\vee\tau_2$, $\tau_1+1$: yes; $\tau_1-1$: no.
-\UseWhen
-``Is $\tau$ a stopping time?'', ``first time the price crosses $u_t$''.
-\HowTo
-\begin{enumerate}
-  \item Write $\{\tau=n\}$ in terms of $X_0,\dots,X_n$.
-  \item Only these appear $\Rightarrow$ ST. Needs $X_{n+1}$ or later $\Rightarrow$ not.
-\end{enumerate}
-\Caveats
-\cav{``Last'', ``maximum over the whole period'', ``one step before'' all need the future.}
-\begin{cardex}
-$\tau=\min\{n:\xi_n\in B\}$: $\{\tau=n\}=\{\xi_1\notin B\}\cap\dots\cap\{\xi_{n-1}\notin B\}\cap\{\xi_n\in B\}\in\F_n$. \textbf{ST.}
-\end{cardex}
-\end{card}
+\begin{mastercard}[label=card:st]{Is it a stopping time?}
+$\tau$ is a stopping time exactly when the event ``stop now'' is decided by the past and present:
+\[
+  \boxed{\begin{gathered}\{\tau=n\}\ \text{(equivalently }\{\tau\le n\})\ \text{can be written}\\ \text{using }X_0,\dots,X_n\text{ only, for every }n.\end{gathered}}
+\]
+\begin{plugrows}
+  \plugrow{First time a condition holds}{$\{\tau=n\}=\{\text{not yet at }0,\dots,n-1\}\cap\{\text{holds at }n\}$}{stopping time}{the condition at time $k$ uses $X_0,\dots,X_k$ only}{first entry into $B$; first $n$ with $\sum_{k\le n}X_k>X_n^2$}
+  \plugrow{Constant, minimum, maximum, delay}{$\tau=c$; $\tau_1\wedge\tau_2$; $\tau_1\vee\tau_2$; $\tau_1+1$}{all stopping times}{$\tau_1,\tau_2$ stopping times}{$\{\tau_1\wedge\tau_2\le n\}=\{\tau_1\le n\}\cup\{\tau_2\le n\}$}
+  \plugrow{Looks ahead}{$\{\tau=n\}$ needs $X_{n+1}$ or later}{\textbf{not} a stopping time}{}{last exit time; time of the overall maximum; $\tau_1-1$; first $n$ with $X_{n+1}>X_n$}
+\end{plugrows}
+\end{mastercard}
 
-\begin{card}{2. Optional stopping theorem}
-\Formula
-$X$ MG, $\tau\le c$ $\Rightarrow$ $\E_P(X_\tau)=\E_P(X_0)$. Also fine: $\tau<\infty$ a.s.\ and $|X_{t\wedge\tau}|\le K$. Super-MG: $\le$; sub-MG: $\ge$.
-\UseWhen
-``Find $\E_P(\tau)$'', ``find $P$(hit $A$ before $B$)'', ``can a stopping rule beat the game?''.
-\HowTo
-\begin{enumerate}
-  \item Pick a martingale whose value at $\tau$ you know in terms of $\tau$ or of where it stopped.
-  \item Set $\E_P(X_\tau)=X_0$ and solve.
-\end{enumerate}
-\Caveats
-\cav{Check boundedness. Walk until it first hits $+1$: $\E_PX_\tau=1\ne0$, because $\tau$ is unbounded and the walk is not.}
-\begin{cardex}
-Prove it: $Z_t=X_{t\wedge\tau}$ is a MG $\Rightarrow$ $\E_PZ_t=\E_PX_0$ $\Rightarrow$ put $t=c\ge\tau$: $Z_c=X_\tau$.
-\end{cardex}
-\end{card}
+\begin{mastercard}[label=card:ost]{Optional stopping for a process with independent increments}
+Let $X$ be as in Card~\ref{card:incr} (increment mean rate $m$, variance rate $v$, $\kappa(u)$), started at $X_0=x$, and $\tau$ a stopping time with $\tau<\infty$ a.s.\ and the stopped martingales bounded (e.g.\ $X$ stays between two levels until $\tau$, or $\tau\le c$). Then
+\[
+  \boxed{\begin{gathered}\E_PX_\tau=x+m\,\E_P\tau,\qquad \E_P\big[(X_\tau-x-m\tau)^2\big]=v\,\E_P\tau,\\
+  \E_P\,e^{uX_\tau-\kappa(u)\tau}=e^{ux}.\end{gathered}}
+\]
+Write $X_\tau$ in terms of $\tau$ or of where it stopped, plug in, solve.
+\begin{plugrows}
+  \plugrow{Exit from $(a,b)$, no drift}{$m=0$: $x=a\,P_a+b\,P_b$; second identity}{$P(\text{exit at }b)=\dfrac{x-a}{b-a}$, $\E_P\tau=\dfrac{(x-a)(b-x)}{v}$}{$a<x<b$}{$W$ from $0$, $a=-2$, $b=1$: $P(-2\text{ first})=\frac13$, $\E_P\tau=2$; fair $\pm1$ walk, win $10$/lose $5$: $\frac13$, $50$}
+  \plugrow{Exit from $(a,b)$ with drift}{$u=-\theta$ with $\kappa(-\theta)=0$: $\theta=2\mu/\sigma^2$ for $x+\mu t+\sigma W_t$}{$P(\text{exit at }b)=\dfrac{e^{-\theta a}-e^{-\theta x}}{e^{-\theta a}-e^{-\theta b}}$; $\E_P\tau=\dfrac{\E_PX_\tau-x}{\mu}$}{$\mu\ne0$ (else previous row)}{$\mu=0.5$, $\sigma=1$, $x=0$, $(a,b)=(-1,1)$: $\theta=1$, $P=\frac{e-1}{e-e^{-1}}\approx0.731$}
+  \plugrow{Ever reach $b$}{previous row with $a\to-\infty$}{$\mu<0$: $P=e^{\theta(b-x)}=e^{-2|\mu|(b-x)/\sigma^2}$; $\mu\ge0$: $1$}{$b>x$}{$\mu=-0.5$, $\sigma=1$, $b-x=1$: $e^{-1}\approx0.368$}
+  \plugrow{Gambler's ruin (unfair $\pm1$ walk)}{$e^{u}=r=q/p$ makes $\kappa=0$: $r^{S_n}$ is a MG; drift $m=p-q$}{from $i$, levels $0,N$: $P_i=\dfrac{1-r^i}{1-r^N}$, $D_i=\E_P\tau=\dfrac{NP_i-i}{p-q}$}{$p\ne\frac12$; fair: first row ($\frac iN$, $i(N-i)$)}{roulette $p=\frac{18}{38}$, $i=10$, $N=20$: $P_{10}\approx0.259$, $D_{10}\approx91.8$}
+  \plugrow{Hitting a moving line}{$W_\tau=c+\beta\tau$ in the first two identities ($m=0$, $v=1$)}{$\E_P\tau=-\dfrac{c}{\beta}$; then $\E_P(c+\beta\tau)^2=\E_P\tau$ gives $\E_P\tau^2$, which works out to $\Var\tau=\dfrac{|c|}{|\beta|^3}$}{$c$ and $\beta$ of opposite sign (line moves towards the path)}{line $2-4t$: $\E_P\tau=\frac12$, $\E_P\tau^2=\frac9{32}$; line $2t-4$: $2$, $4.5$, $\Var=0.5$}
+  \plugrow{Curved boundaries $W_\tau^2=a+b\tau$}{second identity}{$\E_P\tau=\dfrac{a}{1-b}$}{$a>0$, $0<b<1$}{$a=1$, $b=\frac12$: $2$}
+  \plugrow{Laplace transform $\E_Pe^{-s\tau}$}{third identity; choose $u$ so the coefficient of $\tau$ is $-s$}{line $W_\tau=c+\beta\tau$: $\E_Pe^{-s\tau}=e^{-uc}$ with $\frac12u^2-u\beta=s$; symmetric exit $\pm a$: $\dfrac{1}{\cosh(a\sqrt{2s})}$}{take the root that gives a value $\le1$ and $1$ at $s=0$}{line $2t-4$: $e^{8-4\sqrt{2(s+2)}}$; exit $\pm1$: $\E_P\tau=1$, $\Var\tau=\frac23$}
+  \plugrow{Uneven steps}{first identity with $m=\E_PY$}{$\E_P\tau=(X_\tau-x)/m$ when $X_\tau$ is known exactly}{the walk cannot jump over the level}{up $1$ w.p.\ $\frac67$, down $2$ w.p.\ $\frac17$, stop at $4$: $m=\frac47$, $\E_P\tau=7$}
+  \plugrow{When it fails}{$\tau$ unbounded and the stopped process unbounded}{the identities can be false}{check the guard every time}{fair walk until it first hits $+1$: $\E_PX_\tau=1\ne0$}
+\end{plugrows}
+\end{mastercard}
 
-\begin{card}{3. Recipe: hitting a moving line}
-\Formula
-$T=\min\{t:W_t=a-bt\}$, $a,b>0$: \;$\E_P(T)=\dfrac ab$, \;$\Var(T)=\dfrac{a}{b^3}$.
-\UseWhen
-``Use the martingale stopping theorem to find $\E_P(T)$'' for a line.
-\HowTo
-\begin{enumerate}
-  \item MG $W$: $\E_PW_T=0$; substitute $W_T=a-bT$: $a-b\,\E_PT=0$.
-  \item For $\E_PT^2$: MG $W^2-t$ gives $\E_P(a-bT)^2=\E_PT$; expand and solve.
-\end{enumerate}
-\Caveats
-\cav{A rising line $a+bt$ may never be hit; the recipe then gives nonsense (a negative $\E_PT$).}
-\begin{cardex}
-$W_T=2-4T$: $\E_PT=\frac12$. Then $4-16\E_PT+16\E_PT^2=\E_PT$ gives $\E_PT^2=\frac{9}{32}$ and $\Var T=\frac{9}{32}-\frac14=\frac{1}{32}=\frac{a}{b^3}$.
-\end{cardex}
-\end{card}
-
-\begin{card}{4. Recipe: exit from an interval (gambler's ruin)}
-\Formula
-Fair walk or $W$ from $0$, stop at $+A$ or $-B$: $P(+A\text{ first})=\dfrac{B}{A+B}$, \;$\E_P(\tau)=AB$.
-\UseWhen
-``Probability the walk/BM hits $A$ before $-B$'', ``expected duration''.
-\HowTo
-\begin{enumerate}
-  \item MG $X$: $Ap-B(1-p)=0$.
-  \item MG $X^2-t$: $\E_P\tau=A^2p+B^2(1-p)$.
-\end{enumerate}
-\Caveats
-\cav{Only for a fair walk / driftless $W$. With drift see Chapter~11.}
-\begin{cardex}
-Win 10 / lose 5: $p=\frac{5}{15}=\frac13$, $\E_P\tau=50$. Exit from $(-2,2)$: $\E_P\tau=4$.
-\end{cardex}
-\end{card}
-
-\begin{card}{5. Gambling strategies}
-\Formula
-Stake $\alpha_n$ predictable ($\F_{n-1}$-measurable), wealth $Z_n=\sum_k\alpha_k(\Xi_k-\Xi_{k-1})$. Fair game $\Rightarrow$ $Z$ is a MG, $\E_PZ_n=0$. Unfair game, $\alpha\ge0$ $\Rightarrow$ super-MG.
-\UseWhen
-``Can a betting system beat the casino?'', doubling strategies.
-\HowTo
-\begin{enumerate}
-  \item Check the stake uses only past results.
-  \item Then $\E_P(\text{wealth})=0$ in a fair game; compute the two-outcome table for doubling.
-\end{enumerate}
-\Caveats
-\cav{A stake chosen after seeing the result is not a strategy.}
-\begin{cardex}
-Doubling capped at 5 rounds: $+1$ w.p.\ $\frac{31}{32}$, $-31$ w.p.\ $\frac{1}{32}$. Mean $0$.
-\end{cardex}
-\end{card}
+\begin{mastercard}[label=card:stakes]{Betting with stakes chosen from the past}
+Stakes $\alpha_n$ fixed before game $n$ ($\F_{n-1}$-measurable, bounded) on a game with total $\Xi_n$:
+\[
+  \boxed{\begin{gathered}Z_n=\sum_{k=1}^n\alpha_k(\Xi_k-\Xi_{k-1})\ \text{ is a MG if }\Xi\text{ is a MG};\\ \text{a super-MG if }\Xi\text{ is a super-MG and }\alpha\ge0.\end{gathered}}
+\]
+\begin{plugrows}
+  \plugrow{Any capped strategy in a fair game}{$\Xi$ fair}{$\E_PZ_n=0$: no strategy wins on average}{stakes bounded and chosen from the past}{doubling capped at 10 rounds: $+1$ w.p.\ $\frac{1023}{1024}$, $-1023$ w.p.\ $\frac1{1024}$}
+  \plugrow{Unfair game}{$\Xi$ super-MG (house edge)}{$\E_PZ_n\le0$}{$\alpha\ge0$}{roulette on red: $\E_P\eta=-\frac1{37}$ per unit}
+  \plugrow{Uncapped doubling}{stop at the first win}{$Z_\tau=1$ always, $\E_P\tau=2$}{stakes unbounded: Card~\ref{card:ost}'s guard fails}{the sure $+1$ is paid for by unbounded losses before $\tau$}
+\end{plugrows}
+\end{mastercard}

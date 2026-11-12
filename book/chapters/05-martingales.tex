@@ -188,70 +188,19 @@ $u=1.2$, $d=0.8$: $p=\frac{1-0.8}{1.2-0.8}=\frac12$.
 %=====================================================================
 \formulasheet{fs:martingales}
 
-\begin{card}{1. Filtration, adapted, measurable}
-\Formula
-Filtration: $\F_s\subseteq\F_t$ for $s\le t$. Natural filtration: $\F_t=\sigma(X_0,\dots,X_t)$. Adapted: $X_t$ is $\F_t$-measurable for every $t$.
-\UseWhen
-``Is $Y$ $\F_n$-measurable?'', ``is the process adapted?'', condition (i) of a martingale.
-\HowTo
-\begin{enumerate}
-  \item Write $Y$ in terms of $X_0,X_1,\dots$.
-  \item Only $X_0,\dots,X_n$ appear $\Rightarrow$ yes. Any $X_{n+1}$ or later $\Rightarrow$ no.
-\end{enumerate}
-\Caveats
-\cav{Functions of adapted things are adapted ($S_n^2$, $e^{S_n}$, $\max_{k\le n}S_k$). A future increment ($\xi_{n+1}$, $S_{n+1}-S_n$) is never $\F_n$-measurable.}
-\begin{cardex}
-$S_n=\xi_1+\dots+\xi_n$. Is $S_{n+1}$ $\F_n$-measurable? $S_{n+1}=S_n+\xi_{n+1}$ and $\xi_{n+1}$ is a future step: \textbf{no}. Is $S_n^2$? It uses only $\xi_1,\dots,\xi_n$: \textbf{yes}.
-\end{cardex}
-\end{card}
-
-\begin{card}{2. Martingale: definition, sub and super}
-\Formula
-(i) adapted, (ii) $\E_P|X_t|<\infty$, (iii) $\E_P(X_{t+1}\given\F_t)=X_t$. Sub-MG: $\ge$ (goes up). Super-MG: $\le$ (goes down). Consequences: $\E_P(X_{t+s}\given\F_t)=X_t$ and $\E_PX_t=\E_PX_0$.
-\UseWhen
-``Is $X_n$ a martingale?'', ``sub or super?'', ``find $\E_P(X_{10}\given\F_3)$''.
-\HowTo
-\begin{enumerate}
-  \item State (i) and (ii) in one line each.
-  \item Compute $\E_P(X_{t+1}\given\F_t)$ with CE1--CE3 and compare with $X_t$: equal $\to$ MG, bigger $\to$ sub, smaller $\to$ super.
-\end{enumerate}
-\Caveats
-\cav{Constant mean is necessary, not sufficient. ``Super'' goes \emph{down}.}
-\begin{cardex}
-Fair $\pm1$ walk: $\E_P(S_{n+1}^2\given\F_n)=S_n^2+2S_n\E_P\xi+\E_P\xi^2=S_n^2+1>S_n^2$: sub-MG. Hence $S_n^2-n$ is a MG.
-\end{cardex}
-\end{card}
-
-\begin{card}{3. Standard discrete martingales}
-\Formula
-$\xi_i$ i.i.d.\ (independent, identically distributed), $S_n=\xi_1+\dots+\xi_n$, $\mu=\E_P\xi$, $\sigma^2=\Var\xi$: \;$S_n-n\mu$ is a MG; $(S_n-n\mu)^2-n\sigma^2$ is a MG; if $\E_P\xi=1$ (and $\xi\ge0$), $\Pi_n=\xi_1\cdots\xi_n$ is a MG.
-\UseWhen
-Sums of i.i.d.\ steps, games, products of i.i.d.\ factors.
-\HowTo
-\begin{enumerate}
-  \item Write $X_{n+1}=(\text{known at }n)\,\oplus\,\xi_{n+1}$.
-  \item Take out the known part; replace $\xi_{n+1}$ by its mean.
-\end{enumerate}
-\Caveats
-\cav{Biased walk: $S_n$ is not a MG, $S_n-n\mu$ is.}
-\begin{cardex}
-$\xi=+1$ w.p.\ $0.7$, $-1$ w.p.\ $0.3$: $\mu=0.4$, so $S_n-0.4n$ is a MG. $\xi_k\in\{0,2\}$ fair: $\Pi_n$ is a MG with $\E_P\Pi_3=8\cdot\frac18=1$.
-\end{cardex}
-\end{card}
-
-\begin{card}{4. Binomial stock as a martingale}
-\Formula
-$\E_P(S_{t+1}\given\F_t)=S_t\,(pu+(1-p)d)$; MG $\iff p=\dfrac{1-d}{u-d}$; $\E_PS_t=S_0\,(pu+(1-p)d)^t$.
-\UseWhen
-``For which $p$ is $S_t$ a MG?'', ``find $\E_P S_3$''.
-\HowTo
-\begin{enumerate}
-  \item Compute $m=pu+(1-p)d$.
-  \item $m=1$ MG, $m>1$ sub, $m<1$ super; $\E_PS_t=S_0m^t$.
-\end{enumerate}
-\Caveats
-\cav{Needs $d<1<u$ for a MG probability in $(0,1)$. $S_t^2$ is not a MG even when $S_t$ is.}
-\begin{cardex}
-$u=2$, $d=0.5$: $p=\frac{0.5}{1.5}=\frac13$. $S_0=50$, $u=1.1$, $d=0.9$, $p=0.7$: $m=1.04$, $\E_PS_3=50(1.04)^3=56.24$.
-\end{cardex}
-\end{card}
+\begin{mastercard}[label=card:onestep]{The one-step martingale test}
+Write the next value as a rule applied to the present value and a fresh random input $\xi_{n+1}$ that is independent of the past $\F_n$: $X_{n+1}=\varphi(X_n,\xi_{n+1})$. To get $g$, freeze the present value at $x$ and average over the fresh input:
+\[
+  \boxed{\begin{gathered}\E_P(X_{n+1}\given\F_n)=g(X_n),\qquad g(x)=\E_P\,\varphi(x,\xi);\\
+  \text{MG}\iff g(x)=x,\quad\text{sub}\iff g(x)\ge x,\quad\text{super}\iff g(x)\le x\\ \text{for every value }x\text{ the process can take.}\end{gathered}}
+\]
+For a martingale, $\E_P(X_{n+s}\given\F_n)=X_n$ and $\E_PX_n=\E_PX_0$; for a sub (super) martingale $\E_PX_n$ rises (falls).
+\begin{plugrows}
+  \plugrow{Add a fresh step}{$\varphi=x+\xi$}{$g(x)=x+\E_P\xi$: MG iff $\E_P\xi=0$, sub iff $>0$}{$\xi_{n+1}$ independent of $\F_n$, $\E_P|\xi|<\infty$}{$\xi=\pm1$ with $P(+1)=0.6$: $g=x+0.2$, sub}
+  \plugrow{Multiply by a fresh factor (binomial stock)}{$\varphi=x\,\xi$, $\xi\in\{u,d\}$ with $P(u)=p$}{$g(x)=x\,(pu+(1-p)d)$: MG iff $p=\dfrac{1-d}{u-d}$; $\E_PS_t=S_0\,(pu+(1-p)d)^t$}{$d<1<u$ for a MG probability in $(0,1)$}{$u=1.2$, $d=0.8$: $p=\frac12$; with $p=0.6$, $\E_PS_2=100(1.04)^2=108.16$}
+  \plugrow{A function of a martingale}{$\varphi=h(x+\xi)$ or $h(x\xi)$}{compute $g$ directly; convex $h$ of a MG is usually a sub-MG}{as above}{$S_t^2$ in the binomial with $p=\frac12$: $g=1.04\,x$, sub}
+  \plugrow{A rule that depends on the state}{different $\varphi$ in different states}{check $g(x)=x$ in each state}{every state}{fair walk stopped at $0$: $g(x)=\frac12(x+1)+\frac12(x-1)=x$ for $x>0$, $g(0)=0$: MG}
+  \plugrow{Many steps ahead; the mean}{apply the test $s$ times (tower rule)}{$\E_P(X_{n+s}\given\F_n)=X_n$; $\E_PX_n=\E_PX_0$}{martingale; constant mean is necessary, not sufficient}{binomial, $p=\frac12$: $\E_PS_2=\frac14144+\frac1296+\frac1464=100$}
+  \plugrow{Is it adapted / integrable?}{adapted: Card~\ref{card:measurable} with $\G=\F_n$; integrable: $\E_P|X_n|<\infty$}{both needed before the test}{a future increment $X_{n+1}-X_n$ is never $\F_n$-measurable}{binomial: on $A_u$, $S_2-S_1=\pm24$, so not $\F_1$-measurable}
+\end{plugrows}
+\end{mastercard}
