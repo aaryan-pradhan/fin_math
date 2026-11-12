@@ -96,3 +96,25 @@ Needs must appear in an earlier row's Introduces, or in "Before you start".
 | 25 | From binomial to Black–Scholes | 130–133, 139–141 | 24, 12 | binomial call formula, continuous limit, Black–Scholes formula | todo |
 | 26 | Martingale pricing in continuous time | 142–145 | 25, 18 | P_t(X), Black–Scholes market, EMM condition | todo |
 | 27 | Problems: option pricing | — | 26 | — | todo |
+
+## Card catalogue (euclid-book §2a): every general formula, beneath its unlock chapter
+Each special result in the chapters is a row of exactly one card. A chapter with no card points its skip line at the sheet that covers it.
+| Ch | Cards (most general formula) |
+|---|---|
+| 1 | 1.1 finite $\sigma$-field = unions of atoms, $2^k$ events, $P(A)=\sum P(\text{atoms})$ · 1.2 inclusion–exclusion for $P(\bigcup A_i)$ · 1.3 monotone limits $P(\lim A_n)=\lim P(A_n)$ (Borel–Cantelli, a.s. as rows) |
+| 2 | 2.1 $\eta$ is $\G$-measurable ⇔ constant on atoms of $\G$ (σ(ξ), families, Doob–Dynkin, adapted) · 2.2 $P(\xi\in B)$ by sum/integral/d.f. · 2.3 $P(a<\xi\le b)$ for $N(\mu,\sigma^2)$ |
+| 3 | 3.1 $\E_Ph(\xi)$ / $\E_Ph(\xi,\eta)$ · 3.2 $\Var(\sum a_iX_i+c)$ · 3.3 $\E_Pe^{u\xi}$, $\xi\sim N(\mu,\sigma^2)$ (all normal moments) · 3.4 $P(g(X)\ge c)\le\E_Pg(X)/c$ |
+| 4 | 4.1 Bayes over a partition · 4.2 independence: $\E\prod f_i(X_i)=\prod\E f_i(X_i)$ · 4.3 freezing: $\E(f(K,Z)\given\G)=g(K)$, $g(k)=\E f(k,Z)$, plus tower |
+| 5 | 5.1 one-step test $X_{n+1}=\varphi(X_n,\xi_{n+1})$: $\E(X_{n+1}\given\F_n)=g(X_n)$ |
+| 6 | 6.1 independent increments: $\E(f(X_t)\given\F_s)=\E f(x+D)\big|_{x=X_s}$ |
+| 7 | 7.1 stopping-time test · 7.2 optional stopping with $X-mt$, $(X-mt)^2-vt$, $e^{uX-\kappa(u)t}$ · 7.3 predictable stakes |
+| 9 | 9.1 scaled walk mean/variance and limit · 9.2 transition density and heat equation |
+| 10 | none → Ch 13 sheet |
+| 11 | 11.1 exit of $x+\mu t+\sigma W$ from $(a,b)$, $\theta=2\mu/\sigma^2$ · 11.2 discrete ruin $P_i$, $D_i$ |
+| 12 | 12.1 GBM master ($\ln Y$ normal; moments, conditional mean, MG, median, $P(Y_t>K)$) |
+| 13 | 13.1 law and conditioning of $Y_t=x_0+\mu t+\sigma W_t$ on known values · 13.2 MVN: $\sum t_iX_i$, joint $\E e^{\sum t_iX_i}$, $X\given Y$ · 13.3 Gaussian-process tests |
+| 14 | 14.1 $G(b,c)=P(W_t\le b,M_t\ge c)$ (hitting time, maximum, rectangles as rows) |
+| 16 | 16.1 $\int_0^tb\,dW$: mean, $\E[\int b\,dW\int c\,dW]=\int\E(bc)$, normal if $b$ non-random |
+| 17 | 17.1 Itô for $f(t,X_t)$ (MG test, expectation trick as rows) · 17.2 Itô for $f(X_t,Y_t)$ (product, quotient) |
+| 18 | 18.1 linear SDE $dX=\beta(m-X)dt+\sigma dW$ · 18.2 GBM SDE ⇔ exponent drift $\mu-\frac12\sigma^2$ |
+| 20 | 20.1 one-period pricing with discount $D$: price $=D\sum p^*_j\,\text{payoff}_j$, hedge, arbitrage, ranges |
