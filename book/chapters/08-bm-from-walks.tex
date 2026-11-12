@@ -139,13 +139,12 @@ Every $\Delta t$ the walk moves up $\Delta x$ with probability $p$ or down $\Del
   \boxed{\begin{gathered}\E_P\,X(t)=\frac{t}{\Delta t}\,\Delta x\,(2p-1),\qquad \Var X(t)=\frac{t}{\Delta t}\,(\Delta x)^2\big(1-(2p-1)^2\big);\\
   \Delta x=\sigma\sqrt{\Delta t},\ \ p=\tfrac12\big(1+\tfrac{\mu}{\sigma}\sqrt{\Delta t}\big),\ \ \Delta t\to0:\qquad X(t)\to\mu t+\sigma W(t)\sim N(\mu t,\sigma^2t).\end{gathered}}
 \]
-Normality comes from the central limit theorem; independent coins in disjoint time intervals give independent increments.
 \begin{plugrows}
   \plugrow{Fair walk, standard Brownian motion}{$p=\frac12$, $\Delta x=\sqrt{\Delta t}$}{$\E_PX(t)=0$, $\Var X(t)=t$: $X\to W$}{$\Delta x$ must be of order $\sqrt{\Delta t}$}{$\Delta t=0.01$: $100$ steps of $\pm0.1$ by $t=1$, variance $1$}
   \plugrow{Variance parameter $\sigma^2$}{$p=\frac12$, $\Delta x=\sigma\sqrt{\Delta t}$}{$X\to\sigma W$, $\Var=\sigma^2t$}{$\sigma>0$}{$\sigma=2$, $\Delta t=0.01$: steps $\pm0.2$, $\Var X(1)=4$}
   \plugrow{With drift $\mu$}{$p=\frac12(1+\mu\sqrt{\Delta t})$, $\Delta x=\sqrt{\Delta t}$ ($\sigma=1$)}{step mean $\mu\sqrt{\Delta t}$, step variance $1-\mu^2\Delta t$: $X\to\mu t+W$}{$|\mu|\sqrt{\Delta t}\le1$}{$\mu=1$, $\Delta t=0.01$: $p=0.55$, $\E_PX(1)=100(0.1)(0.1)=1$}
   \plugrow{Wrong scalings}{$\Delta x=\Delta t$; $\Delta x\gg\sqrt{\Delta t}$}{$\Var=t\,\Delta t\to0$ (motion collapses); $\Var\to\infty$}{only $\Delta x\propto\sqrt{\Delta t}$ works}{$\Delta x=\Delta t=0.01$: $\Var X(1)=0.01$}
   \plugrow{Multiplicative walk}{the price is multiplied by $e^{\pm\sigma\sqrt h}$ every $h$, with $p=\frac12(1+\frac\mu\sigma\sqrt h)$; apply the box to $\ln(\text{price})$}{$\ln(\text{price})\to\ln(\text{start})+\mu t+\sigma W_t$, i.e.\ price $=\text{start}\cdot e^{\mu t+\sigma W_t}$ (Card 11.1)}{log-steps $\pm\sigma\sqrt h$}{$\mu=0.1$, $\sigma=0.2$: $\ln(\text{price})$ has mean $0.1t$, variance $0.04t$}
-  \plugrow{Density of the limit: the heat equation}{$f(t,y)$ = density of $N(x_0+\mu t,\sigma^2t)$ (walk started at $x_0$); differentiate: $f_y=-\frac{y-x_0-\mu t}{\sigma^2t}f$, then $f_{yy}$ and $f_t$}{$\dfrac{\partial f}{\partial t}=-\mu\dfrac{\partial f}{\partial y}+\dfrac{\sigma^2}{2}\dfrac{\partial^2f}{\partial y^2}$; for $W$: $f_t=\frac12f_{yy}$; the cloud spreads like heat, s.d.\ $\sigma\sqrt t$}{$t>0$}{$W$ at $y=0$, $t=1$: $f_t=-\frac1{2\sqrt{2\pi}}=\frac12f_{yy}$}
+  \plugrow{Density of the limit: the heat equation}{$f(t,y)$ = density of $N(x_0+\mu t,\sigma^2t)$; differentiate once in $t$, twice in $y$}{$f_t=-\mu f_y+\frac{\sigma^2}{2}f_{yy}$; for $W$: $f_t=\frac12f_{yy}$}{$t>0$}{$W$ at $y=0$, $t=1$: $f_t=-\frac1{2\sqrt{2\pi}}=\frac12f_{yy}$}
 \end{plugrows}
 \end{mastercard}
