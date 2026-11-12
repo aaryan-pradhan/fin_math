@@ -176,6 +176,6 @@ The mean moves from $x$ towards the long-run level $\alpha/\beta$; the variance 
   \plugrow{Ornstein--Uhlenbeck}{$\alpha=0$, $\beta=r$}{$X_t\sim N\big(xe^{-rt},\ \frac{\sigma^2}{2r}(1-e^{-2rt})\big)$; $t\to\infty$: $N(0,\frac{\sigma^2}{2r})$}{$r>0$}{$dX=-X\,dt+dW$: $\Var X_t=\frac12(1-e^{-2t})$; $x=2$, $r=2$, $\sigma=1$, $t=1$: $N(0.271,\,0.245)$}
   \plugrow{Vasicek short rate}{$dr=a(b-r)dt+\sigma dW$: $\alpha=ab$, $\beta=a$}{$r_t\sim N\big(b+e^{-at}(r_0-b),\ \frac{\sigma^2}{2a}(1-e^{-2at})\big)$}{rates can go negative}{$a=0.5$, $b=0.05$, $\sigma=0.02$, $r_0=0.03$: $P(r_2<0)\approx0.011$}
   \plugrow{CIR short rate}{noise $\sigma\sqrt r$ instead of $\sigma$; the integrating factor still works for the mean}{$\E_Pr_t=b+e^{-at}(r_0-b)$ (same as Vasicek); $r_t\ge0$, not normal}{no closed-form law}{}
-  \plugrow{A volatility process}{$dZ=-\frac12Z\,dt+dW$, $Z_0=1$ ($\alpha=0$, $\beta=\frac12$)}{$Z_t=e^{-t/2}\big(1+\int_0^te^{s/2}dW_s\big)$}{}{$\Var Z_t=1-e^{-t}$}
+  \plugrow{A volatility process}{$dZ=-\frac12Z\,dt+dW$, $Z_0=1$ ($\alpha=0$, $\beta=\frac12$)}{$Z_t=e^{-t/2}\big(1+\int_0^te^{s/2}dW_s\big)$}{came from $Z=\sqrt V$ by Card~\ref{card:ito}}{$\Var Z_t=1-e^{-t}$}
 \end{plugrows}
 \end{mastercard}
