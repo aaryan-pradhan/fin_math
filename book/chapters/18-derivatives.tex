@@ -1,0 +1,134 @@
+\chapter{Derivatives and replication}
+\label{ch:derivatives}
+
+\begin{question}
+What contracts can be written on a stock, what do they pay, and how do we price one by copying its payoff with the stock and a bond?
+\end{question}
+
+\begin{whatfor}
+\begin{itemize}
+  \item Defines forwards, futures, European and American calls, puts, and derivative securities in general.
+  \item Adds a risk-free bond with interest $r$.
+  \item Prices a call by building a portfolio of stock and bond that pays exactly what the call pays, and shows why the ``expected payoff'' price is wrong.
+\end{itemize}
+\skipline{fs:derivatives}
+\end{whatfor}
+
+\begin{prereq}
+From Chapter~17: option, strike price, arbitrage, risk-neutral probability. From Part~0: random variables, expectation.
+\end{prereq}
+
+%=====================================================================
+\section{Forwards and futures}
+
+\begin{definition}[Forward; long and short positions]
+A \dfn{forward contract} (forward) is a contract to buy or sell an asset at a fixed future time $T$ (or in a time interval $(T,T']$) at a price $K$ fixed today. The side that agrees to buy holds the \dfn{long position}; the side that agrees to sell holds the \dfn{short position}.
+\end{definition}
+
+A forward is both a right and an obligation. If I agree today to buy one share at $T=1$ for $K=100$, I pay $100$ whether the share is then worth $120$ (I gain $20$) or $90$ (I lose $10$).
+
+\begin{definition}[Futures contract]
+A \dfn{futures contract} (future) is a forward traded on an exchange. A forward is a private agreement between two parties.
+\end{definition}
+
+%=====================================================================
+\section{Options}
+
+Write $x^+=\max(x,0)$ (the positive part) and $x^-=\max(-x,0)$ (the negative part). So $(5)^+=5$, $(-3)^+=0$, $(-3)^-=3$, and always
+\[
+  x^+-x^-=x .
+\]
+Let $S_t$ be the price of the stock at time $t$.
+
+\begin{definition}[European call and put; American call]
+\label{def:call-put}
+Three kinds of option.
+\begin{itemize}
+  \item A \dfn{European call} with strike $K$ and expiry $T$ gives the right (not the obligation) to buy one share at time $T$ for $K$. It pays $(S_T-K)^+$ at $T$.
+  \item A \dfn{European put} gives the right to sell one share at time $T$ for $K$. It pays $(K-S_T)^+$ at $T$.
+  \item An \dfn{American call} gives the right to buy at any time $\tau\in[0,T]$ chosen by the holder, paying $(S_\tau-K)^+$.
+\end{itemize}
+\end{definition}
+
+Why $(S_T-K)^+$: if $S_T>K$, use the right, buy at $K$ a share worth $S_T$, gain $S_T-K$; if $S_T\le K$, do not use it, gain $0$. A call is a forward without the obligation: when the share ends at $90$ with $K=100$, the forward loses $10$, the call pays $0$.
+
+\begin{definition}[Derivative security]
+\label{def:claim}
+A \dfn{derivative security} (or \dfn{contingent claim}) with expiry $T$ is a random variable $X=g(S_T)\ge0$ for a function $g$: the contract pays its owner the amount $X$ at time $T$. A call has $g(s)=(s-K)^+$, a put $g(s)=(K-s)^+$.
+\end{definition}
+
+\begin{pic}
+\begin{tikzpicture}
+\begin{groupplot}[group style={group size=4 by 1,horizontal sep=0.9cm},width=4.4cm,height=3.7cm,xmin=0,xmax=200,ymin=-60,ymax=110,xtick={100},xticklabels={$K$},ytick={0},xlabel={$S_T$},title style={font=\small},samples=3]
+  \nextgroupplot[title={call $(S_T-K)^+$}]
+  \addplot[defc,very thick] coordinates {(0,0)(100,0)(200,100)};
+  \nextgroupplot[title={put $(K-S_T)^+$}]
+  \addplot[thmc,very thick] coordinates {(0,100)(100,0)(200,0)};
+  \nextgroupplot[title={long forward $S_T-K$}]
+  \addplot[trapc,very thick] coordinates {(0,-100)(200,100)};
+  \nextgroupplot[title={straddle $|S_T-K|$}]
+  \addplot[exc,very thick] coordinates {(0,100)(100,0)(200,100)};
+\end{groupplot}
+\end{tikzpicture}
+\picnote{Payoffs at expiry as functions of the final price $S_T$. The call gains when the price rises, the put when it falls; the forward has the obligation, so it can lose; a straddle (one call plus one put) gains on any big move.}
+\end{pic}
+
+%=====================================================================
+\section{A stock and a bond}
+
+\begin{definition}[Bond]
+A \dfn{bond} is a risk-free investment growing at interest rate $r\ge0$ per period: $B_t=(1+r)^tB_0$.
+\end{definition}
+
+With $B_0=100$, $r=0.05$: $B_1=105$, $B_2=110.25$. Its future value is known for sure.
+
+\begin{setup}[A one-step market]
+$S_0=100$; at time $1$ the price is $S_1^u=130$ (with real-world probability $p=0.4$) or $S_1^d=80$ (with $1-p=0.6$). Interest $r=0.05$. We sell a European call with $K=110$; its payoff is $X=20$ (up) or $0$ (down). What is its price $C_0$ today?
+\end{setup}
+
+\paragraph{The tempting answer.} Take the expected payoff and discount it: $\E_P(X)=20(0.4)+0=8$, so $C_0=\frac{8}{1.05}\approx7.62$. This is \emph{wrong}, as we now see.
+
+\paragraph{Copy the call.} A \dfn{stock-and-bond portfolio} $(\Delta,B)$ holds $\Delta$ shares and an amount $B$ in the bond (negative $B$ means borrowing). At time $1$ it is worth $\Delta S_1+B(1+r)$. Ask it to pay what the call pays in both states:
+\[
+  130\Delta+1.05B=20,\qquad 80\Delta+1.05B=0 .
+\]
+Subtracting, $50\Delta=20$, so $\Delta=0.4$; then $B=-\frac{32}{1.05}\approx-30.48$ (borrow $30.48$).
+
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{@{}lccc@{}}
+\toprule
+state & $\Delta S_1$ & $B(1+r)$ & value $=X$ \\
+\midrule
+up ($S_1=130$) & $0.4\times130=52$ & $-32$ & $20$ \\
+down ($S_1=80$) & $0.4\times80=32$ & $-32$ & $0$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Today the portfolio costs $\Delta S_0+B=40-30.48=9.52$. It pays exactly what the call pays in every state, so the call must cost $C_0=9.52$: at any other price there is an arbitrage. For example, at $7.62$: buy the call, short $0.4$ shares and lend $30.48$. That brings in $9.52-7.62=1.90$ today, and at time $1$ the call pays exactly what is needed to close the position. A sure $1.90$.
+
+\begin{intuition}
+The real-world probability $p=0.4$ never entered the copy. The price is fixed by the copy, not by anyone's beliefs about the future. Chapter~19 shows that it is still an expected value, but under the risk-neutral probability $p^*=\frac{1.05\cdot100-80}{130-80}=0.5$: $\frac{0.5\cdot20}{1.05}=9.52$.
+\end{intuition}
+
+%=====================================================================
+\formulasheet{fs:derivatives}
+
+The price of any claim (copying, risk-neutral probability, arbitrage) is on Card~20.1 and, over several periods, Card~21.1. This sheet holds the payoffs.
+
+\begin{mastercard}[label=card:payoff]{What a contract pays}
+A claim with expiry $T$ pays $X=g(S_T)$; a portfolio of claims pays the sum of their payoffs, and costs the sum of their prices:
+\[
+  \boxed{\begin{gathered}X=g(S_T),\qquad \text{call }(S_T-K)^+,\quad\text{put }(K-S_T)^+=(S_T-K)^-,\\
+  x^+-x^-=x,\qquad |x|=x^++x^-.\end{gathered}}
+\]
+\begin{plugrows}
+  \plugrow{European call / put}{$g(s)=(s-K)^+$ / $(K-s)^+$}{pays only if $S_T$ ends above / below $K$}{exercise at $T$ only}{$K=100$: $S_T=120$ gives call $20$, put $0$; $S_T=90$: call $0$, put $10$}
+  \plugrow{Forward (long / short)}{$g(s)=s-K$ / $K-s$}{can be negative: an obligation, not a claim ($X\ge0$ fails)}{both sides must trade at $T$}{$K=100$, $S_T=90$: long loses $10$}
+  \plugrow{Call minus put}{$x^+-x^-=x$ with $x=S_T-K$}{$(S_T-K)^+-(K-S_T)^+=S_T-K$: call $-$ put $=$ forward}{same $K$, $T$}{the basis of put--call parity (Card~19.2)}
+  \plugrow{Straddle}{one call plus one put}{$|S_T-K|$}{same $K$, $T$}{$K=100$: $S_T=70$ or $130$ both pay $30$}
+  \plugrow{Spread}{long call at $K_1$, short call at $K_2>K_1$}{$(S_T-K_1)^+-(S_T-K_2)^+$, between $0$ and $K_2-K_1$}{$K_1<K_2$, same $T$}{$K_1=100$, $K_2=120$, $S_T=130$: $30-10=20$}
+  \plugrow{American call}{exercise at a chosen time $\tau\le T$}{$(S_\tau-K)^+$}{$\tau$ a stopping time}{$S=130$ at $\tau=0.5$, $95$ at $T=1$, $K=100$: $30$ early versus $0$ at $T$}
+\end{plugrows}
+\end{mastercard}
