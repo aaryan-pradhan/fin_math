@@ -71,7 +71,7 @@ Needs must appear in an earlier row's Introduces, or in "Before you start".
 | 2 | Random variables and distributions | 4–7 | 1 | random variable, σ(ξ), Borel function, Doob–Dynkin, distribution, d.f., density, discrete, joint density, normal | written |
 | 3 | Expectation | 7–9, 55 | 2 | integrable, E as integral, indicator, step function, E h(ξ), normal mgf, Markov/Chebyshev | written |
 | 4 | Independence and conditional expectation | 9–13 | 3 | conditional prob, total prob, independence (events, r.v.s, σ-fields), E(X∣𝒢), CE1–CE4, tower | written |
-| 5 | Filtrations and martingales | 13–16 | 4 | discrete process, filtration, adapted, filtered space, binomial tree, martingale, sub/super, constant mean | todo |
+| 5 | Filtrations and martingales | 13–16 | 4 | discrete process, filtration, adapted, filtered space, binomial tree, martingale, sub/super, constant mean | written |
 | 6 | First martingales: random walks and the Wiener process | 16–20 | 5 | stochastic process, sample path, Wiener process (axioms), W, W²−t, exponential MG, random walk, geometric random walk | todo |
 | 7 | Stopping times and optional stopping | 21–24 | 6 | stopping time, entry/hitting time, stopped process, optional stopping thm, no beating a fair game | todo |
 | 8 | Problems: martingales and stopping | 55–58, 73–76 | 7 | — | todo |

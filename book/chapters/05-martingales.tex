@@ -1,0 +1,257 @@
+\chapter{Filtrations and martingales}
+\label{ch:martingales}
+
+\begin{question}
+How do we model information that grows over time, and what does it mean for a game to be fair at every moment?
+\end{question}
+
+\begin{whatfor}
+\begin{itemize}
+  \item Defines processes, filtrations, adapted processes and the filtered probability space.
+  \item Builds the binomial stock-price model and its filtration, the running example of the book.
+  \item Defines martingales (fair games), sub- and supermartingales, and proves that a martingale has a constant mean.
+\end{itemize}
+\skipline{fs:martingales}
+\end{whatfor}
+
+\begin{prereq}
+From Part~0: $\sigma$-field, atoms, filtration, random variable, $\sigma(\xi)$, Borel function, expectation $\E_P$, independence, conditional expectation and the rules CE1--CE4.
+\end{prereq}
+
+%=====================================================================
+\section{Processes and filtrations}
+
+\begin{definition}[Stochastic process]
+\label{def:process}
+A \dfn{stochastic process} is a collection of random variables $(X_t)_{t\in\mathbb T}$ on one probability space, indexed by time $t$. In \dfn{discrete time} $\mathbb T=\{0,1,2,\dots\}$ (or $\{0,1,\dots,T\}$); in \dfn{continuous time} $\mathbb T=[0,\infty)$ (or $[0,T]$).
+\end{definition}
+
+Recall from Chapter~1 that a filtration $\FF=(\F_t)_{t\in\mathbb T}$ is an increasing family of $\sigma$-fields, $\F_s\subseteq\F_t\subseteq\F$ for $s\le t$; $\F_t$ is the collection of events whose occurrence is known by time $t$.
+
+\begin{definition}[Adapted process; filtered probability space]
+\label{def:adapted}
+A process $(X_t)$ is \dfn{adapted} to $\FF$ if each $X_t$ is $\F_t$-measurable: $\{X_t\in B\}\in\F_t$ for every Borel set $B$. In words: \emph{the value $X_t$ is known at time $t$}. The quadruple $(\Omega,\F,\FF,P)$ is a \dfn{filtered probability space}. The \dfn{natural filtration} of $(X_t)$ is $\F_t=\sigma(X_0,X_1,\dots,X_t)$: the information in the path up to time $t$.
+\end{definition}
+
+Two facts are used constantly.
+\begin{itemize}
+  \item \emph{Functions of known things are known.} If $(X_t)$ is adapted and $f$ is a Borel function, then $(f(X_t))$ is adapted (\cref{res:f-xi}). So are $X_t^2$, $e^{X_t}$, $\max_{s\le t}X_s$.
+  \item \emph{Known stays known.} Since $\F_t\subseteq\F_s$ for $t\le s$, an $\F_t$-measurable $X_t$ is also $\F_s$-measurable for every $s\ge t$.
+\end{itemize}
+
+On a finite $\Omega$ there is a quick test: $X_t$ is $\F_t$-measurable exactly when it is constant on every atom of $\F_t$.
+
+%=====================================================================
+\section{The binomial market model}
+\label{sec:binomial-model}
+
+\begin{setup}[The binomial model]
+A stock has price $S_0>0$ today. Each period the price is multiplied by $u$ (up) or by $d$ (down), with $0<d<u$:
+\[
+  S_t=\begin{cases}u\,S_{t-1}&\text{(up)},\\ d\,S_{t-1}&\text{(down)},\end{cases}\qquad t=1,2,\dots,T.
+\]
+An outcome is a path of moves $v=(v_1,\dots,v_T)$ with each $v_j\in\{u,d\}$, so $\Omega=\{u,d\}^T$ has $2^T$ paths, and $S_t=v_1v_2\cdots v_t\,S_0$. Each move is up with probability $p$, independently.
+\end{setup}
+
+\begin{example}[A two-period tree]
+\label{ex:tree}
+$S_0=100$, $u=1.2$, $d=0.8$, $T=2$.
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{@{}lccc@{}}
+\toprule
+path & $uu$ & $ud$ & $du$ \quad $dd$ \\
+\midrule
+$S_1$ & $120$ & $120$ & $80$ \quad\ $80$ \\
+$S_2$ & $144$ & $96$ & $96$ \quad\ $64$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+The natural filtration $\F_t=\sigma(S_0,\dots,S_t)$:
+\begin{itemize}
+  \item $\F_0=\{\varnothing,\Omega\}$;
+  \item $\F_1$ has atoms $A_u=\{uu,ud\}$ ($S_1=120$) and $A_d=\{du,dd\}$ ($S_1=80$);
+  \item $\F_2$ has the four single paths as atoms. Note $S_2=96$ on both $ud$ and $du$, but $S_1$ tells them apart.
+\end{itemize}
+\end{example}
+
+\begin{pic}
+\begin{tikzpicture}[x=2.6cm,y=0.95cm,every node/.style={font=\small}]
+  \node[draw,circle,inner sep=1pt] (a) at (0,0) {$100$};
+  \node[draw,circle,inner sep=1pt,fill=defc!12] (b) at (1,1) {$120$};
+  \node[draw,circle,inner sep=1pt,fill=thmc!12] (c) at (1,-1) {$80$};
+  \node[draw,circle,inner sep=1pt] (d) at (2,2) {$144$};
+  \node[draw,circle,inner sep=1pt] (e) at (2,0.55) {$96$};
+  \node[draw,circle,inner sep=1pt] (e2) at (2,-0.55) {$96$};
+  \node[draw,circle,inner sep=1pt] (f) at (2,-2) {$64$};
+  \draw[-{Latex}] (a)--node[above,font=\scriptsize]{$u$}(b); \draw[-{Latex}] (a)--node[below,font=\scriptsize]{$d$}(c);
+  \draw[-{Latex}] (b)--(d); \draw[-{Latex}] (b)--(e); \draw[-{Latex}] (c)--(e2); \draw[-{Latex}] (c)--(f);
+  \node[right] at (2.15,2) {$uu$}; \node[right] at (2.15,0.55) {$ud$}; \node[right] at (2.15,-0.55) {$du$}; \node[right] at (2.15,-2) {$dd$};
+  \draw[defc,rounded corners,thick,dashed] (1.85,0.15) rectangle (2.55,2.4); \node[defc,right] at (2.6,1.3) {$A_u$};
+  \draw[thmc,rounded corners,thick,dashed] (1.85,-2.4) rectangle (2.55,-0.15); \node[thmc,right] at (2.6,-1.3) {$A_d$};
+  \foreach \t in {0,1,2} \node[prec] at (\t,-2.9) {$t=\t$};
+\end{tikzpicture}
+\picnote{At time 1 you know which half of the tree you are in (the atom $A_u$ or $A_d$ of $\F_1$), but not the final path. At time 2 you know the path.}
+\end{pic}
+
+The price is adapted: $S_t$ depends on $v_1,\dots,v_t$ only. So are $S_t^2$ and $\ln S_t$. But the increment $Y_t=S_{t+1}-S_t$ is \emph{not} adapted: on the atom $A_u$, $Y_1=144-120=24$ on $uu$ and $96-120=-24$ on $ud$. It needs the next move.
+
+%=====================================================================
+\section{Martingales}
+
+\begin{definition}[Martingale]
+\label{def:mg}
+A discrete-time process $(X_t)_{t=0,1,2,\dots}$ on $(\Omega,\F,\FF,P)$ is a \dfn{martingale} (MG) if
+\begin{enumerate}[label=(\roman*)]
+  \item it is adapted to $\FF$;
+  \item it is integrable: $\E_P|X_t|<\infty$ for every $t$;
+  \item it is a fair game: $\E_P(X_{t+1}\given\F_t)=X_t$ for every $t$.
+\end{enumerate}
+It is a \dfn{submartingale} if (iii) is replaced by $\E_P(X_{t+1}\given\F_t)\ge X_t$ (it tends to go up), and a \dfn{supermartingale} if $\E_P(X_{t+1}\given\F_t)\le X_t$ (it tends to go down).
+\end{definition}
+
+\begin{intuition}
+$X_t$ is your fortune after $t$ rounds of a game. ``Fair'' means: whatever has happened so far, the expected fortune after the next round equals what you have now. The names are counter-intuitive: a \emph{super}martingale goes \emph{down}, like a casino game seen by the player.
+\end{intuition}
+
+\begin{theorem}[Many steps ahead; constant mean]
+\label{thm:mg-mean}
+If $(X_t)$ is a martingale, then for all $t$ and $s\ge1$,
+\[
+  \E_P(X_{t+s}\given\F_t)=X_t,\qquad\text{and so}\qquad \E_P(X_t)=\E_P(X_0)\ \text{for all }t.
+\]
+For a submartingale, $\E_P(X_t)\ge\E_P(X_0)$ and it is non-decreasing in $t$; for a supermartingale it is non-increasing.
+\end{theorem}
+\begin{proof}
+Use the tower rule one step at a time.
+\begin{steps}
+  \item Since $\F_t\subseteq\F_{t+s-1}$, CE4 gives
+  \[
+    \begin{aligned}
+    \E_P(X_{t+s}\given\F_t)&=\E_P\big[\E_P(X_{t+s}\given\F_{t+s-1})\given\F_t\big]\\
+    &=\E_P(X_{t+s-1}\given\F_t),
+    \end{aligned}
+  \]
+  by the martingale property at time $t+s-1$.
+  \item Repeat until $\E_P(X_{t+1}\given\F_t)=X_t$.
+  \item Take $\E_P$ of both sides (CE4 with no information): $\E_P(X_{t+s})=\E_P(X_t)$; put $t=0$. For sub- and supermartingales the same steps carry the inequality. \qedhere
+\end{steps}
+\end{proof}
+
+A constant mean is \emph{necessary} for a martingale but not sufficient: a process can have $\E_P(X_t)=\E_P(X_0)$ for every $t$ and still fail (iii).
+
+\begin{definition}[Martingale in continuous time]
+\label{def:mg-cont}
+A continuous-time process $(X_t)_{t\ge0}$, adapted to a filtration $(\F_t)_{t\ge0}$, is a martingale if $\E_P|X_t|<\infty$ and $\E_P(X_{t+s}\given\F_t)=X_t$ for all $s,t\ge0$.
+\end{definition}
+
+%=====================================================================
+\section{When is the stock price a martingale?}
+
+\begin{result}[The binomial martingale condition]
+\label{res:binomial-mg}
+In the binomial model with up-probability $p$,
+\[
+  \E_P(S_{t+1}\given\F_t)=S_t\,\big(pu+(1-p)d\big).
+\]
+So $(S_t)$ is a martingale exactly when $pu+(1-p)d=1$, i.e.\ $p=\dfrac{1-d}{u-d}$; a submartingale when $pu+(1-p)d\ge1$; a supermartingale when $\le1$. In every case $\E_P(S_t)=S_0\,m^t$ with $m=pu+(1-p)d$.
+\end{result}
+\begin{proof}
+$S_{t+1}=S_t\,v_{t+1}$, with $S_t$ known at time $t$ and $v_{t+1}$ independent of $\F_t$.
+\begin{steps}
+  \item CE2 and CE3: $\E_P(S_{t+1}\given\F_t)=S_t\,\E_P(v_{t+1})=S_t\,(pu+(1-p)d)$.
+  \item Taking $\E_P$ repeatedly: $\E_P(S_{t+1})=m\,\E_P(S_t)$, so $\E_P(S_t)=S_0m^t$. \qedhere
+\end{steps}
+\end{proof}
+
+\begin{example}[The tree of \cref{ex:tree}]
+$u=1.2$, $d=0.8$: $p=\frac{1-0.8}{1.2-0.8}=\frac12$.
+\begin{itemize}
+  \item Check on $A_u$: $\E_P(S_2\given S_1=120)=\frac12(144)+\frac12(96)=120=S_1$.
+  \item Two steps at once: $\E_P(S_2)=\frac14(144)+\frac12(96)+\frac14(64)=100=S_0$.
+  \item With $p=0.6$: $m=1.04$, a submartingale, $\E_P(S_2)=100(1.04)^2=108.16$.
+  \item With $p=\frac12$, $S_t^2$ is a submartingale: $\E_P(S_{t+1}^2\given\F_t)=S_t^2\cdot\frac12(1.44+0.64)=1.04\,S_t^2$.
+\end{itemize}
+\end{example}
+
+\begin{pic}
+\begin{tikzpicture}
+\begin{axis}[width=8.5cm,height=4.4cm,xmin=0,xmax=10,ymin=60,ymax=155,xlabel={$t$},ylabel={$\E_P(S_t)$},legend style={font=\scriptsize,at={(0.5,-0.32)},anchor=north,legend columns=1},samples=11,domain=0:10]
+  \addplot[thmc,very thick,mark=*,mark size=1.2pt] {100*1.04^x}; \addlegendentry{$p=0.6$: sub-MG, $m=1.04$}
+  \addplot[defc,very thick,mark=*,mark size=1.2pt] {100}; \addlegendentry{$p=0.5$: MG, $m=1$}
+  \addplot[trapc,very thick,mark=*,mark size=1.2pt] {100*0.96^x}; \addlegendentry{$p=0.4$: super-MG, $m=0.96$}
+\end{axis}
+\end{tikzpicture}
+\picnote{The mean of a martingale stays flat; a submartingale's mean rises, a supermartingale's falls.}
+\end{pic}
+
+%=====================================================================
+\formulasheet{fs:martingales}
+
+\begin{card}{1. Filtration, adapted, measurable}
+\Formula
+Filtration: $\F_s\subseteq\F_t$ for $s\le t$. Natural filtration: $\F_t=\sigma(X_0,\dots,X_t)$. Adapted: $X_t$ is $\F_t$-measurable for every $t$.
+\UseWhen
+``Is $Y$ $\F_n$-measurable?'', ``is the process adapted?'', condition (i) of a martingale.
+\HowTo
+\begin{enumerate}
+  \item Write $Y$ in terms of $X_0,X_1,\dots$.
+  \item Only $X_0,\dots,X_n$ appear $\Rightarrow$ yes. Any $X_{n+1}$ or later $\Rightarrow$ no.
+\end{enumerate}
+\Caveats
+\cav{Functions of adapted things are adapted ($S_n^2$, $e^{S_n}$, $\max_{k\le n}S_k$). A future increment ($\xi_{n+1}$, $S_{n+1}-S_n$) is never $\F_n$-measurable.}
+\begin{cardex}
+$S_n=\xi_1+\dots+\xi_n$. Is $S_{n+1}$ $\F_n$-measurable? $S_{n+1}=S_n+\xi_{n+1}$ and $\xi_{n+1}$ is a future step: \textbf{no}. Is $S_n^2$? It uses only $\xi_1,\dots,\xi_n$: \textbf{yes}.
+\end{cardex}
+\end{card}
+
+\begin{card}{2. Martingale: definition, sub and super}
+\Formula
+(i) adapted, (ii) $\E_P|X_t|<\infty$, (iii) $\E_P(X_{t+1}\given\F_t)=X_t$. Sub-MG: $\ge$ (goes up). Super-MG: $\le$ (goes down). Consequences: $\E_P(X_{t+s}\given\F_t)=X_t$ and $\E_PX_t=\E_PX_0$.
+\UseWhen
+``Is $X_n$ a martingale?'', ``sub or super?'', ``find $\E_P(X_{10}\given\F_3)$''.
+\HowTo
+\begin{enumerate}
+  \item State (i) and (ii) in one line each.
+  \item Compute $\E_P(X_{t+1}\given\F_t)$ with CE1--CE3 and compare with $X_t$: equal $\to$ MG, bigger $\to$ sub, smaller $\to$ super.
+\end{enumerate}
+\Caveats
+\cav{Constant mean is necessary, not sufficient. ``Super'' goes \emph{down}.}
+\begin{cardex}
+Fair $\pm1$ walk: $\E_P(S_{n+1}^2\given\F_n)=S_n^2+2S_n\E_P\xi+\E_P\xi^2=S_n^2+1>S_n^2$: sub-MG. Hence $S_n^2-n$ is a MG.
+\end{cardex}
+\end{card}
+
+\begin{card}{3. Standard discrete martingales}
+\Formula
+$\xi_i$ i.i.d.\ (independent, identically distributed), $S_n=\xi_1+\dots+\xi_n$, $\mu=\E_P\xi$, $\sigma^2=\Var\xi$: \;$S_n-n\mu$ is a MG; $(S_n-n\mu)^2-n\sigma^2$ is a MG; if $\E_P\xi=1$ (and $\xi\ge0$), $\Pi_n=\xi_1\cdots\xi_n$ is a MG.
+\UseWhen
+Random walks, games, products of i.i.d.\ factors.
+\HowTo
+\begin{enumerate}
+  \item Write $X_{n+1}=(\text{known at }n)\,\oplus\,\xi_{n+1}$.
+  \item Take out the known part; replace $\xi_{n+1}$ by its mean.
+\end{enumerate}
+\Caveats
+\cav{Biased walk: $S_n$ is not a MG, $S_n-n\mu$ is.}
+\begin{cardex}
+$\xi=+1$ w.p.\ $0.7$, $-1$ w.p.\ $0.3$: $\mu=0.4$, so $S_n-0.4n$ is a MG. $\xi_k\in\{0,2\}$ fair: $\Pi_n$ is a MG with $\E_P\Pi_3=8\cdot\frac18=1$.
+\end{cardex}
+\end{card}
+
+\begin{card}{4. Binomial stock as a martingale}
+\Formula
+$\E_P(S_{t+1}\given\F_t)=S_t\,(pu+(1-p)d)$; MG $\iff p=\dfrac{1-d}{u-d}$; $\E_PS_t=S_0\,(pu+(1-p)d)^t$.
+\UseWhen
+``For which $p$ is $S_t$ a MG?'', ``find $\E_P S_3$''.
+\HowTo
+\begin{enumerate}
+  \item Compute $m=pu+(1-p)d$.
+  \item $m=1$ MG, $m>1$ sub, $m<1$ super; $\E_PS_t=S_0m^t$.
+\end{enumerate}
+\Caveats
+\cav{Needs $d<1<u$ for a MG probability in $(0,1)$. $S_t^2$ is not a MG even when $S_t$ is.}
+\begin{cardex}
+$u=2$, $d=0.5$: $p=\frac{0.5}{1.5}=\frac13$. $S_0=50$, $u=1.1$, $d=0.9$, $p=0.7$: $m=1.04$, $\E_PS_3=50(1.04)^3=56.24$.
+\end{cardex}
+\end{card}
