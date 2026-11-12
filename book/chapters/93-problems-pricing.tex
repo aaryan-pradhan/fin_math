@@ -1,0 +1,222 @@
+\chapter{Problems: option pricing}
+\label{ch:prob-pricing}
+
+\begin{whatfor}
+Each problem names the card and row it uses, plugs in, and reads off the answer.
+\end{whatfor}
+
+%=====================================================================
+\section{Contracts, parity and bounds}
+
+\begin{problem}[Straddle]
+Draw the payoff of one call plus one put, same strike $K$ and expiry. Where does the buyer, who paid $C+P$, make money?
+\uses{card:payoff}{4}
+\plug{$(S_T-K)^++(K-S_T)^+=|S_T-K|$.}
+\answer{A V with its vertex at $(K,0)$, slopes $-1$ and $+1$. Profit $|S_T-K|-(C+P)$ is positive outside $K\pm(C+P)$: a bet on a big move either way.}
+\end{problem}
+
+\begin{problem}[Bull spread]
+Buy a call at $K_1$, sell a call at $K_2>K_1$. Draw the payoff. Is it cheaper than the call at $K_1$ alone?
+\uses{card:payoff}{5}
+\plug{$(S_T-K_1)^+-(S_T-K_2)^+$: $0$ up to $K_1$, slope $1$ on $[K_1,K_2]$, flat at $K_2-K_1$ after.}
+\answer{Yes: it pays the same as the call below $K_2$ and less above, so it costs less.}
+\end{problem}
+
+\begin{problem}[Call and put in words]
+What does each holder receive, and what limits the prices?
+\uses{card:payoff}{1}
+\answer{Call: the right to buy at $K$, pays $(S_T-K)^+$, unbounded upside. Put: the right to sell at $K$, pays $(K-S_T)^+\le K$.}
+\uses{card:parity}{6}
+\answer{$\max(S_0-Ke^{-rT},0)\le C\le S_0$ and $\max(Ke^{-rT}-S_0,0)\le P\le Ke^{-rT}$.}
+\end{problem}
+
+\begin{problem}[Put--call parity from two portfolios]
+Show $C+Ke^{-rT}=P+S_0$ and say how to profit if it fails.
+\uses{card:parity}{3}
+\plug{call $+$ cash $Ke^{-rT}$ and put $+$ share both pay $\max(S_T,K)$ at $T$, so they cost the same today.}
+\uses{card:parity}{4}
+\answer{If $C+Ke^{-rT}>P+S_0$, sell the call and the cash, buy the put and the share: the gap is a sure profit.}
+\end{problem}
+
+\begin{problem}[American versus European call]
+When is an American call worth more than the European one?
+\uses{card:payoff}{6}
+\plug{exercise at a stopping time $\tau\le T$, paying $(S_\tau-K)^+$; the American right includes the European one, so its price is at least as large.}
+\uses{card:parity}{7}
+\answer{Never, for a stock without dividends and $r\ge0$: early exercise gives $S_t-K$, keeping the call is worth at least $S_t-KD_{T-t}$. A put can be worth exercising early.}
+\end{problem}
+
+\begin{problem}[No arbitrage in words]
+What is an arbitrage, and what does ruling it out give?
+\uses{card:selffin}{4}
+\plug{self-financing, $V_0\le0$, $V_T\ge0$, $P(V_T>0)>0$.}
+\uses{card:finite}{1}
+\answer{No arbitrage $\iff$ risk-neutral weights $p^*$ exist; then every claim that can be copied costs its copy, $X^*=D\sum_kp^*_kX(\omega_k)$, and the real-world probabilities do not enter.}
+\end{problem}
+
+%=====================================================================
+\section{One-period markets}
+
+\begin{problem}[No sure win]
+A share costs $75$ and will be worth $200$ or $50$ (present values). An option to buy at $120$ costs $c$. Which $c$ allows no sure win?
+\uses{card:finite}{2}
+\plug{$p^*=\frac{75-50}{200-50}=\frac16$; call $=\frac16(200-120)$.}
+\answer{$c=\frac{40}3\approx13.33$.}
+\end{problem}
+
+\begin{problem}[Arbitrage range]
+A share costs $50$ and will be worth $100$ or $25$ (present values). An option to buy at $85$ costs $c$. For which $c$ is there an arbitrage?
+\uses{card:finite}{2}
+\plug{$p^*=\frac{50-25}{100-25}=\frac13$; call $=\frac13(15)=5$.}
+\uses{card:finite}{4}
+\answer{Every $c\ne5$: sell the option if $c>5$, buy it if $c<5$, and hedge with shares.}
+\end{problem}
+
+\begin{problem}[Price and copy a claim]
+$S_0=5$, $S_1=6$ or $\frac{40}9$, $r=\frac19$; the claim pays $6$ or $1$. Is the market arbitrage-free? Price and copy the claim.
+\uses{card:finite}{1}
+\plug{$u=\frac65$, $d=\frac89$, $1+r=\frac{10}9$: $d<1+r<u$. $p^*=\frac{10/9-8/9}{6/5-8/9}=\frac57$.}
+\answer{Arbitrage-free; $X^*=\frac9{10}\big(\frac57\cdot6+\frac27\cdot1\big)=\frac{144}{35}\approx4.11$; $\Delta=\frac{45}{14}\approx3.21$ shares, $b=-\frac{837}{70}\approx-11.96$ (borrowed).}
+\end{problem}
+
+\begin{problem}[A second claim to copy]
+$S_0=5$, $S_1=\frac{20}3$ or $\frac{40}9$, $r=\frac19$; the claim pays $7$ or $2$.
+\uses{card:finite}{1}
+\plug{$u=\frac43$, $d=\frac89$, $p^*=\frac12$.}
+\answer{Arbitrage-free; $X^*=\frac9{10}\cdot\frac92=4.05$; $\Delta=\frac94$, $b=-7.2$.}
+\end{problem}
+
+\begin{problem}[Bull spread in a one-period market]
+$S_0=5$, $S_1=6$ or $4$, $r=0.1$; price and copy the spread with $K_1=3$, $K_2=5$.
+\uses{card:finite}{1}
+\plug{payoff $2$ (up), $1$ (down); $p^*=\frac{1.1-0.8}{1.2-0.8}=0.75$.}
+\answer{$X^*=\frac{0.75\cdot2+0.25\cdot1}{1.1}\approx1.59$; $\Delta=\frac12$, $b=-\frac{10}{11}$; check: $3-1=2$ and $2-1=1$.}
+\end{problem}
+
+\begin{problem}[Put, then call by parity]
+$S_0=4$, $S_1=4.6$ or $3.6$, $r=0.05$, $K=3.8$.
+\uses{card:finite}{1}
+\plug{$p^*=\frac{1.05-0.9}{1.15-0.9}=0.6$; put pays $0$ or $0.2$.}
+\answer{$P=\frac{0.4\cdot0.2}{1.05}=\frac8{105}\approx0.076$.}
+\uses{card:parity}{2}
+\answer{$C=0.076+4-\frac{3.8}{1.05}=\frac{16}{35}\approx0.457$.}
+\end{problem}
+
+\begin{problem}[The call price as a function of the strike]
+Sketch $C(K)$ in a one-period binomial market.
+\uses{card:finite}{1}
+\plug{$X=(S_1-K)^+$: $C(K)=D\big[p^*(uS_0-K)^++(1-p^*)(dS_0-K)^+\big]$.}
+\answer{Piecewise linear, from $C(0)=S_0$: slope $-D$ for $K<dS_0$, slope $-p^*D$ on $(dS_0,uS_0)$, zero for $K>uS_0$. Decreasing, and $0$ for large $K$.}
+\end{problem}
+
+\begin{problem}[Three outcomes, one stock]
+Prices $dS_0<mS_0<uS_0$, $d<1+r<u$. Arbitrage-free? Can every claim be copied?
+\uses{card:finite}{5}
+\plug{three weights, two equations ($\sum p^*_k=1$ and the stock): one weight is free; take $p^*_2>0$ small, the other two still solve the stock equation in $(0,1)$.}
+\answer{Arbitrage-free, but incomplete: copying needs three lines $\Delta S_1(\omega_k)+b(1+r)=X_k$ through one point, which in general they miss.}
+\end{problem}
+
+\begin{problem}[Two stocks, three outcomes]
+$r=0$; today $(4,5)$; tomorrow $(6,6)$, $(4,4)$ or $(2,7)$. Price and copy the call on stock 1 with $K=5$.
+\uses{card:finite}{6}
+\plug{$4=6p_1+4p_2+2p_3$, $5=6p_1+4p_2+7p_3$, $1=p_1+p_2+p_3$.}
+\answer{$p^*=(0.2,0.6,0.2)$, unique: arbitrage-free and complete. $C=0.2\cdot1=0.2$. Copy $(\Delta^1,\Delta^2,b)=(0.3,0.2,-2)$: stock 2 is needed.}
+\end{problem}
+
+%=====================================================================
+\section{Multiperiod trees}
+
+\begin{problem}[Two-period put, hedge and call]
+$S_0=400$, $u=1.75$, $d=0.5$, $r=0.25$, $T=2$, $K=450$.
+\uses{card:tree}{1}
+\plug{$p^*=0.6$; put pays $0$, $100$, $350$; time-1 values $32$ (up), $160$ (down).}
+\answer{$P=\frac{0.6\cdot32+0.4\cdot160}{1.25}=66.56$.}
+\uses{card:tree}{5}
+\answer{Time 0: $\Delta=-0.256$, bond $168.96$. Up: $\Delta=-\frac4{35}$, bond $112$. Down: $\Delta=-1$, bond $360$.}
+\uses{card:tree}{6}
+\answer{Up: $-0.256\cdot700+168.96\cdot1.25=32=-\frac4{35}\cdot700+112$. Down: $160$ both ways.}
+\uses{card:tree}{4}
+\answer{$C=66.56+400-\frac{450}{1.5625}=178.56$.}
+\end{problem}
+
+\begin{problem}[Four-period call]
+$S_0=81$, $u=\frac43$, $d=\frac23$, $r=0$, $T=4$, $K=120$.
+\uses{card:tree}{1}
+\plug{$p^*=\frac12$; final prices $16,32,64,128,256$ pay $0,0,0,8,136$.}
+\answer{$C=\frac{4\cdot8+136}{16}=10.5$.}
+\end{problem}
+
+\begin{problem}[Two-period put, no interest]
+$S_0=60$, $u=\frac53$, $d=\frac13$, $r=0$, $T=2$, $K=80$.
+\uses{card:tree}{1}
+\plug{$p^*=\frac12$; final prices $166.67$, $33.33$, $6.67$ pay $0$, $46.67$, $73.33$.}
+\answer{$P=\frac14(0)+\frac12(46.67)+\frac14(73.33)=\frac{125}3\approx41.67$.}
+\end{problem}
+
+\begin{problem}[Two-period call: price, hedge, self-financing, put]
+$S_0=400$, $u=1.35$, $d=0.6$, $r=0.15$, $T=2$, $K=500$.
+\uses{card:tree}{1}
+\plug{$p^*=\frac{1.15-0.6}{0.75}=0.7333$; only $S_2=729$ pays ($229$); $V_1=146.03$ (up), $0$ (down).}
+\answer{$C=\frac{0.7333\cdot146.03}{1.15}=93.12$.}
+\uses{card:tree}{5}
+\answer{Time 0: $\Delta=\frac{146.03}{540-240}=0.4868$, bond $-101.59$. Up: $\Delta=\frac{229}{729-324}=0.5654$, bond $-159.30$. Down: nothing.}
+\uses{card:tree}{6}
+\answer{Up: $0.4868\cdot540-101.59\cdot1.15=146.03=0.5654\cdot540-159.30$. Down: $0.4868\cdot240-116.82=0$.}
+\uses{card:tree}{4}
+\answer{$P=93.12-400+\frac{500}{1.3225}=71.19$.}
+\end{problem}
+
+%=====================================================================
+\section{Black--Scholes}
+
+\begin{problem}[A call and its Greeks]
+$S_0=80$, $K=85$, $T=1$, $r=0.05$, $\sigma=0.15$: price the call and give its Greeks.
+\uses{card:bsprice}{1}
+\plug{$h=\frac{\ln(80/85)+0.06125}{0.15}=0.0042$, $h-\sigma\sqrt T=-0.1458$.}
+\answer{$C=80\times0.5017-80.85\times0.4420\approx4.39$.}
+\uses{card:bsprice}{6}
+\answer{$\Delta=0.50$, $\Gamma=0.033$, vega $=31.92$, $\theta=-4.18$ per year, $\rho=35.74$.}
+\end{problem}
+
+\begin{problem}[What the Greeks mean]
+Interpret delta, gamma and theta.
+\uses{card:bsprice}{6}
+\answer{Delta $\Phi(h)\in(0,1)$: price change per unit move in the stock, and the shares held in the copy. Gamma $>0$: how fast delta changes, so how often the hedge is rebalanced (largest at the money near expiry). Theta $<0$: value lost as time passes.}
+\end{problem}
+
+\begin{problem}[Price and implied volatility]
+$S_0=K=18.50$, $r=0.062$, $\sigma=0.2$, $T=\frac1{12}$. Price the call; the market quotes $0.57$/$0.63$.
+\uses{card:bsprice}{1}
+\plug{$h=\frac{(0.062+0.02)/12}{0.2\sqrt{1/12}}=0.1184$, $h-\sigma\sqrt T=0.0606$.}
+\answer{$C\approx0.474$.}
+\uses{card:bsprice}{9}
+\plug{$C_{\mathrm{mkt}}=0.60$, the mid-price.}
+\answer{$\sigma_{\mathrm{imp}}\approx0.259$.}
+\end{problem}
+
+\begin{problem}[Two expiries]
+$S_0=100$, $K=110$, $\sigma=0.4$, $r=0.04$; call and put for $T=1.5$ and $T=\frac1{12}$.
+\uses{card:bsprice}{1}
+\answer{$T=1.5$: $C\approx17.95$; $T=\frac1{12}$: $C\approx1.46$.}
+\uses{card:bsprice}{2}
+\answer{$P\approx21.55$ and $P\approx11.09$. With a month left the stock barely moves: the put is near its payoff $10$, the call nearly worthless.}
+\end{problem}
+
+\begin{problem}[The Black--Scholes market has no arbitrage]
+Why can no strategy in the Black--Scholes market be an arbitrage?
+\uses{card:bsprice}{7}
+\answer{Under the unique EMM $P^*$ every discounted self-financing value is a martingale, so $V_0=0$ and $V_T\ge0$ force $V_T=0$; $P^*$ and $P$ have the same null sets.}
+\end{problem}
+
+\begin{problem}[Black--Scholes from the binomial model]
+Derive the call price as the limit of $n$-step binomial prices.
+\uses{card:bsprice}{8}
+\plug{$u=e^{\sigma\sqrt{T/n}}$, $d=1/u$; under $p^*$ the log-price is a sum of $n$ steps with total mean $\to(r-\frac12\sigma^2)T$ and variance $\to\sigma^2T$; the central limit theorem.}
+\answer{$C=S_0\Phi(h)-Ke^{-rT}\Phi(h-\sigma\sqrt T)$.}
+\end{problem}
+
+\begin{problem}[Value at risk]
+What is the value at risk of a loss $L\sim N(\mu_L,\sigma_L^2)$ at level $99\%$, and what does it miss?
+\uses{card:normal-prob}{5}
+\answer{$\mu_L+2.326\,\sigma_L$: the loss exceeds it with probability $1\%$. It says nothing about how large losses beyond it are.}
+\end{problem}

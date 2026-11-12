@@ -95,7 +95,7 @@ Numbering after the 2026-11-12 restructure: problem chapters moved to the final 
 | P | Problems: probability and martingales (90) | 55–58, 73–76 + sheets | written (card → plug → answer) |
 | P | Problems: Brownian motion (91) | sheets, papers | written |
 | P | Problems: Itô calculus and SDEs (92) | sheets, papers | written |
-| P | Problems: option pricing (93) | sheets, papers | todo |
+| P | Problems: option pricing (93) | sheets, papers | written |
 
 ## Card catalogue (euclid-book §2a), current numbering
 1.1 atoms · 1.2 union · 1.3 limits · 2.1 measurability · 2.2 P(ξ∈B) · 2.3 normal probabilities · 3.1 E h(ξ) · 3.2 variance of combinations · 3.3 normal exponential moment · 3.4 tail bound · 4.1 Bayes · 4.2 independence · 4.3 freeze and average · 5.1 one-step test · 6.1 independent increments · 7.1 stopping-time test · 7.2 optional stopping (exits, ruin, drift, lines, Laplace) · 7.3 stakes · 8.1 scaled walk · 8.2 heat equation · 10.1 law of x0+μt+σW given known values · 11.1 GBM · 12.1 jointly normal / Gaussian processes · 13.1 G(b,c) · 14.1 Itô integral · 15.1 Itô's formula · 16.1 linear SDE · 17.1 one-period pricing.
