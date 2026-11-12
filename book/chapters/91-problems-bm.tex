@@ -1,0 +1,151 @@
+\chapter{Problems: Brownian motion}
+\label{ch:prob-bm}
+
+\begin{whatfor}
+Each problem names the card and row it uses, plugs in, and reads off the answer. $W$ (or $B$) is a standard Brownian motion.
+\end{whatfor}
+
+%=====================================================================
+\section{Moments and combinations}
+
+\begin{problem}[Four basic quantities]
+For $0<s<t$: (a) $\E_P[(W_t-W_s)^2]$; (b) $\E_P(W_s\given W_t=x)$; (c) $\Cov(W_s,W_t)$; (d) $\E_P(W_t\given W_s=x)$.
+\uses{card:incr}{2}
+\plug{(a) $f(x)=x^2$ applied to the increment alone: $\E_PD^2=v(t-s)=t-s$.}
+\uses{card:Ylaw}{3}
+\plug{(b) backward, $x_0=0$, $s_2=t$, $a_2=x$: mean $\frac stx$.}
+\uses{card:mvn}{1}
+\plug{(c) $C(s,t)=\min(s,t)$.}
+\uses{card:Ylaw}{2}
+\plug{(d) forward with $\mu=0$.}
+\answer{(a) $t-s$; (b) $\frac{sx}{t}$; (c) $s$; (d) $x$.}
+\end{problem}
+
+\begin{problem}[Linear combinations]
+Distributions of $B(s)+B(t)$ ($s\le t$), $W_1-W_2+3W_4$, $4W_1+6W_3$, $2W_{t_1}-W_{t_2}$, $W_0+W_2-W_3+2W_4$; and $\Var W_4\cdot\Cov(W_1,W_4)$.
+\uses{card:mvn}{1}
+\plug{$\Var=\sum t_i^2t_i+2\sum_{i<j}t_it_j\min(t_i,t_j)$.}
+\answer{$N(0,s+t+2s)=N(0,3s+t)$; $1+2+36+2(-1+3-6)=31$; $16+108+48=172$; $4t_1+t_2-4t_1=t_2$; $2+3+16+2(-2+4-6)=13$ (since $W_0=0$); and $4\cdot1=4$.}
+\end{problem}
+
+\begin{problem}[Products and fourth moments]
+$\E_P[B(t_1)B(t_2)B(t_3)]$ for $t_1<t_2<t_3$, and $\E_P(W_2^2W_3^2)$.
+\uses{card:mvn}{3}
+\answer{$0$ (odd order, means $0$).}
+\uses{card:incr}{8}
+\plug{$W_3=W_2+Z$, $Z\sim N(0,1)$ independent; $\E_PW_2^4=3\cdot2^2$ (Card~\ref{card:normal-mgf}, row 3).}
+\answer{$12+0+2\cdot1=14$.}
+\end{problem}
+
+\begin{problem}[Exponentials]
+$\E_Pe^{W_1+W_2}$ and $\Cov(e^{W_1},e^{W_2})$.
+\uses{card:mvn}{2}
+\plug{$W_1+W_2\sim N(0,1+2+2)=N(0,5)$.}
+\answer{$e^{5/2}$; $e^{5/2}-e^{1/2}e^{1}=e^{3/2}(e-1)\approx7.70$.}
+\end{problem}
+
+\begin{problem}[A joint density]
+Joint density of $(2W_3,W_5)$.
+\uses{card:mvn}{8}
+\answer{$f(x,y)=\frac{1}{4\pi\sqrt6}\exp\{-\frac{5x^2}{48}+\frac{xy}{4}-\frac{y^2}{4}\}$.}
+\end{problem}
+
+%=====================================================================
+\section{Conditional laws}
+
+\begin{problem}[Between two known values]
+$0<t_1<s<t_2$: law of $B(s)$ given $B(t_1)=A$, $B(t_2)=B$.
+\uses{card:Ylaw}{4}
+\plug{$s_1=t_1$, $a_1=A$, $s_2=t_2$, $a_2=B$, $\sigma=1$, $t\to s$.}
+\answer{$N\Big(A+\frac{s-t_1}{t_2-t_1}(B-A),\ \frac{(s-t_1)(t_2-s)}{t_2-t_1}\Big)$.}
+\end{problem}
+
+\begin{problem}[Brownian motion with drift, both directions]
+$X(t)=\mu t+\sigma B(t)$. Law of $X(t)$ given $X(s)=c$ when (i) $s<t$, (ii) $t<s$.
+\uses{card:Ylaw}{2}
+\answer{(i) $N(c+\mu(t-s),\ \sigma^2(t-s))$.}
+\uses{card:Ylaw}{3}
+\plug{(ii) $x_0=0$, $s_2=s$, $a_2=c$; the drift drops out.}
+\answer{(ii) $N\big(\frac{tc}{s},\ \sigma^2\frac{t(s-t)}{s}\big)$.}
+\end{problem}
+
+\begin{problem}[A bicycle race]
+Lead $Y(t)=\sigma W(t)$. (i) $Y(\frac12)=\sigma$: $P(\text{A wins})$. (ii) $Y(1)=\sigma$: $P(\text{A led at half-way})$.
+\uses{card:Ylaw}{2}
+\plug{(i) $Y(1)\sim N(\sigma,\frac{\sigma^2}2)$: $P(Y(1)>0)=\Phi(\sqrt2)$.}
+\uses{card:Ylaw}{3}
+\plug{(ii) $Y(\frac12)\sim N(\frac\sigma2,\frac{\sigma^2}4)$: $P(Y(\frac12)>0)=\Phi(1)$.}
+\answer{(i) $\approx0.921$; (ii) $\approx0.841$.}
+\end{problem}
+
+%=====================================================================
+\section{Recognising processes}
+
+\begin{problem}[Scaling, time inversion, time change]
+Are $\frac1cW(c^2t)$, $tW(1/t)$ and $e^{-t}W(e^{2t})$ Wiener processes?
+\uses{card:mvn}{5}
+\plug{all three are Gaussian. Covariances: $\frac{1}{c^2}\min(c^2s,c^2t)=\min(s,t)$; $st\min(\frac1s,\frac1t)=\min(s,t)$; $e^{-s-t}\min(e^{2s},e^{2t})=e^{-|t-s|}$.}
+\answer{The first two are Wiener processes; the third is Gaussian but not Wiener.}
+\end{problem}
+
+\begin{problem}[Geometric Brownian motion]
+(a) $Y(t)=ae^{X(t)}$, $X$ BM with drift $\mu$, variance $\sigma^2$: $\E_PY(t)$. (b) $\mu=0.01$, $\sigma=0.2$, $Y(0)=100$: $\E_PY(10)$.
+\uses{card:gbm}{1}
+\plug{exponent form: $m=\mu$.}
+\answer{(a) $ae^{t(\mu+\sigma^2/2)}$; (b) $100e^{0.3}\approx134.99$.}
+\end{problem}
+
+\begin{problem}[Walks becoming Brownian motion]
+(a) Steps $\pm\sqrt{\Delta t}$ with $p=\frac12(1+\mu\sqrt{\Delta t})$. (b) Multiply by $e^{\pm\sigma\sqrt h}$ with $p=\frac12(1+\frac\mu\sigma\sqrt h)$.
+\uses{card:scaledwalk}{3}
+\answer{(a) $\to\mu t+W(t)$.}
+\uses{card:scaledwalk}{5}
+\answer{(b) $\to$ start$\cdot e^{\mu t+\sigma W_t}$, a geometric Brownian motion.}
+\end{problem}
+
+%=====================================================================
+\section{Exits, hitting times and the maximum}
+
+\begin{problem}[Which barrier first?]
+$B$ from $0$, no drift: $P(B\text{ reaches }-2\text{ before }1)$.
+\uses{card:ost}{1}
+\plug{$x=0$, $a=-2$, $b=1$: $P(\text{exit at }a)=\frac{b-x}{b-a}$.}
+\answer{$\frac13$.}
+\end{problem}
+
+\begin{problem}[Up, then down, then up]
+$P(T_1<T_{-1}<T_2)$.
+\uses{card:ost}{1}
+\plug{stage 1 from $0$ on $(-1,1)$: $\frac12$. Stage 2 restarts at $1$ on $(-1,2)$: $P(\text{exit at }-1)=\frac{2-1}{2-(-1)}=\frac13$.}
+\answer{$\frac12\cdot\frac13=\frac16$.}
+\end{problem}
+
+\begin{problem}[Ever reach, and the best exercise level]
+Price $B(t)=\mu t+W(t)$ with $\mu=-d<0$; gain $x-A$ if you exercise when the price first reaches $x>A$. Best $x$?
+\uses{card:ost}{3}
+\plug{$\sigma=1$, $x\to0$, $b\to x$: $P(\text{reach }x)=e^{-2dx}$; maximise $(x-A)e^{-2dx}$.}
+\answer{$x^*=A+\frac1{2d}$; with drift coefficient $-1$ and $A=100$: $100.5$.}
+\end{problem}
+
+\begin{problem}[Hitting time and maximum]
+(a) d.f.\ and density of $T_a$, $a>0$, and $P(T_a<\infty)$. (b) $P(M_1\ge1)$. (c) Bought at $b+c$, price now $b$, sell on recovery or after time $t$: $P(\text{not recover})$.
+\uses{card:G}{1}
+\answer{(a) $P(T_a\le t)=2[1-\Phi(\frac a{\sqrt t})]$; (b) $\approx0.317$.}
+\uses{card:G}{2}
+\answer{(a) $f_{T_a}(t)=\frac{a}{\sqrt{2\pi t^3}}e^{-a^2/2t}$; and row 3: $P(T_a<\infty)=1$, $\E_PT_a=\infty$.}
+\uses{card:G}{6}
+\answer{(c) $2\Phi(\frac{c}{\sqrt t})-1$.}
+\end{problem}
+
+\begin{problem}[A rectangle for $W$ and its maximum]
+$t=4$: $P(1<W_t\le3,\ 2<M_t\le3)$.
+\uses{card:G}{5}
+\plug{$a=1$, $b=3$, $c=2$, $d=3$. Corners: $G(3,2)=1+\Phi(1.5)-2\Phi(1)$ ($0<c<b$); $G(1,2)=1-\Phi(1.5)$; $G(3,3)=1-\Phi(1.5)$; $G(1,3)=1-\Phi(2.5)$.}
+\answer{$[G(3,2)-G(1,2)]-[G(3,3)-G(1,3)]\approx0.1231$.}
+\end{problem}
+
+\begin{problem}[Maximum over a later window]
+$P(\max_{t_1\le s\le t_2}B(s)>x)$.
+\uses{card:G}{7}
+\answer{$P(B(t_1)\ge x)+\int_{-\infty}^x2\big[1-\Phi\big(\frac{x-y}{\sqrt{t_2-t_1}}\big)\big]\frac{e^{-y^2/2t_1}}{\sqrt{2\pi t_1}}dy$.}
+\end{problem}

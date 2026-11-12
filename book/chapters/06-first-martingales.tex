@@ -55,7 +55,7 @@ A process $(W_t)_{t\ge0}$ is a \dfn{Wiener process}, or \dfn{standard Brownian m
 \end{enumerate}
 \end{definition}
 
-That such a process exists is a theorem we take on trust. Chapter~9 shows where it comes from: it is the limit of a fair coin-tossing game with tiny steps.
+That such a process exists is a theorem we take on trust. Chapter~8 shows where it comes from: it is the limit of a fair coin-tossing game with tiny steps.
 
 Three facts follow at once.
 \begin{itemize}
@@ -179,7 +179,7 @@ $\E_PD=m(t-s)$, $\Var D=v(t-s)$ and $\E_Pe^{uD}=e^{\kappa(u)(t-s)}$. Then, freez
 \]
 \begin{plugrows}
   \plugrow{Standard Wiener process $W$}{$m=0$, $v=1$, $\kappa(u)=\frac12u^2$ (since $D\sim N(0,t-s)$, Card~\ref{card:normal-mgf})}{$W_t$, $W_t^2-t$, $e^{uW_t-u^2t/2}$ are martingales}{$s<t$}{$\E_Pe^{uW_t-u^2t/2}=1$ for all $t$}
-  \plugrow{Conditional moments}{$f(x)=x$, $x^2$, $e^{ux}$}{$\E_P(X_t\given\F_s)=X_s+m(t-s)$; $\E_P(X_t^2\given\F_s)=(X_s+m(t-s))^2+v(t-s)$; $\E_P(e^{uX_t}\given\F_s)=e^{uX_s+\kappa(u)(t-s)}$}{$s<t$; for $s>t$ see Card 13.1}{$\E_P(W_5^2\given\F_2)=W_2^2+3$; $\E_P(e^{2W_3}\given\F_1)=e^{2W_1+4}$}
+  \plugrow{Conditional moments}{$f(x)=x$, $x^2$, $e^{ux}$}{$\E_P(X_t\given\F_s)=X_s+m(t-s)$; $\E_P(X_t^2\given\F_s)=(X_s+m(t-s))^2+v(t-s)$; $\E_P(e^{uX_t}\given\F_s)=e^{uX_s+\kappa(u)(t-s)}$}{$s<t$; for $s>t$ see Card 12.1}{$\E_P(W_5^2\given\F_2)=W_2^2+3$; $\E_P(e^{2W_3}\given\F_1)=e^{2W_1+4}$}
   \plugrow{Sums of i.i.d.\ steps (discrete time)}{$X_n=Y_1+\dots+Y_n$: $m=\E_PY$, $v=\Var Y$, $e^{\kappa(u)}=\E_Pe^{uY}$}{$S_n-nm$, $(S_n-nm)^2-nv$, $e^{uS_n}/(\E_Pe^{uY})^n$}{integer times}{$Y=\pm1$, $P(+1)=0.7$: $S_n-0.4n$; fair $\pm1$: $S_n^2-n$}
   \plugrow{Exponential of a sum (geometric walk)}{the third martingale with $u=1$}{$X_0e^{S_n}$ is a MG iff $\E_Pe^{Y}=1$; for $Y\sim N(\mu,\sigma^2)$ iff $\mu=-\frac12\sigma^2$}{$\E_Pe^{Y}<\infty$}{$Y\sim N(\mu,0.04)$: MG iff $\mu=-0.02$}
   \plugrow{Products of i.i.d.\ factors $\eta_i\ge0$}{$Y_i=\ln\eta_i$, $u=1$}{$\prod_{i\le n}\big(\eta_i/\E_P\eta\big)$ is a MG}{$\E_P\eta\in(0,\infty)$}{$U_i$ uniform: $2^nU_1\cdots U_n$; $\epsilon_i$ exponential: $2^ne^{-S_n}$; Bernoulli$(p)$: $p^{-n}\xi_1\cdots\xi_n$}

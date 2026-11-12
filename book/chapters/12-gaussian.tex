@@ -15,7 +15,7 @@ Brownian motion at many times at once: what is the joint law, and which processe
 \end{whatfor}
 
 \begin{prereq}
-From Part~0: covariance and its rules, independence, sums of independent normals, the normal exponential moment, CE1--CE4, matrices. From Chapters~6, 9, 10: Wiener process, independent increments, conditional law of $W(s)$ given $W(t)$.
+From Part~0: covariance and its rules, independence, sums of independent normals, the normal exponential moment, CE1--CE4, matrices. From Chapters~6, 8, 10: Wiener process, independent increments, conditional law of $W(s)$ given $W(t)$.
 \end{prereq}
 
 %=====================================================================
@@ -76,7 +76,7 @@ If $(X,Y)$ is MVN, then $X$ given $Y=y$ is normal with
 Let $c=\Cov(X,Y)/\Var Y$ and $R=X-cY$. Then $\Cov(R,Y)=\Cov(X,Y)-c\Var Y=0$, and $(R,Y)$ is MVN, so $R$ is independent of $Y$. Given $Y=y$, $X=cy+R$ with $R\sim N(\mu_X-c\mu_Y,\ \Var X-c^2\Var Y)$.
 \end{proof}
 
-For $(W(s),W(t))$ with $s<t$ this gives back Chapter~10: $\Cov=s$, $\Var W(t)=t$, so the mean is $\frac stW(t)$ and the variance $s-\frac{s^2}{t}=\frac{s(t-s)}{t}$.
+For $(W(s),W(t))$ with $s<t$ this gives back Chapter~9: $\Cov=s$, $\Var W(t)=t$, so the mean is $\frac stW(t)$ and the variance $s-\frac{s^2}{t}=\frac{s(t-s)}{t}$.
 
 %=====================================================================
 \section{Gaussian processes}
@@ -128,7 +128,7 @@ Is $X(t)=e^{-t}W(e^{2t})$ a Gaussian process? Each $X(t_k)$ is a fixed number ti
 \[
   K(s,t)=e^{-s}e^{-t}\min\big(e^{2s},e^{2t}\big)=e^{-|t-s|} .
 \]
-It has $X(0)=W(1)\ne0$ and depends only on $|t-s|$: it is a stationary process that returns in Chapter~18 as a model of interest rates, not a Brownian motion.
+It has $X(0)=W(1)\ne0$ and depends only on $|t-s|$: it is a stationary process that returns in Chapter~16 as a model of interest rates, not a Brownian motion.
 \end{example}
 
 %=====================================================================
@@ -143,7 +143,7 @@ The \dfn{Brownian bridge} is standard Brownian motion on $[0,1]$ conditioned on 
 The Brownian bridge is a Gaussian process with mean $0$ and covariance $K(s,t)=s(1-t)$ for $s\le t$. The process $Z(t)=W(t)-t\,W(1)$, $0\le t\le1$, has the same mean and covariance, so it is a Brownian bridge.
 \end{theorem}
 \begin{proof}
-Use the conditional law of Chapter~10 and the tower rule.
+Use the conditional law of Chapter~9 and the tower rule.
 \begin{steps}
   \item Mean: $\E_P\big(W(s)\given W(1)=0\big)=s\cdot0=0$.
   \item Covariance, $s<t<1$: by the tower rule, conditioning first on $W(t)$,

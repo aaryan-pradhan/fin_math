@@ -1,0 +1,102 @@
+\chapter{Problems: Itô calculus and SDEs}
+\label{ch:prob-ito}
+
+\begin{whatfor}
+Each problem names the card and row it uses, plugs in, and reads off the answer.
+\end{whatfor}
+
+%=====================================================================
+\section{Itô integrals}
+
+\begin{problem}[Distributions and variances]
+$\int_0^1t\,dW_t$, $\int_0^1t^2\,dW_t$, $\Var\int_0^1t^4\,dW_t$, $\int_0^ts\,dW_s$.
+\uses{card:itoint}{1}
+\plug{$\int b^2$: $\frac13$, $\frac15$, $\frac19$, $\frac{t^3}{3}$.}
+\answer{$N(0,\frac13)$, $N(0,\frac15)$, $\frac19\approx0.11$, $N(0,\frac{t^3}3)$.}
+\end{problem}
+
+\begin{problem}[Isometry with two integrands]
+Show $\E_P[\int_0^tf\,dW\int_0^tg\,dW]=\int_0^t\E_P(f_sg_s)\,ds$.
+\uses{card:itoint}{3}
+\plug{apply the isometry (row 2) to $f+g$, $f$ and $g$; subtract.}
+\answer{The cross terms agree, giving the identity.}
+\end{problem}
+
+%=====================================================================
+\section{Differentials and martingales}
+
+\begin{problem}[Three differentials]
+$d\cos W_t$; $d(e^tW_t)$ and is $e^tW_t$ a martingale?; $d\,e^{-2X_t}$ with $X_t=t+W_t$ and is it a martingale?
+\uses{card:ito}{1}
+\answer{$-\sin W\,dW-\frac12\cos W\,dt$; $e^tW\,dt+e^t\,dW$: not a martingale (row 3: drift $\ne0$).}
+\uses{card:ito}{2}
+\plug{$f=e^{-2x}$ of $X=t+W$, i.e.\ $e^{-2t-2W}$: $\mu=-2$, $\sigma=-2$, $\mu+\frac12\sigma^2=0$.}
+\answer{$d\,e^{-2X}=-2e^{-2X}dW$: a martingale.}
+\end{problem}
+
+\begin{problem}[The exponential martingale]
+$X_t=e^{W_t-t/2}$: $dX_t$, and is it a martingale?
+\uses{card:ito}{2}
+\plug{$\mu=-\frac12$, $\sigma=1$: $\mu+\frac12\sigma^2=0$.}
+\answer{$dX_t=X_t\,dW_t$; yes.}
+\end{problem}
+
+\begin{problem}[An expectation by zero drift]
+$X_t=e^{t/2}\cos W_t$: compute $dX_t$, then $\E_P(\cos W_t)$.
+\uses{card:ito}{4}
+\plug{$h(t)=e^{t/2}$, $\phi=\cos$: drift $\frac12X-\frac12X=0$, $dX=-e^{t/2}\sin W\,dW$.}
+\answer{$e^{t/2}\E_P\cos W_t=1$, so $\E_P\cos W_t=e^{-t/2}$.}
+\end{problem}
+
+\begin{problem}[Which are martingales?]
+$e^{t/2}\sin W_t$, $e^t\cos W_t$, $e^t\sin W_t$, $e^{t/2}\cos W_t$.
+\uses{card:ito}{3}
+\plug{coefficient $(c-\frac12)g$ with $c=\frac12,1,1,\frac12$.}
+\answer{The first and last are martingales; the middle two are not.}
+\end{problem}
+
+\begin{problem}[Hitting a line]
+$T=\min\{t:W_t=2-3t\}$: $\E_P(T)$.
+\uses{card:ost}{5}
+\plug{$c=2$, $\beta=-3$.}
+\answer{$\frac23\approx0.67$.}
+\end{problem}
+
+%=====================================================================
+\section{SDEs}
+
+\begin{problem}[An OU process as a stochastic integral]
+Solve $dX_t=-X_t\,dt+dW_t$, $X_0=x_0$; is it OU? $\E_PX_t$, $\Var X_t$.
+\uses{card:linsde}{1}
+\plug{$\alpha=0$, $\beta=r=1$, $\sigma=1$.}
+\answer{$X_t=x_0e^{-t}+\int_0^te^{-(t-s)}dW_s$ (OU); mean $x_0e^{-t}$, variance $\frac12(1-e^{-2t})$.}
+\end{problem}
+
+\begin{problem}[A square-root SDE]
+Show $X_t=W_t^2$ solves $dX=dt+2\sqrt X\,dW$, $X_0=0$; find $\E_PX_t$, $\Var X_t$.
+\uses{card:ito}{8}
+\plug{$d(W^2)=2W\,dW+dt$, with $2W=2\sqrt X$ where $W\ge0$.}
+\answer{$\E_PX_t=t$; $\Var X_t=3t^2-t^2=2t^2$.}
+\end{problem}
+
+\begin{problem}[Verifying a guessed GBM]
+$dS=0.2S\,dt+S\,dW$, $S_0=5$: find $S_t=ce^{at+bW_t}$ and the SDE of $1/S$.
+\uses{card:ito}{8}
+\plug{drift of $ce^{at+bW}$ is $(a+\frac12b^2)$, noise $b$: $b=1$, $a=-0.3$, $c=5$.}
+\answer{$S_t=5e^{-0.3t+W_t}$; $d(1/S)=0.8(1/S)\,dt-(1/S)\,dW$, $1/S_0=0.2$.}
+\end{problem}
+
+\begin{problem}[Short note: derive Itô's formula]
+Derive $df(t,X_t)$ for $dX=a\,dt+b\,dW$.
+\uses{card:ito}{1}
+\plug{Taylor to second order; $dt^2=dt\,dW=0$ and $dW^2=dt$ (because $\sum(\Delta W)^2\to t$, Card~\ref{card:itoint}).}
+\answer{$df=(\partial_tf+a\partial_xf+\frac12b^2\partial_{xx}f)dt+b\partial_xf\,dW$; e.g.\ $d(W^2)=dt+2W\,dW$.}
+\end{problem}
+
+\begin{problem}[Heston volatility]
+$dV=(1-V)dt+2\sqrt V\,dW$, $V_0=1$: SDE of $Z=\sqrt V$, and check $Z_t=e^{-t/2}(1+\int_0^te^{s/2}dW_s)$.
+\uses{card:ito}{5}
+\answer{$dZ=dW-\frac12Z\,dt$, $Z_0=1$.}
+\uses{card:linsde}{4}
+\answer{The given $Z_t$ is the solution ($\alpha=0$, $\beta=\frac12$, $\sigma=1$).}
+\end{problem}

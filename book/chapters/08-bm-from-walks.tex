@@ -145,7 +145,7 @@ Normality comes from the central limit theorem; independent coins in disjoint ti
   \plugrow{Variance parameter $\sigma^2$}{$p=\frac12$, $\Delta x=\sigma\sqrt{\Delta t}$}{$X\to\sigma W$, $\Var=\sigma^2t$}{$\sigma>0$}{$\sigma=2$, $\Delta t=0.01$: steps $\pm0.2$, $\Var X(1)=4$}
   \plugrow{With drift $\mu$}{$p=\frac12(1+\mu\sqrt{\Delta t})$, $\Delta x=\sqrt{\Delta t}$ ($\sigma=1$)}{step mean $\mu\sqrt{\Delta t}$, step variance $1-\mu^2\Delta t$: $X\to\mu t+W$}{$|\mu|\sqrt{\Delta t}\le1$}{$\mu=1$, $\Delta t=0.01$: $p=0.55$, $\E_PX(1)=100(0.1)(0.1)=1$}
   \plugrow{Wrong scalings}{$\Delta x=\Delta t$; $\Delta x\gg\sqrt{\Delta t}$}{$\Var=t\,\Delta t\to0$ (motion collapses); $\Var\to\infty$}{only $\Delta x\propto\sqrt{\Delta t}$ works}{$\Delta x=\Delta t=0.01$: $\Var X(1)=0.01$}
-  \plugrow{Multiplicative walk}{the price is multiplied by $e^{\pm\sigma\sqrt h}$ every $h$, with $p=\frac12(1+\frac\mu\sigma\sqrt h)$; apply the box to $\ln(\text{price})$}{$\ln(\text{price})\to\ln(\text{start})+\mu t+\sigma W_t$, i.e.\ price $=\text{start}\cdot e^{\mu t+\sigma W_t}$ (Card 12.1)}{log-steps $\pm\sigma\sqrt h$}{$\mu=0.1$, $\sigma=0.2$: $\ln(\text{price})$ has mean $0.1t$, variance $0.04t$}
+  \plugrow{Multiplicative walk}{the price is multiplied by $e^{\pm\sigma\sqrt h}$ every $h$, with $p=\frac12(1+\frac\mu\sigma\sqrt h)$; apply the box to $\ln(\text{price})$}{$\ln(\text{price})\to\ln(\text{start})+\mu t+\sigma W_t$, i.e.\ price $=\text{start}\cdot e^{\mu t+\sigma W_t}$ (Card 11.1)}{log-steps $\pm\sigma\sqrt h$}{$\mu=0.1$, $\sigma=0.2$: $\ln(\text{price})$ has mean $0.1t$, variance $0.04t$}
 \end{plugrows}
 \end{mastercard}
 

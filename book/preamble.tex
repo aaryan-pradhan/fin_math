@@ -108,6 +108,8 @@
 \makeatletter\def\theHproblem{\thechapter.\arabic{theorem}}\makeatother
 \crefname{problem}{Problem}{Problems}
 \newcommand{\uses}[2]{\par\smallskip{\color{defc}$\bigstar$\ \textbf{Uses \cref{#1}, row~#2.}}\par}
+\newcommand{\plug}[1]{\par\textit{Plug:} #1\par}
+\newcommand{\answer}[1]{\par\textbf{Answer:} #1\par}
 
 \InputIfFileExists{notation}{}{}
 

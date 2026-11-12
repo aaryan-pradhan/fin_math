@@ -16,7 +16,7 @@ What is the chain rule when the inner function is random and rough, like $f(W_t)
 \end{whatfor}
 
 \begin{prereq}
-From Part~0: Taylor series, partial derivatives. From Chapters~6--16: Wiener process, its martingales, geometric Brownian motion, the Itô integral, quadratic variation $\sum(\Delta W)^2\to t$, Itô integrals of adapted integrands are martingales.
+From Part~0: Taylor series, partial derivatives. From Chapters~6--14: Wiener process, its martingales, geometric Brownian motion, the Itô integral, quadratic variation $\sum(\Delta W)^2\to t$, Itô integrals of adapted integrands are martingales.
 \end{prereq}
 
 %=====================================================================
@@ -49,7 +49,7 @@ Each rule is a statement about sums over a uniform partition of $[0,t]$ with $\D
 \begin{steps}
   \item $\sum(\Delta t)^2=n\frac{t^2}{n^2}=\frac{t^2}{n}\to0$.
   \item $\sum\Delta t\,\Delta W_k=\frac tn\,W_t\to0$.
-  \item $\sum(\Delta W_k)^2\to t$ (quadratic variation, Chapter~16).
+  \item $\sum(\Delta W_k)^2\to t$ (quadratic variation, Chapter~14).
   \item Expand $(a\,dt+b\,dW)^2=a^2(dt)^2+2ab\,dt\,dW+b^2(dW)^2=b^2\,dt$. \qedhere
 \end{steps}
 \end{proof}
@@ -99,7 +99,7 @@ Ordinary chain rule plus one correction, $\frac12f''\times(\text{squared noise})
 \label{ex:ito-first}
 With $X=W$ ($a=0$, $b=1$):
 \begin{itemize}
-  \item $f(x)=\frac12x^2$: $d\big(\frac12W_t^2\big)=W_t\,dW_t+\frac12dt$, the result of Chapter~16 again.
+  \item $f(x)=\frac12x^2$: $d\big(\frac12W_t^2\big)=W_t\,dW_t+\frac12dt$, the result of Chapter~14 again.
   \item $f(x)=x^3$: $d(W_t^3)=3W_t^2\,dW_t+3W_t\,dt$, so $W_t^3=3\int_0^tW_s\,ds+3\int_0^tW_s^2\,dW_s$.
   \item $f(x)=\cos x$: $d\cos W_t=-\sin W_t\,dW_t-\frac12\cos W_t\,dt$.
   \item $f(t,x)=x^2-t$: $d(W_t^2-t)=-dt+2W_t\,dW_t+dt=2W_t\,dW_t$, no $dt$-term.
@@ -113,7 +113,7 @@ $Z_t=e^{\mu t+\sigma W_t}=f(t,W_t)$ with $f=e^{\mu t+\sigma x}$: $\partial_tf=\m
 \[
   dZ_t=\mu Z_t\,dt+\sigma Z_t\,dW_t+\tfrac12\sigma^2Z_t\,dt=\Big(\mu+\frac{\sigma^2}2\Big)Z_t\,dt+\sigma Z_t\,dW_t .
 \]
-The $dt$-coefficient is $(\mu+\frac12\sigma^2)Z_t$: the growth rate of the mean found in Chapter~12.
+The $dt$-coefficient is $(\mu+\frac12\sigma^2)Z_t$: the growth rate of the mean found in Chapter~11.
 \end{example}
 
 %=====================================================================
@@ -149,7 +149,7 @@ Check with $f(x)=xe^x$, $f'=(1+x)e^x$, $f''=(2+x)e^x$: the same.
 Let $dX_t=a_t\,dt+b_t\,dW_t$ with $\int_0^T\E_P(b_s^2)\,ds<\infty$. Then $X$ is a martingale on $[0,T]$ if and only if $a_t=0$ for all $t$ (a.s.).
 \end{theorem}
 \begin{proof}
-If $a=0$, $X_t=X_0+\int_0^tb\,dW$, a martingale by Chapter~16. Conversely, if $X$ is a martingale then so is $X_t-\int_0^tb\,dW=X_0+\int_0^ta_s\,ds$; a martingale whose paths are smooth (no $dW$ part) cannot move on average without moving surely, which forces $a=0$. We accept this last step.
+If $a=0$, $X_t=X_0+\int_0^tb\,dW$, a martingale by Chapter~14. Conversely, if $X$ is a martingale then so is $X_t-\int_0^tb\,dW=X_0+\int_0^ta_s\,ds$; a martingale whose paths are smooth (no $dW$ part) cannot move on average without moving surely, which forces $a=0$. We accept this last step.
 \end{proof}
 
 So: \emph{to test whether $g(t,W_t)$ is a martingale, compute its $dt$-coefficient $\partial_tg+\frac12\partial_{xx}g$ and check that it is $0$.}

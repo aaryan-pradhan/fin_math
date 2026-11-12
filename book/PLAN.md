@@ -66,55 +66,36 @@ One LaTeX book, one PDF (`build/main.pdf`), that replaces everything else in `fi
 | exam questions on Markov decision processes / optimal betting | dropped: optimal control is out of syllabus (CONTEXT.md) |
 
 ## Topic plan
-Needs must appear in an earlier row's Introduces, or in "Before you start".
-| # | Title | PDF pages | Needs | Introduces | Status |
-|---|---|---|---|---|---|
-| 1 | Probability spaces | 1–4 | sets, series | σ-field, Borel sets, probability measure, continuity of P, almost surely, Borel–Cantelli, filtration (first look) | written |
-| 2 | Random variables and distributions | 4–7 | 1 | random variable, σ(ξ), Borel function, Doob–Dynkin, distribution, d.f., density, discrete, joint density, normal | written |
-| 3 | Expectation | 7–9, 55 | 2 | integrable, E as integral, indicator, step function, E h(ξ), normal mgf, Markov/Chebyshev | written |
-| 4 | Independence and conditional expectation | 9–13 | 3 | conditional prob, total prob, independence (events, r.v.s, σ-fields), E(X∣𝒢), CE1–CE4, tower | written |
-| 5 | Filtrations and martingales | 13–16 | 4 | discrete process, filtration, adapted, filtered space, binomial tree, martingale, sub/super, constant mean | written |
-| 6 | Random walks and the Wiener process | 16–20 | 5 | stochastic process, sample path, Wiener process (axioms), W, W²−t, exponential MG, random walk, geometric random walk | written |
-| 7 | Stopping times and optional stopping | 21–24 | 6 | stopping time, entry/hitting time, stopped process, optional stopping thm, no beating a fair game | written |
-| 8 | Problems: martingales and stopping | 55–58, 73–76 | 7 | — | written |
-| 9 | Brownian motion from random walks | 25–26 | 6 | scaling limit, density of W(t), heat equation, BM with variance σ² | written |
-| 10 | Joint and conditional laws of Brownian motion | 26–27 | 9 | joint density, conditional law W(s)∣W(t) | written |
-| 11 | Drift and gambler's ruin | 27–32 | 7, 9 | BM with drift, gambler's ruin, exit probabilities | written |
-| 12 | Geometric Brownian motion | 32–34 | 11 | GBM, its mean, log-normal | written |
-| 13 | Gaussian processes and the Brownian bridge | 34–39 | 10 | MVN, joint mgf, Gaussian process, cov min(s,t), Brownian bridge, integrated BM | written |
-| 14 | Hitting times and the maximum | 40–43 | 13, 7 | T_a law, reflection principle, M(t), joint law of W and M | written |
-| 15 | Problems: Brownian motion | — | 14 | — | written |
-| 16 | The Itô integral | 44–46 | 14 | Itô integral, isometry, ∫W dW, quadratic variation | written |
-| 17 | Itô processes and Itô's formula | 46–49, 68–70 | 16 | Itô process, multiplication table, Itô formula, product/quotient rule | written |
-| 18 | Stochastic differential equations | 50–54, 70–72 | 17 | SDE, OU, Vasicek, CIR, GBM as SDE | written |
-| 19 | Problems: Itô calculus and SDEs | — | 18 | — | written |
-| 20 | Arbitrage and risk-neutral pricing | 59–63, 77–85 | 4 | discounting, option, arbitrage, risk-neutral probability, arbitrage theorem | todo |
-| 21 | Derivatives and replication | 64–67 | 20 | forward, call, put, American, contingent claim, replicating portfolio | todo |
-| 22 | The single-period binomial market | 86–93, 94–104 | 21 | portfolio, trading strategy, self-financing, NA principle, perfect hedge, p*, put–call parity | todo |
-| 23 | The fundamental theorems (finite market) | 105–114, 115–124 | 22 | convex hull, hyperplane, EMM, Thm 2 (NA⇔EMM), Thm 3 (pricing), complete market, Thm 4 | todo |
-| 24 | The multiperiod binomial market | 125–129, 134–138 | 23 | backward induction, V_t formula, discounted price MG | todo |
-| 25 | From binomial to Black–Scholes | 130–133, 139–141 | 24, 12 | binomial call formula, continuous limit, Black–Scholes formula | todo |
-| 26 | Martingale pricing in continuous time | 142–145 | 25, 18 | P_t(X), Black–Scholes market, EMM condition | todo |
-| 27 | Problems: option pricing | — | 26 | — | todo |
+Numbering after the 2026-11-12 restructure: problem chapters moved to the final Part "Problems" (files 90+), so body chapters renumbered.
+| # | Title | PDF pages | Status |
+|---|---|---|---|
+| 1 | Probability spaces | 1–4 | written |
+| 2 | Random variables and distributions | 4–7 | written |
+| 3 | Expectation | 7–9, 55 | written |
+| 4 | Independence and conditional expectation | 9–13 | written |
+| 5 | Filtrations and martingales | 13–16 | written |
+| 6 | Random walks and the Wiener process | 16–20 | written |
+| 7 | Stopping times and optional stopping | 21–24 | written |
+| 8 | Brownian motion from random walks | 25–26 | written |
+| 9 | Joint and conditional laws of BM | 26–27 | written (no card: rows of Card 10.1) |
+| 10 | Drift and gambler's ruin | 27–32 | written |
+| 11 | Geometric Brownian motion | 32–34 | written |
+| 12 | Gaussian processes and the Brownian bridge | 34–39 | written |
+| 13 | Hitting times and the maximum | 40–43 | written |
+| 14 | The Itô integral | 44–46 | written |
+| 15 | Itô processes and Itô's formula | 46–49, 68–70 | written |
+| 16 | Stochastic differential equations | 50–54, 70–72 | written |
+| 17 | Arbitrage and risk-neutral pricing | 59–63, 77–85 | written |
+| 18 | Derivatives and replication | 64–67 | todo |
+| 19 | The single-period binomial market | 86–93, 94–104 | todo |
+| 20 | The fundamental theorems (finite market) | 105–114, 115–124 | todo |
+| 21 | The multiperiod binomial market | 125–129, 134–138 | todo |
+| 22 | From binomial to Black–Scholes | 130–133, 139–141 | todo |
+| 23 | Martingale pricing in continuous time | 142–145 | todo |
+| P | Problems: probability and martingales (90) | 55–58, 73–76 + sheets | written (card → plug → answer) |
+| P | Problems: Brownian motion (91) | sheets, papers | written |
+| P | Problems: Itô calculus and SDEs (92) | sheets, papers | written |
+| P | Problems: option pricing (93) | sheets, papers | todo |
 
-## Card catalogue (euclid-book §2a): every general formula, beneath its unlock chapter
-Each special result in the chapters is a row of exactly one card. A chapter with no card points its skip line at the sheet that covers it.
-| Ch | Cards (most general formula) |
-|---|---|
-| 1 | 1.1 finite $\sigma$-field = unions of atoms, $2^k$ events, $P(A)=\sum P(\text{atoms})$ · 1.2 inclusion–exclusion for $P(\bigcup A_i)$ · 1.3 monotone limits $P(\lim A_n)=\lim P(A_n)$ (Borel–Cantelli, a.s. as rows) |
-| 2 | 2.1 $\eta$ is $\G$-measurable ⇔ constant on atoms of $\G$ (σ(ξ), families, Doob–Dynkin, adapted) · 2.2 $P(\xi\in B)$ by sum/integral/d.f. · 2.3 $P(a<\xi\le b)$ for $N(\mu,\sigma^2)$ |
-| 3 | 3.1 $\E_Ph(\xi)$ / $\E_Ph(\xi,\eta)$ · 3.2 $\Var(\sum a_iX_i+c)$ · 3.3 $\E_Pe^{u\xi}$, $\xi\sim N(\mu,\sigma^2)$ (all normal moments) · 3.4 $P(g(X)\ge c)\le\E_Pg(X)/c$ |
-| 4 | 4.1 Bayes over a partition · 4.2 independence: $\E\prod f_i(X_i)=\prod\E f_i(X_i)$ · 4.3 freezing: $\E(f(K,Z)\given\G)=g(K)$, $g(k)=\E f(k,Z)$, plus tower |
-| 5 | 5.1 one-step test $X_{n+1}=\varphi(X_n,\xi_{n+1})$: $\E(X_{n+1}\given\F_n)=g(X_n)$ |
-| 6 | 6.1 independent increments: $\E(f(X_t)\given\F_s)=\E f(x+D)\big|_{x=X_s}$ |
-| 7 | 7.1 stopping-time test · 7.2 optional stopping with $X-mt$, $(X-mt)^2-vt$, $e^{uX-\kappa(u)t}$ · 7.3 predictable stakes |
-| 9 | 9.1 scaled walk mean/variance and limit · 9.2 transition density and heat equation |
-| 10 | none → Ch 13 sheet |
-| 11 | 11.1 exit of $x+\mu t+\sigma W$ from $(a,b)$, $\theta=2\mu/\sigma^2$ · 11.2 discrete ruin $P_i$, $D_i$ |
-| 12 | 12.1 GBM master ($\ln Y$ normal; moments, conditional mean, MG, median, $P(Y_t>K)$) |
-| 13 | 13.1 law and conditioning of $Y_t=x_0+\mu t+\sigma W_t$ on known values · 13.2 MVN: $\sum t_iX_i$, joint $\E e^{\sum t_iX_i}$, $X\given Y$ · 13.3 Gaussian-process tests |
-| 14 | 14.1 $G(b,c)=P(W_t\le b,M_t\ge c)$ (hitting time, maximum, rectangles as rows) |
-| 16 | 16.1 $\int_0^tb\,dW$: mean, $\E[\int b\,dW\int c\,dW]=\int\E(bc)$, normal if $b$ non-random |
-| 17 | 17.1 Itô for $f(t,X_t)$ (MG test, expectation trick as rows) · 17.2 Itô for $f(X_t,Y_t)$ (product, quotient) |
-| 18 | 18.1 linear SDE $dX=\beta(m-X)dt+\sigma dW$ · 18.2 GBM SDE ⇔ exponent drift $\mu-\frac12\sigma^2$ |
-| 20 | 20.1 one-period pricing with discount $D$: price $=D\sum p^*_j\,\text{payoff}_j$, hedge, arbitrage, ranges |
+## Card catalogue (euclid-book §2a), current numbering
+1.1 atoms · 1.2 union · 1.3 limits · 2.1 measurability · 2.2 P(ξ∈B) · 2.3 normal probabilities · 3.1 E h(ξ) · 3.2 variance of combinations · 3.3 normal exponential moment · 3.4 tail bound · 4.1 Bayes · 4.2 independence · 4.3 freeze and average · 5.1 one-step test · 6.1 independent increments · 7.1 stopping-time test · 7.2 optional stopping (exits, ruin, drift, lines, Laplace) · 7.3 stakes · 8.1 scaled walk · 8.2 heat equation · 10.1 law of x0+μt+σW given known values · 11.1 GBM · 12.1 jointly normal / Gaussian processes · 13.1 G(b,c) · 14.1 Itô integral · 15.1 Itô's formula · 16.1 linear SDE · 17.1 one-period pricing.
