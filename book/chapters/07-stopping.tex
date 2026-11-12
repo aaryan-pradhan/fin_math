@@ -232,23 +232,21 @@ $\tau$ is a stopping time exactly when the event ``stop now'' is decided by the 
 \end{plugrows}
 \end{mastercard}
 
-\begin{mastercard}[label=card:ost]{Optional stopping for a process with independent increments}
-Let $X$ be as in Card~\ref{card:incr} (increment mean rate $m$, variance rate $v$, $\kappa(u)$), started at $X_0=x$, and $\tau$ a stopping time with $\tau<\infty$ a.s.\ and the stopped martingales bounded (e.g.\ $X$ stays between two levels until $\tau$, or $\tau\le c$). Then
+\begin{mastercard}[label=card:ost]{A stopped martingale keeps its start}
+Pick a martingale $M$ from \cref{card:incr} whose stopped value involves only what you want, plug in where the process stopped, and solve:
 \[
-  \boxed{\begin{gathered}\E_PX_\tau=x+m\,\E_P\tau,\qquad \E_P\big[(X_\tau-x-m\tau)^2\big]=v\,\E_P\tau,\\
-  \E_P\,e^{uX_\tau-\kappa(u)\tau}=e^{ux}.\end{gathered}}
+  \boxed{\;\E_PM_\tau=M_0\qquad(\tau<\infty,\ M\text{ bounded up to }\tau).\;}
 \]
-Write $X_\tau$ in terms of $\tau$ or of where it stopped, plug in, solve.
 \begin{plugrows}
-  \plugrow{Exit from $(a,b)$, no drift}{$m=0$: $x=a\,P_a+b\,P_b$; second identity}{$P(\text{exit at }b)=\dfrac{x-a}{b-a}$, $\E_P\tau=\dfrac{(x-a)(b-x)}{v}$}{$a<x<b$}{$W$ from $0$, $a=-2$, $b=1$: $P(-2\text{ first})=\frac13$, $\E_P\tau=2$; fair $\pm1$ walk, win $10$/lose $5$: $\frac13$, $50$}
-  \plugrow{Exit from $(a,b)$ with drift}{$u=-\theta$ with $\kappa(-\theta)=0$: $\theta=2\mu/\sigma^2$ for $x+\mu t+\sigma W_t$}{$P(\text{exit at }b)=\dfrac{e^{-\theta a}-e^{-\theta x}}{e^{-\theta a}-e^{-\theta b}}$; $\E_P\tau=\dfrac{\E_PX_\tau-x}{\mu}$}{$\mu\ne0$ (else previous row)}{$\mu=0.5$, $\sigma=1$, $x=0$, $(a,b)=(-1,1)$: $\theta=1$, $P=\frac{e-1}{e-e^{-1}}\approx0.731$}
+  \plugrow{Exit from $(a,b)$, no drift}{$M=X$: $x=a\,P_a+b\,P_b$; $M=(X-x)^2-(\text{variance per unit time})\cdot t$}{$P(\text{exit at }b)=\dfrac{x-a}{b-a}$, $\E_P\tau=\dfrac{(x-a)(b-x)}{\text{variance per unit time}}$}{$a<x<b$}{$W$ from $0$, $a=-2$, $b=1$: $P(-2\text{ first})=\frac13$, $\E_P\tau=2$; fair $\pm1$ walk, win $10$/lose $5$: $\frac13$, $50$}
+  \plugrow{Exit from $(a,b)$ with drift}{$X_t=x+\mu t+\sigma W_t$: $M=e^{-\theta X}$ with $\theta=2\mu/\sigma^2$; then $M=X-\mu t$}{$P(\text{exit at }b)=\dfrac{e^{-\theta a}-e^{-\theta x}}{e^{-\theta a}-e^{-\theta b}}$; $\E_P\tau=\dfrac{\E_PX_\tau-x}{\mu}$}{$\mu\ne0$ (else previous row)}{$\mu=0.5$, $\sigma=1$, $x=0$, $(a,b)=(-1,1)$: $\theta=1$, $P=\frac{e-1}{e-e^{-1}}\approx0.731$}
   \plugrow{Ever reach $b$}{previous row with $a\to-\infty$}{$\mu<0$: $P=e^{\theta(b-x)}=e^{-2|\mu|(b-x)/\sigma^2}$; $\mu\ge0$: $1$}{$b>x$}{$\mu=-0.5$, $\sigma=1$, $b-x=1$: $e^{-1}\approx0.368$}
-  \plugrow{Gambler's ruin (unfair $\pm1$ walk)}{$e^{u}=r=q/p$ makes $\kappa=0$: $r^{S_n}$ is a MG; drift $m=p-q$}{from $i$, levels $0,N$: $P_i=\dfrac{1-r^i}{1-r^N}$, $D_i=\E_P\tau=\dfrac{NP_i-i}{p-q}$}{$p\ne\frac12$; fair: first row ($\frac iN$, $i(N-i)$)}{roulette $p=\frac{18}{38}$, $i=10$, $N=20$: $P_{10}\approx0.259$, $D_{10}\approx91.8$}
-  \plugrow{Hitting a moving line}{$W_\tau=c+\beta\tau$ in the first two identities ($m=0$, $v=1$)}{$\E_P\tau=-\dfrac{c}{\beta}$; then $\E_P(c+\beta\tau)^2=\E_P\tau$ gives $\E_P\tau^2$, which works out to $\Var\tau=\dfrac{|c|}{|\beta|^3}$}{$c$ and $\beta$ of opposite sign (line moves towards the path)}{line $2-4t$: $\E_P\tau=\frac12$, $\E_P\tau^2=\frac9{32}$; line $2t-4$: $2$, $4.5$, $\Var=0.5$}
-  \plugrow{Curved boundaries $W_\tau^2=a+b\tau$}{second identity}{$\E_P\tau=\dfrac{a}{1-b}$}{$a>0$, $0<b<1$}{$a=1$, $b=\frac12$: $2$}
-  \plugrow{Laplace transform $\E_Pe^{-s\tau}$}{third identity; choose $u$ so the coefficient of $\tau$ is $-s$}{line $W_\tau=c+\beta\tau$: $\E_Pe^{-s\tau}=e^{-uc}$ with $\frac12u^2-u\beta=s$; symmetric exit $\pm a$: $\dfrac{1}{\cosh(a\sqrt{2s})}$}{take the root that gives a value $\le1$ and $1$ at $s=0$}{line $2t-4$: $e^{8-4\sqrt{2(s+2)}}$; exit $\pm1$: $\E_P\tau=1$, $\Var\tau=\frac23$}
-  \plugrow{Uneven steps}{first identity with $m=\E_PY$}{$\E_P\tau=(X_\tau-x)/m$ when $X_\tau$ is known exactly}{the walk cannot jump over the level}{up $1$ w.p.\ $\frac67$, down $2$ w.p.\ $\frac17$, stop at $4$: $m=\frac47$, $\E_P\tau=7$}
-  \plugrow{When it fails}{$\tau$ unbounded and the stopped process unbounded}{the identities can be false}{check the guard every time}{fair walk until it first hits $+1$: $\E_PX_\tau=1\ne0$}
+  \plugrow{Gambler's ruin (unfair $\pm1$ walk)}{$M=r^{S_n}$ with $r=q/p$ (since $\E_Pr^{Y}=1$); then $M=S_n-(p-q)n$}{from $i$, levels $0,N$: $P_i=\dfrac{1-r^i}{1-r^N}$, $D_i=\E_P\tau=\dfrac{NP_i-i}{p-q}$}{$p\ne\frac12$; fair: first row ($\frac iN$, $i(N-i)$)}{roulette $p=\frac{18}{38}$, $i=10$, $N=20$: $P_{10}\approx0.259$, $D_{10}\approx91.8$}
+  \plugrow{Hitting a moving line $W_\tau=c+\beta\tau$}{$M=W$: $c+\beta\,\E_P\tau=0$; $M=W^2-t$: $\E_P(c+\beta\tau)^2=\E_P\tau$}{$\E_P\tau=-\dfrac{c}{\beta}$, $\Var\tau=\dfrac{|c|}{|\beta|^3}$}{$c$ and $\beta$ of opposite sign (line moves towards the path)}{line $2-4t$: $\E_P\tau=\frac12$, $\E_P\tau^2=\frac9{32}$; line $2t-4$: $2$, $4.5$, $\Var=0.5$}
+  \plugrow{Curved boundaries $W_\tau^2=a+b\tau$}{$M=W^2-t$: $a+b\,\E_P\tau=\E_P\tau$}{$\E_P\tau=\dfrac{a}{1-b}$}{$a>0$, $0<b<1$}{$a=1$, $b=\frac12$: $2$}
+  \plugrow{Laplace transform $\E_Pe^{-s\tau}$}{$M=e^{uW-u^2t/2}$, $u$ chosen so the coefficient of $\tau$ is $-s$; for $\pm a$ use $\cosh(uW)e^{-u^2t/2}$}{line $W_\tau=c+\beta\tau$: $\E_Pe^{-s\tau}=e^{-uc}$ with $\frac12u^2-u\beta=s$; symmetric exit $\pm a$: $\dfrac{1}{\cosh(a\sqrt{2s})}$}{take the root that gives a value $\le1$ and $1$ at $s=0$}{line $2t-4$: $e^{8-4\sqrt{2(s+2)}}$; exit $\pm1$: $\E_P\tau=1$, $\Var\tau=\frac23$}
+  \plugrow{Uneven steps}{$M=S_n-n\mu$ with $\mu=\E_PY$}{$\E_P\tau=(X_\tau-x)/\mu$ when $X_\tau$ is known exactly}{the walk cannot jump over the level}{up $1$ w.p.\ $\frac67$, down $2$ w.p.\ $\frac17$, stop at $4$: $\mu=\frac47$, $\E_P\tau=7$}
+  \plugrow{When it fails}{$\tau$ unbounded and $M$ unbounded before $\tau$}{the box can be false}{check the guard every time}{fair walk until it first hits $+1$: $\E_PX_\tau=1\ne0$}
 \end{plugrows}
 \end{mastercard}
 
