@@ -1,13 +1,14 @@
 """Monte Carlo checks of the book's stochastic claims (run by `make verify`).
-Each check simulates a claim from the text and fails if the text's value is outside the 95% interval."""
+Each check simulates a claim from the text and fails if the text's value is outside the 99.9% interval
+(3.29 standard errors: with many checks per run, 95% would raise false alarms)."""
 import numpy as np
 rng = np.random.default_rng(2026)
 fails = []
 
 def check(name, samples, claim):
     m, se = samples.mean(), samples.std(ddof=1) / np.sqrt(len(samples))
-    ok = abs(m - claim) <= 1.96 * se + 1e-12
-    print(f"{'ok  ' if ok else 'FAIL'} {name}: sim {m:.4f} ± {1.96*se:.4f}, text {claim}")
+    ok = abs(m - claim) <= 3.29 * se + 1e-12
+    print(f"{'ok  ' if ok else 'FAIL'} {name}: sim {m:.4f} ± {3.29*se:.4f}, text {claim}")
     if not ok: fails.append(name)
 
 # --- checks are added chapter by chapter below ---
@@ -68,5 +69,17 @@ def exit_drift(mu, A, B, n=40000, dt=1e-3):
         x = xn
     return up
 check("Ch11 P(up 1 before -1), mu=0.5", exit_drift(0.5, 1, 1), 1 / (1 + np.exp(-1)))
+
+# Ch 14: P(M(1) >= 1) = 2(1 - Phi(1)) and P(W(1) <= 0, M(1) >= 1) = 1 - Phi(2), with bridge-corrected maxima
+from math import erf
+Phi = lambda x: 0.5 * (1 + erf(x / np.sqrt(2)))
+n, steps = 200000, 500; dt = 1 / steps
+w = np.zeros(n); hit = np.zeros(n, bool)
+for _ in range(steps):
+    wn = w + rng.normal(0, np.sqrt(dt), n)
+    hit |= (wn >= 1) | (rng.random(n) < np.exp(-2 * np.maximum(1 - w, 0) * np.maximum(1 - wn, 0) / dt))
+    w = wn
+check("Ch14 P(M(1)>=1)", hit.astype(float), 2 * (1 - Phi(1)))
+check("Ch14 P(W(1)<=0, M(1)>=1)", (hit & (w <= 0)).astype(float), 1 - Phi(2))
 
 raise SystemExit(1 if fails else 0)

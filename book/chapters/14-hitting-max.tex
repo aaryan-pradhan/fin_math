@@ -1,0 +1,213 @@
+\chapter{Hitting times and the maximum}
+\label{ch:hitting}
+
+\begin{question}
+How long does Brownian motion take to reach a level $a$, and how high does it climb by time $t$?
+\end{question}
+
+\begin{whatfor}
+\begin{itemize}
+  \item Finds the distribution and density of the hitting time $T_a$, and shows $T_a<\infty$ a.s.\ but $\E_P(T_a)=\infty$.
+  \item Finds the distribution of the running maximum $M(t)$.
+  \item Proves the reflection principle and gets the joint law of $W(t)$ and $M(t)$.
+\end{itemize}
+\skipline{fs:hitting}
+\end{whatfor}
+
+\begin{prereq}
+From Part~0: total probability, $\Phi$ and its symmetry, densities. From Chapters~6--13: Wiener process, independent increments, stopping times, the symmetry of $N(0,t)$, conditional laws of Brownian motion.
+\end{prereq}
+
+%=====================================================================
+\section{The hitting time of a level}
+
+\begin{definition}[Hitting time; running maximum]
+For a standard Brownian motion $W$ and a level $a$, the \dfn{hitting time} of $a$ is $T_a=\min\{t\ge0:W(t)=a\}$, the first time the path reaches $a$. The \dfn{running maximum} is $M(t)=\max_{0\le s\le t}W(s)$.
+\end{definition}
+
+$T_a$ is a stopping time: whether the path has reached $a$ by time $t$ is decided by the path up to $t$. For $a>0$, the path reaches $a$ by time $t$ exactly when its maximum is at least $a$:
+\[
+  \{T_a\le t\}=\{M(t)\ge a\}.
+\]
+
+We need one more fact about Brownian motion, which we use without proof.
+
+\begin{theorem}[Strong Markov property]
+\label{thm:strong-markov}
+For a stopping time $T$ with $T<\infty$, the process $\tilde W(u)=W(T+u)-W(T)$, $u\ge0$, is a standard Brownian motion independent of the path up to time $T$.
+\end{theorem}
+\noproof
+
+In words: at a stopping time, Brownian motion starts afresh. For fixed times this is just independence of increments; the theorem says it holds at random stopping times too.
+
+\begin{theorem}[Distribution of $T_a$]
+\label{thm:Ta}
+For $a\ne0$ and $t>0$,
+\[
+  P(T_a\le t)=2P\big(W(t)\ge|a|\big)=2\Big[1-\Phi\Big(\frac{|a|}{\sqrt t}\Big)\Big].
+\]
+$T_a$ has density $f_{T_a}(t)=\dfrac{|a|}{\sqrt{2\pi t^3}}\,e^{-a^2/(2t)}$, $t>0$.
+\end{theorem}
+\begin{proof}
+Take $a>0$; for $a<0$ use the symmetry $-W$ of $W$, which turns $T_a$ into $T_{-a}$.
+\begin{steps}
+  \item Total probability over whether $a$ was reached by time $t$:
+  \[
+    P(W(t)\ge a)=P\big(W(t)\ge a\given T_a\le t\big)P(T_a\le t)+P\big(W(t)\ge a\given T_a>t\big)P(T_a>t).
+  \]
+  \item If $T_a>t$, the continuous path is still below $a$ at time $t$: the second conditional probability is $0$.
+  \item If $T_a\le t$: $W(t)=a+\tilde W(t-T_a)$, and $\tilde W$ is a fresh Brownian motion (\cref{thm:strong-markov}), symmetric about $0$. So $W(t)$ is equally likely to end above or below $a$: the first conditional probability is $\frac12$.
+  \item Hence $P(W(t)\ge a)=\frac12P(T_a\le t)$, and $P(W(t)\ge a)=1-\Phi(a/\sqrt t)$.
+  \item Differentiate in $t$: $\frac{d}{dt}\,2\big[1-\Phi(at^{-1/2})\big]=-2\varphi(at^{-1/2})\cdot\big(-\frac a2t^{-3/2}\big)=\frac{a}{t^{3/2}}\frac{1}{\sqrt{2\pi}}e^{-a^2/(2t)}$. \qedhere
+\end{steps}
+\end{proof}
+
+\begin{result}[Certain to hit, but not quickly]
+\label{res:Ta-finite}
+$P(T_a<\infty)=1$, yet $\E_P(T_a)=\infty$ for every $a\ne0$.
+\end{result}
+\begin{proof}
+$P(T_a<\infty)=\lim_{t\to\infty}2\big[1-\Phi(|a|/\sqrt t)\big]=2\big[1-\Phi(0)\big]=1$. For the mean, $t\,f_{T_a}(t)=\frac{|a|}{\sqrt{2\pi}}t^{-1/2}e^{-a^2/(2t)}$, which behaves like $t^{-1/2}$ for large $t$; its integral to $\infty$ diverges.
+\end{proof}
+
+Compare Chapter~7: Brownian motion surely hits the level $1$, but the walk to it can take so long that the average waiting time is infinite. This is why optional stopping fails for $T_1$ alone.
+
+\begin{pic}
+\begin{tikzpicture}
+\begin{axis}[width=10cm,height=4.4cm,xmin=0,xmax=6,ymin=0,ymax=0.5,xlabel={$t$},ylabel={$f_{T_1}(t)$},samples=200,domain=0.01:6]
+  \addplot[defc,very thick] {exp(-1/(2*x))/sqrt(2*pi*x^3)};
+  \node[font=\scriptsize,anchor=west] at (axis cs:2.5,0.3) {peak at $t=\frac13$; tail $\sim t^{-3/2}$};
+\end{axis}
+\end{tikzpicture}
+\picnote{The density of $T_1$. It peaks early but has a long, heavy tail: enough probability far out to make the mean infinite.}
+\end{pic}
+
+\begin{result}[Distribution of the maximum]
+\label{res:max}
+For $a>0$, $P\big(M(t)\ge a\big)=2\Big[1-\Phi\Big(\dfrac{a}{\sqrt t}\Big)\Big]=P\big(|W(t)|\ge a\big)$. So $M(t)$ has the same distribution as $|W(t)|$.
+\end{result}
+\begin{proof}
+$\{M(t)\ge a\}=\{T_a\le t\}$; apply \cref{thm:Ta}. And $P(|W(t)|\ge a)=2P(W(t)\ge a)$ by symmetry.
+\end{proof}
+
+\begin{example}[Numbers]
+\label{ex:max-num}
+Two quick evaluations.
+\begin{itemize}
+  \item $P\big(M(1)\ge1\big)=2(1-\Phi(1))\approx0.317$, while $P(W(1)\ge1)\approx0.159$: half the paths that touch $1$ end below it.
+  \item $P(T_2\le4)=2(1-\Phi(1))\approx0.317$; $P(T_2\le16)=2(1-\Phi(0.5))\approx0.617$.
+\end{itemize}
+\end{example}
+
+%=====================================================================
+\section{The reflection principle}
+
+\begin{theorem}[Reflection principle]
+\label{thm:reflection}
+For $a>0$ and $y\ge0$,
+\[
+  P\big(W(t)\le a-y,\ M(t)\ge a\big)=P\big(W(t)\ge a+y\big)=1-\Phi\Big(\frac{a+y}{\sqrt t}\Big).
+\]
+\end{theorem}
+\begin{proof}
+Reflect the path in the line at height $a$, from the moment it first touches $a$.
+\begin{steps}
+  \item Define the reflected path
+  \[
+    W^*(t)=\begin{cases}W(t),&t\le T_a,\\ 2a-W(t),&t>T_a.\end{cases}
+  \]
+  After $T_a$, $W(t)=a+\tilde W(t-T_a)$ and $W^*(t)=a-\tilde W(t-T_a)$. Since $-\tilde W$ is again a Brownian motion independent of the past (\cref{thm:strong-markov}), $W^*$ has the same law as $W$: it is again a standard Brownian motion.
+  \item $W$ and $W^*$ agree up to $T_a$, so they reach $a$ at the same time. On $\{T_a\le t\}$, reflection swaps ``ends at or below $a-y$'' with ``ends at or above $a+y$'':
+  \[
+    \{W(t)\le a-y,\ M(t)\ge a\}=\{W^*(t)\ge a+y,\ M^*(t)\ge a\}.
+  \]
+  \item Same law, so the two events have the same probability. Finally, $W^*(t)\ge a+y\ge a$ already forces $M^*(t)\ge a$, so $P(W^*(t)\ge a+y,M^*(t)\ge a)=P(W(t)\ge a+y)$. \qedhere
+\end{steps}
+\end{proof}
+
+\begin{pic}
+\begin{tikzpicture}
+\begin{axis}[width=11cm,height=5cm,xmin=0,xmax=1,ymin=-0.4,ymax=1.3,xlabel={$t$},legend style={font=\scriptsize,at={(0.5,1.02)},anchor=south},legend columns=3]
+  \addplot[defc,thick] table[x=t,y=w1] {figs/bm3.dat}; \addlegendentry{$W(t)$}
+  \addplot[trapc,thick] table[x=t,y expr={\thisrow{t}<0.3275 ? nan : 1.2-\thisrow{w1}}] {figs/bm3.dat}; \addlegendentry{$W^*(t)=2a-W(t)$}
+  \addplot[prec,dashed,domain=0:1] {0.6}; \addlegendentry{level $a=0.6$}
+  \draw[thmc,dashed] (axis cs:0.3275,-0.4)--(axis cs:0.3275,0.6);
+  \node[thmc,font=\scriptsize,anchor=west] at (axis cs:0.33,-0.28) {$T_a$};
+\end{axis}
+\end{tikzpicture}
+\picnote{After the path first touches $a$, its mirror image in the line $a$ is an equally likely path. Every path that touches $a$ and ends high has a twin that touches $a$ and ends low.}
+\end{pic}
+
+\begin{result}[Joint law of $W(t)$ and $M(t)$]
+\label{res:joint-WM}
+For $m\ge0$ and $w\le m$:
+\[
+  P\big(W(t)\le w,\ M(t)\ge m\big)=1-\Phi\Big(\frac{2m-w}{\sqrt t}\Big),
+\]
+and the pair has joint density $f(m,w)=\dfrac{2(2m-w)}{t\sqrt{2\pi t}}\,e^{-(2m-w)^2/(2t)}$ on $\{m\ge0,\ w\le m\}$. If $w>m$ the probability $P(W(t)\in\cdot,M(t)\in\cdot)$ is $0$, because $M(t)\ge W(t)$ always.
+\end{result}
+\begin{proof}
+Put $a=m$, $y=m-w\ge0$ in \cref{thm:reflection}: $a+y=2m-w$. For the density, $f=-\frac{\partial^2}{\partial m\,\partial w}P(W\le w,M\ge m)$ (the minus sign because the event shrinks as $m$ grows); differentiating $\Phi\big(\frac{2m-w}{\sqrt t}\big)$ once in $w$ and once in $m$ gives the formula.
+\end{proof}
+
+\begin{example}[A joint probability]
+$P\big(W(1)\le0,\ M(1)\ge1\big)=1-\Phi(2)\approx0.0228$: about $2\%$ of paths reach $1$ by time $1$ and still end below $0$.
+\end{example}
+
+\begin{remark}
+Any rectangle probability $P\big(W(t)\in(a,b],\,M(t)\in(c,d]\big)$ with $b\le c$ follows by inclusion--exclusion from four values of \cref{res:joint-WM}. If the intervals overlap, split off the part where $W(t)$ is also in $(c,d]$ and use $P(M(t)\in(c,d])$ from \cref{res:max}.
+\end{remark}
+
+%=====================================================================
+\formulasheet{fs:hitting}
+
+\begin{card}{1. Hitting time \texorpdfstring{$T_a$}{Ta}}
+\Formula
+$P(T_a\le t)=2\big[1-\Phi\big(\frac{|a|}{\sqrt t}\big)\big]$; density $\frac{|a|}{\sqrt{2\pi t^3}}e^{-a^2/2t}$; $P(T_a<\infty)=1$; $\E_PT_a=\infty$.
+\UseWhen
+``Probability the BM reaches $a$ by time $t$'', ``distribution / density of the first passage time''.
+\HowTo
+\begin{enumerate}
+  \item Compute $2P(W(t)\ge|a|)$.
+  \item For the density, differentiate in $t$.
+\end{enumerate}
+\Caveats
+\cav{Use $|a|$ for negative levels. Do not apply optional stopping to $T_a$ alone (mean infinite).}
+\begin{cardex}
+$P(T_2\le4)=2(1-\Phi(1))\approx0.317$.
+\end{cardex}
+\end{card}
+
+\begin{card}{2. Running maximum}
+\Formula
+$P(M(t)\ge a)=2\big[1-\Phi\big(\frac a{\sqrt t}\big)\big]$, $a>0$; $M(t)\eqd|W(t)|$.
+\UseWhen
+``Probability the maximum over $[0,t]$ exceeds $a$''.
+\HowTo
+\begin{enumerate}
+  \item $\{M(t)\ge a\}=\{T_a\le t\}$.
+  \item Double the one-time tail.
+\end{enumerate}
+\Caveats
+\cav{The factor $2$: the maximum is above $a$ twice as often as the endpoint.}
+\begin{cardex}
+$P(M(1)\ge1)\approx0.317$ vs $P(W(1)\ge1)\approx0.159$.
+\end{cardex}
+\end{card}
+
+\begin{card}{3. Reflection principle and the joint law}
+\Formula
+$P(W(t)\le a-y,\ M(t)\ge a)=1-\Phi\big(\frac{a+y}{\sqrt t}\big)$; \;$P(W(t)\le w,M(t)\ge m)=1-\Phi\big(\frac{2m-w}{\sqrt t}\big)$, $w\le m$, $m\ge0$.
+\UseWhen
+``Probability the BM hits $m$ but ends below $w$'', joint questions about $W(t)$ and $M(t)$.
+\HowTo
+\begin{enumerate}
+  \item Check the guard $w\le m$ (else use the overlap split).
+  \item Reflect: replace ``ends below $w$'' by ``ends above $2m-w$''.
+\end{enumerate}
+\Caveats
+\cav{If $w>m$, write $\{W\le w\}=\{W\le m\}\cup\{m<W\le w\}$; on the second part $M\ge W>m$ holds automatically.}
+\begin{cardex}
+$P(W(1)\le0,M(1)\ge1)=1-\Phi(2)\approx0.0228$.
+\end{cardex}
+\end{card}

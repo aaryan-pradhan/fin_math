@@ -64,7 +64,7 @@ If $X_n=0$ then $X_{n+1}=0$; if $X_n>0$ then $X_{n+1}=X_n\pm1$ with probability 
 %=====================================================================
 \section{Optional stopping for Brownian motion}
 
-In each problem, $W$ is a standard Brownian motion and the stopping time is a first hitting time. The stopped martingales stay bounded, so optional stopping applies (as in Chapter~7).
+In each problem, $W$ is a standard Brownian motion and the stopping time is the first time $W$ reaches a boundary. The stopped martingales stay bounded, so optional stopping applies (as in Chapter~7).
 
 \begin{problem}[Hitting a rising line from above]
 \label{ex:p-rising}
@@ -169,7 +169,7 @@ $\E_PU=\frac12$, $\E_Pe^{-\epsilon}=\frac12$, $\E_P\xi=p$: so $c=2,2,p^{-1}$ res
 \Formula
 At $\tau$, write $W_\tau$ in terms of $\tau$; then $\E_PW_\tau=0$ and $\E_PW_\tau^2=\E_P\tau$. Levels $a<0<b$: $P(W_\tau=a)=\frac{b}{b-a}$, $\E_P\tau=-ab$. Curves $\pm\sqrt{a+bt}$: $\E_P\tau=\frac a{1-b}$. Line $W_\tau=\alpha+\beta\tau$: $\E_P\tau=-\alpha/\beta$.
 \UseWhen
-``Compute $\E_P(\tau)$, $\Var(\tau)$, $\E_P(W_\tau^2)$'' for a hitting time.
+``Compute $\E_P(\tau)$, $\Var(\tau)$, $\E_P(W_\tau^2)$'' for the first time $W$ meets a curve.
 \HowTo
 \begin{enumerate}
   \item Write the boundary at $\tau$.

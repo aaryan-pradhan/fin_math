@@ -80,7 +80,7 @@ Needs must appear in an earlier row's Introduces, or in "Before you start".
 | 11 | Drift and gambler's ruin | 27–32 | 7, 9 | BM with drift, gambler's ruin, exit probabilities | written |
 | 12 | Geometric Brownian motion | 32–34 | 11 | GBM, its mean, log-normal | written |
 | 13 | Gaussian processes and the Brownian bridge | 34–39 | 10 | MVN, joint mgf, Gaussian process, cov min(s,t), Brownian bridge, integrated BM | written |
-| 14 | Hitting times and the maximum | 40–43 | 13, 7 | T_a law, reflection principle, M(t), joint law of W and M | todo |
+| 14 | Hitting times and the maximum | 40–43 | 13, 7 | T_a law, reflection principle, M(t), joint law of W and M | written |
 | 15 | Problems: Brownian motion | — | 14 | — | todo |
 | 16 | The Itô integral | 44–46 | 14 | Itô integral, isometry, ∫W dW, quadratic variation | todo |
 | 17 | Itô processes and Itô's formula | 46–49, 68–70 | 16 | Itô process, multiplication table, Itô formula, product/quotient rule | todo |
