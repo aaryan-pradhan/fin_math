@@ -253,19 +253,18 @@ $X_1,\dots,X_n$ are independent exactly when expectations of products split, for
 \end{plugrows}
 \end{mastercard}
 
-\begin{mastercard}[label=card:freeze]{Conditional expectation: split into known now $+$ fresh}
-$\F_n$ is what is known at time $n$. Split the quantity into a part $K$ already known at time $n$ and a fresh part $Z$ independent of the past. Keep $K$ as it is and average over $Z$:
+\begin{mastercard}[label=card:freeze]{Conditional expectation: the known part stays, the fresh part is averaged}
+$\F_n$ is what is known at time $n$. Write the quantity with a part $K$ known at time $n$ and a fresh part $Z$ independent of the past:
 \[
-  \boxed{\begin{gathered}\E_P(K+Z\given\F_n)=K+\E_PZ,\qquad \E_P(KZ\given\F_n)=K\,\E_PZ;\\
-  \text{any }f(K,Z):\ \text{average }f(k,Z)\text{ over }Z\text{, then put }k=K.\end{gathered}}
+  \boxed{\;\E_P(K+Z\given\F_n)=K+\E_PZ,\qquad \E_P(K\,Z\given\F_n)=K\,\E_PZ.\;}
 \]
 \begin{plugrows}
-  \plugrow{Known plus fresh (CE1)}{$X=K+Z$}{$K+\E_PZ$}{$K$ known at $n$, $Z$ independent of the past}{two dice, $K=X_1$: $\E_P(X_1+X_2\given X_1)=X_1+3.5$}
-  \plugrow{Known times fresh (CE2)}{$X=KZ$}{$K\,\E_PZ$}{same}{$\E_P(X_1X_2\given X_1)=3.5X_1$}
-  \plugrow{Fresh only (CE3)}{$X=Z$}{$\E_PZ$: the past tells nothing}{$Z$ independent of the past}{$\E_P(X_2\given X_1)=3.5$}
-  \plugrow{Future of a sum}{$S_{n+m}=S_n+(S_{n+m}-S_n)$: $K=S_n$, fresh $Z$ with mean $m\mu$, variance $m\sigma^2$; for the square expand $(K+Z)^2$}{$\E_P(S_{n+m}\given\F_n)=S_n+m\mu$; $\E_P(S_{n+m}^2\given\F_n)=(S_n+m\mu)^2+m\sigma^2$}{i.i.d.\ steps, mean $\mu$, variance $\sigma^2$}{fair $\pm1$: $\E_P(S_5^2\given\F_3)=S_3^2+2$}
+  \plugrow{Known plus fresh (CE1)}{$K=X_1$, $Z=X_2$}{$X_1+\E_PX_2$}{$Z$ independent of the past}{two dice: $\E_P(X_1+X_2\given X_1)=X_1+3.5$}
+  \plugrow{Known times fresh (CE2)}{$K=X_1$, $Z=X_2$}{$X_1\,\E_PX_2$}{same}{$\E_P(X_1X_2\given X_1)=3.5X_1$}
+  \plugrow{Fresh only, or known only (CE3)}{$K=0$; or $Z=1$}{$\E_P(Z\given\F_n)=\E_PZ$; $\E_P(K\given\F_n)=K$}{same}{$\E_P(X_2\given X_1)=3.5$; $\E_P(X_1^2\given X_1)=X_1^2$}
+  \plugrow{Future of a sum, and its square}{$S_{n+m}=S_n+Z$, fresh $Z$ with mean $m\mu$, variance $m\sigma^2$; for the square expand $(S_n+Z)^2=S_n^2+2S_nZ+Z^2$}{$\E_P(S_{n+m}\given\F_n)=S_n+m\mu$; $\E_P(S_{n+m}^2\given\F_n)=(S_n+m\mu)^2+m\sigma^2$}{i.i.d.\ steps, mean $\mu$, variance $\sigma^2$}{fair $\pm1$: $\E_P(S_5^2\given\F_3)=S_3^2+2$}
   \plugrow{Finite information}{$\F_n$ only tells which atom $A_i$ happened}{on $A_i$: $\E_P(X\given\F_n)=\E_P(X\ind{A_i})/P(A_i)$, the average over the atom}{$P(A_i)>0$}{die, told odd/even: $3$ on odd, $4$ on even}
-  \plugrow{Averages of averages (tower)}{average the guess at a later time $m\ge n$ again; $n=0$ knows nothing}{$\E_P\big(\E_P(X\given\F_m)\given\F_n\big)=\E_P(X\given\F_n)$; $\E_P[\E_P(X\given\F_m)]=\E_PX$}{$n\le m$}{$\frac12\cdot3+\frac12\cdot4=3.5$}
+  \plugrow{Averaging again (tower)}{average the guess at a later time $m\ge n$ over what is known at $n$; $n=0$ knows nothing}{$\E_P\big(\E_P(X\given\F_m)\given\F_n\big)=\E_P(X\given\F_n)$; $\E_P[\E_P(X\given\F_m)]=\E_PX$}{$n\le m$}{$\frac12\cdot3+\frac12\cdot4=3.5$}
   \plugrow{Given a value, with a density}{$f_{X\given Y=y}=f(x,y)/f_Y(y)$}{$\E_P(X\given Y=y)=\int x\,f_{X\given Y=y}(x)dx$}{$f_Y(y)>0$}{used for Brownian motion in Chapter~9}
 \end{plugrows}
 \end{mastercard}
