@@ -40,3 +40,22 @@ X = np.zeros_like(W); X[:, 0] = 2.0
 for k in range(n):
     X[:, k + 1] = X[:, k] - r_ou * X[:, k] * dt + s_ou * (W[:, k + 1] - W[:, k])
 write('ou', [t, *X], 't x1 x2 x3')
+
+# binomial call price with n steps (u=e^{s sqrt(dt)}, d=1/u, 1+r_n=e^{r dt}) -> Black-Scholes
+from math import comb, exp, sqrt, log, erf
+S0, K, sig, r, T = 100.0, 100.0, 0.2, 0.05, 1.0
+def binom_call(n):
+    dt = T / n; u = exp(sig * sqrt(dt)); d = 1 / u; R = exp(r * dt); p = (R - d) / (u - d)
+    return sum(comb(n, j) * p**j * (1 - p)**(n - j) * max(S0 * u**j * d**(n - j) - K, 0) for j in range(n + 1)) / R**n
+ns = np.arange(1, 101)
+write('bs_conv', [ns, [binom_call(int(k)) for k in ns]], 'n c')
+Phi = lambda x: 0.5 * (1 + erf(x / sqrt(2)))
+h = (log(S0 / K) + (r + sig**2 / 2) * T) / (sig * sqrt(T))
+print('BS', S0 * Phi(h) - K * exp(-r * T) * Phi(h - sig * sqrt(T)), 'n=100', binom_call(100))
+
+# Black-Scholes call value against S0 for two expiries (K=100, r=0.05, sigma=0.2)
+def bs_call(S, tau):
+    h = (log(S / K) + (r + sig**2 / 2) * tau) / (sig * sqrt(tau))
+    return S * Phi(h) - K * exp(-r * tau) * Phi(h - sig * sqrt(tau))
+Ss = np.linspace(60, 140, 81)
+write('bs_value', [Ss, [bs_call(s, 1.0) for s in Ss], [bs_call(s, 0.25) for s in Ss]], 's c1 c025')

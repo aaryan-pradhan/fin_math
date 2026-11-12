@@ -1,0 +1,147 @@
+\chapter{Martingale pricing in continuous time}
+\label{ch:mg-pricing}
+
+\begin{question}
+In continuous time, with a stock driven by Brownian motion, what is the fair price of a claim, and why is the market free of arbitrage?
+\end{question}
+
+\begin{whatfor}
+\begin{itemize}
+  \item States the three facts linking martingales and prices: an EMM rules out arbitrage, the price is a discounted conditional expectation under it, and a unique EMM makes the market complete.
+  \item Sets up the Black--Scholes market and finds its EMM: under it the stock's exponent has drift $r-\frac12\sigma^2$.
+  \item Derives the Black--Scholes formula directly, the put, and the sensitivities (Greeks).
+\end{itemize}
+\skipline{fs:mg-pricing}
+\end{whatfor}
+
+\begin{prereq}
+From Chapters~20--22: EMM, attainable claim, complete market, fair price, the Black--Scholes formula as a limit. From Parts~2--3: geometric Brownian motion, Itô's formula, the product rule, the martingale test.
+\end{prereq}
+
+%=====================================================================
+\section{Three facts}
+
+\begin{setup}[A general market]
+Stocks $S_t=(S_t^1,\dots,S_t^n)$ and a bond $B_t=(1+r)^t$ ($t=0,1,\dots$) or $B_t=e^{rt}$ ($t\ge0$). The discounted prices are $S_t^*=S_t/B_t$.
+\end{setup}
+
+An EMM is a probability $P^*$, giving positive probability to the same events as $P$, under which every discounted price $S_t^*$ is a martingale.
+
+\begin{theorem}[Martingales and claim pricing]
+\label{thm:three-facts}
+In this market:
+\begin{enumerate}[label=(\arabic*)]
+  \item if an EMM exists, there is no arbitrage;
+  \item the fair price at time $t$ of an attainable claim $X$ paid at $T$ is
+  \[
+    P_t(X)=\E_{P^*}\Big(\frac{B_t}{B_T}X\Bigm|\F_t\Big)=\E_{P^*}\big(e^{-r(T-t)}X\given\F_t\big)\ \ (\text{continuous time}),
+  \]
+  in particular $P_0(X)=\E_{P^*}(e^{-rT}X)$;
+  \item if the EMM is unique, the market is complete.
+\end{enumerate}
+\end{theorem}
+\noproof
+
+For finite one-period markets these are Theorems~2--4 of Chapter~20, which we proved.
+
+%=====================================================================
+\section{The Black--Scholes market}
+
+\begin{setup}[Black--Scholes market]
+A bond $B_t=e^{rt}$ and a stock with
+\[
+  dS_t=\mu S_t\,dt+\sigma S_t\,dW_t,\qquad t\in[0,T],
+\]
+i.e.\ $\frac{dS_t}{S_t}=\mu\,dt+\sigma\,dW_t$: mean return $\mu$, volatility $\sigma>0$. By Chapter~16, $S_t=S_0e^{(\mu-\frac12\sigma^2)t+\sigma W_t}$.
+\end{setup}
+
+\begin{theorem}[The EMM of the Black--Scholes market]
+\label{thm:bs-emm}
+Among the processes $Z_t=S_0\exp\big\{\int_0^ta_s\,ds+\sigma W_t\big\}$, the discounted $e^{-rt}Z_t$ is a martingale exactly when $a_t=r-\frac12\sigma^2$. So under the EMM $P^*$,
+\[
+  S_t=S_0\,e^{(r-\frac12\sigma^2)t+\sigma W^*_t},
+\]
+with $W^*$ a standard Brownian motion under $P^*$: the real-world $\mu$ is replaced by $r$. The market is arbitrage-free and complete.
+\end{theorem}
+\begin{proof}
+Split $e^{-rt}Z_t$ into two factors and use the product rule.
+\begin{steps}
+  \item $e^{-rt}Z_t=X_tY_t$ with $X_t=\exp\{\int_0^ta_s\,ds\}$ ($dX=a_tX\,dt$, no $dW$ part) and $Y_t=S_0e^{-rt+\sigma W_t}$ ($dY=(-r+\frac12\sigma^2)Y\,dt+\sigma Y\,dW$, by Itô).
+  \item Product rule, with $dX\,dY=0$:
+  \[
+    d(e^{-rt}Z_t)=X_tY_t\big(a_t-r+\tfrac12\sigma^2\big)dt+\sigma X_tY_t\,dW_t .
+  \]
+  \item Zero drift (the martingale test) $\iff a_t=r-\frac12\sigma^2$. Exactly one such drift, so the EMM is unique: by the three facts, no arbitrage and completeness. \qedhere
+\end{steps}
+\end{proof}
+
+%=====================================================================
+\section{The Black--Scholes formula, directly}
+
+\begin{theorem}[Black--Scholes price of a call]
+\label{thm:bs-direct}
+The price at time $0$ of a European call is
+\[
+  \begin{aligned}
+  C&=\E_{P^*}\big(e^{-rT}(S_T-K)^+\big)=S_0\Phi(h)-Ke^{-rT}\Phi(h-\sigma\sqrt T),\\
+  h&=\frac{\ln(S_0/K)+(r+\frac12\sigma^2)T}{\sigma\sqrt T}.
+  \end{aligned}
+\]
+\end{theorem}
+\begin{proof}
+Write $S_T=S_0e^{(r-\frac12\sigma^2)T+\sigma\sqrt TZ}$ with $Z\sim N(0,1)$ under $P^*$.
+\begin{steps}
+  \item $S_T>K\iff Z>-(h-\sigma\sqrt T)$. So $\E_{P^*}\big(K\ind{S_T>K}\big)=K\,\Phi(h-\sigma\sqrt T)$.
+  \item $\E_{P^*}\big(S_T\ind{S_T>K}\big)=S_0e^{rT}\int_{-(h-\sigma\sqrt T)}^\infty e^{\sigma\sqrt Tz-\frac12\sigma^2T}\varphi(z)\,dz$. Completing the square, $e^{\sigma\sqrt Tz-\frac12\sigma^2T}\varphi(z)=\varphi(z-\sigma\sqrt T)$, so the integral is $P(Z>-h)=\Phi(h)$.
+  \item $C=e^{-rT}\big[S_0e^{rT}\Phi(h)-K\Phi(h-\sigma\sqrt T)\big]$. The same as the limit of Chapter~22. \qedhere
+\end{steps}
+\end{proof}
+
+\begin{pic}
+\begin{tikzpicture}
+\begin{axis}[width=10cm,height=5cm,xmin=60,xmax=140,ymin=0,ymax=45,xlabel={$S_0$},ylabel={value},legend style={font=\scriptsize,at={(0.02,0.98)},anchor=north west}]
+  \addplot[defc,very thick] table[x=s,y=c1] {figs/bs_value.dat}; \addlegendentry{call value, $T=1$}
+  \addplot[thmc,very thick] table[x=s,y=c025] {figs/bs_value.dat}; \addlegendentry{call value, $T=0.25$}
+  \addplot[trapc,thick,dashed] coordinates {(60,0)(100,0)(140,40)}; \addlegendentry{payoff $(S_0-K)^+$}
+\end{axis}
+\end{tikzpicture}
+\picnote{$K=100$, $r=0.05$, $\sigma=0.2$. The call is worth more than its payoff if exercised now; the extra (time value) shrinks as expiry approaches. The slope of each curve is the delta $\Phi(h)$.}
+\end{pic}
+
+\begin{result}[Sensitivities of the call (Greeks)]
+\label{res:greeks}
+With $\varphi$ the standard normal density and $h$ as above:
+\[
+  \begin{aligned}
+  \text{delta }\frac{\partial C}{\partial S_0}&=\Phi(h), &\text{gamma }\frac{\partial^2C}{\partial S_0^2}&=\frac{\varphi(h)}{S_0\sigma\sqrt T},\\
+  \text{vega }\frac{\partial C}{\partial\sigma}&=S_0\varphi(h)\sqrt T, &\text{rho }\frac{\partial C}{\partial r}&=KTe^{-rT}\Phi(h-\sigma\sqrt T),\\
+  \text{theta }-\frac{\partial C}{\partial T}&=-\frac{S_0\varphi(h)\sigma}{2\sqrt T}-rKe^{-rT}\Phi(h-\sigma\sqrt T).
+  \end{aligned}
+\]
+\end{result}
+\begin{proof}
+The one identity that makes everything short is $S_0\varphi(h)=Ke^{-rT}\varphi(h-\sigma\sqrt T)$: indeed $\frac{\varphi(h-\sigma\sqrt T)}{\varphi(h)}=e^{h\sigma\sqrt T-\frac12\sigma^2T}=e^{\ln(S_0/K)+rT}$. Then, for delta, $\frac{\partial C}{\partial S_0}=\Phi(h)+\big[S_0\varphi(h)-Ke^{-rT}\varphi(h-\sigma\sqrt T)\big]\frac{\partial h}{\partial S_0}=\Phi(h)$; the others differentiate the same way.
+\end{proof}
+
+Delta is the number of shares in the copying portfolio; gamma measures how fast it must be adjusted; theta is the loss of value as time passes.
+
+%=====================================================================
+\formulasheet{fs:mg-pricing}
+
+\begin{mastercard}[label=card:bsprice]{Risk-neutral pricing in the Black--Scholes market}
+Stock $dS=\mu S\,dt+\sigma S\,dW$, bond $e^{rt}$; a claim pays $g(S_T)$; time left $\tau=T-t$. Under $P^*$ replace $\mu$ by $r$:
+\[
+  \boxed{\begin{gathered}P_t=e^{-r\tau}\,\E_{P^*}\big[g(S_T)\given\F_t\big],\qquad S_T=S_t\,e^{(r-\frac12\sigma^2)\tau+\sigma\sqrt\tau Z},\ Z\sim N(0,1);\\
+  \text{call: }\ C_t=S_t\Phi(h)-Ke^{-r\tau}\Phi(h-\sigma\sqrt\tau),\qquad h=\frac{\ln(S_t/K)+(r+\frac12\sigma^2)\tau}{\sigma\sqrt\tau}.\end{gathered}}
+\]
+\begin{plugrows}
+  \plugrow{Call today}{$t=0$, $\tau=T$}{the second line}{$\sigma>0$; the real-world $\mu$ is not used}{$S_0=80$, $K=85$, $T=1$, $r=0.05$, $\sigma=0.15$: $h=0.0042$, $C\approx4.39$}
+  \plugrow{Put}{$g=(K-s)^+$, or parity (\cref{card:parity})}{$P_t=Ke^{-r\tau}\Phi(\sigma\sqrt\tau-h)-S_t\Phi(-h)$}{European}{same: $P=4.39-80+80.85\approx5.25$}
+  \plugrow{Probability of finishing in the money}{$P^*(S_T>K)$}{$\Phi(h-\sigma\sqrt\tau)$ (real world: replace $r$ by $\mu$)}{European expiry $T$; under $P^*$}{same: $0.442$}
+  \plugrow{Digital (pays $1$ if $S_T>K$)}{$g=\ind{s>K}$}{$e^{-r\tau}\Phi(h-\sigma\sqrt\tau)$}{cash-or-nothing, pays $1$ at $T$}{same: $e^{-0.05}(0.442)\approx0.420$}
+  \plugrow{Forward contract (value of $S_T-K$)}{$g(s)=s-K$}{$S_t-Ke^{-r\tau}$; zero when $K=S_te^{r\tau}$ (the forward price)}{no dividends; holds for any model}{$S_0=80$, $r=0.05$, $T=1$: forward price $84.10$}
+  \plugrow{Greeks of the call}{differentiate; use $S\varphi(h)=Ke^{-r\tau}\varphi(h-\sigma\sqrt\tau)$}{$\Delta=\Phi(h)$, $\Gamma=\frac{\varphi(h)}{S\sigma\sqrt\tau}$, vega $=S\varphi(h)\sqrt\tau$, $\rho=K\tau e^{-r\tau}\Phi(h-\sigma\sqrt\tau)$, $\theta=-\frac{S\varphi(h)\sigma}{2\sqrt\tau}-rKe^{-r\tau}\Phi(h-\sigma\sqrt\tau)$}{call; put delta $=\Phi(h)-1$}{same: $\Delta\approx0.502$}
+  \plugrow{Is the market arbitrage-free and complete?}{$e^{-rt}S_0e^{at+\sigma W_t}$ is a martingale iff $a=r-\frac12\sigma^2$}{unique EMM: arbitrage-free and complete}{constant $r$, $\sigma>0$}{$r=0.05$, $\sigma=0.2$: $a=0.05-0.02=0.03$}
+  \plugrow{Binomial approximation}{$n$ steps: $u=e^{\sigma\sqrt{T/n}}$, $d=1/u$, $1+r_n=e^{rT/n}$ in \cref{card:tree}}{tends to the Black--Scholes price}{$n\to\infty$}{$S_0=K=100$, $\sigma=0.2$, $r=0.05$: $n=100$ gives $10.43$, limit $10.45$}
+\end{plugrows}
+\end{mastercard}

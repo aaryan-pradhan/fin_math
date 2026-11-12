@@ -1,0 +1,91 @@
+\chapter{From binomial to Black--Scholes}
+\label{ch:black-scholes}
+
+\begin{question}
+What happens to the binomial price of a call when each period becomes tiny and the number of periods huge?
+\end{question}
+
+\begin{whatfor}
+\begin{itemize}
+  \item Writes the binomial call price as a difference of two binomial probabilities.
+  \item Shrinks the steps ($u_n=e^{\sigma\sqrt{T/n}}$, $d_n=e^{-\sigma\sqrt{T/n}}$, $1+r_n=e^{rT/n}$) and uses the central limit theorem.
+  \item Arrives at the Black--Scholes formula $C=S_0\Phi(h)-Ke^{-rT}\Phi(h-\sigma\sqrt T)$.
+\end{itemize}
+\par\smallskip\textbf{Skipping this chapter?} Its formulas are rows of the continuous-time pricing card, in the formula sheet on page~\pageref{fs:mg-pricing}.
+\end{whatfor}
+
+\begin{prereq}
+From Chapter~21: the $T$-period binomial price and the split of the call into ``in the money'' terms. From Chapters~8 and~11: the central limit theorem and geometric Brownian motion. From Part~0: $\Phi$.
+\end{prereq}
+
+%=====================================================================
+\section{The call as two binomial probabilities}
+
+In a $T$-period tree the call pays $(u^jd^{T-j}S_0-K)^+$ after $j$ up-moves. It pays only when $j\ge m$, where $m$ is the least $j$ with $u^jd^{T-j}S_0>K$; taking logarithms,
+\[
+  m=\Big\lfloor\frac{\ln K-\ln S_0-T\ln d}{\ln u-\ln d}\Big\rfloor+1 .
+\]
+Splitting the two terms of $(u^jd^{T-j}S_0-K)$ in Chapter~21's formula,
+\[
+  C=S_0\,P(\hat U\ge m)-\frac{K}{(1+r)^T}\,P(U^*\ge m),\qquad U^*\sim B(T,p^*),\quad \hat U\sim B(T,\hat p),\quad \hat p=\frac{up^*}{1+r}. \tag{$\star$}
+\]
+($\hat p\in(0,1)$ because $up^*+d(1-p^*)=1+r$.)
+
+%=====================================================================
+\section{Many small steps}
+
+Divide $[0,T]$ into $n$ steps of length $\delta_n=T/n$, and let
+\[
+  u_n=e^{\sigma\sqrt{\delta_n}},\qquad d_n=e^{-\sigma\sqrt{\delta_n}},\qquad 1+r_n=e^{r\delta_n}.
+\]
+After $n$ steps, $S_T=S_0e^{Z_n}$ with $Z_n=Y_1+\dots+Y_n$, $Y_k=\pm\sigma\sqrt{\delta_n}$. With $e^x\approx1+x$,
+\[
+  p_n^*=\frac{e^{r\delta_n}-e^{-\sigma\sqrt{\delta_n}}}{e^{\sigma\sqrt{\delta_n}}-e^{-\sigma\sqrt{\delta_n}}}\approx\frac12+\frac{r}{2\sigma}\sqrt{\delta_n}\quad\Big(\text{more precisely }\tfrac12+\tfrac{r-\sigma^2/2}{2\sigma}\sqrt{\delta_n}\Big).
+\]
+This is the walk of Chapter~8 with drift: under $P^*$, $Z_n$ has mean $n\sigma\sqrt{\delta_n}(2p^*_n-1)\to(r-\frac12\sigma^2)T$ and variance $\to\sigma^2T$, so by the central limit theorem
+\[
+  Z_n\ \longrightarrow\ N\big((r-\tfrac12\sigma^2)T,\ \sigma^2T\big)\quad\text{under }P^*.
+\]
+The same argument under $\hat p_n$ gives mean $(r+\frac12\sigma^2)T$ and the same variance.
+
+\begin{theorem}[Black--Scholes formula]
+\label{thm:bs}
+As $n\to\infty$, the binomial price of a European call converges to
+\[
+  \boxed{\;C=S_0\,\Phi(h)-Ke^{-rT}\,\Phi(h-\sigma\sqrt T),\qquad h=\frac{\ln(S_0/K)+(r+\frac12\sigma^2)T}{\sigma\sqrt T}.\;}
+\]
+\end{theorem}
+\begin{proof}
+Take the limit of each probability in $(\star)$.
+\begin{steps}
+  \item $U^*\ge m$ means the price ends above $K$: $Z_n>\ln(K/S_0)$. With the normal limit,
+  \[
+    \begin{aligned}
+    P(U^*\ge m)&\to P\Big(N\big((r-\tfrac12\sigma^2)T,\sigma^2T\big)>\ln\tfrac{K}{S_0}\Big)\\
+    &=\Phi\Big(\frac{\ln(S_0/K)+(r-\frac12\sigma^2)T}{\sigma\sqrt T}\Big)=\Phi(h-\sigma\sqrt T).
+    \end{aligned}
+  \]
+  \item Likewise $P(\hat U\ge m)\to\Phi(h)$, using the mean $(r+\frac12\sigma^2)T$.
+  \item $(1+r_n)^n=e^{rT}$. Substitute into $(\star)$. \qedhere
+\end{steps}
+\end{proof}
+
+\begin{pic}
+\begin{tikzpicture}
+\begin{axis}[width=10cm,height=4.8cm,xmin=0,xmax=100,ymin=9.4,ymax=12.3,xlabel={number of steps $n$},ylabel={call price},legend style={font=\scriptsize}]
+  \addplot[defc,thick,mark=*,mark size=0.6pt] table[x=n,y=c] {figs/bs_conv.dat}; \addlegendentry{binomial price}
+  \addplot[trapc,very thick,dashed,domain=0:100] {10.4506}; \addlegendentry{Black--Scholes $10.45$}
+\end{axis}
+\end{tikzpicture}
+\picnote{$S_0=K=100$, $\sigma=0.2$, $r=0.05$, $T=1$. The binomial price zig-zags (odd and even $n$ alternate) and settles on the Black--Scholes value.}
+\end{pic}
+
+\paragraph{The limiting model.} In the limit the stock is $S_t=S_0e^{\mu t+\sigma W_t}$, a geometric Brownian motion, and the bond is $B_t=e^{rt}$. Under the risk-neutral probability the exponent's drift is $r-\frac12\sigma^2$, whatever the real-world drift $\mu$. Chapter~23 derives the same price directly in continuous time.
+
+\begin{example}[A Black--Scholes price]
+\label{ex:bs}
+$S_0=80$, $K=85$, $T=1$, $r=0.05$, $\sigma=0.15$. Then $h=\frac{\ln(80/85)+0.06125}{0.15}\approx0.0042$, and
+\[
+  C=80\,\Phi(0.0042)-85e^{-0.05}\Phi(-0.1458)\approx80\times0.5017-80.85\times0.4420\approx4.39 .
+\]
+\end{example}
