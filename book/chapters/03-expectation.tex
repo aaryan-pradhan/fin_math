@@ -217,12 +217,12 @@ Apply $h$ to each value, weight by its probability (or density), and add (or int
   \boxed{\begin{gathered}\E_P\,h(\xi)=\sum_ih(x_i)\,P(\xi=x_i)\ \ \text{or}\ \ \int_{-\infty}^{\infty}h(x)f_\xi(x)\,dx;\\ \E_P\,h(\xi,\eta)=\iint h(x,y)f(x,y)\,dx\,dy.\end{gathered}}
 \]
 \begin{plugrows}
-  \plugrow{Probability as an expectation}{$h=\ind{x\in A}$}{$\E_P\ind{\xi\in A}=P(\xi\in A)$}{always}{die: $\E_P\ind{\xi\ge5}=\frac13$}
-  \plugrow{A payoff with finitely many values}{$h$ = value $x_i$ on event $A_i$ (disjoint)}{$\sum_ix_iP(A_i)$}{always}{$2\ind{U<0.3}-\ind{U\ge0.7}$: $0.6-0.3=0.3$}
-  \plugrow{Mean, second moment, variance}{$h=x$; $h=x^2$; $h=(x-\E_P\xi)^2$}{$\E_P\xi$; $\E_P\xi^2$; $\Var\xi=\E_P\xi^2-(\E_P\xi)^2$}{integrable}{$U$ on $[0,1]$: $\frac12$, $\frac13$, $\frac1{12}$}
-  \plugrow{Payoff above a level $K$}{$h=(x-K)^+$}{$\int_K^\infty(x-K)f(x)dx$}{integrable}{Exp$(1)$, $K=1$: $\int_1^\infty(x-1)e^{-x}dx=e^{-1}$}
-  \plugrow{Is $\xi$ integrable?}{$h=|x|$}{finite or not}{needed before $\E_P\xi$ exists}{$P(\xi=2^k)=2^{-k}$: $\sum2^k2^{-k}=\infty$, not integrable}
-  \plugrow{A function is not averaged by its value}{compare $\E_Ph(\xi)$ with $h(\E_P\xi)$}{different in general}{only equal for linear $h$}{die: $\E_P\frac1\xi=0.408$ but $\frac1{3.5}=0.286$}
+  \plugrow{Probability as an expectation}{\pstep{Box: $\E_Ph(\xi)=\sum_ih(x_i)P(\xi=x_i)$ (or the integral).}\pstep{From the event: $h(x)=\ind{x\in A}$, which is $1$ on $A$ and $0$ off it.}\pstep{Substitute: only the values in $A$ survive.}}{$\E_P\ind{\xi\in A}=P(\xi\in A)$}{always}{die, $A=\{5,6\}$: $\E_P\ind{\xi\ge5}=1\cdot\frac16+1\cdot\frac16=\frac13$}
+  \plugrow{A payoff with finitely many values}{\pstep{Box with discrete values: $\sum_i(\text{value})\cdot P(\text{value})$.}\pstep{From the payoff: value $x_i$ on the disjoint event $A_i$.}\pstep{Substitute.}}{$\sum_ix_iP(A_i)$}{always}{$2\ind{U<0.3}-\ind{U\ge0.7}$, $U$ uniform: $2(0.3)-1(0.3)=0.6-0.3=0.3$}
+  \plugrow{Mean, second moment, variance}{\pstep{Box with $h(x)=x$: $\E_P\xi$.}\pstep{Box with $h(x)=x^2$: $\E_P\xi^2$.}\pstep{Box with $h(x)=(x-\E_P\xi)^2$, expanded: $\E_P\xi^2-2(\E_P\xi)^2+(\E_P\xi)^2$.}}{$\E_P\xi$; $\E_P\xi^2$; $\Var\xi=\E_P\xi^2-(\E_P\xi)^2$}{integrable}{$U$ on $[0,1]$, $f=1$: $\int_0^1x\,dx=\frac12$, $\int_0^1x^2dx=\frac13$, $\Var U=\frac13-\frac14=\frac1{12}$}
+  \plugrow{Payoff above a level $K$}{\pstep{Box with a density: $\E_Ph(\xi)=\int h(x)f(x)\,dx$.}\pstep{From the payoff: $h(x)=(x-K)^+$, which is $0$ for $x\le K$.}\pstep{Substitute: integrate only from $K$.}}{$\int_K^\infty(x-K)f(x)\,dx$}{integrable}{Exp$(1)$, $K=1$: $\int_1^\infty(x-1)e^{-x}dx$, put $y=x-1$: $e^{-1}\int_0^\infty ye^{-y}dy=e^{-1}\cdot1\approx0.368$}
+  \plugrow{Is $\xi$ integrable?}{\pstep{Box with $h(x)=|x|$.}\pstep{Substitute and add up.}}{integrable iff $\E_P|\xi|<\infty$}{needed before $\E_P\xi$ exists}{$P(\xi=2^k)=2^{-k}$: $\sum_k2^k\cdot2^{-k}=\sum_k1=\infty$, not integrable}
+  \plugrow{A function is not averaged by its value}{\pstep{Box with $h$: $\E_Ph(\xi)=\sum h(x_i)P(\xi=x_i)$.}\pstep{Compare with $h(\E_P\xi)$: the function of the average.}}{different in general; equal for linear $h$}{only equal for linear $h$}{die, $h(x)=\frac1x$: $\E_P\frac1\xi=\frac16(1+\frac12+\frac13+\frac14+\frac15+\frac16)=\frac{2.45}6=0.408$, but $\frac1{3.5}=0.286$}
 \end{plugrows}
 \end{mastercard}
 
@@ -232,11 +232,11 @@ Expand the square: every pair contributes its covariance, with $\Cov(X,X)=\Var X
   \boxed{\begin{gathered}\Var\Big(\sum_{i=1}^na_iX_i+c\Big)=\sum_{i=1}^n\sum_{j=1}^na_ia_j\Cov(X_i,X_j),\\ \Cov(X,Y)=\E_P(XY)-\E_PX\,\E_PY.\end{gathered}}
 \]
 \begin{plugrows}
-  \plugrow{One variable}{$n=1$}{$\Var(aX+c)=a^2\Var X$ (the constant drops)}{always}{$\Var X=2$: $\Var(3X+7)=18$}
-  \plugrow{Two variables}{$n=2$}{$a^2\Var X+b^2\Var Y+2ab\Cov(X,Y)$}{always}{$\Var X=2$, $\Var Y=3$, $\Cov=1$: $\Var(2X-Y)=8+3-4=7$}
-  \plugrow{Covariance of combinations}{bilinearity}{$\Cov(\sum a_iX_i,\sum b_jY_j)=\sum_{i,j}a_ib_j\Cov(X_i,Y_j)$}{always}{$\Cov(X+Y,X-Y)=\Var X-\Var Y$}
-  \plugrow{Uncorrelated terms}{all $\Cov(X_i,X_j)=0$, $i\ne j$}{$\sum a_i^2\Var X_i$}{zero covariances; Chapter~4 gives the common case}{sum of $n$ fair dice: $n\cdot\frac{35}{12}$}
-  \plugrow{A bound (Cauchy--Schwarz)}{any two variables}{$(\E_P|XY|)^2\le\E_PX^2\,\E_PY^2$; so $(\E_P|X|)^2\le\E_PX^2$}{finite second moments}{$X\sim N(0,\sigma^2)$: $\E_P|X|\le\sigma$ (exactly $0.80\sigma$)}
+  \plugrow{One variable}{\pstep{Box: $\Var(\sum a_iX_i+c)=\sum_{i,j}a_ia_j\Cov(X_i,X_j)$.}\pstep{From one variable: $n=1$, $a_1=a$.}\pstep{Substitute: $a\cdot a\cdot\Cov(X,X)=a^2\Var X$; the constant $c$ never appears.}}{$\Var(aX+c)=a^2\Var X$}{always}{$\Var X=2$, $a=3$, $c=7$: $3^2\cdot2=18$}
+  \plugrow{Two variables}{\pstep{Box with $n=2$, $a_1=a$, $a_2=b$: four terms $(i,j)=(1,1),(2,2),(1,2),(2,1)$.}\pstep{Substitute: $a^2\Var X+b^2\Var Y+ab\Cov+ba\Cov$.}}{$a^2\Var X+b^2\Var Y+2ab\Cov(X,Y)$}{always}{$\Var X=2$, $\Var Y=3$, $\Cov=1$, $a=2$, $b=-1$: $4\cdot2+1\cdot3+2(2)(-1)(1)=8+3-4=7$}
+  \plugrow{Covariance of combinations}{\pstep{Box, second line: $\Cov(X,Y)=\E_P(XY)-\E_PX\E_PY$.}\pstep{Substitute $X=\sum a_iX_i$, $Y=\sum b_jY_j$ and multiply out.}}{$\Cov(\sum a_iX_i,\sum b_jY_j)=\sum_{i,j}a_ib_j\Cov(X_i,Y_j)$}{always}{$\Cov(X+Y,X-Y)=\Cov(X,X)-\Cov(X,Y)+\Cov(Y,X)-\Cov(Y,Y)=\Var X-\Var Y$}
+  \plugrow{Uncorrelated terms}{\pstep{Box.}\pstep{From ``uncorrelated'': $\Cov(X_i,X_j)=0$ for $i\ne j$; only $i=j$ terms remain.}}{$\sum a_i^2\Var X_i$}{zero covariances; Chapter~4 gives the common case}{$n$ fair dice, each $\Var=\frac{35}{12}$, $a_i=1$: $n\cdot\frac{35}{12}$}
+  \plugrow{A bound (Cauchy--Schwarz)}{\pstep{A square has a non-negative mean: $\E_P(|X|-t|Y|)^2\ge0$ for every number $t$.}\pstep{Expand: $\E_PX^2-2t\E_P|XY|+t^2\E_PY^2\ge0$; a quadratic in $t$ that is never negative has discriminant $\le0$.}\pstep{With $Y=1$: $(\E_P|X|)^2\le\E_PX^2$.}}{$(\E_P|XY|)^2\le\E_PX^2\,\E_PY^2$; so $(\E_P|X|)^2\le\E_PX^2$}{finite second moments}{$X\sim N(0,\sigma^2)$: $\E_P|X|\le\sqrt{\sigma^2}=\sigma$ (exactly $\sqrt{2/\pi}\,\sigma=0.80\sigma$)}
 \end{plugrows}
 \end{mastercard}
 
@@ -247,10 +247,10 @@ For $\xi\sim N(\mu,\sigma^2)$ and any number $u$:
 \]
 Expanding $\E_Pe^{u(\xi-\mu)}=e^{u^2\sigma^2/2}$ in powers of $u$ gives every central moment.
 \begin{plugrows}
-  \plugrow{$\E_Pe^{\xi}$, $\E_Pe^{a\xi+b}$}{$u=1$; $u=a$ and multiply by $e^b$}{$e^{\mu+\sigma^2/2}$; $e^{b+a\mu+a^2\sigma^2/2}$}{always}{$N(0.1,0.04)$: $\E_Pe^\xi=e^{0.12}\approx1.1275$}
-  \plugrow{Variance of $e^\xi$}{$u=2$ minus the square of $u=1$}{$e^{2\mu+\sigma^2}(e^{\sigma^2}-1)$}{always}{$N(0,1)$: $e(e-1)\approx4.67$}
-  \plugrow{Central moments}{match powers of $u$ in $e^{u^2\sigma^2/2}=1+\frac{u^2\sigma^2}{2}+\frac{u^4\sigma^4}{8}+\cdots$}{$\E_P(\xi-\mu)^2=\sigma^2$, $\E_P(\xi-\mu)^4=3\sigma^4$, odd ones $0$}{the coefficient of $u^k$ equals $\E_P(\xi-\mu)^k/k!$}{$N(0,2)$: $\E_P\xi^4=3\cdot4=12$}
-  \plugrow{Raw moments}{expand $\xi=\mu+(\xi-\mu)$}{$\E_P\xi=\mu$, $\E_P\xi^2=\mu^2+\sigma^2$}{always}{$N(1,4)$: $\E_P\xi^2=5$}
+  \plugrow{$\E_Pe^{\xi}$, $\E_Pe^{a\xi+b}$}{\pstep{Box: $\E_Pe^{u\xi}=e^{u\mu+\frac12u^2\sigma^2}$.}\pstep{For $e^\xi$: $u=1$.}\pstep{For $e^{a\xi+b}=e^b\cdot e^{a\xi}$: take $e^b$ out, then $u=a$.}}{$e^{\mu+\sigma^2/2}$; $e^{b+a\mu+a^2\sigma^2/2}$}{always}{$N(0.1,0.04)$: $u=1$: $e^{0.1+0.04/2}=e^{0.12}\approx1.1275$}
+  \plugrow{Variance of $e^\xi$}{\pstep{\cref{card:Eh}, row 3: $\Var e^\xi=\E_Pe^{2\xi}-(\E_Pe^\xi)^2$.}\pstep{Box with $u=2$: $\E_Pe^{2\xi}=e^{2\mu+2\sigma^2}$.}\pstep{Box with $u=1$, squared: $e^{2\mu+\sigma^2}$.}\pstep{Subtract and factor out $e^{2\mu+\sigma^2}$.}}{$e^{2\mu+\sigma^2}(e^{\sigma^2}-1)$}{always}{$N(0,1)$: $\mu=0$, $\sigma^2=1$: $e^{0+1}(e^1-1)=e(e-1)=2.718\cdot1.718\approx4.67$}
+  \plugrow{Central moments}{\pstep{Box for $\xi-\mu\sim N(0,\sigma^2)$: $\E_Pe^{u(\xi-\mu)}=e^{u^2\sigma^2/2}$.}\pstep{Expand both sides in powers of $u$: left $\sum_k\frac{u^k}{k!}\E_P(\xi-\mu)^k$; right $1+\frac{u^2\sigma^2}{2}+\frac{u^4\sigma^4}{8}+\cdots$.}\pstep{Match the coefficient of $u^k$.}}{$\E_P(\xi-\mu)^2=\sigma^2$, $\E_P(\xi-\mu)^4=3\sigma^4$, odd ones $0$}{the coefficient of $u^k$ equals $\E_P(\xi-\mu)^k/k!$}{$u^4$: $\frac{\E_P(\xi-\mu)^4}{24}=\frac{\sigma^4}8$, so $3\sigma^4$; $N(0,2)$: $\E_P\xi^4=3\cdot2^2=12$}
+  \plugrow{Raw moments}{\pstep{Write $\xi=\mu+(\xi-\mu)$.}\pstep{Expand $\xi^2=\mu^2+2\mu(\xi-\mu)+(\xi-\mu)^2$.}\pstep{Row 3: $\E_P(\xi-\mu)=0$, $\E_P(\xi-\mu)^2=\sigma^2$.}}{$\E_P\xi=\mu$, $\E_P\xi^2=\mu^2+\sigma^2$}{always}{$N(1,4)$: $\E_P\xi^2=1^2+4=5$}
 \end{plugrows}
 \end{mastercard}
 
@@ -260,8 +260,8 @@ For any function $g\ge0$ and number $c>0$:
   \boxed{\begin{gathered}P\big(g(X)\ge c\big)\le\frac{\E_P\,g(X)}{c}.\end{gathered}}
 \]
 \begin{plugrows}
-  \plugrow{Markov}{$g(x)=x$}{$P(X\ge c)\le\E_PX/c$}{$X\ge0$}{Exp, mean 1, $c=3$: exact $0.050$, bound $0.333$}
-  \plugrow{Chebyshev}{$g(x)=(x-\mu)^2$, $c=\varepsilon^2$}{$P(|X-\mu|\ge\varepsilon)\le\sigma^2/\varepsilon^2$}{finite variance}{$\sigma=1$, $\varepsilon=2$: $\le\frac14$}
-  \plugrow{When is it exact?}{$X$ takes only the values $0$ and $c$}{equality}{$g(X)$ is $0$ or exactly $c$}{Bernoulli$(p)$, $c=1$: both sides $p$}
+  \plugrow{Markov}{\pstep{Box: $P(g(X)\ge c)\le\frac{\E_Pg(X)}c$.}\pstep{From the question: $g(x)=x$ (allowed since $X\ge0$).}\pstep{Substitute.}}{$P(X\ge c)\le\E_PX/c$}{$X\ge0$}{Exp, mean 1, $c=3$: exact $P(X\ge3)=e^{-3}=0.050$; bound $\frac13=0.333$}
+  \plugrow{Chebyshev}{\pstep{Box.}\pstep{From the question: $g(x)=(x-\mu)^2\ge0$, $c=\varepsilon^2$.}\pstep{Substitute: $\{(X-\mu)^2\ge\varepsilon^2\}=\{|X-\mu|\ge\varepsilon\}$ and $\E_P(X-\mu)^2=\sigma^2$.}}{$P(|X-\mu|\ge\varepsilon)\le\sigma^2/\varepsilon^2$}{finite variance}{$\sigma=1$, $\varepsilon=2$: $\le\frac{1^2}{2^2}=\frac14$}
+  \plugrow{When is it exact?}{\pstep{Box: the bound comes from $c\ind{g(X)\ge c}\le g(X)$.}\pstep{Equality needs $g(X)=c\ind{g(X)\ge c}$, i.e.\ $g(X)$ is $0$ or exactly $c$.}}{equality}{$g(X)$ is $0$ or exactly $c$}{Bernoulli$(p)$, $g(x)=x$, $c=1$: $P(X\ge1)=p$ and $\frac{\E_PX}1=p$}
 \end{plugrows}
 \end{mastercard}
