@@ -181,53 +181,19 @@ $\E_P\big(\int_0^tW\,dW\big)=0$ agrees with $\E_P\big(\frac12W_t^2-\frac12t\big)
 %=====================================================================
 \formulasheet{fs:ito-integral}
 
-\begin{card}{1. Itô integral of a non-random function}
-\Formula
-$\displaystyle\int_a^bf\,dW\sim N\Big(0,\int_a^bf^2\,dt\Big)$; \;$\int_a^bf\,dW=f(b)W(b)-f(a)W(a)-\int_a^bW f'\,dt$.
-\UseWhen
-``Find the distribution / variance of $\int_0^1t^k\,dW_t$''.
-\HowTo
-\begin{enumerate}
-  \item Check $f$ is non-random.
-  \item Mean $0$; variance $\int f^2$.
-\end{enumerate}
-\Caveats
-\cav{Square $f$ inside the integral; do not square the integral of $f$. Not for random integrands like $W_s$.}
-\begin{cardex}
-$\int_0^1t\,dW_t\sim N(0,\frac13)$; $\Var\int_0^1t^4dW_t=\frac19$; $\int_0^ts\,dW_s\sim N(0,\frac{t^3}3)$.
-\end{cardex}
-\end{card}
-
-\begin{card}{2. Quadratic variation and \texorpdfstring{$\int W\,dW$}{int W dW}}
-\Formula
-$\sum(\Delta W)^2\to t$, i.e.\ $(dW)^2=dt$. \;$\int_0^tW\,dW=\frac12W_t^2-\frac12t$.
-\UseWhen
-``Evaluate $\int_0^tW\,dW$'', ``why the extra term?''.
-\HowTo
-\begin{enumerate}
-  \item Use $a(b-a)=\frac12(b^2-a^2)-\frac12(b-a)^2$ on each term.
-  \item Telescope; the squared increments add to $t$.
-\end{enumerate}
-\Caveats
-\cav{Without $-\frac12t$ the mean would be $\frac t2\ne0$.}
-\begin{cardex}
-$\E_P\big(\int_0^2W\,dW\big)^2=\int_0^2s\,ds=2$.
-\end{cardex}
-\end{card}
-
-\begin{card}{3. Adapted integrands}
-\Formula
-$b$ adapted, $\int\E_Pb^2<\infty$: $\int_0^tb\,dW$ is a martingale, mean $0$, $\E_P\big(\int_0^tb\,dW\big)^2=\int_0^t\E_P(b_s^2)\,ds$.
-\UseWhen
-``Is $\int_0^tb_s\,dW_s$ a martingale?'', ``$\E_P$ / second moment of a stochastic integral''.
-\HowTo
-\begin{enumerate}
-  \item Check $b$ uses only the past.
-  \item Mean $0$; second moment = $\int$ of $\E_Pb^2$.
-\end{enumerate}
-\Caveats
-\cav{Normality needs non-random $b$.}
-\begin{cardex}
-$\E_P\big(\int_0^1W_s^2\,dW_s\big)^2=\int_0^1\E_PW_s^4\,ds=\int_0^13s^2ds=1$.
-\end{cardex}
-\end{card}
+\begin{mastercard}[label=card:itoint]{The Itô integral $\int_0^tb_s\,dW_s$}
+For adapted integrands $b$, $c$ with $\int_0^t\E_P(b_s^2)\,ds<\infty$ (and the same for $c$):
+\[
+  \boxed{\begin{gathered}\E_P\int_0^tb\,dW=0,\qquad \E_P\Big[\int_0^tb\,dW\int_0^tc\,dW\Big]=\int_0^t\E_P(b_sc_s)\,ds,\\ \Big(\int_0^tb\,dW\Big)_{t\ge0}\text{ is a martingale};\\
+  b\ \text{non-random}:\quad \int_0^tb\,dW\sim N\Big(0,\int_0^tb_s^2\,ds\Big),\qquad \int_0^tb\,dW=b_tW_t-\int_0^tW_s\,b'_s\,ds.\end{gathered}}
+\]
+The integral is the limit of left-endpoint sums $\sum b_{t_{i-1}}(W_{t_i}-W_{t_{i-1}})$, and $\sum(\Delta W)^2\to t$ (written $(dW)^2=dt$).
+\begin{plugrows}
+  \plugrow{Distribution, non-random integrand}{second line}{$N\big(0,\int b^2\big)$}{$b$ has no $W$ in it}{$\int_0^1t\,dW\sim N(0,\frac13)$; $\int_0^1t^k\,dW\sim N(0,\frac1{2k+1})$; $\int_0^ts\,dW_s\sim N(0,\frac{t^3}3)$}
+  \plugrow{Variance or second moment (Itô isometry)}{$c=b$}{$\E_P\big(\int_0^tb\,dW\big)^2=\int_0^t\E_P(b_s^2)\,ds$}{any adapted $b$}{$\Var\int_0^1t^4dW=\frac19$; $\E_P(\int_0^1W^2dW)^2=\int_0^13s^2ds=1$}
+  \plugrow{Covariance of two integrals}{the middle formula}{$\Cov\big(\int b\,dW,\int c\,dW\big)=\int\E_P(bc)$}{same $W$, same interval}{$\Cov(\int_0^1t\,dW,\int_0^1dW)=\int_0^1t\,dt=\frac12$}
+  \plugrow{$\int W\,dW$}{use $a(b-a)=\frac12(b^2-a^2)-\frac12(b-a)^2$ in the sums}{$\int_0^tW\,dW=\frac12W_t^2-\frac12t$}{Itô (left endpoints)}{mean $0$; $\E_P(\int_0^tW\,dW)^2=\frac{t^2}2$}
+  \plugrow{Pathwise form}{second formula of line two}{no $dW$ left, ordinary calculus on the path}{$b$ non-random and smooth}{$\int_0^1t\,dW=W_1-\int_0^1W\,dt$}
+  \plugrow{Is $\int b\,dW$ normal?}{check whether $b$ is random}{normal only for non-random $b$}{}{$\int_0^tW\,dW$ is \textbf{not} normal}
+\end{plugrows}
+\end{mastercard}

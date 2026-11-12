@@ -163,54 +163,19 @@ A ``variance process'' follows $dV_t=(1-V_t)\,dt+2\sqrt{V_t}\,dW_t$, $V_0=1$. (i
 %=====================================================================
 \formulasheet{fs:sde}
 
-\begin{card}{1. Ornstein--Uhlenbeck}
-\Formula
-$dX=-rX\,dt+\sigma\,dW$: $X_t=x_0e^{-rt}+\sigma\int_0^te^{-r(t-s)}dW_s\sim N\big(x_0e^{-rt},\frac{\sigma^2}{2r}(1-e^{-2rt})\big)$; $t\to\infty$: $N(0,\frac{\sigma^2}{2r})$.
-\UseWhen
-``Solve $dX=-rX\,dt+\sigma dW$'', ``distribution of $X_t$'', mean-reverting models.
-\HowTo
-\begin{enumerate}
-  \item $d(e^{rt}X_t)=\sigma e^{rt}dW_t$ (Itô with $f=e^{rt}x$).
-  \item Integrate, multiply by $e^{-rt}$.
-  \item Mean: first term. Variance: isometry $\int_0^te^{-2r(t-s)}ds$.
-\end{enumerate}
-\Caveats
-\cav{The variance has $2r$ in the denominator and $e^{-2rt}$, not $e^{-rt}$.}
-\begin{cardex}
-$r=2$, $\sigma=1$, $x_0=2$, $t=1$: $X_1\sim N(2e^{-2},\frac14(1-e^{-4}))=N(0.271,0.245)$.
-\end{cardex}
-\end{card}
+Geometric Brownian motion $dN=\mu N\,dt+\sigma N\,dW$ is Card~\ref{card:gbm} with $m=\mu-\frac12\sigma^2$. This sheet holds the mean-reverting models.
 
-\begin{card}{2. Vasicek and CIR}
-\Formula
-Vasicek $dr=a(b-r)dt+\sigma dW$: $r_t\sim N\big(b+e^{-at}(r_0-b),\frac{\sigma^2}{2a}(1-e^{-2at})\big)$. CIR $dr=a(b-r)dt+\sigma\sqrt r\,dW$: $r_t\ge0$, same mean, not normal.
-\UseWhen
-``Distribution of the short rate'', ``probability of a negative rate'', ``compare Vasicek and CIR''.
-\HowTo
-\begin{enumerate}
-  \item Shift $X=r-b$ to get OU with speed $a$.
-  \item Read off mean and variance; standardise.
-\end{enumerate}
-\Caveats
-\cav{Vasicek rates can be negative; CIR rates cannot.}
-\begin{cardex}
-$a=0.5$, $b=0.05$, $\sigma=0.02$, $r_0=0.03$: $P(r_2<0)\approx0.011$.
-\end{cardex}
-\end{card}
-
-\begin{card}{3. GBM as an SDE}
-\Formula
-$dN=rN\,dt+\alpha N\,dW$: $N_t=N_0e^{(r-\alpha^2/2)t+\alpha W_t}$, $\E_PN_t=N_0e^{rt}$, $d\ln N_t=(r-\frac{\alpha^2}2)dt+\alpha dW_t$.
-\UseWhen
-``Solve the GBM SDE'', ``find $\E_PN_t$'', ``verify $S_t=ce^{at+bW_t}$ solves \dots''.
-\HowTo
-\begin{enumerate}
-  \item Itô on $\ln N$; integrate; exponentiate.
-  \item Or verify a guess: drift of $ce^{at+bW}$ is $(a+\frac{b^2}2)$, noise $b$.
-\end{enumerate}
-\Caveats
-\cav{The exponent drift is $r-\frac{\alpha^2}2$, not $r$; the mean grows at $r$.}
-\begin{cardex}
-$dS=0.2S\,dt+S\,dW$, $S_0=5$: $S_t=5e^{-0.3t+W_t}$, $\E_PS_t=5e^{0.2t}$.
-\end{cardex}
-\end{card}
+\begin{mastercard}[label=card:linsde]{The linear (mean-reverting) SDE}
+For constants $\alpha$, $\beta>0$, $\sigma>0$, the SDE $dX_t=(\alpha-\beta X_t)\,dt+\sigma\,dW_t$, $X_0=x$, is solved by the integrating factor $e^{\beta t}$ (so $d(e^{\beta t}X_t)=\alpha e^{\beta t}dt+\sigma e^{\beta t}dW_t$):
+\[
+  \boxed{\begin{gathered}X_t=xe^{-\beta t}+\frac{\alpha}{\beta}\big(1-e^{-\beta t}\big)+\sigma\int_0^te^{-\beta(t-s)}\,dW_s,\\
+  X_t\sim N\Big(xe^{-\beta t}+\frac\alpha\beta\big(1-e^{-\beta t}\big),\ \frac{\sigma^2}{2\beta}\big(1-e^{-2\beta t}\big)\Big).\end{gathered}}
+\]
+The mean moves from $x$ towards the long-run level $\alpha/\beta$; the variance rises to $\sigma^2/(2\beta)$ and stays bounded.
+\begin{plugrows}
+  \plugrow{Ornstein--Uhlenbeck}{$\alpha=0$, $\beta=r$}{$X_t\sim N\big(xe^{-rt},\ \frac{\sigma^2}{2r}(1-e^{-2rt})\big)$; $t\to\infty$: $N(0,\frac{\sigma^2}{2r})$}{$r>0$}{$dX=-X\,dt+dW$: $\Var X_t=\frac12(1-e^{-2t})$; $x=2$, $r=2$, $\sigma=1$, $t=1$: $N(0.271,\,0.245)$}
+  \plugrow{Vasicek short rate}{$dr=a(b-r)dt+\sigma dW$: $\alpha=ab$, $\beta=a$}{$r_t\sim N\big(b+e^{-at}(r_0-b),\ \frac{\sigma^2}{2a}(1-e^{-2at})\big)$}{rates can go negative}{$a=0.5$, $b=0.05$, $\sigma=0.02$, $r_0=0.03$: $P(r_2<0)\approx0.011$}
+  \plugrow{CIR short rate}{noise $\sigma\sqrt r$ instead of $\sigma$; the integrating factor still works for the mean}{$\E_Pr_t=b+e^{-at}(r_0-b)$ (same as Vasicek); $r_t\ge0$, not normal}{no closed-form law}{}
+  \plugrow{A volatility process}{$dZ=-\frac12Z\,dt+dW$, $Z_0=1$ ($\alpha=0$, $\beta=\frac12$)}{$Z_t=e^{-t/2}\big(1+\int_0^te^{s/2}dW_s\big)$}{}{$\Var Z_t=1-e^{-t}$}
+\end{plugrows}
+\end{mastercard}

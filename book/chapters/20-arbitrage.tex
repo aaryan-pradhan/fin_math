@@ -137,53 +137,19 @@ With $C=20$: $x=(1,-3)$ gives $10$ in both columns, so (ii) holds. And (i) fails
 %=====================================================================
 \formulasheet{fs:arbitrage}
 
-\begin{card}{1. No-arbitrage option price, one period}
-\Formula
-Stock $S_0\to S_u$ or $S_d$ (present values). $p^*=\dfrac{S_0-S_d}{S_u-S_d}$; option price $C=p^*(S_u-K)^++(1-p^*)(S_d-K)^+$.
-\UseWhen
-``For which $c$ is there no sure win?'', ``price the option by no arbitrage''.
-\HowTo
-\begin{enumerate}
-  \item Solve $S_0=p^*S_u+(1-p^*)S_d$.
-  \item Payoffs $(S_u-K)^+$, $(S_d-K)^+$; average with $p^*$.
-\end{enumerate}
-\Caveats
-\cav{Use $p^*$, not the real-world probability. Here prices are in present value; with interest see Chapter~22.}
-\begin{cardex}
-$S_0=75$, $S_u=200$, $S_d=50$, $K=120$: $p^*=\frac16$, $C=\frac{80}6\approx13.33$. $S_0=50$, $S_u=100$, $S_d=25$, $K=85$: $p^*=\frac13$, $C=5$.
-\end{cardex}
-\end{card}
-
-\begin{card}{2. Building the arbitrage}
-\Formula
-Buy $x$ shares and $y$ options with $y=-x\,\dfrac{S_u-S_d}{(S_u-K)^+-(S_d-K)^+}$; sure gain $=x\,(\text{constant})\,(C-C^*)$.
-\UseWhen
-``Show an arbitrage exists when $C=\dots$'', ``construct the sure-win scheme''.
-\HowTo
-\begin{enumerate}
-  \item Equate the two time-1 values to get $y$ in terms of $x$.
-  \item Gain $=$ value $-$ cost; choose the sign of $x$ to make it positive.
-\end{enumerate}
-\Caveats
-\cav{If the option is overpriced, sell options and buy stock; if underpriced, the reverse.}
-\begin{cardex}
-$100\to200/50$, $K=150$: $y=-3x$, gain $x(3C-50)$. $C=20$: buy 1 share, sell 3 options, gain $10$.
-\end{cardex}
-\end{card}
-
-\begin{card}{3. Arbitrage theorem and several outcomes}
-\Formula
-Either a probability $p$ makes every wager's expected return $0$, or some scheme wins in every outcome; never both. Three outcomes, two assets: a whole interval of no-arbitrage option prices.
-\UseWhen
-``State the arbitrage theorem'', ``find the range of option prices with no arbitrage''.
-\HowTo
-\begin{enumerate}
-  \item Write the stock condition (today's price = expected price) as an equation in the $p_j$.
-  \item Express $C=\E_p(\text{payoff})$ in one free parameter; let it range over values keeping all $p_j>0$.
-\end{enumerate}
-\Caveats
-\cav{All $p_j$ must be strictly between 0 and 1 and sum to 1.}
-\begin{cardex}
-$100\to300/200/50$, $K=150$: $5p_1+3p_2=1$, $C=\frac{50}3+\frac{200}3p_1$, $p_1\in(0,\frac15)$: $C\in(16.67,\,30)$.
-\end{cardex}
-\end{card}
+\begin{mastercard}[label=card:oneperiod]{No-arbitrage price in a one-period market}
+A stock costs $S_0$ today and is worth $S_j$ tomorrow in state $j=1,\dots,m$; a claim pays $X_j$ in state $j$; $D$ is the discount factor ($D=1$ if prices are in present value, $D=\frac1{1+r}$ with interest $r$ per period). Find the risk-neutral probabilities $p^*_j>0$, $\sum_jp^*_j=1$, from the stock, then price the claim:
+\[
+  \boxed{\begin{gathered}S_0=D\sum_jp^*_jS_j\quad\Longrightarrow\quad\text{price}=D\sum_jp^*_jX_j;\\
+  m=2\ (S_u>S_d):\quad p^*=\frac{S_0/D-S_d}{S_u-S_d};\\ \text{hedge: }\Delta=\frac{X_u-X_d}{S_u-S_d}\ \text{shares and a bond worth }D(X_u-\Delta S_u)\text{ today}.\end{gathered}}
+\]
+Any other price allows an arbitrage (a sure profit); with more states than assets the $p^*$ are not unique and the price is only pinned to an interval.
+\begin{plugrows}
+  \plugrow{Two prices, present values}{$D=1$; $X=(S-K)^+$}{$p^*=\frac{S_0-S_d}{S_u-S_d}$, price $p^*(S_u-K)^+$}{$S_d<S_0<S_u$}{$100\to200/50$, $K=150$: $p^*=\frac13$, $C=\frac{50}3$; $75\to200/50$, $K=120$: $\frac{40}3$; $50\to100/25$, $K=85$: $5$}
+  \plugrow{With interest}{$D=\frac1{1+r}$, $S_u=uS_0$, $S_d=dS_0$}{$p^*=\frac{1+r-d}{u-d}$}{$d<1+r<u$}{$S_0=100$, $u=1.2$, $d=0.8$, $r=0.05$, $K=100$: $p^*=0.625$, $C=\frac{0.625\cdot20}{1.05}\approx11.90$}
+  \plugrow{The replicating holding}{second line}{$\Delta S_0+D(X_u-\Delta S_u)$ equals the price}{two states}{same: $\Delta=0.5$, bond $-38.10$, $50-38.10=11.90$}
+  \plugrow{Building the arbitrage}{if the market price $C\ne$ fair price $C^*$: sell the dear one, buy the cheap one in the hedge ratio}{sure gain $=$ (price difference) per claim, at time 0 in present value}{two states}{$100\to200/50$, $K=150$, $C=20$: sell 3 options, buy 1 share: gain $3(20-\frac{50}3)=10$}
+  \plugrow{More states than assets}{solve the stock equation with one free $p^*$; let it range over values keeping every $p^*_j>0$}{an interval of no-arbitrage prices}{all $p^*_j\in(0,1)$}{$100\to300/200/50$, $K=150$: $C=\frac{50}3+\frac{200}3p_1$, $p_1\in(0,\frac15)$: $C\in(16.67,\,30)$}
+  \plugrow{The arbitrage theorem}{returns $r_i(j)$ of wager $i$ in outcome $j$}{either some $p$ gives every wager expected return $0$, or some betting scheme wins in every outcome; never both}{finitely many outcomes}{$C=20$: scheme $(1,-3)$ wins $10$ in both states}
+\end{plugrows}
+\end{mastercard}
