@@ -182,11 +182,11 @@ Holdings $\Phi_n$ are chosen at time $n-1$; prices $S_n$ include the bond $(1+r)
 \]
 An arbitrage is a self-financing strategy with $V_0\le0$, $V_T\ge0$ and $P(V_T>0)>0$.
 \begin{plugrows}
-  \plugrow{Value of a holding}{dot product of units and prices}{$V_n$}{all securities, bond included}{$\Phi=(-30.48,0.4)$, $S=(1.05,130)$: $V=-32+52=20$}
-  \plugrow{Is a trade self-financing?}{rebalancing at time-$n$ prices must cost nothing: $\Phi_n\cdot S_n=\Phi_{n+1}\cdot S_n$}{equal $\Rightarrow$ yes}{at the time-$n$ prices}{$\Phi_2=(-18.10,0.3)$ at $S_1$: $-19+39=20$: yes}
-  \plugrow{Gain over a period}{one term of the sum, $\Phi_{n+1}\cdot(S_{n+1}-S_n)$}{$V_{n+1}-V_n$}{self-financing}{$-18.10(0.0525)+0.3(20)=5.05$}
-  \plugrow{Is it an arbitrage?}{check the three conditions}{yes / no}{all three needed}{borrow $40$, buy 1 share, sell 3 options at $20$ ($100\to200/50$, $K=150$, $r=0$): $V_0=0$, $V_1=10$}
-  \plugrow{No arbitrage in the binomial market}{compare $1+r$ with $d$ and $u$}{arbitrage-free $\iff d<1+r<u$; else borrow-and-buy ($1+r\le d$) or short-and-lend ($u\le1+r$)}{one stock, two states, one period}{$u=1.1$, $d=0.95$, $r=0.1$: $1+r\ge u$, short the stock}
+  \plugrow{Value of a holding}{\pstep{Lead: $V_n=\Phi_n\cdot S_n$, units times prices, summed.}\pstep{From the holding: $\Phi$ = (bonds, shares); $S$ = (bond price, share price).}\pstep{Multiply and add.}}{$V_n=\Phi_n\cdot S_n$}{all securities, bond included}{$\Phi=(-30.48,\,0.4)$, $S=(1.05,\,130)$: $-30.48(1.05)+0.4(130)=-32+52=20$}
+  \plugrow{Is a trade self-financing?}{\pstep{Box: the value changes only through price moves, so rebalancing at time $n$ costs nothing.}\pstep{That is $\Phi_n\cdot S_n=\Phi_{n+1}\cdot S_n$: old and new holdings, same time-$n$ prices.}\pstep{Compute both sides (row 1).}}{equal $\Rightarrow$ self-financing}{at the time-$n$ prices}{old value $20$; new $\Phi_2=(-18.10,0.3)$ at $S_1=(1.05,130)$: $-18.10(1.05)+0.3(130)=-19+39=20$: equal, yes}
+  \plugrow{Gain over a period}{\pstep{Box: $V_{n+1}-V_n$ is the term $k=n$ of the sum.}\pstep{That term: $\Phi_{n+1}\cdot(S_{n+1}-S_n)$, units held times price changes.}}{$V_{n+1}-V_n=\Phi_{n+1}\cdot(S_{n+1}-S_n)$}{self-financing}{$\Phi_2=(-18.10,0.3)$; bond $1.1025-1.05=0.0525$, share $150-130=20$: $-18.10(0.0525)+0.3(20)=-0.95+6=5.05$}
+  \plugrow{Is it an arbitrage?}{\pstep{Lead: arbitrage = self-financing, $V_0\le0$, $V_T\ge0$, $P(V_T>0)>0$.}\pstep{Compute $V_0$ and $V_T$ in every outcome with row 1.}\pstep{Check all three.}}{yes / no}{all three needed}{$100\to200/50$, $r=0$, $K=150$, option at $20$; borrow $40$, buy 1 share, sell 3 options: $V_0=-40+100-60=0$; up: $-40+200-3(50)=10$; down: $-40+50-0=10$: an arbitrage}
+  \plugrow{No arbitrage in the binomial market}{\pstep{Row 4 for one stock and the bond.}\pstep{If $1+r\le d$: borrow and buy the stock; it beats the loan in both states.}\pstep{If $u\le1+r$: short the stock and lend; the loan beats the stock in both states.}\pstep{If $d<1+r<u$: any holding that gains in one state loses in the other.}}{arbitrage-free $\iff d<1+r<u$}{one stock, two states, one period}{$u=1.1$, $d=0.95$, $r=0.1$: $1+r=1.1\ge u$: short $S_0$ of stock, lend it: $1.1S_0\ge S_1$ in both states}
 \end{plugrows}
 \end{mastercard}
 
@@ -196,12 +196,12 @@ Same stock, strike $K$, expiry $T$; $D_T$ = today's value of $1$ paid at $T$ ($(
   \boxed{\;S_0+P-C=K\,D_T,\qquad\text{at time }t:\ S_t+P_t-C_t=K\,D_{T-t}.\;}
 \]
 \begin{plugrows}
-  \plugrow{Put from call}{$P=C-S_0+KD_T$}{$P$}{European options, no dividends}{$S_0=1$, $K=1$, $r=0.25$, $T=1$, $C=0.36$: $P=0.36-1+0.8=0.16$}
-  \plugrow{Call from put}{$C=P+S_0-KD_T$}{$C$}{same}{$P=0.16$: $C=0.16+1-0.8=0.36$}
-  \plugrow{Continuous time}{$D_T=e^{-rT}$}{$C-P=S_0-Ke^{-rT}$}{European options, rate $r$ compounded continuously}{$S_0=80$, $K=85$, $r=0.05$, $T=1$: $C-P=80-85e^{-0.05}\approx-0.85$}
-  \plugrow{Prices violate parity}{compare $S_0+P-C$ with $KD_T$}{buy the cheap side (stock $+$ put $-$ call, or the bond), sell the dear side: sure profit equal to the gap}{European options; any gap at all is an arbitrage}{$S_0+P-C=0.85$ but $KD_T=0.8$: sell share and put, buy call, lend $0.8$: gain $0.05$}
-  \plugrow{Straddle price}{call $+$ put}{$C+P=2C-S_0+KD_T$}{same $K$, $T$}{$2(0.36)-1+0.8=0.52$}
-  \plugrow{Bounds on option prices}{$P\ge0$ in the box; a call pays less than a share, a put less than $K$}{$\max(S_0-KD_T,0)\le C\le S_0$ and $\max(KD_T-S_0,0)\le P\le KD_T$}{European options, no dividends}{$S_0=80$, $K=85$, $r=0.05$, $T=1$: $KD_T=80.85$, so $0\le C\le80$ and $0.85\le P\le80.85$}
-  \plugrow{American call on a stock without dividends}{the call bound at time $t$: $C_t\ge S_t-KD_{T-t}\ge S_t-K$}{exercising early (worth $S_t-K$) never beats keeping the call, so the American call costs the same as the European one}{$r\ge0$, no dividends; false for puts, which can be worth exercising early}{$S_t=130$, $K=100$, $r=0.05$, $T-t=0.5$: $C_t\ge130-97.53=32.47>30$}
+  \plugrow{Put from call}{\pstep{Box: $S_0+P-C=KD_T$.}\pstep{Solve for $P$.}\pstep{From the problem: $D_T=(1+r)^{-T}$, read $S_0$, $K$, $C$.}}{$P=C-S_0+KD_T$}{European options, no dividends}{$S_0=1$, $K=1$, $r=0.25$, $T=1$, $C=0.36$: $D_1=\frac1{1.25}=0.8$; $P=0.36-1+1(0.8)=0.16$}
+  \plugrow{Call from put}{\pstep{Box: $S_0+P-C=KD_T$.}\pstep{Solve for $C$.}}{$C=P+S_0-KD_T$}{same}{$P=0.16$: $C=0.16+1-0.8=0.36$}
+  \plugrow{Continuous time}{\pstep{Box with $D_T=e^{-rT}$.}\pstep{Rearrange: $C-P=S_0-KD_T$.}}{$C-P=S_0-Ke^{-rT}$}{European options, rate $r$ compounded continuously}{$S_0=80$, $K=85$, $r=0.05$, $T=1$: $85e^{-0.05}=80.85$; $C-P=80-80.85=-0.85$}
+  \plugrow{Prices violate parity}{\pstep{Box: share $+$ put $-$ call pays $K$ at $T$ in every state, so it must cost $KD_T$.}\pstep{Compare the quoted $S_0+P-C$ with $KD_T$.}\pstep{Sell the dearer side, buy the cheaper; at $T$ the two positions cancel.}}{sure profit equal to the gap}{European options; any gap at all is an arbitrage}{$S_0+P-C=0.85$, $KD_T=0.8$: sell share and put, buy call (receive $0.85$), lend $0.8$; at $T$ the loan returns $K$ and covers the position: gain $0.85-0.8=0.05$}
+  \plugrow{Straddle price}{\pstep{Straddle = call $+$ put (\cref{card:payoff}, row 4); prices add.}\pstep{Row 1: $P=C-S_0+KD_T$.}\pstep{Substitute.}}{$C+P=2C-S_0+KD_T$}{same $K$, $T$}{$C=0.36$: $2(0.36)-1+0.8=0.52$}
+  \plugrow{Bounds on option prices}{\pstep{Box: $C=S_0+P-KD_T$, and $P\ge0$, so $C\ge S_0-KD_T$; also $C\ge0$.}\pstep{A call pays less than a share: $C\le S_0$.}\pstep{The same for the put: $P=C-S_0+KD_T\ge KD_T-S_0$; a put pays at most $K$: $P\le KD_T$.}}{$\max(S_0-KD_T,0)\le C\le S_0$ and $\max(KD_T-S_0,0)\le P\le KD_T$}{European options, no dividends}{$S_0=80$, $K=85$, $r=0.05$, $T=1$: $KD_T=80.85$: $\max(80-80.85,0)=0\le C\le80$; $\max(80.85-80,0)=0.85\le P\le80.85$}
+  \plugrow{American call on a stock without dividends}{\pstep{Row 6 at time $t$: $C_t\ge S_t-KD_{T-t}$.}\pstep{With $r\ge0$, $D_{T-t}\le1$, so $S_t-KD_{T-t}\ge S_t-K$.}\pstep{Exercising now gives $S_t-K$; keeping the call is worth at least as much.}}{never exercise early: the American call costs the same as the European}{$r\ge0$, no dividends; false for puts, which can be worth exercising early}{$S_t=130$, $K=100$, $r=0.05$, $T-t=0.5$: $100e^{-0.025}=97.53$; $C_t\ge130-97.53=32.47>30=130-100$}
 \end{plugrows}
 \end{mastercard}
