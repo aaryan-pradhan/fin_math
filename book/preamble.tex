@@ -97,11 +97,18 @@
   title={$\bigstar$\ Card~\thetcbcounter: #2},fonttitle=\bfseries,coltitle=white,colbacktitle=defc!80,list text={#2},#1}
 \newlist{plugrows}{enumerate}{1}
 \setlist[plugrows]{label=\textbf{Row \arabic*.},ref=\arabic*,leftmargin=*,align=left,itemsep=0.55em,topsep=0.4em}
-% \plugrow{given / situation}{what to plug}{result}{valid when}{numbers}
+% \plugrow{situation}{\pstep{formula being plugged}\pstep{this from that}...}{result}{valid when}{numbers}
+\newlist{psteps}{enumerate}{1}
+\setlist[psteps]{label=\arabic*.,nosep,leftmargin=1.6em}
+\newcommand{\pstep}{\item}
+\makeatletter
 \newcommand{\plugrow}[5]{\item \textbf{#1}\par\nobreak
-  \textit{Plug:} #2\ \ $\Longrightarrow$\ \ #3\par\nobreak
+  \in@{\pstep}{#2}%
+  \ifin@\textit{Plug:}\nobreak\begin{psteps}#2\end{psteps}\nobreak\textit{Result:} #3%
+  \else\textit{Plug:} #2\ \ $\Longrightarrow$\ \ #3\fi\par\nobreak
   {\small\color{trapc!85!black}\textit{Valid when:} #4}\par\nobreak
   {\small\color{thmc!80!black}\textit{Numbers:} #5}}
+\makeatother
 % A problem, solved by plugging into a card: \uses{card:x}{3} prints "Card 12.1, row 3".
 \declaretheorem[style=slmthm,sibling=theorem]{problem}
 \tcolorboxenvironment{problem}{slm,colback=exc!4,colframe=exc!60}
