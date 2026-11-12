@@ -156,14 +156,13 @@ With one stock and three outcomes ($n+1=2<N=3$), the EMMs form a whole segment a
 \formulasheet{fs:fundamental}
 
 \begin{mastercard}[label=card:finite]{Pricing in a finite one-period market}
-Outcomes $\omega_1,\dots,\omega_N$; $n$ stocks with prices $S_0^i$ today and $S_1^i(\omega_k)$ tomorrow; discount factor $D=\frac1{1+r}$ ($D=1$ for present-value prices); a claim pays $X(\omega_k)$. Solve for the risk-neutral weights $p^*_k$, then price:
+Outcomes $\omega_1,\dots,\omega_N$; $D=\frac1{1+r}$ ($D=1$ for present-value prices). The risk-neutral weights $p^*_k$ are the ones that price every stock correctly; then they price every claim:
 \[
-  \boxed{\begin{gathered}S_0^i=D\sum_{k=1}^Np^*_k\,S_1^i(\omega_k)\ \ (i=1,\dots,n),\qquad \sum_kp^*_k=1,\ \ p^*_k>0;\\
-  X^*=D\sum_kp^*_k\,X(\omega_k);\qquad \text{copy: }\ \sum_i\Delta_iS_1^i(\omega_k)+b\,(1+r)=X(\omega_k)\ \ \text{for all }k.\end{gathered}}
+  \boxed{\;\text{price today}=D\sum_kp^*_k\cdot(\text{value tomorrow in }\omega_k),\qquad p^*_k>0,\ \ \sum_kp^*_k=1.\;}
 \]
-No solution $p^*$ $\iff$ arbitrage (Theorem~2). Unique $p^*$ $\iff$ complete (Theorem~4). Several $p^*$: each attainable claim still has one price; other claims get an interval.
+Applied to the stocks, the box gives the equations for $p^*$; applied to a claim, its price. No solution: arbitrage. One solution: complete. Several: a claim that can be copied still has one price; others get an interval.
 \begin{plugrows}
-  \plugrow{One stock, two outcomes (up/down)}{$N=2$, $n=1$, $S_1=uS_0$ or $dS_0$}{$p^*=\dfrac{1+r-d}{u-d}$; $X^*=D[p^*X_u+(1-p^*)X_d]$; $\Delta=\dfrac{X_u-X_d}{(u-d)S_0}$, $b=\dfrac{uX_d-dX_u}{(1+r)(u-d)}$}{$d<1+r<u$}{$S_0=1$, $u=1.75$, $d=0.5$, $r=0.25$, $K=1$: $p^*=0.6$, call $0.36$, $\Delta=0.6$, $b=-0.24$; put $0.16$}
+  \plugrow{One stock, two outcomes (up/down)}{$N=2$, $n=1$, $S_1=uS_0$ or $dS_0$}{$p^*=\dfrac{1+r-d}{u-d}$; $X^*=D[p^*X_u+(1-p^*)X_d]$; copy (same payoff, same price): $\Delta=\dfrac{X_u-X_d}{(u-d)S_0}$ shares, $b=\dfrac{uX_d-dX_u}{(1+r)(u-d)}$ in the bond}{$d<1+r<u$}{$S_0=1$, $u=1.75$, $d=0.5$, $r=0.25$, $K=1$: $p^*=0.6$, call $0.36$, $\Delta=0.6$, $b=-0.24$; put $0.16$}
   \plugrow{Prices in present value}{$D=1$, two prices $S_u,S_d$}{$p^*=\dfrac{S_0-S_d}{S_u-S_d}$; call $=p^*(S_u-K)^+$}{$S_d<S_0<S_u$}{$100\to200/50$, $K=150$: $\frac{50}3$; $75\to200/50$, $K=120$: $13.33$; $50\to100/25$, $K=85$: $5$}
   \plugrow{The real-world probability}{not used anywhere}{the price is the same whatever $p$ is}{the discounted real-world expectation is \emph{not} the price}{$100\to130/80$, $r=0.05$, $K=110$: $p^*=0.5$, $C=9.52$ (the real $p=0.4$ would wrongly give $7.62$)}
   \plugrow{No $p^*$ in $(0,1)$: build the arbitrage}{solution outside $(0,1)$ or no solution}{short what is dear, buy what is cheap; for a mispriced claim, hedge it with $\Delta$ shares}{any price other than $X^*$}{$r=0.25$, stock $\to2$ or $0.5$, $S_0=2$: short the stock, bank $2.5$, owe at most $2$; option at $C=20$ ($100\to200/50$, $K=150$): sell 3, buy 1 share, gain $10$}
