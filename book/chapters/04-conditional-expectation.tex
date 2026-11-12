@@ -1,0 +1,315 @@
+\chapter{Independence and conditional expectation}
+\label{ch:cond}
+
+\begin{question}
+How does partial information change our best guess of a random quantity, and when does information about one quantity tell us nothing about another?
+\end{question}
+
+\begin{whatfor}
+\begin{itemize}
+  \item Conditional probability, total probability and Bayes.
+  \item Independence of events, of random variables and of $\sigma$-fields, and what it does to expectations.
+  \item The conditional expectation $\E_P(X\given\G)$: a random variable, the best guess of $X$ given the information $\G$.
+  \item Its four working rules CE1--CE4, used on every page of Parts~1--4.
+\end{itemize}
+\skipline{fs:cond}
+\end{whatfor}
+
+\begin{prereq}
+From Chapters~1--3: $\sigma$-field, atoms, filtration, random variable, $\sigma(\xi)$, density, joint density, expectation $\E_P$, variance, covariance, the normal exponential moment.
+\end{prereq}
+
+%=====================================================================
+\section{Conditional probability}
+
+\begin{definition}[Conditional probability]
+For events $A,B$ with $P(B)\ne0$, the \dfn{conditional probability} of $A$ given $B$ is
+\[
+  P(A\given B)=\frac{P(A\cap B)}{P(B)} .
+\]
+\end{definition}
+
+Conditioning on $B$ throws away the outcomes outside $B$ and rescales what is left so that $B$ has probability $1$. Die, told ``even'': the weights become $\frac13$ on each of $2,4,6$, so $P(\{6\}\given\text{even})=\frac{1/6}{1/2}=\frac13$.
+
+\begin{result}[Total probability and Bayes]
+\label{res:total}
+Let $B_1,B_2,\ldots$ be a \dfn{partition} of $\Omega$: pairwise disjoint events with union $\Omega$, each with $P(B_i)>0$. Then for every event $A$,
+\[
+  P(A)=\sum_i P(A\given B_i)\,P(B_i),\qquad
+  P(B_k\given A)=\frac{P(A\given B_k)\,P(B_k)}{\sum_iP(A\given B_i)\,P(B_i)} .
+\]
+\end{result}
+\begin{proof}
+$A$ is the disjoint union of the pieces $A\cap B_i$, so $P(A)=\sum_iP(A\cap B_i)=\sum_iP(A\given B_i)P(B_i)$. Bayes is $P(B_k\given A)=P(A\cap B_k)/P(A)$ with this denominator.
+\end{proof}
+
+\begin{example}[Which machine made the defect?]
+Machine $M_1$ makes $60\%$ of items, $2\%$ of them defective; $M_2$ makes $40\%$, $5\%$ defective.
+\begin{steps}
+  \item Total probability: $P(D)=0.02(0.6)+0.05(0.4)=0.012+0.020=0.032$.
+  \item Bayes: $P(M_2\given D)=0.020/0.032=0.625$. $M_2$ makes $40\%$ of the items but $62.5\%$ of the defects.
+\end{steps}
+\end{example}
+
+%=====================================================================
+\section{Independence}
+
+\begin{definition}[Independence]
+\label{def:indep}
+Independence is defined in three layers.
+\begin{itemize}
+  \item Events $A,B$ are \dfn{independent} if $P(A\cap B)=P(A)P(B)$, i.e.\ $P(A\given B)=P(A)$ when $P(B)>0$. Events $A_1,\dots,A_n$ are independent if $P(A_{i_1}\cap\dots\cap A_{i_k})=P(A_{i_1})\cdots P(A_{i_k})$ for every choice $i_1<\dots<i_k$.
+  \item $\sigma$-fields $\G$ and $\mathcal H$ are independent if every $A\in\G$ and $B\in\mathcal H$ are independent events.
+  \item Random variables $\xi,\eta$ are independent if $\sigma(\xi)$ and $\sigma(\eta)$ are independent: $P(\xi\in A,\eta\in B)=P(\xi\in A)P(\eta\in B)$ for all Borel $A,B$. A family of random variables is independent if any finitely many of them are. A random variable $\xi$ is independent of $\G$ if $\sigma(\xi)$ and $\G$ are independent.
+\end{itemize}
+\end{definition}
+
+\begin{example}[Pairwise is not enough]
+Two dice. $A$ = first even, $B$ = second even, $C$ = sum even; each has probability $\frac12$.
+\begin{itemize}
+  \item Every pair: $P(A\cap B)=P(A\cap C)=P(B\cap C)=\frac14=\frac12\cdot\frac12$.
+  \item All three: $P(A\cap B\cap C)=P(\text{both even})=\frac14\ne\frac18$.
+\end{itemize}
+Any two of them decide the third, so the three are not independent.
+\end{example}
+
+Disjoint events with positive probabilities are never independent: $P(A\cap B)=0<P(A)P(B)$. Learning $A$ rules $B$ out completely.
+
+\begin{result}[Independence and expectations]
+\label{res:indep-E}
+Let $\xi,\eta$ be independent and $f,g$ Borel functions with $f(\xi),g(\eta)$ integrable. Then
+\[
+  \E_P\big[f(\xi)\,g(\eta)\big]=\E_P f(\xi)\;\E_P g(\eta).
+\]
+In particular $\Cov(\xi,\eta)=0$ and $\Var(\xi+\eta)=\Var\xi+\Var\eta$. If $\xi,\eta$ have densities, they are independent exactly when the joint density factorises: $f_{\xi,\eta}(x,y)=f_\xi(x)f_\eta(y)$.
+\end{result}
+\begin{proof}
+For indicators, $f=\ind{A}$, $g=\ind{B}$, the claim is $P(\xi\in A,\eta\in B)=P(\xi\in A)P(\eta\in B)$, the definition. It extends to step functions by linearity, and to the rest by the limits of Chapter~3.
+\end{proof}
+
+\begin{result}[Sums of independent normals]
+\label{res:normal-sum}
+If $\xi\sim N(\mu_1,\sigma_1^2)$ and $\eta\sim N(\mu_2,\sigma_2^2)$ are independent, then $\xi+\eta\sim N(\mu_1+\mu_2,\ \sigma_1^2+\sigma_2^2)$.
+\end{result}
+\begin{proof}
+Compare exponential moments.
+\begin{steps}
+  \item By independence and \cref{res:normal-moments}, $\E_Pe^{u(\xi+\eta)}=\E_Pe^{u\xi}\,\E_Pe^{u\eta}=e^{u\mu_1+u^2\sigma_1^2/2}\,e^{u\mu_2+u^2\sigma_2^2/2}$.
+  \item This is $e^{u(\mu_1+\mu_2)+u^2(\sigma_1^2+\sigma_2^2)/2}$, the exponential moment of $N(\mu_1+\mu_2,\sigma_1^2+\sigma_2^2)$.
+  \item A distribution whose exponential moments $\E_Pe^{u\xi}$ are finite for all $u$ is determined by them (a fact we use without proof). \qedhere
+\end{steps}
+\end{proof}
+
+%=====================================================================
+\section{Conditional expectation}
+
+Start with the simplest information: whether an event $B$ happened.
+
+\begin{definition}[Conditional expectation given an event]
+For an event $B$ with $P(B)>0$, $\E_P(X\given B)=\dfrac{1}{P(B)}\displaystyle\int_BX\,dP=\dfrac{\E_P(X\ind B)}{P(B)}$: the average of $X$ over the outcomes in $B$.
+\end{definition}
+
+Now suppose the information is a $\sigma$-field $\G\subseteq\F$ with atoms $G_1,\dots,G_k$ (a partition of $\Omega$). Once we learn which atom happened, our best guess of $X$ is its average over that atom. This guess depends on the outcome, so it is a random variable.
+
+\begin{definition}[Conditional expectation given a $\sigma$-field]
+\label{def:cond-exp}
+Let $X$ be integrable and $\G\subseteq\F$ a $\sigma$-field. The \dfn{conditional expectation} $\E_P(X\given\G)$ is the random variable $Y$ with
+\begin{enumerate}[label=(\roman*)]
+  \item $Y$ is $\G$-measurable (it uses only the information in $\G$);
+  \item $\int_GY\,dP=\int_GX\,dP$ for every $G\in\G$ (it has the right average on every event of $\G$).
+\end{enumerate}
+Such a $Y$ exists and is unique up to a set of probability $0$. We write $\E_P(X\given\xi)$ for $\E_P(X\given\sigma(\xi))$, and $\E_P(X\given\xi=y)$ for its value where $\xi=y$.
+\end{definition}
+
+\begin{result}[The partition formula]
+\label{res:partition}
+If $\G$ has atoms $G_1,\dots,G_k$ with $P(G_i)>0$, then
+\[
+  \E_P(X\given\G)=\sum_{i=1}^k\E_P(X\given G_i)\,\ind{G_i}:
+\]
+on each atom, it equals the average of $X$ over that atom.
+\end{result}
+\begin{proof}
+(i) forces $Y$ to be constant on each atom, say $c_i$ on $G_i$. Then (ii) with $G=G_i$ reads $c_iP(G_i)=\int_{G_i}X\,dP$, so $c_i=\E_P(X\given G_i)$.
+\end{proof}
+
+\begin{example}[A die told odd or even]
+\label{ex:die-ce}
+$X(\omega)=\omega$, $\G=\{\varnothing,\{1,3,5\},\{2,4,6\},\Omega\}$.
+\begin{steps}
+  \item Odd atom: $\E_P(X\given\text{odd})=\frac{1+3+5}{3}=3$. Even atom: $\frac{2+4+6}{3}=4$.
+  \item So $\E_P(X\given\G)=3$ on odd outcomes and $4$ on even ones: a random variable with two values.
+  \item Check the average: $\frac12\cdot3+\frac12\cdot4=3.5=\E_P(X)$.
+\end{steps}
+\end{example}
+
+\begin{pic}
+\begin{tikzpicture}
+\begin{axis}[width=8.5cm,height=4.4cm,ybar,bar width=12pt,ymin=0,ymax=6.8,xtick={1,...,6},xlabel={outcome $\omega$},ylabel={value},xmin=0.4,xmax=6.6]
+  \addplot[fill=prec!25,draw=prec] coordinates {(1,1)(2,2)(3,3)(4,4)(5,5)(6,6)};
+  \addplot[ybar=0pt,draw=none,forget plot] coordinates {(1,0)};
+\end{axis}
+\begin{axis}[width=8.5cm,height=4.4cm,ymin=0,ymax=6.8,xmin=0.4,xmax=6.6,axis lines=none]
+  \addplot[thmc,very thick,mark=*] coordinates {(1,3)(3,3)(5,3)};
+  \addplot[defc,very thick,mark=*] coordinates {(2,4)(4,4)(6,4)};
+  \node[thmc,font=\scriptsize,anchor=east] at (axis cs:0.95,3) {odd: $3$};
+  \node[defc,font=\scriptsize,anchor=east] at (axis cs:1.9,4.4) {even: $4$};
+\end{axis}
+\end{tikzpicture}
+\picnote{Grey bars: $X(\omega)=\omega$. Lines: $\E_P(X\given\G)$ replaces $X$ by its average on each atom of $\G$: all odd outcomes get $3$, all even outcomes get $4$. Finer information means finer averaging.}
+\end{pic}
+
+\begin{result}[With a joint density]
+\label{res:cond-density}
+If $(X,Y)$ has joint density $f(x,y)$ and $f_Y(y)>0$, the \dfn{conditional density} of $X$ given $Y=y$ is $f_{X\given Y=y}(x)=\dfrac{f(x,y)}{f_Y(y)}$, and
+\[
+  \begin{aligned}
+  \E_P(X\given Y=y)&=\int x\,f_{X\given Y=y}(x)\,dx,\\
+  P(X>t)&=\int P(X>t\given Y=y)\,f_Y(y)\,dy=\E_P\big[P(X>t\given Y)\big].
+  \end{aligned}
+\]
+\end{result}
+\begin{proof}
+For the second formula, swap the order of integration:
+\[
+  \begin{aligned}
+  \int P(X>t\given Y=y)f_Y(y)\,dy&=\int\!\!\int_t^\infty\frac{f(x,y)}{f_Y(y)}\,dx\,f_Y(y)\,dy\\
+  &=\int_t^\infty\!\!\int f(x,y)\,dy\,dx=\int_t^\infty f_X(x)\,dx=P(X>t). \qedhere
+  \end{aligned}
+\]
+\end{proof}
+
+%=====================================================================
+\section{The rules CE1--CE4}
+
+These four rules, plus two extreme cases, are all we use to compute conditional expectations.
+
+\begin{theorem}[Rules of conditional expectation]
+\label{thm:ce-rules}
+Let $X,Y$ be integrable, $a,b$ numbers, and $\G_0\subseteq\G_1\subseteq\F$ $\sigma$-fields.
+\begin{itemize}
+  \item[\textbf{CE1}] Linearity: $\E_P(aX+bY\given\G)=a\,\E_P(X\given\G)+b\,\E_P(Y\given\G)$.
+  \item[\textbf{CE2}] Taking out what is known: if $Z$ is $\G$-measurable, $\E_P(ZX\given\G)=Z\,\E_P(X\given\G)$.
+  \item[\textbf{CE3}] Independence: if $X$ is independent of $\G$, then $\E_P(X\given\G)=\E_P(X)$.
+  \item[\textbf{CE4}] Tower: $\E_P\big[\E_P(X\given\G_1)\given\G_0\big]=\E_P(X\given\G_0)$. With $\G_0=\{\varnothing,\Omega\}$: $\E_P\big[\E_P(X\given\G_1)\big]=\E_P(X)$.
+\end{itemize}
+Two extremes: if $X$ is $\G$-measurable, $\E_P(X\given\G)=X$ (full information); if $\G=\{\varnothing,\Omega\}$, $\E_P(X\given\G)=\E_P(X)$ (no information).
+\end{theorem}
+\begin{proof}
+We prove the rules on a finite $\Omega$, where the partition formula (\cref{res:partition}) gives everything; the general case uses the same two defining properties.
+\begin{steps}
+  \item CE1: on each atom, the average of $aX+bY$ is $a$ times the average of $X$ plus $b$ times that of $Y$.
+  \item CE2: $Z$ is constant on each atom $G$ of $\G$, say $z$, so the average of $ZX$ over $G$ is $z$ times the average of $X$.
+  \item CE3: for an atom $G$ of $\G$, independence gives $\E_P(X\ind G)=\E_P(X)P(G)$, so the average over $G$ is $\E_P(X)$.
+  \item CE4: let $B$ be an atom of $\G_0$. It is a union of atoms of $\G_1$, so
+  \[
+    \E_P\big[\E_P(X\given\G_1)\given B\big]=\frac{1}{P(B)}\int_B\E_P(X\given\G_1)\,dP=\frac{1}{P(B)}\int_BX\,dP=\E_P(X\given B),
+  \]
+  where the middle step is property (ii) of $\E_P(X\given\G_1)$, applied to $B\in\G_1$. \qedhere
+\end{steps}
+\end{proof}
+
+\begin{intuition}
+CE4 says: averaging the finer guess with coarser information gives the coarser guess. The coarse information always wins.
+\end{intuition}
+
+\begin{example}[Two dice]
+\label{ex:two-dice-ce}
+$X_1,X_2$ two independent dice, $\G=\sigma(X_1)$; $\E_P(X_2)=3.5$, $\E_P(X_2^2)=\frac{91}{6}$.
+\begin{itemize}
+  \item $\E_P(X_1+X_2\given X_1)=X_1+3.5$ (CE1, then known, then CE3).
+  \item $\E_P(X_1X_2\given X_1)=X_1\,\E_P(X_2\given X_1)=3.5X_1$ (CE2, CE3). If $X_1=2$ it is $7$.
+  \item $\E_P\big((X_1+X_2)^2\given X_1\big)=X_1^2+2X_1(3.5)+\frac{91}{6}$ (expand, then CE1--CE3).
+  \item Tower: $\E_P\big[\E_P(X_1+X_2\given X_1)\big]=\E_P(X_1)+3.5=7=\E_P(X_1+X_2)$.
+\end{itemize}
+\end{example}
+
+%=====================================================================
+\formulasheet{fs:cond}
+
+\begin{card}{1. Conditional probability, total probability, Bayes}
+\Formula
+$P(A\given B)=\dfrac{P(A\cap B)}{P(B)}$; \;$P(A)=\sum_iP(A\given B_i)P(B_i)$; \;$P(B_k\given A)=\dfrac{P(A\given B_k)P(B_k)}{P(A)}$ ($B_i$ a partition).
+\UseWhen
+Two-stage experiments; ``given that'', ``which cause?''.
+\HowTo
+\begin{enumerate}
+  \item Choose the partition (the first stage).
+  \item Total probability for $P(A)$; Bayes to reverse.
+\end{enumerate}
+\Caveats
+\cav{$P(A\given B)\ne P(B\given A)$. The $B_i$ must be disjoint and cover $\Omega$.}
+\begin{cardex}
+$M_1$: $60\%$ of items, $2\%$ defective; $M_2$: $40\%$, $5\%$. $P(D)=0.032$, $P(M_2\given D)=0.625$.
+\end{cardex}
+\end{card}
+
+\begin{card}{2. Independence}
+\Formula
+$P(A\cap B)=P(A)P(B)$. Independent r.v.s: $\E_P[f(\xi)g(\eta)]=\E_Pf(\xi)\E_Pg(\eta)$, $\Cov=0$, $\Var(\xi+\eta)=\Var\xi+\Var\eta$. Independent normals add: means add, variances add.
+\UseWhen
+``Are they independent?'', products and sums of independent quantities.
+\HowTo
+\begin{enumerate}
+  \item Events: compare $P(A\cap B)$ with $P(A)P(B)$; for $n$ events check every sub-collection.
+  \item Densities: check $f(x,y)=f_\xi(x)f_\eta(y)$.
+\end{enumerate}
+\Caveats
+\cav{Pairwise independence does not give independence of three. $\Cov=0$ does not give independence. Disjoint $\ne$ independent.}
+\begin{cardex}
+$\xi\sim N(1,2)$, $\eta\sim N(-3,5)$ independent: $\xi+\eta\sim N(-2,7)$; $2\xi-\eta\sim N(5,13)$.
+\end{cardex}
+\end{card}
+
+\begin{card}{3. Conditional expectation on a partition}
+\Formula
+$\E_P(X\given\G)=\sum_i\E_P(X\given G_i)\ind{G_i}$, \;$\E_P(X\given G)=\E_P(X\ind G)/P(G)$. It is a random variable.
+\UseWhen
+``Find $\E_P(X\given\G)$'' with $\G$ finite, or ``given the first toss''.
+\HowTo
+\begin{enumerate}
+  \item List the atoms of $\G$.
+  \item Average $X$ over each atom.
+  \item Write the answer as a random variable: value on each atom.
+\end{enumerate}
+\Caveats
+\cav{The answer is not one number (unless $\G$ is trivial). It must be constant on each atom.}
+\begin{cardex}
+Die, $\G$ = low $\{1,2,3\}$ / high $\{4,5,6\}$, $X=\omega^2$: low $\frac{14}{3}$, high $\frac{77}{3}$. Check: $\frac12(\frac{14}3+\frac{77}3)=\frac{91}6=\E_PX$.
+\end{cardex}
+\end{card}
+
+\begin{card}{4. The rules CE1--CE4}
+\Formula
+CE1 $\E_P(aX+bY\given\G)=a\E_P(X\given\G)+b\E_P(Y\given\G)$. CE2 $Z$ known: $\E_P(ZX\given\G)=Z\E_P(X\given\G)$. CE3 $X$ indep.\ of $\G$: $\E_P(X\given\G)=\E_PX$. CE4 $\G_0\subseteq\G_1$: $\E_P[\E_P(X\given\G_1)\given\G_0]=\E_P(X\given\G_0)$, and $\E_P[\E_P(X\given\G)]=\E_PX$.
+\UseWhen
+Every conditional expectation in Parts~1--4: martingale checks, pricing.
+\HowTo
+\begin{enumerate}
+  \item Split $X$ into a known part and a part independent of $\G$ (e.g.\ $S_{n+1}=S_n+\xi_{n+1}$).
+  \item Known part: take it out (CE2). Independent part: replace by its mean (CE3).
+  \item For an unconditional mean, condition first and average (CE4).
+\end{enumerate}
+\Caveats
+\cav{CE3 needs independence of the whole $\G$, not just of one variable in it.}
+\begin{cardex}
+Walk $S_n=\xi_1+\dots+\xi_n$, $\xi_i=\pm1$ fair, $\F_3=\sigma(\xi_1,\xi_2,\xi_3)$. $S_5=S_3+D$, $D=\xi_4+\xi_5$ independent of $\F_3$, $\E_PD=0$, $\E_PD^2=2$: $\E_P(S_5\given\F_3)=S_3$; $\E_P(S_5^2\given\F_3)=S_3^2+2$.
+\end{cardex}
+\end{card}
+
+\begin{card}{5. Conditioning with densities}
+\Formula
+$f_{X\given Y=y}=\dfrac{f(x,y)}{f_Y(y)}$; $\E_P(X\given Y=y)=\int xf_{X\given Y=y}(x)dx$; $P(X>t)=\E_P[P(X>t\given Y)]$.
+\UseWhen
+A random parameter: ``rate is $1$ or $2$'', ``bias $p$ is uniform''.
+\HowTo
+\begin{enumerate}
+  \item Compute the answer as if $Y=y$ were known.
+  \item Average over $Y$.
+\end{enumerate}
+\Caveats
+\cav{Average the conditional \emph{probabilities}, not the parameters.}
+\begin{cardex}
+$X$ exponential with rate $Y=1$ or $2$, each with probability $\frac12$: $P(X>1)=\frac12e^{-1}+\frac12e^{-2}\approx0.252$, not $e^{-1.5}\approx0.223$.
+\end{cardex}
+\end{card}
