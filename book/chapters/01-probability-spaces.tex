@@ -316,106 +316,43 @@ The lemma goes one way only. A divergent sum tells you nothing on its own: $A_i=
 %=====================================================================
 \formulasheet{fs:spaces}
 
-\begin{card}{1. Is this collection a \texorpdfstring{$\sigma$}{sigma}-field?}
-\Formula
-(i) $\varnothing\in\F$; (ii) $A\in\F\Rightarrow A^c\in\F$; (iii) $A_1,A_2,\ldots\in\F\Rightarrow\bigcup_iA_i\in\F$. Intersections and $\Omega$ come free.
-\UseWhen
-``Is $\{\dots\}$ a $\sigma$-field?'', ``what can we ask about this experiment?''
-\HowTo
-\begin{enumerate}
-  \item Check $\varnothing$ (and $\Omega$) are there.
-  \item Check the complement of every set; this is the usual failure, so do it first.
-  \item Check unions of the sets.
-\end{enumerate}
-\Caveats
-\cav{A collection missing one complement is not a $\sigma$-field, however natural it looks.}
-\begin{cardex}
-Die: is $\{\varnothing,\{6\},\Omega\}$ a $\sigma$-field? Step 1: $\varnothing,\Omega$ present. Step 2: $\{6\}^c=\{1,2,3,4,5\}$ is missing. \textbf{No.}
-\end{cardex}
-\end{card}
+\begin{mastercard}[label=card:atoms]{Events of a finite $\sigma$-field}
+A finite $\sigma$-field $\F$ on $\Omega$ is fixed by its atoms $G_1,\dots,G_k$ (its smallest non-empty events; they are disjoint and cover $\Omega$):
+\[
+  \boxed{\;\F=\Big\{\bigcup_{i\in I}G_i:\ I\subseteq\{1,\dots,k\}\Big\},\qquad |\F|=2^k,\qquad P\Big(\bigcup_{i\in I}G_i\Big)=\sum_{i\in I}P(G_i).\;}
+\]
+\begin{plugrows}
+  \plugrow{Is a given collection a $\sigma$-field?}{find its smallest non-empty sets; check they are disjoint, cover $\Omega$, and that every union of them is in the list}{yes exactly when the list is all unions of some disjoint sets that cover $\Omega$}{finite $\Omega$; check complements first, they fail most often}{die, $\{\varnothing,\{6\},\Omega\}$: $\{6\}^c$ missing, so \textbf{no}}
+  \plugrow{How many events?}{count the atoms $k$}{$2^k$}{always (finite)}{die, even/odd: $k=2$, $4$ events; all subsets: $k=6$, $64$}
+  \plugrow{Information after $n$ coin tosses, $\F_n$}{atoms = the $2^n$ sets of sequences sharing the first $n$ tosses}{$|\F_n|=2^{2^n}$; $\F_0\subseteq\F_1\subseteq\cdots$ (a filtration)}{tosses observed one by one}{$\F_1$: atoms $A_H,A_T$, $4$ events; $\F_2$: $16$ events}
+  \plugrow{Smallest / largest $\sigma$-field}{$k=1$ / $k=|\Omega|$}{$\{\varnothing,\Omega\}$ / all subsets}{finite $\Omega$}{die: $2$ and $64$ events}
+  \plugrow{Probability of an event in $\F$}{write it as a union of atoms}{add the atoms' probabilities}{atoms disjoint}{fair die, $\{1,2,3,5\}=\{1,3,5\}\cup\{2\}$: $\frac12+\frac16=\frac23$}
+\end{plugrows}
+\end{mastercard}
 
-\begin{card}{2. How many events are in a \texorpdfstring{$\sigma$}{sigma}-field?}
-\Formula
-$k$ atoms (disjoint blocks that cut up $\Omega$) $\Rightarrow$ exactly $2^k$ events. Smallest: $\{\varnothing,\Omega\}$. Largest: all $2^{|\Omega|}$ subsets.
-\UseWhen
-``How many events?'', ``list $\F_1$'', ``what information does $\F_k$ hold?''
-\HowTo
-\begin{enumerate}
-  \item Find the atoms: the smallest non-empty events.
-  \item Count them: $k$. Answer $2^k$; each event is a union of some atoms.
-\end{enumerate}
-\Caveats
-\cav{Never list subsets by hand to count them.}
-\begin{cardex}
-Coin tossed twice, $\F_1$ = what the first toss tells you. Atoms $A_H,A_T$, so $2^2=4$ events: $\varnothing,A_H,A_T,\Omega$. $\F_2$: $4$ atoms, $16$ events.
-\end{cardex}
-\end{card}
+\begin{mastercard}[label=card:incl-excl]{Probability of a union}
+For any events $A_1,\dots,A_n$:
+\[
+  \boxed{\;P\Big(\bigcup_{i=1}^nA_i\Big)=\sum_iP(A_i)-\sum_{i<j}P(A_i\cap A_j)+\sum_{i<j<k}P(A_i\cap A_j\cap A_k)-\cdots\;\le\;\sum_iP(A_i).\;}
+\]
+\begin{plugrows}
+  \plugrow{Disjoint events}{all intersections $=0$}{$P(\bigcup A_i)=\sum P(A_i)$}{pairwise disjoint (also for countably many)}{die, $P(\{1\}\cup\{2\})=\frac16+\frac16=\frac13$}
+  \plugrow{Complement}{$n=2$, $A_1=A$, $A_2=A^c$ (disjoint, union $\Omega$)}{$P(A^c)=1-P(A)$; with $A=\Omega$: $P(\varnothing)=0$}{always}{$P(\text{not }6)=1-\frac16=\frac56$}
+  \plugrow{Two events}{$n=2$}{$P(A\cup B)=P(A)+P(B)-P(A\cap B)$}{always}{die, $A=\{1,2\}$, $B=\{2,3\}$: $\frac13+\frac13-\frac16=\frac12$}
+  \plugrow{Upper bound (union bound)}{drop every term after the first sum}{$P(\bigcup A_i)\le\sum P(A_i)$}{always; exact iff overlaps have probability 0}{same $A,B$: $\frac12\le\frac23$}
+  \plugrow{Subset}{$B=A\cup(B\setminus A)$, disjoint}{$A\subseteq B\Rightarrow P(A)\le P(B)$}{always}{$P(\{6\})\le P(\text{even})$: $\frac16\le\frac12$}
+\end{plugrows}
+\end{mastercard}
 
-\begin{card}{3. Rules of probability}
-\Formula
-$P(\Omega)=1$; disjoint $A_i$: $P(\bigcup A_i)=\sum P(A_i)$. Hence $P(A^c)=1-P(A)$, $A\subseteq B\Rightarrow P(A)\le P(B)$, $P(A\cup B)=P(A)+P(B)-P(A\cap B)$, and the union bound $P(\bigcup A_i)\le\sum P(A_i)$.
-\UseWhen
-Any calculation with events; the union bound whenever you need an upper bound on ``at least one of''.
-\HowTo
-\begin{enumerate}
-  \item Cut the event into disjoint pieces and add, or go via the complement.
-  \item For a bound, use the union bound.
-\end{enumerate}
-\Caveats
-\cav{Adding probabilities needs disjoint events; otherwise you double-count the overlap.}
-\begin{cardex}
-Die, $A=\{1,2\}$, $B=\{2,3\}$: $P(A\cup B)=\frac13+\frac13-\frac16=\frac12$. Union bound: $\frac12\le\frac23$.
-\end{cardex}
-\end{card}
-
-\begin{card}{4. Continuity of probability}
-\Formula
-$A_n\uparrow$ (growing): $P(\bigcup A_n)=\lim P(A_n)$. \quad $A_n\downarrow$ (shrinking): $P(\bigcap A_n)=\lim P(A_n)$.
-\UseWhen
-A limit of events: ``all $H$ forever'', $\{\xi\le x+\frac1n\}$, Borel--Cantelli.
-\HowTo
-\begin{enumerate}
-  \item Check the sets only grow or only shrink.
-  \item Compute $P(A_n)$ and take the limit.
-\end{enumerate}
-\Caveats
-\cav{If the sets are not nested, you may not swap $\lim$ and $P$.}
-\begin{cardex}
-$A_n$ = ``first $n$ tosses all $H$'' shrink to ``all $H$ forever''. So $P(\text{all }H)=\lim(\frac12)^n=0$.
-\end{cardex}
-\end{card}
-
-\begin{card}{5. Almost surely}
-\Formula
-$A$ holds a.s.\ $\iff P(A)=1\iff P(A^c)=0$.
-\UseWhen
-``Does it always happen?'', statements about paths or limits that hold ``with probability one''.
-\HowTo
-\begin{enumerate}
-  \item Find the exceptional set $A^c$.
-  \item Show $P(A^c)=0$.
-\end{enumerate}
-\Caveats
-\cav{a.s.\ is not ``surely'': outcomes in $A^c$ can exist. On a finite $\Omega$ with all $P(\{\omega\})>0$ the two coincide.}
-\begin{cardex}
-Uniform point in $[0,1]$: $\omega\ne0.5$ a.s., because $P(\{0.5\})=0$, yet $\omega=0.5$ is possible.
-\end{cardex}
-\end{card}
-
-\begin{card}{6. Borel--Cantelli lemma}
-\Formula
-$\displaystyle\sum_{i=1}^\infty P(A_i)<\infty\;\Rightarrow\;P(A_n\text{ infinitely often})=0$. No independence is needed.
-\UseWhen
-``Infinitely often'', ``only finitely many happen a.s.'', a sum of probabilities that converges.
-\HowTo
-\begin{enumerate}
-  \item Compute $\sum_i P(A_i)$ and check it is finite.
-  \item Conclude: a.s.\ there is a cut-off after which no $A_i$ happens.
-  \item If asked to prove it: $0\le P(E)=\lim P(B_n)\le\lim\sum_{i\ge n}P(A_i)=0$ (shrinking $B_n$, continuity, union bound).
-\end{enumerate}
-\Caveats
-\cav{One direction only: a divergent sum proves nothing by itself.}
-\begin{cardex}
-$A_i=[0,1/i^2]$ under the uniform $P$ on $[0,1]$: $\sum1/i^2=\pi^2/6<\infty$, so $P(E)=0$. Indeed $E=\{0\}$.
-\end{cardex}
-\end{card}
+\begin{mastercard}[label=card:limits]{Limits of events}
+If the sets only grow ($A_n\uparrow$) or only shrink ($A_n\downarrow$), probability and limit swap:
+\[
+  \boxed{\;P\Big(\lim_{n\to\infty}A_n\Big)=\lim_{n\to\infty}P(A_n),\qquad \lim A_n=\bigcup_nA_n\ (\uparrow)\ \text{ or }\ \bigcap_nA_n\ (\downarrow).\;}
+\]
+\begin{plugrows}
+  \plugrow{Growing sets}{$\lim A_n=\bigcup A_n$}{$P(\bigcup A_n)=\lim P(A_n)$}{$A_1\subseteq A_2\subseteq\cdots$}{$A_n=[0,1-\frac1n]$, uniform: $P([0,1))=\lim(1-\frac1n)=1$}
+  \plugrow{Shrinking sets}{$\lim A_n=\bigcap A_n$}{$P(\bigcap A_n)=\lim P(A_n)$}{$A_1\supseteq A_2\supseteq\cdots$}{$A_n$ = first $n$ tosses all $H$: $P(\text{all }H)=\lim2^{-n}=0$}
+  \plugrow{Infinitely often (Borel--Cantelli)}{$B_n=\bigcup_{i\ge n}A_i\downarrow\limsup A_n$, and $P(B_n)\le\sum_{i\ge n}P(A_i)$}{if $\sum_iP(A_i)<\infty$: $P(A_n\text{ i.o.})=0$; a.s.\ only finitely many $A_n$ happen}{convergent sum; a divergent sum proves nothing}{$A_i=[0,1/i^2]$: $\sum\frac1{i^2}=\frac{\pi^2}6<\infty$, so $P=0$ (indeed $\limsup=\{0\}$)}
+  \plugrow{Almost surely}{show the exceptional set $A^c$ has $P(A^c)=0$ (often by a shrinking limit)}{$A$ holds a.s.\ $\iff P(A)=1$}{a.s.\ allows outcomes in $A^c$; on a finite $\Omega$ with all $P(\omega)>0$ a.s.\ = surely}{uniform on $[0,1]$: $\omega\ne0.5$ a.s.\ since $P(\{0.5\})=0$}
+\end{plugrows}
+\end{mastercard}
