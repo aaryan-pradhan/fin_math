@@ -1,0 +1,222 @@
+\chapter{Random walks and the Wiener process}
+\label{ch:first-mg}
+
+\begin{question}
+Which processes are fair games? We meet the Wiener process, the most important process in this book, and find its three standard martingales.
+\end{question}
+
+\begin{whatfor}
+\begin{itemize}
+  \item Defines sample paths and the Wiener process (standard Brownian motion) by four rules.
+  \item Proves that $W_t$, $W_t^2-t$ and $e^{uW_t-u^2t/2}$ are martingales.
+  \item Finds when an additive or a geometric random walk is a martingale.
+\end{itemize}
+\skipline{fs:first-mg}
+\end{whatfor}
+
+\begin{prereq}
+From Part~0: almost surely, independence, normal distribution, $\E_Pe^{u\xi}=e^{u\mu+u^2\sigma^2/2}$, sums of independent normals, CE1--CE4, Cauchy--Schwarz. From Chapter~5: stochastic process, filtration, adapted, martingale, sub/supermartingale.
+\end{prereq}
+
+%=====================================================================
+\section{Sample paths}
+
+A stochastic process $(\xi(t))_{t\in\mathbb T}$ has two variables: time $t$ and outcome $\omega$. Fix $t$: you get a random variable $\xi(t,\cdot)$, as before. Fix $\omega$ instead:
+
+\begin{definition}[Sample path]
+For a fixed outcome $\omega$, the function $t\mapsto\xi(t,\omega)$ is a \dfn{sample path} (or path) of the process. The set of values the process can take is its \dfn{state space}; the set $\mathbb T$ of times is its \dfn{parameter space}.
+\end{definition}
+
+So a process is a random function: the experiment picks $\omega$, and with it a whole path.
+
+\begin{pic}
+\begin{tikzpicture}
+\begin{axis}[width=10cm,height=5cm,xmin=0,xmax=1,ymin=-1.6,ymax=1.6,xlabel={$t$},ylabel={$W_t(\omega)$},legend style={font=\scriptsize,at={(0.02,0.98)},anchor=north west},legend columns=3]
+  \addplot[defc,thick] table[x=t,y=w1] {figs/bm3.dat}; \addlegendentry{$\omega_1$}
+  \addplot[thmc,thick] table[x=t,y=w2] {figs/bm3.dat}; \addlegendentry{$\omega_2$}
+  \addplot[trapc,thick] table[x=t,y=w3] {figs/bm3.dat}; \addlegendentry{$\omega_3$}
+  \draw[dashed,prec] (axis cs:0.6,-1.6)--(axis cs:0.6,1.6) node[pos=0.94,right,font=\scriptsize] {fix $t=0.6$};
+\end{axis}
+\end{tikzpicture}
+\picnote{Three sample paths of one process (the process defined next), one for each of three outcomes. Reading across a path is one $\omega$; reading down the dashed line is one random variable $W_{0.6}$.}
+\end{pic}
+
+%=====================================================================
+\section{The Wiener process}
+
+\begin{definition}[Wiener process / standard Brownian motion]
+\label{def:wiener}
+A process $(W_t)_{t\ge0}$ is a \dfn{Wiener process}, or \dfn{standard Brownian motion} (SBM), if
+\begin{enumerate}[label=(\arabic*)]
+  \item $W_0=0$ a.s.;
+  \item the sample paths $t\mapsto W_t$ are continuous a.s.;
+  \item it has \dfn{independent increments}: for $0\le t_1<t_2<\dots<t_n$, the increments $W_{t_2}-W_{t_1},\dots,W_{t_n}-W_{t_{n-1}}$ are independent;
+  \item for $0\le s<t$, the increment $W_t-W_s\sim N(0,\,t-s)$ (\dfn{stationary increments}: the law depends only on the length $t-s$).
+\end{enumerate}
+\end{definition}
+
+That such a process exists is a theorem we take on trust. Chapter~9 shows where it comes from: it is the limit of a fair coin-tossing game with tiny steps.
+
+Three facts follow at once.
+\begin{itemize}
+  \item $W_t=W_t-W_0\sim N(0,t)$: so $\E_P(W_t)=0$, $\E_P(W_t^2)=t$, $\E_Pe^{uW_t}=e^{u^2t/2}$.
+  \item The future increment $W_t-W_s$ ($s<t$) is independent of the whole past $\F_s=\sigma(W_r:r\le s)$, the natural filtration. This is the property we use most.
+  \item Integrable: by Cauchy--Schwarz, $\E_P|W_t|\le\sqrt{\E_PW_t^2}=\sqrt t<\infty$.
+\end{itemize}
+
+The one trick of this chapter is \emph{increment splitting}: write a future value as a known value plus an independent increment,
+\[
+  W_t=W_s+(W_t-W_s),\qquad\text{known at time $s$}\;+\;\text{independent of }\F_s,\ \sim N(0,t-s).
+\]
+
+%=====================================================================
+\section{Three martingales of the Wiener process}
+
+Throughout, $\F_t=\sigma(W_r:r\le t)$ and $0\le s<t$.
+
+\begin{theorem}[The three canonical martingales]
+\label{thm:canonical}
+Each of the following is a martingale:
+\begin{enumerate}[label=(\alph*)]
+  \item $W_t$;
+  \item $Y_t=W_t^2-t$;
+  \item $Z_t=e^{uW_t-\frac12u^2t}$, for any number $u$; it has $\E_P(Z_t)=1$.
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+All three are functions of $W_t$, so they are adapted. Split $W_t=W_s+(W_t-W_s)$ every time.
+\begin{steps}
+  \item (a) Integrable: $\E_P|W_t|\le\sqrt t$. By CE1, then CE2 and CE3,
+  \[
+    \E_P(W_t\given\F_s)=W_s+\E_P(W_t-W_s)=W_s+0=W_s .
+  \]
+  \item (b) Integrable: $\E_P|Y_t|\le\E_PW_t^2+t=2t$. Square the split, $W_t^2=W_s^2+2W_s(W_t-W_s)+(W_t-W_s)^2$, and condition term by term:
+  \[
+    \begin{aligned}
+    \E_P(W_t^2\given\F_s)&=W_s^2+2W_s\,\E_P(W_t-W_s)+\E_P(W_t-W_s)^2\\
+    &=W_s^2+0+(t-s).
+    \end{aligned}
+  \]
+  Subtract $t$: $\E_P(W_t^2-t\given\F_s)=W_s^2-s=Y_s$.
+  \item (c) $Z_t>0$ and $\E_PZ_t=e^{-u^2t/2}\E_Pe^{uW_t}=e^{-u^2t/2}e^{u^2t/2}=1$. Split the exponent:
+  \[
+    \begin{aligned}
+    Z_t&=Z_s\cdot e^{u(W_t-W_s)-\frac12u^2(t-s)},\\
+    \E_P(Z_t\given\F_s)&=Z_s\,e^{-\frac12u^2(t-s)}\,\E_Pe^{u(W_t-W_s)}=Z_s\,e^{-\frac12u^2(t-s)}\,e^{\frac12u^2(t-s)}=Z_s . \qedhere
+    \end{aligned}
+  \]
+\end{steps}
+\end{proof}
+
+\begin{remark}
+$W_t^2$ on its own is a \emph{sub}martingale: $\E_P(W_t^2\given\F_s)=W_s^2+(t-s)\ge W_s^2$. Subtracting $t$ removes exactly the upward drift. Likewise $e^{uW_t}$ is a submartingale, and the factor $e^{-u^2t/2}$ removes its drift.
+\end{remark}
+
+\begin{pic}
+\begin{tikzpicture}
+\begin{axis}[width=10cm,height=4.6cm,xmin=0,xmax=1,ymin=-1.3,ymax=1.6,xlabel={$t$},legend style={font=\scriptsize,at={(0.02,0.98)},anchor=north west},legend columns=2]
+  \addplot[defc,thick] table[x=t,y expr=\thisrow{w1}^2] {figs/bm3.dat}; \addlegendentry{$W_t^2$ (drifts up)}
+  \addplot[thmc,thick] table[x=t,y expr=\thisrow{w1}^2-\thisrow{t}] {figs/bm3.dat}; \addlegendentry{$W_t^2-t$ (fair)}
+  \addplot[prec,dashed,domain=0:1] {x}; \addlegendentry{$\E_P W_t^2=t$}
+  \addplot[prec,dotted,domain=0:1] {0}; \addlegendentry{$\E_P(W_t^2-t)=0$}
+\end{axis}
+\end{tikzpicture}
+\picnote{One path of $W_t^2$ and of $W_t^2-t$. The mean of $W_t^2$ grows like $t$; subtracting $t$ leaves a process whose mean stays at $0$.}
+\end{pic}
+
+%=====================================================================
+\section{Random walks}
+
+\begin{definition}[Random walk; geometric random walk]
+\label{def:rw}
+Let $Y_1,Y_2,\ldots$ be i.i.d.\ (independent and identically distributed) random variables with $\E_P|Y_1|<\infty$, and $\F_n=\sigma(Y_1,\dots,Y_n)$.
+\begin{itemize}
+  \item The \dfn{random walk} is $X_0=0$, $X_n=Y_1+\dots+Y_n$.
+  \item For a constant $X_0>0$, the \dfn{geometric random walk} is $X_n=X_0\,e^{Y_1+\dots+Y_n}$.
+\end{itemize}
+\end{definition}
+
+\begin{result}[When is a walk a martingale?]
+\label{res:rw-mg}
+Split off the last step.
+\begin{enumerate}[label=(\alph*)]
+  \item $\E_P(X_{n+1}\given\F_n)=X_n+\E_P(Y_1)$ for the random walk, which is a martingale exactly when $\E_P(Y_1)=0$ (sub if $\ge0$, super if $\le0$).
+  \item $\E_P(X_{n+1}\given\F_n)=X_n\,\E_P(e^{Y_1})$ for the geometric walk, which is a martingale exactly when $\E_P(e^{Y_1})=1$. If $Y_j\sim N(\mu,\sigma^2)$ this means $e^{\mu+\sigma^2/2}=1$, i.e.\ $\mu=-\frac12\sigma^2$.
+\end{enumerate}
+\end{result}
+\begin{proof}
+One step at a time.
+\begin{steps}
+  \item (a) $X_{n+1}=X_n+Y_{n+1}$; $X_n$ is known and $Y_{n+1}$ is independent of $\F_n$, so CE1--CE3 give $X_n+\E_P(Y_{n+1})=X_n+\E_P(Y_1)$. Integrable: $\E_P|X_n|\le n\,\E_P|Y_1|$.
+  \item (b) $X_{n+1}=X_n\,e^{Y_{n+1}}$, so CE2--CE3 give $X_n\,\E_P(e^{Y_1})$. For normal $Y_1$ use $\E_Pe^{Y_1}=e^{\mu+\sigma^2/2}$. \qedhere
+\end{steps}
+\end{proof}
+
+\begin{pic}
+\begin{tikzpicture}
+\begin{axis}[width=10cm,height=4.2cm,xmin=0,xmax=40,xlabel={$n$},ylabel={$X_n$},ymin=-8,ymax=8]
+  \addplot[defc,thick,mark=*,mark size=0.8pt] table[x=k,y=s] {figs/walk.dat};
+  \addplot[prec,dashed,domain=0:40] {0};
+\end{axis}
+\end{tikzpicture}
+\picnote{A fair $\pm1$ random walk: each step adds $+1$ or $-1$ with probability $\frac12$. It is a martingale because each step has mean $0$.}
+\end{pic}
+
+\begin{example}[The drift correction]
+\label{ex:drift-correction}
+A stock modelled as $X_n=X_0e^{Y_1+\dots+Y_n}$ with daily log-returns $Y_j\sim N(\mu,\sigma^2)$, $\sigma=0.02$. It is a martingale only if $\mu=-\frac12(0.02)^2=-0.0002$. A zero median log-return ($\mu=0$) would make it a \emph{sub}martingale: $\E_Pe^{Y_1}=e^{0.0002}>1$. This $-\frac12\sigma^2$ is the same correction as in $e^{uW_t-\frac12u^2t}$; it returns in geometric Brownian motion and Black--Scholes.
+\end{example}
+
+%=====================================================================
+\formulasheet{fs:first-mg}
+
+\begin{card}{1. The Wiener process (standard Brownian motion)}
+\Formula
+(1) $W_0=0$; (2) continuous paths; (3) independent increments; (4) $W_t-W_s\sim N(0,t-s)$. So $W_t\sim N(0,t)$, $\E_PW_t=0$, $\E_PW_t^2=t$, $\E_Pe^{uW_t}=e^{u^2t/2}$.
+\UseWhen
+Any computation with $W$: split a future value into known $+$ independent increment.
+\HowTo
+\begin{enumerate}
+  \item $s<t$: write $W_t=W_s+(W_t-W_s)$.
+  \item $W_s$ is known at $s$; $W_t-W_s\sim N(0,t-s)$ is independent of $\F_s$.
+\end{enumerate}
+\Caveats
+\cav{$W_t$ and $W_s$ are \emph{not} independent; only increments over disjoint intervals are.}
+\begin{cardex}
+$\E_P(W_2^2W_3^2)$: $W_3=W_2+Z$, $Z\sim N(0,1)$ independent of $W_2\sim N(0,2)$. Expand: $\E_PW_2^4+2\E_PW_2^3\E_PZ+\E_PW_2^2\E_PZ^2=3\cdot4+0+2\cdot1=14$.
+\end{cardex}
+\end{card}
+
+\begin{card}{2. The three canonical martingales of \texorpdfstring{$W$}{W}}
+\Formula
+$W_t$; \quad $W_t^2-t$; \quad $e^{uW_t-\frac12u^2t}$ (mean 1). Also, for $s<t$: $\E_P(W_t\given\F_s)=W_s$, $\E_P(W_t^2\given\F_s)=W_s^2+t-s$, $\E_P(e^{uW_t}\given\F_s)=e^{uW_s+\frac12u^2(t-s)}$.
+\UseWhen
+``Is $X_t$ a martingale?'', ``find $\E_P(\,\cdot\given\F_s)$'', the optional stopping recipes of Chapter~7.
+\HowTo
+\begin{enumerate}
+  \item Split $W_t=W_s+(W_t-W_s)$ inside the expression.
+  \item Take out $W_s$-terms; replace increment moments: $\E_P=0$, $\E_P(\cdot)^2=t-s$, $\E_Pe^{u(\cdot)}=e^{u^2(t-s)/2}$.
+\end{enumerate}
+\Caveats
+\cav{$W_t^2$ and $e^{uW_t}$ alone are submartingales, not martingales.}
+\begin{cardex}
+$\E_P(W_5^2\given\F_2)=W_2^2+3$. \quad $\E_P(e^{2W_3}\given\F_1)=e^{2W_1+\frac12\cdot4\cdot2}=e^{2W_1+4}$.
+\end{cardex}
+\end{card}
+
+\begin{card}{3. Random walks}
+\Formula
+$X_n=Y_1+\dots+Y_n$: MG $\iff\E_PY_1=0$. \quad $X_n=X_0e^{Y_1+\dots+Y_n}$: MG $\iff\E_Pe^{Y_1}=1$; for $Y\sim N(\mu,\sigma^2)$: $\mu=-\frac12\sigma^2$.
+\UseWhen
+``Is the (geometric) random walk a martingale?'', ``choose $\mu$ to make it one''.
+\HowTo
+\begin{enumerate}
+  \item Split off the last step: $X_{n+1}=X_n+Y_{n+1}$ or $X_ne^{Y_{n+1}}$.
+  \item Additive: compare $\E_PY$ with 0. Geometric: compare $\E_Pe^{Y}$ with 1.
+\end{enumerate}
+\Caveats
+\cav{For the geometric walk, $\E_PY=0$ is \emph{not} the condition; it gives a submartingale.}
+\begin{cardex}
+$Y_j\sim N(\mu,0.04)$: martingale iff $\mu=-0.02$. $Y_j=\pm1$ with $P(+1)=0.6$: $\E_PY=0.2$, so $X_n$ is a submartingale and $X_n-0.2n$ is a martingale.
+\end{cardex}
+\end{card}
