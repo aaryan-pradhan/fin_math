@@ -11,7 +11,7 @@ Every problem is solved by plugging into a card of the formula sheets: the card 
 \begin{problem}[Doubled uniforms]
 $U_1,U_2,\ldots$ independent, uniform on $(0,1]$. Is $X_0=1$, $X_n=2^nU_1\cdots U_n$ a martingale?
 \uses{card:incr}{5}
-\plug{$\eta_i=U_i$, $\E_P\eta=\frac12$, so $\prod_{i\le n}(\eta_i/\E_P\eta)=2^nU_1\cdots U_n$.}
+\plug{$\eta_i=U_i$, $\E_P\eta=\frac12$, so $\prod_{i\le n}\eta_i/(\E_P\eta)^n=2^nU_1\cdots U_n$.}
 \answer{Yes; $\E_PX_n=1$ for every $n$.}
 \end{problem}
 
@@ -19,7 +19,7 @@ $U_1,U_2,\ldots$ independent, uniform on $(0,1]$. Is $X_0=1$, $X_n=2^nU_1\cdots 
 $\epsilon_i$ independent exponential with mean $1$, $S_n=\epsilon_1+\dots+\epsilon_n$. Is $X_n=2^ne^{-S_n}$ a martingale?
 \uses{card:incr}{5}
 \plug{$\eta_i=e^{-\epsilon_i}$, $\E_P\eta=\int_0^\infty e^{-u}e^{-u}du=\frac12$.}
-\answer{Yes: $X_n=\prod(\eta_i/\frac12)$.}
+\answer{Yes: $X_n=\prod\eta_i/(\frac12)^n$.}
 \end{problem}
 
 \begin{problem}[A martingale that goes to zero]
@@ -34,16 +34,16 @@ $X_{n+1}=X_n\pm1$ w.p.\ $\frac12$ if $X_n>0$, and $X_{n+1}=0$ if $X_n=0$; $X_0=i
 \uses{card:onestep}{4}
 \plug{$X_n>0$: $\frac12(X_n+1)+\frac12(X_n-1)=X_n$; $X_n=0$: stays $0$.}
 \uses{card:ost}{1}
-\plug{$x=i$, $a=0$, $b=N$, no drift: $P(\text{exit at }N)=\frac{i-0}{N-0}$.}
+\plug{$M=X$, $x=i$, $a=0$, $b=N$: $P(\text{exit at }N)=\frac{i-0}{N-0}$.}
 \answer{A non-negative martingale; $P=\frac iN$.}
 \end{problem}
 
 \begin{problem}[$S_n^2-n\sigma^2$ and the Poisson martingales]
 (a) $Y_j$ i.i.d., mean $0$, variance $\sigma^2$: is $S_n^2-n\sigma^2$ a martingale? (b) $N_t$ with independent Poisson$(\lambda(t-s))$ increments: show $N_t-\lambda t$, $(N_t-\lambda t)^2-\lambda t$, $e^{uN_t-\lambda t(e^u-1)}$ are martingales; find $\E_P(N_{t+s}\given\F_t)$, $\E_P(N_{t+s}^2\given\F_t)$.
 \uses{card:incr}{3}
-\plug{(a) $m=0$, $v=\sigma^2$: the second martingale $(S_n-0)^2-n\sigma^2$.}
+\plug{(a) $\mu=0$: the second martingale $S_n^2-n\sigma^2$.}
 \uses{card:incr}{7}
-\plug{(b) $m=v=\lambda$, $\kappa(u)=\lambda(e^u-1)$; and row~2 with $m=v=\lambda$.}
+\plug{(b) read off the three; the martingale property of $N_t-\lambda t$ and $(N_t-\lambda t)^2-\lambda t$ gives the conditional moments.}
 \answer{(a) Yes. (b) The three martingales; $\E_P(N_{t+s}\given\F_t)=N_t+\lambda s$, $\E_P(N_{t+s}^2\given\F_t)=(N_t+\lambda s)^2+\lambda s$.}
 \end{problem}
 
@@ -76,7 +76,7 @@ Show $X_t=\E_P(Y\given\F_t)$ is a martingale ($\E_P|Y|<\infty$).
 \begin{problem}[Martingale increments are uncorrelated]
 $X$ a square-integrable martingale, $t_1\le t_2\le t_3\le t_4$. Show $\E_P[(X_{t_2}-X_{t_1})(X_{t_4}-X_{t_3})]=0$.
 \uses{card:freeze}{2}
-\plug{$K=X_{t_2}-X_{t_1}$ is known at $t_3$; $\E_P(X_{t_4}-X_{t_3}\given\F_{t_3})=0$ (Card~\ref{card:onestep}, row 5).}
+\plug{$K=X_{t_2}-X_{t_1}$ is known at $t_3$, and $\E_P(X_{t_4}-X_{t_3}\given\F_{t_3})=0$ (\cref{card:onestep}, row 5); then average (row 6).}
 \answer{$\E_P[K\cdot0]=0$.}
 \end{problem}
 
@@ -118,7 +118,7 @@ Steps $+1$ w.p.\ $p\ne\frac12$, $-1$ w.p.\ $q$; exit from $(a,b)$, $a<0<b$, star
 \begin{problem}[Up one, down two]
 Steps $+1$ w.p.\ $\frac67$, $-2$ w.p.\ $\frac17$, $S_0=0$. (i) Is $2^{-S_n}$ a martingale? (ii) $\tau=\min\{n:2^{-S_n}\le0.1\}$; find $\E_P\tau$.
 \uses{card:incr}{3}
-\plug{(i) third martingale with $e^u=\frac12$: $\E_P2^{-Y}=\frac12\cdot\frac67+4\cdot\frac17=1$, so $\kappa=0$.}
+\plug{(i) third martingale with $e^u=\frac12$: $\E_P2^{-Y}=\frac12\cdot\frac67+4\cdot\frac17=1$, so $2^{-S_n}$ itself.}
 \uses{card:ost}{8}
 \plug{(ii) $2^{-S_n}\le0.1\iff S_n\ge\log_210\approx3.32\iff S_n\ge4$; up-steps are $1$, so $S_\tau=4$; $m=\frac67-\frac27=\frac47$.}
 \answer{(i) Yes. (ii) $\E_P\tau=\frac{4}{4/7}=7$.}

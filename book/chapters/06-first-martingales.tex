@@ -170,21 +170,18 @@ A stock modelled as $X_n=X_0e^{Y_1+\dots+Y_n}$ with daily log-returns $Y_j\sim N
 %=====================================================================
 \formulasheet{fs:first-mg}
 
-\begin{mastercard}[label=card:incr]{Processes with independent increments: conditioning and martingales}
-Split $X_t=X_s+D$ ($s<t$): $X_s$ is known at time $s$, the fresh part $D=X_t-X_s$ is independent of the past, with
-$\E_PD=m(t-s)$, $\Var D=v(t-s)$ and $\E_Pe^{uD}=e^{\kappa(u)(t-s)}$. Keep $X_s$, average over $D$ (\cref{card:freeze}):
+\begin{mastercard}[label=card:incr]{The three martingales of a process with independent increments}
+$X$ has independent increments and starts at a fixed $X_0$. Split $X_t=X_s+(X_t-X_s)$ and use \cref{card:freeze}: take away what the fresh increment adds on average.
 \[
-  \boxed{\begin{gathered}\E_P\big(f(X_t)\given\F_s\big)=\E_P\,f(x+D)\Big|_{x=X_s},\\
-  X_t-mt,\qquad (X_t-mt)^2-vt,\qquad e^{uX_t-\kappa(u)t}\quad\text{are martingales.}\end{gathered}}
+  \boxed{\;X_t-\E_PX_t,\qquad \big(X_t-\E_PX_t\big)^2-\Var X_t,\qquad \frac{e^{uX_t}}{\E_P\,e^{uX_t}}\qquad\text{are martingales.}\;}
 \]
 \begin{plugrows}
-  \plugrow{Standard Wiener process $W$}{$m=0$, $v=1$, $\kappa(u)=\frac12u^2$ (since $D\sim N(0,t-s)$, Card~\ref{card:normal-mgf})}{$W_t$, $W_t^2-t$, $e^{uW_t-u^2t/2}$ are martingales}{$s<t$}{$\E_Pe^{uW_t-u^2t/2}=1$ for all $t$}
-  \plugrow{Conditional moments}{$f(x)=x$, $x^2$, $e^{ux}$}{$\E_P(X_t\given\F_s)=X_s+m(t-s)$; $\E_P(X_t^2\given\F_s)=(X_s+m(t-s))^2+v(t-s)$; $\E_P(e^{uX_t}\given\F_s)=e^{uX_s+\kappa(u)(t-s)}$}{$s<t$; for $s>t$ see Card 12.1}{$\E_P(W_5^2\given\F_2)=W_2^2+3$; $\E_P(e^{2W_3}\given\F_1)=e^{2W_1+4}$}
-  \plugrow{Sums of i.i.d.\ steps (discrete time)}{$X_n=Y_1+\dots+Y_n$: $m=\E_PY$, $v=\Var Y$, $e^{\kappa(u)}=\E_Pe^{uY}$}{$S_n-nm$, $(S_n-nm)^2-nv$, $e^{uS_n}/(\E_Pe^{uY})^n$}{integer times}{$Y=\pm1$, $P(+1)=0.7$: $S_n-0.4n$; fair $\pm1$: $S_n^2-n$}
-  \plugrow{Exponential of a sum (geometric walk)}{the third martingale with $u=1$}{$X_0e^{S_n}$ is a MG iff $\E_Pe^{Y}=1$; for $Y\sim N(\mu,\sigma^2)$ iff $\mu=-\frac12\sigma^2$}{$\E_Pe^{Y}<\infty$}{$Y\sim N(\mu,0.04)$: MG iff $\mu=-0.02$}
-  \plugrow{Products of i.i.d.\ factors $\eta_i\ge0$}{$Y_i=\ln\eta_i$, $u=1$}{$\prod_{i\le n}\big(\eta_i/\E_P\eta\big)$ is a MG}{$\E_P\eta\in(0,\infty)$}{$U_i$ uniform: $2^nU_1\cdots U_n$; $\epsilon_i$ exponential: $2^ne^{-S_n}$; Bernoulli$(p)$: $p^{-n}\xi_1\cdots\xi_n$}
-  \plugrow{Wiener process with drift and scale}{$X_t=x+\mu t+\sigma W_t$: $m=\mu$, $v=\sigma^2$, $\kappa(u)=u\mu+\frac12u^2\sigma^2$}{$X_t-\mu t$, $(X_t-\mu t)^2-\sigma^2t$, $e^{uX_t-(u\mu+u^2\sigma^2/2)t}$; with $u=-2\mu/\sigma^2$: $e^{-2\mu X_t/\sigma^2}$}{$\sigma>0$}{$\mu=1.5$, $\sigma=1$: $e^{-3X_t}$ is a MG}
-  \plugrow{Poisson increments, rate $\lambda$}{$D\sim$ Poisson$(\lambda(t-s))$: $m=v=\lambda$, $\kappa(u)=\lambda(e^u-1)$}{$N_t-\lambda t$, $(N_t-\lambda t)^2-\lambda t$, $e^{uN_t-\lambda t(e^u-1)}$}{independent Poisson increments}{$\E_P(N_{t+s}\given\F_t)=N_t+\lambda s$}
-  \plugrow{Moments at several times}{split every later value into an earlier one plus independent increments, expand, use independence}{products of independent factors}{increments over disjoint intervals}{$W_3=W_2+Z$: $\E_P(W_2^2W_3^2)=\E_PW_2^4+\E_PW_2^2\E_PZ^2=12+2=14$}
+  \plugrow{Standard Wiener process $W$}{$\E_PW_t=0$, $\Var W_t=t$, $\E_Pe^{uW_t}=e^{u^2t/2}$ (\cref{card:normal-mgf})}{$W_t$, $W_t^2-t$, $e^{uW_t-u^2t/2}$}{$u$ any number}{$\E_Pe^{uW_t-u^2t/2}=1$ for all $t$}
+  \plugrow{Conditional moments}{the martingale property of row 1, read backwards}{$\E_P(W_t\given\F_s)=W_s$; $\E_P(W_t^2\given\F_s)=W_s^2+(t-s)$; $\E_P(e^{uW_t}\given\F_s)=e^{uW_s+u^2(t-s)/2}$}{$s<t$ (looking back, $s>t$, is Card 12.1)}{$\E_P(W_5^2\given\F_2)=W_2^2+3$; $\E_P(e^{2W_3}\given\F_1)=e^{2W_1+4}$}
+  \plugrow{Sums of i.i.d.\ steps}{$S_n=Y_1+\dots+Y_n$: $\E_PS_n=n\mu$, $\Var S_n=n\sigma^2$, $\E_Pe^{uS_n}=(\E_Pe^{uY})^n$}{$S_n-n\mu$, $(S_n-n\mu)^2-n\sigma^2$, $e^{uS_n}/(\E_Pe^{uY})^n$}{integer times}{$P(+1)=0.7$: $S_n-0.4n$; fair $\pm1$: $S_n^2-n$; up $1$ w.p.\ $\frac67$, down $2$ w.p.\ $\frac17$: $\E_P2^{-Y}=1$, so $2^{-S_n}$}
+  \plugrow{Exponential of a sum (geometric walk)}{third martingale, $u=1$}{$X_0e^{S_n}$ is a martingale iff $\E_Pe^{Y}=1$; for $Y\sim N(\mu,\sigma^2)$ iff $\mu=-\frac12\sigma^2$}{$\E_Pe^{Y}<\infty$}{$Y\sim N(\mu,0.04)$: martingale iff $\mu=-0.02$}
+  \plugrow{Products of i.i.d.\ factors $\eta_i\ge0$}{third martingale with $Y_i=\ln\eta_i$, $u=1$}{$\prod_{i\le n}\eta_i\big/(\E_P\eta)^n$}{$\E_P\eta\in(0,\infty)$}{$U_i$ uniform: $2^nU_1\cdots U_n$; $\epsilon_i$ exponential: $2^ne^{-S_n}$; Bernoulli$(p)$: $p^{-n}\xi_1\cdots\xi_n$}
+  \plugrow{Wiener process with drift and scale}{$X_t=x+\mu t+\sigma W_t$: mean $x+\mu t$, variance $\sigma^2t$, $\E_Pe^{uX_t}=e^{ux+(u\mu+u^2\sigma^2/2)t}$}{$X_t-\mu t$, $(X_t-x-\mu t)^2-\sigma^2t$, $e^{uX_t-(u\mu+u^2\sigma^2/2)t}$; with $u=-2\mu/\sigma^2$: $e^{-2\mu X_t/\sigma^2}$}{$\sigma>0$}{$\mu=1.5$, $\sigma=1$: $e^{-3X_t}$}
+  \plugrow{Poisson process, rate $\lambda$}{$\E_PN_t=\Var N_t=\lambda t$, $\E_Pe^{uN_t}=e^{\lambda t(e^u-1)}$}{$N_t-\lambda t$, $(N_t-\lambda t)^2-\lambda t$, $e^{uN_t-\lambda t(e^u-1)}$}{independent Poisson increments}{$\E_P(N_{t+s}\given\F_t)=N_t+\lambda s$}
 \end{plugrows}
 \end{mastercard}
