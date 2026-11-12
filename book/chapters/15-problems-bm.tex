@@ -1,0 +1,249 @@
+\chapter{Problems: Brownian motion}
+\label{ch:prob-bm}
+
+\begin{question}
+Can you compute any probability, mean or covariance for Brownian motion in a few lines?
+\end{question}
+
+\begin{whatfor}
+\begin{itemize}
+  \item Means, variances and covariances of values of Brownian motion; conditional laws.
+  \item Recognising a Wiener process; geometric Brownian motion; random-walk limits.
+  \item Exit orders, the maximum, the hitting time and joint probabilities with the maximum.
+\end{itemize}
+\skipline{fs:prob-bm}
+\end{whatfor}
+
+\begin{prereq}
+Chapters~9--14: Brownian motion with drift and variance parameter, independent increments, $\Cov(W_s,W_t)=\min(s,t)$, conditional laws, MVN, GBM, exit probabilities, hitting times, the maximum and the reflection principle.
+\end{prereq}
+
+Throughout, $W$ (or $B$) is a standard Brownian motion and $\Phi$ the standard normal d.f.
+
+%=====================================================================
+\section{Moments and conditional laws}
+
+\begin{problem}[Four basic quantities]
+For $0<s<t$, find (a) $\E_P\big[(W(t)-W(s))^2\big]$; (b) $\E_P\big(W(s)\given W(t)=x\big)$; (c) $\Cov\big(W(s),W(t)\big)$; (d) $\E_P\big(W(t)\given W(s)=x\big)$.
+\begin{steps}
+  \item (a) $W(t)-W(s)\sim N(0,t-s)$, so the answer is $t-s$.
+  \item (b) Conditioning backwards: $N\big(\frac stx,\frac{s(t-s)}t\big)$, mean $\frac{sx}{t}$.
+  \item (c) $\Cov\big(W(s),W(s)+(W(t)-W(s))\big)=\Var W(s)=s$.
+  \item (d) Forwards: $x+\E_P\big(W(t)-W(s)\big)=x$.
+\end{steps}
+\end{problem}
+
+\begin{problem}[Linear combinations]
+Find the distributions of (a) $B(s)+B(t)$, $s\le t$; (b) $W_1-W_2+3W_4$; and (c) the number $\Var(W_4)\times\Cov(W_1,W_4)$.
+\begin{steps}
+  \item (a) $B(s)+B(t)=2B(s)+\big(B(t)-B(s)\big)$, independent pieces $N(0,4s)$ and $N(0,t-s)$: $N(0,\,3s+t)$.
+  \item (b) Mean $0$. Variance, with $\Cov(W_a,W_b)=\min(a,b)$: the squares give $1\cdot1+1\cdot2+9\cdot4=39$, and the cross terms give
+  \[
+    2\big[(1)(-1)\min(1,2)+(1)(3)\min(1,4)+(-1)(3)\min(2,4)\big]=2(-1+3-6)=-8 .
+  \]
+  So $W_1-W_2+3W_4\sim N(0,\,31)$.
+  \item (c) $\Var W_4\cdot\Cov(W_1,W_4)=4\cdot\min(1,4)=4$.
+\end{steps}
+\end{problem}
+
+\begin{problem}[A triple product]
+Compute $\E_P\big[B(t_1)B(t_2)B(t_3)\big]$ for $t_1<t_2<t_3$.
+\begin{steps}
+  \item Condition on the path up to $t_2$ (tower rule): $\E_P\big(B(t_3)\given\F_{t_2}\big)=B(t_2)$, so the answer is $\E_P\big[B(t_1)B(t_2)^2\big]$.
+  \item Condition on $\F_{t_1}$: $\E_P\big(B(t_2)^2\given\F_{t_1}\big)=B(t_1)^2+(t_2-t_1)$.
+  \item So the answer is $\E_P\big[B(t_1)^3\big]+(t_2-t_1)\E_PB(t_1)=0+0=0$, since odd moments of $N(0,t_1)$ vanish.
+\end{steps}
+\end{problem}
+
+\begin{problem}[A mixed fourth moment]
+Compute $\E_P\big(W_2^2W_3^2\big)$.
+\begin{steps}
+  \item $W_3=W_2+Z$ with $Z=W_3-W_2\sim N(0,1)$ independent of $W_2\sim N(0,2)$.
+  \item $\E_P\big[W_2^2(W_2^2+2W_2Z+Z^2)\big]=\E_PW_2^4+2\E_PW_2^3\,\E_PZ+\E_PW_2^2\,\E_PZ^2=3\cdot2^2+0+2\cdot1=14$.
+\end{steps}
+\end{problem}
+
+\begin{problem}[Bridge between two known values]
+For $0<t_1<s<t_2$, find the law of $B(s)$ given $B(t_1)=A$ and $B(t_2)=B$.
+\begin{steps}
+  \item After $t_1$, $B(t_1+u)-A$ is a fresh Brownian motion (independent increments). So we need $\tilde B(s-t_1)$ given $\tilde B(t_2-t_1)=B-A$.
+  \item By the backward conditional law with $s\to s-t_1$, $t\to t_2-t_1$:
+  \[
+    B(s)\given\dots\sim N\Big(A+\frac{s-t_1}{t_2-t_1}(B-A),\ \frac{(s-t_1)(t_2-s)}{t_2-t_1}\Big).
+  \]
+\end{steps}
+The mean is the straight line between the two known points.
+\end{problem}
+
+\begin{problem}[Conditioning Brownian motion with drift]
+$X(t)=\mu t+\sigma B(t)$. Find the law of $X(t)$ given $X(s)=c$ when (i) $s<t$ and (ii) $t<s$.
+\begin{steps}
+  \item (i) $X(t)=c+\big(X(t)-X(s)\big)$ with an independent $N\big(\mu(t-s),\sigma^2(t-s)\big)$ increment: $N\big(c+\mu(t-s),\ \sigma^2(t-s)\big)$.
+  \item (ii) $X(s)=c$ means $B(s)=\frac{c-\mu s}{\sigma}$. Given that, $B(t)\sim N\big(\frac ts\cdot\frac{c-\mu s}{\sigma},\frac{t(s-t)}{s}\big)$.
+  \item So $\E_P\big(X(t)\given X(s)=c\big)=\mu t+\sigma\cdot\frac ts\cdot\frac{c-\mu s}{\sigma}=\frac{tc}{s}$, and the law is $N\big(\frac{tc}s,\ \sigma^2\frac{t(s-t)}{s}\big)$.
+\end{steps}
+The drift cancels: once both ends are fixed, the slope $\mu$ no longer matters. Check with $c=0$: a path pinned at $0$ at both ends has mean $0$.
+\end{problem}
+
+%=====================================================================
+\section{Recognising processes}
+
+\begin{problem}[Scaling]
+True or false: for $c>0$, $V(t)=\frac1cW(c^2t)$ is a Wiener process.
+\begin{steps}
+  \item $V(0)=0$ and its paths are continuous.
+  \item Increments over disjoint intervals come from increments of $W$ over disjoint intervals: independent.
+  \item $V(t)-V(s)=\frac1c\big(W(c^2t)-W(c^2s)\big)\sim N\big(0,\frac{1}{c^2}c^2(t-s)\big)=N(0,t-s)$.
+\end{steps}
+\textbf{True.} Brownian motion looks the same at every scale if time is stretched by $c^2$ and space by $c$.
+\end{problem}
+
+\begin{problem}[Mean of a geometric Brownian motion]
+$Y(t)=100\,e^{X(t)}$ with $X$ a Brownian motion with drift $\mu=0.01$ and $\sigma=0.2$. Find $\E_PY(10)$.
+\begin{steps}
+  \item $X(10)\sim N(0.1,\,0.4)$.
+  \item $\E_PY(10)=100\,e^{0.1+0.2}=100e^{0.3}\approx134.99$.
+\end{steps}
+\end{problem}
+
+\begin{problem}[A multiplicative walk becomes GBM]
+Every $h$ time units a price is multiplied by $e^{\sigma\sqrt h}$ with probability $p=\frac12\big(1+\frac\mu\sigma\sqrt h\big)$, otherwise by $e^{-\sigma\sqrt h}$. Show that as $h\to0$ the price becomes a geometric Brownian motion.
+\begin{steps}
+  \item The logarithm of the price moves by $\pm\sigma\sqrt h$: a random walk.
+  \item Each step has mean $\sigma\sqrt h(2p-1)=\sigma\sqrt h\cdot\frac\mu\sigma\sqrt h=\mu h$ and variance $\sigma^2h-\mu^2h^2$.
+  \item Over time $t$ there are $t/h$ steps: mean $\to\mu t$, variance $\to\sigma^2t$, and the central limit theorem gives normality. So $\ln(\text{price})$ becomes a Brownian motion with drift $\mu$ and variance $\sigma^2$, and the price a GBM.
+\end{steps}
+\end{problem}
+
+%=====================================================================
+\section{Exits, hitting times and the maximum}
+
+\begin{problem}[Which barrier first?]
+$B$ is a Brownian motion from $0$ with no drift. Find $P(B\text{ reaches }-2\text{ before }1)$.
+\begin{steps}
+  \item Martingale $B$, optional stopping: $0=-2p+1\cdot(1-p)$.
+  \item $p=\frac13$: the nearer barrier is the likelier one.
+\end{steps}
+\end{problem}
+
+\begin{problem}[Up, then down, then up]
+Find $P(T_1<T_{-1}<T_2)$.
+\begin{steps}
+  \item First $1$ must come before $-1$: probability $\frac{1}{1+1}=\frac12$.
+  \item At $T_1$ the motion starts afresh from $1$ (strong Markov property). It must now fall by $2$ (to $-1$) before rising by $1$ (to $2$): probability $\frac{1}{2+1}=\frac13$.
+  \item Multiply: $P(T_1<T_{-1}<T_2)=\frac12\cdot\frac13=\frac16$.
+\end{steps}
+\end{problem}
+
+\begin{problem}[Not recovering the purchase price]
+You bought a share at $b+c$ ($c>0$); its price now is $b$ and moves as $b+W(t)$. You sell when the price returns to $b+c$, or after a further time $t$, whichever is first. Find the probability that you do not recover the purchase price.
+\begin{steps}
+  \item You recover it exactly when the maximum over $[0,t]$ reaches $c$.
+  \item $P(\text{not recover})=1-P(M(t)\ge c)=1-2\big[1-\Phi(c/\sqrt t)\big]=2\Phi\big(\frac{c}{\sqrt t}\big)-1$.
+\end{steps}
+For $c=1$, $t=4$: $2\Phi(0.5)-1\approx0.383$.
+\end{problem}
+
+\begin{problem}[Distribution of the hitting time]
+For $a>0$, find the d.f.\ and density of $T_a$, and $P(T_a<\infty)$.
+\begin{steps}
+  \item Reflection: $P(T_a\le t)=2P(W_t\ge a)=2\Phi\big(-\frac{a}{\sqrt t}\big)$.
+  \item Differentiate: $f_{T_a}(t)=\dfrac{a}{\sqrt{2\pi}\,t^{3/2}}e^{-a^2/(2t)}$, $t>0$.
+  \item $P(T_a<\infty)=\lim_{t\to\infty}2\Phi(-a/\sqrt t)=2\Phi(0)=1$ (though $\E_PT_a=\infty$).
+\end{steps}
+\end{problem}
+
+\begin{problem}[A rectangle for $W$ and its maximum]
+\label{pr:rectangle}
+With $t=4$, find $P\big(1<W(t)\le3,\ 2<M(t)\le3\big)$.
+\begin{steps}
+  \item Let $A(x,m)=P\big(W(t)\le x,\ M(t)\le m\big)$. For $x\le m$: $A(x,m)=P(W\le x)-P(W\le x,M>m)=\Phi\big(\frac x2\big)-\big[1-\Phi\big(\frac{2m-x}{2}\big)\big]$. For $x\ge m$: $M\le m$ already forces $W\le m$, so $A(x,m)=P(M\le m)=2\Phi\big(\frac m2\big)-1$.
+  \item Inclusion--exclusion: $P=A(3,3)-A(3,2)-A(1,3)+A(1,2)$.
+  \item Values: $A(3,3)=2\Phi(1.5)-1=0.86638$; $A(3,2)=2\Phi(1)-1=0.68269$ (here $x>m$); $A(1,3)=\Phi(0.5)-[1-\Phi(2.5)]=0.68525$; $A(1,2)=\Phi(0.5)-[1-\Phi(1.5)]=0.62465$.
+  \item $P=0.86638-0.68269-0.68525+0.62465\approx0.1231$.
+\end{steps}
+Using the $x\le m$ formula at $A(3,2)$ by mistake gives $0.1811$: always check the guard.
+\end{problem}
+
+\begin{problem}[Maximum over a later interval]
+Find an expression for $P\big(\max_{t_1\le s\le t_2}B(s)>x\big)$.
+\begin{steps}
+  \item Condition on $B(t_1)=y$. If $y\ge x$ the event already holds.
+  \item If $y<x$, the motion restarts at $y$ and must climb $x-y$ within time $t_2-t_1$: probability $2\big[1-\Phi\big(\frac{x-y}{\sqrt{t_2-t_1}}\big)\big]$.
+  \item Average over $B(t_1)\sim N(0,t_1)$:
+  \[
+    P=P\big(B(t_1)\ge x\big)+\int_{-\infty}^x2\Big[1-\Phi\Big(\frac{x-y}{\sqrt{t_2-t_1}}\Big)\Big]\frac{e^{-y^2/(2t_1)}}{\sqrt{2\pi t_1}}\,dy .
+  \]
+\end{steps}
+\end{problem}
+
+%=====================================================================
+\formulasheet{fs:prob-bm}
+
+\begin{card}{1. Moments of values of Brownian motion}
+\Formula
+$\Var\big(\sum a_iW_{t_i}\big)=\sum_{i,j}a_ia_j\min(t_i,t_j)$; odd moments $0$; $\E_PW_t^4=3t^2$; split $W_t=W_s+(W_t-W_s)$.
+\UseWhen
+``Distribution of $W_1-W_2+3W_4$'', ``$\E_P(W_2^2W_3^2)$'', ``$\E_P[B(t_1)B(t_2)B(t_3)]$''.
+\HowTo
+\begin{enumerate}
+  \item Build the covariance matrix $\min(t_i,t_j)$; or split into independent increments.
+  \item For products, condition on the earliest times and use CE2--CE3.
+\end{enumerate}
+\Caveats
+\cav{Count every cross term twice. Values at different times are dependent.}
+\begin{cardex}
+$W_1-W_2+3W_4\sim N(0,31)$; $\E_P(W_2^2W_3^2)=14$; $\E_P[B(t_1)B(t_2)B(t_3)]=0$.
+\end{cardex}
+\end{card}
+
+\begin{card}{2. Conditioning: forwards, backwards, between}
+\Formula
+Forwards: $N(c+\mu(t-s),\sigma^2(t-s))$. Backwards: $N(\frac stc,\sigma^2\frac{s(t-s)}t)$ (drift cancels). Between $(t_1,A)$ and $(t_2,B)$: $N\big(A+\frac{s-t_1}{t_2-t_1}(B-A),\frac{(s-t_1)(t_2-s)}{t_2-t_1}\big)$.
+\UseWhen
+Any ``given $W(\cdot)=\cdot$'' question.
+\HowTo
+\begin{enumerate}
+  \item Decide: is the known time before or after $s$, or both?
+  \item Mean on the straight line between known points; variance $\frac{(\text{gap left})(\text{gap right})}{\text{total gap}}$.
+\end{enumerate}
+\Caveats
+\cav{With drift, the backward mean is $\frac{tc}{s}$, not $\mu t+\dots$.}
+\begin{cardex}
+Given $W(1)=0$ and $W(3)=2$: $W(2)\sim N(1,\frac12)$.
+\end{cardex}
+\end{card}
+
+\begin{card}{3. Exit orders and restarts}
+\Formula
+Driftless: $P(a\text{ before }-b)=\frac{b}{a+b}$. Chains: multiply, restarting at each level reached.
+\UseWhen
+``$P(T_1<T_{-1}<T_2)$'', ``reach $-2$ before $1$''.
+\HowTo
+\begin{enumerate}
+  \item Break the event into stages.
+  \item Each stage: distances to the two barriers from the current level.
+\end{enumerate}
+\Caveats
+\cav{Measure distances from the level where the stage starts.}
+\begin{cardex}
+$P(T_1<T_{-1}<T_2)=\frac12\cdot\frac13=\frac16$.
+\end{cardex}
+\end{card}
+
+\begin{card}{4. Rectangles for \texorpdfstring{$W(t)$}{W(t)} and \texorpdfstring{$M(t)$}{M(t)}}
+\Formula
+$A(x,m)=P(W\le x,M\le m)=\Phi(\frac x{\sqrt t})-1+\Phi(\frac{2m-x}{\sqrt t})$ if $x\le m$; $=2\Phi(\frac m{\sqrt t})-1$ if $x\ge m$. Rectangle $=A(x_2,m_2)-A(x_2,m_1)-A(x_1,m_2)+A(x_1,m_1)$.
+\UseWhen
+``$P(x_1<W(t)\le x_2,\ m_1<M(t)\le m_2)$''.
+\HowTo
+\begin{enumerate}
+  \item Write the four corners; check $x\le m$ at each.
+  \item Evaluate and combine.
+\end{enumerate}
+\Caveats
+\cav{The reflection formula is only for $x\le m$.}
+\begin{cardex}
+$t=4$: $P(1<W\le3,\,2<M\le3)\approx0.1231$.
+\end{cardex}
+\end{card}
