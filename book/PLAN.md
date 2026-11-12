@@ -76,7 +76,7 @@ Needs must appear in an earlier row's Introduces, or in "Before you start".
 | 7 | Stopping times and optional stopping | 21–24 | 6 | stopping time, entry/hitting time, stopped process, optional stopping thm, no beating a fair game | written |
 | 8 | Problems: martingales and stopping | 55–58, 73–76 | 7 | — | written |
 | 9 | Brownian motion from random walks | 25–26 | 6 | scaling limit, density of W(t), heat equation, BM with variance σ² | written |
-| 10 | Joint and conditional laws of Brownian motion | 26–27 | 9 | joint density, conditional law W(s)∣W(t) | todo |
+| 10 | Joint and conditional laws of Brownian motion | 26–27 | 9 | joint density, conditional law W(s)∣W(t) | written |
 | 11 | Drift and gambler's ruin | 27–32 | 7, 9 | BM with drift, gambler's ruin, exit probabilities | todo |
 | 12 | Geometric Brownian motion | 32–34 | 11 | GBM, its mean, log-normal | todo |
 | 13 | Gaussian processes and the Brownian bridge | 34–39 | 10 | MVN, joint mgf, Gaussian process, cov min(s,t), Brownian bridge, integrated BM | todo |

@@ -1,0 +1,166 @@
+\chapter{Joint and conditional laws of Brownian motion}
+\label{ch:joint}
+
+\begin{question}
+What is the joint distribution of Brownian motion at several times, and what do we learn about $W(s)$ if we are told $W(t)$?
+\end{question}
+
+\begin{whatfor}
+\begin{itemize}
+  \item Writes the joint density of $W(t_1),\dots,W(t_n)$ as a product over increments.
+  \item Finds the law of $W(s)$ given $W(t)=B$: for $s<t$ it is $N\big(\frac stB,\frac{s(t-s)}{t}\big)$; for $s>t$ it is $N(B,s-t)$.
+\end{itemize}
+\skipline{fs:joint}
+\end{whatfor}
+
+\begin{prereq}
+From Part~0: joint density, conditional density $f_{X\given Y=y}=f(x,y)/f_Y(y)$, normal density, $\Phi$. From Chapters~6 and 9: standard Brownian motion, independent and stationary increments, Brownian motion with variance parameter $\sigma^2$, the density $f_t(x)=\frac{1}{\sqrt{2\pi t}}e^{-x^2/(2t)}$.
+\end{prereq}
+
+Throughout, $f_t(x)=\frac{1}{\sqrt{2\pi t}}e^{-x^2/(2t)}$ is the density of $W(t)\sim N(0,t)$.
+
+%=====================================================================
+\section{The joint density}
+
+\begin{result}[Joint density of Brownian motion]
+\label{res:joint-density}
+For $0<t_1<t_2<\dots<t_n$, the vector $(W(t_1),\dots,W(t_n))$ has joint density
+\[
+  f(x_1,\dots,x_n)=f_{t_1}(x_1)\,f_{t_2-t_1}(x_2-x_1)\cdots f_{t_n-t_{n-1}}(x_n-x_{n-1}).
+\]
+Written out,
+\[
+  f(x_1,\dots,x_n)=\frac{\exp\Big\{-\frac12\Big[\frac{x_1^2}{t_1}+\frac{(x_2-x_1)^2}{t_2-t_1}+\dots+\frac{(x_n-x_{n-1})^2}{t_n-t_{n-1}}\Big]\Big\}}{(2\pi)^{n/2}\,\big[t_1(t_2-t_1)\cdots(t_n-t_{n-1})\big]^{1/2}} .
+\]
+\end{result}
+\begin{proof}
+Translate positions into increments.
+\begin{steps}
+  \item The event $\{W(t_1)=x_1,\dots,W(t_n)=x_n\}$ is the event $\{W(t_1)=x_1,\ W(t_2)-W(t_1)=x_2-x_1,\ \dots,\ W(t_n)-W(t_{n-1})=x_n-x_{n-1}\}$.
+  \item The increments are independent, with $W(t_k)-W(t_{k-1})\sim N(0,t_k-t_{k-1})$. So their joint density is the product of the $f_{t_k-t_{k-1}}$ (\cref{res:indep-E}).
+  \item The map from positions to increments is linear with determinant $1$, so the density of the positions is the same product, evaluated at the increments. \qedhere
+\end{steps}
+\end{proof}
+
+\begin{example}[Two times]
+$(W(1),W(3))$ has density $f_1(x)\,f_2(y-x)=\dfrac{1}{2\pi\sqrt2}\exp\Big\{-\dfrac{x^2}{2}-\dfrac{(y-x)^2}{4}\Big\}$. So, for instance, $P\big(W(1)>0,\ W(3)-W(1)>0\big)=\frac12\cdot\frac12=\frac14$ by independence of increments.
+\end{example}
+
+%=====================================================================
+\section{Conditioning on a future value}
+
+\begin{theorem}[$W(s)$ given $W(t)=B$, for $s<t$]
+\label{thm:bridge-law}
+For $0<s<t$,
+\[
+  \big[W(s)\given W(t)=B\big]\sim N\Big(\frac stB,\ \frac{s(t-s)}{t}\Big).
+\]
+So $\E_P\big(W(s)\given W(t)=B\big)=\frac stB$ and $\Var\big(W(s)\given W(t)=B\big)=\frac{s(t-s)}{t}$.
+\end{theorem}
+\begin{proof}
+Bayes for densities, then complete the square.
+\begin{steps}
+  \item By \cref{res:cond-density} and \cref{res:joint-density},
+  \[
+    f_{s\given t}(x\given B)=\frac{f_{s,t}(x,B)}{f_t(B)}=\frac{f_s(x)\,f_{t-s}(B-x)}{f_t(B)}
+    =k_1\exp\Big\{-\frac12\Big[\frac{x^2}{s}+\frac{(B-x)^2}{t-s}\Big]\Big\},
+  \]
+  where $k_1$ does not involve $x$.
+  \item Collect the terms in $x$: $\dfrac{x^2}{s}+\dfrac{x^2-2Bx}{t-s}=x^2\,\dfrac{t}{s(t-s)}-\dfrac{2Bx}{t-s}$. Complete the square:
+  \[
+    \frac{t}{s(t-s)}\Big(x^2-\frac{2Bs}{t}x\Big)=\frac{\big(x-\frac{Bs}{t}\big)^2}{s(t-s)/t}-\text{(a constant)}.
+  \]
+  \item So $f_{s\given t}(x\given B)=k_3\exp\Big\{-\dfrac{(x-Bs/t)^2}{2\,s(t-s)/t}\Big\}$, the density of $N\big(\frac{Bs}{t},\frac{s(t-s)}{t}\big)$. \qedhere
+\end{steps}
+\end{proof}
+
+\begin{intuition}
+Knowing where the path is at time $t$ pins it down at both ends: $0$ at time $0$ and $B$ at time $t$. The best guess in between is the straight line $\frac stB$. The uncertainty $\frac{s(t-s)}{t}$ is $0$ at both ends and largest in the middle, $s=\frac t2$, where it is $\frac t4$, half of the unconditional $\Var W(t/2)=\frac t2$.
+\end{intuition}
+
+\begin{pic}
+\begin{tikzpicture}
+\begin{axis}[width=11cm,height=5cm,xmin=0,xmax=1,ymin=-1,ymax=2.2,xlabel={$s$},ylabel={$W(s)$ given $W(1)=1$},samples=100]
+  \addplot[draw=none,fill=defc!12,domain=0:1] {x+sqrt(x*(1-x))} \closedcycle;
+  \addplot[draw=none,fill=white,domain=0:1] {x-sqrt(x*(1-x))} \closedcycle;
+  \addplot[thmc,thick] table[x=t,y expr=\thisrow{w1}-\thisrow{t}*1.0089+\thisrow{t}] {figs/bm3.dat};
+  \addplot[trapc,thick] table[x=t,y expr=\thisrow{w2}+\thisrow{t}*0.8089+\thisrow{t}] {figs/bm3.dat};
+  \addplot[prec,thick] table[x=t,y expr=\thisrow{w3}-\thisrow{t}*0.0112+\thisrow{t}] {figs/bm3.dat};
+  \addplot[black,very thick,dashed,domain=0:1] {x};
+  \addplot[only marks,mark=*] coordinates {(0,0)(1,1)};
+  \node[font=\scriptsize,anchor=west] at (axis cs:0.03,1.6) {band: mean $\pm$ one standard deviation $\sqrt{s(1-s)}$};
+\end{axis}
+\end{tikzpicture}
+\picnote{Three paths conditioned on $W(1)=1$. They all start at $0$ and end at $1$; in between they scatter around the line $s\mapsto s$ (dashed), most widely in the middle.}
+\end{pic}
+
+\begin{result}[$W(s)$ given $W(t)=B$, for $s>t$]
+\label{res:after}
+For $s>t$, $\big[W(s)\given W(t)=B\big]\sim N(B,\ s-t)$.
+\end{result}
+\begin{proof}
+$W(s)=W(t)+\big(W(s)-W(t)\big)$, and the increment $W(s)-W(t)\sim N(0,s-t)$ is independent of $W(t)$. Given $W(t)=B$, this is $B+N(0,s-t)$.
+\end{proof}
+
+Looking forward, knowledge of the present only shifts the starting point. Looking backward, it pins the path down.
+
+\begin{result}[Brownian motion with variance parameter]
+\label{res:scaled-cond}
+If $Y(t)=\sigma W(t)$, then for $s<t$, $\big[Y(s)\given Y(t)=C\big]\sim N\Big(\frac stC,\ \sigma^2\frac{s(t-s)}{t}\Big)$.
+\end{result}
+\begin{proof}
+$Y(t)=C$ means $W(t)=C/\sigma$. By \cref{thm:bridge-law}, $W(s)$ then has mean $\frac st\cdot\frac C\sigma$ and variance $\frac{s(t-s)}{t}$; multiply by $\sigma$.
+\end{proof}
+
+\begin{example}[A bicycle race]
+\label{ex:race}
+The lead of rider A over rider B when a fraction $t$ of the race is done is modelled by $Y(t)=\sigma W(t)$, $0\le t\le1$.
+\begin{steps}
+  \item \emph{A leads by $\sigma$ at half-way. Probability that A wins?} A wins if $Y(1)>0$, i.e.\ $Y(1)-Y(\frac12)>-\sigma$. The increment is $N(0,\frac{\sigma^2}{2})$ and independent of $Y(\frac12)$:
+  \[
+    P\Big(Z>\frac{-\sigma}{\sigma/\sqrt2}\Big)=P(Z>-\sqrt2)=\Phi(\sqrt2)\approx0.921 .
+  \]
+  \item \emph{A won by $\sigma$. Probability that A led at half-way?} By \cref{res:scaled-cond}, $\big[Y(\frac12)\given Y(1)=\sigma\big]\sim N\big(\frac\sigma2,\frac{\sigma^2}{4}\big)$, so
+  \[
+    P\Big(Y(\tfrac12)>0\Big)=P\Big(Z>\frac{-\sigma/2}{\sigma/2}\Big)=\Phi(1)\approx0.841 .
+  \]
+\end{steps}
+\end{example}
+
+%=====================================================================
+\formulasheet{fs:joint}
+
+\begin{card}{1. Joint density of Brownian motion}
+\Formula
+$f(x_1,\dots,x_n)=f_{t_1}(x_1)f_{t_2-t_1}(x_2-x_1)\cdots f_{t_n-t_{n-1}}(x_n-x_{n-1})$, \;$f_t(x)=\frac{1}{\sqrt{2\pi t}}e^{-x^2/2t}$.
+\UseWhen
+``Write the joint density of $W(t_1),\dots,W(t_n)$'', probabilities about several times.
+\HowTo
+\begin{enumerate}
+  \item Order the times; switch to increments.
+  \item Multiply the normal densities of the increments.
+\end{enumerate}
+\Caveats
+\cav{The values $W(t_k)$ are \emph{not} independent; the increments are.}
+\begin{cardex}
+$(W(1),W(3))$: $f_1(x)f_2(y-x)$. $P(W(1)>0,W(3)>W(1))=\frac14$.
+\end{cardex}
+\end{card}
+
+\begin{card}{2. Conditioning on \texorpdfstring{$W(t)=B$}{W(t)=B}}
+\Formula
+$s<t$: $[W(s)\given W(t)=B]\sim N\big(\frac stB,\frac{s(t-s)}{t}\big)$. \;$s>t$: $N(B,s-t)$. \;$Y=\sigma W$: $[Y(s)\given Y(t)=C]\sim N\big(\frac stC,\sigma^2\frac{s(t-s)}t\big)$.
+\UseWhen
+``Given the final value, what about earlier?'' (backward) or ``given now, later?'' (forward).
+\HowTo
+\begin{enumerate}
+  \item Backward ($s<t$): mean on the straight line, variance $\frac{s(t-s)}t$.
+  \item Forward ($s>t$): add an independent $N(0,s-t)$.
+  \item Standardise and read $\Phi$.
+\end{enumerate}
+\Caveats
+\cav{$\sigma$ cancels in the conditional mean but not in the variance.}
+\begin{cardex}
+Race, $Y=\sigma W$: given $Y(\frac12)=\sigma$, $P(Y(1)>0)=\Phi(\sqrt2)\approx0.921$; given $Y(1)=\sigma$, $P(Y(\frac12)>0)=\Phi(1)\approx0.841$.
+\end{cardex}
+\end{card}
