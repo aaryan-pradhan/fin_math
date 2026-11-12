@@ -171,8 +171,8 @@ A stock modelled as $X_n=X_0e^{Y_1+\dots+Y_n}$ with daily log-returns $Y_j\sim N
 \formulasheet{fs:first-mg}
 
 \begin{mastercard}[label=card:incr]{Processes with independent increments: conditioning and martingales}
-Let the increments $D=X_t-X_s$ ($s<t$) be independent of the past $\F_s$, with
-$\E_PD=m(t-s)$, $\Var D=v(t-s)$ and $\E_Pe^{uD}=e^{\kappa(u)(t-s)}$. Then, freezing $X_s=x$ and averaging over $D$,
+Split $X_t=X_s+D$ ($s<t$): $X_s$ is known at time $s$, the fresh part $D=X_t-X_s$ is independent of the past, with
+$\E_PD=m(t-s)$, $\Var D=v(t-s)$ and $\E_Pe^{uD}=e^{\kappa(u)(t-s)}$. Keep $X_s$, average over $D$ (\cref{card:freeze}):
 \[
   \boxed{\begin{gathered}\E_P\big(f(X_t)\given\F_s\big)=\E_P\,f(x+D)\Big|_{x=X_s},\\
   X_t-mt,\qquad (X_t-mt)^2-vt,\qquad e^{uX_t-\kappa(u)t}\quad\text{are martingales.}\end{gathered}}

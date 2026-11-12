@@ -32,7 +32,7 @@ $\xi_i$ independent Bernoulli$(p)$. Is $X_n=p^{-n}\xi_1\cdots\xi_n$ a martingale
 \begin{problem}[The absorbed fair walk]
 $X_{n+1}=X_n\pm1$ w.p.\ $\frac12$ if $X_n>0$, and $X_{n+1}=0$ if $X_n=0$; $X_0=i$. Is it a martingale? Probability of reaching $N\ge i$ before $0$?
 \uses{card:onestep}{4}
-\plug{$g(x)=\frac12(x+1)+\frac12(x-1)=x$ for $x>0$, $g(0)=0$.}
+\plug{$X_n>0$: $\frac12(X_n+1)+\frac12(X_n-1)=X_n$; $X_n=0$: stays $0$.}
 \uses{card:ost}{1}
 \plug{$x=i$, $a=0$, $b=N$, no drift: $P(\text{exit at }N)=\frac{i-0}{N-0}$.}
 \answer{A non-negative martingale; $P=\frac iN$.}
@@ -69,7 +69,7 @@ For the last two (not on a card): by symmetry each $X_k$, $k\le n$, has the same
 \begin{problem}[Every integrable variable gives a martingale]
 Show $X_t=\E_P(Y\given\F_t)$ is a martingale ($\E_P|Y|<\infty$).
 \uses{card:freeze}{6}
-\plug{tower with $\G_0=\F_s\subseteq\G=\F_t$: $\E_P(X_t\given\F_s)=\E_P(Y\given\F_s)=X_s$.}
+\plug{tower with $s\le t$: $\E_P(X_t\given\F_s)=\E_P(Y\given\F_s)=X_s$.}
 \answer{A martingale (adapted by definition, $\E_P|X_t|\le\E_P|Y|$).}
 \end{problem}
 

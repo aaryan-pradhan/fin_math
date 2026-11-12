@@ -189,18 +189,18 @@ $u=1.2$, $d=0.8$: $p=\frac{1-0.8}{1.2-0.8}=\frac12$.
 \formulasheet{fs:martingales}
 
 \begin{mastercard}[label=card:onestep]{The one-step martingale test}
-Write the next value as a rule applied to the present value and a fresh random input $\xi_{n+1}$ that is independent of the past $\F_n$: $X_{n+1}=\varphi(X_n,\xi_{n+1})$. To get $g$, freeze the present value at $x$ and average over the fresh input:
+Split the next value into the part known at time $n$ and a fresh part $\xi_{n+1}$ independent of the past, and average the fresh part (\cref{card:freeze}). Compare with $X_n$:
 \[
-  \boxed{\begin{gathered}\E_P(X_{n+1}\given\F_n)=g(X_n),\qquad g(x)=\E_P\,\varphi(x,\xi);\\
-  \text{MG}\iff g(x)=x,\quad\text{sub}\iff g(x)\ge x,\quad\text{super}\iff g(x)\le x\\ \text{for every value }x\text{ the process can take.}\end{gathered}}
+  \boxed{\begin{gathered}X_{n+1}=X_n+\xi_{n+1}:\quad \E_P(X_{n+1}\given\F_n)=X_n+\E_P\xi;\\
+  X_{n+1}=X_n\,\xi_{n+1}:\quad \E_P(X_{n+1}\given\F_n)=X_n\,\E_P\xi;\\
+  \text{martingale: }=X_n,\qquad\text{sub: }\ge X_n,\qquad\text{super: }\le X_n.\end{gathered}}
 \]
-For a martingale, $\E_P(X_{n+s}\given\F_n)=X_n$ and $\E_PX_n=\E_PX_0$; for a sub (super) martingale $\E_PX_n$ rises (falls).
 \begin{plugrows}
-  \plugrow{Add a fresh step}{$\varphi=x+\xi$}{$g(x)=x+\E_P\xi$: MG iff $\E_P\xi=0$, sub iff $>0$}{$\xi_{n+1}$ independent of $\F_n$, $\E_P|\xi|<\infty$}{$\xi=\pm1$ with $P(+1)=0.6$: $g=x+0.2$, sub}
-  \plugrow{Multiply by a fresh factor (binomial stock)}{$\varphi=x\,\xi$, $\xi\in\{u,d\}$ with $P(u)=p$}{$g(x)=x\,(pu+(1-p)d)$: MG iff $p=\dfrac{1-d}{u-d}$; $\E_PS_t=S_0\,(pu+(1-p)d)^t$}{$d<1<u$ for a MG probability in $(0,1)$}{$u=1.2$, $d=0.8$: $p=\frac12$; with $p=0.6$, $\E_PS_2=100(1.04)^2=108.16$}
-  \plugrow{A function of a martingale}{$\varphi=h(x+\xi)$ or $h(x\xi)$}{compute $g$ directly; convex $h$ of a MG is usually a sub-MG}{as above}{$S_t^2$ in the binomial with $p=\frac12$: $g=1.04\,x$, sub}
-  \plugrow{A rule that depends on the state}{different $\varphi$ in different states}{check $g(x)=x$ in each state}{every state}{fair walk stopped at $0$: $g(x)=\frac12(x+1)+\frac12(x-1)=x$ for $x>0$, $g(0)=0$: MG}
-  \plugrow{Many steps ahead; the mean}{apply the test $s$ times (tower rule)}{$\E_P(X_{n+s}\given\F_n)=X_n$; $\E_PX_n=\E_PX_0$}{martingale; constant mean is necessary, not sufficient}{binomial, $p=\frac12$: $\E_PS_2=\frac14144+\frac1296+\frac1464=100$}
-  \plugrow{Is it adapted / integrable?}{adapted: Card~\ref{card:measurable} with $\G=\F_n$; integrable: $\E_P|X_n|<\infty$}{both needed before the test}{a future increment $X_{n+1}-X_n$ is never $\F_n$-measurable}{binomial: on $A_u$, $S_2-S_1=\pm24$, so not $\F_1$-measurable}
+  \plugrow{Add a fresh step}{$X_{n+1}=X_n+\xi_{n+1}$}{$X_n+\E_P\xi$: martingale iff $\E_P\xi=0$, sub iff $\E_P\xi>0$}{$\xi_{n+1}$ independent of the past, $\E_P|\xi|<\infty$}{$\xi=\pm1$ with $P(+1)=0.6$: $X_n+0.2$, sub}
+  \plugrow{Multiply by a fresh factor (binomial stock)}{$S_{n+1}=S_n\xi_{n+1}$, $\xi\in\{u,d\}$, $P(u)=p$}{$S_n(pu+(1-p)d)$: martingale iff $p=\dfrac{1-d}{u-d}$; $\E_PS_t=S_0\,(pu+(1-p)d)^t$}{$d<1<u$ for such a $p$ in $(0,1)$}{$u=1.2$, $d=0.8$: $p=\frac12$; with $p=0.6$, $\E_PS_2=100(1.04)^2=108.16$}
+  \plugrow{A function of the process}{split first, then apply the function: $S_{n+1}^2=S_n^2\,\xi_{n+1}^2$}{$S_n^2\,\E_P\xi^2$; a convex function of a martingale is usually a sub-martingale}{as above}{binomial, $p=\frac12$: $\E_P(S_{n+1}^2\given\F_n)=1.04\,S_n^2$, sub}
+  \plugrow{A rule that depends on the state}{split separately in each state}{check $=X_n$ in every state}{every state}{fair walk stopped at $0$: $X_n>0$: $\frac12(X_n+1)+\frac12(X_n-1)=X_n$; $X_n=0$: stays $0$: martingale}
+  \plugrow{Many steps ahead; the mean}{apply the test $s$ times (tower, \cref{card:freeze})}{$\E_P(X_{n+s}\given\F_n)=X_n$; $\E_PX_n=\E_PX_0$}{martingale; constant mean is necessary, not sufficient}{binomial, $p=\frac12$: $\E_PS_2=\frac14144+\frac1296+\frac1464=100$}
+  \plugrow{Is it adapted / integrable?}{adapted: \cref{card:measurable} with the information $\F_n$; integrable: $\E_P|X_n|<\infty$}{both needed before the test}{a future increment $X_{n+1}-X_n$ is never known at time $n$}{binomial: on $A_u$, $S_2-S_1=\pm24$, so not known at time $1$}
 \end{plugrows}
 \end{mastercard}
