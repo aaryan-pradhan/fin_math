@@ -146,17 +146,6 @@ Normality comes from the central limit theorem; independent coins in disjoint ti
   \plugrow{With drift $\mu$}{$p=\frac12(1+\mu\sqrt{\Delta t})$, $\Delta x=\sqrt{\Delta t}$ ($\sigma=1$)}{step mean $\mu\sqrt{\Delta t}$, step variance $1-\mu^2\Delta t$: $X\to\mu t+W$}{$|\mu|\sqrt{\Delta t}\le1$}{$\mu=1$, $\Delta t=0.01$: $p=0.55$, $\E_PX(1)=100(0.1)(0.1)=1$}
   \plugrow{Wrong scalings}{$\Delta x=\Delta t$; $\Delta x\gg\sqrt{\Delta t}$}{$\Var=t\,\Delta t\to0$ (motion collapses); $\Var\to\infty$}{only $\Delta x\propto\sqrt{\Delta t}$ works}{$\Delta x=\Delta t=0.01$: $\Var X(1)=0.01$}
   \plugrow{Multiplicative walk}{the price is multiplied by $e^{\pm\sigma\sqrt h}$ every $h$, with $p=\frac12(1+\frac\mu\sigma\sqrt h)$; apply the box to $\ln(\text{price})$}{$\ln(\text{price})\to\ln(\text{start})+\mu t+\sigma W_t$, i.e.\ price $=\text{start}\cdot e^{\mu t+\sigma W_t}$ (Card 11.1)}{log-steps $\pm\sigma\sqrt h$}{$\mu=0.1$, $\sigma=0.2$: $\ln(\text{price})$ has mean $0.1t$, variance $0.04t$}
-\end{plugrows}
-\end{mastercard}
-
-\begin{mastercard}[label=card:heat]{The density of Brownian motion solves the heat equation}
-The density of $x_0+\mu t+\sigma W_t$ at the point $y$,
-\[
-  \boxed{\;f(t,y)=\frac{1}{\sqrt{2\pi\sigma^2t}}\exp\Big(-\frac{(y-x_0-\mu t)^2}{2\sigma^2t}\Big)\quad\text{solves}\quad\frac{\partial f}{\partial t}=-\mu\,\frac{\partial f}{\partial y}+\frac{\sigma^2}{2}\,\frac{\partial^2f}{\partial y^2}.\;}
-\]
-\begin{plugrows}
-  \plugrow{Standard Brownian motion}{$x_0=0$, $\mu=0$, $\sigma=1$}{$f=\frac{1}{\sqrt{2\pi t}}e^{-y^2/2t}$ solves $f_t=\frac12f_{yy}$}{$t>0$}{at $y=0$, $t=1$: $f_t=-\frac{1}{2\sqrt{2\pi}}$, $f_{yy}=-\frac{1}{\sqrt{2\pi}}$}
-  \plugrow{How to show it}{differentiate: $f_y=-\frac{y-\mu t}{\sigma^2t}f$ (take $x_0=0$), $f_{yy}=\big(\frac{(y-\mu t)^2}{\sigma^4t^2}-\frac{1}{\sigma^2t}\big)f$, $f_t=\big(-\frac1{2t}+\frac{(y-\mu t)^2}{2\sigma^2t^2}+\frac{\mu(y-\mu t)}{\sigma^2t}\big)f$}{$f_t+\mu f_y-\frac{\sigma^2}2f_{yy}=0$}{collect the three brackets}{the $\mu$ terms cancel against $-\mu f_y$}
-  \plugrow{Spread of the cloud}{the standard deviation of $f(t,\cdot)$}{$\sigma\sqrt t$: it spreads like heat, total area $1$}{$t>0$}{$\sigma=1$: s.d.\ $0.5$, $1$, $1.73$ at $t=0.25,1,3$}
+  \plugrow{Density of the limit: the heat equation}{$f(t,y)$ = density of $N(x_0+\mu t,\sigma^2t)$ (walk started at $x_0$); differentiate: $f_y=-\frac{y-x_0-\mu t}{\sigma^2t}f$, then $f_{yy}$ and $f_t$}{$\dfrac{\partial f}{\partial t}=-\mu\dfrac{\partial f}{\partial y}+\dfrac{\sigma^2}{2}\dfrac{\partial^2f}{\partial y^2}$; for $W$: $f_t=\frac12f_{yy}$; the cloud spreads like heat, s.d.\ $\sigma\sqrt t$}{$t>0$}{$W$ at $y=0$, $t=1$: $f_t=-\frac1{2\sqrt{2\pi}}=\frac12f_{yy}$}
 \end{plugrows}
 \end{mastercard}

@@ -122,7 +122,7 @@ $S_t=uS_{t-1}$ or $dS_{t-1}$, bond $(1+r)^t$, $p^*=\frac{1+r-d}{u-d}$, claim $g(
   \plugrow{A call: only the ``in the money'' terms}{$g=(s-K)^+$; $m$ = least $j$ with $u^jd^{T-j}S_0>K$}{$C=S_0\sum_{j\ge m}\binom Tj\hat p^{\,j}(1-\hat p)^{T-j}-\dfrac{K}{(1+r)^T}\sum_{j\ge m}\binom Tj(p^*)^j(1-p^*)^{T-j}$, $\hat p=\dfrac{up^*}{1+r}$}{call, $g$ increasing; $\hat p$ is again a probability}{same: $m=2$, $\hat p=\frac{1.2\cdot0.625}{1.05}=0.714$: $100(0.510)-\frac{100}{1.1025}(0.391)=15.59$}
   \plugrow{A put}{$g=(K-s)^+$, or \cref{card:parity} (parity)}{$P=C-S_0+K(1+r)^{-T}$}{European}{same: $P=15.59-100+90.70=6.29$}
   \plugrow{The hedge at a node}{the second line of the box}{shares and bond money held over the next period}{use values one step ahead}{time $0$: $\Delta_1=0.655$, bond $-49.89$; after an up-move: $\Delta_2=0.917$, bond $-83.81$}
-  \plugrow{Is the strategy self-financing?}{value of the old holding at the new price $=$ value of the new holding}{yes for the backward-induction hedge}{compare at the same price}{$0.655\cdot120-49.89\cdot1.05=26.19=V_1[120]$}
+  \plugrow{Is the strategy self-financing?}{\cref{card:selffin}, row 2: value of the old holding at the new price $=$ value of the new holding}{yes for the backward-induction hedge}{compare at the same price}{$0.655\cdot120-49.89\cdot1.05=26.19=V_1[120]$}
   \plugrow{A discounted martingale}{$\E_{P^*}(S_{t+1}\given\F_t)=(1+r)S_t$}{$(1+r)^{-t}S_t$ and $(1+r)^{-t}V_t$ are $P^*$-martingales}{self-financing strategies}{$0.625(120)+0.375(80)=105=1.05\cdot100$}
 \end{plugrows}
 \end{mastercard}
