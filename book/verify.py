@@ -45,4 +45,28 @@ up, tau = ruin(10, 5)
 check("Ch7 P(hit +10 before -5)", up.astype(float), 1 / 3)
 check("Ch7 E[tau], exit (-5,10)", tau.astype(float), 50)
 
+# Ch 11: roulette ruin, p = 18/38, from 10 to 20: P = 0.2585, D = 91.76
+def ruin_p(p, i, N, n=20000):
+    x = np.full(n, i); tau = np.zeros(n); alive = np.ones(n, bool)
+    while alive.any():
+        x[alive] += np.where(rng.random(alive.sum()) < p, 1, -1); tau[alive] += 1
+        alive &= (x > 0) & (x < N)
+    return (x == N).astype(float), tau
+win, dur = ruin_p(18 / 38, 10, 20)
+check("Ch11 roulette P_10", win, 0.2585334)
+check("Ch11 roulette D_10", dur, 91.757303)
+
+# Ch 11: B = mu t + W, mu = 0.5, exit (-1, 1): P(up first) = 1/(1+e^{-1})
+def exit_drift(mu, A, B, n=40000, dt=1e-3):
+    x = np.zeros(n); up = np.full(n, np.nan); alive = np.ones(n, bool)
+    while alive.any():
+        xn = x + mu * dt + rng.normal(0, np.sqrt(dt), n)
+        pu = np.exp(-2 * np.maximum(A - x, 0) * np.maximum(A - xn, 0) / dt)   # bridge crosses A
+        pd = np.exp(-2 * np.maximum(x + B, 0) * np.maximum(xn + B, 0) / dt)   # bridge crosses -B
+        hu = alive & ((xn >= A) | (rng.random(n) < pu)); up[hu] = 1; alive &= ~hu
+        hd = alive & ((xn <= -B) | (rng.random(n) < pd)); up[hd] = 0; alive &= ~hd
+        x = xn
+    return up
+check("Ch11 P(up 1 before -1), mu=0.5", exit_drift(0.5, 1, 1), 1 / (1 + np.exp(-1)))
+
 raise SystemExit(1 if fails else 0)

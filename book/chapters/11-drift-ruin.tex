@@ -1,0 +1,245 @@
+\chapter{Drift and gambler's ruin}
+\label{ch:drift}
+
+\begin{question}
+A gambler wins each bet with probability $p$. What is the chance of reaching a target before going broke, and how long does it take? And what is the continuous version: Brownian motion with a drift?
+\end{question}
+
+\begin{whatfor}
+\begin{itemize}
+  \item Defines Brownian motion with drift $\mu$ and builds it from a slightly unfair random walk.
+  \item Solves the gambler's ruin problem: win probability and expected duration.
+  \item Finds the probability that Brownian motion with drift hits $+A$ before $-B$, and the chance it ever reaches $A$.
+\end{itemize}
+\skipline{fs:drift}
+\end{whatfor}
+
+\begin{prereq}
+From Part~0: total probability, independence, geometric sums. From Chapters~6--9: Wiener process, exponential martingale $e^{uW_t-u^2t/2}$, random walk, optional stopping theorem and its exit recipe, the scaled random walk ($\Delta x=\sqrt{\Delta t}$).
+\end{prereq}
+
+%=====================================================================
+\section{Brownian motion with drift}
+
+\begin{definition}[Brownian motion with drift]
+\label{def:drift}
+A process $(B(t))_{t\ge0}$ is a \dfn{Brownian motion with drift} $\mu$ if (1) $B(0)=0$; (2) its paths are continuous a.s.; (3) it has stationary and independent increments; (4) $B(t)\sim N(\mu t,\,t)$. Equivalently $B(t)=\mu t+W(t)$ with $W$ a standard Brownian motion.
+\end{definition}
+
+It is a fair Brownian motion riding on a straight line of slope $\mu$.
+
+\begin{pic}
+\begin{tikzpicture}
+\begin{axis}[width=10cm,height=4.6cm,xmin=0,xmax=1,xlabel={$t$},ylabel={$B(t)$},legend style={font=\scriptsize,at={(0.02,0.98)},anchor=north west}]
+  \addplot[defc,thick] table[x=t,y expr=1.5*\thisrow{t}+\thisrow{w2}] {figs/bm3.dat}; \addlegendentry{$B(t)=1.5t+W(t)$}
+  \addplot[prec,dashed,domain=0:1] {1.5*x}; \addlegendentry{mean $\mu t$}
+\end{axis}
+\end{tikzpicture}
+\picnote{A Brownian motion with drift $\mu=1.5$ wanders around the line $\mu t$; its spread around the line grows like $\sqrt t$.}
+\end{pic}
+
+\paragraph{From an unfair random walk.} Take the scaled walk of Chapter~9 with $\Delta x=\sqrt{\Delta t}$, but let each step go right with probability $p=\frac12\big(1+\mu\sqrt{\Delta t}\big)$. Then each step $X_i=\pm1$ has
+\[
+  \E_P(X_i)=2p-1=\mu\sqrt{\Delta t},\qquad \Var(X_i)=1-(2p-1)^2=1-\mu^2\Delta t,
+\]
+so for $B(t)=\Delta x\,(X_1+\dots+X_{[t/\Delta t]})$,
+\[
+  \E_P\,B(t)=\sqrt{\Delta t}\,\Big[\frac{t}{\Delta t}\Big]\,\mu\sqrt{\Delta t}\to\mu t,\qquad
+  \Var\,B(t)=\Delta t\,\Big[\frac{t}{\Delta t}\Big]\,(1-\mu^2\Delta t)\to t .
+\]
+A tiny bias in each coin, of order $\sqrt{\Delta t}$, adds up to a steady drift $\mu t$.
+
+%=====================================================================
+\section{Gambler's ruin}
+
+\begin{setup}[The gambler]
+A gambler has Rs~$i$. Each bet wins Rs~1 with probability $p$ and loses Rs~1 with probability $q=1-p$, independently. The gambler stops on reaching Rs~$N$ (the target) or Rs~$0$ (ruin). Write $X_n$ for the fortune after $n$ bets, $r=q/p$, and
+\[
+  P_i=P(\text{reach }N\text{ before }0\given X_0=i).
+\]
+\end{setup}
+
+\begin{pic}
+\begin{tikzpicture}[x=1.25cm,every node/.style={font=\small}]
+  \foreach \i/\l in {0/0,1/1,2/2,4/N\!-\!2,5/N\!-\!1,6/N} \node[draw,circle,minimum size=1.05cm,inner sep=0pt,font=\scriptsize] (n\i) at (\i*1.2,0) {$\l$};
+  \node at (3.6,0) {$\cdots$};
+  \foreach \a/\b in {1/2,4/5} {\draw[-{Latex},bend left=35] (n\a) to node[above,font=\scriptsize]{$p$} (n\b); \draw[-{Latex},bend left=35] (n\b) to node[below,font=\scriptsize]{$q$} (n\a);}
+  \draw[-{Latex},bend left=35] (n1) to node[below,font=\scriptsize]{$q$} (n0);
+  \draw[-{Latex},bend left=35] (n5) to node[above,font=\scriptsize]{$p$} (n6);
+  \node[trapc,below=0.45cm of n0] {ruin}; \node[thmc,below=0.45cm of n6] {target};
+\end{tikzpicture}
+\picnote{The fortune moves one step right with probability $p$, left with probability $q$. The states $0$ and $N$ are absorbing: once there, the game is over.}
+\end{pic}
+
+\begin{theorem}[Gambler's ruin]
+\label{thm:ruin}
+For $0\le i\le N$,
+\[
+  P_i=\begin{cases}\dfrac{1-r^i}{1-r^N},&p\ne\frac12,\\[2ex] \dfrac iN,&p=\frac12.\end{cases}
+\]
+\end{theorem}
+\begin{proof}
+Condition on the first bet (first-step analysis).
+\begin{steps}
+  \item \emph{Boundaries:} $P_0=0$, $P_N=1$.
+  \item \emph{First bet:} after it the fortune is $i+1$ or $i-1$, and the rest is a fresh game from there. By total probability, $P_i=p\,P_{i+1}+q\,P_{i-1}$ for $1\le i\le N-1$.
+  \item \emph{Differences:} write $P_i=(p+q)P_i$ and rearrange: $p(P_{i+1}-P_i)=q(P_i-P_{i-1})$, so $P_{i+1}-P_i=r\,(P_i-P_{i-1})$. Repeating, and using $P_1-P_0=P_1$,
+  \[
+    P_{k+1}-P_k=r^k\,P_1 .
+  \]
+  \item \emph{Telescope:} adding the differences for $k=0,\dots,i-1$,
+  \[
+    P_i=(1+r+\dots+r^{i-1})P_1=\begin{cases}\frac{1-r^i}{1-r}P_1,&r\ne1,\\ i\,P_1,&r=1.\end{cases}
+  \]
+  \item \emph{Use $P_N=1$:} $P_1=\frac{1-r}{1-r^N}$ (or $\frac1N$ when $r=1$, i.e.\ $p=\frac12$). Substitute. \qedhere
+\end{steps}
+\end{proof}
+
+\begin{result}[Infinite bankroll of the opponent]
+\label{res:ruin-limit}
+Let $N\to\infty$ (the gambler plays until ruin, aiming at nothing). Then
+\[
+  P(\text{gambler is never ruined})=\lim_{N\to\infty}P_i=\begin{cases}0,&p\le\frac12,\\ 1-\big(\frac qp\big)^i,&p>\frac12.\end{cases}
+\]
+\end{result}
+\begin{proof}
+If $p<\frac12$ then $r>1$ and $r^N\to\infty$, so $P_i\to0$. If $p=\frac12$, $\frac iN\to0$. If $p>\frac12$ then $r<1$, $r^N\to0$, and $P_i\to1-r^i$.
+\end{proof}
+
+A fair game against an infinitely rich opponent ruins you for sure.
+
+\begin{result}[Expected duration]
+\label{res:duration}
+Let $D_i=\E_P(\tau\given X_0=i)$, where $\tau$ is the number of bets played. Then
+\[
+  D_i=\begin{cases}\dfrac{N\,P_i-i}{p-q},&p\ne\frac12,\\[2ex] i(N-i),&p=\frac12.\end{cases}
+\]
+\end{result}
+\begin{proof}
+Use optional stopping with two martingales; the stopped walk stays in $[0,N]$.
+\begin{steps}
+  \item Each bet has mean $p-q$, so $X_n-n(p-q)$ is a martingale (Chapter~5). At $\tau$, $X_\tau=N$ with probability $P_i$, else $0$. Optional stopping: $N P_i-(p-q)D_i=i$; solve for $D_i$.
+  \item For $p=\frac12$ that equation is empty ($0\cdot D_i$); use the martingale $(X_n-i)^2-n$ instead, as in the exit recipe of Chapter~7: $D_i=\E_P(X_\tau-i)^2=(N-i)^2\frac iN+i^2\frac{N-i}{N}=i(N-i)$. \qedhere
+\end{steps}
+\end{proof}
+
+\begin{example}[Roulette]
+\label{ex:roulette}
+Betting on red with 38 pockets: $p=\frac{18}{38}\approx0.474$, $q\approx0.526$, so $r=\frac{20}{18}=\frac{10}{9}$. Start with $i=10$, target $N=20$:
+\[
+  P_{10}=\frac{1-(10/9)^{10}}{1-(10/9)^{20}}=\frac{1}{1+(10/9)^{10}}\approx0.259,\qquad
+  D_{10}=\frac{20(0.259)-10}{18/38-20/38}\approx91.8 .
+\]
+A fair coin would give $P_{10}=\frac12$ and $D_{10}=100$. A small house edge cuts the chance of doubling your money almost in half.
+\end{example}
+
+%=====================================================================
+\section{Exit probabilities for Brownian motion with drift}
+
+\begin{theorem}[Up $A$ before down $B$]
+\label{thm:exit-drift}
+Let $B(t)=\mu t+W(t)$ with $\mu\ne0$, and $A,B>0$. Then
+\[
+  P\big(B\text{ hits }A\text{ before }-B\big)=\frac{1-e^{-2\mu B}}{1-e^{-2\mu(A+B)}}=\frac{e^{2\mu B}-1}{e^{2\mu B}-e^{-2\mu A}} .
+\]
+For $\mu=0$ it is $\frac{B}{A+B}$.
+\end{theorem}
+\begin{proof}
+Find a martingale that is a function of $B(t)$ alone.
+\begin{steps}
+  \item $e^{-2\mu B(t)}=e^{-2\mu W(t)-2\mu^2t}=e^{uW(t)-\frac12u^2t}$ with $u=-2\mu$: the exponential martingale of Chapter~6.
+  \item Let $\tau$ be the exit time and $p$ the probability of exiting at $A$. The stopped martingale is bounded, so optional stopping gives $1=\E_Pe^{-2\mu B(\tau)}=p\,e^{-2\mu A}+(1-p)\,e^{2\mu B}$.
+  \item Solve: $p=\dfrac{e^{2\mu B}-1}{e^{2\mu B}-e^{-2\mu A}}$; multiply top and bottom by $e^{-2\mu B}$ for the first form.
+  \item For $\mu=0$, $B(t)=W(t)$ and the recipe of Chapter~7 gives $\frac{B}{A+B}$ (also the limit $\mu\to0$). \qedhere
+\end{steps}
+\end{proof}
+
+\begin{remark}[Second route: the random-walk limit]
+The same answer comes from the gambler's ruin. Put the walk of the first section on the grid $-B,\dots,A$ with step $\Delta x$: start $i=B/\Delta x$, target $N=(A+B)/\Delta x$, and $r=\frac qp=\frac{1-\mu\Delta x}{1+\mu\Delta x}$. Taking logarithms and using $\ln(1\pm h)=\pm h+O(h^2)$,
+\[
+  \ln r^{1/\Delta x}=\frac{\ln(1-\mu\Delta x)-\ln(1+\mu\Delta x)}{\Delta x}\to-2\mu,\qquad\text{so } r^{B/\Delta x}\to e^{-2\mu B}.
+\]
+Then $P_i=\frac{1-r^{B/\Delta x}}{1-r^{(A+B)/\Delta x}}\to\frac{1-e^{-2\mu B}}{1-e^{-2\mu(A+B)}}$.
+\end{remark}
+
+\begin{result}[Will it ever reach $A$?]
+\label{res:ever}
+For $\mu<0$ and $A>0$, $P\big(B(t)\text{ ever reaches }A\big)=e^{2\mu A}$. Equivalently, the overall maximum $\max_{t\ge0}B(t)$ is exponential with rate $-2\mu$. For $\mu\ge0$ the probability is $1$.
+\end{result}
+\begin{proof}
+Let $B\to\infty$ in \cref{thm:exit-drift}. For $\mu<0$, $e^{-2\mu B}\to\infty$, and $\frac{1-e^{-2\mu B}}{1-e^{-2\mu(A+B)}}\to\frac{e^{-2\mu B}}{e^{-2\mu(A+B)}}=e^{2\mu A}$. For $\mu>0$ the ratio tends to $1$; for $\mu=0$, $\frac{B}{A+B}\to1$.
+\end{proof}
+
+\begin{pic}
+\begin{tikzpicture}
+\begin{axis}[width=9cm,height=4.6cm,xmin=-2,xmax=2,ymin=0,ymax=1,xlabel={drift $\mu$},ylabel={$P(\text{hit }1\text{ before }-1)$},samples=101,domain=-2:2]
+  \addplot[defc,very thick] {(abs(x)<1e-6) ? 0.5 : (1-exp(-2*x))/(1-exp(-4*x))};
+  \addplot[prec,dashed] coordinates {(-2,0.5)(2,0.5)};
+\end{axis}
+\end{tikzpicture}
+\picnote{With $A=B=1$ the exit probability is $\frac{1}{1+e^{-2\mu}}$: $\frac12$ for no drift, and quickly close to $0$ or $1$ as the drift grows.}
+\end{pic}
+
+\begin{example}[When to sell?]
+\label{ex:sell}
+A stock price, measured from today's level, moves as $B(t)=\mu t+W(t)$ with $\mu=-d<0$. You hold an option to buy at price $A>0$ (above today's level) and will exercise when the price first reaches some level $x>A$, gaining $x-A$. Which $x$ maximises the expected gain?
+\begin{steps}
+  \item $P(\text{price ever reaches }x)=e^{2\mu x}=e^{-2dx}$, so the expected gain is $f(x)=(x-A)e^{-2dx}$.
+  \item $f'(x)=e^{-2dx}\big[1-2d(x-A)\big]=0$ gives $x^*=A+\frac{1}{2d}$.
+  \item Maximum expected gain: $f(x^*)=\frac{1}{2d}e^{-2dA-1}$. With $d=0.5$, $A=1$: $x^*=2$ and $f(x^*)=e^{-2}\approx0.135$.
+\end{steps}
+\end{example}
+
+%=====================================================================
+\formulasheet{fs:drift}
+
+\begin{card}{1. Brownian motion with drift}
+\Formula
+$B(t)=\mu t+W(t)\sim N(\mu t,t)$; from a walk with $\Delta x=\sqrt{\Delta t}$ and $p=\frac12(1+\mu\sqrt{\Delta t})$.
+\UseWhen
+``BM with drift $\mu$'', ``show the walk converges to BM with drift''.
+\HowTo
+\begin{enumerate}
+  \item Step mean $2p-1=\mu\sqrt{\Delta t}$, variance $1-\mu^2\Delta t$.
+  \item Multiply by the number of steps $t/\Delta t$ and by $(\Delta x)^2=\Delta t$.
+\end{enumerate}
+\Caveats
+\cav{$B(t)$ is not a martingale unless $\mu=0$; $B(t)-\mu t$ is.}
+\begin{cardex}
+$\mu=1.5$: $B(2)\sim N(3,2)$, $P(B(2)<0)=\Phi(-3/\sqrt2)\approx0.017$.
+\end{cardex}
+\end{card}
+
+\begin{card}{2. Gambler's ruin}
+\Formula
+$r=\frac qp$: $P_i=\dfrac{1-r^i}{1-r^N}$ ($p\ne\frac12$), $\frac iN$ (fair). Duration: $D_i=\dfrac{NP_i-i}{p-q}$, fair $i(N-i)$. $N\to\infty$: ruin is certain if $p\le\frac12$; else survive w.p.\ $1-r^i$.
+\UseWhen
+``Probability of reaching $N$ before $0$'', ``expected number of plays'', ``short note on gambler's ruin''.
+\HowTo
+\begin{enumerate}
+  \item Write $P_i=pP_{i+1}+qP_{i-1}$, $P_0=0$, $P_N=1$.
+  \item Differences are geometric: $P_{k+1}-P_k=r^kP_1$; telescope; use $P_N=1$.
+\end{enumerate}
+\Caveats
+\cav{Check which state is the target. For $p=\frac12$ use the fair formulas (the general ones give $0/0$).}
+\begin{cardex}
+Roulette red, $i=10$, $N=20$: $r=\frac{10}9$, $P_{10}=1/(1+(10/9)^{10})\approx0.259$, $D_{10}\approx91.8$.
+\end{cardex}
+\end{card}
+
+\begin{card}{3. Exit probabilities with drift}
+\Formula
+$P(\text{hit }A\text{ before }-B)=\dfrac{1-e^{-2\mu B}}{1-e^{-2\mu(A+B)}}$; $\mu=0$: $\frac B{A+B}$. $\mu<0$: $P(\text{ever reach }A)=e^{2\mu A}$, $\max_tB(t)\sim$ Exp(rate $-2\mu$).
+\UseWhen
+``Probability the process goes up $A$ before down $B$'', ``probability it ever reaches $A$''.
+\HowTo
+\begin{enumerate}
+  \item MG $e^{-2\mu B(t)}$; optional stopping: $p\,e^{-2\mu A}+(1-p)e^{2\mu B}=1$.
+  \item Solve for $p$; let $B\to\infty$ for ``ever''.
+\end{enumerate}
+\Caveats
+\cav{For variance $\sigma^2$, replace $2\mu$ by $2\mu/\sigma^2$. Start at $x$: shift both levels.}
+\begin{cardex}
+$\mu=-0.5$, $A=1$: $P(\text{ever reach }1)=e^{-1}\approx0.368$. Optimal sale level $x^*=A+\frac1{2d}$.
+\end{cardex}
+\end{card}
