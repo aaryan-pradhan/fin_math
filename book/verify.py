@@ -82,4 +82,11 @@ for _ in range(steps):
 check("Ch14 P(M(1)>=1)", hit.astype(float), 2 * (1 - Phi(1)))
 check("Ch14 P(W(1)<=0, M(1)>=1)", (hit & (w <= 0)).astype(float), 1 - Phi(2))
 
+# Ch 18: OU dX = -2X dt + dW, X0 = 2: X_1 ~ N(2e^{-2}, (1 - e^{-4})/4)
+x = np.full(40000, 2.0); dt = 1e-3
+for _ in range(1000):
+    x += -2 * x * dt + rng.normal(0, np.sqrt(dt), x.size)
+check("Ch18 OU mean X_1", x, 2 * np.exp(-2))
+check("Ch18 OU E[X_1^2]", x**2, (1 - np.exp(-4)) / 4 + 4 * np.exp(-4))
+
 raise SystemExit(1 if fails else 0)

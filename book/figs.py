@@ -33,3 +33,10 @@ write('ibm', [t, *W, *Z], 't w1 w2 w3 z1 z2 z3')
 # quadratic variation sum (dW)^2 and the left-point sum W dW along path w1
 dW = np.diff(W[0]); qv = np.concatenate([[0], np.cumsum(dW**2)]); iwdw = np.concatenate([[0], np.cumsum(W[0][:-1] * dW)])
 write('ito', [t, W[0], qv, iwdw], 't w qv iwdw')
+
+# Ornstein-Uhlenbeck dX = -r X dt + sigma dW, r = 2, sigma = 1, X0 = 2, driven by the three paths above (Euler steps)
+r_ou, s_ou, dt = 2.0, 1.0, 1 / n
+X = np.zeros_like(W); X[:, 0] = 2.0
+for k in range(n):
+    X[:, k + 1] = X[:, k] - r_ou * X[:, k] * dt + s_ou * (W[:, k + 1] - W[:, k])
+write('ou', [t, *X], 't x1 x2 x3')

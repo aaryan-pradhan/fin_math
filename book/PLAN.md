@@ -85,7 +85,7 @@ Needs must appear in an earlier row's Introduces, or in "Before you start".
 | 15 | Problems: Brownian motion | — | 14 | — | written |
 | 16 | The Itô integral | 44–46 | 14 | Itô integral, isometry, ∫W dW, quadratic variation | written |
 | 17 | Itô processes and Itô's formula | 46–49, 68–70 | 16 | Itô process, multiplication table, Itô formula, product/quotient rule | written |
-| 18 | Stochastic differential equations | 50–54, 70–72 | 17 | SDE, OU, Vasicek, CIR, GBM as SDE | todo |
+| 18 | Stochastic differential equations | 50–54, 70–72 | 17 | SDE, OU, Vasicek, CIR, GBM as SDE | written |
 | 19 | Problems: Itô calculus and SDEs | — | 18 | — | todo |
 | 20 | Arbitrage and risk-neutral pricing | 59–63, 77–85 | 4 | discounting, option, arbitrage, risk-neutral probability, arbitrage theorem | todo |
 | 21 | Derivatives and replication | 64–67 | 20 | forward, call, put, American, contingent claim, replicating portfolio | todo |

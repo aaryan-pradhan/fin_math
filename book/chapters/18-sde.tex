@@ -1,0 +1,216 @@
+\chapter{Stochastic differential equations}
+\label{ch:sde}
+
+\begin{question}
+If the drift and the noise of a process depend on the process itself, can we solve for it? Which interest-rate and price models come out?
+\end{question}
+
+\begin{whatfor}
+\begin{itemize}
+  \item Defines a stochastic differential equation (SDE) and its solution.
+  \item Solves the Ornstein--Uhlenbeck SDE with an integrating factor and finds its normal distribution.
+  \item Applies it to the Vasicek interest-rate model; states the CIR model.
+  \item Solves the geometric Brownian motion SDE $dN=rN\,dt+\alpha N\,dW$.
+\end{itemize}
+\skipline{fs:sde}
+\end{whatfor}
+
+\begin{prereq}
+From Part~0: normal distribution, $\Phi$. From Chapters~12--17: geometric Brownian motion, Gaussian process, Itô integral of a non-random function is $N(0,\int f^2)$, Itô isometry, mean $0$ of Itô integrals, Itô process, Itô's formula, product rule.
+\end{prereq}
+
+%=====================================================================
+\section{SDEs and their solutions}
+
+\begin{definition}[Stochastic differential equation]
+\label{def:sde}
+Let $a(t,x)$ and $b(t,x)$ be non-random functions. A process $X$ \dfn{solves the SDE}
+\[
+  dX_t=a(t,X_t)\,dt+b(t,X_t)\,dW_t,\qquad X_0=x_0,
+\]
+if it is an Itô process with $X_t=x_0+\int_0^ta(s,X_s)\,ds+\int_0^tb(s,X_s)\,dW_s$ for all $t\in[0,T]$.
+\end{definition}
+
+The difference from an Itô process: the coefficients are built from the unknown $X$ itself, so this is an equation to solve. For example $dX_t=dt+2\,dW_t$, $X_0=3$ has the solution $X_t=3+t+2W_t$ (just integrate), while $dX_t=-2X_t\,dt+dW_t$ cannot be integrated directly: $X$ appears on both sides.
+
+SDEs rarely have a closed-form solution. Two that do are the main models of this chapter. The tool for both is Itô's formula with a well-chosen $f$, chosen so that the unknown disappears.
+
+%=====================================================================
+\section{The Ornstein--Uhlenbeck process}
+
+\begin{definition}[Ornstein--Uhlenbeck process]
+For constants $r,\sigma>0$, the solution of
+\[
+  dX_t=-rX_t\,dt+\sigma\,dW_t,\qquad X_0=x_0,
+\]
+is the \dfn{Ornstein--Uhlenbeck process} (OU). The drift $-rX_t$ always points back towards $0$, and is stronger the farther $X$ is from $0$: \dfn{mean reversion}.
+\end{definition}
+
+\begin{theorem}[Solution of the OU SDE]
+\label{thm:ou}
+\[
+  X_t=x_0e^{-rt}+\sigma\int_0^te^{-r(t-s)}\,dW_s,
+  \qquad
+  X_t\sim N\Big(x_0e^{-rt},\ \frac{\sigma^2}{2r}\big(1-e^{-2rt}\big)\Big).
+\]
+\end{theorem}
+\begin{proof}
+Multiply by the integrating factor $e^{rt}$.
+\begin{steps}
+  \item Itô with $f(t,x)=e^{rt}x$ ($\partial_tf=re^{rt}x$, $\partial_xf=e^{rt}$, $\partial_{xx}f=0$):
+  \[
+    d\big(e^{rt}X_t\big)=re^{rt}X_t\,dt+e^{rt}dX_t=re^{rt}X_t\,dt+e^{rt}\big(-rX_t\,dt+\sigma\,dW_t\big)=\sigma e^{rt}\,dW_t .
+  \]
+  The unknown $X$ has cancelled.
+  \item Integrate: $e^{rt}X_t-x_0=\sigma\int_0^te^{rs}\,dW_s$. Multiply by $e^{-rt}$ for the solution.
+  \item The integrand $e^{-r(t-s)}$ is non-random, so $Q_t=\int_0^te^{-r(t-s)}dW_s$ is normal with mean $0$ and, by the isometry,
+  \[
+    \Var Q_t=\int_0^te^{-2r(t-s)}\,ds=e^{-2rt}\Big[\frac{e^{2rs}}{2r}\Big]_0^t=\frac{1-e^{-2rt}}{2r}.
+  \]
+  \item $X_t=x_0e^{-rt}+\sigma Q_t$: mean $x_0e^{-rt}$, variance $\sigma^2\Var Q_t$. \qedhere
+\end{steps}
+\end{proof}
+
+As $t\to\infty$, $X_t$ tends in distribution to $N\big(0,\frac{\sigma^2}{2r}\big)$: the start is forgotten and the spread stays bounded, unlike Brownian motion whose variance grows like $t$. If $X_0$ is normal and independent of $W$, then $X$ is a Gaussian process.
+
+\begin{pic}
+\begin{tikzpicture}
+\begin{axis}[width=10.5cm,height=5cm,xmin=0,xmax=1,xlabel={$t$},ylabel={$X_t$},samples=100,domain=0:1]
+  \addplot[draw=none,fill=thmc!12] {2*exp(-2*x)+sqrt(0.25*(1-exp(-4*x)))} \closedcycle;
+  \addplot[draw=none,fill=white] {2*exp(-2*x)-sqrt(0.25*(1-exp(-4*x)))} \closedcycle;
+  \addplot[defc,thick] table[x=t,y=x1] {figs/ou.dat};
+  \addplot[trapc,thick] table[x=t,y=x2] {figs/ou.dat};
+  \addplot[prec,thick] table[x=t,y=x3] {figs/ou.dat};
+  \addplot[black,very thick,dashed] {2*exp(-2*x)};
+  \addplot[prec,dotted] {0};
+\end{axis}
+\end{tikzpicture}
+\picnote{Three OU paths with $x_0=2$, $r=2$, $\sigma=1$. They are pulled back towards $0$ along the mean $2e^{-2t}$ (dashed); the band is one standard deviation, which levels off at $\sigma/\sqrt{2r}=0.5$.}
+\end{pic}
+
+%=====================================================================
+\section{Interest-rate models}
+
+\begin{definition}[Vasicek and CIR models]
+For constants $a,b,\sigma>0$, the short interest rate $r_t$ follows the
+\begin{itemize}
+  \item \dfn{Vasicek model} if $dr_t=a(b-r_t)\,dt+\sigma\,dW_t$;
+  \item \dfn{CIR model} (Cox--Ingersoll--Ross) if $dr_t=a(b-r_t)\,dt+\sigma\sqrt{r_t}\,dW_t$, $r_0>0$.
+\end{itemize}
+In both, $b$ is the long-run level and $a$ the speed of return to it.
+\end{definition}
+
+\begin{result}[The Vasicek rate is normal]
+\label{res:vasicek}
+$r_t\sim N\Big(b+e^{-at}(r_0-b),\ \dfrac{\sigma^2}{2a}\big(1-e^{-2at}\big)\Big)$.
+\end{result}
+\begin{proof}
+Put $X_t=r_t-b$. Then $dX_t=dr_t=-aX_t\,dt+\sigma\,dW_t$: an OU process with $r\to a$ and $x_0=r_0-b$. Apply \cref{thm:ou} and add $b$.
+\end{proof}
+
+\begin{example}[Can the rate go negative?]
+\label{ex:vasicek}
+$a=0.5$, $b=0.05$, $\sigma=0.02$, $r_0=0.03$. At $t=2$: mean $0.05+e^{-1}(-0.02)\approx0.0426$, variance $\frac{0.0004}{1}(1-e^{-2})\approx0.000346$, s.d.\ $\approx0.0186$. So $P(r_2<0)=\Phi(-0.0426/0.0186)\approx\Phi(-2.29)\approx0.011$. A normal rate can be negative; that is the weakness the CIR model fixes.
+\end{example}
+
+In the CIR model the noise $\sigma\sqrt{r_t}$ dies out as the rate approaches $0$, while the drift $ab>0$ pushes it up, so $r_t$ stays non-negative. The integrating factor still gives $r_t=b+e^{-at}(r_0-b)+\sigma\int_0^te^{-a(t-s)}\sqrt{r_s}\,dW_s$, which is not a closed form (the unknown is inside the integral), but the mean is the same as Vasicek's: $\E_P(r_t)=b+e^{-at}(r_0-b)$, since the Itô integral has mean $0$.
+
+%=====================================================================
+\section{Geometric Brownian motion as an SDE}
+
+\begin{theorem}[Solution of the GBM SDE]
+\label{thm:gbm-sde}
+For constants $r$ and $\alpha>0$, the SDE $dN_t=rN_t\,dt+\alpha N_t\,dW_t$, $N_0>0$, has the solution
+\[
+  N_t=N_0\exp\Big\{\Big(r-\frac{\alpha^2}2\Big)t+\alpha W_t\Big\},\qquad \E_P(N_t)=N_0e^{rt}.
+\]
+\end{theorem}
+\begin{proof}
+Take logarithms with Itô.
+\begin{steps}
+  \item $f(x)=\ln x$: $f'=\frac1x$, $f''=-\frac1{x^2}$, and $(dN_t)^2=\alpha^2N_t^2\,dt$. So
+  \[
+    d(\ln N_t)=\frac{dN_t}{N_t}-\frac{1}{2N_t^2}\alpha^2N_t^2\,dt=\Big(r-\frac{\alpha^2}2\Big)dt+\alpha\,dW_t .
+  \]
+  \item Integrate: $\ln N_t-\ln N_0=\big(r-\frac{\alpha^2}{2}\big)t+\alpha W_t$; exponentiate.
+  \item Check (this also covers the assumption $N_t>0$ made by taking $\ln$): by the GBM example of Chapter~17, $e^{\mu t+\sigma W_t}$ has $dt$-coefficient $(\mu+\frac{\sigma^2}{2})$ times itself; here $\mu+\frac{\sigma^2}2=r$.
+  \item Mean: $\E_PN_t=N_0e^{(r-\alpha^2/2)t}\E_Pe^{\alpha W_t}=N_0e^{(r-\alpha^2/2)t}e^{\alpha^2t/2}=N_0e^{rt}$. \qedhere
+\end{steps}
+\end{proof}
+
+The equation $\frac{dN_t}{N_t}=r\,dt+\alpha\,dW_t$ is just notation for the SDE: the percentage change has mean rate $r$ and volatility $\alpha$. The median of $N_t$ is $N_0e^{(r-\alpha^2/2)t}$, below the mean $N_0e^{rt}$.
+
+%=====================================================================
+\section{A volatility model}
+
+\begin{example}[The Heston variance process]
+\label{ex:heston}
+A ``variance process'' follows $dV_t=(1-V_t)\,dt+2\sqrt{V_t}\,dW_t$, $V_0=1$. (i) Find the SDE of the volatility $Z_t=\sqrt{V_t}$ and $Z_0$. (ii) Show that $Z_t=e^{-t/2}\big(1+\int_0^te^{s/2}dW_s\big)$ solves it.
+\begin{steps}
+  \item (i) $f(x)=\sqrt x$: $f'=\frac12x^{-1/2}$, $f''=-\frac14x^{-3/2}$; $(dV_t)^2=4V_t\,dt$. Itô:
+  \[
+    dZ_t=\frac{(1-V_t)\,dt+2\sqrt{V_t}\,dW_t}{2\sqrt{V_t}}-\frac{4V_t\,dt}{8V_t^{3/2}}=dW_t-\frac12\sqrt{V_t}\,dt=dW_t-\frac12Z_t\,dt,
+  \]
+  with $Z_0=\sqrt{V_0}=1$. (The terms $\pm\frac{1}{2\sqrt{V_t}}dt$ cancel.)
+  \item (ii) $Z_t=X_tY_t$ with $X_t=e^{-t/2}$ ($dX_t=-\frac12X_t\,dt$, non-random) and $Y_t=1+\int_0^te^{s/2}dW_s$ ($dY_t=e^{t/2}dW_t$). Product rule, with $dX_t\,dY_t=0$:
+  \[
+    dZ_t=X_t\,dY_t+Y_t\,dX_t=e^{-t/2}e^{t/2}\,dW_t-\frac12X_tY_t\,dt=dW_t-\frac12Z_t\,dt,
+  \]
+  and $Z_0=1\cdot1=1$. It is an OU process with $r=\frac12$, $\sigma=1$.
+\end{steps}
+\end{example}
+
+%=====================================================================
+\formulasheet{fs:sde}
+
+\begin{card}{1. Ornstein--Uhlenbeck}
+\Formula
+$dX=-rX\,dt+\sigma\,dW$: $X_t=x_0e^{-rt}+\sigma\int_0^te^{-r(t-s)}dW_s\sim N\big(x_0e^{-rt},\frac{\sigma^2}{2r}(1-e^{-2rt})\big)$; $t\to\infty$: $N(0,\frac{\sigma^2}{2r})$.
+\UseWhen
+``Solve $dX=-rX\,dt+\sigma dW$'', ``distribution of $X_t$'', mean-reverting models.
+\HowTo
+\begin{enumerate}
+  \item $d(e^{rt}X_t)=\sigma e^{rt}dW_t$ (Itô with $f=e^{rt}x$).
+  \item Integrate, multiply by $e^{-rt}$.
+  \item Mean: first term. Variance: isometry $\int_0^te^{-2r(t-s)}ds$.
+\end{enumerate}
+\Caveats
+\cav{The variance has $2r$ in the denominator and $e^{-2rt}$, not $e^{-rt}$.}
+\begin{cardex}
+$r=2$, $\sigma=1$, $x_0=2$, $t=1$: $X_1\sim N(2e^{-2},\frac14(1-e^{-4}))=N(0.271,0.245)$.
+\end{cardex}
+\end{card}
+
+\begin{card}{2. Vasicek and CIR}
+\Formula
+Vasicek $dr=a(b-r)dt+\sigma dW$: $r_t\sim N\big(b+e^{-at}(r_0-b),\frac{\sigma^2}{2a}(1-e^{-2at})\big)$. CIR $dr=a(b-r)dt+\sigma\sqrt r\,dW$: $r_t\ge0$, same mean, not normal.
+\UseWhen
+``Distribution of the short rate'', ``probability of a negative rate'', ``compare Vasicek and CIR''.
+\HowTo
+\begin{enumerate}
+  \item Shift $X=r-b$ to get OU with speed $a$.
+  \item Read off mean and variance; standardise.
+\end{enumerate}
+\Caveats
+\cav{Vasicek rates can be negative; CIR rates cannot.}
+\begin{cardex}
+$a=0.5$, $b=0.05$, $\sigma=0.02$, $r_0=0.03$: $P(r_2<0)\approx0.011$.
+\end{cardex}
+\end{card}
+
+\begin{card}{3. GBM as an SDE}
+\Formula
+$dN=rN\,dt+\alpha N\,dW$: $N_t=N_0e^{(r-\alpha^2/2)t+\alpha W_t}$, $\E_PN_t=N_0e^{rt}$, $d\ln N_t=(r-\frac{\alpha^2}2)dt+\alpha dW_t$.
+\UseWhen
+``Solve the GBM SDE'', ``find $\E_PN_t$'', ``verify $S_t=ce^{at+bW_t}$ solves \dots''.
+\HowTo
+\begin{enumerate}
+  \item Itô on $\ln N$; integrate; exponentiate.
+  \item Or verify a guess: drift of $ce^{at+bW}$ is $(a+\frac{b^2}2)$, noise $b$.
+\end{enumerate}
+\Caveats
+\cav{The exponent drift is $r-\frac{\alpha^2}2$, not $r$; the mean grows at $r$.}
+\begin{cardex}
+$dS=0.2S\,dt+S\,dW$, $S_0=5$: $S_t=5e^{-0.3t+W_t}$, $\E_PS_t=5e^{0.2t}$.
+\end{cardex}
+\end{card}
