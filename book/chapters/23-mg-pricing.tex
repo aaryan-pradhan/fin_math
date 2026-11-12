@@ -129,13 +129,12 @@ Delta is the number of shares in the copying portfolio; gamma measures how fast 
 \formulasheet{fs:mg-pricing}
 
 \begin{mastercard}[label=card:bsprice]{Risk-neutral pricing in the Black--Scholes market}
-Stock $dS=\mu S\,dt+\sigma S\,dW$, bond $e^{rt}$; a claim pays $g(S_T)$; time left $\tau=T-t$. Under $P^*$ replace $\mu$ by $r$:
+\cref{card:finite} in continuous time: price $=$ discounted $P^*$-average of the payoff, and under $P^*$ the stock is the GBM of \cref{card:gbm} with $\mu$ replaced by $r$. Time left $\tau=T-t$, $Z\sim N(0,1)$:
 \[
-  \boxed{\begin{gathered}P_t=e^{-r\tau}\,\E_{P^*}\big[g(S_T)\given\F_t\big],\qquad S_T=S_t\,e^{(r-\frac12\sigma^2)\tau+\sigma\sqrt\tau Z},\ Z\sim N(0,1);\\
-  \text{call: }\ C_t=S_t\Phi(h)-Ke^{-r\tau}\Phi(h-\sigma\sqrt\tau),\qquad h=\frac{\ln(S_t/K)+(r+\frac12\sigma^2)\tau}{\sigma\sqrt\tau}.\end{gathered}}
+  \boxed{\;P_t=e^{-r\tau}\,\E_{P^*}\big[g(S_T)\given\F_t\big],\qquad S_T=S_t\,e^{(r-\frac12\sigma^2)\tau+\sigma\sqrt\tau\,Z}.\;}
 \]
 \begin{plugrows}
-  \plugrow{Call today}{$t=0$, $\tau=T$}{the second line}{$\sigma>0$; the real-world $\mu$ is not used}{$S_0=80$, $K=85$, $T=1$, $r=0.05$, $\sigma=0.15$: $h=0.0042$, $C\approx4.39$}
+  \plugrow{Call}{$g=(s-K)^+$; today: $t=0$, $\tau=T$}{$C_t=S_t\Phi(h)-Ke^{-r\tau}\Phi(h-\sigma\sqrt\tau)$, $h=\dfrac{\ln(S_t/K)+(r+\frac12\sigma^2)\tau}{\sigma\sqrt\tau}$}{$\sigma>0$; the real-world $\mu$ is not used}{$S_0=80$, $K=85$, $T=1$, $r=0.05$, $\sigma=0.15$: $h=0.0042$, $C\approx4.39$}
   \plugrow{Put}{$g=(K-s)^+$, or parity (\cref{card:parity})}{$P_t=Ke^{-r\tau}\Phi(\sigma\sqrt\tau-h)-S_t\Phi(-h)$}{European}{same: $P=4.39-80+80.85\approx5.25$}
   \plugrow{Probability of finishing in the money}{$P^*(S_T>K)$}{$\Phi(h-\sigma\sqrt\tau)$ (real world: replace $r$ by $\mu$)}{European expiry $T$; under $P^*$}{same: $0.442$}
   \plugrow{Digital (pays $1$ if $S_T>K$)}{$g=\ind{s>K}$}{$e^{-r\tau}\Phi(h-\sigma\sqrt\tau)$}{cash-or-nothing, pays $1$ at $T$}{same: $e^{-0.05}(0.442)\approx0.420$}
@@ -143,6 +142,6 @@ Stock $dS=\mu S\,dt+\sigma S\,dW$, bond $e^{rt}$; a claim pays $g(S_T)$; time le
   \plugrow{Greeks of the call}{differentiate; use $S\varphi(h)=Ke^{-r\tau}\varphi(h-\sigma\sqrt\tau)$}{$\Delta=\Phi(h)$, $\Gamma=\frac{\varphi(h)}{S\sigma\sqrt\tau}$, vega $=S\varphi(h)\sqrt\tau$, $\rho=K\tau e^{-r\tau}\Phi(h-\sigma\sqrt\tau)$, $\theta=-\frac{S\varphi(h)\sigma}{2\sqrt\tau}-rKe^{-r\tau}\Phi(h-\sigma\sqrt\tau)$}{call; put delta $=\Phi(h)-1$}{same: $\Delta\approx0.502$}
   \plugrow{Is the market arbitrage-free and complete?}{$e^{-rt}S_0e^{at+\sigma W_t}$ is a martingale iff $a=r-\frac12\sigma^2$}{unique EMM: arbitrage-free and complete}{constant $r$, $\sigma>0$}{$r=0.05$, $\sigma=0.2$: $a=0.05-0.02=0.03$}
   \plugrow{Binomial approximation}{$n$ steps: $u=e^{\sigma\sqrt{T/n}}$, $d=1/u$, $1+r_n=e^{rT/n}$ in \cref{card:tree}}{tends to the Black--Scholes price}{$n\to\infty$}{$S_0=K=100$, $\sigma=0.2$, $r=0.05$: $n=100$ gives $10.43$, limit $10.45$}
-  \plugrow{Implied volatility}{a market price $C_{\mathrm{mkt}}$; solve the second line $C(\sigma)=C_{\mathrm{mkt}}$ for $\sigma$ by bisection ($C$ grows with $\sigma$, since vega $>0$)}{the implied volatility $\sigma_{\mathrm{imp}}$}{$C_{\mathrm{mkt}}$ strictly between $\max(S_0-Ke^{-rT},0)$ and $S_0$}{$S_0=K=18.5$, $r=0.062$, $T=\frac1{12}$: $\sigma=0.2$ gives $C=0.474$; $C_{\mathrm{mkt}}=0.60$ gives $\sigma_{\mathrm{imp}}\approx0.259$}
+  \plugrow{Implied volatility}{a market price $C_{\mathrm{mkt}}$; solve row 1, $C(\sigma)=C_{\mathrm{mkt}}$, for $\sigma$ by bisection ($C$ grows with $\sigma$, since vega $>0$)}{the implied volatility $\sigma_{\mathrm{imp}}$}{$C_{\mathrm{mkt}}$ strictly between $\max(S_0-Ke^{-rT},0)$ and $S_0$}{$S_0=K=18.5$, $r=0.062$, $T=\frac1{12}$: $\sigma=0.2$ gives $C=0.474$; $C_{\mathrm{mkt}}=0.60$ gives $\sigma_{\mathrm{imp}}\approx0.259$}
 \end{plugrows}
 \end{mastercard}
