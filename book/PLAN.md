@@ -73,7 +73,7 @@ Needs must appear in an earlier row's Introduces, or in "Before you start".
 | 4 | Independence and conditional expectation | 9–13 | 3 | conditional prob, total prob, independence (events, r.v.s, σ-fields), E(X∣𝒢), CE1–CE4, tower | written |
 | 5 | Filtrations and martingales | 13–16 | 4 | discrete process, filtration, adapted, filtered space, binomial tree, martingale, sub/super, constant mean | written |
 | 6 | Random walks and the Wiener process | 16–20 | 5 | stochastic process, sample path, Wiener process (axioms), W, W²−t, exponential MG, random walk, geometric random walk | written |
-| 7 | Stopping times and optional stopping | 21–24 | 6 | stopping time, entry/hitting time, stopped process, optional stopping thm, no beating a fair game | todo |
+| 7 | Stopping times and optional stopping | 21–24 | 6 | stopping time, entry/hitting time, stopped process, optional stopping thm, no beating a fair game | written |
 | 8 | Problems: martingales and stopping | 55–58, 73–76 | 7 | — | todo |
 | 9 | Brownian motion from random walks | 25–26 | 6 | scaling limit, density of W(t), heat equation, BM with variance σ² | todo |
 | 10 | Joint and conditional laws of Brownian motion | 26–27 | 9 | joint density, conditional law W(s)∣W(t) | todo |

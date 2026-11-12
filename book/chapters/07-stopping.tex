@@ -1,0 +1,306 @@
+\chapter{Stopping times and optional stopping}
+\label{ch:stopping}
+
+\begin{question}
+Can you beat a fair game by choosing cleverly \emph{when} to stop, or \emph{how much} to bet?
+\end{question}
+
+\begin{whatfor}
+\begin{itemize}
+  \item Defines stopping times: random times decided without looking into the future.
+  \item Proves that a stopped martingale is a martingale, and the optional stopping theorem $\E_P(X_\tau)=\E_P(X_0)$.
+  \item Turns the theorem into recipes: expected hitting times of lines, and gambler's-ruin probabilities.
+  \item Shows that no betting strategy turns a fair game into a favourable one.
+\end{itemize}
+\skipline{fs:stopping}
+\end{whatfor}
+
+\begin{prereq}
+From Part~0: events, $\sigma$-fields, indicators, CE1--CE4. From Chapters~5--6: filtration, adapted, martingale, sub/supermartingale, constant mean, random walk, Wiener process and its martingales $W_t$, $W_t^2-t$.
+\end{prereq}
+
+%=====================================================================
+\section{Stopping times}
+
+\begin{definition}[Stopping time]
+\label{def:st}
+On a filtered probability space $(\Omega,\F,\FF,P)$, a random variable $\tau$ with values in $\{0,1,2,\dots\}\cup\{\infty\}$ is a \dfn{stopping time} (ST) if
+\[
+  \{\tau\le t\}\in\F_t\qquad\text{for each }t=0,1,2,\dots \tag{1}
+\]
+In words: at time $t$, using only what is known at time $t$, you can say whether you have already stopped. No peeking into the future. The value $\tau=\infty$ means ``never stops''.
+\end{definition}
+
+\begin{result}[An equivalent test]
+\label{res:st-equiv}
+$\tau$ is a stopping time if and only if $\{\tau=t\}\in\F_t$ for each $t$. \hfill (2)
+\end{result}
+\begin{proof}
+Both directions use only that $\F_t$ grows.
+\begin{steps}
+  \item (1)$\Rightarrow$(2): $\{\tau=t\}=\{\tau\le t\}\cap\{\tau\le t-1\}^c$. The first set is in $\F_t$; the second is in $\F_{t-1}\subseteq\F_t$, and so is its complement.
+  \item (2)$\Rightarrow$(1): $\{\tau\le t\}=\bigcup_{s=0}^t\{\tau=s\}$, and each $\{\tau=s\}\in\F_s\subseteq\F_t$. \qedhere
+\end{steps}
+\end{proof}
+
+\begin{result}[First entry times are stopping times]
+\label{res:entry}
+Let $(X_n)$ be adapted and $B$ a Borel set. The \dfn{first entry time} $\tau=\min\{n:X_n\in B\}$ (with $\tau=\infty$ if $X$ never enters $B$) is a stopping time. In particular, for an adapted process $(X_t)$ and a boundary $u_t$, the first time $\tau=\min\{t:X_t\ge u_t\}$ that $X$ crosses the boundary is a stopping time.
+\end{result}
+\begin{proof}
+Use test (2):
+\[
+  \{\tau=n\}=\{X_0\notin B\}\cap\dots\cap\{X_{n-1}\notin B\}\cap\{X_n\in B\}.
+\]
+Each set $\{X_k\in B\}$ or $\{X_k\notin B\}$ with $k\le n$ is in $\F_k\subseteq\F_n$, so the intersection is in $\F_n$.
+\end{proof}
+
+\begin{example}[Stopping times and a non-example]
+Three coin tosses, $\F_t$ = the first $t$ tosses.
+\begin{itemize}
+  \item $\tau$ = time of the first $H$: $\{\tau=2\}=\{TH\cdot\}$ is decided by two tosses. A stopping time, with $P(\tau=1)=\frac12$, $P(\tau=2)=\frac14$, $P(\tau=3)=\frac18$, $P(\tau=\infty)=\frac18$.
+  \item A constant $\tau=5$ is a stopping time.
+  \item The \emph{last} time the walk is at level $1$ is \emph{not}: steps $+1,-1,-1$ and $+1,-1,+1$ agree at time $1$, yet the last visit is at time $1$ for the first and time $3$ for the second. Deciding $\{\tau=1\}$ needs the future.
+\end{itemize}
+\end{example}
+
+If $\tau_1,\tau_2$ are stopping times, so are $\tau_1\wedge\tau_2=\min(\tau_1,\tau_2)$, $\tau_1\vee\tau_2=\max(\tau_1,\tau_2)$ and $\tau_1+1$ (but not $\tau_1-1$): for example $\{\tau_1\wedge\tau_2\le t\}=\{\tau_1\le t\}\cup\{\tau_2\le t\}$.
+
+%=====================================================================
+\section{The stopped process}
+
+\begin{definition}[Stopped process]
+For a process $(X_t)$ and a stopping time $\tau$, the \dfn{stopped process} is $Z_t=X_{t\wedge\tau}$, where $t\wedge\tau=\min(t,\tau)$:
+\[
+  Z_t=\begin{cases}X_t,&t<\tau\ \text{(still running)},\\ X_\tau,&t\ge\tau\ \text{(frozen at the stopping value)}.\end{cases}
+\]
+\end{definition}
+
+\begin{pic}
+\begin{tikzpicture}
+\begin{axis}[width=10cm,height=4.6cm,xmin=0,xmax=25,ymin=-5,ymax=3,xlabel={$t$},legend style={font=\scriptsize,at={(0.5,1.02)},anchor=south,legend columns=2}]
+  \addplot[prec,thick,mark=*,mark size=0.8pt] table[x=k,y=s] {figs/walk.dat}; \addlegendentry{$X_t$}
+  \addplot[thmc,very thick] coordinates {(0,0)(1,-1)(2,0)(3,-1)(4,0)(5,1)(6,0)(7,-1)(8,-2)(9,-3)(25,-3)}; \addlegendentry{$Z_t=X_{t\wedge\tau}$}
+  \addplot[trapc,dashed,domain=0:25] {-3};
+  \draw[trapc,dashed] (axis cs:9,-5)--(axis cs:9,-3); \node[trapc,below right,font=\scriptsize] at (axis cs:9,-4.2) {$\tau=9$};
+\end{axis}
+\end{tikzpicture}
+\picnote{$\tau$ = first time the walk reaches $-3$. The stopped process follows the walk until $\tau$ and then stays frozen at $-3$, whatever the walk does afterwards.}
+\end{pic}
+
+\begin{theorem}[A stopped martingale is a martingale]
+\label{thm:stopped}
+If $(X_t)$ is a martingale and $\tau$ a stopping time, then $Z_t=X_{t\wedge\tau}$ is a martingale. (The same holds with ``sub'' or ``super'' in place of ``martingale''.)
+\end{theorem}
+\begin{proof}
+Write $Z_{t+1}$ by asking whether we stopped by time $t$.
+\begin{steps}
+  \item If $\tau=k\le t$, then $Z_{t+1}=X_k$; if $\tau>t$, then $Z_{t+1}=X_{t+1}$. So
+  \[
+    Z_{t+1}=\sum_{k=0}^tX_k\,\ind{\tau=k}+X_{t+1}\,\ind{\tau>t}.
+  \]
+  \item Each $X_k$ and $\ind{\tau=k}$ with $k\le t$ is $\F_t$-measurable, and so is $\ind{\tau>t}$ because $\{\tau>t\}=\{\tau\le t\}^c\in\F_t$. Integrability: $|Z_{t+1}|\le|X_0|+\dots+|X_{t+1}|$.
+  \item CE1, CE2 and the martingale property give
+  \[
+    \begin{aligned}
+    \E_P(Z_{t+1}\given\F_t)&=\sum_{k=0}^tX_k\,\ind{\tau=k}+\ind{\tau>t}\,\E_P(X_{t+1}\given\F_t)\\
+    &=\sum_{k=0}^{t-1}X_k\,\ind{\tau=k}+X_t\big(\ind{\tau=t}+\ind{\tau>t}\big)=Z_t ,
+    \end{aligned}
+  \]
+  because $\ind{\tau=t}+\ind{\tau>t}=\ind{\tau\ge t}$ and $Z_t=X_t$ exactly when $\tau\ge t$.
+  For a supermartingale the bracket is $\le X_t$, so the equality becomes $\le$. \qedhere
+\end{steps}
+\end{proof}
+
+%=====================================================================
+\section{The optional stopping theorem}
+
+\begin{theorem}[Optional stopping theorem]
+\label{thm:ost}
+Let $(X_t)$ be a martingale and $\tau$ a \dfn{bounded} stopping time: $\tau\le c$ a.s.\ for some constant $c$. Then
+\[
+  \boxed{\;\E_P(X_\tau)=\E_P(X_0).\;}
+\]
+For a supermartingale, $\E_P(X_\tau)\le\E_P(X_0)$; for a submartingale, $\ge$. The same holds in continuous time.
+\end{theorem}
+\begin{proof}
+Four lines, all done by \cref{thm:stopped}.
+\begin{steps}
+  \item $Z_t=X_{t\wedge\tau}$ is a martingale.
+  \item A martingale has constant mean (\cref{thm:mg-mean}): $\E_P(Z_t)=\E_P(Z_0)=\E_P(X_0)$ for every $t$.
+  \item Put $t=c$. Since $\tau\le c$, $c\wedge\tau=\tau$, so $Z_c=X_\tau$.
+  \item Hence $\E_P(X_\tau)=\E_P(Z_c)=\E_P(X_0)$. \qedhere
+\end{steps}
+\end{proof}
+
+\begin{intuition}
+In a fair game you cannot invent a rule for quitting that beats the system: the game stays fair however you decide to stop, as long as you decide from the past and stop within a fixed time.
+\end{intuition}
+
+\begin{example}[Checking it on eight paths]
+Fair $\pm1$ walk from $0$; stop the first time $X_t=1$, or at $t=3$. The paths starting $H$ stop at $\tau=1$ with $X_\tau=1$ (four paths). The others: $THH\to1$, $THT\to-1$, $TTH\to-1$, $TTT\to-3$. So
+\[
+  \E_P(X_\tau)=\tfrac18(1+1+1+1+1-1-1-3)=0=X_0 .
+\]
+\end{example}
+
+\paragraph{Why ``bounded'' matters.} Let $\tau$ be the first time the fair walk hits $+1$. The walk does hit $+1$ eventually (a.s.), so $X_\tau=1$ and $\E_P(X_\tau)=1\ne0$. The theorem does not apply: $\tau$ is not bounded, and on the way the walk can sink arbitrarily low. In practice, an unbounded $\tau$ is allowed when the stopped process stays bounded, $|X_{t\wedge\tau}|\le K$, and $\tau<\infty$ a.s.: apply the theorem to the bounded times $\tau\wedge n$ and let $n\to\infty$.
+
+%=====================================================================
+\section{Two recipes}
+
+\begin{example}[Recipe 1: Brownian motion hits a falling line]
+\label{ex:line}
+Let $T=\min\{t:W(t)=2-4t\}$, the first time a standard Brownian motion hits the line $2-4t$. Find $\E_P(T)$.
+\begin{steps}
+  \item $W$ is a martingale with $W(0)=0$. Optional stopping gives $\E_P W(T)=0$.
+  \item At time $T$, $W(T)=2-4T$ by definition. So $\E_P(2-4T)=0$.
+  \item Linearity: $2-4\E_P(T)=0$, so $\E_P(T)=\frac12$.
+\end{steps}
+\end{example}
+
+Here $T$ is not bounded, so Step-1 uses the extension above: the line falls to $-\infty$ while a Brownian path grows slower than any straight line, so $T<\infty$ a.s., and applying the theorem to $T\wedge n$ and letting $n\to\infty$ gives the same answer. A simulation confirms $\E_P(T)=\frac12$ (the book's check script).
+
+\begin{pic}
+\begin{tikzpicture}
+\begin{axis}[width=10cm,height=4.8cm,xmin=0,xmax=0.8,ymin=-1.3,ymax=2.2,xlabel={$t$},legend style={font=\scriptsize,at={(0.98,0.98)},anchor=north east}]
+  \addplot[defc,thick] table[x=t,y=w1] {figs/bm3.dat}; \addlegendentry{$W(t)$}
+  \addplot[trapc,very thick,domain=0:0.8] {2-4*x}; \addlegendentry{line $2-4t$}
+  \addplot[only marks,mark=*,thmc] coordinates {(0.33,0.68)};
+  \draw[thmc,dashed] (axis cs:0.33,-1.3)--(axis cs:0.33,0.68);
+  \node[thmc,below right,font=\scriptsize] at (axis cs:0.33,-0.8) {$T\approx0.33$ on this path};
+\end{axis}
+\end{tikzpicture}
+\picnote{The first time the path meets the falling line is a stopping time. On this path $T\approx0.33$; averaged over all paths, $\E_P(T)=\frac12$.}
+\end{pic}
+
+\begin{example}[Recipe 2: gambler's ruin with two martingales]
+\label{ex:ruin-ost}
+A fair $\pm1$ walk starts at $0$ and stops when it first hits $+A$ or $-B$ ($A,B>0$ integers). Find $p=P(\text{hit }+A\text{ first})$ and $\E_P(\tau)$.
+\begin{steps}
+  \item The stopped walk stays in $[-B,A]$, so optional stopping applies (with the limit argument above).
+  \item Martingale $X_n$: $0=\E_P(X_\tau)=A\,p-B(1-p)$, so $p=\dfrac{B}{A+B}$.
+  \item Martingale $X_n^2-n$: $0=\E_P(X_\tau^2)-\E_P(\tau)$, so $\E_P(\tau)=A^2p+B^2(1-p)=AB$.
+\end{steps}
+For $A=10$, $B=5$: $p=\frac13$ and $\E_P(\tau)=50$.
+\end{example}
+
+%=====================================================================
+\section{You cannot beat a fair game}
+
+Let $\eta_n$ be your win per unit stake in game $n$, and $\Xi_n=\eta_1+\dots+\eta_n$ your total win with unit stakes; $\F_n=\sigma(\eta_1,\dots,\eta_n)$. The game is fair if $(\Xi_n)$ is a martingale, favourable if it is a submartingale, unfavourable if a supermartingale. (Roulette on red: $\E_P\eta=\frac{18}{37}-\frac{19}{37}=-\frac{1}{37}$, a supermartingale.)
+
+\begin{definition}[Gambling strategy]
+A \dfn{gambling strategy} is a sequence of stakes $\alpha_1,\alpha_2,\ldots$ where $\alpha_n$, the stake on game $n$, is $\F_{n-1}$-measurable: it is chosen before game $n$ is played. Such a sequence is called \dfn{predictable}. Your wealth after $n$ games is
+\[
+  Z_n=\sum_{k=1}^n\alpha_k\,\eta_k=\sum_{k=1}^n\alpha_k(\Xi_k-\Xi_{k-1}).
+\]
+\end{definition}
+
+\begin{theorem}[No strategy beats a fair game]
+\label{thm:no-beat}
+If $(\Xi_n)$ is a martingale and each $\alpha_n$ is bounded and predictable, then $(Z_n)$ is a martingale; in particular $\E_P(Z_n)=0$ for every $n$. If $(\Xi_n)$ is a supermartingale and $\alpha_n\ge0$, then $(Z_n)$ is a supermartingale.
+\end{theorem}
+\begin{proof}
+$Z_{n+1}=Z_n+\alpha_{n+1}(\Xi_{n+1}-\Xi_n)$ with $Z_n$ and $\alpha_{n+1}$ known at time $n$. By CE2,
+\[
+  \E_P(Z_{n+1}\given\F_n)=Z_n+\alpha_{n+1}\big(\E_P(\Xi_{n+1}\given\F_n)-\Xi_n\big)=Z_n+\alpha_{n+1}\cdot0=Z_n .
+\]
+For a supermartingale the bracket is $\le0$, and $\alpha_{n+1}\ge0$ keeps the sign.
+\end{proof}
+
+\begin{example}[Doubling, capped at 10 rounds]
+Bet $1,2,4,\dots$ on a fair coin and quit at the first win. A win at round $k$ nets $2^{k-1}-(1+2+\dots+2^{k-2})=+1$. Losing all ten rounds costs $1+2+\dots+512=1023$.
+\[
+  \E_P(Z)=\Big(1-\tfrac{1}{1024}\Big)(+1)+\tfrac{1}{1024}(-1023)=0 .
+\]
+A frequent small win is paid for by a rare huge loss. If the stake could be chosen \emph{after} seeing the result (not predictable), say ``bet only on games you will win'', the theorem would fail; that is insider trading, not a strategy.
+\end{example}
+
+%=====================================================================
+\formulasheet{fs:stopping}
+
+\begin{card}{1. Is \texorpdfstring{$\tau$}{tau} a stopping time?}
+\Formula
+$\{\tau\le t\}\in\F_t$ for all $t$ $\iff$ $\{\tau=t\}\in\F_t$ for all $t$. First entry $\min\{n:X_n\in B\}$: yes. Last exit, time of the maximum: no. $\tau_1\wedge\tau_2$, $\tau_1\vee\tau_2$, $\tau_1+1$: yes; $\tau_1-1$: no.
+\UseWhen
+``Is $\tau$ a stopping time?'', ``first time the price crosses $u_t$''.
+\HowTo
+\begin{enumerate}
+  \item Write $\{\tau=n\}$ in terms of $X_0,\dots,X_n$.
+  \item Only these appear $\Rightarrow$ ST. Needs $X_{n+1}$ or later $\Rightarrow$ not.
+\end{enumerate}
+\Caveats
+\cav{``Last'', ``maximum over the whole period'', ``one step before'' all need the future.}
+\begin{cardex}
+$\tau=\min\{n:\xi_n\in B\}$: $\{\tau=n\}=\{\xi_1\notin B\}\cap\dots\cap\{\xi_{n-1}\notin B\}\cap\{\xi_n\in B\}\in\F_n$. \textbf{ST.}
+\end{cardex}
+\end{card}
+
+\begin{card}{2. Optional stopping theorem}
+\Formula
+$X$ MG, $\tau\le c$ $\Rightarrow$ $\E_P(X_\tau)=\E_P(X_0)$. Also fine: $\tau<\infty$ a.s.\ and $|X_{t\wedge\tau}|\le K$. Super-MG: $\le$; sub-MG: $\ge$.
+\UseWhen
+``Find $\E_P(\tau)$'', ``find $P$(hit $A$ before $B$)'', ``can a stopping rule beat the game?''.
+\HowTo
+\begin{enumerate}
+  \item Pick a martingale whose value at $\tau$ you know in terms of $\tau$ or of where it stopped.
+  \item Set $\E_P(X_\tau)=X_0$ and solve.
+\end{enumerate}
+\Caveats
+\cav{Check boundedness. Walk until it first hits $+1$: $\E_PX_\tau=1\ne0$, because $\tau$ is unbounded and the walk is not.}
+\begin{cardex}
+Prove it: $Z_t=X_{t\wedge\tau}$ is a MG $\Rightarrow$ $\E_PZ_t=\E_PX_0$ $\Rightarrow$ put $t=c\ge\tau$: $Z_c=X_\tau$.
+\end{cardex}
+\end{card}
+
+\begin{card}{3. Recipe: hitting a moving line}
+\Formula
+$T=\min\{t:W_t=a-bt\}$, $a,b>0$: \;$\E_P(T)=\dfrac ab$, \;$\Var(T)=\dfrac{a}{b^3}$.
+\UseWhen
+``Use the martingale stopping theorem to find $\E_P(T)$'' for a line.
+\HowTo
+\begin{enumerate}
+  \item MG $W$: $\E_PW_T=0$; substitute $W_T=a-bT$: $a-b\,\E_PT=0$.
+  \item For $\E_PT^2$: MG $W^2-t$ gives $\E_P(a-bT)^2=\E_PT$; expand and solve.
+\end{enumerate}
+\Caveats
+\cav{A rising line $a+bt$ may never be hit; the recipe then gives nonsense (a negative $\E_PT$).}
+\begin{cardex}
+$W_T=2-4T$: $\E_PT=\frac12$. Then $4-16\E_PT+16\E_PT^2=\E_PT$ gives $\E_PT^2=\frac{9}{32}$ and $\Var T=\frac{9}{32}-\frac14=\frac{1}{32}=\frac{a}{b^3}$.
+\end{cardex}
+\end{card}
+
+\begin{card}{4. Recipe: exit from an interval (gambler's ruin)}
+\Formula
+Fair walk or $W$ from $0$, stop at $+A$ or $-B$: $P(+A\text{ first})=\dfrac{B}{A+B}$, \;$\E_P(\tau)=AB$.
+\UseWhen
+``Probability the walk/BM hits $A$ before $-B$'', ``expected duration''.
+\HowTo
+\begin{enumerate}
+  \item MG $X$: $Ap-B(1-p)=0$.
+  \item MG $X^2-t$: $\E_P\tau=A^2p+B^2(1-p)$.
+\end{enumerate}
+\Caveats
+\cav{Only for a fair walk / driftless $W$. With drift see Chapter~11.}
+\begin{cardex}
+Win 10 / lose 5: $p=\frac{5}{15}=\frac13$, $\E_P\tau=50$. Exit from $(-2,2)$: $\E_P\tau=4$.
+\end{cardex}
+\end{card}
+
+\begin{card}{5. Gambling strategies}
+\Formula
+Stake $\alpha_n$ predictable ($\F_{n-1}$-measurable), wealth $Z_n=\sum_k\alpha_k(\Xi_k-\Xi_{k-1})$. Fair game $\Rightarrow$ $Z$ is a MG, $\E_PZ_n=0$. Unfair game, $\alpha\ge0$ $\Rightarrow$ super-MG.
+\UseWhen
+``Can a betting system beat the casino?'', doubling strategies.
+\HowTo
+\begin{enumerate}
+  \item Check the stake uses only past results.
+  \item Then $\E_P(\text{wealth})=0$ in a fair game; compute the two-outcome table for doubling.
+\end{enumerate}
+\Caveats
+\cav{A stake chosen after seeing the result is not a strategy.}
+\begin{cardex}
+Doubling capped at 5 rounds: $+1$ w.p.\ $\frac{31}{32}$, $-31$ w.p.\ $\frac{1}{32}$. Mean $0$.
+\end{cardex}
+\end{card}
