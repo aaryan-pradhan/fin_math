@@ -176,15 +176,15 @@ In \cref{ex:call-put}: $P=\frac{1}{1.25}-1+0.36=0.16$, as computed directly.
 The one-period price, hedge and $p^*$ of this chapter are row~1 of Card~20.1 (beneath Chapter~20), which also covers markets with more outcomes or stocks.
 
 \begin{mastercard}[label=card:selffin]{Value and gains of a trading strategy}
-Holdings $\Phi_n$ (chosen at $n-1$), prices $S_n$ (bond $S_n^0=(1+r)^n$ included):
+Holdings $\Phi_n$ are chosen at time $n-1$; prices $S_n$ include the bond $(1+r)^n$. A self-financing strategy never adds or takes out cash, so its value $V_n=\Phi_n\cdot S_n$ changes only through price moves of what it holds:
 \[
-  \boxed{\begin{gathered}V_n=\Phi_n\cdot S_n;\\ \text{self-financing}\iff\Phi_n\cdot S_n=\Phi_{n+1}\cdot S_n\iff V_n=V_0+\sum_{k<n}\Phi_{k+1}\cdot(S_{k+1}-S_k);\\
-  \text{arbitrage: self-financing with }V_0\le0,\ V_T\ge0,\ P(V_T>0)>0.\end{gathered}}
+  \boxed{\;V_n=V_0+\sum_{k<n}\Phi_{k+1}\cdot(S_{k+1}-S_k).\;}
 \]
+An arbitrage is a self-financing strategy with $V_0\le0$, $V_T\ge0$ and $P(V_T>0)>0$.
 \begin{plugrows}
   \plugrow{Value of a holding}{dot product of units and prices}{$V_n$}{all securities, bond included}{$\Phi=(-30.48,0.4)$, $S=(1.05,130)$: $V=-32+52=20$}
-  \plugrow{Is a trade self-financing?}{value before and after at the same prices}{equal $\Rightarrow$ yes}{at the time-$n$ prices}{$\Phi_2=(-18.10,0.3)$ at $S_1$: $-19+39=20$: yes}
-  \plugrow{Gain over a period}{$\Phi_{n+1}\cdot(S_{n+1}-S_n)$}{$V_{n+1}-V_n$}{self-financing}{$-18.10(0.0525)+0.3(20)=5.05$}
+  \plugrow{Is a trade self-financing?}{rebalancing at time-$n$ prices must cost nothing: $\Phi_n\cdot S_n=\Phi_{n+1}\cdot S_n$}{equal $\Rightarrow$ yes}{at the time-$n$ prices}{$\Phi_2=(-18.10,0.3)$ at $S_1$: $-19+39=20$: yes}
+  \plugrow{Gain over a period}{one term of the sum, $\Phi_{n+1}\cdot(S_{n+1}-S_n)$}{$V_{n+1}-V_n$}{self-financing}{$-18.10(0.0525)+0.3(20)=5.05$}
   \plugrow{Is it an arbitrage?}{check the three conditions}{yes / no}{all three needed}{borrow $40$, buy 1 share, sell 3 options at $20$ ($100\to200/50$, $K=150$, $r=0$): $V_0=0$, $V_1=10$}
   \plugrow{No arbitrage in the binomial market}{compare $1+r$ with $d$ and $u$}{arbitrage-free $\iff d<1+r<u$; else borrow-and-buy ($1+r\le d$) or short-and-lend ($u\le1+r$)}{one stock, two states, one period}{$u=1.1$, $d=0.95$, $r=0.1$: $1+r\ge u$, short the stock}
 \end{plugrows}
