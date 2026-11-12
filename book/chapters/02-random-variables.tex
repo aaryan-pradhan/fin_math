@@ -312,14 +312,15 @@ $\xi\sim N(2,9)$, so $\mu=2$, $\sigma=3$. Then $P(\xi\le5)=\Phi\big(\frac{5-2}{3
 %=====================================================================
 \formulasheet{fs:rv}
 
-\begin{mastercard}[label=card:measurable]{Is it measurable? What does a random variable reveal?}
-On a finite $\Omega$, a random variable $\eta$ is $\G$-measurable (its value is known from the information $\G$) exactly when it is constant on every atom of $\G$. The atoms of $\sigma(\xi_1,\dots,\xi_k)$ are the sets of outcomes on which the vector $(\xi_1,\dots,\xi_k)$ takes one value:
+\begin{mastercard}[label=card:measurable]{What does a random variable reveal?}
+On a finite $\Omega$, information $\F$ is its list of atoms. A random variable is known from $\F$ exactly when it cannot tell apart two outcomes in the same atom:
 \[
-  \boxed{\begin{gathered}\eta\ \text{is }\sigma(\xi_1,\dots,\xi_k)\text{-measurable}\\ \iff\eta\text{ is constant on each set }\{(\xi_1,\dots,\xi_k)=v\}\\ \iff\eta=f(\xi_1,\dots,\xi_k)\text{ for some function }f.\end{gathered}}
+  \boxed{\;\eta\ \text{is known from }\F\ (\F\text{-measurable})\iff\eta\text{ is constant on every atom of }\F.\;}
 \]
+For $\F=\sigma(\xi)$ the atoms are the level sets $\{\xi=v\}$, so ``constant on each'' means $\eta=f(\xi)$.
 \begin{plugrows}
   \plugrow{Is $\xi$ a random variable for a given $\F$?}{atoms of $\F$; check $\xi$ is constant on each}{yes iff every level set $\{\xi=v\}$ is an event of $\F$}{finite $\Omega$; in general check $\{\xi\le x\}\in\F$ for all $x$}{one toss, $\xi=\#H$: with $\F=\{\varnothing,\Omega\}$ \textbf{no} ($\{T\}$ missing); with all subsets \textbf{yes}}
-  \plugrow{List / count $\sigma(\xi)$}{atoms = level sets of $\xi$; $\xi$ takes $k$ values}{$\sigma(\xi)$ = all unions of level sets, $2^k$ events (Card~\ref{card:atoms})}{always}{die, $\xi=\omega\bmod3$: atoms $\{3,6\},\{1,4\},\{2,5\}$, $8$ events}
+  \plugrow{List / count $\sigma(\xi)$}{atoms = level sets $\{\xi=v\}$; $\xi$ takes $k$ values}{$\sigma(\xi)$ = all unions of level sets, $2^k$ events (Card~\ref{card:atoms})}{always}{die, $\xi=\omega\bmod3$: atoms $\{3,6\},\{1,4\},\{2,5\}$, $8$ events}
   \plugrow{$\sigma$ of several variables}{atoms = sets where the whole vector is constant}{two outcomes are separated iff some $\xi_j$ differs on them}{always}{two tosses: $\sigma(\xi_1,\xi_2)$ has 4 atoms (16 events); $\sigma(S)$, $S=\xi_1+\xi_2$, has 3 atoms (8 events)}
   \plugrow{Is $\eta$ a function of $\xi$? (Doob--Dynkin)}{atoms of $\sigma(\xi)$; is $\eta$ constant on each?}{yes $\Rightarrow\eta=f(\xi)$ with $f(\text{value})$ = that constant; no $\Rightarrow$ not $\sigma(\xi)$-measurable}{finite $\Omega$ (in general: $\eta$ $\sigma(\xi)$-measurable $\iff\eta=f(\xi)$, $f$ Borel)}{$S$ = heads in two tosses: $\eta=S^2-1$ yes; $\eta$ = first toss no ($HT,TH$ share $S=1$)}
   \plugrow{A function of a known variable}{$\eta=f(\xi)$, $f$ Borel}{always $\sigma(\xi)$-measurable}{$f$ any formula, continuous or piecewise}{$\xi^2$, $e^\xi$, $\max(\xi,0)$ are known once $\xi$ is}
