@@ -25,3 +25,7 @@ for m in (10, 100, 1000):
     path = np.concatenate([[0], np.cumsum(steps)])
     tt = np.linspace(0, 1, m + 1)
     np.savetxt(f'figs/scaled{m}.dat', np.column_stack([tt, path]), header='t x', comments='', fmt='%.4f')
+
+# integrated Brownian motion Z(t) = int_0^t W(s) ds for the three paths above
+Z = np.cumsum(W * (1 / n), axis=1) - W * (1 / n) / 2
+write('ibm', [t, *W, *Z], 't w1 w2 w3 z1 z2 z3')

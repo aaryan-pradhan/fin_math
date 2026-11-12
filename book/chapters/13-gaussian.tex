@@ -1,0 +1,292 @@
+\chapter{Gaussian processes and the Brownian bridge}
+\label{ch:gaussian}
+
+\begin{question}
+Brownian motion at many times at once: what is the joint law, and which processes built from Brownian motion are still ``normal everywhere''?
+\end{question}
+
+\begin{whatfor}
+\begin{itemize}
+  \item Defines the multivariate normal (MVN) distribution, its covariance matrix and joint exponential moment.
+  \item Defines Gaussian processes and shows that Brownian motion is the Gaussian process with mean $0$ and covariance $\min(s,t)$.
+  \item Studies two Gaussian processes built from it: the Brownian bridge and integrated Brownian motion.
+\end{itemize}
+\skipline{fs:gaussian}
+\end{whatfor}
+
+\begin{prereq}
+From Part~0: covariance and its rules, independence, sums of independent normals, the normal exponential moment, CE1--CE4, matrices. From Chapters~6, 9, 10: Wiener process, independent increments, conditional law of $W(s)$ given $W(t)$.
+\end{prereq}
+
+%=====================================================================
+\section{The multivariate normal distribution}
+
+\begin{definition}[Multivariate normal]
+\label{def:mvn}
+Let $Z_1,\dots,Z_n$ be independent $N(0,1)$. Random variables $X_1,\dots,X_m$ have a \dfn{multivariate normal} (MVN) distribution if each is a fixed linear combination of the $Z_j$ plus a constant:
+\[
+  X_i=a_{i1}Z_1+\dots+a_{in}Z_n+\mu_i,\qquad i=1,\dots,m;\qquad\text{in matrix form } X=AZ+\mu .
+\]
+\end{definition}
+
+The numbers that matter are the means and covariances:
+\[
+  \E_P(X_i)=\mu_i,\qquad \Cov(X_i,X_j)=\sum_{k=1}^na_{ik}a_{jk},\qquad\text{i.e.\ the covariance matrix is }\Sigma=AA^{\mathsf T}.
+\]
+
+\begin{result}[Linear combinations and the joint exponential moment]
+\label{res:mvn}
+If $X=(X_1,\dots,X_m)$ is MVN with means $\mu_i$ and covariances $\Cov(X_i,X_j)$, then for any numbers $t_1,\dots,t_m$:
+\begin{enumerate}[label=(\alph*)]
+  \item $\sum_it_iX_i$ is normal, with mean $\sum_it_i\mu_i$ and variance $\sum_i\sum_jt_it_j\Cov(X_i,X_j)$;
+  \item the \dfn{joint exponential moment} is
+  \[
+    \E_P\,e^{t_1X_1+\dots+t_mX_m}=\exp\Big\{\sum_it_i\mu_i+\frac12\sum_i\sum_jt_it_j\Cov(X_i,X_j)\Big\}.
+  \]
+\end{enumerate}
+So an MVN distribution is completely determined by its means and covariances.
+\end{result}
+\begin{proof}
+Everything reduces to one normal variable.
+\begin{steps}
+  \item $\sum_it_iX_i=\sum_j\big(\sum_it_ia_{ij}\big)Z_j+\sum_it_i\mu_i$ is a constant plus a combination of independent normals, hence normal (\cref{res:normal-sum}). Its mean and variance follow from the rules of Chapter~3.
+  \item For (b), apply $\E_Pe^{Y}=e^{\E_PY+\frac12\Var Y}$ to $Y=\sum_it_iX_i$.
+  \item The joint exponential moment depends only on the means and covariances, and (as in Chapter~4) it determines the joint distribution. \qedhere
+\end{steps}
+\end{proof}
+
+\begin{result}[Uncorrelated means independent, for MVN]
+\label{res:uncorr}
+If $(X,Y)$ is MVN and $\Cov(X,Y)=0$, then $X$ and $Y$ are independent.
+\end{result}
+\begin{proof}
+With $\Cov=0$ the double sum in \cref{res:mvn}(b) splits: $\E_Pe^{t_1X+t_2Y}=e^{t_1\mu_X+\frac12t_1^2\Var X}\cdot e^{t_2\mu_Y+\frac12t_2^2\Var Y}=\E_Pe^{t_1X}\,\E_Pe^{t_2Y}$. This is the joint exponential moment of an independent pair with the same marginals, so the joint law is that of an independent pair.
+\end{proof}
+
+This is special to MVN. In general, zero covariance does not give independence.
+
+\begin{result}[Conditioning within an MVN pair]
+\label{res:mvn-cond}
+If $(X,Y)$ is MVN, then $X$ given $Y=y$ is normal with
+\[
+  \E_P(X\given Y=y)=\mu_X+\frac{\Cov(X,Y)}{\Var Y}(y-\mu_Y),\qquad \Var(X\given Y=y)=\Var X-\frac{\Cov(X,Y)^2}{\Var Y}.
+\]
+\end{result}
+\begin{proof}
+Let $c=\Cov(X,Y)/\Var Y$ and $R=X-cY$. Then $\Cov(R,Y)=\Cov(X,Y)-c\Var Y=0$, and $(R,Y)$ is MVN, so $R$ is independent of $Y$. Given $Y=y$, $X=cy+R$ with $R\sim N(\mu_X-c\mu_Y,\ \Var X-c^2\Var Y)$.
+\end{proof}
+
+For $(W(s),W(t))$ with $s<t$ this gives back Chapter~10: $\Cov=s$, $\Var W(t)=t$, so the mean is $\frac stW(t)$ and the variance $s-\frac{s^2}{t}=\frac{s(t-s)}{t}$.
+
+%=====================================================================
+\section{Gaussian processes}
+
+\begin{definition}[Gaussian process]
+A process $(X(t))_{t\ge0}$ is a \dfn{Gaussian process} if for all times $t_1,\dots,t_n$, the vector $(X(t_1),\dots,X(t_n))$ is MVN. Its \dfn{mean function} is $m(t)=\E_PX(t)$ and its \dfn{covariance function} is $K(s,t)=\Cov\big(X(s),X(t)\big)$.
+\end{definition}
+
+By \cref{res:mvn}, a Gaussian process is described completely by $m$ and $K$.
+
+\begin{theorem}[Brownian motion is Gaussian]
+\label{thm:bm-gauss}
+Standard Brownian motion is a Gaussian process with $m(t)=0$ and $K(s,t)=\min(s,t)$. Conversely, a Gaussian process with continuous paths, $X(0)=0$, mean $0$ and covariance $\min(s,t)$ is a standard Brownian motion.
+\end{theorem}
+\begin{proof}
+Write values as sums of independent increments.
+\begin{steps}
+  \item For $t_1<\dots<t_n$: $W(t_k)=W(t_1)+\big(W(t_2)-W(t_1)\big)+\dots+\big(W(t_k)-W(t_{k-1})\big)$, a linear combination of independent normals. So the vector is MVN.
+  \item For $s<t$: $\Cov(W(s),W(t))=\E_P\big[W(s)\big(W(s)+W(t)-W(s)\big)\big]=\E_PW(s)^2+\E_PW(s)\,\E_P\big(W(t)-W(s)\big)=s+0=\min(s,t)$.
+  \item Converse: increments over disjoint intervals $(r,s]$, $(s,t]$ have covariance $\min(s,t)-\min(s,s)-\min(r,t)+\min(r,s)=s-s-r+r=0$, so by \cref{res:uncorr} they are independent; and $\Var\big(X(t)-X(s)\big)=t-2s+s=t-s$. These are the rules of a Wiener process. \qedhere
+\end{steps}
+\end{proof}
+
+\begin{pic}
+\begin{tikzpicture}
+\begin{axis}[width=7.2cm,height=6.2cm,view={35}{35},xlabel={$s$},ylabel={$t$},zlabel={$\min(s,t)$},colormap={blu}{color=(defc!15) color=(defc)},samples=21,domain=0:1,y domain=0:1,z buffer=sort]
+  \addplot3[surf,shader=faceted interp,draw=defc!40] {min(x,y)};
+\end{axis}
+\end{tikzpicture}
+\picnote{The covariance function $K(s,t)=\min(s,t)$ of Brownian motion: a ridge along the diagonal $s=t$, where it equals the variance $t$.}
+\end{pic}
+
+\begin{example}[Two values of Brownian motion]
+\label{ex:4w1-6w3}
+$4W_1+6W_3$ is normal with mean $0$ and variance $16\cdot1+36\cdot3+2\cdot4\cdot6\cdot\min(1,3)=16+108+48=172$.
+\end{example}
+
+\begin{example}[Exponentials of Brownian motion]
+\label{ex:cov-exp}
+$W_1+W_2\sim N(0,\,1+2+2\cdot1)=N(0,5)$, so $\E_Pe^{W_1+W_2}=e^{5/2}$, and
+\[
+  \Cov\big(e^{W_1},e^{W_2}\big)=\E_Pe^{W_1+W_2}-\E_Pe^{W_1}\E_Pe^{W_2}=e^{5/2}-e^{1/2}e^{1}=e^{3/2}(e-1)\approx7.70 .
+\]
+\end{example}
+
+\begin{example}[A time-changed Brownian motion]
+\label{ex:time-change}
+Is $X(t)=e^{-t}W(e^{2t})$ a Gaussian process? Each $X(t_k)$ is a fixed number times a value of $W$ at a fixed time, so any vector $(X(t_1),\dots,X(t_n))$ is a linear transformation of an MVN vector: yes. Its covariance is
+\[
+  K(s,t)=e^{-s}e^{-t}\min\big(e^{2s},e^{2t}\big)=e^{-|t-s|} .
+\]
+It has $X(0)=W(1)\ne0$ and depends only on $|t-s|$: it is a stationary process that returns in Chapter~18 as a model of interest rates, not a Brownian motion.
+\end{example}
+
+%=====================================================================
+\section{The Brownian bridge}
+
+\begin{definition}[Brownian bridge]
+The \dfn{Brownian bridge} is standard Brownian motion on $[0,1]$ conditioned on $W(1)=0$: the process $\{W(t),0\le t\le1\given W(1)=0\}$, tied down at both ends.
+\end{definition}
+
+\begin{theorem}[Mean and covariance of the bridge]
+\label{thm:bridge}
+The Brownian bridge is a Gaussian process with mean $0$ and covariance $K(s,t)=s(1-t)$ for $s\le t$. The process $Z(t)=W(t)-t\,W(1)$, $0\le t\le1$, has the same mean and covariance, so it is a Brownian bridge.
+\end{theorem}
+\begin{proof}
+Use the conditional law of Chapter~10 and the tower rule.
+\begin{steps}
+  \item Mean: $\E_P\big(W(s)\given W(1)=0\big)=s\cdot0=0$.
+  \item Covariance, $s<t<1$: by the tower rule, conditioning first on $W(t)$,
+  \[
+    \begin{aligned}
+    \E_P\big(W(s)W(t)\given W(1)=0\big)&=\E_P\Big[W(t)\,\E_P\big(W(s)\given W(t)\big)\Bigm| W(1)=0\Big]\\
+    &=\frac st\,\E_P\big(W(t)^2\given W(1)=0\big)=\frac st\cdot t(1-t)=s(1-t),
+    \end{aligned}
+  \]
+  using $\E_P(W(s)\given W(t),W(1))=\frac stW(t)$ (the value at $1$ adds nothing once $W(t)$ is known) and $\Var(W(t)\given W(1)=0)=t(1-t)$.
+  \item For $Z$: it is Gaussian (linear in $W$), $\E_PZ(t)=0$, and for $s<t$
+  \[
+    \begin{aligned}
+    \Cov(Z(s),Z(t))&=\Cov(W(s),W(t))-t\Cov(W(s),W(1))\\
+    &\quad-s\Cov(W(1),W(t))+st\Var W(1)\\
+    &=s-ts-st+st=s(1-t). \qedhere
+    \end{aligned}
+  \]
+\end{steps}
+\end{proof}
+
+\begin{pic}
+\begin{tikzpicture}
+\begin{axis}[width=10cm,height=4.8cm,xmin=0,xmax=1,xlabel={$t$},ylabel={$W(t)-tW(1)$},samples=100]
+  \addplot[draw=none,fill=thmc!12,domain=0:1] {sqrt(x*(1-x))} \closedcycle;
+  \addplot[draw=none,fill=thmc!12,domain=0:1] {-sqrt(x*(1-x))} \closedcycle;
+  \addplot[defc,thick] table[x=t,y expr=\thisrow{w1}-\thisrow{t}*1.0089] {figs/bm3.dat};
+  \addplot[trapc,thick] table[x=t,y expr=\thisrow{w2}+\thisrow{t}*0.8089] {figs/bm3.dat};
+  \addplot[prec,thick] table[x=t,y expr=\thisrow{w3}-\thisrow{t}*0.0112] {figs/bm3.dat};
+  \addplot[only marks,mark=*] coordinates {(0,0)(1,0)};
+\end{axis}
+\end{tikzpicture}
+\picnote{Three Brownian bridges, made from the Brownian paths of Chapter~6 by subtracting $tW(1)$. All are pinned to $0$ at both ends; the shaded band is $\pm\sqrt{t(1-t)}$, one standard deviation.}
+\end{pic}
+
+%=====================================================================
+\section{Integrated Brownian motion}
+
+A commodity price whose \emph{rate of change} behaves like Brownian motion is modelled by integrating it.
+
+\begin{definition}[Integrated Brownian motion]
+For standard Brownian motion $W$, the process $Z(t)=\int_0^tW(s)\,ds$ is \dfn{integrated Brownian motion}.
+\end{definition}
+
+\begin{result}[Integrated Brownian motion is Gaussian]
+\label{res:ibm}
+$Z$ is a Gaussian process with mean $0$ and, for $s\le t$,
+\[
+  \Cov\big(Z(s),Z(t)\big)=s^2\Big(\frac t2-\frac s6\Big);\qquad\text{in particular }\Var Z(t)=\frac{t^3}{3}.
+\]
+\end{result}
+\begin{proof}
+An integral is a limit of sums, and sums of values of $W$ are normal.
+\begin{steps}
+  \item $Z(t)$ is a limit of Riemann sums $\sum_kW(s_k)\Delta s$, which are MVN; limits of normal vectors are normal, so $Z$ is Gaussian.
+  \item Mean: $\E_PZ(t)=\int_0^t\E_PW(s)\,ds=0$.
+  \item Covariance: swap $\E_P$ and the integrals,
+  \[
+    \begin{aligned}
+    \E_P\big(Z(s)Z(t)\big)&=\int_0^s\!\!\int_0^t\min(y,u)\,du\,dy=\int_0^s\Big[\int_0^yu\,du+\int_y^ty\,du\Big]dy\\
+    &=\int_0^s\Big[\frac{y^2}{2}+y(t-y)\Big]dy=\int_0^s\Big[yt-\frac{y^2}{2}\Big]dy=\frac{ts^2}{2}-\frac{s^3}{6}. \qedhere
+    \end{aligned}
+  \]
+\end{steps}
+\end{proof}
+
+\begin{pic}
+\begin{tikzpicture}
+\begin{axis}[width=10cm,height=4.6cm,xmin=0,xmax=1,xlabel={$t$},legend style={font=\scriptsize,at={(0.02,0.98)},anchor=north west},legend columns=2]
+  \addplot[defc!50,thick] table[x=t,y=w1] {figs/ibm.dat}; \addlegendentry{$W(t)$}
+  \addplot[defc,very thick] table[x=t,y=z1] {figs/ibm.dat}; \addlegendentry{$Z(t)=\int_0^tW$}
+\end{axis}
+\end{tikzpicture}
+\picnote{Integrating smooths the path: $Z$ has a slope at every time (its slope is $W$), unlike $W$ itself.}
+\end{pic}
+
+%=====================================================================
+\formulasheet{fs:gaussian}
+
+\begin{card}{1. MVN and linear combinations}
+\Formula
+$X=AZ+\mu$: $\Sigma=AA^{\mathsf T}$. $\sum t_iX_i\sim N\big(\sum t_i\mu_i,\ \sum_{i,j}t_it_j\Cov(X_i,X_j)\big)$. $\E_Pe^{\sum t_iX_i}=e^{\sum t_i\mu_i+\frac12\sum t_it_j\Cov}$. MVN: uncorrelated $\Rightarrow$ independent.
+\UseWhen
+``Distribution of $4W_1+6W_3$'', ``$\E_Pe^{W_1+W_2}$'', ``$\Cov(e^{W_1},e^{W_2})$''.
+\HowTo
+\begin{enumerate}
+  \item Mean: weighted sum of means. Variance: $\sum_it_i^2\Var X_i+2\sum_{i<j}t_it_j\Cov$.
+  \item For $\E_Pe^{(\cdot)}$: $e^{\text{mean}+\frac12\text{variance}}$.
+\end{enumerate}
+\Caveats
+\cav{Do not forget the cross terms $2t_it_j\Cov$; for BM $\Cov(W_s,W_t)=\min(s,t)$.}
+\begin{cardex}
+$4W_1+6W_3\sim N(0,172)$. $\Cov(e^{W_1},e^{W_2})=e^{5/2}-e^{3/2}=e^{3/2}(e-1)\approx7.70$.
+\end{cardex}
+\end{card}
+
+\begin{card}{2. Conditioning an MVN pair}
+\Formula
+$\E_P(X\given Y=y)=\mu_X+\frac{\Cov(X,Y)}{\Var Y}(y-\mu_Y)$, \;$\Var(X\given Y)=\Var X-\frac{\Cov(X,Y)^2}{\Var Y}$.
+\UseWhen
+``Given $W(t)$ (or $W(1)$), find the law of $W(s)$'', any normal pair.
+\HowTo
+\begin{enumerate}
+  \item Read off variances and covariance ($\min(s,t)$ for BM).
+  \item Plug in.
+\end{enumerate}
+\Caveats
+\cav{Only valid for jointly normal pairs.}
+\begin{cardex}
+$W(2)$ given $W(5)=1$: mean $\frac25$, variance $2-\frac45=\frac65$.
+\end{cardex}
+\end{card}
+
+\begin{card}{3. Gaussian process tests}
+\Formula
+Gaussian process: every finite vector is MVN. SBM $\iff$ Gaussian, continuous, $X(0)=0$, $m=0$, $K=\min(s,t)$.
+\UseWhen
+``Is $X(t)$ Gaussian?'', ``is $X(t)$ a Wiener process?''
+\HowTo
+\begin{enumerate}
+  \item Linear in values of $W$ at fixed times (deterministic coefficients) $\Rightarrow$ Gaussian.
+  \item For Wiener: check $X(0)=0$, mean $0$, covariance $\min(s,t)$.
+\end{enumerate}
+\Caveats
+\cav{Random coefficients or non-linear functions ($W^2$, $e^W$) are not Gaussian.}
+\begin{cardex}
+$e^{-t}W(e^{2t})$: Gaussian, $K=e^{-|t-s|}$, not Wiener. $\frac1cW(c^2t)$: Gaussian, $K=\min(s,t)$: Wiener.
+\end{cardex}
+\end{card}
+
+\begin{card}{4. Brownian bridge and integrated BM}
+\Formula
+Bridge (BM given $W(1)=0$, or $W(t)-tW(1)$): mean $0$, $K(s,t)=s(1-t)$, $s\le t$. Integrated BM $Z(t)=\int_0^tW$: mean $0$, $K(s,t)=s^2(\frac t2-\frac s6)$, $\Var Z(t)=\frac{t^3}3$.
+\UseWhen
+``Show $W(t)-tW(1)$ is a Brownian bridge'', ``covariance of $\int_0^tW(s)ds$''.
+\HowTo
+\begin{enumerate}
+  \item Show Gaussian; compute mean $0$.
+  \item Expand the covariance with bilinearity and $\min(s,t)$; for integrals swap $\E_P$ and $\int$.
+\end{enumerate}
+\Caveats
+\cav{Split $\int_0^t\min(y,u)du$ at $u=y$.}
+\begin{cardex}
+$\Var\big(\int_0^1W\,ds\big)=\frac13$; bridge: $\Var Z(\frac12)=\frac14$.
+\end{cardex}
+\end{card}
