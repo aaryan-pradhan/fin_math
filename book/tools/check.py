@@ -40,7 +40,7 @@ for m in re.finditer(r'\\dfn\{((?:[^{}]|\{[^{}]*\})+)\}', prose):   # one level 
         errors.append(f'{where[use.start()]}: "{term}" used before its definition ... {ctx} ...')
 
 seen = set()
-for m in re.finditer(r'\\label\{([^}]+)\}|\\[cC]?ref\{([^}]+)\}', full):
+for m in re.finditer(r'(?:\\label\{|\[label=)([^}\],]+)[}\],]|\\[cC]?ref\{([^}]+)\}', full):
     if m.group(1): seen.add(m.group(1)); continue
     for lab in m.group(2).split(','):
         if lab.strip() not in seen:

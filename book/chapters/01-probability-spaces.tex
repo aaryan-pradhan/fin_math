@@ -319,7 +319,7 @@ The lemma goes one way only. A divergent sum tells you nothing on its own: $A_i=
 \begin{mastercard}[label=card:atoms]{Events of a finite $\sigma$-field}
 A finite $\sigma$-field $\F$ on $\Omega$ is fixed by its atoms $G_1,\dots,G_k$ (its smallest non-empty events; they are disjoint and cover $\Omega$):
 \[
-  \boxed{\;\F=\Big\{\bigcup_{i\in I}G_i:\ I\subseteq\{1,\dots,k\}\Big\},\qquad |\F|=2^k,\qquad P\Big(\bigcup_{i\in I}G_i\Big)=\sum_{i\in I}P(G_i).\;}
+  \boxed{\begin{gathered}\F=\Big\{\bigcup_{i\in I}G_i:\ I\subseteq\{1,\dots,k\}\Big\},\\ |\F|=2^k,\\ P\Big(\bigcup_{i\in I}G_i\Big)=\sum_{i\in I}P(G_i).\end{gathered}}
 \]
 \begin{plugrows}
   \plugrow{Is a given collection a $\sigma$-field?}{find its smallest non-empty sets; check they are disjoint, cover $\Omega$, and that every union of them is in the list}{yes exactly when the list is all unions of some disjoint sets that cover $\Omega$}{finite $\Omega$; check complements first, they fail most often}{die, $\{\varnothing,\{6\},\Omega\}$: $\{6\}^c$ missing, so \textbf{no}}
@@ -333,7 +333,7 @@ A finite $\sigma$-field $\F$ on $\Omega$ is fixed by its atoms $G_1,\dots,G_k$ (
 \begin{mastercard}[label=card:incl-excl]{Probability of a union}
 For any events $A_1,\dots,A_n$:
 \[
-  \boxed{\;P\Big(\bigcup_{i=1}^nA_i\Big)=\sum_iP(A_i)-\sum_{i<j}P(A_i\cap A_j)+\sum_{i<j<k}P(A_i\cap A_j\cap A_k)-\cdots\;\le\;\sum_iP(A_i).\;}
+  \boxed{\begin{gathered}P\Big(\bigcup_{i=1}^nA_i\Big)=\sum_iP(A_i)-\sum_{i<j}P(A_i\cap A_j)+\sum_{i<j<k}P(A_i\cap A_j\cap A_k)-\cdots\;\le\;\sum_iP(A_i).\end{gathered}}
 \]
 \begin{plugrows}
   \plugrow{Disjoint events}{all intersections $=0$}{$P(\bigcup A_i)=\sum P(A_i)$}{pairwise disjoint (also for countably many)}{die, $P(\{1\}\cup\{2\})=\frac16+\frac16=\frac13$}
@@ -347,7 +347,7 @@ For any events $A_1,\dots,A_n$:
 \begin{mastercard}[label=card:limits]{Limits of events}
 If the sets only grow ($A_n\uparrow$) or only shrink ($A_n\downarrow$), probability and limit swap:
 \[
-  \boxed{\;P\Big(\lim_{n\to\infty}A_n\Big)=\lim_{n\to\infty}P(A_n),\qquad \lim A_n=\bigcup_nA_n\ (\uparrow)\ \text{ or }\ \bigcap_nA_n\ (\downarrow).\;}
+  \boxed{\begin{gathered}P\Big(\lim_{n\to\infty}A_n\Big)=\lim_{n\to\infty}P(A_n),\\ \lim A_n=\bigcup_nA_n\ (\uparrow)\ \text{ or }\ \bigcap_nA_n\ (\downarrow).\end{gathered}}
 \]
 \begin{plugrows}
   \plugrow{Growing sets}{$\lim A_n=\bigcup A_n$}{$P(\bigcup A_n)=\lim P(A_n)$}{$A_1\subseteq A_2\subseteq\cdots$}{$A_n=[0,1-\frac1n]$, uniform: $P([0,1))=\lim(1-\frac1n)=1$}

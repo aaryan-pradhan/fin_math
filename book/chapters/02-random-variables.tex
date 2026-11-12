@@ -312,88 +312,44 @@ $\xi\sim N(2,9)$, so $\mu=2$, $\sigma=3$. Then $P(\xi\le5)=\Phi\big(\frac{5-2}{3
 %=====================================================================
 \formulasheet{fs:rv}
 
-\begin{card}{1. Random variable and the information it carries}
-\Formula
-$\xi$ is a r.v.\ if $\{\xi\in B\}\in\F$ for every Borel $B$ (enough: every $(-\infty,x]$). $\sigma(\xi)=\{\xi^{-1}(B)\}$; atoms = outcomes sharing one value; $k$ values $\Rightarrow 2^k$ events.
-\UseWhen
-``Is $\xi$ $\F$-measurable?'', ``list $\sigma(\xi)$'', ``how many events in $\sigma(\xi)$?''
-\HowTo
-\begin{enumerate}
-  \item Group the outcomes by the value of $\xi$: these are the atoms.
-  \item Measurable w.r.t.\ $\F$ $\iff$ every atom is an event of $\F$.
-  \item $\sigma(\xi)$ = all unions of atoms; count $2^k$.
-\end{enumerate}
-\Caveats
-\cav{Measurability depends on $\F$: the same $\xi$ can be measurable for one $\sigma$-field and not for a smaller one.}
-\begin{cardex}
-Die, $\xi$ = remainder of $\omega$ divided by 3. Atoms $\{3,6\},\{1,4\},\{2,5\}$, so $\sigma(\xi)$ has $2^3=8$ events. Not measurable w.r.t.\ $\{\varnothing,\{1,2,3\},\{4,5,6\},\Omega\}$: the atom $\{1,4\}$ is not in it.
-\end{cardex}
-\end{card}
+\begin{mastercard}[label=card:measurable]{Is it measurable? What does a random variable reveal?}
+On a finite $\Omega$, a random variable $\eta$ is $\G$-measurable (its value is known from the information $\G$) exactly when it is constant on every atom of $\G$. The atoms of $\sigma(\xi_1,\dots,\xi_k)$ are the sets of outcomes on which the vector $(\xi_1,\dots,\xi_k)$ takes one value:
+\[
+  \boxed{\begin{gathered}\eta\ \text{is }\sigma(\xi_1,\dots,\xi_k)\text{-measurable}\\ \iff\eta\text{ is constant on each set }\{(\xi_1,\dots,\xi_k)=v\}\\ \iff\eta=f(\xi_1,\dots,\xi_k)\text{ for some function }f.\end{gathered}}
+\]
+\begin{plugrows}
+  \plugrow{Is $\xi$ a random variable for a given $\F$?}{atoms of $\F$; check $\xi$ is constant on each}{yes iff every level set $\{\xi=v\}$ is an event of $\F$}{finite $\Omega$; in general check $\{\xi\le x\}\in\F$ for all $x$}{one toss, $\xi=\#H$: with $\F=\{\varnothing,\Omega\}$ \textbf{no} ($\{T\}$ missing); with all subsets \textbf{yes}}
+  \plugrow{List / count $\sigma(\xi)$}{atoms = level sets of $\xi$; $\xi$ takes $k$ values}{$\sigma(\xi)$ = all unions of level sets, $2^k$ events (Card~\ref{card:atoms})}{always}{die, $\xi=\omega\bmod3$: atoms $\{3,6\},\{1,4\},\{2,5\}$, $8$ events}
+  \plugrow{$\sigma$ of several variables}{atoms = sets where the whole vector is constant}{two outcomes are separated iff some $\xi_j$ differs on them}{always}{two tosses: $\sigma(\xi_1,\xi_2)$ has 4 atoms (16 events); $\sigma(S)$, $S=\xi_1+\xi_2$, has 3 atoms (8 events)}
+  \plugrow{Is $\eta$ a function of $\xi$? (Doob--Dynkin)}{atoms of $\sigma(\xi)$; is $\eta$ constant on each?}{yes $\Rightarrow\eta=f(\xi)$ with $f(\text{value})$ = that constant; no $\Rightarrow$ not $\sigma(\xi)$-measurable}{finite $\Omega$ (in general: $\eta$ $\sigma(\xi)$-measurable $\iff\eta=f(\xi)$, $f$ Borel)}{$S$ = heads in two tosses: $\eta=S^2-1$ yes; $\eta$ = first toss no ($HT,TH$ share $S=1$)}
+  \plugrow{A function of a known variable}{$\eta=f(\xi)$, $f$ Borel}{always $\sigma(\xi)$-measurable}{$f$ any formula, continuous or piecewise}{$\xi^2$, $e^\xi$, $\max(\xi,0)$ are known once $\xi$ is}
+\end{plugrows}
+\end{mastercard}
 
-\begin{card}{2. Is \texorpdfstring{$\eta$}{eta} a function of \texorpdfstring{$\xi$}{xi}? (Doob--Dynkin)}
-\Formula
-$\eta$ is $\sigma(\xi)$-measurable $\iff\eta=f(\xi)$ for a Borel $f$. Always: $f(\xi)$ is $\sigma(\xi)$-measurable.
-\UseWhen
-``Is $\eta$ $\sigma(\xi)$-measurable?'', ``can $\eta$ be written as $f(\xi)$?''
-\HowTo
-\begin{enumerate}
-  \item Find the atoms of $\xi$.
-  \item Check $\eta$ is constant on each atom. Yes $\Rightarrow$ $f(\text{value of }\xi)$ = that constant.
-\end{enumerate}
-\Caveats
-\cav{One atom where $\eta$ takes two values kills it.}
-\begin{cardex}
-Two tosses, $S$ = heads. $\eta=S^2-1$: yes, $f(x)=x^2-1$. $\eta$ = first toss: $HT,TH$ share $S=1$ but differ in $\eta$: \textbf{no}.
-\end{cardex}
-\end{card}
+\begin{mastercard}[label=card:prob-B]{Probability that a random variable lands in a set}
+For any Borel set $B$ (and $B\subseteq\R^2$ for a pair), add the point masses in $B$ or integrate the density over $B$; with the d.f.\ $F(x)=P(\xi\le x)$ intervals are differences:
+\[
+  \boxed{\begin{gathered}P(\xi\in B)=\sum_{x_i\in B}P(\xi=x_i)\ \ \text{or}\ \ \int_Bf_\xi(x)\,dx,\\ P(a<\xi\le b)=F(b)-F(a),\qquad P(\xi=x)=F(x)-F(x^-).\end{gathered}}
+\]
+\begin{plugrows}
+  \plugrow{Discrete variable}{list the values in $B$}{add their probabilities}{values $x_i$ with $P(\xi=x_i)>0$}{die, $P(\xi\in[2,4.5])=P(2)+P(3)+P(4)=\frac12$}
+  \plugrow{Variable with a density}{integrate $f$ over $B$}{$\int_Bf$; single points have probability $0$, so $<$ and $\le$ agree}{$f\ge0$, $\int f=1$; a density may exceed 1}{Exp$(1)$: $P(1<\xi\le2)=e^{-1}-e^{-2}\approx0.233$}
+  \plugrow{Interval from the d.f.}{$F$ at the two ends}{$F(b)-F(a)$; for $P(\xi<b)$ use $F(b^-)$}{always}{heads in two tosses: $P(0<\xi\le2)=1-\frac14=\frac34$}
+  \plugrow{Point mass}{jump of $F$ at $x$}{$F(x)-F(x^-)$}{always; $0$ if $F$ is continuous at $x$}{same: $P(\xi=1)=\frac34-\frac14=\frac12$}
+  \plugrow{Is $F$ a d.f.? Density from $F$}{check non-decreasing, right-continuous, $F(-\infty)=0$, $F(\infty)=1$; differentiate}{$f=F'$ where it exists}{all three properties needed}{$F(x)=1-e^{-x}$, $x\ge0$: $f=e^{-x}$}
+  \plugrow{A pair $(\xi,\eta)$}{draw the region $B$; integrate the joint density}{$\iint_Bf(x,y)\,dx\,dy$; uniform on a square: area}{joint density exists}{uniform on $[0,1]^2$: $P(\xi+\eta\le1)=\frac12$, $P(\xi=\eta)=0$}
+\end{plugrows}
+\end{mastercard}
 
-\begin{card}{3. Distribution function}
-\Formula
-$F_\xi(x)=P(\xi\le x)$: non-decreasing, right-continuous, $F(-\infty)=0$, $F(\infty)=1$. $P(a<\xi\le b)=F(b)-F(a)$; jump at $x$ = $P(\xi=x)$.
-\UseWhen
-``Is this a d.f.?'', probabilities of intervals, point masses.
-\HowTo
-\begin{enumerate}
-  \item Check the three properties.
-  \item Interval: subtract values of $F$. Point mass: size of the jump.
-\end{enumerate}
-\Caveats
-\cav{At a jump, $P(\xi\le x)\ne P(\xi<x)$. With a density they are equal.}
-\begin{cardex}
-Heads in two tosses: $F(1)=\frac34$, $F(1^-)=\frac14$, so $P(\xi=1)=\frac12$ and $P(0<\xi\le2)=1-\frac14=\frac34$.
-\end{cardex}
-\end{card}
-
-\begin{card}{4. Density and joint density}
-\Formula
-$P(\xi\in B)=\int_Bf_\xi(x)\,dx$, $f_\xi=F_\xi'$. Joint: $P((\xi_1,\xi_2)\in B)=\iint_Bf(x,y)\,dx\,dy$.
-\UseWhen
-Any probability for a continuous r.v.\ or pair.
-\HowTo
-\begin{enumerate}
-  \item Draw the region $B$.
-  \item Integrate the density over it (for a uniform density: area $\times$ height).
-\end{enumerate}
-\Caveats
-\cav{A density can exceed 1; only its integrals are probabilities. Single points and lines have probability 0.}
-\begin{cardex}
-Uniform on $[0,1]^2$: $P(\xi_1+\xi_2\le1)=\frac12$ (triangle). Exponential(1): $P(\xi>1)=\int_1^\infty e^{-x}dx=e^{-1}\approx0.368$.
-\end{cardex}
-\end{card}
-
-\begin{card}{5. Normal probabilities}
-\Formula
-$\xi\sim N(\mu,\sigma^2)$: $P(\xi\le x)=\Phi\big(\frac{x-\mu}{\sigma}\big)$. $\Phi(-x)=1-\Phi(x)$, $\Phi(0)=\frac12$. $\mu+\sigma Z\sim N(\mu,\sigma^2)$.
-\UseWhen
-Any probability for a normal r.v.\ (later: Brownian motion, Black--Scholes).
-\HowTo
-\begin{enumerate}
-  \item Standardise: subtract $\mu$, divide by $\sigma$.
-  \item Read $\Phi$; use symmetry for negative arguments and for ``$>$''.
-\end{enumerate}
-\Caveats
-\cav{Divide by $\sigma$, never by $\sigma^2$.}
-\begin{cardex}
-$\xi\sim N(2,9)$: $P(\xi\le5)=\Phi(1)\approx0.841$; $P(\xi>-1)=1-\Phi(-1)=\Phi(1)\approx0.841$.
-\end{cardex}
-\end{card}
+\begin{mastercard}[label=card:normal-prob]{Normal probabilities}
+If $\xi\sim N(\mu,\sigma^2)$, standardise by subtracting the mean and dividing by the standard deviation $\sigma$:
+\[
+  \boxed{\begin{gathered}P(a<\xi\le b)=\Phi\Big(\frac{b-\mu}{\sigma}\Big)-\Phi\Big(\frac{a-\mu}{\sigma}\Big),\\ \Phi(-x)=1-\Phi(x),\quad\Phi(-\infty)=0,\quad\Phi(\infty)=1.\end{gathered}}
+\]
+\begin{plugrows}
+  \plugrow{$P(\xi\le x)$}{$a=-\infty$, $b=x$}{$\Phi\big(\frac{x-\mu}{\sigma}\big)$}{$\sigma>0$}{$\xi\sim N(2,9)$: $P(\xi\le5)=\Phi(1)\approx0.841$}
+  \plugrow{$P(\xi>x)$}{$a=x$, $b=\infty$}{$1-\Phi\big(\frac{x-\mu}{\sigma}\big)=\Phi\big(\frac{\mu-x}{\sigma}\big)$}{always}{same: $P(\xi>-1)=\Phi(1)\approx0.841$}
+  \plugrow{Within $k$ standard deviations}{$a=\mu-k\sigma$, $b=\mu+k\sigma$}{$2\Phi(k)-1$}{always}{$k=1$: $0.683$; $k=2$: $0.954$}
+  \plugrow{Building a normal}{$\xi=\mu+\sigma Z$, $Z\sim N(0,1)$}{$N(\mu,\sigma^2)$, density $\frac{1}{\sqrt{2\pi\sigma^2}}e^{-(x-\mu)^2/2\sigma^2}$}{$\sigma>0$}{$3+2Z\sim N(3,4)$}
+\end{plugrows}
+\end{mastercard}

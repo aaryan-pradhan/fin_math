@@ -227,89 +227,44 @@ $X_1,X_2$ two independent dice, $\G=\sigma(X_1)$; $\E_P(X_2)=3.5$, $\E_P(X_2^2)=
 %=====================================================================
 \formulasheet{fs:cond}
 
-\begin{card}{1. Conditional probability, total probability, Bayes}
-\Formula
-$P(A\given B)=\dfrac{P(A\cap B)}{P(B)}$; \;$P(A)=\sum_iP(A\given B_i)P(B_i)$; \;$P(B_k\given A)=\dfrac{P(A\given B_k)P(B_k)}{P(A)}$ ($B_i$ a partition).
-\UseWhen
-Two-stage experiments; ``given that'', ``which cause?''.
-\HowTo
-\begin{enumerate}
-  \item Choose the partition (the first stage).
-  \item Total probability for $P(A)$; Bayes to reverse.
-\end{enumerate}
-\Caveats
-\cav{$P(A\given B)\ne P(B\given A)$. The $B_i$ must be disjoint and cover $\Omega$.}
-\begin{cardex}
-$M_1$: $60\%$ of items, $2\%$ defective; $M_2$: $40\%$, $5\%$. $P(D)=0.032$, $P(M_2\given D)=0.625$.
-\end{cardex}
-\end{card}
+\begin{mastercard}[label=card:bayes]{Conditioning on a partition (total probability and Bayes)}
+For a partition $B_1,B_2,\dots$ of $\Omega$ (disjoint, covering, each $P(B_i)>0$):
+\[
+  \boxed{\begin{gathered}P(B_k\given A)=\frac{P(A\given B_k)\,P(B_k)}{\sum_iP(A\given B_i)\,P(B_i)},\\ P(A\given B)=\frac{P(A\cap B)}{P(B)}.\end{gathered}}
+\]
+\begin{plugrows}
+  \plugrow{Probability of $A$ by cases}{the denominator alone}{$P(A)=\sum_iP(A\given B_i)P(B_i)$}{partition}{machines: $P(D)=0.02(0.6)+0.05(0.4)=0.032$}
+  \plugrow{Reverse the conditioning}{the full formula}{$P(B_k\given A)$}{partition}{$P(M_2\given D)=0.020/0.032=0.625$}
+  \plugrow{Random parameter, continuous}{partition by the value $y$ of $Y$; sum becomes integral}{$P(A)=\int P(A\given Y=y)f_Y(y)\,dy$}{$Y$ has a density}{rate $1$ or $2$ w.p.\ $\frac12$: $P(X>1)=\frac12e^{-1}+\frac12e^{-2}\approx0.252$}
+\end{plugrows}
+\end{mastercard}
 
-\begin{card}{2. Independence}
-\Formula
-$P(A\cap B)=P(A)P(B)$. Independent r.v.s: $\E_P[f(\xi)g(\eta)]=\E_Pf(\xi)\E_Pg(\eta)$, $\Cov=0$, $\Var(\xi+\eta)=\Var\xi+\Var\eta$. Independent normals add: means add, variances add.
-\UseWhen
-``Are they independent?'', products and sums of independent quantities.
-\HowTo
-\begin{enumerate}
-  \item Events: compare $P(A\cap B)$ with $P(A)P(B)$; for $n$ events check every sub-collection.
-  \item Densities: check $f(x,y)=f_\xi(x)f_\eta(y)$.
-\end{enumerate}
-\Caveats
-\cav{Pairwise independence does not give independence of three. $\Cov=0$ does not give independence. Disjoint $\ne$ independent.}
-\begin{cardex}
-$\xi\sim N(1,2)$, $\eta\sim N(-3,5)$ independent: $\xi+\eta\sim N(-2,7)$; $2\xi-\eta\sim N(5,13)$.
-\end{cardex}
-\end{card}
+\begin{mastercard}[label=card:indep]{Independence}
+$X_1,\dots,X_n$ are independent exactly when expectations of products split, for all functions $f_i$:
+\[
+  \boxed{\begin{gathered}\E_P\Big[\prod_{i=1}^nf_i(X_i)\Big]=\prod_{i=1}^n\E_P\,f_i(X_i).\end{gathered}}
+\]
+\begin{plugrows}
+  \plugrow{Events}{$f_i=$ indicators}{$P(A_{i_1}\cap\dots\cap A_{i_k})=P(A_{i_1})\cdots P(A_{i_k})$ for every sub-collection}{all sub-collections, not just pairs}{two dice, first even / second even / sum even: pairwise yes, all three no}
+  \plugrow{Densities}{compare the joint density with the product of the marginals}{independent $\iff f(x,y)=f_X(x)f_Y(y)$}{joint density exists}{uniform on $[0,1]^2$: $1=1\cdot1$, independent}
+  \plugrow{Covariance and variance}{$f_1=f_2=$ identity}{$\Cov=0$, $\Var(\sum X_i)=\sum\Var X_i$}{$\Cov=0$ does not give independence}{two independent dice: $\Var(X_1+X_2)=2\cdot\frac{35}{12}$}
+  \plugrow{Sums of independent normals}{$f_i=e^{ua_ix}$ and Card~\ref{card:normal-mgf}}{$\sum a_iX_i\sim N\big(\sum a_i\mu_i,\ \sum a_i^2\sigma_i^2\big)$}{independent normal $X_i$}{$N(1,2)$, $N(-3,5)$: $2X-Y\sim N(5,13)$}
+  \plugrow{Disjoint events}{$A\cap B=\varnothing$}{never independent if both have positive probability}{$P(A),P(B)>0$}{$P(A\cap B)=0<P(A)P(B)$}
+\end{plugrows}
+\end{mastercard}
 
-\begin{card}{3. Conditional expectation on a partition}
-\Formula
-$\E_P(X\given\G)=\sum_i\E_P(X\given G_i)\ind{G_i}$, \;$\E_P(X\given G)=\E_P(X\ind G)/P(G)$. It is a random variable.
-\UseWhen
-``Find $\E_P(X\given\G)$'' with $\G$ finite, or ``given the first toss''.
-\HowTo
-\begin{enumerate}
-  \item List the atoms of $\G$.
-  \item Average $X$ over each atom.
-  \item Write the answer as a random variable: value on each atom.
-\end{enumerate}
-\Caveats
-\cav{The answer is not one number (unless $\G$ is trivial). It must be constant on each atom.}
-\begin{cardex}
-Die, $\G$ = low $\{1,2,3\}$ / high $\{4,5,6\}$, $X=\omega^2$: low $\frac{14}{3}$, high $\frac{77}{3}$. Check: $\frac12(\frac{14}3+\frac{77}3)=\frac{91}6=\E_PX$.
-\end{cardex}
-\end{card}
-
-\begin{card}{4. The rules CE1--CE4}
-\Formula
-CE1 $\E_P(aX+bY\given\G)=a\E_P(X\given\G)+b\E_P(Y\given\G)$. CE2 $Z$ known: $\E_P(ZX\given\G)=Z\E_P(X\given\G)$. CE3 $X$ indep.\ of $\G$: $\E_P(X\given\G)=\E_PX$. CE4 $\G_0\subseteq\G_1$: $\E_P[\E_P(X\given\G_1)\given\G_0]=\E_P(X\given\G_0)$, and $\E_P[\E_P(X\given\G)]=\E_PX$.
-\UseWhen
-Every conditional expectation in Parts~1--4.
-\HowTo
-\begin{enumerate}
-  \item Split $X$ into a known part and a part independent of $\G$ (e.g.\ $S_{n+1}=S_n+\xi_{n+1}$).
-  \item Known part: take it out (CE2). Independent part: replace by its mean (CE3).
-  \item For an unconditional mean, condition first and average (CE4).
-\end{enumerate}
-\Caveats
-\cav{CE3 needs independence of the whole $\G$, not just of one variable in it.}
-\begin{cardex}
-Walk $S_n=\xi_1+\dots+\xi_n$, $\xi_i=\pm1$ fair, $\F_3=\sigma(\xi_1,\xi_2,\xi_3)$. $S_5=S_3+D$, $D=\xi_4+\xi_5$ independent of $\F_3$, $\E_PD=0$, $\E_PD^2=2$: $\E_P(S_5\given\F_3)=S_3$; $\E_P(S_5^2\given\F_3)=S_3^2+2$.
-\end{cardex}
-\end{card}
-
-\begin{card}{5. Conditioning with densities}
-\Formula
-$f_{X\given Y=y}=\dfrac{f(x,y)}{f_Y(y)}$; $\E_P(X\given Y=y)=\int xf_{X\given Y=y}(x)dx$; $P(X>t)=\E_P[P(X>t\given Y)]$.
-\UseWhen
-A random parameter: ``rate is $1$ or $2$'', ``bias $p$ is uniform''.
-\HowTo
-\begin{enumerate}
-  \item Compute the answer as if $Y=y$ were known.
-  \item Average over $Y$.
-\end{enumerate}
-\Caveats
-\cav{Average the conditional \emph{probabilities}, not the parameters.}
-\begin{cardex}
-$X$ exponential with rate $Y=1$ or $2$, each with probability $\frac12$: $P(X>1)=\frac12e^{-1}+\frac12e^{-2}\approx0.252$, not $e^{-1.5}\approx0.223$.
-\end{cardex}
-\end{card}
+\begin{mastercard}[label=card:freeze]{Conditional expectation: freeze what is known, average the rest}
+Let $K$ be known from $\G$ ($\G$-measurable) and $Z$ independent of $\G$. Then the guess given $\G$ is found by treating $K$ as a constant $k$ and averaging over $Z$:
+\[
+  \boxed{\begin{gathered}\E_P\big(f(K,Z)\given\G\big)=g(K),\quad g(k)=\E_P\,f(k,Z);\\ \E_P\big[\E_P(X\given\G)\given\G_0\big]=\E_P(X\given\G_0)\ \ (\G_0\subseteq\G).\end{gathered}}
+\]
+\begin{plugrows}
+  \plugrow{Linear combinations (CE1)}{$f=ak+bz$}{$\E_P(aK+bZ\given\G)=aK+b\E_PZ$}{always}{two dice: $\E_P(X_1+X_2\given X_1)=X_1+3.5$}
+  \plugrow{Take out what is known (CE2)}{$f=k\,z$}{$\E_P(KZ\given\G)=K\E_PZ$}{$K$ known}{$\E_P(X_1X_2\given X_1)=3.5X_1$}
+  \plugrow{Independent of the information (CE3)}{$f$ depends on $z$ only}{$\E_P(Z\given\G)=\E_PZ$}{independent of all of $\G$}{$\E_P(X_2\given X_1)=3.5$}
+  \plugrow{Future of a sum}{$K=S_n$, $Z=S_{n+m}-S_n$}{$\E_P(S_{n+m}\given\F_n)=S_n+m\mu$; $\E_P(S_{n+m}^2\given\F_n)=(S_n+m\mu)^2+m\sigma^2$}{i.i.d.\ steps, mean $\mu$, variance $\sigma^2$}{fair $\pm1$: $\E_P(S_5^2\given\F_3)=S_3^2+2$}
+  \plugrow{Finite information}{$\G$ with atoms $G_i$}{on $G_i$: $\E_P(X\given\G)=\E_P(X\ind{G_i})/P(G_i)$, the average over the atom}{$P(G_i)>0$}{die, odd/even: $3$ on odd, $4$ on even}
+  \plugrow{Unconditional mean (tower)}{$\G_0=\{\varnothing,\Omega\}$}{$\E_P[\E_P(X\given\G)]=\E_PX$}{always}{$\frac12\cdot3+\frac12\cdot4=3.5$}
+  \plugrow{Given a value, with a density}{$f_{X\given Y=y}=f(x,y)/f_Y(y)$}{$\E_P(X\given Y=y)=\int x\,f_{X\given Y=y}(x)dx$}{$f_Y(y)>0$}{used for Brownian motion in Chapter~10}
+\end{plugrows}
+\end{mastercard}

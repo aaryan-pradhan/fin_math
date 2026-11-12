@@ -211,87 +211,57 @@ Two comparisons of the exact tail with the Markov bound.
 %=====================================================================
 \formulasheet{fs:expectation}
 
-\begin{card}{1. Expectation of indicators and step functions}
-\Formula
-$\E_P(\ind A)=P(A)$. \quad $\E_P\big(\sum_ix_i\ind{A_i}\big)=\sum_ix_iP(A_i)$ ($A_i$ disjoint). Integrable: $\E_P|\xi|<\infty$.
-\UseWhen
-``Find $\E_P$ of a payoff that is $x_i$ on event $A_i$'', counting with indicators, ``is $\xi$ integrable?''
-\HowTo
-\begin{enumerate}
-  \item Write the r.v.\ as values times indicators of disjoint events.
-  \item Multiply each value by its probability and add.
-\end{enumerate}
-\Caveats
-\cav{Not integrable if $\sum|x_i|P(A_i)=\infty$ (e.g.\ $P(\xi=2^k)=2^{-k}$).}
-\begin{cardex}
-$U$ uniform on $[0,1]$, $\eta=2\cdot\ind{U<0.3}-1\cdot\ind{U\ge0.7}$: $\E_P(\eta)=2(0.3)-1(0.3)=0.3$.
-\end{cardex}
-\end{card}
+\begin{mastercard}[label=card:Eh]{Expectation of any function of a random variable}
+Apply $h$ to each value, weight by its probability (or density), and add (or integrate). It exists when $\E_P|h(\xi)|<\infty$:
+\[
+  \boxed{\begin{gathered}\E_P\,h(\xi)=\sum_ih(x_i)\,P(\xi=x_i)\ \ \text{or}\ \ \int_{-\infty}^{\infty}h(x)f_\xi(x)\,dx;\\ \E_P\,h(\xi,\eta)=\iint h(x,y)f(x,y)\,dx\,dy.\end{gathered}}
+\]
+\begin{plugrows}
+  \plugrow{Probability as an expectation}{$h=\ind{x\in A}$}{$\E_P\ind{\xi\in A}=P(\xi\in A)$}{always}{die: $\E_P\ind{\xi\ge5}=\frac13$}
+  \plugrow{A payoff with finitely many values}{$h$ = value $x_i$ on event $A_i$ (disjoint)}{$\sum_ix_iP(A_i)$}{always}{$2\ind{U<0.3}-\ind{U\ge0.7}$: $0.6-0.3=0.3$}
+  \plugrow{Mean, second moment, variance}{$h=x$; $h=x^2$; $h=(x-\E_P\xi)^2$}{$\E_P\xi$; $\E_P\xi^2$; $\Var\xi=\E_P\xi^2-(\E_P\xi)^2$}{integrable}{$U$ on $[0,1]$: $\frac12$, $\frac13$, $\frac1{12}$}
+  \plugrow{Payoff above a level $K$}{$h=(x-K)^+$}{$\int_K^\infty(x-K)f(x)dx$}{integrable}{Exp$(1)$, $K=1$: $\int_1^\infty(x-1)e^{-x}dx=e^{-1}$}
+  \plugrow{Is $\xi$ integrable?}{$h=|x|$}{finite or not}{needed before $\E_P\xi$ exists}{$P(\xi=2^k)=2^{-k}$: $\sum2^k2^{-k}=\infty$, not integrable}
+  \plugrow{A function is not averaged by its value}{compare $\E_Ph(\xi)$ with $h(\E_P\xi)$}{different in general}{only equal for linear $h$}{die: $\E_P\frac1\xi=0.408$ but $\frac1{3.5}=0.286$}
+\end{plugrows}
+\end{mastercard}
 
-\begin{card}{2. Expectation of a function of \texorpdfstring{$\xi$}{xi}}
-\Formula
-$\E_P\,h(\xi)=\int h(x)f_\xi(x)\,dx$ (density) or $\sum_ih(x_i)P(\xi=x_i)$ (discrete).
-\UseWhen
-Any $\E_P$ of $\xi^2$, $e^\xi$, $(\xi-K)^+$, $1/\xi$, \dots
-\HowTo
-\begin{enumerate}
-  \item Find the density or the list of values of $\xi$.
-  \item Apply $h$ to each value, weight, and integrate or sum.
-\end{enumerate}
-\Caveats
-\cav{$\E_P\,h(\xi)\ne h(\E_P\xi)$ in general.}
-\begin{cardex}
-$U$ uniform on $[0,1]$: $\E_P(U^2)=\int_0^1x^2dx=\frac13$, not $(\frac12)^2$.
-\end{cardex}
-\end{card}
+\begin{mastercard}[label=card:var-lin]{Variance of any linear combination}
+Expand the square: every pair contributes its covariance, with $\Cov(X,X)=\Var X$:
+\[
+  \boxed{\begin{gathered}\Var\Big(\sum_{i=1}^na_iX_i+c\Big)=\sum_{i=1}^n\sum_{j=1}^na_ia_j\Cov(X_i,X_j),\\ \Cov(X,Y)=\E_P(XY)-\E_PX\,\E_PY.\end{gathered}}
+\]
+\begin{plugrows}
+  \plugrow{One variable}{$n=1$}{$\Var(aX+c)=a^2\Var X$ (the constant drops)}{always}{$\Var X=2$: $\Var(3X+7)=18$}
+  \plugrow{Two variables}{$n=2$}{$a^2\Var X+b^2\Var Y+2ab\Cov(X,Y)$}{always}{$\Var X=2$, $\Var Y=3$, $\Cov=1$: $\Var(2X-Y)=8+3-4=7$}
+  \plugrow{Covariance of combinations}{bilinearity}{$\Cov(\sum a_iX_i,\sum b_jY_j)=\sum_{i,j}a_ib_j\Cov(X_i,Y_j)$}{always}{$\Cov(X+Y,X-Y)=\Var X-\Var Y$}
+  \plugrow{Uncorrelated terms}{all $\Cov(X_i,X_j)=0$, $i\ne j$}{$\sum a_i^2\Var X_i$}{zero covariances; Chapter~4 gives the common case}{sum of $n$ fair dice: $n\cdot\frac{35}{12}$}
+  \plugrow{A bound (Cauchy--Schwarz)}{any two variables}{$(\E_P|XY|)^2\le\E_PX^2\,\E_PY^2$; so $(\E_P|X|)^2\le\E_PX^2$}{finite second moments}{$\E_P|W_t|\le\sqrt t$}
+\end{plugrows}
+\end{mastercard}
 
-\begin{card}{3. Variance and covariance}
-\Formula
-$\Var\xi=\E_P\xi^2-(\E_P\xi)^2$; $\Cov(\xi,\eta)=\E_P(\xi\eta)-\E_P\xi\,\E_P\eta$; $\Var(a\xi+b\eta)=a^2\Var\xi+b^2\Var\eta+2ab\Cov(\xi,\eta)$; $\Var(a\xi+c)=a^2\Var\xi$.
-\UseWhen
-Spread of a sum or a linear combination; later, Brownian motion at several times.
-\HowTo
-\begin{enumerate}
-  \item Expand by bilinearity.
-  \item Plug in each variance and covariance.
-\end{enumerate}
-\Caveats
-\cav{Constants shift the mean only; the coefficient is squared.}
-\begin{cardex}
-$\Var\xi=2$, $\Var\eta=3$, $\Cov=1$: $\Var(2\xi-\eta)=4\cdot2+3-4\cdot1=7$.
-\end{cardex}
-\end{card}
+\begin{mastercard}[label=card:normal-mgf]{Exponential moment of a normal (all normal moments)}
+For $\xi\sim N(\mu,\sigma^2)$ and any number $u$:
+\[
+  \boxed{\begin{gathered}\E_P\,e^{u\xi}=\exp\Big(u\mu+\tfrac12u^2\sigma^2\Big).\end{gathered}}
+\]
+Expanding $\E_Pe^{u(\xi-\mu)}=e^{u^2\sigma^2/2}$ in powers of $u$ gives every central moment.
+\begin{plugrows}
+  \plugrow{$\E_Pe^{\xi}$, $\E_Pe^{a\xi+b}$}{$u=1$; $u=a$ and multiply by $e^b$}{$e^{\mu+\sigma^2/2}$; $e^{b+a\mu+a^2\sigma^2/2}$}{always}{$N(0.1,0.04)$: $\E_Pe^\xi=e^{0.12}\approx1.1275$}
+  \plugrow{Variance of $e^\xi$}{$u=2$ minus the square of $u=1$}{$e^{2\mu+\sigma^2}(e^{\sigma^2}-1)$}{always}{$N(0,1)$: $e(e-1)\approx4.67$}
+  \plugrow{Central moments}{match powers of $u$ in $e^{u^2\sigma^2/2}=1+\frac{u^2\sigma^2}{2}+\frac{u^4\sigma^4}{8}+\cdots$}{$\E_P(\xi-\mu)^2=\sigma^2$, $\E_P(\xi-\mu)^4=3\sigma^4$, odd ones $0$}{the coefficient of $u^k$ equals $\E_P(\xi-\mu)^k/k!$}{$N(0,2)$: $\E_P\xi^4=3\cdot4=12$}
+  \plugrow{Raw moments}{expand $\xi=\mu+(\xi-\mu)$}{$\E_P\xi=\mu$, $\E_P\xi^2=\mu^2+\sigma^2$}{always}{$N(1,4)$: $\E_P\xi^2=5$}
+\end{plugrows}
+\end{mastercard}
 
-\begin{card}{4. Normal moments and the exponential moment}
-\Formula
-$Z\sim N(0,1)$: $\E_PZ=\E_PZ^3=0$, $\E_PZ^2=1$, $\E_PZ^4=3$, $\E_Pe^{uZ}=e^{u^2/2}$. $\xi\sim N(\mu,\sigma^2)$: $\E_Pe^{u\xi}=e^{u\mu+u^2\sigma^2/2}$; $\E_Pe^{\xi}=e^{\mu+\sigma^2/2}$.
-\UseWhen
-$\E_P$ of a power or an exponential of a normal; later, Brownian motion and stock prices.
-\HowTo
-\begin{enumerate}
-  \item Write the exponent as $u\xi$ with $\xi$ normal; read off $\mu$ and $\sigma^2$.
-  \item Plug into $e^{u\mu+u^2\sigma^2/2}$.
-\end{enumerate}
-\Caveats
-\cav{The $\frac12\sigma^2$ is always there: $\E_Pe^{\xi}\ne e^{\E_P\xi}$. Fourth moment of $N(0,\sigma^2)$ is $3\sigma^4$.}
-\begin{cardex}
-$\xi\sim N(0.1,0.04)$: $\E_Pe^{\xi}=e^{0.12}\approx1.1275$. \;$\xi\sim N(0,2)$: $\E_P\xi^4=3\cdot2^2=12$.
-\end{cardex}
-\end{card}
-
-\begin{card}{5. Markov and Chebyshev}
-\Formula
-$X\ge0$: $P(X\ge x)\le\E_P(X)/x$. \quad $P(|\xi-\mu|\ge\varepsilon)\le\sigma^2/\varepsilon^2$.
-\UseWhen
-``Bound the probability'', ``compare with the Markov bound'', only the mean (or variance) is known.
-\HowTo
-\begin{enumerate}
-  \item Markov: check $X\ge0$, divide the mean by the level.
-  \item Chebyshev: square the deviation and apply Markov to $(\xi-\mu)^2$.
-\end{enumerate}
-\Caveats
-\cav{Markov needs $X\ge0$. The bound can exceed 1 and be useless.}
-\begin{cardex}
-$X$ exponential, mean 1, $x=3$: exact $e^{-3}\approx0.050$, Markov $\frac13$. $X$ Bernoulli$(p)$, $x=1$: both equal $p$.
-\end{cardex}
-\end{card}
+\begin{mastercard}[label=card:markov]{Bounding a tail by an expectation}
+For any function $g\ge0$ and number $c>0$:
+\[
+  \boxed{\begin{gathered}P\big(g(X)\ge c\big)\le\frac{\E_P\,g(X)}{c}.\end{gathered}}
+\]
+\begin{plugrows}
+  \plugrow{Markov}{$g(x)=x$}{$P(X\ge c)\le\E_PX/c$}{$X\ge0$}{Exp, mean 1, $c=3$: exact $0.050$, bound $0.333$}
+  \plugrow{Chebyshev}{$g(x)=(x-\mu)^2$, $c=\varepsilon^2$}{$P(|X-\mu|\ge\varepsilon)\le\sigma^2/\varepsilon^2$}{finite variance}{$\sigma=1$, $\varepsilon=2$: $\le\frac14$}
+  \plugrow{When is it exact?}{$X$ takes only the values $0$ and $c$}{equality}{$g(X)$ is $0$ or exactly $c$}{Bernoulli$(p)$, $c=1$: both sides $p$}
+\end{plugrows}
+\end{mastercard}
