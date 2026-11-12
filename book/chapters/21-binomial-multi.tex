@@ -111,17 +111,16 @@ Chapter~22 lets the number of periods grow with $u,d$ shrinking, and $Z_T$ becom
 \formulasheet{fs:binomial-multi}
 
 \begin{mastercard}[label=card:tree]{Pricing and hedging in the $T$-period binomial tree}
-$S_t=uS_{t-1}$ or $dS_{t-1}$, bond $(1+r)^t$, $p^*=\frac{1+r-d}{u-d}$, claim $g(S_T)$; $V_t[s]$ = value at time $t$ when $S_t=s$:
+\cref{card:finite}, one period at a time, from the payoff backwards. $S_t=uS_{t-1}$ or $dS_{t-1}$, $p^*=\frac{1+r-d}{u-d}$, a claim pays $g(S_T)$; $V_t[s]$ is the value at time $t$ when $S_t=s$:
 \[
-  \boxed{\begin{gathered}V_t[s]=\frac{1}{(1+r)^{T-t}}\sum_{j=0}^{T-t}\binom{T-t}{j}(p^*)^j(1-p^*)^{T-t-j}g\big(u^jd^{T-t-j}s\big)\\=\frac{p^*V_{t+1}[us]+(1-p^*)V_{t+1}[ds]}{1+r};\\
-  \text{hold over period }t+1:\quad \Delta=\frac{V_{t+1}[us]-V_{t+1}[ds]}{us-ds}\ \text{shares},\qquad V_t[s]-\Delta s\ \text{in the bond}.\end{gathered}}
+  \boxed{\;V_t[s]=\frac{p^*\,V_{t+1}[us]+(1-p^*)\,V_{t+1}[ds]}{1+r},\qquad V_T[s]=g(s).\;}
 \]
 \begin{plugrows}
-  \plugrow{Price today}{$t=0$, $s=S_0$; either the sum or the backward step at every node}{$V_0$}{$d<1+r<u$; European claims $g(S_T)$}{$S_0=100$, $u=1.2$, $d=0.8$, $r=0.05$, $T=2$, $K=100$: call $15.59$}
+  \plugrow{Price today}{step back to $t=0$; or all $T$ steps at once}{$V_0=\dfrac{1}{(1+r)^T}\sum_{j=0}^{T}\binom Tj(p^*)^j(1-p^*)^{T-j}g\big(u^jd^{T-j}S_0\big)$}{$d<1+r<u$; European claims $g(S_T)$}{$S_0=100$, $u=1.2$, $d=0.8$, $r=0.05$, $T=2$, $K=100$: call $15.59$}
   \plugrow{One period}{$T=1$}{the one-step formulas: \cref{card:finite}, row 1}{one period}{$S_0=1$, $u=1.75$, $d=0.5$, $r=0.25$, $K=1$: $0.36$}
   \plugrow{A call: only the ``in the money'' terms}{$g=(s-K)^+$; $m$ = least $j$ with $u^jd^{T-j}S_0>K$}{$C=S_0\sum_{j\ge m}\binom Tj\hat p^{\,j}(1-\hat p)^{T-j}-\dfrac{K}{(1+r)^T}\sum_{j\ge m}\binom Tj(p^*)^j(1-p^*)^{T-j}$, $\hat p=\dfrac{up^*}{1+r}$}{call, $g$ increasing; $\hat p$ is again a probability}{same: $m=2$, $\hat p=\frac{1.2\cdot0.625}{1.05}=0.714$: $100(0.510)-\frac{100}{1.1025}(0.391)=15.59$}
   \plugrow{A put}{$g=(K-s)^+$, or \cref{card:parity} (parity)}{$P=C-S_0+K(1+r)^{-T}$}{European}{same: $P=15.59-100+90.70=6.29$}
-  \plugrow{The hedge at a node}{the second line of the box}{shares and bond money held over the next period}{use values one step ahead}{time $0$: $\Delta_1=0.655$, bond $-49.89$; after an up-move: $\Delta_2=0.917$, bond $-83.81$}
+  \plugrow{The hedge at a node}{the copy of \cref{card:finite}, row 1, at the node}{$\Delta=\dfrac{V_{t+1}[us]-V_{t+1}[ds]}{us-ds}$ shares and $V_t[s]-\Delta s$ in the bond, held over the next period}{use values one step ahead}{time $0$: $\Delta_1=0.655$, bond $-49.89$; after an up-move: $\Delta_2=0.917$, bond $-83.81$}
   \plugrow{Is the strategy self-financing?}{\cref{card:selffin}, row 2: value of the old holding at the new price $=$ value of the new holding}{yes for the backward-induction hedge}{compare at the same price}{$0.655\cdot120-49.89\cdot1.05=26.19=V_1[120]$}
   \plugrow{A discounted martingale}{$\E_{P^*}(S_{t+1}\given\F_t)=(1+r)S_t$}{$(1+r)^{-t}S_t$ and $(1+r)^{-t}V_t$ are $P^*$-martingales}{self-financing strategies}{$0.625(120)+0.375(80)=105=1.05\cdot100$}
 \end{plugrows}
