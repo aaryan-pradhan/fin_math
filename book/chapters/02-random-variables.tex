@@ -170,7 +170,7 @@ $\xi$ = number of heads: $P(\xi=0)=\frac14$ ($TT$), $P(\xi=1)=\frac12$ ($HT,TH$)
   \draw[trapc,thick,{Latex}-{Latex}] (axis cs:1.15,0.25)--(axis cs:1.15,0.75) node[midway,right,font=\scriptsize] {jump $=P(\xi=1)=\frac12$};
 \end{axis}
 \end{tikzpicture}
-\picnote{A step function: flat between values, jumping at each value by that value's probability. The filled dot shows $F$ takes the upper value at a jump (right-continuity).}
+\picnote{A staircase: flat between values, jumping at each value by that value's probability. The filled dot shows $F$ takes the upper value at a jump (right-continuity).}
 \end{pic}
 
 \begin{result}[Properties of a distribution function]
@@ -388,11 +388,11 @@ $\xi\sim N(\mu,\sigma^2)$: $P(\xi\le x)=\Phi\big(\frac{x-\mu}{\sigma}\big)$. $\P
 Any probability for a normal r.v.\ (later: Brownian motion, Black--Scholes).
 \HowTo
 \begin{enumerate}
-  \item Standardise: subtract $\mu$, divide by $\sigma$ (not $\sigma^2$).
+  \item Standardise: subtract $\mu$, divide by $\sigma$.
   \item Read $\Phi$; use symmetry for negative arguments and for ``$>$''.
 \end{enumerate}
 \Caveats
-\cav{Divide by the standard deviation $\sigma$, never by the variance $\sigma^2$.}
+\cav{Divide by $\sigma$, never by $\sigma^2$.}
 \begin{cardex}
 $\xi\sim N(2,9)$: $P(\xi\le5)=\Phi(1)\approx0.841$; $P(\xi>-1)=1-\Phi(-1)=\Phi(1)\approx0.841$.
 \end{cardex}
