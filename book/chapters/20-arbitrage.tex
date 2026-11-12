@@ -1,0 +1,189 @@
+\chapter{Arbitrage and risk-neutral pricing}
+\label{ch:arbitrage}
+
+\begin{question}
+A stock will be worth one of two prices tomorrow. What is the fair price today of an option on it, and why can no other price survive?
+\end{question}
+
+\begin{whatfor}
+\begin{itemize}
+  \item Discounting: money later is worth less than money now.
+  \item Prices an option in a one-period, two-price market by building a riskless holding, and finds the only price that allows no sure profit.
+  \item Gets the same price from the risk-neutral probability, under which every bet has expected return $0$.
+  \item States the arbitrage theorem for any finite experiment.
+\end{itemize}
+\skipline{fs:arbitrage}
+\end{whatfor}
+
+\begin{prereq}
+From Part~0: probability on a finite set of outcomes, expectation. From Chapter~5: the binomial tree and the martingale probability $p=\frac{1-d}{u-d}$. (This chapter needs nothing from Parts~2--3.)
+\end{prereq}
+
+%=====================================================================
+\section{Money now and money later}
+
+An amount $v$ received at time $t$ in the future is not worth as much as $v$ received now: money now can earn interest. With a constant rate $\alpha$, the amount $v$ at time $t$ is worth $v\,e^{-\alpha t}$ today. The number $\alpha$ is the \dfn{discount rate} and $e^{-\alpha t}$ the \dfn{discount factor}. For example Rs~100 a year from now, at $\alpha=0.1$, is worth $100e^{-0.1}\approx\text{Rs }90.48$ today.
+
+In this chapter all prices are quoted in present value, so no further discounting is needed.
+
+%=====================================================================
+\section{One stock, one option, two prices}
+
+\begin{setup}[The one-period market]
+A stock costs $100$ today (time $0$). At time $1$ its price is either $200$ or $50$. An \dfn{option} costs $C$ today and gives the right, but not the obligation, to buy one share at time $1$ for the \dfn{strike price} $K=150$.
+\end{setup}
+
+At time $1$ the option is worth $200-150=50$ if the price is $200$ (use it), and $0$ if the price is $50$ (buying at $150$ a share worth $50$ would be a loss, so do not use it).
+
+\begin{pic}
+\begin{tikzpicture}[x=3cm,y=1.1cm,every node/.style={font=\small}]
+  \node[draw,rounded corners,fill=defc!8] (s0) at (0,0) {stock $100$};
+  \node[draw,rounded corners,fill=thmc!10] (su) at (1,1) {stock $200$};
+  \node[draw,rounded corners,fill=trapc!8] (sd) at (1,-1) {stock $50$};
+  \draw[-{Latex}] (s0)--(su); \draw[-{Latex}] (s0)--(sd);
+  \node[anchor=west] at (1.35,1) {option pays $200-150=50$};
+  \node[anchor=west] at (1.35,-1) {option pays $0$};
+  \node[prec] at (0,-1.8) {$t=0$}; \node[prec] at (1,-1.8) {$t=1$};
+  \node[anchor=east] at (-0.3,0) {option costs $C$};
+\end{tikzpicture}
+\picnote{The whole market: one stock with two possible prices tomorrow, and one option whose payoff is fixed by the stock price.}
+\end{pic}
+
+\paragraph{A holding with no risk.} Buy $x$ shares and $y$ options at time $0$ (a negative number means selling). At time $1$ the holding is worth
+\[
+  \text{Value}=\begin{cases}200x+50y,&\text{price }200,\\ 50x,&\text{price }50.\end{cases}
+\]
+Choose $y$ so the two values are equal: $200x+50y=50x$ gives $y=-3x$. Then the holding is worth $50x$ whatever happens. It cost $100x+Cy=100x-3xC$, so
+\[
+  \text{gain}=50x-(100x-3xC)=x\,(3C-50).
+\]
+If $3C>50$, take $x>0$; if $3C<50$, take $x<0$. Either way the gain is positive \emph{for sure}.
+
+\begin{example}[Two option prices, two sure profits]
+\label{ex:arb}
+One overpriced and one underpriced option.
+\begin{itemize}
+  \item $C=20$: buy $1$ share, sell $3$ options ($x=1$, $y=-3$). Cost $100-60=40$; value at time $1$ is $50$ for sure. Profit Rs~$10$, with no risk.
+  \item $C=15$: sell $1$ share, buy $3$ options ($x=-1$, $y=3$). You receive $100-45=55$; at time $1$ you owe $50$. Profit Rs~$5$, with no risk.
+\end{itemize}
+\end{example}
+
+\begin{definition}[Arbitrage]
+An \dfn{arbitrage} is a way of buying and selling that is sure to make a profit: a risk-free profit.
+\end{definition}
+
+The only option price that allows no arbitrage is $3C=50$, i.e.\ $C=\frac{50}{3}\approx16.67$.
+
+\begin{pic}
+\begin{tikzpicture}
+\begin{axis}[width=9cm,height=4.4cm,xmin=10,xmax=25,ymin=-12,ymax=12,xlabel={option price $C$},ylabel={sure gain},domain=10:25,legend style={font=\scriptsize,at={(0.02,0.98)},anchor=north west}]
+  \addplot[defc,very thick] {3*x-50}; \addlegendentry{$x=1$: buy share, sell 3 options}
+  \addplot[trapc,very thick] {50-3*x}; \addlegendentry{$x=-1$: sell share, buy 3 options}
+  \addplot[only marks,mark=*] coordinates {(50/3,0)};
+  \node[font=\scriptsize,anchor=north] at (axis cs:50/3,-1) {$C=\frac{50}3$};
+  \addplot[prec,dotted] {0};
+\end{axis}
+\end{tikzpicture}
+\picnote{At every option price except $\frac{50}{3}$ one of the two schemes makes a sure profit. Only at $C=\frac{50}{3}$ do both gains vanish.}
+\end{pic}
+
+%=====================================================================
+\section{The risk-neutral probability}
+
+Look at the same market through probabilities. Suppose the price goes to $200$ with probability $p$ and to $50$ with probability $1-p$. Ask for a $p$ under which each bet has expected return $0$.
+\begin{itemize}
+  \item Stock: the return on one share is $100$ or $-50$. $100p-50(1-p)=0$, i.e.\ $100=200p+50(1-p)$, gives $p=\frac13$. Today's price equals the expected price tomorrow.
+  \item Option: the return is $50-C$ or $-C$. $(50-C)\frac13-C\cdot\frac23=0$ gives $C=50\cdot\frac13=\frac{50}{3}$.
+\end{itemize}
+The same price as the no-arbitrage argument.
+
+\begin{definition}[Risk-neutral probability]
+A probability on the outcomes under which every available bet has expected return $0$ (equivalently, every price today is the expected value of its payoff) is a \dfn{risk-neutral probability}.
+\end{definition}
+
+So: \emph{the no-arbitrage price of the option is the expected payoff under the risk-neutral probability.} The real-world probability of an up-move never entered. With $p^*=\frac13$ here, $C=\E_{P^*}(\text{payoff})=\frac13\cdot50$.
+
+\paragraph{Three possible prices.} Let the stock go from $100$ to $300$, $200$ or $50$ with probabilities $p_1,p_2,1-p_1-p_2$ (all positive), and keep $K=150$, so the option pays $150$, $50$, $0$. The two conditions become
+\[
+  100=300p_1+200p_2+50(1-p_1-p_2)\quad(\text{i.e. }5p_1+3p_2=1),\qquad C=150p_1+50p_2 .
+\]
+One equation, two unknowns: many risk-neutral probabilities. Substituting $p_2=\frac{1-5p_1}{3}$ gives $C=\frac{50}{3}+\frac{200}{3}p_1$ with $0<p_1<\frac15$, so every $C$ in $\big(\frac{50}3,\,30\big)$ is consistent with no arbitrage. With three outcomes and only two assets, the option is not pinned down to one price. (Chapter~23 explains this: the market is not complete.)
+
+%=====================================================================
+\section{The arbitrage theorem}
+
+\begin{setup}[A general betting experiment]
+An experiment has outcomes $j\in\{1,\dots,m\}$. There are $n$ wagers; a unit bet on wager $i$ returns $r_i(j)$ if the outcome is $j$. A \dfn{betting scheme} $x=(x_1,\dots,x_n)$ bets $x_i$ on wager $i$ and returns $\sum_ix_ir_i(j)$ when the outcome is $j$.
+\end{setup}
+
+Think of the returns as a table: row $i$ is a wager, column $j$ an outcome. For the two-price market with $C=20$: the stock row is $(100,-50)$ and the option row is $(30,-20)$.
+
+\begin{theorem}[Arbitrage theorem]
+\label{thm:arbitrage}
+Exactly one of the following holds:
+\begin{enumerate}[label=(\roman*)]
+  \item (\emph{no arbitrage}) there is a probability vector $p=(p_1,\dots,p_m)$, $p_j\ge0$, $\sum_jp_j=1$, with $\displaystyle\sum_{j=1}^mp_j\,r_i(j)=0$ for every wager $i$;
+  \item (\emph{arbitrage}) there is a betting scheme $x$ with $\displaystyle\sum_{i=1}^nx_i\,r_i(j)>0$ for every outcome $j$.
+\end{enumerate}
+\end{theorem}
+\noproof
+
+Read (i) across each row (every wager has expected return $0$ under $p$) and (ii) down each column (every outcome gives a positive total). Both cannot hold: if they did, averaging the column totals of (ii) with the weights $p_j$ would give a positive number, but by (i) it equals $\sum_ix_i\sum_jp_jr_i(j)=0$.
+
+\begin{example}[Checking the theorem]
+With $C=20$: $x=(1,-3)$ gives $10$ in both columns, so (ii) holds. And (i) fails: the stock row forces $p=(\frac13,\frac23)$, but then the option row gives $30\cdot\frac13-20\cdot\frac23=-\frac{10}3\ne0$. With $C=\frac{50}3$, $p=(\frac13,\frac23)$ satisfies (i), so no sure-win scheme exists.
+\end{example}
+
+%=====================================================================
+\formulasheet{fs:arbitrage}
+
+\begin{card}{1. No-arbitrage option price, one period}
+\Formula
+Stock $S_0\to S_u$ or $S_d$ (present values). $p^*=\dfrac{S_0-S_d}{S_u-S_d}$; option price $C=p^*(S_u-K)^++(1-p^*)(S_d-K)^+$.
+\UseWhen
+``For which $c$ is there no sure win?'', ``price the option by no arbitrage''.
+\HowTo
+\begin{enumerate}
+  \item Solve $S_0=p^*S_u+(1-p^*)S_d$.
+  \item Payoffs $(S_u-K)^+$, $(S_d-K)^+$; average with $p^*$.
+\end{enumerate}
+\Caveats
+\cav{Use $p^*$, not the real-world probability. Here prices are in present value; with interest see Chapter~22.}
+\begin{cardex}
+$S_0=75$, $S_u=200$, $S_d=50$, $K=120$: $p^*=\frac16$, $C=\frac{80}6\approx13.33$. $S_0=50$, $S_u=100$, $S_d=25$, $K=85$: $p^*=\frac13$, $C=5$.
+\end{cardex}
+\end{card}
+
+\begin{card}{2. Building the arbitrage}
+\Formula
+Buy $x$ shares and $y$ options with $y=-x\,\dfrac{S_u-S_d}{(S_u-K)^+-(S_d-K)^+}$; sure gain $=x\,(\text{constant})\,(C-C^*)$.
+\UseWhen
+``Show an arbitrage exists when $C=\dots$'', ``construct the sure-win scheme''.
+\HowTo
+\begin{enumerate}
+  \item Equate the two time-1 values to get $y$ in terms of $x$.
+  \item Gain $=$ value $-$ cost; choose the sign of $x$ to make it positive.
+\end{enumerate}
+\Caveats
+\cav{If the option is overpriced, sell options and buy stock; if underpriced, the reverse.}
+\begin{cardex}
+$100\to200/50$, $K=150$: $y=-3x$, gain $x(3C-50)$. $C=20$: buy 1 share, sell 3 options, gain $10$.
+\end{cardex}
+\end{card}
+
+\begin{card}{3. Arbitrage theorem and several outcomes}
+\Formula
+Either a probability $p$ makes every wager's expected return $0$, or some scheme wins in every outcome; never both. Three outcomes, two assets: a whole interval of no-arbitrage option prices.
+\UseWhen
+``State the arbitrage theorem'', ``find the range of option prices with no arbitrage''.
+\HowTo
+\begin{enumerate}
+  \item Write the stock condition (today's price = expected price) as an equation in the $p_j$.
+  \item Express $C=\E_p(\text{payoff})$ in one free parameter; let it range over values keeping all $p_j>0$.
+\end{enumerate}
+\Caveats
+\cav{All $p_j$ must be strictly between 0 and 1 and sum to 1.}
+\begin{cardex}
+$100\to300/200/50$, $K=150$: $5p_1+3p_2=1$, $C=\frac{50}3+\frac{200}3p_1$, $p_1\in(0,\frac15)$: $C\in(16.67,\,30)$.
+\end{cardex}
+\end{card}

@@ -90,5 +90,24 @@
 \renewcommand{\indexname}{Glossary}
 \newcommand{\dfn}[1]{\textbf{#1}\index{#1}}
 
+
+% ---------- formula sheets (SKILL.md §2a) ----------
+% A card: one general formula, then numbered plug-in rows. \begin{mastercard}[label=card:x]{Title} \[\boxed{...}\] \begin{plugrows} \plugrow{..}{..}{..}{..}{..} \end{plugrows} \end{mastercard}
+\newtcolorbox[auto counter,number within=chapter,crefname={Card}{Cards}]{mastercard}[2][]{slm,colback=white,colframe=defc!75,
+  title={$\bigstar$\ Card~\thetcbcounter: #2},fonttitle=\bfseries,coltitle=white,colbacktitle=defc!80,#1}
+\newlist{plugrows}{enumerate}{1}
+\setlist[plugrows]{label=\textbf{Row \arabic*.},ref=\arabic*,leftmargin=*,align=left,itemsep=0.55em,topsep=0.4em}
+% \plugrow{given / situation}{what to plug}{result}{valid when}{numbers}
+\newcommand{\plugrow}[5]{\item \textbf{#1}\par\nobreak
+  \textit{Plug:} #2\ \ $\Longrightarrow$\ \ #3\par\nobreak
+  {\small\color{trapc!85!black}\textit{Valid when:} #4}\par\nobreak
+  {\small\color{thmc!80!black}\textit{Numbers:} #5}}
+% A problem, solved by plugging into a card: \uses{card:x}{3} prints "Card 12.1, row 3".
+\declaretheorem[style=slmthm,sibling=theorem]{problem}
+\tcolorboxenvironment{problem}{slm,colback=exc!4,colframe=exc!60}
+\makeatletter\def\theHproblem{\thechapter.\arabic{theorem}}\makeatother
+\crefname{problem}{Problem}{Problems}
+\newcommand{\uses}[2]{\par\smallskip{\color{defc}$\bigstar$\ \textbf{Uses \cref{#1}, row~#2.}}\par}
+
 \InputIfFileExists{notation}{}{}
 

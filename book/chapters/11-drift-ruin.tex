@@ -182,7 +182,7 @@ Let $B\to\infty$ in \cref{thm:exit-drift}. For $\mu<0$, $e^{-2\mu B}\to\infty$, 
 
 \begin{example}[When to sell?]
 \label{ex:sell}
-A stock price, measured from today's level, moves as $B(t)=\mu t+W(t)$ with $\mu=-d<0$. You hold an option to buy at price $A>0$ (above today's level) and will exercise when the price first reaches some level $x>A$, gaining $x-A$. Which $x$ maximises the expected gain?
+A stock price, measured from today's level, moves as $B(t)=\mu t+W(t)$ with $\mu=-d<0$. You hold the right to buy at price $A>0$ (above today's level) and will exercise when the price first reaches some level $x>A$, gaining $x-A$. Which $x$ maximises the expected gain?
 \begin{steps}
   \item $P(\text{price ever reaches }x)=e^{2\mu x}=e^{-2dx}$, so the expected gain is $f(x)=(x-A)e^{-2dx}$.
   \item $f'(x)=e^{-2dx}\big[1-2d(x-A)\big]=0$ gives $x^*=A+\frac{1}{2d}$.
