@@ -1,0 +1,127 @@
+\chapter{Value at risk}
+\label{ch:var}
+
+\begin{question}
+How large a loss should a portfolio expect on a bad day, and how is that number computed from the returns of the assets in it?
+\end{question}
+
+\begin{whatfor}
+\begin{itemize}
+  \item States value at risk as a quantile of the loss, and names the three ways to compute it.
+  \item Computes it by the variance--covariance method: the portfolio's return is a weighted sum, so its variance comes from the covariance matrix.
+  \item Works the lecture's three-asset portfolio (a swap, a bond and a stock) through to a dollar figure at $95\%$ and $99\%$.
+\end{itemize}
+\skipline{fs:var}
+\end{whatfor}
+
+\begin{prereq}
+From \cref{ch:rv}: normal probabilities and quantiles (\cref{card:normal-prob}, row 5). From \cref{ch:expectation}: covariance and the variance of a linear combination (\cref{card:var-lin}).
+\end{prereq}
+
+%=====================================================================
+\section{A quantile of the loss}
+
+\begin{setup}[A portfolio over one day]
+A portfolio is worth $V$ today. Over the next day it loses $L$ (a gain is a negative loss). We pick a level $\alpha$, usually $95\%$ or $99\%$.
+\end{setup}
+
+\begin{definition}[Value at risk]
+\label{def:var}
+The value at risk at level $\alpha$ is the loss that is exceeded only with probability $1-\alpha$: the number $v$ with
+\[
+  P(L\le v)=\alpha,\qquad\text{equivalently}\qquad P(L>v)=1-\alpha.
+\]
+\end{definition}
+
+So ``the one-day $99\%$ value at risk is $v$'' means: on $99$ days out of $100$ the loss is at most $v$. It says nothing about how large the loss is on the remaining day.
+
+\begin{pic}
+\begin{tikzpicture}
+\begin{axis}[width=10cm,height=4.6cm,xmin=-4,xmax=4,ymin=0,ymax=0.45,xtick={0,1.645},xticklabels={$0$,$v$},ytick=\empty,xlabel={daily loss $L$},axis lines=left,samples=80]
+  \addplot[fill=trapc!35,draw=none,domain=1.645:4] {exp(-x^2/2)/sqrt(2*pi)} \closedcycle;
+  \addplot[defc,very thick,domain=-4:4] {exp(-x^2/2)/sqrt(2*pi)};
+  \node[font=\small,anchor=west] at (axis cs:1.9,0.12) {area $1-\alpha$};
+  \node[font=\small] at (axis cs:-0.3,0.2) {area $\alpha$};
+\end{axis}
+\end{tikzpicture}
+\picnote{The density of the daily loss. The value at risk $v$ cuts off the worst $1-\alpha$ of days (shaded).}
+\end{pic}
+
+There are three standard ways to find $v$.
+\begin{itemize}
+  \item The \dfn{variance--covariance method} (or delta--normal method): assume the assets' returns are jointly normal, compute the portfolio's standard deviation from their covariances, and read $v$ off the normal quantile. The rest of this chapter does this.
+  \item \dfn{Historical simulation}: apply each past day's observed returns to today's portfolio, giving a list of possible losses, and take the loss exceeded on a fraction $1-\alpha$ of those days.
+  \item \dfn{Monte Carlo simulation}: draw many random days of returns from a fitted model, revalue the portfolio on each, and take the same empirical quantile.
+\end{itemize}
+
+%=====================================================================
+\section{The variance--covariance method}
+
+\begin{setup}[Weights and returns]
+The portfolio holds $n$ assets, worth $V_1,\dots,V_n$, with $V=\sum_iV_i$. The weight of asset $i$ is $w_i=V_i/V$, so $\sum_iw_i=1$. Asset $i$ has daily return $R_i$, with standard deviation $\sigma_i$, covariances $\sigma_{ij}=\Cov(R_i,R_j)$ (so $\sigma_{ii}=\sigma_i^2$) and correlations $\rho_{ij}=\sigma_{ij}/(\sigma_i\sigma_j)$. The returns are jointly normal with daily mean about $0$.
+\end{setup}
+
+\begin{result}[Value at risk of a portfolio]
+\label{res:pvar}
+The portfolio's daily return $R=\sum_iw_iR_i$ has
+\[
+  \Var R=\sum_i\sum_jw_iw_j\sigma_{ij}=\sum_i\sum_jw_iw_j\sigma_i\sigma_j\rho_{ij},
+\]
+and its value at risk at level $\alpha$ is
+\[
+  v=z_\alpha\,V\sqrt{\Var R},\qquad\Phi(z_\alpha)=\alpha\quad(z_{0.95}=1.645,\ z_{0.99}=2.326).
+\]
+\end{result}
+\begin{proof}
+The dollar loss is $L=-VR$.
+\begin{steps}
+  \item Each asset's dollar gain is $V_iR_i=Vw_iR_i$, so the portfolio gains $V\sum_iw_iR_i=VR$.
+  \item $R$ is a linear combination, so \cref{card:var-lin} gives $\Var R=\sum_{i,j}w_iw_j\sigma_{ij}$.
+  \item $R$ is normal with mean $0$ (jointly normal returns, \cref{card:mvn}), so $L=-VR\sim N\big(0,V^2\Var R\big)$.
+  \item \Cref{card:normal-prob}, row 5, with mean $0$ and standard deviation $V\sqrt{\Var R}$: $v=0+z_\alpha V\sqrt{\Var R}$. \qedhere
+\end{steps}
+\end{proof}
+
+%=====================================================================
+\section{A three-asset portfolio}
+
+\begin{example}[A swap, a bond and a stock]
+\label{ex:var3}
+A portfolio worth $\$23$ million holds three assets:
+\begin{itemize}
+  \item a currency swap, now worth $\$2$ million because of exchange-rate moves since it was entered into: $w_1=0.087$;
+  \item a bond with market value $\$17$ million: $w_2=0.739$;
+  \item $10{,}000$ shares of a stock, worth $\$4$ million: $w_3=0.174$.
+\end{itemize}
+The covariance matrix of the daily returns (swap, bond, stock) is
+\[
+  \Sigma=\begin{pmatrix}0.0009&-0.00008&0.00007\\-0.00008&0.0004&-0.0001\\0.00007&-0.0001&0.003\end{pmatrix}.
+\]
+Here is the calculation, one term at a time.
+\begin{steps}
+  \item Squares: $w_1^2\sigma_1^2=0.087^2(0.0009)=0.0000068$; $w_2^2\sigma_2^2=0.739^2(0.0004)=0.0002185$; $w_3^2\sigma_3^2=0.174^2(0.003)=0.0000908$.
+  \item Cross terms (each pair twice): $2w_1w_2\sigma_{12}=2(0.087)(0.739)(-0.00008)=-0.0000103$; $2w_1w_3\sigma_{13}=2(0.087)(0.174)(0.00007)=0.0000021$; $2w_2w_3\sigma_{23}=2(0.739)(0.174)(-0.0001)=-0.0000257$.
+  \item Add: $\Var R=0.0002822$, so $\sqrt{\Var R}=0.0168$, a daily standard deviation of $1.68\%$.
+  \item One standard deviation of dollar loss: $0.0168\times\$23\text{ million}=\$386{,}375$.
+  \item $95\%$: $v=1.645\times\$386{,}375=\$635{,}587$. $99\%$: $v=2.326\times\$386{,}375=\$898{,}709$.
+\end{steps}
+So there is a $5\%$ chance of losing more than $\$635{,}587$ in one day, and a $1\%$ chance of losing more than $\$898{,}709$.
+\end{example}
+
+The bond dominates: it is $74\%$ of the value, and its term $0.0002185$ is most of the variance. The negative covariances pull the total down; that is diversification.
+
+%=====================================================================
+\formulasheet{fs:var}
+
+\begin{mastercard}[label=card:pvar]{Value at risk of a portfolio (variance--covariance)}
+The loss exceeded only with probability $1-\alpha$: a normal quantile (\cref{card:normal-prob}, row 5) of the portfolio's dollar loss, whose variance comes from \cref{card:var-lin} with weights $w_i=V_i/V$:
+\[
+  \boxed{\;v_\alpha=z_\alpha\,V\sqrt{\sum_i\sum_jw_iw_j\sigma_{ij}},\qquad\sigma_{ij}=\sigma_i\sigma_j\rho_{ij},\quad\Phi(z_\alpha)=\alpha.\;}
+\]
+\begin{plugrows}
+  \plugrow{One asset}{\pstep{Box with $n=1$, $w_1=1$: $\sum\sum w_iw_j\sigma_{ij}=\sigma^2$.}\pstep{Square root: $\sigma$.}}{$v_\alpha=z_\alpha V\sigma$}{daily mean return about $0$}{$\$1$ million in a stock with daily $\sigma=2\%$, $\alpha=0.95$: $1.645(0.02)(1{,}000{,}000)=\$32{,}900$}
+  \plugrow{Two assets with correlation $\rho$}{\pstep{Box with $n=2$: the double sum has $w_1^2\sigma_1^2$, $w_2^2\sigma_2^2$, and the pair twice, $2w_1w_2\sigma_1\sigma_2\rho$.}\pstep{Square root, times $z_\alpha V$.}}{$v_\alpha=z_\alpha V\sqrt{w_1^2\sigma_1^2+w_2^2\sigma_2^2+2w_1w_2\sigma_1\sigma_2\rho}$}{$-1\le\rho\le1$}{$V=\$10$ million, $w=(0.6,0.4)$, $\sigma=(1\%,2\%)$, $\rho=0.3$: $0.000036+0.000064+0.0000288=0.0001288$, root $0.01135$; $99\%$: $2.326(0.01135)(10^7)=\$263{,}978$}
+  \plugrow{Three assets from a covariance matrix}{\pstep{Box: three squares $w_i^2\sigma_{ii}$ and three pairs $2w_iw_j\sigma_{ij}$.}\pstep{Add, take the square root, multiply by $V$: one standard deviation of dollar loss.}\pstep{Multiply by $z_\alpha$.}}{$v_\alpha=z_\alpha\times$(one s.d.\ of dollar loss)}{weights add to $1$; use covariances, not correlations, in $\sigma_{ij}$}{swap, bond, stock of \cref{ex:var3}: $\Var R=0.0002822$, s.d.\ $1.68\%$ of $\$23$ million $=\$386{,}375$; $95\%$: $\$635{,}587$; $99\%$: $\$898{,}709$}
+  \plugrow{Change the level}{\pstep{Box: $v_\alpha$ is proportional to $z_\alpha$; nothing else depends on $\alpha$.}\pstep{Divide.}}{$v_{\alpha'}=v_\alpha\cdot z_{\alpha'}/z_\alpha$}{same portfolio and horizon}{$\frac{z_{0.99}}{z_{0.95}}=\frac{2.326}{1.645}=1.414$: $\$635{,}587\times1.414=\$898{,}709$}
+\end{plugrows}
+\end{mastercard}
