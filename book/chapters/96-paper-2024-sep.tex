@@ -1,0 +1,326 @@
+\chapter{September 2024 paper}
+\label{ch:paper-2024-sep}
+
+\begin{whatfor}
+The mid-semester paper of September 2024 (2 hours, 30 marks), solved question by question. As in the April 2024 paper, every solution names its card and row, says what the card says in plain words, works one substitution per step, and ends with the answer.
+\end{whatfor}
+
+%=====================================================================
+\section{Question 1: short answers}
+
+Throughout, $\{W_t,\ t\ge0\}$ is a standard Wiener process. The answer table for the first page:
+
+\begin{center}
+\begin{tabular}{@{}cl@{\qquad}cl@{}}
+\toprule
+Part & Answer & Part & Answer\\
+\midrule
+(a) & $c=\frac{40}3\approx13.33$ & (d) & $4.00$\\
+(b) & $0$ & (e) & $-\sin W_t\,dW_t-\frac12\cos W_t\,dt$\\
+(c) & $\frac13\approx0.33$ & (f) & $1.00$\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{problem}[Q1(a)]
+A stock sells for Rs $75$ today. After one period its price (in present value) is either Rs $200$ or Rs $50$. An option to buy $y$ units at time 1 for the (present value) price $120y$ costs $cy$. What must $c$ be for there to be no sure win?
+\uses{card:finite}{2}
+\cardsays No sure win means there is a risk-neutral probability $p^*$ that prices everything as an average. When prices are already in present value, nothing is discounted, so the stock itself fixes $p^*$, and the option costs its average payoff:
+\[
+p^*=\frac{S_0-S_d}{S_u-S_d},\qquad c=p^*(S_u-K)^++(1-p^*)(S_d-K)^+.
+\]
+\working
+\begin{steps}
+\item Read off: $S_0=75$, $S_u=200$, $S_d=50$, $K=120$ per unit.
+\item The stock fixes $p^*$: $p^*=\frac{75-50}{200-50}=\frac{25}{150}=\frac16$.
+\item Payoff of one option: up, $(200-120)^+=80$; down, $(50-120)^+=0$.
+\item Average: $c=\frac16(80)+\frac56(0)=\frac{80}6=\frac{40}3$.
+\item Why any other $c$ gives a sure win. The option is copied by $\frac{80}{150}=\frac8{15}$ of a share and borrowing $\frac8{15}(50)=\frac{80}3$: it pays $\frac8{15}(200)-\frac{80}3=80$ up and $\frac8{15}(50)-\frac{80}3=0$ down, and costs $\frac8{15}(75)-\frac{80}3=40-\frac{80}3=\frac{40}3$. If $c<\frac{40}3$, buy the option and sell the copy: you collect $\frac{40}3-c>0$ today and owe nothing in either outcome. If $c>\frac{40}3$, do the opposite.
+\end{steps}
+\answer{$c=\frac{40}3\approx13.33$.}
+\end{problem}
+
+\begin{problem}[Q1(b)]
+Random walk $X_0=0$, $X_n=Y_1+\dots+Y_n$ with $Y_j$ i.i.d.\ and $\E_P|Y_1|<\infty$. $\{X_n\}$ is a martingale if $\E_PY_1=\ ?$
+\uses{card:onestep}{1}
+\cardsays To test a martingale, split the next value into the known part and a fresh step: $X_{n+1}=X_n+Y_{n+1}$. Averaging keeps the known part and replaces the fresh step by its mean:
+\[
+\E_P(X_{n+1}\given\F_n)=X_n+\E_PY.
+\]
+It is a martingale exactly when this equals $X_n$.
+\working
+\begin{steps}
+\item Known part: $X_n$. Fresh part: $Y_{n+1}$, independent of the past.
+\item Average: $\E_P(X_{n+1}\given\F_n)=X_n+\E_PY_1$.
+\item Set equal to $X_n$: $\E_PY_1=0$.
+\end{steps}
+\answer{$\E_PY_1=0$.}
+\end{problem}
+
+\begin{problem}[Q1(c)]
+$B(t)$ is a Brownian motion from $0$ with drift $\mu=0$ and variance $\sigma^2=1$. Find the probability that $B$ reaches $-2$ before $1$.
+\uses{card:ost}{1}
+\cardsays A path without drift, started at $x$ between $a$ and $b$, leaves at $b$ with probability $\frac{x-a}{b-a}$ and at $a$ with probability $\frac{b-x}{b-a}$. (This comes from $\E_PB_\tau=x$: the stopped martingale keeps its start.)
+\working
+\begin{steps}
+\item Read off: start $x=0$, lower level $a=-2$, upper level $b=1$.
+\item We want exit at $a$: $P_a=\frac{b-x}{b-a}=\frac{1-0}{1-(-2)}=\frac13$.
+\item Check with the martingale: $\E_PB_\tau=(-2)\frac13+(1)\frac23=0=x$.
+\end{steps}
+\answer{$\frac13\approx0.33$.}
+\end{problem}
+
+\begin{problem}[Q1(d)]
+Find $\Var(W_4)\times\Cov(W_1,W_4)$.
+\uses{card:mvn}{1}
+\cardsays For the Wiener process, $C_{ij}=\Cov(W_{t_i},W_{t_j})=\min(t_i,t_j)$, and so $\Var W_t=C_{ii}=t$.
+\working
+\begin{steps}
+\item $\Var W_4=4$.
+\item $\Cov(W_1,W_4)=\min(1,4)=1$.
+\item Multiply: $4\times1=4$.
+\end{steps}
+\answer{$4.00$.}
+\end{problem}
+
+\begin{problem}[Q1(e)]
+Compute $d\cos(W_t)$.
+\uses{card:ito}{1}
+\cardsays For a function of the Wiener process,
+\[
+df(t,W_t)=\Big(\partial_tf+\tfrac12\partial_{xx}f\Big)dt+\partial_xf\,dW_t.
+\]
+\working
+\begin{steps}
+\item The function: $f(t,x)=\cos x$ (no $t$ in it).
+\item Derivatives: $\partial_tf=0$, $\partial_xf=-\sin x$, $\partial_{xx}f=-\cos x$.
+\item Substitute, with $x=W_t$: $dt$-part $0+\frac12(-\cos W_t)$; $dW$-part $-\sin W_t$.
+\end{steps}
+\answer{$d\cos W_t=-\frac12\cos W_t\,dt-\sin W_t\,dW_t$.}
+\end{problem}
+
+\begin{problem}[Q1(f)]
+$T_a$ is the time $W$ takes to hit $a$. Find $P(T_a<\infty)$.
+\uses{card:G}{3}
+\cardsays The chance of having hit $a$ by time $t$ is $P(T_a\le t)=2\big[1-\Phi\big(\frac{|a|}{\sqrt t}\big)\big]$ (reflection principle). Let $t$ grow.
+\working
+\begin{steps}
+\item As $t\to\infty$, $\frac{|a|}{\sqrt t}\to0$, and $\Phi(0)=\frac12$.
+\item Substitute: $2\big(1-\frac12\big)=1$.
+\item (Note from the card: the mean time $\E_PT_a$ is still infinite.)
+\end{steps}
+\answer{$P(T_a<\infty)=1.00$.}
+\end{problem}
+
+%=====================================================================
+\section{Question 2: short notes}
+
+\begin{pic}
+\begin{tikzpicture}
+\begin{groupplot}[group style={group size=2 by 1,horizontal sep=1.4cm},width=5.4cm,height=4cm,xmin=0,xmax=200,ymin=-10,ymax=110,xtick={100},xticklabels={$K$},ytick={0},xlabel={$S_T$},title style={font=\small},samples=3]
+  \nextgroupplot[title={call pays $(S_T-K)^+$}]
+  \addplot[defc,very thick] coordinates {(0,0)(100,0)(200,100)};
+  \nextgroupplot[title={put pays $(K-S_T)^+$}]
+  \addplot[thmc,very thick] coordinates {(0,100)(100,0)(200,0)};
+\end{groupplot}
+\end{tikzpicture}
+\picnote{The call pays only when the final price ends above $K$; the put only when it ends below $K$.}
+\end{pic}
+
+\begin{problem}[Q2(a)]
+Short note on call options.
+\uses{card:payoff}{1}
+\cardsays A contract is described by what it pays at expiry, $X=g(S_T)$. A call has $g(s)=(s-K)^+=\max(s-K,0)$.
+\working
+\begin{steps}
+\item What it is: a European call gives its holder the \emph{right, not the obligation}, to buy one share at the strike price $K$ at the expiry date $T$.
+\item What it pays: if $S_T>K$, buy at $K$ and the share is worth $S_T$, a gain of $S_T-K$; if $S_T\le K$, do not use it, gain $0$. Together: $(S_T-K)^+$ (left picture).
+\item Cost: the buyer pays a price $C$ today, so the profit is $(S_T-K)^+-C$. The upside has no limit; the most the buyer loses is $C$.
+\item Numbers: $K=100$. If $S_T=120$ the call pays $20$; if $S_T=90$ it pays $0$.
+\end{steps}
+\answer{A call is the right to buy at $K$ at $T$; it pays $(S_T-K)^+$, a bet that the price rises.}
+\end{problem}
+
+\begin{problem}[Q2(b)]
+Short note on put options.
+\uses{card:payoff}{1}
+\cardsays A put has $g(s)=(K-s)^+=\max(K-s,0)$.
+\working
+\begin{steps}
+\item What it is: a European put gives its holder the right, not the obligation, to \emph{sell} one share at the strike $K$ at expiry $T$.
+\item What it pays: if $S_T<K$, sell at $K$ a share worth $S_T$, a gain of $K-S_T$; otherwise $0$. Together: $(K-S_T)^+$ (right picture).
+\item The payoff is at most $K$ (when $S_T=0$). The buyer pays $P$ today; it works like insurance against a fall.
+\item Numbers: $K=100$. If $S_T=90$ the put pays $10$; if $S_T=120$ it pays $0$.
+\item Link to the call (\cref{card:parity}): call minus put pays $S_T-K$, so $C-P=S_0-KD_T$.
+\end{steps}
+\answer{A put is the right to sell at $K$ at $T$; it pays $(K-S_T)^+$, a bet that the price falls.}
+\end{problem}
+
+\begin{problem}[Q2(c)]
+Short note on the no-arbitrage principle.
+\uses{card:selffin}{4}
+\cardsays An arbitrage is a self-financing strategy with value $V_0\le0$ today, $V_T\ge0$ in every outcome, and $P(V_T>0)>0$: it costs nothing, can never lose, and sometimes wins.
+\working
+\begin{steps}
+\item The principle: a working market has no arbitrage. If one existed, everyone would use it, and prices would move until it vanished.
+\item Consequence 1 (one price): two portfolios with the same payoff in every outcome must cost the same today. Otherwise buy the cheap one, sell the dear one, and pocket the gap.
+\item Consequence 2 (the theorem, \cref{card:finite}): no arbitrage $\iff$ there is a risk-neutral probability $p^*$ with every $p^*_k>0$, and then every price is $D\sum_kp^*_k\cdot(\text{value in }\omega_k)$.
+\item Numbers: stock $100$, going to $200$ or $50$, $r=0$; a call at $K=150$ selling for $20$. Borrow $40$, buy one share, sell three calls: $V_0=-40+100-60=0$; up: $-40+200-150=10$; down: $-40+50-0=10$. A sure $10$ from nothing, so $20$ is the wrong price (the right one is $\frac{50}3$).
+\end{steps}
+\answer{No strategy may turn nothing into a sure non-negative, sometimes positive, amount. This forces one price for one payoff, and pricing by the risk-neutral average.}
+\end{problem}
+
+%=====================================================================
+\section{Question 3: dynamic programming, and the walk that becomes Brownian motion}
+
+\begin{problem}[Q3(a)]
+Explain dynamic programming in Markov decision processes, and derive the optimality equation using the total probability formula.
+
+\textit{Not in this book:} Markov decision processes and optimal control are outside the course as this book covers it, so no card holds them.
+\end{problem}
+
+\begin{problem}[Q3(b)]
+In each time step $\Delta t$ a walk goes up or down by $\sqrt{\Delta t}$, with probabilities $p$ and $1-p$, where $p=\frac12(1+\mu\sqrt{\Delta t})$. Argue that as $\Delta t\to0$ the limit is a Brownian motion with drift $\mu$.
+\uses{card:scaledwalk}{3}
+\cardsays Take $t/\Delta t$ steps of size $\pm\Delta x$, up with probability $p$. The sum has
+\[
+\E_PX(t)=\frac{t}{\Delta t}\,\Delta x\,(2p-1),\qquad\Var X(t)=\frac{t}{\Delta t}\,(\Delta x)^2\big(1-(2p-1)^2\big).
+\]
+With $\Delta x=\sigma\sqrt{\Delta t}$ and $p=\frac12(1+\frac\mu\sigma\sqrt{\Delta t})$, as $\Delta t\to0$ the walk becomes $\mu t+\sigma W(t)$.
+\working
+\begin{steps}
+\item Our walk: $\Delta x=\sqrt{\Delta t}$, so $\sigma=1$, and $p=\frac12(1+\mu\sqrt{\Delta t})$, so $2p-1=\mu\sqrt{\Delta t}$.
+\item Mean: $\frac t{\Delta t}\cdot\sqrt{\Delta t}\cdot\mu\sqrt{\Delta t}=\frac t{\Delta t}\cdot\mu\,\Delta t=\mu t$.
+\item Variance: $\frac t{\Delta t}\cdot\Delta t\cdot(1-\mu^2\Delta t)=t(1-\mu^2\Delta t)\to t$.
+\item Normal: $X(t)$ is a sum of $t/\Delta t$ i.i.d.\ steps; as $\Delta t\to0$ there are more and more of them, so by the central limit theorem $X(t)\to N(\mu t,t)$.
+\item Increments: $X(t)-X(s)$ uses only the steps between $s$ and $t$. Steps in disjoint time intervals are different coin flips, so increments are independent, and by steps 2--4 each is $N(\mu(t-s),\,t-s)$.
+\item Start and paths: $X(0)=0$, and the jumps $\pm\sqrt{\Delta t}$ shrink to $0$, so the limit has continuous paths.
+\end{steps}
+\answer{The limit starts at $0$, has independent $N(\mu(t-s),t-s)$ increments and continuous paths: it is $\mu t+W(t)$, a Brownian motion with drift $\mu$ (variance $1$).}
+\end{problem}
+
+%=====================================================================
+\section{Question 4: an Ornstein--Uhlenbeck equation and an exponential martingale}
+
+\begin{problem}[Q4(a)]
+Write the solution of $dX_t=-X_t\,dt+dW_t$, $X_0=x_0$, as a stochastic integral. Is it an OU process? Find $\E_PX_t$ and $\Var X_t$.
+\uses{card:linsde}{1}
+\cardsays The equation $dX=-rX\,dt+\sigma\,dW$ is the Ornstein--Uhlenbeck equation: the drift $-rX$ pulls $X$ back to $0$. Its solution and its law are
+\[
+X_t=xe^{-rt}+\sigma\int_0^te^{-r(t-s)}\,dW_s,\qquad X_t\sim N\Big(xe^{-rt},\ \frac{\sigma^2}{2r}\big(1-e^{-2rt}\big)\Big).
+\]
+\working
+\begin{steps}
+\item Match: $dX_t=-1\cdot X_t\,dt+1\cdot dW_t$, so $r=1$, $\sigma=1$, $x=x_0$. It has the OU form, with $r=1>0$: yes, an OU process, pulled back to $0$.
+\item Derive the solution (product rule, \cref{card:ito}, row 6): $d(e^tX_t)=e^tX_t\,dt+e^t\,dX_t$, and there is no $dt\,dW$ term because $e^t$ is not random.
+\item Substitute $dX_t$: $d(e^tX_t)=e^tX_t\,dt+e^t(-X_t\,dt+dW_t)=e^t\,dW_t$.
+\item Integrate from $0$ to $t$: $e^tX_t-x_0=\int_0^te^s\,dW_s$, so
+\[
+X_t=x_0e^{-t}+\int_0^te^{-(t-s)}\,dW_s.
+\]
+\item Mean: the Itô integral has mean $0$ (\cref{card:itoint}), so $\E_PX_t=x_0e^{-t}$.
+\item Variance: by the Itô isometry (\cref{card:itoint}, row 2), $\Var X_t=\int_0^te^{-2(t-s)}\,ds=\Big[\frac{e^{-2(t-s)}}2\Big]_{s=0}^{s=t}=\frac12\big(1-e^{-2t}\big)$.
+\end{steps}
+\answer{$X_t=x_0e^{-t}+\int_0^te^{-(t-s)}dW_s$; yes, it is OU; $\E_PX_t=x_0e^{-t}$, $\Var X_t=\frac12(1-e^{-2t})$.}
+\end{problem}
+
+\begin{problem}[Q4(b)(i)]
+Is $X_t=e^{W_t-t/2}$ a martingale?
+\uses{card:incr}{1}
+\cardsays For the Wiener process three things are martingales: $W_t$, $W_t^2-t$, and the exponential divided by its own mean,
+\[
+\frac{e^{uW_t}}{\E_Pe^{uW_t}}=e^{uW_t-u^2t/2}\qquad\text{for any number }u.
+\]
+\working
+\begin{steps}
+\item Take $u=1$: $e^{W_t-t/2}$, which is exactly $X_t$.
+\item Why it works: $\E_P(e^{W_t}\given\F_s)=e^{W_s}\E_Pe^{W_t-W_s}=e^{W_s}e^{(t-s)/2}$, so $\E_P(X_t\given\F_s)=e^{W_s+(t-s)/2-t/2}=e^{W_s-s/2}=X_s$.
+\end{steps}
+\answer{Yes, $X_t$ is a martingale.}
+\end{problem}
+
+\begin{problem}[Q4(b)(ii)]
+Apply Itô's formula to compute $dX_t$.
+\uses{card:ito}{2}
+\cardsays For an exponential $f=ce^{\mu t+\sigma W_t}$, Itô's formula gives
+\[
+df=\big(\mu+\tfrac12\sigma^2\big)f\,dt+\sigma f\,dW_t.
+\]
+Never drop the $\frac12\sigma^2$.
+\working
+\begin{steps}
+\item Match $e^{W_t-t/2}$: $c=1$, $\mu=-\frac12$, $\sigma=1$.
+\item $dt$-coefficient: $-\frac12+\frac12\cdot1^2=0$.
+\item $dW$-coefficient: $1\cdot X_t$.
+\item This agrees with (i): no $dt$ term, so a martingale.
+\end{steps}
+\answer{$dX_t=X_t\,dW_t$.}
+\end{problem}
+
+%=====================================================================
+\section{Question 5: the single-period binomial market}
+
+\begin{problem}[Q5(a)]
+Derive and explain the single-period binomial market.
+\uses{card:finite}{1}
+\cardsays In a one-period market with two outcomes, the price today is the risk-neutral average of tomorrow's value, discounted:
+\[
+p^*=\frac{1+r-d}{u-d},\qquad X^*=\frac{p^*X_u+(1-p^*)X_d}{1+r},\qquad
+\Delta=\frac{X_u-X_d}{(u-d)S_0},\quad b=\frac{uX_d-dX_u}{(1+r)(u-d)}.
+\]
+\textbf{The market.} Two dates, $t=0$ and $t=1$, and two outcomes $\omega_1$ (up) and $\omega_2$ (down). A bond is worth $B_0=1$ today and $B_1=1+r$ tomorrow. A stock is worth $S_0$ today and $S_1=uS_0$ (up) or $dS_0$ (down) tomorrow, with $d<u$.
+\working
+\begin{steps}
+\item No arbitrage needs $d<1+r<u$. If $1+r\le d$, borrow $S_0$ and buy the stock: tomorrow you owe $(1+r)S_0$ and hold at least $dS_0$, never a loss, a gain if up. If $1+r\ge u$, sell the stock short and lend: a sure gain the other way.
+\item Risk-neutral probability: ask the stock to earn the bond rate on average, $S_0=\frac{p^*uS_0+(1-p^*)dS_0}{1+r}$. Divide by $S_0$: $1+r=p^*u+(1-p^*)d$, so $p^*=\frac{1+r-d}{u-d}$, which lies in $(0,1)$ exactly when $d<1+r<u$.
+\item Copy a claim $X$ (pays $X_u$ or $X_d$): hold $\Delta$ shares and $b$ bonds with
+\[
+\Delta uS_0+b(1+r)=X_u,\qquad\Delta dS_0+b(1+r)=X_d.
+\]
+\item Subtract the equations: $\Delta(u-d)S_0=X_u-X_d$, so $\Delta=\frac{X_u-X_d}{(u-d)S_0}$. Put back: $b=\frac{uX_d-dX_u}{(1+r)(u-d)}$.
+\item Price = cost of the copy (otherwise sell the dear one, buy the cheap one): $X^*=\Delta S_0+b$. Simplifying gives $X^*=\frac{p^*X_u+(1-p^*)X_d}{1+r}$.
+\item The real-world chance of going up never enters: only $u$, $d$, $r$ do.
+\end{steps}
+\answer{No arbitrage $\iff d<1+r<u$; then $p^*=\frac{1+r-d}{u-d}$, every claim can be copied, and its price is $\frac{p^*X_u+(1-p^*)X_d}{1+r}$.}
+\end{problem}
+
+\begin{problem}[Q5(b)(i)]
+One period, $\Omega=\{\omega_1,\omega_2\}$, $S_0=5$, $B_0=1$, $S_1(\omega_1)=6$, $S_1(\omega_2)=\frac{40}9$, $r=\frac19$. Show the market is arbitrage-free.
+\uses{card:finite}{1}
+\cardsays No arbitrage $\iff d<1+r<u$ (equivalently, $p^*\in(0,1)$).
+\working
+\begin{steps}
+\item Factors: $u=\frac65=1.2$, $d=\frac{40/9}{5}=\frac89\approx0.889$, $1+r=\frac{10}9\approx1.111$.
+\item Check: $0.889<1.111<1.2$. True.
+\item So $p^*=\frac{1+r-d}{u-d}=\frac{\frac{10}9-\frac89}{\frac65-\frac89}=\frac{2/9}{14/45}=\frac{2}{9}\cdot\frac{45}{14}=\frac57$, which is in $(0,1)$.
+\end{steps}
+\answer{$d<1+r<u$ holds ($p^*=\frac57$), so the market is arbitrage-free.}
+\end{problem}
+
+\begin{problem}[Q5(b)(ii)]
+A claim pays $X(\omega_1)=6$, $X(\omega_2)=1$. Find its arbitrage-free value at $t=0$.
+\uses{card:finite}{1}
+\cardsays $X^*=\frac{p^*X_u+(1-p^*)X_d}{1+r}$.
+\working
+\begin{steps}
+\item From (i): $p^*=\frac57$, $1-p^*=\frac27$.
+\item Average: $\frac57(6)+\frac27(1)=\frac{30+2}7=\frac{32}7$.
+\item Discount: $\frac{32/7}{10/9}=\frac{32}7\cdot\frac9{10}=\frac{288}{70}=\frac{144}{35}$.
+\end{steps}
+\answer{$X^*=\frac{144}{35}\approx4.11$.}
+\end{problem}
+
+\begin{problem}[Q5(b)(iii)]
+Build a replicating portfolio for $X$, and check that its value is the price from (ii) at $t=0$ and equals $X$ at $t=1$.
+\uses{card:finite}{1}
+\cardsays The copy holds $\Delta=\frac{X_u-X_d}{S_u-S_d}$ shares and $b$ bonds, with $b$ chosen so that one outcome matches.
+\working
+\begin{steps}
+\item Shares: $\Delta=\frac{6-1}{6-\frac{40}9}=\frac{5}{14/9}=\frac{45}{14}\approx3.2143$.
+\item Bonds, from the up outcome: $\Delta\cdot6+b\cdot\frac{10}9=6$, so $b=\frac{9}{10}\big(6-\frac{45}{14}\cdot6\big)=\frac9{10}\cdot\frac{84-270}{14}=-\frac{837}{70}\approx-11.9571$ (borrow).
+\item Value at $t=0$: $\Delta S_0+bB_0=\frac{45}{14}(5)-\frac{837}{70}=\frac{1125-837}{70}=\frac{288}{70}\approx4.11$. Matches (ii).
+\item Value at $t=1$, outcome $\omega_1$: $\frac{45}{14}(6)-\frac{837}{70}\cdot\frac{10}9=19.2857-13.2857=6=X(\omega_1)$.
+\item Value at $t=1$, outcome $\omega_2$: $\frac{45}{14}\cdot\frac{40}9-13.2857=14.2857-13.2857=1=X(\omega_2)$.
+\end{steps}
+\answer{Hold $\frac{45}{14}\approx3.21$ shares and $-\frac{837}{70}\approx-11.96$ bonds. It costs $4.11$ today and pays $6$ or $1$ tomorrow, exactly the claim.}
+\end{problem}
