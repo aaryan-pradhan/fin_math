@@ -1,0 +1,396 @@
+\chapter{April 2024 paper}
+\label{ch:paper-2024-apr}
+
+\begin{whatfor}
+The end-of-semester paper of April 2024 (3 hours, 50 marks), solved question by question. Every solution has the same four parts:
+\begin{itemize}
+\item the card and row it uses (click to jump to the card);
+\item what the card says, in plain words, with its formula written out;
+\item the working, one substitution per step;
+\item the answer, to at least two decimal places.
+\end{itemize}
+\end{whatfor}
+
+%=====================================================================
+\section{Question 1: short answers}
+
+Throughout, $\{W_t,\ t\ge0\}$ is a standard Wiener process: $W_0=0$, mean $0$, $\Var W_t=t$. The paper wants only the answers in a table on the first page; here is that table, then the working for each part.
+
+\begin{center}
+\begin{tabular}{@{}cl@{\qquad}cl@{}}
+\toprule
+Part & Answer & Part & Answer\\
+\midrule
+(a) & $N(0,\,34)$ & (f) & $0.20$\\
+(b) & $0.67$ & (g) & $W_t\,dt+t\,dW_t$\\
+(c) & $2.00$ & (h) & No\\
+(d) & $2.00$ & (i) & $0.75$\\
+(e) & when the price first reaches $100.50$ & (j) & Rs $8.59$\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{problem}[Q1(a)]
+Find the distribution of $2W_1+3W_2$.
+\uses{card:mvn}{1}
+\cardsays A fixed mix of values of $W$ is normal with mean $0$. Its variance has one term $a_i^2t_i$ for each value, and one cross term $2a_ia_j\min(t_i,t_j)$ for each pair:
+\[
+\sum_ia_iW_{t_i}\ \sim\ N\Big(0,\ \sum_ia_i^2t_i+2\sum_{i<j}a_ia_j\min(t_i,t_j)\Big).
+\]
+\working
+\begin{steps}
+\item Read off the mix: $a_1=2$ at time $t_1=1$, and $a_2=3$ at time $t_2=2$.
+\item Square terms: $a_1^2t_1=4\cdot1=4$ and $a_2^2t_2=9\cdot2=18$.
+\item Cross term: $2a_1a_2\min(t_1,t_2)=2\cdot2\cdot3\cdot\min(1,2)=12$.
+\item Add them: $4+18+12=34$.
+\end{steps}
+\answer{$2W_1+3W_2\sim N(0,\,34)$.}
+\end{problem}
+
+\begin{problem}[Q1(b)]
+Find $\E_P(W_1\given W_3=2)$.
+\uses{card:Ylaw}{3}
+\cardsays The card is about $Y_t=x_0+\mu t+\sigma W_t$. When the start $x_0$ and a later value $Y_{s_2}=a_2$ are known, the value at an earlier time $t$ lies on the straight line between them, with some normal spread:
+\[
+Y_t\given(Y_{s_2}=a_2)\ \sim\ N\Big(x_0+\frac{t}{s_2}(a_2-x_0),\ \ \sigma^2\,\frac{t(s_2-t)}{s_2}\Big),\qquad t<s_2.
+\]
+\working
+\begin{steps}
+\item Our process is $W$ itself, so $x_0=0$, $\mu=0$, $\sigma=1$.
+\item The known later value: $s_2=3$, $a_2=2$. The time we ask about: $t=1$, which is before $3$, so the row applies.
+\item Mean: $0+\frac13(2-0)=\frac23$.
+\item (Not asked, but free: the variance is $1\cdot\frac{1\cdot2}{3}=\frac23$.)
+\end{steps}
+\answer{$\E_P(W_1\given W_3=2)=\frac23\approx0.67$.}
+\end{problem}
+
+\begin{problem}[Q1(c)]
+Find $\E_P(W_3\given W_1=2)$.
+\uses{card:Ylaw}{2}
+\cardsays Going forward from a known value: split $Y_t=Y_s+(Y_t-Y_s)$. The first piece is known; the second is a fresh normal with mean $\mu(t-s)$ and variance $\sigma^2(t-s)$:
+\[
+Y_t\given(Y_s=a)\ \sim\ N\big(a+\mu(t-s),\ \sigma^2(t-s)\big),\qquad t>s.
+\]
+\working
+\begin{steps}
+\item Our process is $W$: $\mu=0$, $\sigma=1$.
+\item Known value: $s=1$, $a=2$. Time asked: $t=3>1$, so the row applies.
+\item Mean: $2+0\cdot(3-1)=2$. (Variance: $3-1=2$.)
+\end{steps}
+\answer{$\E_P(W_3\given W_1=2)=2.00$.}
+\end{problem}
+
+\begin{problem}[Q1(d)]
+Find $\Cov(W_2,W_4)$.
+\uses{card:mvn}{1}
+\cardsays For the Wiener process the covariance of two values is the earlier of the two times: $C_{ij}=\Cov(W_{t_i},W_{t_j})=\min(t_i,t_j)$.
+\working
+\begin{steps}
+\item Times: $t_i=2$, $t_j=4$.
+\item $\min(2,4)=2$.
+\end{steps}
+\answer{$\Cov(W_2,W_4)=2.00$.}
+\end{problem}
+
+\begin{problem}[Q1(e)]
+We may buy one unit of a stock at a fixed price Rs $100$, at any time we choose. The price starts at $0$ and moves as a Brownian motion with drift $-1$. When, if ever, should we exercise?
+\uses{card:ost}{3}
+\cardsays A Brownian motion with \emph{negative} drift $\mu$ and variance $\sigma^2$ per unit time, starting at $x$, may never climb to a level $b>x$. The chance that it ever does is
+\[
+P(\text{ever reach }b)=e^{-2|\mu|(b-x)/\sigma^2}.
+\]
+\working
+\begin{steps}
+\item Read off: start $x=0$, drift $\mu=-1$. No variance is given, so take $\sigma^2=1$.
+\item A plan: exercise the first time the price reaches some level $y>100$. Then we gain $y-100$. If the price never reaches $y$, we never exercise and gain $0$.
+\item Chance of reaching $y$, from the card: $e^{-2\cdot1\cdot(y-0)/1}=e^{-2y}$.
+\item Expected gain of the plan: $g(y)=(y-100)\,e^{-2y}$.
+\item Best $y$: set the derivative to zero,
+\[
+\begin{aligned}
+g'(y)&=e^{-2y}-2(y-100)e^{-2y}\\
+&=e^{-2y}\big(1-2(y-100)\big)=0\quad\Longrightarrow\quad y=100+\tfrac12=100.5.
+\end{aligned}
+\]
+\item It is a maximum: $1-2(y-100)$ is positive below $100.5$ and negative above it, so $g$ rises and then falls.
+\end{steps}
+\answer{Exercise the first time the price reaches Rs $100.50$. (The expected gain $0.5\,e^{-201}$ is tiny but positive, so ``never'' is worse.)}
+\end{problem}
+
+\begin{problem}[Q1(f)]
+Compute $\Var\int_0^1t^2\,dW_t$.
+\uses{card:itoint}{2}
+\cardsays The Itô integral has mean $0$, and its variance is the ordinary integral of the integrand squared (the Itô isometry):
+\[
+\Var\int_0^tb_s\,dW_s=\int_0^t\E_P(b_s^2)\,ds.
+\]
+\working
+\begin{steps}
+\item Integrand: $b_s=s^2$, not random, so $\E_P(b_s^2)=s^4$.
+\item Integrate: $\int_0^1s^4\,ds=\Big[\frac{s^5}5\Big]_0^1=\frac15$.
+\end{steps}
+\answer{$\Var\int_0^1t^2\,dW_t=\frac15=0.20$.}
+\end{problem}
+
+\begin{problem}[Q1(g)]
+Apply Itô's formula to compute $d(tW_t)$.
+\uses{card:ito}{1}
+\cardsays For a function $f(t,W_t)$ of time and the Wiener process,
+\[
+df(t,W_t)=\Big(\partial_tf+\tfrac12\partial_{xx}f\Big)dt+\partial_xf\,dW_t.
+\]
+The $\frac12\partial_{xx}f$ is the extra Itô term: it comes from $(dW_t)^2=dt$.
+\working
+\begin{steps}
+\item The function: $f(t,x)=tx$.
+\item Derivatives: $\partial_tf=x$, $\partial_xf=t$, $\partial_{xx}f=0$.
+\item Substitute, with $x=W_t$: $dt$-part $W_t+\frac12\cdot0=W_t$; $dW$-part $t$.
+\end{steps}
+\answer{$d(tW_t)=W_t\,dt+t\,dW_t$.}
+\end{problem}
+
+\begin{problem}[Q1(h)]
+Is $Y_t=tW_t$ a martingale?
+\uses{card:ito}{3}
+\cardsays $g(t,W_t)$ is a martingale exactly when its $dt$-coefficient $\partial_tg+\frac12\partial_{xx}g$ is $0$ for every $x$.
+\working
+\begin{steps}
+\item From Q1(g): the $dt$-coefficient of $tW_t$ is $W_t$.
+\item $W_t$ is not $0$ for every value, so the test fails.
+\item Check by the mean: $\E_P(tW_t\given\F_s)=t\,W_s\ne sW_s$ when $t\ne s$.
+\end{steps}
+\answer{No.}
+\end{problem}
+
+\begin{problem}[Q1(i)]
+Let $T=\min\{t:W_t=3-4t\}$, the first time $W$ hits the line $3-4t$. Use the martingale stopping theorem to find $\E_PT$.
+\uses{card:ost}{5}
+\cardsays A stopped martingale keeps its starting mean: $\E_PM_\tau=M_0$. Take $M=W$, which starts at $0$, and a line $c+\beta t$ that moves towards the path. At the hitting time $W_\tau=c+\beta\tau$, so
+\[
+0=\E_PW_\tau=c+\beta\,\E_P\tau\qquad\Longrightarrow\qquad\E_P\tau=-\frac c\beta.
+\]
+\working
+\begin{steps}
+\item Read the line $3-4t$: $c=3$, $\beta=-4$.
+\item Check the guard: $c>0$ and $\beta<0$ have opposite signs, so the line comes down to meet the path.
+\item Substitute: $\E_PT=-\frac{3}{-4}=\frac34$.
+\end{steps}
+\answer{$\E_PT=0.75$.}
+\end{problem}
+
+\begin{problem}[Q1(j)]
+A European call: stock price Rs $100$, strike Rs $100$, expiry $1$ year, risk-free rate $5\%$, volatility $\sigma=0.15$. Find its value.
+\uses{card:bsprice}{1}
+\cardsays The Black--Scholes call price, with $\tau$ the time left:
+\[
+C=S\,\Phi(h)-Ke^{-r\tau}\,\Phi(h-\sigma\sqrt\tau),\qquad h=\frac{\ln(S/K)+(r+\frac12\sigma^2)\tau}{\sigma\sqrt\tau}.
+\]
+\working
+\begin{steps}
+\item Read off: $S=100$, $K=100$, $r=0.05$, $\sigma=0.15$, $\tau=1$.
+\item Pieces: $\ln(S/K)=\ln1=0$; $r+\frac12\sigma^2=0.05+0.01125=0.06125$; $\sigma\sqrt\tau=0.15$.
+\item $h=\frac{0+0.06125}{0.15}=0.4083$ and $h-\sigma\sqrt\tau=0.4083-0.15=0.2583$.
+\item Table: $\Phi(0.4083)=0.6585$ and $\Phi(0.2583)=0.6019$.
+\item Discounted strike: $Ke^{-r\tau}=100e^{-0.05}=95.12$.
+\item Substitute: $C=100(0.6585)-95.12(0.6019)=65.85-57.26=8.59$.
+\end{steps}
+\answer{The call is worth Rs $8.59$.}
+\end{problem}
+
+%=====================================================================
+\section{Question 2: the binomial call and Black--Scholes}
+
+\begin{problem}[Q2(a)]
+Price European calls in the binomial setting. Using the binomial model, derive the Black--Scholes formula.
+\uses{card:tree}{3}
+\cardsays In a $T$-period tree the price is today's risk-neutral average of the payoff, discounted. For a call only the paths that end above $K$ pay, and splitting $(S_T-K)$ into its two parts gives
+\[
+C=S_0\sum_{j\ge m}\binom Tj\hat p^{\,j}(1-\hat p)^{T-j}-\frac{K}{(1+r)^T}\sum_{j\ge m}\binom Tj(p^*)^j(1-p^*)^{T-j},
+\]
+with $p^*=\frac{1+r-d}{u-d}$, $\hat p=\frac{up^*}{1+r}$, and $m$ the least number of up-moves with $u^md^{T-m}S_0>K$.
+
+\textbf{Part 1: the binomial call price.}
+\begin{steps}
+\item One period (\cref{card:finite}, row 1): today's price is $\frac{p^*X_u+(1-p^*)X_d}{1+r}$, where $p^*$ is the probability that makes the stock earn the bond rate.
+\item Repeat backwards $T$ times. A path with $j$ ups and $T-j$ downs ends at $u^jd^{T-j}S_0$, has weight $(p^*)^j(1-p^*)^{T-j}$, and there are $\binom Tj$ such paths:
+\[
+C=\frac1{(1+r)^T}\sum_{j=0}^T\binom Tj(p^*)^j(1-p^*)^{T-j}\big(u^jd^{T-j}S_0-K\big)^+.
+\]
+\item Only $j\ge m$ pay. Split $u^jd^{T-j}S_0-K$ into the stock part and the $K$ part.
+\item Stock part: $\frac{(p^*)^j(1-p^*)^{T-j}u^jd^{T-j}}{(1+r)^T}=\Big(\frac{up^*}{1+r}\Big)^j\Big(\frac{d(1-p^*)}{1+r}\Big)^{T-j}=\hat p^{\,j}(1-\hat p)^{T-j}$, because $up^*+d(1-p^*)=1+r$. This gives the box.
+\end{steps}
+
+\textbf{Part 2: let the steps shrink.} Here is the limit, using \cref{card:bsprice}, row 8.
+\begin{steps}[resume]
+\item Split $[0,\tau]$ into $n$ steps of length $\Delta=\tau/n$, with $u=e^{\sigma\sqrt\Delta}$, $d=e^{-\sigma\sqrt\Delta}$ and $1+r_n=e^{r\Delta}$.
+\item Expand for small $\Delta$: $p^*=\frac{e^{r\Delta}-e^{-\sigma\sqrt\Delta}}{e^{\sigma\sqrt\Delta}-e^{-\sigma\sqrt\Delta}}\approx\frac{\sigma\sqrt\Delta+(r-\frac12\sigma^2)\Delta}{2\sigma\sqrt\Delta}=\frac12\Big(1+\frac{r-\frac12\sigma^2}{\sigma}\sqrt\Delta\Big)$.
+\item This is exactly the walk of \cref{card:scaledwalk} (steps $\pm\sigma\sqrt\Delta$, $p=\frac12(1+\frac\mu\sigma\sqrt\Delta)$) with drift $\mu=r-\frac12\sigma^2$. So under $p^*$,
+\[
+\ln\frac{S_\tau}{S_0}\ \longrightarrow\ N\big((r-\tfrac12\sigma^2)\tau,\ \sigma^2\tau\big).
+\]
+\item The $K$ part: the second sum is $P^*(S_\tau>K)=P\Big(Z>\frac{\ln(K/S_0)-(r-\frac12\sigma^2)\tau}{\sigma\sqrt\tau}\Big)=\Phi(h-\sigma\sqrt\tau)$, and $(1+r_n)^{-n}=e^{-r\tau}$.
+\item The stock part: the same expansion for $\hat p=up^*/(1+r_n)$ gives $\hat p\approx\frac12\big(1+\frac{r+\frac12\sigma^2}{\sigma}\sqrt\Delta\big)$, a walk with drift $r+\frac12\sigma^2$. So the first sum tends to $\Phi\Big(\frac{\ln(S_0/K)+(r+\frac12\sigma^2)\tau}{\sigma\sqrt\tau}\Big)=\Phi(h)$.
+\item Put the two parts together.
+\end{steps}
+\answer{$C=S_0\Phi(h)-Ke^{-r\tau}\Phi(h-\sigma\sqrt\tau)$ with $h=\frac{\ln(S_0/K)+(r+\frac12\sigma^2)\tau}{\sigma\sqrt\tau}$: the Black--Scholes formula (\cref{card:bsprice}, row 1).}
+\end{problem}
+
+\begin{problem}[Q2(b)]
+Two-period binomial market, $u=\frac43$, $d=\frac23$, $r=0$, $S_0=70$. Price a call with maturity $T=2$ and strike $K=120$.
+\uses{card:tree}{3}
+\cardsays The box of Q2(a) with $T=2$: only the paths with at least $m$ up-moves pay.
+\working
+\begin{steps}
+\item Risk-neutral probability: $p^*=\frac{1+r-d}{u-d}=\frac{1-\frac23}{\frac43-\frac23}=\frac{1/3}{2/3}=\frac12$. The guard $d<1+r<u$ holds: $\frac23<1<\frac43$.
+\item Final prices: $u^2S_0=\frac{16}9\cdot70=124.44$, $udS_0=\frac89\cdot70=62.22$, $d^2S_0=\frac49\cdot70=31.11$.
+\item Only $124.44>120$, so $m=2$: one path pays $124.44-120=4.44$.
+\item $\hat p=\frac{up^*}{1+r}=\frac43\cdot\frac12=\frac23$.
+\item Box: $C=70\big(\tfrac23\big)^2-\frac{120}{1^2}\big(\tfrac12\big)^2=31.11-30=1.11$.
+\item Check by the plain average: $\frac{(p^*)^2\cdot4.44}{(1+r)^2}=\frac14\cdot4.44=1.11$.
+\end{steps}
+\answer{The call costs $\frac{10}9\approx1.11$.}
+\end{problem}
+
+%=====================================================================
+\section{Question 3: a two-period put, its hedge, and the call}
+
+Market: $T=2$, $u=1.75$, $d=0.5$, $r=0.25$, $S_0=500$, strike $K=550$.
+
+\begin{problem}[Q3(i)]
+Price a put with maturity $T=2$ and strike $K=550$.
+\uses{card:tree}{1}
+\cardsays Start at the end with the payoffs, then step back one period at a time. At each node the value is the risk-neutral average of the two next values, divided by $1+r$:
+\[
+V_t[s]=\frac{p^*\,V_{t+1}[us]+(1-p^*)\,V_{t+1}[ds]}{1+r},\qquad V_T[s]=g(s).
+\]
+\working
+\begin{steps}
+\item Risk-neutral probability: $p^*=\frac{1+r-d}{u-d}=\frac{1.25-0.5}{1.75-0.5}=\frac{0.75}{1.25}=0.6$, so $1-p^*=0.4$. Guard: $0.5<1.25<1.75$ holds.
+\item Stock tree. Time 1: $875$ (up), $250$ (down). Time 2: $1531.25$, $437.5$, $125$.
+\item Put payoffs $(550-S_2)^+$: $0$, $112.5$, $425$.
+\item Back to the up node ($S_1=875$): $V_1[875]=\frac{0.6(0)+0.4(112.5)}{1.25}=\frac{45}{1.25}=36$.
+\item Back to the down node ($S_1=250$): $V_1[250]=\frac{0.6(112.5)+0.4(425)}{1.25}=\frac{67.5+170}{1.25}=190$.
+\item Back to today: $V_0=\frac{0.6(36)+0.4(190)}{1.25}=\frac{21.6+76}{1.25}=78.08$.
+\end{steps}
+\answer{The put costs $78.08$.}
+\end{problem}
+
+\begin{problem}[Q3(ii)]
+Construct a replicating portfolio for this put.
+\uses{card:tree}{5}
+\cardsays Each node is one small one-period market. Hold $\Delta$ shares and put the rest of the value in the bond (money that grows by $1+r$):
+\[
+\Delta=\frac{V_{t+1}[us]-V_{t+1}[ds]}{us-ds},\qquad\text{bond money}=V_t[s]-\Delta s.
+\]
+\working
+\begin{steps}
+\item Today ($s=500$): $\Delta_1=\frac{36-190}{875-250}=\frac{-154}{625}=-0.2464$; bond $=78.08-(-0.2464)(500)=78.08+123.20=201.28$.
+\item Up node ($s=875$): $\Delta_2=\frac{0-112.5}{1531.25-437.5}=\frac{-112.5}{1093.75}=-0.1029$; bond $=36+0.1029(875)=36+90=126$.
+\item Down node ($s=250$): $\Delta_2=\frac{112.5-425}{437.5-125}=\frac{-312.5}{312.5}=-1$; bond $=190+1(250)=440$.
+\end{steps}
+\answer{Today: short $0.2464$ shares and $201.28$ in the bond. After an up-move: short $0.1029$ shares and $126$ in the bond. After a down-move: short $1$ share and $440$ in the bond.}
+\end{problem}
+
+\begin{problem}[Q3(iii)]
+Directly verify that this strategy is self-financing.
+\uses{card:tree}{6}
+\cardsays Self-financing means no money is added or taken out when we rebalance: the old holding, valued at the new prices, must equal the new holding.
+\working
+\begin{steps}
+\item Old holding at time 1 is worth $\Delta_1S_1+(\text{bond})(1+r)$, with $\Delta_1=-0.2464$ and bond $201.28$, which grows to $201.28(1.25)=251.60$.
+\item After an up-move ($S_1=875$): $-0.2464(875)+251.60=-215.60+251.60=36$. The new holding costs $-0.1029(875)+126=-90+126=36$. Equal.
+\item After a down-move ($S_1=250$): $-0.2464(250)+251.60=-61.60+251.60=190$. The new holding costs $-1(250)+440=190$. Equal.
+\item At time 2 the holding pays exactly the put. Up node: $-0.1029S_2+126(1.25)$ gives $-157.5+157.5=0$ at $1531.25$ and $-45+157.5=112.5$ at $437.5$. Down node: $-S_2+440(1.25)$ gives $-437.5+550=112.5$ and $-125+550=425$.
+\end{steps}
+\answer{At both time-1 nodes the old holding is worth exactly what the new holding costs, so the strategy is self-financing, and it pays the put at time 2.}
+\end{problem}
+
+\begin{problem}[Q3(iv)]
+Price a call with the same maturity and strike.
+\uses{card:parity}{2}
+\cardsays Put--call parity: a share plus a put is worth the same as a call plus the bond that pays $K$ at $T$. Solve it for the call:
+\[
+C=P+S_0-KD_T,\qquad D_T=(1+r)^{-T}.
+\]
+\working
+\begin{steps}
+\item Discount factor: $D_2=1.25^{-2}=\frac1{1.5625}=0.64$, so $KD_2=550(0.64)=352$.
+\item Substitute: $C=78.08+500-352=226.08$.
+\item Check with \cref{card:tree}, row 1: only $S_2=1531.25$ pays, $981.25$; $\frac{0.6^2(981.25)}{1.25^2}=\frac{353.25}{1.5625}=226.08$.
+\end{steps}
+\answer{The call costs $226.08$.}
+\end{problem}
+
+%=====================================================================
+\section{Question 4: the Black--Scholes market}
+
+\begin{problem}[Q4]
+Explain the Black--Scholes framework. Argue that the Black--Scholes market is arbitrage-free and complete.
+\uses{card:bsprice}{7}
+\cardsays The market is arbitrage-free when there is a risk-neutral measure $P^*$ under which the discounted stock $e^{-rt}S_t$ is a martingale, and complete when that $P^*$ is the only one. Then every claim is priced by
+\[
+P_t=e^{-r\tau}\,\E_{P^*}\big[g(S_T)\given\F_t\big],\qquad S_T=S_t\,e^{(r-\frac12\sigma^2)\tau+\sigma\sqrt\tau\,Z}.
+\]
+\textbf{The framework} has these parts.
+\begin{itemize}
+\item Two assets. A bond $B_t=e^{rt}$ with a constant rate $r$. A stock that is a geometric Brownian motion, $S_t=S_0e^{at+\sigma W_t}$, with a constant volatility $\sigma>0$ (\cref{card:gbm}).
+\item Trading is continuous, with no costs, no dividends, and short selling allowed.
+\item A claim pays $g(S_T)$ at time $T$; a call has $g(s)=(s-K)^+$.
+\end{itemize}
+\working
+\begin{steps}
+\item The discounted stock is $e^{-rt}S_t=S_0e^{(a-r)t+\sigma W_t}$.
+\item \Cref{card:gbm}, row 4: $e^{ct+\sigma W_t}$ is a martingale exactly when $c+\frac12\sigma^2=0$. Here $c=a-r$, so we need $a=r-\frac12\sigma^2$.
+\item Such a measure exists: the one under which the stock grows at rate $a=r-\frac12\sigma^2$. By the first fundamental theorem (\cref{card:finite}: no arbitrage $\iff$ a risk-neutral measure exists), the market is \textbf{arbitrage-free}.
+\item The equation $a=r-\frac12\sigma^2$ has exactly one solution, so there is exactly one risk-neutral measure. By the second fundamental theorem (complete $\iff$ the risk-neutral measure is unique), the market is \textbf{complete}: every claim $g(S_T)$ can be copied by trading the stock and the bond.
+\item Consequence: every price is the box above, and the real-world drift never enters.
+\end{steps}
+\answer{One stock (geometric Brownian motion) and one bond with constant $r$ and $\sigma$. The risk-neutral drift $a=r-\frac12\sigma^2$ exists, so the market is arbitrage-free; it is unique, so the market is complete.}
+\end{problem}
+
+%=====================================================================
+\section{Question 5: Black--Scholes numbers and a geometric Brownian motion}
+
+\begin{problem}[Q5(a)]
+$S_0=150$, volatility $40\%$, continuously compounded rate $r=5\%$ (time in years). Use the Black--Scholes formula and put--call parity to price the call and the put with strike $K=180$ and maturity (i) $18$ months, (ii) one month. Comment.
+\uses{card:bsprice}{1}
+\cardsays The call price from the Black--Scholes formula (as in Q1(j)):
+\[
+C=S\,\Phi(h)-Ke^{-r\tau}\,\Phi(h-\sigma\sqrt\tau),\qquad h=\frac{\ln(S/K)+(r+\frac12\sigma^2)\tau}{\sigma\sqrt\tau}.
+\]
+\uses{card:parity}{3}
+\cardsays Then the put from parity in continuous time: $C-P=S_0-Ke^{-r\tau}$, so $P=C-S_0+Ke^{-r\tau}$.
+\working
+\begin{steps}
+\item Pieces that do not change: $\ln(S/K)=\ln\frac{150}{180}=-0.1823$ and $r+\frac12\sigma^2=0.05+0.08=0.13$.
+\item (i) $\tau=1.5$: $\sigma\sqrt\tau=0.4(1.2247)=0.4899$; $h=\frac{-0.1823+0.13(1.5)}{0.4899}=\frac{0.0127}{0.4899}=0.0259$; $h-\sigma\sqrt\tau=-0.4640$.
+\item Table: $\Phi(0.0259)=0.5103$, $\Phi(-0.4640)=0.3213$. Discounted strike: $180e^{-0.075}=166.99$.
+\item Call: $C=150(0.5103)-166.99(0.3213)=76.55-53.66=22.89$.
+\item Put: $P=22.89-150+166.99=39.88$.
+\item (ii) $\tau=\frac1{12}$: $\sigma\sqrt\tau=0.4(0.2887)=0.1155$; $h=\frac{-0.1823+0.13/12}{0.1155}=\frac{-0.1715}{0.1155}=-1.4851$; $h-\sigma\sqrt\tau=-1.6006$.
+\item Table: $\Phi(-1.4851)=0.0688$, $\Phi(-1.6006)=0.0547$. Discounted strike: $180e^{-0.05/12}=179.25$.
+\item Call: $C=150(0.0688)-179.25(0.0547)=10.31-9.81=0.50$.
+\item Put: $P=0.50-150+179.25=29.75$.
+\end{steps}
+\answer{(i) $18$ months: call $22.89$, put $39.88$. (ii) One month: call $0.50$, put $29.75$.
+
+Comment: more time leaves more room for the price to move, so both options are worth more at $18$ months. In one month the stock would have to rise $20\%$ for the call to pay (risk-neutral chance $\Phi(-1.60)\approx5\%$), so the call is almost worthless. The put is almost its discounted intrinsic value, $179.25-150=29.25$, plus $0.50$ for the time left.}
+\end{problem}
+
+\begin{problem}[Q5(b)]
+$Y(t)$, the price of a stock, is a geometric Brownian motion with drift parameter $2$ per year and variance parameter $4$; today $Y(0)=35$. What is the probability that after $18$ months the price exceeds Rs $60$?
+\uses{card:gbm}{6}
+\cardsays The log of a geometric Brownian motion is normal: $\ln Y_t\sim N(\ln Y_0+mt,\ \sigma^2t)$. So the chance of ending above a level $K$ is a single normal probability:
+\[
+P(Y_t>K)=\Phi\Big(\frac{\ln(Y_0/K)+mt}{\sigma\sqrt t}\Big).
+\]
+\working
+\begin{steps}
+\item Read $m$ correctly: ``drift $2$, variance $4$'' are the parameters of the Brownian motion in the exponent, $\ln Y(t)=\ln35+X(t)$. So $m=2$ and $\sigma^2=4$, $\sigma=2$.
+\item Read off: $Y_0=35$, $K=60$, $t=1.5$.
+\item Pieces: $\ln\frac{35}{60}=-0.5390$; $mt=3$; $\sigma\sqrt t=2(1.2247)=2.4495$.
+\item Substitute: $\frac{-0.5390+3}{2.4495}=\frac{2.4610}{2.4495}=1.0047$.
+\item Table: $\Phi(1.0047)=0.8425$.
+\end{steps}
+\answer{$P\big(Y(1.5)>60\big)\approx0.84$.}
+\end{problem}
