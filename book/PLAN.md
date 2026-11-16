@@ -62,7 +62,7 @@ One LaTeX book, one PDF (`build/main.pdf`), that replaces everything else in `fi
 | pre-midsem/*.md | dropped: verbatim copies of notes/*.html |
 | videos/ | dropped: renders of the transcripts |
 | assignments/individual_project | dropped: a project report, not course content |
-| past_papers/*.pdf | via their solution notes (Ch 8, 15, 19, 27) |
+| past_papers/*.pdf | via their solution notes (Ch 8, 15, 19, 27), and each paper whole in Part "Papers and explanations" (95–98); MDP questions left out |
 | exam questions on Markov decision processes / optimal betting | dropped: optimal control is out of syllabus (CONTEXT.md) |
 
 ## Topic plan
@@ -96,6 +96,7 @@ Numbering after the 2026-11-12 restructure: problem chapters moved to the final 
 | P | Problems: Brownian motion (91) | sheets, papers | written |
 | P | Problems: Itô calculus and SDEs (92) | sheets, papers | written |
 | P | Problems: option pricing (93) | sheets, papers | written |
+| X | Papers and explanations: April 2024 (95), September 2024 (96), September 2025 (97), November 2025 (98) | the four papers | written (card → what it says → steps → answer) |
 
 ## Card catalogue (euclid-book §2a), current numbering
 1.1 atoms · 1.2 union · 1.3 limits · 2.1 measurability · 2.2 P(ξ∈B) · 2.3 normal probabilities and quantiles (VaR) · 3.1 E h(ξ) · 3.2 variance of combinations · 3.3 normal exponential moment · 3.4 tail bound · 4.1 Bayes · 4.2 independence · 4.3 freeze and average · 5.1 one-step test · 6.1 independent increments · 7.1 stopping-time test · 7.2 optional stopping · 7.3 stakes · 8.1 scaled walk (+ heat equation) · 10.1 law of x0+μt+σW given known values · 11.1 GBM · 12.1 jointly normal / Gaussian processes · 13.1 G(b,c) · 14.1 Itô integral · 15.1 Itô's formula · 16.1 linear SDE · 18.1 payoffs · 19.1 strategies, self-financing, arbitrage · 19.2 put–call parity (bounds, American call) · 20.1 finite one-period market · 21.1 binomial tree · 23.1 Black–Scholes pricing (Greeks, implied vol). No card: Ch 9 (rows of 10.1), Ch 17 (rows of 20.1), Ch 22 (rows of 23.1). Kept after review: 3.4 (only home of Chebyshev); 19.1 separate from 21.1 (general strategies; 21.1 row 6 plugs into it).
