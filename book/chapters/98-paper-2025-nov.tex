@@ -1,0 +1,345 @@
+\chapter{November 2025 paper}
+\label{ch:paper-2025-nov}
+
+\begin{whatfor}
+The end-of-semester paper of November 2025 (3 hours, 50 marks), solved question by question. Every solution names its card and row, says what the card says in plain words, works one substitution per step, and ends with the answer.
+\end{whatfor}
+
+%=====================================================================
+\section{Question 1: short answers}
+
+Throughout, $\{W_t,\ t\ge0\}$ is a standard Wiener process. The answer table for the first page:
+
+\begin{center}
+\begin{tabular}{@{}cl@{\qquad}cl@{}}
+\toprule
+Part & Answer & Part & Answer\\
+\midrule
+(a) & $\frac19\approx0.11$ & (d) & $\frac23\approx0.67$\\
+(b) & $e^tW_t\,dt+e^t\,dW_t$ & (e) & Rs $4.39$\\
+(c) & No & &\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{problem}[Q1(a)]
+Compute the variance of $\int_0^1t^4\,dW_t$.
+\uses{card:itoint}{2}
+\cardsays The Itô integral has mean $0$, and its variance is the ordinary integral of the integrand squared (the Itô isometry):
+\[
+\Var\int_0^tb_s\,dW_s=\int_0^t\E_P(b_s^2)\,ds.
+\]
+\working
+\begin{steps}
+\item Integrand: $b_s=s^4$, not random, so $\E_P(b_s^2)=s^8$.
+\item Integrate: $\int_0^1s^8\,ds=\Big[\frac{s^9}9\Big]_0^1=\frac19$.
+\end{steps}
+\answer{$\frac19\approx0.11$.}
+\end{problem}
+
+\begin{problem}[Q1(b)]
+Apply Itô's formula to compute $d(e^tW_t)$.
+\uses{card:ito}{1}
+\cardsays For a function of time and $W$: $df(t,W_t)=\big(\partial_tf+\frac12\partial_{xx}f\big)dt+\partial_xf\,dW_t$.
+\working
+\begin{steps}
+\item The function: $f(t,x)=e^tx$.
+\item Derivatives: $\partial_tf=e^tx$, $\partial_xf=e^t$, $\partial_{xx}f=0$.
+\item Substitute, with $x=W_t$: $dt$-part $e^tW_t+0$; $dW$-part $e^t$.
+\end{steps}
+\answer{$d(e^tW_t)=e^tW_t\,dt+e^t\,dW_t$.}
+\end{problem}
+
+\begin{problem}[Q1(c)]
+Is $Y_t=e^tW_t$ a martingale?
+\uses{card:ito}{3}
+\cardsays $g(t,W_t)$ is a martingale exactly when its $dt$-coefficient $\partial_tg+\frac12\partial_{xx}g$ is $0$ for every $x$.
+\working
+\begin{steps}
+\item From (b): the $dt$-coefficient is $e^tW_t$.
+\item It is not $0$ for every value of $W_t$, so the test fails.
+\item Check by the mean: $\E_P(e^tW_t\given\F_s)=e^tW_s\ne e^sW_s$ when $t\ne s$.
+\end{steps}
+\answer{No.}
+\end{problem}
+
+\begin{problem}[Q1(d)]
+$T=\min\{t:W_t=2-3t\}$, the first time $W$ hits the line $2-3t$. Use the martingale stopping theorem to find $\E_PT$.
+\uses{card:ost}{5}
+\cardsays A stopped martingale keeps its start, $\E_PM_\tau=M_0$. With $M=W$ (start $0$) and a line $c+\beta t$ moving towards the path, $W_\tau=c+\beta\tau$, so
+\[
+0=c+\beta\,\E_P\tau\qquad\Longrightarrow\qquad\E_P\tau=-\frac c\beta.
+\]
+\working
+\begin{steps}
+\item Read the line $2-3t$: $c=2$, $\beta=-3$.
+\item Guard: $c>0$, $\beta<0$, opposite signs, so the line comes down to meet the path.
+\item Substitute: $\E_PT=-\frac{2}{-3}=\frac23$.
+\end{steps}
+\answer{$\E_PT=\frac23\approx0.67$.}
+\end{problem}
+
+\begin{problem}[Q1(e)]
+A European call: stock Rs $80$, strike Rs $85$, expiry $1$ year, risk-free rate $5\%$, volatility $\sigma=0.15$. Find its value.
+\uses{card:bsprice}{1}
+\cardsays The Black--Scholes call price, with $\tau$ the time left:
+\[
+C=S\,\Phi(h)-Ke^{-r\tau}\,\Phi(h-\sigma\sqrt\tau),\qquad h=\frac{\ln(S/K)+(r+\frac12\sigma^2)\tau}{\sigma\sqrt\tau}.
+\]
+\working
+\begin{steps}
+\item Read off: $S=80$, $K=85$, $r=0.05$, $\sigma=0.15$, $\tau=1$.
+\item Pieces: $\ln\frac{80}{85}=-0.06062$; $r+\frac12\sigma^2=0.06125$; $\sigma\sqrt\tau=0.15$.
+\item $h=\frac{-0.06062+0.06125}{0.15}=0.0042$ and $h-\sigma\sqrt\tau=-0.1458$.
+\item Table: $\Phi(0.0042)=0.5017$ and $\Phi(-0.1458)=0.4420$.
+\item Discounted strike: $85e^{-0.05}=80.85$.
+\item Substitute: $C=80(0.5017)-80.85(0.4420)=40.13-35.74=4.39$.
+\end{steps}
+\answer{The call is worth Rs $4.39$.}
+\end{problem}
+
+%=====================================================================
+\section{Question 2: Greeks, parity, no arbitrage, straddle, value at risk}
+
+\begin{problem}[Q2(a)]
+Interpret the Greeks delta, gamma and theta of a European call in the Black--Scholes framework.
+\uses{card:bsprice}{6}
+\cardsays Each Greek is a derivative of the call price $C=S\Phi(h)-Ke^{-r\tau}\Phi(h-\sigma\sqrt\tau)$:
+\[
+\Delta=\Phi(h),\qquad\Gamma=\frac{\varphi(h)}{S\sigma\sqrt\tau},\qquad\theta=-\frac{S\varphi(h)\sigma}{2\sqrt\tau}-rKe^{-r\tau}\Phi(h-\sigma\sqrt\tau).
+\]
+\working
+\begin{steps}
+\item \textbf{Delta} $=\frac{\partial C}{\partial S}=\Phi(h)$, between $0$ and $1$. Meaning: if the stock rises by Rs $1$, the call rises by about $\Delta$. It is also the hedge: hold $\Delta$ shares per call sold to cancel small moves. Deep in the money $\Delta\to1$; far out of the money $\Delta\to0$.
+\item \textbf{Gamma} $=\frac{\partial^2C}{\partial S^2}=\frac{\varphi(h)}{S\sigma\sqrt\tau}>0$. Meaning: how fast delta changes, so how often the hedge must be adjusted. It is largest near $S=K$ close to expiry. $\Gamma>0$ says the call price is convex in $S$.
+\item \textbf{Theta} $=\frac{\partial C}{\partial t}<0$ for a call. Meaning: the value lost per unit of time as expiry comes closer, with everything else fixed (time decay).
+\item Numbers from Q1(e) ($S=80$, $K=85$, $h=0.0042$, $\varphi(h)=0.3989$): $\Delta=0.5017$; $\Gamma=\frac{0.3989}{80(0.15)(1)}=0.0332$; $\theta=-\frac{80(0.3989)(0.15)}{2}-0.05(80.85)(0.4420)=-2.39-1.79=-4.18$ per year.
+\end{steps}
+\answer{Delta: price change per Rs $1$ of stock, and the hedge ratio. Gamma: change in delta per Rs $1$, the curvature. Theta: value lost per unit of time.}
+\end{problem}
+
+\begin{problem}[Q2(b)]
+Derive put--call parity.
+\uses{card:parity}{3}
+\cardsays For European options on the same stock with the same $K$ and $T$, rate $r$ compounded continuously:
+\[
+C-P=S_0-Ke^{-rT}.
+\]
+\working
+\begin{steps}
+\item Portfolio A: one call and cash $Ke^{-rT}$ in the bond (it grows to $K$ at $T$). Portfolio B: one put and one share.
+\item At $T$, if $S_T>K$: A is worth $(S_T-K)+K=S_T$; B is worth $0+S_T=S_T$.
+\item At $T$, if $S_T\le K$: A is worth $0+K=K$; B is worth $(K-S_T)+S_T=K$.
+\item So both always pay $\max(S_T,K)$. (In one line: $(S_T-K)^+-(K-S_T)^+=S_T-K$, \cref{card:payoff}.)
+\item Same payoff, so the same price today, or there is an arbitrage: $C+Ke^{-rT}=P+S_0$.
+\item If it fails, say $C+Ke^{-rT}>P+S_0$: sell A, buy B, and keep the difference; at $T$ the two cancel exactly.
+\end{steps}
+\answer{$C+Ke^{-rT}=P+S_0$, that is $C-P=S_0-Ke^{-rT}$.}
+\end{problem}
+
+\begin{problem}[Q2(c)]
+Argue that the Black--Scholes market is arbitrage-free.
+\uses{card:bsprice}{7}
+\cardsays The market is arbitrage-free when a risk-neutral measure $P^*$ exists, one under which the discounted stock $e^{-rt}S_t$ is a martingale.
+\working
+\begin{steps}
+\item The market: a bond $B_t=e^{rt}$ and a stock $S_t=S_0e^{at+\sigma W_t}$, constant $r$ and $\sigma>0$.
+\item Discounted stock: $e^{-rt}S_t=S_0e^{(a-r)t+\sigma W_t}$.
+\item \Cref{card:gbm}, row 4: $e^{ct+\sigma W_t}$ is a martingale exactly when $c+\frac12\sigma^2=0$. With $c=a-r$ this asks for $a=r-\frac12\sigma^2$.
+\item Such a measure exists: the one under which the stock has drift $a=r-\frac12\sigma^2$.
+\item By the first fundamental theorem (no arbitrage $\iff$ a risk-neutral measure exists), there is no arbitrage. (It is also the only one, so the market is complete.)
+\end{steps}
+\answer{A risk-neutral measure exists (stock drift $r-\frac12\sigma^2$), so the Black--Scholes market is arbitrage-free.}
+\end{problem}
+
+\begin{problem}[Q2(d)]
+A straddle is a call and a put on the same stock with the same strike and expiry. Plot the payoff of the straddle as a function of the final price $S_T$.
+\uses{card:payoff}{4}
+\cardsays Since $|x|=x^++x^-$, a call plus a put with the same $K$ pays
+\[
+(S_T-K)^++(K-S_T)^+=|S_T-K|.
+\]
+\working
+\begin{steps}
+\item Below $K$ only the put pays: $K-S_T$, a line of slope $-1$ falling to $0$ at $S_T=K$.
+\item Above $K$ only the call pays: $S_T-K$, slope $+1$.
+\item Together: a V with its tip at $(K,0)$.
+\item Profit: subtract the cost $C+P$. The buyer gains only if $S_T$ ends outside $K\pm(C+P)$: a bet on a big move in either direction.
+\end{steps}
+\begin{pic}
+\begin{tikzpicture}
+\begin{axis}[width=8cm,height=5.2cm,xmin=0,xmax=200,ymin=-50,ymax=110,xtick={60,100,140},xticklabels={$K-c$,$K$,$K+c$},ytick={0},xlabel={$S_T$},axis lines=left,ticklabel style={font=\small},legend style={at={(0.5,0.98)},anchor=north,font=\small,draw=none,fill=none}]
+  \addplot[exc,very thick] coordinates {(0,100)(100,0)(200,100)};
+  \addplot[defc,thick,dashed] coordinates {(0,60)(100,-40)(200,60)};
+  \addplot[black!40,thin,forget plot] coordinates {(0,0)(200,0)};
+  \legend{payoff $|S_T-K|$,profit $|S_T-K|-c$}
+\end{axis}
+\end{tikzpicture}
+\picnote{Straddle payoff (solid) and profit (dashed), with $c=C+P$ the cost of the call and the put. The profit is positive only outside $K\pm c$.}
+\end{pic}
+\answer{The payoff is $|S_T-K|$: a V with its tip at $S_T=K$, slope $-1$ to the left and $+1$ to the right.}
+\end{problem}
+
+\begin{problem}[Q2(e)]
+Explain value at risk (VaR).
+\uses{card:normal-prob}{5}
+\cardsays The $\alpha$-quantile of a normal $\xi\sim N(\mu,\sigma^2)$ is $q=\mu+z_\alpha\sigma$, where $\Phi(z_\alpha)=\alpha$. For a loss $\xi$, this $q$ is its value at risk at level $\alpha$.
+\working
+\begin{steps}
+\item Definition: fix a horizon (say one day) and a level $\alpha$ (say $99\%$). VaR is the loss level $q$ that is exceeded only with probability $1-\alpha$: $P(\text{loss}\le q)=\alpha$.
+\item In words: ``on $99\%$ of days we lose no more than $q$''.
+\item Normal loss: $P(\xi\le q)=\Phi\big(\frac{q-\mu}\sigma\big)=\alpha$ gives $\frac{q-\mu}\sigma=z_\alpha$, so $q=\mu+z_\alpha\sigma$, with $z_{0.95}=1.645$ and $z_{0.99}=2.326$.
+\item Numbers: loss $\xi\sim N(1,4^2)$ at $\alpha=0.99$: $q=1+2.326(4)=10.31$.
+\item What it does not say: how large the loss is on the bad $1\%$ of days.
+\end{steps}
+\answer{VaR at level $\alpha$ is the $\alpha$-quantile of the loss: the loss exceeded only with probability $1-\alpha$. For a normal loss it is $\mu+z_\alpha\sigma$.}
+\end{problem}
+
+%=====================================================================
+\section{Question 3: from binomial to Black--Scholes, and a two-period put}
+
+\begin{problem}[Q3(a)]
+Using the binomial model, derive the Black--Scholes formula. Then explain the Black--Scholes framework.
+\uses{card:tree}{3}
+\cardsays In a $T$-period tree, a call costs
+\[
+C=S_0\sum_{j\ge m}\binom Tj\hat p^{\,j}(1-\hat p)^{T-j}-\frac{K}{(1+r)^T}\sum_{j\ge m}\binom Tj(p^*)^j(1-p^*)^{T-j},
+\]
+with $p^*=\frac{1+r-d}{u-d}$, $\hat p=\frac{up^*}{1+r}$, and $m$ the least number of ups that ends above $K$.
+\uses{card:bsprice}{8}
+\cardsays Let the number of steps grow: the tree price tends to the Black--Scholes price.
+\working
+\begin{steps}
+\item Tree price: a path with $j$ ups has weight $(p^*)^j(1-p^*)^{T-j}$ and there are $\binom Tj$ of them, so $C=(1+r)^{-T}\sum_j\binom Tj(p^*)^j(1-p^*)^{T-j}(u^jd^{T-j}S_0-K)^+$. Keeping only $j\ge m$ and splitting off the $S_0$ part (using $up^*+d(1-p^*)=1+r$) gives the box.
+\item Shrink the steps: $n$ steps of length $\Delta=\tau/n$, $u=e^{\sigma\sqrt\Delta}$, $d=e^{-\sigma\sqrt\Delta}$, $1+r_n=e^{r\Delta}$.
+\item Expand: $p^*=\frac{e^{r\Delta}-e^{-\sigma\sqrt\Delta}}{e^{\sigma\sqrt\Delta}-e^{-\sigma\sqrt\Delta}}\approx\frac12\Big(1+\frac{r-\frac12\sigma^2}{\sigma}\sqrt\Delta\Big)$.
+\item This is the walk of \cref{card:scaledwalk} with drift $r-\frac12\sigma^2$, so under $p^*$, $\ln\frac{S_\tau}{S_0}\to N\big((r-\frac12\sigma^2)\tau,\sigma^2\tau\big)$.
+\item The $K$ part: $K(1+r_n)^{-n}P^*(S_\tau>K)\to Ke^{-r\tau}\Phi(h-\sigma\sqrt\tau)$.
+\item The stock part: $\hat p\approx\frac12\big(1+\frac{r+\frac12\sigma^2}{\sigma}\sqrt\Delta\big)$, a walk with drift $r+\frac12\sigma^2$, so the first sum tends to $\Phi(h)$, with $h=\frac{\ln(S_0/K)+(r+\frac12\sigma^2)\tau}{\sigma\sqrt\tau}$.
+\item Together: $C=S_0\Phi(h)-Ke^{-r\tau}\Phi(h-\sigma\sqrt\tau)$.
+\end{steps}
+\textbf{The framework} has these parts.
+\begin{itemize}
+\item A bond $B_t=e^{rt}$ and a stock $S_t=S_0e^{at+\sigma W_t}$ (geometric Brownian motion), with $r$ and $\sigma>0$ constant.
+\item Continuous trading, no costs, no dividends, short selling allowed.
+\item The risk-neutral measure exists and is unique (drift $r-\frac12\sigma^2$), so the market is arbitrage-free and complete, and every claim costs $e^{-r\tau}\E_{P^*}[g(S_T)\given\F_t]$.
+\end{itemize}
+\answer{The binomial price tends to $C=S_0\Phi(h)-Ke^{-r\tau}\Phi(h-\sigma\sqrt\tau)$, the Black--Scholes formula.}
+\end{problem}
+
+\begin{problem}[Q3(b)]
+Two-period binomial market, $u=\frac53$, $d=\frac13$, $r=0$, $S_0=60$. Price a put with maturity $T=2$ and strike $K=80$.
+\uses{card:tree}{1}
+\cardsays Start at the end with the payoffs, then step back: each node is the risk-neutral average of the next two values, divided by $1+r$,
+\[
+V_t[s]=\frac{p^*\,V_{t+1}[us]+(1-p^*)\,V_{t+1}[ds]}{1+r},\qquad V_T[s]=g(s).
+\]
+\working
+\begin{steps}
+\item $p^*=\frac{1+r-d}{u-d}=\frac{1-\frac13}{\frac53-\frac13}=\frac{2/3}{4/3}=\frac12$. Guard: $\frac13<1<\frac53$ holds.
+\item Stock tree. Time 1: $100$ and $20$. Time 2: $\frac{25}9(60)=166.67$, $\frac59(60)=33.33$, $\frac19(60)=6.67$.
+\item Put payoffs $(80-S_2)^+$: $0$, $46.67$, $73.33$.
+\item Node $100$: $V_1=\frac12(0)+\frac12(46.67)=23.33$.
+\item Node $20$: $V_1=\frac12(46.67)+\frac12(73.33)=60$.
+\item Today: $V_0=\frac12(23.33)+\frac12(60)=41.67$.
+\end{steps}
+\answer{The put costs $\frac{125}3\approx41.67$.}
+\end{problem}
+
+%=====================================================================
+\section{Question 4: a two-period call, its hedge, and the put}
+
+Market: $T=2$, $u=1.35$, $d=0.6$, $r=0.15$, $S_0=400$, strike $K=500$.
+
+\begin{problem}[Q4(i)]
+Price a call with maturity $T=2$ and strike $K=500$.
+\uses{card:tree}{1}
+\cardsays Backward induction, $V_t[s]=\frac{p^*V_{t+1}[us]+(1-p^*)V_{t+1}[ds]}{1+r}$, starting from the payoffs.
+\working
+\begin{steps}
+\item $p^*=\frac{1.15-0.6}{1.35-0.6}=\frac{0.55}{0.75}=\frac{11}{15}=0.7333$, so $1-p^*=0.2667$. Guard: $0.6<1.15<1.35$ holds.
+\item Stock tree. Time 1: $540$ and $240$. Time 2: $729$, $324$, $144$.
+\item Call payoffs $(S_2-500)^+$: $229$, $0$, $0$.
+\item Node $540$: $V_1=\frac{0.7333(229)+0.2667(0)}{1.15}=\frac{167.93}{1.15}=146.03$.
+\item Node $240$: $V_1=\frac{0+0}{1.15}=0$.
+\item Today: $V_0=\frac{0.7333(146.03)+0}{1.15}=\frac{107.09}{1.15}=93.12$.
+\end{steps}
+\answer{The call costs $93.12$.}
+\end{problem}
+
+\begin{problem}[Q4(ii)]
+Construct a replicating portfolio for this option.
+\uses{card:tree}{5}
+\cardsays At each node hold $\Delta$ shares and the rest of the value in the bond:
+\[
+\Delta=\frac{V_{t+1}[us]-V_{t+1}[ds]}{us-ds},\qquad\text{bond money}=V_t[s]-\Delta s.
+\]
+\working
+\begin{steps}
+\item Today ($s=400$): $\Delta_1=\frac{146.03-0}{540-240}=\frac{146.03}{300}=0.4868$; bond $=93.12-0.4868(400)=93.12-194.71=-101.59$ (borrowed).
+\item Node $540$: $\Delta_2=\frac{229-0}{729-324}=\frac{229}{405}=0.5654$; bond $=146.03-0.5654(540)=146.03-305.33=-159.30$.
+\item Node $240$: $\Delta_2=\frac{0-0}{324-144}=0$; bond $=0-0=0$.
+\end{steps}
+\answer{Today: $0.4868$ shares and borrow $101.59$. After an up-move: $0.5654$ shares and borrow $159.30$. After a down-move: hold nothing.}
+\end{problem}
+
+\begin{problem}[Q4(iii)]
+Directly verify that this strategy is self-financing.
+\uses{card:tree}{6}
+\cardsays Self-financing: at each rebalancing, the old holding valued at the new prices equals the cost of the new holding.
+\working
+\begin{steps}
+\item The borrowing grows to $-101.59(1.15)=-116.82$ at time 1.
+\item Up ($S_1=540$): old holding $0.4868(540)-116.82=262.85-116.82=146.03$. New holding costs $0.5654(540)-159.30=146.03$. Equal.
+\item Down ($S_1=240$): old holding $0.4868(240)-116.82=116.82-116.82=0$. New holding costs $0$. Equal.
+\item Time 2 from node $540$: the borrowing grows to $-159.30(1.15)=-183.20$. At $729$: $0.5654(729)-183.20=412.20-183.20=229$. At $324$: $0.5654(324)-183.20=183.20-183.20=0$. Exactly the call.
+\end{steps}
+\answer{At each node the old holding is worth exactly what the new one costs, so no money goes in or out: self-financing.}
+\end{problem}
+
+\begin{problem}[Q4(iv)]
+Price a put with the same maturity and strike.
+\uses{card:parity}{1}
+\cardsays Put--call parity solved for the put: $P=C-S_0+KD_T$, with $D_T=(1+r)^{-T}$.
+\working
+\begin{steps}
+\item Discount: $D_2=1.15^{-2}=\frac1{1.3225}$, so $KD_2=\frac{500}{1.3225}=378.07$.
+\item Substitute: $P=93.12-400+378.07=71.19$.
+\end{steps}
+\answer{The put costs $71.19$.}
+\end{problem}
+
+%=====================================================================
+\section{Question 5: deriving the Greeks}
+
+\begin{problem}[Q5]
+Derive the sensitivities delta, gamma, theta, vega and rho of a European call in the Black--Scholes framework.
+\uses{card:bsprice}{6}
+\cardsays With $\tau=T-t$ and $k=h-\sigma\sqrt\tau$, the call is $C=S\Phi(h)-Ke^{-r\tau}\Phi(k)$, and
+\[
+\begin{gathered}
+\Delta=\Phi(h),\qquad\Gamma=\frac{\varphi(h)}{S\sigma\sqrt\tau},\qquad\text{vega}=S\varphi(h)\sqrt\tau,\\
+\rho=K\tau e^{-r\tau}\Phi(k),\qquad\theta=-\frac{S\varphi(h)\sigma}{2\sqrt\tau}-rKe^{-r\tau}\Phi(k).
+\end{gathered}
+\]
+The trick is one identity that makes the messy terms cancel.
+\working
+\begin{steps}
+\item The identity $S\varphi(h)=Ke^{-r\tau}\varphi(k)$. Since $\varphi(x)=\frac{e^{-x^2/2}}{\sqrt{2\pi}}$,
+\[
+\begin{aligned}
+\frac{\varphi(k)}{\varphi(h)}&=e^{(h^2-k^2)/2}=e^{(h-k)(h+k)/2}=e^{\sigma\sqrt\tau(2h-\sigma\sqrt\tau)/2}\\
+&=e^{\sigma\sqrt\tau\,h-\frac12\sigma^2\tau}=e^{\ln(S/K)+(r+\frac12\sigma^2)\tau-\frac12\sigma^2\tau}=\frac SKe^{r\tau}.
+\end{aligned}
+\]
+Multiply both sides by $Ke^{-r\tau}\varphi(h)$.
+\item How $k$ moves with $h$: $k=h-\sigma\sqrt\tau$, so $\partial k=\partial h$ for $S$ and $r$; $\partial_\sigma k=\partial_\sigma h-\sqrt\tau$; $\partial_\tau k=\partial_\tau h-\frac{\sigma}{2\sqrt\tau}$.
+\item \textbf{Delta.} $\partial_SC=\Phi(h)+\big[S\varphi(h)-Ke^{-r\tau}\varphi(k)\big]\partial_Sh=\Phi(h)$, because the bracket is $0$ by Step 1.
+\item \textbf{Gamma.} $\partial_S\Phi(h)=\varphi(h)\,\partial_Sh$, and $\partial_Sh=\frac{1}{S\sigma\sqrt\tau}$ (only $\ln S$ contains $S$). So $\Gamma=\frac{\varphi(h)}{S\sigma\sqrt\tau}$.
+\item \textbf{Vega.} $\partial_\sigma C=S\varphi(h)\partial_\sigma h-Ke^{-r\tau}\varphi(k)\big(\partial_\sigma h-\sqrt\tau\big)$. The $\partial_\sigma h$ terms cancel by Step 1, leaving $Ke^{-r\tau}\varphi(k)\sqrt\tau=S\varphi(h)\sqrt\tau$.
+\item \textbf{Rho.} $\partial_rC=\big[S\varphi(h)-Ke^{-r\tau}\varphi(k)\big]\partial_rh+\tau Ke^{-r\tau}\Phi(k)=K\tau e^{-r\tau}\Phi(k)$.
+\item \textbf{Theta.} First in $\tau$: $\partial_\tau C=S\varphi(h)\partial_\tau h-Ke^{-r\tau}\varphi(k)\big(\partial_\tau h-\frac\sigma{2\sqrt\tau}\big)+rKe^{-r\tau}\Phi(k)=\frac{S\varphi(h)\sigma}{2\sqrt\tau}+rKe^{-r\tau}\Phi(k)$. Time $t$ runs the other way ($\tau=T-t$), so $\theta=\partial_tC=-\partial_\tau C$.
+\item Numbers ($S=80$, $K=85$, $r=0.05$, $\sigma=0.15$, $\tau=1$, from Q1(e)): $\Delta=0.5017$, $\Gamma=0.0332$, vega $=80(0.3989)=31.92$, $\rho=85e^{-0.05}(0.4420)=35.74$, $\theta=-2.39-1.79=-4.18$.
+\end{steps}
+\answer{$\Delta=\Phi(h)$, $\Gamma=\frac{\varphi(h)}{S\sigma\sqrt\tau}$, vega $=S\varphi(h)\sqrt\tau$, $\rho=K\tau e^{-r\tau}\Phi(h-\sigma\sqrt\tau)$, $\theta=-\frac{S\varphi(h)\sigma}{2\sqrt\tau}-rKe^{-r\tau}\Phi(h-\sigma\sqrt\tau)$.}
+\end{problem}
