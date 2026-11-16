@@ -1,7 +1,9 @@
-Probability Densities & Joint Distributions
+Financial Mathematics 06 · Probability Densities & Joint Distributions (p.6–7)
 
-Probability Densities & Joint Distributions
+Financial Mathematics — lecture notes, p.6–7. Video 6 of 44 in the Pre-midsem playlist.
+Silent explainer with captions, made with Manim in the 3Blue1Brown style.
 
+Chapters:
 0:00 Step 1: Absolutely Continuous Distributions & Density
 1:31 Step 2: Discrete Distributions
 2:09 Step 3: Joint Distributions in mathbbRn

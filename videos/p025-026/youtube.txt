@@ -1,7 +1,9 @@
-Wiener Process Axioms, Lévy Characterization & Random Walk Limit
+Financial Mathematics 20 · Wiener Process Axioms, Lévy Characterization & Random Walk Limit… (p.25–26)
 
-Wiener Process Axioms, Lévy Characterization & Random Walk Limit
+Financial Mathematics — lecture notes, p.25–26. Video 20 of 44 in the Pre-midsem playlist.
+Silent explainer with captions, made with Manim in the 3Blue1Brown style.
 
+Chapters:
 0:00 1. Classical Definition of Wiener Process
 0:31 2. Lévy's Martingale Characterization
 0:58 3. Microscopic Random Walk Construction

@@ -1,7 +1,9 @@
-Gambling Strategies & Fairness
+Financial Mathematics 18 · Gambling Strategies & Fairness (p.24)
 
-Gambling Strategies & Fairness
+Financial Mathematics — lecture notes, p.24. Video 18 of 44 in the Pre-midsem playlist.
+Silent explainer with captions, made with Manim in the 3Blue1Brown style.
 
+Chapters:
 0:00 1. The Game Process (Xin)
 0:57 2. The Gambling Strategy (alphan)
 1:44 3. Total Wealth Process (Zn)

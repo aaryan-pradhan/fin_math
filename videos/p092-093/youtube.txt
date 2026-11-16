@@ -1,7 +1,9 @@
-p.92–93: Put–call parity
+Financial Mathematics 37 · Put–call parity (p.92–93)
 
-p.92–93: Put–call parity
+Financial Mathematics — lecture notes, p.92–93. Video 37 of 44 in the Post-midsem playlist.
+Silent explainer with captions, made with Manim in the 3Blue1Brown style.
 
+Chapters:
 0:00 The setup (p.92)
 0:57 Value at t = 0 (p.93)
 1:09 Value at t = 1 (p.93)

@@ -1,7 +1,9 @@
-Gambler's Ruin Problem
+Financial Mathematics 23 · Gambler's Ruin Problem (p.29–30)
 
-Gambler's Ruin Problem
+Financial Mathematics — lecture notes, p.29–30. Video 23 of 44 in the Pre-midsem playlist.
+Silent explainer with captions, made with Manim in the 3Blue1Brown style.
 
+Chapters:
 0:00 1. Problem Formulation
 1:28 2. Win Probability: First-Step Equation
 2:37 3. From the Equation to a Ratio of Differences

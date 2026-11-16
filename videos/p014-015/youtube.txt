@@ -1,7 +1,9 @@
-Filtrations, Adapted Processes & Martingales
+Financial Mathematics 11 · Filtrations, Adapted Processes & Martingales (p.14–15)
 
-Filtrations, Adapted Processes & Martingales
+Financial Mathematics — lecture notes, p.14–15. Video 11 of 44 in the Pre-midsem playlist.
+Silent explainer with captions, made with Manim in the 3Blue1Brown style.
 
+Chapters:
 0:00 Step 1: Filtrations & Adapted Stochastic Processes
 1:17 Step 2: Measurable Functions of Adapted Processes
 2:15 Step 3: Discrete-Time Martingale Definition

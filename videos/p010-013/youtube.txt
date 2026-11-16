@@ -1,7 +1,9 @@
-Conditional Expectation & σ-Fields
+Financial Mathematics 10 · Conditional Expectation & σ-Fields (p.10–13)
 
-Conditional Expectation & σ-Fields
+Financial Mathematics — lecture notes, p.10–13. Video 10 of 44 in the Pre-midsem playlist.
+Silent explainer with captions, made with Manim in the 3Blue1Brown style.
 
+Chapters:
 0:00 Step 1: Independence of Random Variables & σ-Fields
 1:09 Step 2: What is E(X mid mathcalG)?
 3:32 Step 3: Law of Iterated Expectations (Tower Property)

@@ -1,7 +1,9 @@
-p.64–65: Forwards, futures, calls, puts and derivative securities
+Financial Mathematics 33 · Forwards, futures, calls, puts and derivative securities (p.64–65)
 
-p.64–65: Forwards, futures, calls, puts and derivative securities
+Financial Mathematics — lecture notes, p.64–65. Video 33 of 44 in the Post-midsem playlist.
+Silent explainer with captions, made with Manim in the 3Blue1Brown style.
 
+Chapters:
 0:00 Forwards (p.64)
 1:01 Forwards vs futures (p.64)
 1:37 The plus notation (p.64)

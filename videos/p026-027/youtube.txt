@@ -1,7 +1,9 @@
-Brownian Bridge & Conditional Distributions
+Financial Mathematics 21 · Brownian Bridge & Conditional Distributions (p.26–27)
 
-Brownian Bridge & Conditional Distributions
+Financial Mathematics — lecture notes, p.26–27. Video 21 of 44 in the Pre-midsem playlist.
+Silent explainer with captions, made with Manim in the 3Blue1Brown style.
 
+Chapters:
 0:00 1. Reference Rules & Definitions
 0:48 2. Derivation of Standard Brownian Bridge [W(s) mid W(t) = B]
 1:10 3. General Brownian Motion Y(t) = sigma W(t)

@@ -1,7 +1,9 @@
-Almost Surely & Borel-Cantelli Lemma
+Financial Mathematics 02 · Almost Surely & Borel-Cantelli Lemma (p.3–4)
 
-Almost Surely & Borel-Cantelli Lemma
+Financial Mathematics — lecture notes, p.3–4. Video 2 of 44 in the Pre-midsem playlist.
+Silent explainer with captions, made with Manim in the 3Blue1Brown style.
 
+Chapters:
 0:00 Step 1: The Setup
 0:42 Step 2: Understanding Bn for a single outcome omega
 1:36 Step 3: The Intersection Set E

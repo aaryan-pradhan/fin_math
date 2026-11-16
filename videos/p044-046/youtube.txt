@@ -1,7 +1,9 @@
-Itô Integral
+Financial Mathematics 29 · Itô Integral (p.44–46)
 
-Itô Integral
+Financial Mathematics — lecture notes, p.44–46. Video 29 of 44 in the Pre-midsem playlist.
+Silent explainer with captions, made with Manim in the 3Blue1Brown style.
 
+Chapters:
 0:00 Step 1: Definition
 1:03 Step 2: Summation by parts
 1:18 Step 3: Pathwise formula

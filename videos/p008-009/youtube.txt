@@ -1,7 +1,9 @@
-Change of Variables for Expectation
+Financial Mathematics 08 · Change of Variables for Expectation (p.8–9)
 
-Change of Variables for Expectation
+Financial Mathematics — lecture notes, p.8–9. Video 8 of 44 in the Pre-midsem playlist.
+Silent explainer with captions, made with Manim in the 3Blue1Brown style.
 
+Chapters:
 0:00 Theorem Statement
 1:00 Step 1: Simple Functions (Base Case)
 1:28 Step 2: Non-Negative Borel Functions (MCT)

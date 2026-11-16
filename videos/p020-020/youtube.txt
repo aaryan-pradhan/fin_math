@@ -1,7 +1,9 @@
-Additive & Geometric Random Walks
+Financial Mathematics 14 · Additive & Geometric Random Walks (p.20)
 
-Additive & Geometric Random Walks
+Financial Mathematics — lecture notes, p.20. Video 14 of 44 in the Pre-midsem playlist.
+Silent explainer with captions, made with Manim in the 3Blue1Brown style.
 
+Chapters:
 0:00 Step 1: Additive Random Walk
 1:08 Step 2: Geometric (Exponential) Random Walk
 1:50 Step 3: Normal Log-Increments Case

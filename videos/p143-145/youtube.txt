@@ -1,7 +1,9 @@
-p.143–145: The Black–Scholes framework
+Financial Mathematics 44 · The Black–Scholes framework (p.143–145)
 
-p.143–145: The Black–Scholes framework
+Financial Mathematics — lecture notes, p.143–145. Video 44 of 44 in the Post-midsem playlist.
+Silent explainer with captions, made with Manim in the 3Blue1Brown style.
 
+Chapters:
 0:00 The bond and the stock (p.143)
 1:07 Solving the SDE with Itô's formula (p.143–144)
 2:07 Two questions (p.144)

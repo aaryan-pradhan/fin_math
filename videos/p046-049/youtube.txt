@@ -1,7 +1,9 @@
-Itô's Formula
+Financial Mathematics 30 · Itô's Formula (p.46–49)
 
-Itô's Formula
+Financial Mathematics — lecture notes, p.46–49. Video 30 of 44 in the Pre-midsem playlist.
+Silent explainer with captions, made with Manim in the 3Blue1Brown style.
 
+Chapters:
 0:00 Step 1: Itô process
 0:57 Step 2: Multiplication table
 1:20 Step 3: Itô's formula

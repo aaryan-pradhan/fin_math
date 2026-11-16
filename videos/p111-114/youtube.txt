@@ -1,7 +1,9 @@
-p.111–114: Thm 4, the completeness theorem
+Financial Mathematics 40 · Thm 4, the completeness theorem (p.111–114)
 
-p.111–114: Thm 4, the completeness theorem
+Financial Mathematics — lecture notes, p.111–114. Video 40 of 44 in the Post-midsem playlist.
+Silent explainer with captions, made with Manim in the 3Blue1Brown style.
 
+Chapters:
 0:00 Notation check
 0:41 The statement (p.111)
 1:01 Observation 1: the EMM is the solution of a linear system (p.111–112)

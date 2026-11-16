@@ -1,7 +1,9 @@
-p.130–133: From the binomial call price to Black–Scholes
+Financial Mathematics 42 · From the binomial call price to Black–Scholes (p.130–133)
 
-p.130–133: From the binomial call price to Black–Scholes
+Financial Mathematics — lecture notes, p.130–133. Video 42 of 44 in the Post-midsem playlist.
+Silent explainer with captions, made with Manim in the 3Blue1Brown style.
 
+Chapters:
 0:00 Notation check
 0:23 The European call in the binomial model (p.130)
 1:00 How many ups are enough: m (p.130)

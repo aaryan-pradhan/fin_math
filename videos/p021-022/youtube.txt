@@ -1,7 +1,9 @@
-Stopping Times
+Financial Mathematics 15 · Stopping Times (p.21–22)
 
-Stopping Times
+Financial Mathematics — lecture notes, p.21–22. Video 15 of 44 in the Pre-midsem playlist.
+Silent explainer with captions, made with Manim in the 3Blue1Brown style.
 
+Chapters:
 0:00 Step 1: Definition
 1:37 Step 2: Equivalent Characterisation — (1) iff (2)
 2:56 Step 3: Example — First Entry Time is a ST

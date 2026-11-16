@@ -1,7 +1,9 @@
-p.65–67: Pricing a call by a duplicating portfolio
+Financial Mathematics 34 · Pricing a call by a duplicating portfolio (p.65–67)
 
-p.65–67: Pricing a call by a duplicating portfolio
+Financial Mathematics — lecture notes, p.65–67. Video 34 of 44 in the Post-midsem playlist.
+Silent explainer with captions, made with Manim in the 3Blue1Brown style.
 
+Chapters:
 0:00 Stock and bond (p.65)
 0:44 The one-step tree (p.65–66)
 1:39 The classical way (p.66)

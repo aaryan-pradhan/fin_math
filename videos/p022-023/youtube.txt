@@ -1,7 +1,9 @@
-Stopped Process & Martingale Preservation
+Financial Mathematics 16 · Stopped Process & Martingale Preservation (p.22–23)
 
-Stopped Process & Martingale Preservation
+Financial Mathematics — lecture notes, p.22–23. Video 16 of 44 in the Pre-midsem playlist.
+Silent explainer with captions, made with Manim in the 3Blue1Brown style.
 
+Chapters:
 0:00 1. Motivating Question
 0:19 2. The Stopped Process
 0:51 3. Explicit Formula

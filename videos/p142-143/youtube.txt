@@ -1,7 +1,9 @@
-p.142–143: Martingales and claim pricing
+Financial Mathematics 43 · Martingales and claim pricing (p.142–143)
 
-p.142–143: Martingales and claim pricing
+Financial Mathematics — lecture notes, p.142–143. Video 43 of 44 in the Post-midsem playlist.
+Silent explainer with captions, made with Manim in the 3Blue1Brown style.
 
+Chapters:
 0:00 The setting (p.142)
 0:46 The fair price (p.142)
 1:08 Fact 1: an EMM means no arbitrage (p.142)

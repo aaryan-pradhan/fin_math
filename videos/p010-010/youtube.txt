@@ -1,7 +1,9 @@
-Conditional Probability & Independence
+Financial Mathematics 09 · Conditional Probability & Independence (p.10)
 
-Conditional Probability & Independence
+Financial Mathematics — lecture notes, p.10. Video 9 of 44 in the Pre-midsem playlist.
+Silent explainer with captions, made with Manim in the 3Blue1Brown style.
 
+Chapters:
 0:00 Step 1: Conditional Probability
 0:47 Step 2: Subsets & Disjoint Special Cases
 1:29 Step 3: Law of Total Probability

@@ -1,7 +1,9 @@
-p.125–129: Multiperiod binomial market
+Financial Mathematics 41 · Multiperiod binomial market (p.125–129)
 
-p.125–129: Multiperiod binomial market
+Financial Mathematics — lecture notes, p.125–129. Video 41 of 44 in the Post-midsem playlist.
+Silent explainer with captions, made with Manim in the 3Blue1Brown style.
 
+Chapters:
 0:00 Notation check
 0:30 The model (p.125)
 1:04 Trading strategy (p.125)

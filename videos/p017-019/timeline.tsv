@@ -1,33 +1,36 @@
 start	end	line	kind	text
 0.00	4.00	6	title	Standard Brownian Motion & Canonical Martingales
-4.00	10.37	8	sentence	Rigorously defining the Wiener process (Standard Brownian Motion) and deriving i
-10.37	11.17	10	section	Step 1: Definition of Standard Brownian Motion (SBM / Wiener Process)
-11.17	19.37	12	anim	bm_paths
-19.37	26.12	14	sentence	A continuous-time stochastic process $(W_t)_{t \geq 0}$ is a **Wiener process** 
-26.12	29.22	16	sentence	**Initial State:** $W_0 = 0$ ($P$-a.s.).
-29.22	33.65	18	sentence	**Continuous Paths:** The map $t \mapsto W_t(\omega)$ is continuous $P$-a.s.
-33.65	43.08	20	sentence	**Independent Increments:** For $0 \leq t_1 < t_2 < \cdots < t_n$, increments $(
-43.08	49.83	22	sentence	**Gaussian Increments:** For $0 \leq s < t$: $\;(W_t - W_s) \sim \mathcal{N}(0, 
-49.83	51.13	24	section	Step 2: Martingale 1 — The Linear Process $W_t$
-51.13	59.80	26	sentence	**Theorem:** $(W_t)_{t \geq 0}$ is a martingale relative to its natural filtrati
-59.80	62.90	28	sentence	**Proof:**
-62.90	66.57	30	sentence	Integrability: $E[|W_t|] \leq \sqrt{E[W_t^2]} = \sqrt{t} < \infty$.
-66.57	72.55	32	sentence	For $0 \leq s < t$, decompose $W_t = (W_t - W_s) + W_s$:
-72.55	74.75	34	equation	E[W_t \mid \mathcal{F}_s] = E[W_t - W_s \mid \mathcal{F}_s] + E[W_s \mid \mathca
-74.75	76.05	36	section	Step 3: Martingale 2 — The Quadratic Process $W_t^2 - t$
-76.05	81.25	38	sentence	**Theorem:** $Y_t = W_t^2 - t$ is a martingale relative to $\mathcal{F}_t$.
-81.25	84.35	40	sentence	**Proof:**
-84.35	88.78	42	sentence	Integrability: $E[|Y_t|] \leq E[W_t^2] + t = 2t < \infty$.
-88.78	93.98	44	sentence	Decompose $W_t^2 = (W_t - W_s)^2 + 2W_s(W_t - W_s) + W_s^2$:
-93.98	96.18	46	equation	\begin{aligned} E[W_t^2 \mid \mathcal{F}_s] &= E[(W_t - W_s)^2 \mid \mathcal{F}_
-96.18	104.85	48	sentence	Subtract $t$ on both sides: $E[W_t^2 - t \mid \mathcal{F}_s] = W_s^2 - s \implie
-104.85	112.75	50	sentence	The un-centered process $(W_t^2)_{t \geq 0}$ is a **submartingale** since $E[W_t
-112.75	114.05	52	section	Step 4: Martingale 3 — The Exponential Process $e^{uW_t - \frac12 u^2 t}$
-114.05	123.87	54	sentence	**Theorem:** For any parameter $u \in \mathbb{R}$, $Z_t = e^{uW_t - \frac12 u^2 
-123.87	126.97	56	sentence	**Proof:**
-126.97	134.48	58	sentence	Integrability: $E[Z_t] = e^{-\frac12 u^2 t} E[e^{uW_t}] = e^{-\frac12 u^2 t} e^{
-134.48	142.38	60	sentence	Multiplicative increment splitting for $0 \leq s < t$: $\;Z_t = Z_s \cdot e^{u(W
-142.38	145.48	62	sentence	Taking conditional expectation $E[\cdot \mid \mathcal{F}_s]$:
-145.48	147.68	64	equation	E[Z_t \mid \mathcal{F}_s] = Z_s \cdot e^{-\frac12 u^2(t-s)}\, E[e^{u(W_t - W_s)}
-147.68	155.20	66	sentence	Since $(W_t - W_s) \sim \mathcal{N}(0, t - s)$, its MGF is $E[e^{u(W_t - W_s)}] 
-155.20	161.18	66	sentence	Substituting this in yields $E[Z_t \mid \mathcal{F}_s] = Z_s \cdot 1 = Z_s$. ■
+4.00	11.33	8	sentence	Rigorously defining the Wiener process (Standard Brownian Motion) and deriving i
+11.33	12.67	10	section	Step 1: Definition of Standard Brownian Motion (SBM / Wiener Process)
+12.67	14.27	12	beat	paths
+14.27	26.13	14	sentence	A continuous-time stochastic process $(W_t)_{t \geq 0}$ is a **Wiener process** 
+26.13	32.47	16	sentence	**Initial State:** $W_0 = 0$ ($P$-a.s.).
+32.47	38.80	18	sentence	**Continuous Paths:** The map $t \mapsto W_t(\omega)$ is continuous $P$-a.s.
+38.80	47.47	20	sentence	**Independent Increments:** For $0 \leq t_1 < t_2 < \cdots < t_n$, increments $(
+47.47	53.81	22	sentence	**Gaussian Increments:** For $0 \leq s < t$: $\;(W_t - W_s) \sim \mathcal{N}(0, 
+53.81	55.11	24	section	Step 2: Martingale 1 — The Linear Process $W_t$
+55.11	56.71	26	beat	paths
+56.71	68.97	28	sentence	**Theorem:** $(W_t)_{t \geq 0}$ is a martingale relative to its natural filtrati
+68.97	74.07	30	sentence	**Proof:**
+74.07	79.26	32	sentence	Integrability: $E[|W_t|] \leq \sqrt{E[W_t^2]} = \sqrt{t} < \infty$.
+79.26	84.84	34	sentence	For $0 \leq s < t$, decompose $W_t = (W_t - W_s) + W_s$:
+84.84	91.74	36	equation	E[W_t \mid \mathcal{F}_s] = E[W_t - W_s \mid \mathcal{F}_s] + E[W_s \mid \mathca
+91.74	93.04	38	section	Step 3: Martingale 2 — The Quadratic Process $W_t^2 - t$
+93.04	94.64	40	beat	graph
+94.64	102.37	42	sentence	**Theorem:** $Y_t = W_t^2 - t$ is a martingale relative to $\mathcal{F}_t$.
+102.37	105.97	44	sentence	**Proof:**
+105.97	110.77	46	sentence	Integrability: $E[|Y_t|] \leq E[W_t^2] + t = 2t < \infty$.
+110.77	115.58	48	sentence	Decompose $W_t^2 = (W_t - W_s)^2 + 2W_s(W_t - W_s) + W_s^2$:
+115.58	124.82	50	equation	\begin{aligned} E[W_t^2 \mid \mathcal{F}_s] &= E[(W_t - W_s)^2 \mid \mathcal{F}_
+124.82	132.70	52	sentence	Subtract $t$ on both sides: $E[W_t^2 - t \mid \mathcal{F}_s] = W_s^2 - s \implie
+132.70	140.97	54	sentence	The un-centered process $(W_t^2)_{t \geq 0}$ is a **submartingale** since $E[W_t
+140.97	142.27	56	section	Step 4: Martingale 3 — The Exponential Process $e^{uW_t - \frac12 u^2 t}$
+142.27	143.87	58	beat	graph
+143.87	154.76	60	sentence	**Theorem:** For any parameter $u \in \mathbb{R}$, $Z_t = e^{uW_t - \frac12 u^2 
+154.76	162.89	62	sentence	**Proof:**
+162.89	168.34	64	sentence	Integrability: $E[Z_t] = e^{-\frac12 u^2 t} E[e^{uW_t}] = e^{-\frac12 u^2 t} e^{
+168.34	175.46	66	sentence	Multiplicative increment splitting for $0 \leq s < t$: $\;Z_t = Z_s \cdot e^{u(W
+175.46	179.75	68	sentence	Taking conditional expectation $E[\cdot \mid \mathcal{F}_s]$:
+179.75	184.95	70	equation	E[Z_t \mid \mathcal{F}_s] = Z_s \cdot e^{-\frac12 u^2(t-s)}\, E[e^{u(W_t - W_s)}
+184.95	192.83	72	sentence	Since $(W_t - W_s) \sim \mathcal{N}(0, t - s)$, its MGF is $E[e^{u(W_t - W_s)}] 
+192.83	198.28	72	sentence	Substituting this in yields $E[Z_t \mid \mathcal{F}_s] = Z_s \cdot 1 = Z_s$. ■

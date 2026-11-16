@@ -1,7 +1,9 @@
-Random Variables & Measurability
+Financial Mathematics 03 · Random Variables & Measurability (p.4)
 
-Random Variables & Measurability
+Financial Mathematics — lecture notes, p.4. Video 3 of 44 in the Pre-midsem playlist.
+Silent explainer with captions, made with Manim in the 3Blue1Brown style.
 
+Chapters:
 0:00 Step 1: Definition of a Measurable Function
 0:52 Step 2: Definition of a Random Variable
 1:35 Step 3: Concrete Coin-Toss Example

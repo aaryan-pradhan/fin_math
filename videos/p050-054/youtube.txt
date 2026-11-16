@@ -1,7 +1,9 @@
-Stochastic Differential Equations
+Financial Mathematics 31 · Stochastic Differential Equations (p.50–54)
 
-Stochastic Differential Equations
+Financial Mathematics — lecture notes, p.50–54. Video 31 of 44 in the Pre-midsem playlist.
+Silent explainer with captions, made with Manim in the 3Blue1Brown style.
 
+Chapters:
 0:00 Step 1: Ingredients
 0:35 Step 2: SDE vs Itô process
 0:59 Step 3: Solution

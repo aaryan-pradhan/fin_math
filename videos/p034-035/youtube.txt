@@ -1,7 +1,9 @@
-Multivariate Normal Distribution (MVN)
+Financial Mathematics 25 · Multivariate Normal Distribution (MVN) (p.34–35)
 
-Multivariate Normal Distribution (MVN)
+Financial Mathematics — lecture notes, p.34–35. Video 25 of 44 in the Pre-midsem playlist.
+Silent explainer with captions, made with Manim in the 3Blue1Brown style.
 
+Chapters:
 0:00 1. Definition & Construction
 1:08 2. Mean and Covariance Structure
 1:54 Linear Combinations

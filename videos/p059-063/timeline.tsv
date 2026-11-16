@@ -1,244 +1,257 @@
 start	end	line	kind	text
 0.00	4.00	5	title	p.59–63: Pricing a stock option by arbitrage, and the arbitrage theorem
-4.00	4.80	7	section	Money now vs money later (p.59)
-4.80	7.90	9	sentence	Let's start with one idea.
-7.90	17.72	9	sentence	An amount $v$ that you get at time $t$ in the future is not worth as much as $v$
-17.72	22.15	11	sentence	So we say: $v$ at time $t$ is worth, today,
-22.15	24.35	13	equation	v e^{-\alpha t}
-24.35	29.95	15	sentence	Here $\alpha$ is the discount factor, and $e^{-\alpha t}$ is the discount functi
-29.95	33.05	17	sentence	Let's put numbers in.
-33.05	37.48	17	sentence	Take $v = 100$, $\alpha = 0.1$, $t = 1$.
-37.48	41.15	17	sentence	Then today's worth is $100 e^{-0.1} \approx 90.48$.
-41.15	47.13	17	sentence	So Rs 100 a year from now is like Rs 90.48 in hand today.
-47.13	48.43	19	section	The one-period stock and the option (p.59)
-48.43	53.88	21	anim	branches
-53.88	56.98	23	sentence	Now the setup.
-56.98	60.27	23	sentence	A stock costs $100$ at time $0$.
-60.27	64.70	23	sentence	At time $1$ its price is either $200$ or $50$.
-64.70	67.80	23	sentence	Only these two.
-67.80	70.90	25	sentence	There is also an option.
-70.90	74.18	25	sentence	It costs Rs $C$ at time $0$.
-74.18	80.55	25	sentence	It gives the right to buy one share at time $1$ for the strike price
-80.55	82.75	27	equation	K = 150 \text{ per share}
-82.75	86.42	29	sentence	What is the option worth at time $1$?
-86.42	89.52	29	sentence	Let's see.
-89.52	93.57	29	sentence	If the price is $200$, I use the option.
-93.57	101.08	29	sentence	I buy at $150$ and the share is worth $200$, so I gain $200 - 150 = 50$.
-101.08	107.83	29	sentence	If the price is $50$, buying at $150$ is a loss, so I don't use it.
-107.83	110.93	29	sentence	It is worth $0$.
-110.93	112.23	31	section	Buying stock and options together (p.59)
-112.23	118.60	33	sentence	Suppose at time $0$ I buy $x$ units of stock and $y$ units of option.
-118.60	122.27	35	sentence	Now I value my holding at time $1$.
-122.27	125.55	35	sentence	Each share is worth the time-1 price.
-125.55	130.37	35	sentence	Each option is worth $50$ or $0$, as we just saw.
-130.37	133.47	35	sentence	So
-133.47	135.67	37	equation	\text{Value} = \begin{cases} 200x + 50y, & \text{if price is } 200 \\ 50x, & \te
-135.67	139.72	39	sentence	Quick check with $x = 1$, $y = 2$.
-139.72	144.92	39	sentence	If the price is $200$, value is $200 + 100 = 300$.
-144.92	148.58	39	sentence	If the price is $50$, value is $50$.
-148.58	149.88	41	section	Make the holding the same in both cases (p.60)
-149.88	153.93	43	sentence	Let's choose $y$ so that both values are equal.
-153.93	157.98	43	sentence	Then I don't care which way the price goes.
-157.98	161.08	43	sentence	Set the two cases equal:
-161.08	163.28	45	equation	200x + 50y = 50x
-163.28	166.38	47	sentence	Now subtract $200x$ from both sides:
-166.38	168.58	49	equation	50y = -150x
-168.58	171.68	51	sentence	Now divide by $50$:
-171.68	173.88	53	equation	y = -3x
-173.88	181.40	55	sentence	So if $y = -3x$, the value of the holding at time $1$ is $50x$, no matter what.
-181.40	186.22	57	sentence	A negative $y$ means I sell options instead of buying them.
-186.22	193.35	57	sentence	With $x = 1$, $y = -3$: I own one share and I have sold three options.
-193.35	199.33	57	sentence	If the price is $200$, value is $200 - 3 \cdot 50 = 50$.
-199.33	203.00	57	sentence	If the price is $50$, value is $50$.
-203.00	206.10	57	sentence	Same number.
-206.10	209.20	57	sentence	Good.
-209.20	210.50	59	section	Cost and gain (p.60)
-210.50	214.17	61	sentence	What did this cost me at time $0$?
-214.17	218.98	61	sentence	I pay $100$ for each share and $C$ for each option.
-218.98	223.03	61	sentence	Here $C$ is the unit cost of an option.
-223.03	227.08	61	sentence	So with $x$ shares and $y = -3x$ options,
-227.08	229.28	63	equation	\text{Original cost} = 100x + C y
-229.28	232.38	65	sentence	Now substitute $y = -3x$:
-232.38	234.58	67	equation	\text{Original cost} = 100x - 3xC
-234.58	240.18	69	sentence	My gain is what I hold at time $1$ minus what I paid:
-240.18	242.38	71	equation	\text{gain} = 50x - (100x - 3xC)
-242.38	245.48	73	sentence	Now open the bracket:
-245.48	247.68	75	equation	\text{gain} = 50x - 100x + 3xC
-247.68	250.97	77	sentence	Now collect terms and take $x$ out:
-250.97	253.17	79	equation	\text{gain} = x(3C - 50)
-253.17	257.98	81	sentence	So the sign of the gain depends on $3C$ against $50$:
-257.98	260.18	83	equation	\text{gain} = \begin{cases} 0, & \text{if } 3C = 50 \\ +\text{ve}, & \text{if } 
-260.18	268.47	85	sentence	And when it is negative for $x > 0$, I just flip the sign of $x$, and it turns p
-268.47	271.57	85	sentence	The two examples show both cases.
-271.57	272.87	87	section	Example 1: C = 20 (p.60)
-272.87	276.53	89	sentence	Take $C = 20$, unit cost per option.
-276.53	281.35	89	sentence	Here $3C = 60 > 50$, so take $x > 0$.
-281.35	284.63	89	sentence	Let $x = 1$, $y = -3$.
-284.63	291.77	91	sentence	So I purchase 1 unit of stock and at the same time sell 3 units of option.
-291.77	294.87	91	sentence	Initially this costs me
-294.87	297.07	93	equation	100 - 3 \cdot 20 = 100 - 60 = 40
-297.07	301.12	95	sentence	My holding at time $1$ is $50x = 50$.
-301.12	304.22	97	sentence	Guaranteed profit:
-304.22	306.42	99	equation	50 - 40 = \text{Rs } 10
-306.42	312.78	101	sentence	Check with the formula: $x(3C - 50) = 1 \cdot (60 - 50) = 10$.
-312.78	315.88	101	sentence	Same.
-315.88	317.18	103	section	Example 2: C = 15 (p.60–61)
-317.18	320.28	105	sentence	Take $C = 15$.
-320.28	326.65	105	sentence	Here $3C = 45 < 50$, so I flip: $x = -1$, $y = 3$.
-326.65	330.32	105	sentence	I sell one share and buy three options.
-330.32	333.42	107	sentence	Selling the share brings in $100$.
-333.42	337.47	107	sentence	Buying three options costs $3 \cdot 15 = 45$.
-337.47	340.57	107	sentence	So my initial gain is
-340.57	342.77	109	equation	100 - 3 \times 15 = 55
-342.77	346.82	111	sentence	At time $1$, the value of holding is $50x$.
-346.82	349.92	111	sentence	Substitute $x = -1$:
-349.92	352.12	113	equation	50 \cdot (-1) = -50
-352.12	359.63	115	sentence	That is, I must give back a share worth $50$ in total value, after the options p
-359.63	362.73	117	sentence	Guaranteed profit:
-362.73	364.93	119	equation	55 - 50 = \text{Rs } 5
-364.93	370.53	121	sentence	Check with the formula: $x(3C - 50) = (-1)(45 - 50) = 5$.
-370.53	373.63	121	sentence	Same.
-373.63	374.93	123	section	What arbitrage means (p.61)
-374.93	378.60	125	sentence	A sure-win betting scheme is called an arbitrage.
-378.60	381.70	125	sentence	That is, a risk-free profit.
-381.70	391.13	127	sentence	In this example we just saw: $C = 20$ gives Rs 10 for sure, and $C = 15$ gives R
-391.13	398.27	127	sentence	The only option cost $C$ that does not give an arbitrage is when the gain is zer
-398.27	400.47	129	equation	3C = 50
-400.47	403.57	131	sentence	Now divide by $3$:
-403.57	405.77	133	equation	C = \frac{50}{3} \approx 16.67
-405.77	407.07	135	section	Same answer through probabilities (p.61)
-407.07	410.35	137	sentence	Now let's look at it another way.
-410.35	417.48	137	sentence	Say the price goes to $200$ with probability $p$, and to $50$ with probability $
-417.48	421.15	139	sentence	Our wagers are the stock and the option.
-421.15	426.75	139	sentence	We ask for a $p$ under which each wager has expected return zero:
-426.75	428.95	141	equation	E(\text{return on wager}) = 0
-428.95	432.05	143	sentence	First the stock.
-432.05	436.10	143	sentence	The return from purchasing 1 unit of stock is
-436.10	438.30	145	equation	\text{return} = \begin{cases} 200 - 100 = 100, & \text{price is } 200 \\ 50 - 10
-438.30	441.40	147	sentence	Set its expectation to zero:
-441.40	443.60	149	equation	E(\text{return stock}) = 0
-443.60	447.65	151	sentence	Now write the expectation as value times probability, summed:
-447.65	449.85	153	equation	100p - 50(1 - p) = 0
-449.85	458.90	155	sentence	Now add $100$ to both sides (written as $100p + 100(1-p)$ on the left), and you 
-458.90	461.10	157	equation	100 = 200p + 50(1 - p)
-461.10	465.15	159	sentence	This says: today's price equals the expected price tomorrow.
-465.15	468.25	159	sentence	Now open the bracket:
-468.25	470.45	161	equation	100 = 200p + 50 - 50p
-470.45	473.55	163	sentence	Now subtract $50$ and collect $p$:
-473.55	475.75	165	equation	50 = 150p
-475.75	478.85	167	sentence	Now divide by $150$ (p.62):
-478.85	481.55	169	equation	p = \frac{1}{3}
-481.55	487.53	171	sentence	Check: $200 \cdot \frac{1}{3} + 50 \cdot \frac{2}{3} = 66.67 + 33.33 = 100$.
-487.53	490.63	171	sentence	Yes.
-490.63	491.93	173	section	Pricing the option with p = 1/3 (p.62)
-491.93	495.98	175	sentence	The return from purchasing one share of option is
-495.98	498.18	177	equation	\text{return} = \begin{cases} 50 - C, & \text{if price is } 200 \\ -C, & \text{i
-498.18	501.28	179	sentence	Set its expected return to zero:
-501.28	503.48	181	equation	E(\text{return option}) = 0
-503.48	508.30	183	sentence	Now substitute $p = \frac{1}{3}$ and $1 - p = \frac{2}{3}$:
-508.30	510.50	185	equation	(50 - C) \times \frac{1}{3} - C \times \frac{2}{3} = 0
-510.50	513.60	187	sentence	Now open the bracket:
-513.60	515.80	189	equation	\frac{50}{3} - \frac{C}{3} - \frac{2C}{3} = 0
-515.80	518.90	191	sentence	Now collect the $C$ terms.
-518.90	522.00	191	sentence	$\frac{C}{3} + \frac{2C}{3} = C$:
-522.00	524.20	193	equation	\frac{50}{3} - C = 0
-524.20	529.40	195	sentence	So $C$ is the option's payoff $200 - 150$ times its probability:
-529.40	532.10	197	equation	C = (200 - 150) \times \frac{1}{3}
-532.10	534.30	199	equation	C = \frac{50}{3}
-534.30	538.35	201	sentence	This is the same $C$ as the no-arbitrage answer.
-538.35	545.48	201	sentence	Check numerically: $(50 - 16.67) \cdot \frac{1}{3} - 16.67 \cdot \frac{2}{3} = 1
-545.48	546.78	203	section	Three outcomes (p.62)
-546.78	552.48	205	anim	branches
-552.48	558.85	207	sentence	Now let the stock go from $100$ to one of three prices at time $1$:
-558.85	561.55	209	equation	300 \text{ with prob } p_1, \quad 200 \text{ with prob } p_2, \quad 50 \text{ wi
-561.55	566.75	211	sentence	with $0 < p_1 < 1$ and $0 < p_2 < 1$.
-566.75	571.18	211	sentence	The option still costs $C$ with strike $K = 150$.
-571.18	581.78	213	sentence	The option pays $300 - 150 = 150$ at price $300$, pays $200 - 150 = 50$ at price
-581.78	584.88	215	sentence	Same two conditions as before.
-584.88	588.17	215	sentence	Stock: today's price equals expected price tomorrow:
-588.17	590.37	217	equation	100 = 300p_1 + 200p_2 + 50(1 - p_1 - p_2)
-590.37	593.47	219	sentence	Option: expected return zero.
-593.47	600.60	219	sentence	That is $(150 - C)p_1 + (50 - C)p_2 - C(1 - p_1 - p_2) = 0$.
-600.60	608.12	219	sentence	The $C$ terms add up to $C(p_1 + p_2 + 1 - p_1 - p_2) = C$, so
-608.12	610.32	221	equation	C = 150p_1 + 50p_2
-610.32	615.13	223	sentence	with $0 < p_1 < 1$, $0 < p_2 < 1$.
-615.13	618.23	225	sentence	The notes stop here.
-618.23	621.52	225	sentence	Let's see what the first equation says.
-621.52	624.62	225	sentence	Open the bracket and subtract $50$:
-624.62	626.82	227	equation	50 = 250p_1 + 150p_2
-626.82	629.92	229	sentence	Now divide by $50$:
-629.92	632.12	231	equation	1 = 5p_1 + 3p_2
-632.12	637.32	233	sentence	That's one equation for two unknowns, so there are many $(p_1, p_2)$.
-637.32	640.42	233	sentence	Try two:
-640.42	644.85	235	sentence	$p_1 = 0.1$: then $3p_2 = 0.5$, $p_2 = \frac{1}{6}$.
-644.85	648.52	235	sentence	So $C = 15 + 8.33 = 23.33$.
-648.52	652.95	236	sentence	$p_1 = 0.15$: then $3p_2 = 0.25$, $p_2 = \frac{1}{12}$.
-652.95	656.62	236	sentence	So $C = 22.5 + 4.17 = 26.67$.
-656.62	662.60	238	sentence	So with three outcomes, these two conditions don't pin $C$ down to one number.
-662.60	665.70	238	sentence	Different $p$'s give different $C$'s.
-665.70	667.00	240	section	The arbitrage theorem: setup (p.62–63)
-667.00	670.10	242	sentence	Now the general picture.
-670.10	674.15	242	sentence	Take an experiment whose set of possible outcomes is
-674.15	676.35	244	equation	S = \{1, 2, \dots, m\}
-676.35	679.45	246	sentence	There are $n$ wagers.
-679.45	690.05	246	sentence	If amount $x$ is bet on wager $i$, then the return $x \, r_i(j)$ is earned if th
-690.05	695.65	246	sentence	So $r_i(\cdot)$ is the return function for a unit bet on wager $i$.
-695.65	699.70	248	sentence	Let's lay all the $r_i(j)$ out as a table.
-699.70	705.30	248	sentence	Each row is a wager $i$, and each column is an outcome $j$.
-705.30	713.58	248	sentence	The entry in row $i$, column $j$ is what a unit bet on wager $i$ returns when ou
-713.58	715.78	250	table	
-715.78	720.98	257	sentence	So $i$ counts rows ($n$ wagers), and $j$ counts columns ($m$ outcomes).
-720.98	725.80	259	sentence	A betting scheme is a vector of bets, one per wager:
-725.80	728.00	261	equation	\underset{\sim}{x} = (x_1, \dots, x_n)
-728.00	735.13	263	sentence	If the outcome of the experiment is $j$, then I add up the return of every wager
-735.13	737.33	265	equation	\text{return from } \underset{\sim}{x} = \sum_{i=1}^{n} x_i r_i(j)
-737.33	745.23	267	sentence	In the table: I go down column $j$, multiply each row's entry by that row's bet 
-745.23	748.52	269	sentence	Let's map our two-outcome example onto this.
-748.52	756.03	269	sentence	Wagers (rows): $i = 1$ is the stock, $i = 2$ is the option, so $n = 2$.
-756.03	763.55	269	sentence	Outcomes (columns): $j = 1$ means price $200$, $j = 2$ means price $50$, so $m =
-763.55	766.65	269	sentence	With $C = 20$:
-766.65	769.35	271	table	
-769.35	772.63	276	sentence	Take the scheme $\underset{\sim}{x} = (1, -3)$.
-772.63	778.23	276	sentence	If $j = 1$: $1 \cdot 100 - 3 \cdot 30 = 10$.
-778.23	783.83	276	sentence	If $j = 2$: $1 \cdot (-50) - 3 \cdot (-20) = 10$.
-783.83	787.12	276	sentence	That's our Rs 10 from Example 1.
-787.12	801.93	278	sentence	The idea: either there is a $\underset{\sim}{p} = (p_1, \dots, p_m)$ on the set 
-801.93	803.23	280	section	The arbitrage theorem: statement (p.63)
-803.23	807.67	282	sentence	**Theorem (Arbitrage theorem).** Exactly one of the following is true.
-807.67	810.77	282	sentence	Either
-810.77	815.58	284	sentence	(i) there exists a $\underset{\sim}{p} = (p_1, \dots, p_m)$ for which
-815.58	817.78	286	equation	\sum_{j=1}^{m} p_j \, r_i(j) = 0 \quad \forall \, i = 1, \dots, n
-817.78	820.88	288	sentence	or
-820.88	826.48	290	sentence	(ii) there exists a betting scheme $\underset{\sim}{x} = (x_1, \dots, x_n)$ for 
-826.48	828.68	292	equation	\sum_{i=1}^{n} x_i \, r_i(j) > 0 \quad \forall \, j = 1, \dots, m
-828.68	831.97	294	sentence	Read (i) and (ii) off the table.
-831.97	841.02	294	sentence	In (i), I fix a row $i$, walk across it, and weight each entry by $p_j$; every r
-841.02	850.07	294	sentence	In (ii), I fix a column $j$, walk down it, and weight each entry by $x_i$; every
-850.07	853.35	296	sentence	Let's check both sides on our example.
-853.35	859.72	298	sentence	With $C = 20$, case (ii) holds, since $(1, -3)$ wins $10$ for every $j$.
-859.72	862.82	298	sentence	So (i) must fail.
-862.82	865.92	298	sentence	Let's see it fail.
-865.92	872.28	298	sentence	The stock needs $100p_1 - 50p_2 = 0$, so $p_1 = \frac{1}{3}$, $p_2 = \frac{2}{3}
-872.28	880.18	298	sentence	Then the option gives $30 \cdot \frac{1}{3} - 20 \cdot \frac{2}{3} = 10 - 13.33 
-880.18	883.28	298	sentence	So no such $\underset{\sim}{p}$ exists.
-883.28	890.42	300	sentence	With $C = \frac{50}{3}$, case (i) holds with $\underset{\sim}{p} = (\frac{1}{3},
-890.42	894.08	300	sentence	So by the theorem, no sure-win scheme exists.
-894.08	899.28	300	sentence	That matches the gain $x(3C - 50) = 0$ for every $x$.
-899.28	900.58	302	section	Extras from the slides (p.82–83)
-900.58	903.68	304	sentence	The slides repeat this lecture.
-903.68	906.78	304	sentence	They add only names:
-906.78	913.53	306	sentence	The $p = \frac{1}{3}$ that gives every wager expected return $0$ is called the r
-913.53	920.67	307	sentence	In the theorem, $\underset{\sim}{p}$ is a probability vector, so $p_j \ge 0$ and
-920.67	923.77	307	sentence	Case (i) is called "No Arbitrage".
-923.77	926.87	307	sentence	Case (ii) is called "Arbitrage Opportunity".
-926.87	932.85	309	sentence	So in our example: at $C = \frac{50}{3}$, the risk-neutral vector is $(\frac{1}{
-932.85	937.28	309	sentence	It sums to $1$, and we are in case (i).
-937.28	941.33	309	sentence	At $C = 20$ we are in case (ii).
-941.33	942.13	311	section	Doubts
-942.13	944.33	313	question	In $r_i(j)$, what do $i$ and $j$ index? Can it be a table?
-944.33	947.43	315	sentence	Look at it as a table.
-947.43	956.10	315	sentence	Row $i$ is a wager (there are $n$), column $j$ is an outcome (there are $m$), an
-956.10	963.23	315	sentence	With $C = 20$, the stock row is $(100, -50)$ and the option row is $(30, -20)$.
-963.23	969.60	315	sentence	Condition (i) works across a row: $100 \cdot \frac{1}{3} - 50 \cdot \frac{2}{3} 
-969.60	978.26	315	sentence	Condition (ii) works down a column: with $\underset{\sim}{x} = (1, -3)$, column 
-978.26	982.31	315	sentence	I've put both tables into the arbitrage theorem section.
+4.00	5.33	7	section	Money now vs money later (p.59)
+5.33	6.93	9	beat	graph
+6.93	11.53	11	sentence	Let's start with one idea.
+11.53	22.33	11	sentence	An amount $v$ that you get at time $t$ in the future is not worth as much as $v$
+22.33	27.73	13	sentence	So we say: $v$ at time $t$ is worth, today,
+27.73	30.80	15	equation	v e^{-\alpha t}
+30.80	37.40	17	sentence	Here $\alpha$ is the discount factor, and $e^{-\alpha t}$ is the discount functi
+37.40	41.00	19	sentence	Let's put numbers in.
+41.00	45.67	19	sentence	Take $v = 100$, $\alpha = 0.1$, $t = 1$.
+45.67	50.33	19	sentence	Then today's worth is $100 e^{-0.1} \approx 90.48$.
+50.33	57.27	19	sentence	So Rs 100 a year from now is like Rs 90.48 in hand today.
+57.27	58.60	21	section	The one-period stock and the option (p.59)
+58.60	60.20	23	beat	tree
+60.20	65.40	25	sentence	Now the setup.
+65.40	71.07	25	sentence	A stock costs $100$ at time $0$.
+71.07	76.87	25	sentence	At time $1$ its price is either $200$ or $50$.
+76.87	80.47	25	sentence	Only these two.
+80.47	84.07	27	sentence	There is also an option.
+84.07	89.67	27	sentence	It costs Rs $C$ at time $0$.
+89.67	97.00	27	sentence	It gives the right to buy one share at time $1$ for the strike price
+97.00	100.07	29	equation	K = 150 \text{ per share}
+100.07	105.07	31	sentence	What is the option worth at time $1$?
+105.07	108.67	31	sentence	Let's see.
+108.67	114.07	31	sentence	If the price is $200$, I use the option.
+114.07	122.20	31	sentence	I buy at $150$ and the share is worth $200$, so I gain $200 - 150 = 50$.
+122.20	130.33	31	sentence	If the price is $50$, buying at $150$ is a loss, so I don't use it.
+130.33	133.93	31	sentence	It is worth $0$.
+133.93	135.27	33	section	Buying stock and options together (p.59)
+135.27	136.87	35	beat	compare
+136.87	145.80	37	sentence	Suppose at time $0$ I buy $x$ units of stock and $y$ units of option.
+145.80	152.40	39	sentence	Now I value my holding at time $1$.
+152.40	156.67	39	sentence	Each share is worth the time-1 price.
+156.67	162.87	39	sentence	Each option is worth $50$ or $0$, as we just saw.
+162.87	166.47	39	sentence	So
+166.47	171.73	41	equation	\text{Value} = \begin{cases} 200x + 50y, & \text{if price is } 200 \\ 50x, & \te
+171.73	176.00	43	sentence	Quick check with $x = 1$, $y = 2$.
+176.00	181.80	43	sentence	If the price is $200$, value is $200 + 100 = 300$.
+181.80	187.20	43	sentence	If the price is $50$, value is $50$.
+187.20	188.53	45	section	Make the holding the same in both cases (p.60)
+188.53	190.13	47	beat	recap
+190.13	196.73	49	sentence	Let's choose $y$ so that both values are equal.
+196.73	201.73	49	sentence	Then I don't care which way the price goes.
+201.73	205.33	49	sentence	Set the two cases equal:
+205.33	208.40	51	equation	200x + 50y = 50x
+208.40	212.27	53	sentence	Now subtract $200x$ from both sides:
+212.27	215.53	55	equation	50y = -150x
+215.53	219.13	57	sentence	Now divide by $50$:
+219.13	222.40	59	equation	y = -3x
+222.40	230.87	61	sentence	So if $y = -3x$, the value of the holding at time $1$ is $50x$, no matter what.
+230.87	236.67	63	sentence	A negative $y$ means I sell options instead of buying them.
+236.67	244.00	63	sentence	With $x = 1$, $y = -3$: I own one share and I have sold three options.
+244.00	249.80	63	sentence	If the price is $200$, value is $200 - 3 \cdot 50 = 50$.
+249.80	255.20	63	sentence	If the price is $50$, value is $50$.
+255.20	258.80	63	sentence	Same number.
+258.80	262.40	63	sentence	Good.
+262.40	263.73	65	section	Cost and gain (p.60)
+263.73	265.33	67	beat	graph
+265.33	271.33	69	sentence	What did this cost me at time $0$?
+271.33	278.07	69	sentence	I pay $100$ for each share and $C$ for each option.
+278.07	284.00	69	sentence	Here $C$ is the unit cost of an option.
+284.00	288.27	69	sentence	So with $x$ shares and $y = -3x$ options,
+288.27	292.27	71	equation	\text{Original cost} = 100x + C y
+292.27	295.87	73	sentence	Now substitute $y = -3x$:
+295.87	299.13	75	equation	\text{Original cost} = 100x - 3xC
+299.13	305.73	77	sentence	My gain is what I hold at time $1$ minus what I paid:
+305.73	309.00	79	equation	\text{gain} = 50x - (100x - 3xC)
+309.00	312.60	81	sentence	Now open the bracket:
+312.60	315.87	83	equation	\text{gain} = 50x - 100x + 3xC
+315.87	320.13	85	sentence	Now collect terms and take $x$ out:
+320.13	324.33	87	equation	\text{gain} = x(3C - 50)
+324.33	331.47	89	sentence	So the sign of the gain depends on $3C$ against $50$:
+331.47	340.13	91	equation	\text{gain} = \begin{cases} 0, & \text{if } 3C = 50 \\ +\text{ve}, & \text{if } 
+340.13	349.40	93	sentence	And when it is negative for $x > 0$, I just flip the sign of $x$, and it turns p
+349.40	353.27	93	sentence	The two examples show both cases.
+353.27	354.60	95	section	Example 1: C = 20 (p.60)
+354.60	356.20	97	beat	compare
+356.20	363.00	99	sentence	Take $C = 20$, unit cost per option.
+363.00	370.20	99	sentence	Here $3C = 60 > 50$, so take $x > 0$.
+370.20	373.80	99	sentence	Let $x = 1$, $y = -3$.
+373.80	381.93	101	sentence	So I purchase 1 unit of stock and at the same time sell 3 units of option.
+381.93	385.53	101	sentence	Initially this costs me
+385.53	388.60	103	equation	100 - 3 \cdot 20 = 100 - 60 = 40
+388.60	393.27	105	sentence	My holding at time $1$ is $50x = 50$.
+393.27	396.87	107	sentence	Guaranteed profit:
+396.87	400.13	109	equation	50 - 40 = \text{Rs } 10
+400.13	405.73	111	sentence	Check with the formula: $x(3C - 50) = 1 \cdot (60 - 50) = 10$.
+405.73	409.33	111	sentence	Same.
+409.33	410.67	113	section	Example 2: C = 15 (p.60–61)
+410.67	412.27	115	beat	compare
+412.27	418.40	117	sentence	Take $C = 15$.
+418.40	426.73	117	sentence	Here $3C = 45 < 50$, so I flip: $x = -1$, $y = 3$.
+426.73	431.40	117	sentence	I sell one share and buy three options.
+431.40	435.67	119	sentence	Selling the share brings in $100$.
+435.67	439.93	119	sentence	Buying three options costs $3 \cdot 15 = 45$.
+439.93	443.53	119	sentence	So my initial gain is
+443.53	446.60	121	equation	100 - 3 \times 15 = 55
+446.60	452.40	123	sentence	At time $1$, the value of holding is $50x$.
+452.40	456.00	123	sentence	Substitute $x = -1$:
+456.00	459.27	125	equation	50 \cdot (-1) = -50
+459.27	467.73	127	sentence	That is, I must give back a share worth $50$ in total value, after the options p
+467.73	471.33	129	sentence	Guaranteed profit:
+471.33	474.60	131	equation	55 - 50 = \text{Rs } 5
+474.60	480.20	133	sentence	Check with the formula: $x(3C - 50) = (-1)(45 - 50) = 5$.
+480.20	483.80	133	sentence	Same.
+483.80	485.13	135	section	What arbitrage means (p.61)
+485.13	486.73	137	beat	recap
+486.73	493.00	139	sentence	A sure-win betting scheme is called an arbitrage.
+493.00	498.20	139	sentence	That is, a risk-free profit.
+498.20	508.00	141	sentence	In this example we just saw: $C = 20$ gives Rs 10 for sure, and $C = 15$ gives R
+508.00	517.07	141	sentence	The only option cost $C$ that does not give an arbitrage is when the gain is zer
+517.07	521.07	143	equation	3C = 50
+521.07	524.67	145	sentence	Now divide by $3$:
+524.67	528.67	147	equation	C = \frac{50}{3} \approx 16.67
+528.67	530.00	149	section	Same answer through probabilities (p.61)
+530.00	531.60	151	beat	tree
+531.60	537.47	153	sentence	Now let's look at it another way.
+537.47	547.53	153	sentence	Say the price goes to $200$ with probability $p$, and to $50$ with probability $
+547.53	552.20	155	sentence	Our wagers are the stock and the option.
+552.20	559.73	155	sentence	We ask for a $p$ under which each wager has expected return zero:
+559.73	562.80	157	equation	E(\text{return on wager}) = 0
+562.80	566.40	159	sentence	First the stock.
+566.40	571.40	159	sentence	The return from purchasing 1 unit of stock is
+571.40	577.27	161	equation	\text{return} = \begin{cases} 200 - 100 = 100, & \text{price is } 200 \\ 50 - 10
+577.27	580.87	163	sentence	Set its expectation to zero:
+580.87	584.13	165	equation	E(\text{return stock}) = 0
+584.13	589.13	167	sentence	Now write the expectation as value times probability, summed:
+589.13	593.33	169	equation	100p - 50(1 - p) = 0
+593.33	603.93	171	sentence	Now add $100$ to both sides (written as $100p + 100(1-p)$ on the left), and you 
+603.93	608.13	173	equation	100 = 200p + 50(1 - p)
+608.13	613.13	175	sentence	This says: today's price equals the expected price tomorrow.
+613.13	616.73	175	sentence	Now open the bracket:
+616.73	620.93	177	equation	100 = 200p + 50 - 50p
+620.93	626.13	179	sentence	Now subtract $50$ and collect $p$:
+626.13	630.33	181	equation	50 = 150p
+630.33	633.93	183	sentence	Now divide by $150$ (p.62):
+633.93	638.13	185	equation	p = \frac{1}{3}
+638.13	642.80	187	sentence	Check: $200 \cdot \frac{1}{3} + 50 \cdot \frac{2}{3} = 66.67 + 33.33 = 100$.
+642.80	646.40	187	sentence	Yes.
+646.40	647.73	189	section	Pricing the option with p = 1/3 (p.62)
+647.73	649.33	191	beat	tree
+649.33	655.93	193	sentence	The return from purchasing one share of option is
+655.93	663.00	195	equation	\text{return} = \begin{cases} 50 - C, & \text{if price is } 200 \\ -C, & \text{i
+663.00	666.87	197	sentence	Set its expected return to zero:
+666.87	670.13	199	equation	E(\text{return option}) = 0
+670.13	675.73	201	sentence	Now substitute $p = \frac{1}{3}$ and $1 - p = \frac{2}{3}$:
+675.73	680.07	203	equation	(50 - C) \times \frac{1}{3} - C \times \frac{2}{3} = 0
+680.07	683.67	205	sentence	Now open the bracket:
+683.67	687.87	207	equation	\frac{50}{3} - \frac{C}{3} - \frac{2C}{3} = 0
+687.87	692.40	209	sentence	Now collect the $C$ terms.
+692.40	696.93	209	sentence	$\frac{C}{3} + \frac{2C}{3} = C$:
+696.93	701.13	211	equation	\frac{50}{3} - C = 0
+701.13	707.47	213	sentence	So $C$ is the option's payoff $200 - 150$ times its probability:
+707.47	711.67	215	equation	C = (200 - 150) \times \frac{1}{3}
+711.67	715.87	217	equation	C = \frac{50}{3}
+715.87	721.80	219	sentence	This is the same $C$ as the no-arbitrage answer.
+721.80	727.20	219	sentence	Check numerically: $(50 - 16.67) \cdot \frac{1}{3} - 16.67 \cdot \frac{2}{3} = 1
+727.20	728.53	221	section	Three outcomes (p.62)
+728.53	730.13	223	beat	tree
+730.13	739.47	225	sentence	Now let the stock go from $100$ to one of three prices at time $1$:
+739.47	747.00	227	equation	300 \text{ with prob } p_1, \quad 200 \text{ with prob } p_2, \quad 50 \text{ wi
+747.00	752.53	229	sentence	with $0 < p_1 < 1$ and $0 < p_2 < 1$.
+752.53	758.47	229	sentence	The option still costs $C$ with strike $K = 150$.
+758.47	768.87	231	sentence	The option pays $300 - 150 = 150$ at price $300$, pays $200 - 150 = 50$ at price
+768.87	772.47	233	sentence	Same two conditions as before.
+772.47	776.73	233	sentence	Stock: today's price equals expected price tomorrow:
+776.73	780.93	235	equation	100 = 300p_1 + 200p_2 + 50(1 - p_1 - p_2)
+780.93	784.53	237	sentence	Option: expected return zero.
+784.53	790.13	237	sentence	That is $(150 - C)p_1 + (50 - C)p_2 - C(1 - p_1 - p_2) = 0$.
+790.13	796.87	237	sentence	The $C$ terms add up to $C(p_1 + p_2 + 1 - p_1 - p_2) = C$, so
+796.87	801.07	239	equation	C = 150p_1 + 50p_2
+801.07	805.60	241	sentence	with $0 < p_1 < 1$, $0 < p_2 < 1$.
+805.60	809.20	243	sentence	The notes stop here.
+809.20	813.47	243	sentence	Let's see what the first equation says.
+813.47	817.73	243	sentence	Open the bracket and subtract $50$:
+817.73	821.93	245	equation	50 = 250p_1 + 150p_2
+821.93	825.53	247	sentence	Now divide by $50$:
+825.53	829.73	249	equation	1 = 5p_1 + 3p_2
+829.73	836.87	251	sentence	That's one equation for two unknowns, so there are many $(p_1, p_2)$.
+836.87	840.47	251	sentence	Try two:
+840.47	846.07	253	sentence	$p_1 = 0.1$: then $3p_2 = 0.5$, $p_2 = \frac{1}{6}$.
+846.07	850.60	253	sentence	So $C = 15 + 8.33 = 23.33$.
+850.60	856.20	254	sentence	$p_1 = 0.15$: then $3p_2 = 0.25$, $p_2 = \frac{1}{12}$.
+856.20	860.73	254	sentence	So $C = 22.5 + 4.17 = 26.67$.
+860.73	868.60	256	sentence	So with three outcomes, these two conditions don't pin $C$ down to one number.
+868.60	873.80	256	sentence	Different $p$'s give different $C$'s.
+873.80	875.13	258	section	The arbitrage theorem: setup (p.62–63)
+875.13	876.73	260	beat	matrix
+876.73	882.33	262	sentence	Now the general picture.
+882.33	888.73	262	sentence	Take an experiment whose set of possible outcomes is
+888.73	892.73	264	equation	S = \{1, 2, \dots, m\}
+892.73	896.33	266	sentence	There are $n$ wagers.
+896.33	908.07	266	sentence	If amount $x$ is bet on wager $i$, then the return $x \, r_i(j)$ is earned if th
+908.07	915.00	266	sentence	So $r_i(\cdot)$ is the return function for a unit bet on wager $i$.
+915.00	920.00	268	sentence	Let's lay all the $r_i(j)$ out as a table.
+920.00	927.33	268	sentence	Each row is a wager $i$, and each column is an outcome $j$.
+927.33	937.00	268	sentence	The entry in row $i$, column $j$ is what a unit bet on wager $i$ returns when ou
+937.00	945.47	270	table	
+945.47	952.40	277	sentence	So $i$ counts rows ($n$ wagers), and $j$ counts columns ($m$ outcomes).
+952.40	958.20	279	sentence	A betting scheme is a vector of bets, one per wager:
+958.20	961.27	281	equation	\underset{\sim}{x} = (x_1, \dots, x_n)
+961.27	969.73	283	sentence	If the outcome of the experiment is $j$, then I add up the return of every wager
+969.73	973.53	285	equation	\text{return from } \underset{\sim}{x} = \sum_{i=1}^{n} x_i r_i(j)
+973.53	983.20	287	sentence	In the table: I go down column $j$, multiply each row's entry by that row's bet 
+983.20	987.47	289	sentence	Let's map our two-outcome example onto this.
+987.47	994.07	289	sentence	Wagers (rows): $i = 1$ is the stock, $i = 2$ is the option, so $n = 2$.
+994.07	1001.40	289	sentence	Outcomes (columns): $j = 1$ means price $200$, $j = 2$ means price $50$, so $m =
+1001.40	1005.93	289	sentence	With $C = 20$:
+1005.93	1011.40	291	table	
+1011.40	1015.67	296	sentence	Take the scheme $\underset{\sim}{x} = (1, -3)$.
+1015.67	1019.93	296	sentence	If $j = 1$: $1 \cdot 100 - 3 \cdot 30 = 10$.
+1019.93	1024.20	296	sentence	If $j = 2$: $1 \cdot (-50) - 3 \cdot (-20) = 10$.
+1024.20	1028.47	296	sentence	That's our Rs 10 from Example 1.
+1028.47	1045.20	298	sentence	The idea: either there is a $\underset{\sim}{p} = (p_1, \dots, p_m)$ on the set 
+1045.20	1046.53	300	section	The arbitrage theorem: statement (p.63)
+1046.53	1048.13	302	beat	compare
+1048.13	1055.13	304	sentence	**Theorem (Arbitrage theorem).** Exactly one of the following is true.
+1055.13	1060.33	304	sentence	Either
+1060.33	1066.68	306	sentence	(i) there exists a $\underset{\sim}{p} = (p_1, \dots, p_m)$ for which
+1066.68	1071.35	308	equation	\sum_{j=1}^{m} p_j \, r_i(j) = 0 \quad \forall \, i = 1, \dots, n
+1071.35	1074.95	310	sentence	or
+1074.95	1081.16	312	sentence	(ii) there exists a betting scheme $\underset{\sim}{x} = (x_1, \dots, x_n)$ for 
+1081.16	1085.13	314	equation	\sum_{i=1}^{n} x_i \, r_i(j) > 0 \quad \forall \, j = 1, \dots, m
+1085.13	1089.42	316	sentence	Read (i) and (ii) off the table.
+1089.42	1101.54	316	sentence	In (i), I fix a row $i$, walk across it, and weight each entry by $p_j$; every r
+1101.54	1112.37	316	sentence	In (ii), I fix a column $j$, walk down it, and weight each entry by $x_i$; every
+1112.37	1116.66	318	sentence	Let's check both sides on our example.
+1116.66	1124.54	320	sentence	With $C = 20$, case (ii) holds, since $(1, -3)$ wins $10$ for every $j$.
+1124.54	1128.14	320	sentence	So (i) must fail.
+1128.14	1131.74	320	sentence	Let's see it fail.
+1131.74	1139.24	320	sentence	The stock needs $100p_1 - 50p_2 = 0$, so $p_1 = \frac{1}{3}$, $p_2 = \frac{2}{3}
+1139.24	1145.07	320	sentence	Then the option gives $30 \cdot \frac{1}{3} - 20 \cdot \frac{2}{3} = 10 - 13.33 
+1145.07	1149.88	320	sentence	So no such $\underset{\sim}{p}$ exists.
+1149.88	1159.31	322	sentence	With $C = \frac{50}{3}$, case (i) holds with $\underset{\sim}{p} = (\frac{1}{3},
+1159.31	1163.98	322	sentence	So by the theorem, no sure-win scheme exists.
+1163.98	1170.33	322	sentence	That matches the gain $x(3C - 50) = 0$ for every $x$.
+1170.33	1171.63	324	section	Extras from the slides (p.82–83)
+1171.63	1173.23	326	beat	recap
+1173.23	1178.43	328	sentence	The slides repeat this lecture.
+1178.43	1183.63	328	sentence	They add only names:
+1183.63	1191.90	330	sentence	The $p = \frac{1}{3}$ that gives every wager expected return $0$ is called the r
+1191.90	1200.17	331	sentence	In the theorem, $\underset{\sim}{p}$ is a probability vector, so $p_j \ge 0$ and
+1200.17	1204.07	331	sentence	Case (i) is called "No Arbitrage".
+1204.07	1207.98	331	sentence	Case (ii) is called "Arbitrage Opportunity".
+1207.98	1216.64	333	sentence	So in our example: at $C = \frac{50}{3}$, the risk-neutral vector is $(\frac{1}{
+1216.64	1222.47	333	sentence	It sums to $1$, and we are in case (i).
+1222.47	1227.66	333	sentence	At $C = 20$ we are in case (ii).
+1227.39	1228.19	337	section	Doubt
+1228.19	1229.79	339	beat	matrix
+1229.79	1239.12	337	qline	In $r_i(j)$, what do $i$ and $j$ index? Can it be a table?
+1239.12	1244.39	341	sentence	Look at it as a table.
+1244.39	1255.19	341	sentence	Row $i$ is a wager (there are $n$), column $j$ is an outcome (there are $m$), an
+1255.19	1263.46	341	sentence	With $C = 20$, the stock row is $(100, -50)$ and the option row is $(30, -20)$.
+1263.46	1269.66	341	sentence	Condition (i) works across a row: $100 \cdot \frac{1}{3} - 50 \cdot \frac{2}{3} 
+1269.66	1277.79	341	sentence	Condition (ii) works down a column: with $\underset{\sim}{x} = (1, -3)$, column 
+1277.79	1282.79	341	sentence	I've put both tables into the arbitrage theorem section.

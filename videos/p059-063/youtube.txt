@@ -1,7 +1,9 @@
-p.59–63: Pricing a stock option by arbitrage, and the arbitrage theorem
+Financial Mathematics 32 · Pricing a stock option by arbitrage, and the arbitrage theorem (p.59–63)
 
-p.59–63: Pricing a stock option by arbitrage, and the arbitrage theorem
+Financial Mathematics — lecture notes, p.59–63. Video 32 of 44 in the Post-midsem playlist.
+Silent explainer with captions, made with Manim in the 3Blue1Brown style.
 
+Chapters:
 0:00 Money now vs money later (p.59)
 0:47 The one-period stock and the option (p.59)
 1:50 Buying stock and options together (p.59)

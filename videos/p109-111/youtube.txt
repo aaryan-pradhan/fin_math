@@ -1,7 +1,9 @@
-p.109–111: Thm 3, the arbitrage pricing theorem
+Financial Mathematics 39 · Thm 3, the arbitrage pricing theorem (p.109–111)
 
-p.109–111: Thm 3, the arbitrage pricing theorem
+Financial Mathematics — lecture notes, p.109–111. Video 39 of 44 in the Post-midsem playlist.
+Silent explainer with captions, made with Manim in the 3Blue1Brown style.
 
+Chapters:
 0:00 Notation check
 0:41 The statement (p.109)
 1:29 Attainable claim (p.110)

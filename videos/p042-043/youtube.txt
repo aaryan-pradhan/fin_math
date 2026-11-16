@@ -1,7 +1,9 @@
-Joint Distribution of $W(t)$ and $M(t)$
+Financial Mathematics 28 · Joint Distribution of W(t) and M(t) (p.42–43)
 
-Joint Distribution of $W(t)$ and $M(t)$
+Financial Mathematics — lecture notes, p.42–43. Video 28 of 44 in the Pre-midsem playlist.
+Silent explainer with captions, made with Manim in the 3Blue1Brown style.
 
+Chapters:
 0:00 1. Setup
 0:44 2. Disjoint Case
 0:54 Case B: I below J — Inclusion-Exclusion

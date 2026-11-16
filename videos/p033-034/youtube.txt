@@ -1,7 +1,9 @@
-Geometric Brownian Motion (GBM) & Filtration Expectation
+Financial Mathematics 24 · Geometric Brownian Motion (GBM) & Filtration Expectation (p.33–34)
 
-Geometric Brownian Motion (GBM) & Filtration Expectation
+Financial Mathematics — lecture notes, p.33–34. Video 24 of 44 in the Pre-midsem playlist.
+Silent explainer with captions, made with Manim in the 3Blue1Brown style.
 
+Chapters:
 0:00 1. Definition of Geometric Brownian Motion
 0:41 2. Grounding Filtrations mathcalFs: Discrete vs Continuous
 1:10 3. Moment Generating Function & Derivation of mathbbE[X(t) mid mathcalF

@@ -1,7 +1,9 @@
-p.105–109: Finite single-period market and the no-arbitrage theorem
+Financial Mathematics 38 · Finite single-period market and the no-arbitrage theorem (p.105–109)
 
-p.105–109: Finite single-period market and the no-arbitrage theorem
+Financial Mathematics — lecture notes, p.105–109. Video 38 of 44 in the Post-midsem playlist.
+Silent explainer with captions, made with Manim in the 3Blue1Brown style.
 
+Chapters:
 0:00 Notation check
 0:38 Recap: the binomial case (p.105)
 1:23 The finite market (p.105)

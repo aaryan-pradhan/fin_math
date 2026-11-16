@@ -1,7 +1,9 @@
-p.87–92: The binomial market and single-period pricing
+Financial Mathematics 36 · The binomial market and single-period pricing (p.87–92)
 
-p.87–92: The binomial market and single-period pricing
+Financial Mathematics — lecture notes, p.87–92. Video 36 of 44 in the Post-midsem playlist.
+Silent explainer with captions, made with Manim in the 3Blue1Brown style.
 
+Chapters:
 0:00 Notation check
 0:51 The binomial market (p.87)
 1:19 Up or down (p.88)
