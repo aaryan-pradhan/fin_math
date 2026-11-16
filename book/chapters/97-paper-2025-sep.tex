@@ -1,0 +1,301 @@
+\chapter{September 2025 paper}
+\label{ch:paper-2025-sep}
+
+\begin{whatfor}
+The mid-semester paper of September 2025 (2 hours, 30 marks), solved question by question. Every solution names its card and row, says what the card says in plain words, works one substitution per step, and ends with the answer.
+\end{whatfor}
+
+%=====================================================================
+\section{Question 1: short answers}
+
+Throughout, $\{W_t,\ t\ge0\}$ is a standard Wiener process. The answer table for the first page:
+
+\begin{center}
+\begin{tabular}{@{}cl@{\qquad}cl@{}}
+\toprule
+Part & Answer & Part & Answer\\
+\midrule
+(a) & when the price first reaches $100.50$ & (d) & $N(0,\,31)$\\
+(b) & $10e^3\approx200.86$ & (e) & True\\
+(c) & every $c\ne5$ & (f) & False\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{problem}[Q1(a)]
+We may buy one unit of a stock at a fixed price Rs $100$, at any time we choose. The price starts at $0$ and moves as a Brownian motion with drift $-1$. When, if ever, should we exercise?
+\uses{card:ost}{3}
+\cardsays A Brownian motion with negative drift $\mu$ and variance $\sigma^2$, started at $x$, reaches a level $b>x$ only with probability
+\[
+P(\text{ever reach }b)=e^{-2|\mu|(b-x)/\sigma^2}.
+\]
+\working
+\begin{steps}
+\item Read off: $x=0$, $\mu=-1$, and $\sigma^2=1$ since no variance is given.
+\item Plan: exercise the first time the price reaches a level $y>100$, gaining $y-100$; if it never gets there, gain $0$.
+\item Chance of reaching $y$: $e^{-2y}$. Expected gain: $g(y)=(y-100)e^{-2y}$.
+\item Derivative: $g'(y)=e^{-2y}\big(1-2(y-100)\big)$, which is $0$ at $y=100.5$, positive before it and negative after it, so this is the maximum.
+\end{steps}
+\answer{Exercise the first time the price reaches Rs $100.50$.}
+\end{problem}
+
+\begin{problem}[Q1(b)]
+$Y(t)$ is a geometric Brownian motion with drift parameter $\mu=0.01$ and volatility $\sigma=0.2$, and $Y(0)=10$. Find $\E_P\,Y(100)$.
+\uses{card:gbm}{1}
+\cardsays The log of a geometric Brownian motion is normal, $\ln Y_t\sim N(\ln Y_0+mt,\sigma^2t)$. The mean of $e^{\text{normal}}$ is $e^{\text{mean}+\frac12\text{variance}}$ (\cref{card:normal-mgf}), so
+\[
+\E_PY_t=Y_0\,e^{(m+\frac12\sigma^2)t}.
+\]
+\working
+\begin{steps}
+\item Read $m$ correctly. In this course ``drift parameter $\mu$'' is the drift of the Brownian motion in the exponent, $Y(t)=Y(0)e^{\mu t+\sigma W_t}$, so $m=0.01$.
+\item Read off: $Y_0=10$, $\sigma^2=0.04$, $t=100$.
+\item Exponent: $(0.01+0.02)(100)=3$.
+\item Substitute: $\E_PY(100)=10e^3=10(20.0855)=200.86$.
+\item (If the paper meant the equation $dY=\mu Y\,dt+\sigma Y\,dW$ instead, then $m=\mu-\frac12\sigma^2$ and $\E_PY(100)=10e^{0.01\cdot100}=27.18$. Write which reading you use.)
+\end{steps}
+\answer{$\E_PY(100)=10e^3\approx200.86$.}
+\end{problem}
+
+\begin{problem}[Q1(c)]
+A stock costs $50$ today; at time 1 it is worth $25$ or $100$. An option to buy $y$ shares at time 1 for the (present value) price $Ky$ costs $cy$. With $K=85$, for which $c$ is there an arbitrage?
+\uses{card:finite}{2}
+\cardsays With prices in present value, the stock fixes the risk-neutral probability, and the option has exactly one fair price, its risk-neutral average payoff:
+\[
+p^*=\frac{S_0-S_d}{S_u-S_d},\qquad c^*=p^*(S_u-K)^+.
+\]
+Any other price is an arbitrage.
+\working
+\begin{steps}
+\item Read off: $S_0=50$, $S_u=100$, $S_d=25$, $K=85$.
+\item $p^*=\frac{50-25}{100-25}=\frac{25}{75}=\frac13$.
+\item Option payoff: up $(100-85)^+=15$, down $(25-85)^+=0$.
+\item Fair price: $c^*=\frac13(15)=5$.
+\item The copy: $\frac{15}{75}=\frac15$ of a share and borrow $\frac15(25)=5$. It pays $20-5=15$ up and $5-5=0$ down, and costs $\frac15(50)-5=5$.
+\item If $c<5$: buy the option, sell the copy, keep $5-c>0$ today, owe nothing later. If $c>5$: sell the option, buy the copy, keep $c-5>0$.
+\end{steps}
+\answer{An arbitrage exists for every $c\ne5$ (none only at $c=5$).}
+\end{problem}
+
+\begin{problem}[Q1(d)]
+Find the distribution of $W_1-W_2+3W_4$.
+\uses{card:mvn}{1}
+\cardsays A fixed mix of values of $W$ is normal with mean $0$ and variance $\sum_ia_i^2t_i+2\sum_{i<j}a_ia_j\min(t_i,t_j)$.
+\working
+\begin{steps}
+\item Read off: $a_1=1$ at $t_1=1$; $a_2=-1$ at $t_2=2$; $a_3=3$ at $t_3=4$.
+\item Square terms: $1^2(1)+(-1)^2(2)+3^2(4)=1+2+36=39$.
+\item Cross terms: $2\big[(1)(-1)\min(1,2)+(1)(3)\min(1,4)+(-1)(3)\min(2,4)\big]=2[-1+3-6]=-8$.
+\item Add: $39-8=31$.
+\item Check with independent increments: $W_1-W_2+3W_4=3W_1+2(W_2-W_1)+3(W_4-W_2)$, variance $9(1)+4(1)+9(2)=31$.
+\end{steps}
+\answer{$W_1-W_2+3W_4\sim N(0,\,31)$.}
+\end{problem}
+
+\begin{problem}[Q1(e)]
+For $c>0$, is $V(t)=\frac1cW(c^2t)$ a Wiener process? (T/F)
+\uses{card:mvn}{5}
+\cardsays A process built linearly from $W$ with fixed numbers is Gaussian. It is a Wiener process when it has all four: mean $0$, covariance $\min(s,t)$, start $0$, continuous paths.
+\working
+\begin{steps}
+\item Gaussian: $V$ is a fixed multiple of values of $W$.
+\item Mean: $\frac1c\E_PW(c^2t)=0$.
+\item Covariance: $\frac1{c^2}\min(c^2s,c^2t)=\frac{c^2}{c^2}\min(s,t)=\min(s,t)$.
+\item Start and paths: $V(0)=\frac1cW(0)=0$, and $t\mapsto W(c^2t)$ is continuous.
+\end{steps}
+\answer{True.}
+\end{problem}
+
+\begin{problem}[Q1(f)]
+Is it true that $|W_t|^2-t$ is NOT a martingale? (T/F)
+\uses{card:incr}{1}
+\cardsays For the Wiener process, $W_t$, $W_t^2-t$ and $e^{uW_t-u^2t/2}$ are martingales.
+\working
+\begin{steps}
+\item $|W_t|^2=W_t^2$, so the process is $W_t^2-t$, the second martingale of the card.
+\item Check directly: $\E_P(W_t^2\given\F_s)=W_s^2+(t-s)$, so $\E_P(W_t^2-t\given\F_s)=W_s^2-s$.
+\item It \emph{is} a martingale, so the statement ``is NOT a martingale'' is false.
+\end{steps}
+\answer{False.}
+\end{problem}
+
+%=====================================================================
+\section{Question 2: short notes}
+
+\begin{problem}[Q2(a)]
+Short note on American and European call options.
+\uses{card:payoff}{1}
+\cardsays A European call pays $(S_T-K)^+$ at the fixed expiry $T$.
+\uses{card:payoff}{6}
+\cardsays An American call may be used at any time $\tau\le T$ the holder chooses (a stopping time, so only past prices decide), and then pays $(S_\tau-K)^+$.
+\uses{card:parity}{7}
+\cardsays For a stock without dividends and $r\ge0$, early exercise never helps, so the two calls cost the same.
+\working
+\begin{steps}
+\item Both give the right, not the obligation, to buy one share at the strike $K$.
+\item European: only at $T$. American: at any time up to $T$. The American right contains the European one, so $C^{\mathrm{Am}}\ge C^{\mathrm{Eu}}$.
+\item Lower bound for the call at time $t$ (from parity): $C_t\ge S_t-Ke^{-r(T-t)}$.
+\item With $r\ge0$, $Ke^{-r(T-t)}\le K$, so $C_t\ge S_t-K$: keeping the call is worth at least what exercising gives now. So never exercise early.
+\item Numbers: $S_t=130$, $K=100$, $r=0.05$, half a year left: $C_t\ge130-97.53=32.47$, more than the $30$ from exercising.
+\item For puts this fails: an American put can be worth exercising early.
+\end{steps}
+\answer{Same payoff $(S-K)^+$; the European call is used only at $T$, the American at any stopping time $\tau\le T$. Without dividends the American call is never exercised early, so both cost the same.}
+\end{problem}
+
+\begin{problem}[Q2(b)]
+Derive Itô's formula.
+\uses{card:ito}{1}
+\cardsays For an Itô process $dX_t=a_t\,dt+b_t\,dW_t$ and a smooth $f(t,x)$,
+\[
+df(t,X_t)=\Big(\partial_tf+a_t\,\partial_xf+\tfrac12b_t^2\,\partial_{xx}f\Big)dt+b_t\,\partial_xf\,dW_t.
+\]
+\working
+\begin{steps}
+\item Taylor-expand $f$ over a small step:
+\[
+df=\partial_tf\,dt+\partial_xf\,dX+\tfrac12\partial_{xx}f\,(dX)^2+\partial_{tx}f\,dt\,dX+\tfrac12\partial_{tt}f\,(dt)^2+\cdots
+\]
+\item The rule that makes Itô different: $(dW)^2=dt$. Reason: over $[0,t]$ cut into $n$ pieces of length $\Delta=t/n$, the sum $\sum(\Delta W)^2$ has mean $n\Delta=t$ and variance $n\cdot2\Delta^2=2t\Delta\to0$, so it equals $t$ in the limit.
+\item The other products are smaller than $dt$: $dt\,dW=0$ and $(dt)^2=0$.
+\item So $(dX)^2=(a\,dt+b\,dW)^2=a^2(dt)^2+2ab\,dt\,dW+b^2(dW)^2=b^2\,dt$, and $dt\,dX=0$.
+\item Substitute into Step 1:
+\[
+\begin{aligned}
+df&=\partial_tf\,dt+\partial_xf\,(a\,dt+b\,dW)+\tfrac12\partial_{xx}f\,b^2\,dt\\
+&=\Big(\partial_tf+a\,\partial_xf+\tfrac12b^2\partial_{xx}f\Big)dt+b\,\partial_xf\,dW.
+\end{aligned}
+\]
+\item Example, $f=x^2$ and $X=W$ ($a=0$, $b=1$): $d(W^2)=\big(0+0+\frac12\cdot2\big)dt+2W\,dW=dt+2W\,dW$. Ordinary calculus would miss the $dt$.
+\end{steps}
+\answer{Taylor's formula to second order plus $(dW)^2=dt$ gives the box; the extra $\frac12b^2\partial_{xx}f\,dt$ is the Itô term.}
+\end{problem}
+
+\begin{problem}[Q2(c)]
+Short note on the gambler's ruin problem.
+\uses{card:ost}{4}
+\cardsays A gambler starts with $i$, bets $1$ each round, wins with probability $p$ and loses with $q=1-p$, and stops on reaching $0$ (ruin) or $N$ (target). With $r=q/p$,
+\[
+P_i=P(\text{reach }N\text{ first})=\frac{1-r^i}{1-r^N},\qquad D_i=\E_P\tau=\frac{NP_i-i}{p-q}\qquad(p\ne\tfrac12).
+\]
+For a fair game ($p=\frac12$, \cref{card:ost}, row 1): $P_i=\frac iN$ and $D_i=i(N-i)$.
+\working
+\begin{steps}
+\item The fortune $S_n$ is a $\pm1$ random walk from $i$; $\tau$ is the first time $S_n\in\{0,N\}$, a stopping time.
+\item A martingale: $r^{S_n}$, since one step multiplies it on average by $p\,r+q\,r^{-1}=q+p=1$.
+\item Stopping theorem: $r^i=\E_Pr^{S_\tau}=P_i\,r^N+(1-P_i)\,r^0$. Solve: $P_i=\frac{1-r^i}{1-r^N}$.
+\item Another martingale: $S_n-(p-q)n$ (take away the average gain per step). Stopping: $\E_PS_\tau-(p-q)\E_P\tau=i$, with $\E_PS_\tau=NP_i$. Solve: $D_i=\frac{NP_i-i}{p-q}$.
+\item Numbers (roulette, $p=\frac{18}{38}$, $i=10$, $N=20$): $r=\frac{20}{18}$, $r^{10}=2.868$, $r^{20}=8.225$; $P_{10}=\frac{1-2.868}{1-8.225}\approx0.259$ and $D_{10}\approx91.8$ bets.
+\end{steps}
+\answer{Ruin is likely in an unfair game even when starting half-way: $P(\text{reach }N)=\frac{1-(q/p)^i}{1-(q/p)^N}$; a fair game gives $\frac iN$.}
+\end{problem}
+
+%=====================================================================
+\section{Question 3: dynamic programming}
+
+\begin{problem}[Q3(a) and Q3(b)]
+(a) Derive the optimality equation of dynamic programming in Markov decision processes using the total probability formula. (b) A gambler bets any amount up to the current fortune, winning or losing that amount with probabilities $\frac23$ and $\frac13$, for $T=3$ bets, maximising the expected Bernoulli (log) utility of the final fortune. Find the optimal strategy.
+
+\textit{Not in this book:} Markov decision processes and optimal control are outside the course as this book covers it, so no card holds them.
+\end{problem}
+
+%=====================================================================
+\section{Question 4: two Itô computations}
+
+\begin{problem}[Q4(a)]
+Show that $dX_t=dt+2\sqrt{X_t}\,dW_t$, $X_0=0$, has the solution $X_t=W_t^2$. Find $\E_PX_t$ and $\Var X_t$.
+\uses{card:ito}{8}
+\cardsays To verify a solution, compute $dX$ for the guess with Itô's formula, then match the $dt$ part, the $dW$ part and the start with the equation.
+\working
+\begin{steps}
+\item Guess $X_t=f(W_t)$ with $f(x)=x^2$: $\partial_xf=2x$, $\partial_{xx}f=2$.
+\item Itô (\cref{card:ito}, row 1): $dX_t=\frac12(2)\,dt+2W_t\,dW_t=dt+2W_t\,dW_t$.
+\item Match: $dt$ parts agree ($1$). $dW$ parts: $\sqrt{X_t}=\sqrt{W_t^2}$, so $2\sqrt{X_t}=2W_t$ when we take the root with the sign of $W_t$. Start: $X_0=W_0^2=0$. So $X_t=W_t^2$ solves the equation.
+\item (Fine print: with the positive root, $2\sqrt{X_t}=2|W_t|$; then $W_t^2$ solves the equation driven by $\int_0^t\operatorname{sign}(W_s)\,dW_s$, which is again a Wiener process.)
+\item Mean: $\E_PX_t=\E_PW_t^2=\Var W_t=t$.
+\item Fourth moment (\cref{card:normal-mgf}, row 3): for $W_t\sim N(0,t)$, $\E_PW_t^4=3t^2$.
+\item Variance: $\Var X_t=\E_PW_t^4-(\E_PW_t^2)^2=3t^2-t^2=2t^2$.
+\end{steps}
+\answer{$X_t=W_t^2$; $\E_PX_t=t$, $\Var X_t=2t^2$.}
+\end{problem}
+
+\begin{problem}[Q4(b)(i)]
+$X_t=e^{t/2}\cos W_t$. Apply Itô's formula to compute $dX_t$.
+\uses{card:ito}{1}
+\cardsays For a function of time and $W$: $df(t,W_t)=\big(\partial_tf+\frac12\partial_{xx}f\big)dt+\partial_xf\,dW_t$.
+\working
+\begin{steps}
+\item The function: $f(t,x)=e^{t/2}\cos x$.
+\item Derivatives: $\partial_tf=\frac12e^{t/2}\cos x$; $\partial_xf=-e^{t/2}\sin x$; $\partial_{xx}f=-e^{t/2}\cos x$.
+\item $dt$-part: $\frac12e^{t/2}\cos W_t+\frac12\big(-e^{t/2}\cos W_t\big)=0$.
+\item $dW$-part: $-e^{t/2}\sin W_t$.
+\end{steps}
+\answer{$dX_t=-e^{t/2}\sin W_t\,dW_t$ (no $dt$ term).}
+\end{problem}
+
+\begin{problem}[Q4(b)(ii)]
+Using part (i), evaluate $\E_P\cos W_t$.
+\uses{card:ito}{4}
+\cardsays If $h(t)\phi(W_t)$ has zero $dt$-part, it is a martingale, so its mean stays at its starting value: $\E_P[h(t)\phi(W_t)]=h(0)\phi(0)$.
+\working
+\begin{steps}
+\item From (i): $X_t=e^{t/2}\cos W_t$ has zero $dt$-part, so it is a martingale.
+\item A martingale keeps its mean (\cref{card:onestep}): $\E_PX_t=X_0=e^0\cos0=1$.
+\item So $e^{t/2}\E_P\cos W_t=1$. Divide by $e^{t/2}$.
+\end{steps}
+\answer{$\E_P\cos W_t=e^{-t/2}$.}
+\end{problem}
+
+%=====================================================================
+\section{Question 5: the hitting time and the maximum}
+
+\begin{problem}[Q5(a)]
+$\tau_a$ is the hitting time of a level $a>0$ by a Wiener process. Find the cdf and the pdf of $\tau_a$.
+\uses{card:G}{1}
+\cardsays Hitting $a$ by time $t$ is the same event as the maximum $M_t$ being at least $a$. By the reflection principle,
+\[
+P(\tau_a\le t)=P(M_t\ge a)=2\Big[1-\Phi\Big(\frac{a}{\sqrt t}\Big)\Big].
+\]
+\working
+\begin{steps}
+\item Same event: $\{\tau_a\le t\}=\{M_t\ge a\}$, because the path is continuous.
+\item Split by where $W$ ends: $P(\tau_a\le t)=P(\tau_a\le t,\ W_t\ge a)+P(\tau_a\le t,\ W_t<a)$.
+\item Reflection: after $\tau_a$ the path is at $a$ and is equally likely to end above or below $a$ (mirror it in the line $a$). So the two pieces are equal.
+\item The first piece is just $P(W_t\ge a)$, since ending above $a$ forces a hit. So $P(\tau_a\le t)=2P(W_t\ge a)=2\big[1-\Phi\big(\frac a{\sqrt t}\big)\big]$.
+\end{steps}
+\uses{card:G}{2}
+\cardsays The density is the derivative of the cdf in $t$.
+\begin{steps}[resume]
+\item Chain rule, with $\varphi=\Phi'$ the standard normal density:
+\[
+\begin{aligned}
+f_{\tau_a}(t)&=\frac{d}{dt}\,2\Big[1-\Phi\big(at^{-1/2}\big)\Big]=-2\varphi\big(at^{-1/2}\big)\cdot\Big(-\frac a2t^{-3/2}\Big)\\
+&=\frac{a}{t^{3/2}}\cdot\frac{e^{-a^2/2t}}{\sqrt{2\pi}}.
+\end{aligned}
+\]
+\end{steps}
+\answer{cdf $P(\tau_a\le t)=2\big[1-\Phi\big(\frac a{\sqrt t}\big)\big]$; pdf $f_{\tau_a}(t)=\frac{a}{\sqrt{2\pi t^3}}\,e^{-a^2/2t}$, $t>0$.}
+\end{problem}
+
+\begin{problem}[Q5(b)]
+$M(t)=\max_{0\le u\le t}W(u)$. Find $P\big(1<W(4)<3,\ 2<M(4)<3\big)$.
+\uses{card:G}{5}
+\cardsays Memorise one function, $G(b,c)=P(W_t\le b,\ M_t\ge c)$:
+\[
+G(b,c)=\begin{cases}\Phi\big(\frac{b}{\sqrt t}\big),&c\le0,\\[0.5ex] 1-\Phi\big(\frac{2c-b}{\sqrt t}\big),&c>0,\ b\le c,\\[0.5ex] 1+\Phi\big(\frac b{\sqrt t}\big)-2\Phi\big(\frac c{\sqrt t}\big),&0<c<b.\end{cases}
+\]
+A rectangle is four corners of $G$:
+\[
+P\big(a<W_t\le b,\ c<M_t\le d\big)=\big[G(b,c)-G(a,c)\big]-\big[G(b,d)-G(a,d)\big].
+\]
+\working
+\begin{steps}
+\item Read off: $t=4$, so $\sqrt t=2$; $a=1$, $b=3$ (for $W$); $c=2$, $d=3$ (for $M$). Strict or not does not matter: single values have probability $0$.
+\item $G(3,2)$: here $0<c=2<b=3$, last case: $1+\Phi(1.5)-2\Phi(1)=1+0.9332-2(0.8413)=0.2505$.
+\item $G(1,2)$: $b=1\le c=2$, middle case: $1-\Phi\big(\frac{4-1}2\big)=1-\Phi(1.5)=0.0668$.
+\item $G(3,3)$: $b=3\le c=3$, middle case: $1-\Phi\big(\frac{6-3}2\big)=1-\Phi(1.5)=0.0668$.
+\item $G(1,3)$: $b=1\le c=3$, middle case: $1-\Phi\big(\frac{6-1}2\big)=1-\Phi(2.5)=0.0062$.
+\item Rectangle: $[0.2505-0.0668]-[0.0668-0.0062]=0.1837-0.0606=0.1231$.
+\item In one line: $3\Phi(1.5)-2\Phi(1)-\Phi(2.5)=2.7996-1.6827-0.9938=0.1231$.
+\end{steps}
+\answer{$P\big(1<W(4)<3,\ 2<M(4)<3\big)\approx0.12$ (more exactly $0.1231$).}
+\end{problem}
