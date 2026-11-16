@@ -1,0 +1,260 @@
+\chapter{Replication and hedging}
+\label{ch:replication}
+
+\begin{question}
+How do you build, from the stock and the bond, a portfolio that pays exactly the claim $g(S_T)$, and what do the Greeks say about that portfolio?
+\end{question}
+
+\begin{whatfor}
+\begin{itemize}
+  \item Says what a self-financing strategy is when trading never stops, and what an arbitrage is then.
+  \item Finds the copying portfolio of any claim: hold $\partial_sf$ shares, where $f(t,s)$ is the claim's price.
+  \item Reads the Greeks as sensitivities, gets the put's Greeks from parity, and explains their signs.
+  \item Derives the Black--Scholes formula once more, from the rule that a discounted price must be a martingale, and gives that rule for prices that jump.
+\end{itemize}
+\skipline{fs:replication}
+\end{whatfor}
+
+\begin{prereq}
+From \cref{ch:mg-pricing}: the Black--Scholes market, the price $P_t(X)=\E_{P^*}\big(e^{-r(T-t)}X\given\F_t\big)$, the call formula and its Greeks. From \cref{ch:binomial-one}: trading strategy, portfolio value, self-financing, arbitrage strategy. From Part~3: Itô's formula. From Part~1: the Poisson process and its martingales (\cref{card:incr}).
+\end{prereq}
+
+%=====================================================================
+\section{Self-financing when trading never stops}
+
+\begin{setup}[Black--Scholes market]
+A bond $B_t=e^{rt}$ and a stock with $dS_t=\mu S_t\,dt+\sigma S_t\,dW_t$, for $t\in[0,T]$.
+\end{setup}
+
+Start with trading at the dates $t=0,1,\dots,T$ and a bond $B_t=(1+r)^t$. A trading strategy holds $\Delta_t$ shares and $b_t$ bonds, its portfolio value is $V_t=\Delta_tS_t+b_tB_t$, and it is self-financing when rebalancing at time $t$ costs nothing:
+\[
+  \Delta_tS_t+b_tB_t=\Delta_{t+1}S_t+b_{t+1}B_t,\qquad t<T.
+\]
+
+\begin{result}[Gains of a self-financing strategy]
+\label{res:gains-discrete}
+For a self-financing strategy, the value changes only through price moves:
+\[
+  V_{t+1}-V_t=\Delta_{t+1}(S_{t+1}-S_t)+b_{t+1}(B_{t+1}-B_t).
+\]
+\end{result}
+\begin{proof}
+Write the new value, then subtract the old one in its rebalanced form.
+\begin{steps}
+  \item $V_{t+1}=\Delta_{t+1}S_{t+1}+b_{t+1}B_{t+1}$.
+  \item Self-financing: $V_t=\Delta_tS_t+b_tB_t=\Delta_{t+1}S_t+b_{t+1}B_t$.
+  \item Subtract: $V_{t+1}-V_t=\Delta_{t+1}(S_{t+1}-S_t)+b_{t+1}(B_{t+1}-B_t)$. \qedhere
+\end{steps}
+\end{proof}
+
+In continuous time the same rule is written with differentials.
+
+\begin{definition}[Self-financing in continuous time]
+\label{def:selffin-cont}
+A trading strategy in continuous time is a pair $(\Delta_t,b_t)$, $t\in[0,T]$, that is predictable (chosen from the information just before $t$) and for which the integrals $\int_0^u\Delta_t\,dS_t$ make sense. Its value is $V_t=\Delta_tS_t+b_tB_t$. It is self-financing when
+\[
+  dV_t=\Delta_t\,dS_t+b_t\,dB_t,\qquad t<T.
+\]
+\end{definition}
+
+So money never comes in or goes out: every change in value is a gain or a loss on the shares or the bonds held.
+
+\begin{definition}[Arbitrage and replication in continuous time]
+\label{def:arb-cont}
+An arbitrage is a self-financing strategy with $V_0=0$, $V_T\ge0$ almost surely and $P(V_T>0)>0$. A \dfn{replicating strategy} for a claim $X$ paid at $T$ is a self-financing strategy with $V_T=X$ almost surely: it produces the same cash flow as $X$ at expiry.
+\end{definition}
+
+\begin{result}[The price is the value of the copy]
+\label{res:price-copy}
+If $(\Delta_t,b_t)$ replicates $X$, then $P_t(X)=V_t$ for every $t\le T$.
+\end{result}
+\begin{proof}
+Suppose the price is above the copy at some time $t$, $P_t(X)>V_t$.
+\begin{steps}
+  \item At time $t$: sell the claim for $P_t(X)$, start the copying strategy for $V_t$, and put the difference $P_t(X)-V_t>0$ in the bond.
+  \item At time $T$: the strategy pays $V_T=X$, exactly what the sold claim owes. The bond holds $(P_t(X)-V_t)e^{r(T-t)}>0$.
+  \item That is an arbitrage. If $P_t(X)<V_t$, do the opposite. So $P_t(X)=V_t$. \qedhere
+\end{steps}
+\end{proof}
+
+%=====================================================================
+\section{The copying portfolio}
+
+The price of $X=g(S_T)$ depends on the past only through today's price. Under $P^*$, $S_T=S_te^{(r-\frac12\sigma^2)\tau+\sigma(W^*_T-W^*_t)}$ with $\tau=T-t$: today's price times a fresh factor. By \cref{card:freeze},
+\[
+  P_t(X)=e^{-r\tau}\E_{P^*}\big(g(S_T)\given\F_t\big)=e^{-r\tau}\E_{P^*}\big(g(S_T)\given S_t\big)=:f(t,S_t),
+\]
+where $f(t,s)=e^{-r\tau}\E_{P^*}\,g\big(se^{(r-\frac12\sigma^2)\tau+\sigma\sqrt\tau Z}\big)$ with $Z\sim N(0,1)$.
+
+\begin{theorem}[Delta hedging]
+\label{thm:delta-hedge}
+If $f(t,s)$ is smooth, the strategy that replicates $X=g(S_T)$ holds
+\[
+  \Delta_t=\partial_sf(t,S_t)\ \text{ shares},\qquad b_t=\frac{f(t,S_t)-\Delta_tS_t}{B_t}\ \text{ bonds},\qquad t\in[0,T].
+\]
+The number of shares is the partial derivative of the claim's price in the stock price.
+\end{theorem}
+\begin{proof}
+Compute $dP_t(X)$ in two ways and compare the random parts.
+\begin{steps}
+  \item Itô's formula for $f(t,S_t)$, with $(dS_t)^2=\sigma^2S_t^2\,dt$:
+  \[
+    \begin{aligned}
+    dP_t(X)=df(t,S_t)&=\partial_tf\,dt+\partial_sf\,dS_t+\tfrac12\partial_{ss}f\,(dS_t)^2\\
+    &=\big(\partial_tf+\tfrac12\sigma^2S_t^2\,\partial_{ss}f\big)dt+\partial_sf\,dS_t.
+    \end{aligned}
+  \]
+  \item A replicating strategy has $V_t=P_t(X)$ (\cref{res:price-copy}), so $dP_t(X)=dV_t=\Delta_t\,dS_t+b_t\,dB_t$, and $dB_t=rB_t\,dt$ has no random part.
+  \item The only random part on each side is the $dS_t$ term (it carries the $dW_t$). Matching them gives $\Delta_t=\partial_sf(t,S_t)$.
+  \item The value must match too: $\Delta_tS_t+b_tB_t=f(t,S_t)$, so $b_t=\frac{f(t,S_t)-\Delta_tS_t}{B_t}$. \qedhere
+\end{steps}
+\end{proof}
+
+Holding $\Delta_t=\partial_sf$ shares against a sold claim is \dfn{delta hedging}: for small moves of the stock, the shares gain what the claim loses.
+
+\begin{example}[Hedging a call]
+For a call, $f=C=S\Phi(h)-Ke^{-r\tau}\Phi(h-\sigma\sqrt\tau)$, and $\partial_sC=\Phi(h)$ (\cref{res:greeks}). So hold $\Phi(h)$ shares, and the bond money is $C-\Phi(h)S=-Ke^{-r\tau}\Phi(h-\sigma\sqrt\tau)$: the hedge borrows. With $S=80$, $K=85$, $r=0.05$, $\sigma=0.15$, $\tau=1$: $\Phi(h)=0.5017$ share, worth $40.13$, and borrow $35.74$; together $4.39$, the call's price.
+\end{example}
+
+\begin{pic}
+\begin{tikzpicture}
+\begin{axis}[width=10cm,height=5.2cm,xmin=60,xmax=140,ymin=0,ymax=45,xlabel={$S$},ylabel={value},legend style={font=\scriptsize,at={(0.02,0.98)},anchor=north west}]
+  \addplot[defc,very thick] table[x=s,y=c1] {figs/bs_value.dat}; \addlegendentry{call value $f(0,S)$}
+  \addplot[thmc,thick,dashed,domain=75:140] {10.45+0.6368*(x-100)}; \addlegendentry{hedge: $0.6368$ share $-$ bond}
+  \addplot[only marks,mark=*,mark size=1.6pt,black] coordinates {(100,10.45)};
+\end{axis}
+\end{tikzpicture}
+\picnote{$K=100$, $r=0.05$, $\sigma=0.2$, $T=1$. At $S=100$ the call is worth $10.45$ and its slope is $\Delta=\Phi(0.35)=0.6368$. The hedge is the straight line through that point with the same slope: it matches the call for small moves. The curve bends away from the line (gamma), so the hedge must be adjusted as $S$ moves.}
+\end{pic}
+
+%=====================================================================
+\section{The Greeks as sensitivities}
+
+\begin{definition}[Sensitivities]
+\label{def:greeks}
+For a claim with price $P_t(X)=f(t,S_t)$, which also depends on $\sigma$, $r$ and the expiry $T$:
+\[
+  \begin{aligned}
+  \text{delta }\Delta&=\partial_sf, &\text{gamma }\Gamma&=\partial_{ss}f, &\text{vega }\nu&=\partial_\sigma P_t(X),\\
+  \text{rho }\rho&=\partial_rP_t(X), &\text{theta }\theta&=\partial_tP_t(X)=-\partial_\tau P_t(X).
+  \end{aligned}
+\]
+\end{definition}
+
+By \cref{thm:delta-hedge}, the number of shares in the hedge is the delta. The call's values are in \cref{res:greeks}.
+
+\begin{result}[Greeks of the put]
+\label{res:put-greeks}
+With $k=h-\sigma\sqrt\tau$,
+\[
+  \begin{aligned}
+  \Delta_P&=\Phi(h)-1=-\Phi(-h), &\Gamma_P&=\Gamma_C, &\nu_P&=\nu_C,\\
+  \rho_P&=-K\tau e^{-r\tau}\Phi(-k), &\theta_P&=-\frac{S\varphi(h)\sigma}{2\sqrt\tau}+rKe^{-r\tau}\Phi(-k).
+  \end{aligned}
+\]
+\end{result}
+\begin{proof}
+Differentiate put--call parity, $S_t+P_t-C_t=Ke^{-r\tau}$, so $P_t=C_t-S_t+Ke^{-r\tau}$.
+\begin{steps}
+  \item In $s$: $\partial_sP=\partial_sC-1=\Phi(h)-1$. Once more: $\partial_{ss}P=\partial_{ss}C$.
+  \item In $\sigma$: $S_t$ and $Ke^{-r\tau}$ do not contain $\sigma$, so $\nu_P=\nu_C$.
+  \item In $r$: $\rho_P=\rho_C-K\tau e^{-r\tau}=K\tau e^{-r\tau}\big(\Phi(k)-1\big)=-K\tau e^{-r\tau}\Phi(-k)$.
+  \item In $t$: $\partial_t(Ke^{-r(T-t)})=rKe^{-r\tau}$, so $\theta_P=\theta_C+rKe^{-r\tau}=-\frac{S\varphi(h)\sigma}{2\sqrt\tau}+rKe^{-r\tau}\big(1-\Phi(k)\big)$. \qedhere
+\end{steps}
+\end{proof}
+
+Since $\Phi(h)$ lies in $(0,1)$, the call's delta is always positive and the put's always negative. This matches the hedges: whoever sells a call must be able to deliver the stock if the owner exercises, so holds some shares; whoever sells a put must be able to absorb a share bought at $K$, so is short shares.
+
+%=====================================================================
+\section{The formula from the discounted price}
+
+Here the price is derived once more, in the form that needs only the rule ``a discounted price is a martingale''.
+
+\begin{setup}[Discounted price rule]
+A stock price $X(t)$, $t\in[0,T]$, and a continuously compounded discount rate $\alpha$, so a payment $x$ at time $t$ is worth $e^{-\alpha t}x$ today. No arbitrage asks that the discounted price be a martingale:
+\[
+  \E_P\big(e^{-\alpha t}X(t)\given X(u),\,0\le u\le s\big)=e^{-\alpha s}X(s),\qquad s<t. \tag{1}
+\]
+An option to buy at $K$ at time $t$ is worth $(X(t)-K)^+$ then, and costs today
+\[
+  C=\E_P\big(e^{-\alpha t}(X(t)-K)^+\big). \tag{2}
+\]
+\end{setup}
+
+\begin{result}[Which drift satisfies the rule]
+\label{res:alpha-drift}
+Let $X(t)=x_0e^{Y(t)}$, with $Y$ a Brownian motion with drift $\mu$ and variance $\sigma^2$. Then (1) holds exactly when $\mu+\frac12\sigma^2=\alpha$.
+\end{result}
+\begin{proof}
+Split $Y(t)=Y(s)+\big(Y(t)-Y(s)\big)$: known plus fresh.
+\begin{steps}
+  \item $\E_P\big(e^{Y(t)}\given Y(u),u\le s\big)=e^{Y(s)}\E_Pe^{Y(t)-Y(s)}$ (\cref{card:freeze}).
+  \item $Y(t)-Y(s)\sim N\big(\mu(t-s),\sigma^2(t-s)\big)$, so by \cref{card:normal-mgf} $\E_Pe^{Y(t)-Y(s)}=e^{(t-s)(\mu+\frac12\sigma^2)}$.
+  \item So $\E_P\big(e^{-\alpha t}X(t)\given\cdot\big)=e^{-\alpha t}X(s)e^{(t-s)(\mu+\frac12\sigma^2)}$, which equals $e^{-\alpha s}X(s)$ exactly when $\mu+\frac12\sigma^2=\alpha$. \qedhere
+\end{steps}
+\end{proof}
+
+This is \cref{thm:bs-emm} in other letters: the exponent's drift is $\mu=\alpha-\frac12\sigma^2$.
+
+\begin{theorem}[Black--Scholes formula from the discounted price]
+\label{thm:bs-alpha}
+With $\mu=\alpha-\frac12\sigma^2$ and $a=\dfrac{\ln(K/x_0)-\mu t}{\sigma\sqrt t}$,
+\[
+  C=x_0\,\Phi\big(\sigma\sqrt t-a\big)-Ke^{-\alpha t}\,\Phi(-a).
+\]
+\end{theorem}
+\begin{proof}
+Write (2) as an integral against the density of $Y(t)\sim N(\mu t,\sigma^2t)$.
+\begin{steps}
+  \item $Ce^{\alpha t}=\displaystyle\int_{-\infty}^\infty(x_0e^y-K)^+\frac{e^{-(y-\mu t)^2/2t\sigma^2}}{\sqrt{2\pi t\sigma^2}}\,dy$. The payoff is $0$ unless $x_0e^y>K$, that is $y>\ln(K/x_0)$.
+  \item Substitute $w=\frac{y-\mu t}{\sigma\sqrt t}$ (so $dy=\sigma\sqrt t\,dw$); the lower limit becomes $a$:
+  \[
+    Ce^{\alpha t}=\frac{x_0e^{\mu t}}{\sqrt{2\pi}}\int_a^\infty e^{w\sigma\sqrt t}e^{-w^2/2}\,dw-\frac{K}{\sqrt{2\pi}}\int_a^\infty e^{-w^2/2}\,dw.
+  \]
+  \item Second integral: $K\,P(Z\ge a)=K\Phi(-a)$.
+  \item First integral: complete the square,
+  \[
+    w\sigma\sqrt t-\frac{w^2}2=\frac{t\sigma^2}2-\frac{(w-\sigma\sqrt t)^2}2.
+  \]
+  So it is $e^{t\sigma^2/2}P\big(N(\sigma\sqrt t,1)\ge a\big)=e^{t\sigma^2/2}\Phi(\sigma\sqrt t-a)$.
+  \item Together: $Ce^{\alpha t}=x_0e^{(\mu+\frac12\sigma^2)t}\Phi(\sigma\sqrt t-a)-K\Phi(-a)$. Use $\mu+\frac12\sigma^2=\alpha$ and divide by $e^{\alpha t}$. \qedhere
+\end{steps}
+\end{proof}
+
+It is the same formula as \cref{thm:bs-direct}: with $r=\alpha$, $S_0=x_0$, $T=t$,
+\[
+  -a=\frac{\ln(x_0/K)+(\alpha-\frac12\sigma^2)t}{\sigma\sqrt t}=h-\sigma\sqrt t,\qquad\sigma\sqrt t-a=h.
+\]
+
+\begin{result}[The rule for prices that jump]
+\label{res:jump-drift}
+Let $X(t)=x_0\prod_{i=1}^{N(t)}Y_i$, where $Y_1,Y_2,\dots>0$ are i.i.d.\ with mean $m$, and $N$ is a Poisson process with rate $\lambda$, independent of them. Then (1) holds exactly when $\lambda(m-1)=\alpha$.
+\end{result}
+\begin{proof}
+The factors that arrive after $s$ are fresh.
+\begin{steps}
+  \item $X(t)=X(s)\prod_{N(s)<i\le N(t)}Y_i$, and the number of new factors, $N(t)-N(s)$, is Poisson with mean $\lambda(t-s)$, independent of the past.
+  \item Given $n$ new factors, their product has mean $m^n$. Averaging over $n$:
+  \[
+    \sum_{n\ge0}e^{-\lambda(t-s)}\frac{(\lambda(t-s))^n}{n!}m^n=e^{-\lambda(t-s)}e^{\lambda(t-s)m}=e^{\lambda(t-s)(m-1)}.
+  \]
+  (On the sheet: \cref{card:incr}, row 8.)
+  \item So $\E_P\big(e^{-\alpha t}X(t)\given\cdot\big)=e^{-\alpha t}X(s)e^{\lambda(t-s)(m-1)}$, which is $e^{-\alpha s}X(s)$ exactly when $\lambda(m-1)=\alpha$. \qedhere
+\end{steps}
+\end{proof}
+
+%=====================================================================
+\formulasheet{fs:replication}
+
+\begin{mastercard}[label=card:hedge]{Copying a claim in the Black--Scholes market}
+The price of $X=g(S_T)$ is a function $f(t,S_t)$ of time and today's price (\cref{card:bsprice}). Its copy holds the slope of $f$ in shares and keeps the rest in the bond, rebalancing without adding money:
+\[
+  \boxed{\begin{gathered}\Delta_t=\partial_sf(t,S_t)\ \text{shares},\qquad b_tB_t=f(t,S_t)-\Delta_tS_t\ \text{in the bond},\\ dV_t=\Delta_t\,dS_t+b_t\,dB_t.\end{gathered}}
+\]
+\begin{plugrows}
+  \plugrow{Hedge for a call}{\pstep{Box: $\Delta=\partial_sf$, bond money $f-\Delta S$.}\pstep{From \cref{card:bsprice}, rows 1 and 6: $f=C=S\Phi(h)-Ke^{-r\tau}\Phi(h-\sigma\sqrt\tau)$ and $\partial_sC=\Phi(h)$.}\pstep{Bond money: $C-\Phi(h)S=-Ke^{-r\tau}\Phi(h-\sigma\sqrt\tau)$.}}{$\Phi(h)$ shares, borrow $Ke^{-r\tau}\Phi(h-\sigma\sqrt\tau)$}{call; rebalance as $S$ and $t$ move}{$S=80$, $K=85$, $r=0.05$, $\sigma=0.15$, $\tau=1$: $\Phi(h)=0.5017$, shares worth $80(0.5017)=40.13$; borrow $80.85(0.4420)=35.74$; total $40.13-35.74=4.39=C$}
+  \plugrow{Hedge for a put}{\pstep{Box: $\Delta=\partial_sf$, bond money $f-\Delta S$.}\pstep{Parity (\cref{card:parity}, row 3): $P=C-S+Ke^{-r\tau}$, so $\partial_sP=\Phi(h)-1=-\Phi(-h)$.}\pstep{Bond money: $P-(\Phi(h)-1)S=Ke^{-r\tau}\big(1-\Phi(h-\sigma\sqrt\tau)\big)$.}}{short $\Phi(-h)$ shares, lend $Ke^{-r\tau}\Phi(\sigma\sqrt\tau-h)$}{put}{same: $\Delta_P=0.5017-1=-0.4983$, shares $-39.87$; lend $80.85(0.5580)=45.11$; total $-39.87+45.11=5.25=P$}
+  \plugrow{Greeks of the put}{\pstep{Parity: $P=C-S+Ke^{-r\tau}$.}\pstep{Differentiate in $s$, $\sigma$, $r$, $t$; $Ke^{-r\tau}$ gives $-K\tau e^{-r\tau}$ in $r$ and $+rKe^{-r\tau}$ in $t$.}\pstep{Use $1-\Phi(x)=\Phi(-x)$ with $k=h-\sigma\sqrt\tau$.}}{$\Delta_P=\Phi(h)-1$, $\Gamma_P=\Gamma_C$, $\nu_P=\nu_C$, $\rho_P=-K\tau e^{-r\tau}\Phi(-k)$, $\theta_P=-\frac{S\varphi(h)\sigma}{2\sqrt\tau}+rKe^{-r\tau}\Phi(-k)$}{European; $\Delta_C>0>\Delta_P$}{same: $\Gamma=0.0332$, $\nu=31.92$, $\rho_P=-80.85(0.5580)=-45.11$, $\theta_P=-2.39+0.05(80.85)(0.5580)=-2.39+2.26=-0.14$}
+  \plugrow{Market price differs from the copy}{\pstep{Box: the copy costs $f(t,S_t)$ and pays $X$ at $T$.}\pstep{Price above the copy: sell the claim, run the copy, bank the gap. Below: the opposite.}\pstep{At $T$ the claim and the copy cancel; the gap has grown by $e^{r\tau}$.}}{sure profit $|P_{\mathrm{mkt}}-f|\,e^{r\tau}$ at $T$}{the copy is self-financing}{call quoted at $5.00$ against $4.39$: sell it, buy $0.5017$ share, borrow $35.74$, bank $0.61$; at $T$: $0.61e^{0.05}=0.64$}
+\end{plugrows}
+\end{mastercard}
