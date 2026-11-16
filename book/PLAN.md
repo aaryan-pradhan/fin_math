@@ -57,6 +57,8 @@ One LaTeX book, one PDF (`build/main.pdf`), that replaces everything else in `fi
 | post-midsem p125-129 | Ch 24 |
 | post-midsem p130-133 | Ch 25 |
 | post-midsem p142-143, p143-145 | Ch 26 |
+| lectures_27-28.pdf p.1–5, lectures_29.pdf | Ch 24 |
+| lectures_27-28.pdf p.5–7 | Ch 25 |
 | notes: binomial_and_black_scholes_problems; assignments intro_finance*; endsem 2025 (finance parts) | Ch 27 (Problems) |
 | FinMath Formula Sheet.pdf / notes/formula_sheet.html, notes/ct2_memorize | every chapter's formula sheet |
 | pre-midsem/*.md | dropped: verbatim copies of notes/*.html |
@@ -92,6 +94,8 @@ Numbering after the 2026-11-12 restructure: problem chapters moved to the final 
 | 21 | The multiperiod binomial market | 125–129, 134–138 | written |
 | 22 | From binomial to Black–Scholes | 130–133, 139–141 | written |
 | 23 | Martingale pricing in continuous time | 142–145 | written |
+| 24 | Replication and hedging | lectures_27-28 p.1–5, lectures_29 | written |
+| 25 | Value at risk | lectures_27-28 p.5–7 | written |
 | P | Problems: probability and martingales (90) | 55–58, 73–76 + sheets | written (card → plug → answer) |
 | P | Problems: Brownian motion (91) | sheets, papers | written |
 | P | Problems: Itô calculus and SDEs (92) | sheets, papers | written |
@@ -99,4 +103,4 @@ Numbering after the 2026-11-12 restructure: problem chapters moved to the final 
 | X | Papers and explanations: April 2024 (95), September 2024 (96), September 2025 (97), November 2025 (98) | the four papers | written (card → what it says → steps → answer) |
 
 ## Card catalogue (euclid-book §2a), current numbering
-1.1 atoms · 1.2 union · 1.3 limits · 2.1 measurability · 2.2 P(ξ∈B) · 2.3 normal probabilities and quantiles (VaR) · 3.1 E h(ξ) · 3.2 variance of combinations · 3.3 normal exponential moment · 3.4 tail bound · 4.1 Bayes · 4.2 independence · 4.3 freeze and average · 5.1 one-step test · 6.1 independent increments · 7.1 stopping-time test · 7.2 optional stopping · 7.3 stakes · 8.1 scaled walk (+ heat equation) · 10.1 law of x0+μt+σW given known values · 11.1 GBM · 12.1 jointly normal / Gaussian processes · 13.1 G(b,c) · 14.1 Itô integral · 15.1 Itô's formula · 16.1 linear SDE · 18.1 payoffs · 19.1 strategies, self-financing, arbitrage · 19.2 put–call parity (bounds, American call) · 20.1 finite one-period market · 21.1 binomial tree · 23.1 Black–Scholes pricing (Greeks, implied vol). No card: Ch 9 (rows of 10.1), Ch 17 (rows of 20.1), Ch 22 (rows of 23.1). Kept after review: 3.4 (only home of Chebyshev); 19.1 separate from 21.1 (general strategies; 21.1 row 6 plugs into it).
+1.1 atoms · 1.2 union · 1.3 limits · 2.1 measurability · 2.2 P(ξ∈B) · 2.3 normal probabilities and quantiles (VaR) · 3.1 E h(ξ) · 3.2 variance of combinations · 3.3 normal exponential moment · 3.4 tail bound · 4.1 Bayes · 4.2 independence · 4.3 freeze and average · 5.1 one-step test · 6.1 independent increments · 7.1 stopping-time test · 7.2 optional stopping · 7.3 stakes · 8.1 scaled walk (+ heat equation) · 10.1 law of x0+μt+σW given known values · 11.1 GBM · 12.1 jointly normal / Gaussian processes · 13.1 G(b,c) · 14.1 Itô integral · 15.1 Itô's formula · 16.1 linear SDE · 18.1 payoffs · 19.1 strategies, self-financing, arbitrage · 19.2 put–call parity (bounds, American call) · 20.1 finite one-period market · 21.1 binomial tree · 23.1 Black–Scholes pricing (Greeks, implied vol) · 24.1 copying a claim (delta hedge, put Greeks) · 25.1 portfolio value at risk. Card 6.1 row 8: product over a Poisson number of factors (jump-price rule). No card: Ch 9 (rows of 10.1), Ch 17 (rows of 20.1), Ch 22 (rows of 23.1). Kept after review: 3.4 (only home of Chebyshev); 19.1 separate from 21.1 (general strategies; 21.1 row 6 plugs into it).
