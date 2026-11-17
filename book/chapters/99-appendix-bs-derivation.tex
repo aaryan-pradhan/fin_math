@@ -598,10 +598,20 @@ The Greeks say how the price moves when one input moves and the others stay fixe
 \begin{deriv}
 \dl{\frac{\partial h}{\partial S}=\frac1{S\,\sigma\sqrt\tau}}{only $\ln S$ has $S$ in it; $\frac{d}{dS}\ln S=\frac1S$}
 \dl{\frac{\partial h}{\partial r}=\frac{\tau}{\sigma\sqrt\tau}=\frac{\sqrt\tau}\sigma}{only $r\tau$ has $r$ in it}
-\dl{\frac{\partial h}{\partial\sigma}=-\frac{\ln(S/K)+r\tau}{\sigma^2\sqrt\tau}+\frac12\sqrt\tau}{$\frac{d}{d\sigma}\frac1\sigma=-\frac1{\sigma^2}$ on the first part; the second part is $\frac12\sqrt\tau\cdot\sigma$}
-\dl{\phantom{\frac{\partial h}{\partial\sigma}}=-\frac{h-\frac12\sigma\sqrt\tau}{\sigma}+\frac12\sqrt\tau=-\frac{h-\sigma\sqrt\tau}{\sigma}=-\frac k\sigma}{the first part is $\frac1\sigma\big(h-\frac12\sigma\sqrt\tau\big)$, from the way we wrote $h$}
-\dl{\frac{\partial h}{\partial\tau}}{left as it is: it always cancels below}
 \end{deriv}
+For $\sigma$ and $\tau$, one identity does all the work. Write $h'$ for the derivative being taken:
+\begin{deriv}
+\dl{h-k=\sigma\sqrt\tau}{definition of $k$}
+\dl{h+k=\frac{2\big(\ln(S/K)+r\tau\big)}{\sigma\sqrt\tau}}{the $\pm\frac12\sigma\sqrt\tau$ parts of $h$ and $k$ cancel}
+\dl{h^2-k^2=(h-k)(h+k)=2\ln(S/K)+2r\tau}{multiply the two lines; $\sigma\sqrt\tau$ cancels. No $\sigma$ is left}
+\dl{2h\,h'-2k\,(h'-\sqrt\tau)=0}{differentiate in $\sigma$; $k'=h'-\sqrt\tau$}
+\dl{(h-k)\,h'=-k\sqrt\tau}{collect $h'$, divide by $2$}
+\dl{\frac{\partial h}{\partial\sigma}=-\frac{k\sqrt\tau}{\sigma\sqrt\tau}=-\frac k\sigma}{$h-k=\sigma\sqrt\tau$}
+\dl{2h\,h'-2k\Big(h'-\frac{\sigma}{2\sqrt\tau}\Big)=2r}{differentiate in $\tau$; $k'=h'-\frac{\sigma}{2\sqrt\tau}$}
+\dl{(h-k)\,h'=r-\frac{k\sigma}{2\sqrt\tau}}{collect $h'$, divide by $2$}
+\dl{\frac{\partial h}{\partial\tau}=\frac{r}{\sigma\sqrt\tau}-\frac{k}{2\tau}}{divide by $h-k=\sigma\sqrt\tau$}
+\end{deriv}
+We will not need $\frac{\partial h}{\partial\tau}$ itself: it always cancels below.
 
 \item\label{s:kder} How $k=h-\sigma\sqrt\tau$ moves:
 \begin{deriv}
@@ -613,10 +623,7 @@ The Greeks say how the price moves when one input moves and the others stay fixe
 \item\label{s:ident} The identity that makes everything cancel, $S\varphi(h)=Ke^{-r\tau}\varphi(k)$:
 \begin{deriv}
 \dl{\frac{\varphi(k)}{\varphi(h)}=e^{(h^2-k^2)/2}}{$\varphi(x)=\frac1{\sqrt{2\pi}}e^{-x^2/2}$; the $\frac1{\sqrt{2\pi}}$ cancels}
-\dl{h^2-k^2=(h-k)(h+k)}{difference of two squares}
-\dl{\phantom{h^2-k^2}=\sigma\sqrt\tau\,(2h-\sigma\sqrt\tau)}{$h-k=\sigma\sqrt\tau$ and $h+k=2h-\sigma\sqrt\tau$}
-\dl{\phantom{h^2-k^2}=2\big(\ln(S/K)+(r+\tfrac12\sigma^2)\tau\big)-\sigma^2\tau}{$\sigma\sqrt\tau\cdot2h=2\big(\ln(S/K)+(r+\frac12\sigma^2)\tau\big)$ by the definition of $h$}
-\dl{\phantom{h^2-k^2}=2\ln(S/K)+2r\tau}{the $\sigma^2\tau$ terms cancel}
+\dl{h^2-k^2=2\ln(S/K)+2r\tau}{Step~\ref{s:hder}}
 \dl{\frac{\varphi(k)}{\varphi(h)}=e^{\ln(S/K)+r\tau}=\frac SK\,e^{r\tau}}{halve it and put it in the first line}
 \dl{Ke^{-r\tau}\varphi(k)=S\varphi(h)}{multiply both sides by $Ke^{-r\tau}\varphi(h)$}
 \end{deriv}
