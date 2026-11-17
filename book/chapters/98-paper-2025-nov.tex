@@ -152,10 +152,20 @@ Two key facts: if an EMM exists, the market is arbitrage-free; if the EMM is uni
 
 \paragraph{The Black--Scholes market.} Bond $B_t=e^{rt}$; stock $dS_t=\mu S_t\,dt+\sigma S_t\,dW_t$ with $\mu\in\mathbb R$, $\sigma>0$, $t\in[0,T]$.
 \begin{steps}
-\item First, find every EMM. Under a measure equivalent to $P$ the stock keeps its $\sigma$; only its drift can change (Girsanov). So write the stock with any adapted drift $a_t$:
+\item First, find every EMM. An EMM is a new probability $Q$ for the same paths. So ask: when we switch from $P$ to $Q$, what about the stock can change?
 \begin{deriv}
 \dl{d\ln S_t=\big(\mu-\tfrac12\sigma^2\big)dt+\sigma\,dW_t}{\cref{card:ito}, row 5, with $f=\ln x$}
-\dl{Z_t=S_0\exp\Big\{\int_0^ta_s\,ds+\sigma W_t\Big\}}{the stock under a candidate measure; under $P$, $a_t=\mu-\frac12\sigma^2$}
+\dl{\ln S_t=\ln S_0+\big(\mu-\tfrac12\sigma^2\big)t+\sigma W_t}{integrate from $0$ to $t$}
+\dl{\textstyle\sum\big(\Delta\ln S\big)^2\to\sigma^2t}{over finer and finer grids on $[0,t]$; $(dW)^2=dt$ (\cref{card:itoint}): this holds on every path, with $P$-probability $1$}
+\dl{\text{the same under }Q}{$Q$ is equivalent: an event of probability $1$ under $P$ keeps probability $1$ under $Q$}
+\dl{\sigma\text{ cannot change}}{$\sigma$ can be read off a single path}
+\dl{W_t=W^Q_t+\int_0^t\theta_s\,ds}{the drift cannot be read off a path, and it can change: under $Q$, $W$ is a Brownian motion $W^Q$ plus a drift $\theta_t$ (adapted) and nothing else (Girsanov's theorem)}
+\dl{\ln S_t=\ln S_0+\int_0^t\big(\mu-\tfrac12\sigma^2+\sigma\theta_s\big)ds+\sigma W^Q_t}{substitute into the second line}
+\dl{S_t=S_0\exp\Big\{\int_0^ta_s\,ds+\sigma W^Q_t\Big\}}{name the new drift $a_s=\mu-\frac12\sigma^2+\sigma\theta_s$}
+\end{deriv}
+So each candidate $Q$ gives the stock the same $\sigma$ and some adapted drift $a_t$. The question ``which $Q$ is an EMM?'' becomes ``which drift $a_t$ makes $e^{-rt}S_t$ a martingale?''. From here on write $W$ for $W^Q$ and $Z_t$ for the stock under $Q$:
+\begin{deriv}
+\dl{Z_t=S_0\exp\Big\{\int_0^ta_s\,ds+\sigma W_t\Big\}}{the stock under a candidate $Q$; under $P$ itself, $a_t=\mu-\frac12\sigma^2$}
 \dl{e^{-rt}Z_t=S_0X_tY_t}{split into two factors}
 \dl{X_t=\exp\Big\{\int_0^ta_s\,ds\Big\},\qquad Y_t=e^{-rt+\sigma W_t}}{$X_t$ has no $dW$ part}
 \end{deriv}
