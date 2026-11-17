@@ -577,14 +577,14 @@ Only one drift works, so there is only one risk-neutral measure. This matches St
 %=====================================================================
 \section*{Part H: the Greeks of the call and the put}
 
-The Greeks say how the price moves when one input moves and the others stay fixed. Here $\tau=T-t$ is the time left, and from Parts D and E:
+The Greeks say how the price moves when one input moves and the others stay fixed. The three that matter most are delta, gamma and theta; vega and rho follow at the end. Here $\tau=T-t$ is the time left, and from Parts D and E:
 \begin{deriv}
 \dl{h=\frac{\ln(S/K)+(r+\frac12\sigma^2)\tau}{\sigma\sqrt\tau},\qquad k=h-\sigma\sqrt\tau}{$k$ is a short name for $h-\sigma\sqrt\tau$}
 \dl{C=S\,\Phi(h)-Ke^{-r\tau}\,\Phi(k)}{the call, Step~24 at time $t$ with price $S$}
 \dl{P=Ke^{-r\tau}\,\Phi(-k)-S\,\Phi(-h)}{the put, Step~29}
-\dl{\Delta=\frac{\partial C}{\partial S},\ \ \Gamma=\frac{\partial^2C}{\partial S^2},\ \ \text{vega}=\frac{\partial C}{\partial\sigma},}{the five Greeks (the same for $P$)}
-\dl{\rho=\frac{\partial C}{\partial r},\ \ \theta=\frac{\partial C}{\partial t}}{}
+\dl{\Delta=\frac{\partial C}{\partial S},\quad\Gamma=\frac{\partial^2C}{\partial S^2},\quad\theta=\frac{\partial C}{\partial t}}{delta, gamma, theta (the same for $P$)}
 \end{deriv}
+Here $\theta$ is taken in calendar time $t$. Some texts take it in the maturity instead, $\Theta=\frac{\partial C}{\partial T}$; since $\tau=T-t$, that is $\frac{\partial C}{\partial\tau}=-\theta$: the same formula with the opposite sign.
 
 \begin{steps}[resume]
 \item\label{s:nfacts} Three facts about the normal curve, $\varphi(x)=\frac1{\sqrt{2\pi}}e^{-x^2/2}$ and $\Phi(x)=\int_{-\infty}^x\varphi(y)\,dy$:
@@ -597,7 +597,6 @@ The Greeks say how the price moves when one input moves and the others stay fixe
 \item\label{s:hder} How $h$ moves. Write $h=\frac{\ln S-\ln K+r\tau}{\sigma\sqrt\tau}+\frac12\sigma\sqrt\tau$:
 \begin{deriv}
 \dl{\frac{\partial h}{\partial S}=\frac1{S\,\sigma\sqrt\tau}}{only $\ln S$ has $S$ in it; $\frac{d}{dS}\ln S=\frac1S$}
-\dl{\frac{\partial h}{\partial r}=\frac{\tau}{\sigma\sqrt\tau}=\frac{\sqrt\tau}\sigma}{only $r\tau$ has $r$ in it}
 \end{deriv}
 For $\sigma$ and $\tau$, one identity does all the work. Write $h'$ for the derivative being taken:
 \begin{deriv}
@@ -615,7 +614,7 @@ We will not need $\frac{\partial h}{\partial\tau}$ itself: it always cancels bel
 
 \item\label{s:kder} How $k=h-\sigma\sqrt\tau$ moves:
 \begin{deriv}
-\dl{\frac{\partial k}{\partial S}=\frac{\partial h}{\partial S},\qquad\frac{\partial k}{\partial r}=\frac{\partial h}{\partial r}}{$\sigma\sqrt\tau$ has no $S$ and no $r$ in it}
+\dl{\frac{\partial k}{\partial S}=\frac{\partial h}{\partial S}}{$\sigma\sqrt\tau$ has no $S$ in it}
 \dl{\frac{\partial k}{\partial\sigma}=\frac{\partial h}{\partial\sigma}-\sqrt\tau}{$\frac{\partial}{\partial\sigma}\sigma\sqrt\tau=\sqrt\tau$}
 \dl{\frac{\partial k}{\partial\tau}=\frac{\partial h}{\partial\tau}-\frac{\sigma}{2\sqrt\tau}}{$\frac{\partial}{\partial\tau}\sigma\sqrt\tau=\frac{\sigma}{2\sqrt\tau}$}
 \end{deriv}
@@ -642,68 +641,73 @@ So in every Greek below, any term $\big[S\varphi(h)-Ke^{-r\tau}\varphi(k)\big]\t
 \dl{\phantom{\Gamma_C}=\frac{\varphi(h)}{S\sigma\sqrt\tau}}{Step~\ref{s:hder}}
 \end{deriv}
 
-\item\label{s:cvega} Vega of the call:
+\item\label{s:ctheta} Theta of the call. Time $t$ enters only through $\tau=T-t$, so $\theta_C=\frac{\partial C}{\partial t}=-\frac{\partial C}{\partial\tau}$ (chain rule, $\frac{d\tau}{dt}=-1$). Write $C=A-B$ with $A=S\Phi(h)$ and $B=Ke^{-r\tau}\Phi(k)$, and differentiate each in $\tau$:
+\begin{deriv}
+\dl{\frac{\partial A}{\partial\tau}=S\varphi(h)\frac{\partial h}{\partial\tau}}{$S$ has no $\tau$ in it; Step~\ref{s:nfacts}}
+\dl{\frac{\partial B}{\partial\tau}=-rKe^{-r\tau}\Phi(k)+Ke^{-r\tau}\varphi(k)\frac{\partial k}{\partial\tau}}{product rule; $\frac{d}{d\tau}e^{-r\tau}=-re^{-r\tau}$}
+\dl{\phantom{\frac{\partial B}{\partial\tau}}=-rKe^{-r\tau}\Phi(k)+S\varphi(h)\Big(\frac{\partial h}{\partial\tau}-\frac{\sigma}{2\sqrt\tau}\Big)}{$Ke^{-r\tau}\varphi(k)=S\varphi(h)$ (Step~\ref{s:ident}); $\frac{\partial k}{\partial\tau}$ from Step~\ref{s:kder}}
+\dl{\frac{\partial C}{\partial\tau}=\frac{\partial A}{\partial\tau}-\frac{\partial B}{\partial\tau}=\frac{S\varphi(h)\sigma}{2\sqrt\tau}+rKe^{-r\tau}\Phi(k)}{the two $S\varphi(h)\frac{\partial h}{\partial\tau}$ terms cancel}
+\dl{\theta_C=-\frac{S\varphi(h)\sigma}{2\sqrt\tau}-rKe^{-r\tau}\Phi(k)}{$\theta_C=-\frac{\partial C}{\partial\tau}$}
+\end{deriv}
+
+\item\label{s:pgreeks} The put, from put--call parity $P=C-S+Ke^{-r\tau}$ (Step~30). Each Greek of the put is the call's Greek plus that of $-S+Ke^{-r\tau}$:
+\begin{deriv}
+\dl{\frac{\partial}{\partial S}\big(-S+Ke^{-r\tau}\big)=-1}{$Ke^{-r\tau}$ has no $S$ in it}
+\dl{\Delta_P=\Phi(h)-1=-\Phi(-h)}{Step~\ref{s:cdelta}; $\Phi(h)+\Phi(-h)=1$ (\cref{card:normal-prob})}
+\dl{\frac{\partial^2}{\partial S^2}\big(-S+Ke^{-r\tau}\big)=0}{a straight line in $S$ does not bend}
+\dl{\Gamma_P=\Gamma_C=\frac{\varphi(h)}{S\sigma\sqrt\tau}}{Step~\ref{s:cgamma}}
+\dl{\frac{\partial}{\partial t}\big(-S+Ke^{-r(T-t)}\big)=rKe^{-r\tau}}{$S$ is held fixed; $\frac{d}{dt}e^{-r(T-t)}=re^{-r(T-t)}$}
+\dl{\theta_P=\theta_C+rKe^{-r\tau}}{add it to Step~\ref{s:ctheta}}
+\dl{\phantom{\theta_P}=-\frac{S\varphi(h)\sigma}{2\sqrt\tau}-rKe^{-r\tau}\big(\Phi(k)-1\big)}{collect the $rKe^{-r\tau}$ terms}
+\dl{\theta_P=-\frac{S\varphi(h)\sigma}{2\sqrt\tau}+rKe^{-r\tau}\Phi(-k)}{$1-\Phi(k)=\Phi(-k)$}
+\end{deriv}
+Differentiating $P=Ke^{-r\tau}\Phi(-k)-S\Phi(-h)$ directly, the same way as the call, gives the same three answers.
+
+\item\label{s:gmean} What the signs say:
+\begin{deriv}
+\dl{0<\Delta_C=\Phi(h)<1}{the call gains when $S$ rises, but by less than the stock; the copy holds $\Delta_C$ shares (Step~\ref{s:copy})}
+\dl{\Delta_C\to1\ (S\gg K),\qquad\Delta_C\to0\ (S\ll K)}{$h\to\pm\infty$: a call sure to be used moves like one share; one sure to expire worthless hardly moves}
+\dl{-1<\Delta_P=-\Phi(-h)<0}{the put gains when $S$ falls; its copy is short $|\Delta_P|$ shares}
+\dl{\Delta_C-\Delta_P=1}{a call minus a put is one share minus a bond (parity)}
+\dl{\Gamma_C=\Gamma_P>0}{delta rises as $S$ rises: the payoffs $\max(S-K,0)$ and $\max(K-S,0)$ bend upward}
+\dl{\Gamma\text{ is largest at }h=0}{$\varphi$ peaks at $0$, so $S$ near the strike; with $\sqrt\tau$ below, it grows as $T$ nears: the hedge must then be changed most often}
+\dl{\theta_C<0}{both terms are negative: as time passes there is less time for $S$ to climb past $K$, so the call loses value (time decay)}
+\dl{\theta_P<0\text{ usually}}{the same time decay $-\frac{S\varphi(h)\sigma}{2\sqrt\tau}$ wins}
+\dl{\theta_P\approx rKe^{-r\tau}>0\ (S\ll K)}{$\varphi(h)\approx0$ and $\Phi(-k)\approx1$: the put is then almost $Ke^{-r\tau}-S$, a payment of $K$ that grows in value as $T$ nears}
+\dl{\theta+rS\Delta+\tfrac12\sigma^2S^2\Gamma=rC}{the Black--Scholes equation (Step~\ref{s:pde}) written in Greeks}
+\dl{\theta=-\tfrac12\sigma^2S^2\Gamma\quad(r=0)}{the price of positive gamma is negative theta: an option holder gains from big moves and pays for it with time}
+\end{deriv}
+
+\item\label{s:cvega} Vega, how the price moves with $\sigma$. For the call:
 \begin{deriv}
 \dl{\frac{\partial C}{\partial\sigma}=S\varphi(h)\frac{\partial h}{\partial\sigma}-Ke^{-r\tau}\varphi(k)\frac{\partial k}{\partial\sigma}}{$S$ and $Ke^{-r\tau}$ have no $\sigma$ in them; Step~\ref{s:nfacts}}
 \dl{\phantom{\frac{\partial C}{\partial\sigma}}=S\varphi(h)\frac{\partial h}{\partial\sigma}-Ke^{-r\tau}\varphi(k)\Big(\frac{\partial h}{\partial\sigma}-\sqrt\tau\Big)}{Step~\ref{s:kder}}
 \dl{\phantom{\frac{\partial C}{\partial\sigma}}=\big[S\varphi(h)-Ke^{-r\tau}\varphi(k)\big]\frac{\partial h}{\partial\sigma}+Ke^{-r\tau}\varphi(k)\sqrt\tau}{collect the $\frac{\partial h}{\partial\sigma}$ terms}
 \dl{\text{vega}_C=S\varphi(h)\sqrt\tau}{bracket $=0$, and $Ke^{-r\tau}\varphi(k)=S\varphi(h)$ (Step~\ref{s:ident})}
 \end{deriv}
+Vega is the same for the put: $-S+Ke^{-r\tau}$ has no $\sigma$ in it. It is positive: more volatility means a bigger chance of a large move the useful way, while the loss is capped at the premium.
 
-\item\label{s:crho} Rho of the call. Now $Ke^{-r\tau}$ depends on $r$ too: $\frac{\partial}{\partial r}e^{-r\tau}=-\tau e^{-r\tau}$:
+\item\label{s:crho} Rho, how the price moves with $r$. Now $Ke^{-r\tau}$ depends on $r$: $\frac{\partial}{\partial r}e^{-r\tau}=-\tau e^{-r\tau}$. Also $\frac{\partial k}{\partial r}=\frac{\partial h}{\partial r}$, since $h-k=\sigma\sqrt\tau$ has no $r$ in it:
 \begin{deriv}
-\dl{\frac{\partial C}{\partial r}=S\varphi(h)\frac{\partial h}{\partial r}+K\tau e^{-r\tau}\Phi(k)-Ke^{-r\tau}\varphi(k)\frac{\partial k}{\partial r}}{product rule on $Ke^{-r\tau}\Phi(k)$; the minus sign in front turns $-\tau$ into $+\tau$}
+\dl{\frac{\partial C}{\partial r}=S\varphi(h)\frac{\partial h}{\partial r}+K\tau e^{-r\tau}\Phi(k)-Ke^{-r\tau}\varphi(k)\frac{\partial k}{\partial r}}{product rule on $Ke^{-r\tau}\Phi(k)$; the minus in front turns $-\tau$ into $+\tau$}
 \dl{\phantom{\frac{\partial C}{\partial r}}=\big[S\varphi(h)-Ke^{-r\tau}\varphi(k)\big]\frac{\partial h}{\partial r}+K\tau e^{-r\tau}\Phi(k)}{$\frac{\partial k}{\partial r}=\frac{\partial h}{\partial r}$}
-\dl{\rho_C=K\tau e^{-r\tau}\,\Phi(k)}{bracket $=0$}
+\dl{\rho_C=K\tau e^{-r\tau}\,\Phi(k)>0}{bracket $=0$ (Step~\ref{s:ident})}
+\dl{\rho_P=\rho_C+\frac{\partial}{\partial r}\big(Ke^{-r\tau}\big)=\rho_C-K\tau e^{-r\tau}}{parity, as in Step~\ref{s:pgreeks}}
+\dl{\rho_P=-K\tau e^{-r\tau}\,\Phi(-k)<0}{$1-\Phi(k)=\Phi(-k)$}
 \end{deriv}
-
-\item\label{s:ctheta} Theta of the call. Time $t$ enters only through $\tau=T-t$, so $\frac{\partial}{\partial t}=-\frac{\partial}{\partial\tau}$ (chain rule, $\frac{d\tau}{dt}=-1$). First differentiate in $\tau$, with $\frac{\partial}{\partial\tau}e^{-r\tau}=-re^{-r\tau}$:
-\begin{deriv}
-\dl{\frac{\partial C}{\partial\tau}=S\varphi(h)\frac{\partial h}{\partial\tau}+rKe^{-r\tau}\Phi(k)-Ke^{-r\tau}\varphi(k)\frac{\partial k}{\partial\tau}}{product rule on $Ke^{-r\tau}\Phi(k)$}
-\dl{\phantom{\frac{\partial C}{\partial\tau}}=S\varphi(h)\frac{\partial h}{\partial\tau}+rKe^{-r\tau}\Phi(k)}{Step~\ref{s:kder}}
-\dl{\qquad-Ke^{-r\tau}\varphi(k)\Big(\frac{\partial h}{\partial\tau}-\frac\sigma{2\sqrt\tau}\Big)}{}
-\dl{\phantom{\frac{\partial C}{\partial\tau}}=\big[S\varphi(h)-Ke^{-r\tau}\varphi(k)\big]\frac{\partial h}{\partial\tau}}{collect the $\frac{\partial h}{\partial\tau}$ terms}
-\dl{\qquad+rKe^{-r\tau}\Phi(k)+\frac{S\varphi(h)\sigma}{2\sqrt\tau}}{$Ke^{-r\tau}\varphi(k)=S\varphi(h)$ (Step~\ref{s:ident})}
-\dl{\theta_C=-\frac{\partial C}{\partial\tau}=-\frac{S\varphi(h)\sigma}{2\sqrt\tau}-rKe^{-r\tau}\Phi(k)}{bracket $=0$; then the sign flip}
-\end{deriv}
-
-\item\label{s:pdelta} Delta and gamma of the put, $P=Ke^{-r\tau}\Phi(-k)-S\Phi(-h)$, the same way:
-\begin{deriv}
-\dl{\frac{\partial P}{\partial S}=-Ke^{-r\tau}\varphi(k)\frac{\partial k}{\partial S}-\Phi(-h)+S\varphi(h)\frac{\partial h}{\partial S}}{Step~\ref{s:nfacts}, third line, on both $\Phi$s; product rule on $S\Phi(-h)$}
-\dl{\phantom{\frac{\partial P}{\partial S}}=\big[S\varphi(h)-Ke^{-r\tau}\varphi(k)\big]\frac{\partial h}{\partial S}-\Phi(-h)}{$\frac{\partial k}{\partial S}=\frac{\partial h}{\partial S}$}
-\dl{\Delta_P=-\Phi(-h)}{bracket $=0$; it is negative: the put loses when $S$ rises}
-\dl{\Gamma_P=-\frac{\partial}{\partial S}\Phi(-h)=\varphi(h)\frac{\partial h}{\partial S}=\frac{\varphi(h)}{S\sigma\sqrt\tau}}{Step~\ref{s:nfacts}, third line; Step~\ref{s:hder}}
-\end{deriv}
-
-\item\label{s:pvega} Vega and rho of the put:
-\begin{deriv}
-\dl{\frac{\partial P}{\partial\sigma}=-Ke^{-r\tau}\varphi(k)\Big(\frac{\partial h}{\partial\sigma}-\sqrt\tau\Big)+S\varphi(h)\frac{\partial h}{\partial\sigma}}{Steps~\ref{s:nfacts} and~\ref{s:kder}}
-\dl{\phantom{\frac{\partial P}{\partial\sigma}}=\big[S\varphi(h)-Ke^{-r\tau}\varphi(k)\big]\frac{\partial h}{\partial\sigma}+Ke^{-r\tau}\varphi(k)\sqrt\tau}{collect}
-\dl{\text{vega}_P=S\varphi(h)\sqrt\tau}{as for the call (Step~\ref{s:ident})}
-\dl{\frac{\partial P}{\partial r}=-K\tau e^{-r\tau}\Phi(-k)}{product rule on $Ke^{-r\tau}\Phi(-k)$; $\frac{\partial}{\partial r}e^{-r\tau}=-\tau e^{-r\tau}$}
-\dl{\qquad-Ke^{-r\tau}\varphi(k)\frac{\partial k}{\partial r}+S\varphi(h)\frac{\partial h}{\partial r}}{Step~\ref{s:nfacts} on both $\Phi$s}
-\dl{\rho_P=-K\tau e^{-r\tau}\,\Phi(-k)}{$\frac{\partial k}{\partial r}=\frac{\partial h}{\partial r}$, so the other two terms make the bracket, which is $0$}
-\end{deriv}
-
-\item\label{s:ptheta} Theta of the put, first in $\tau$:
-\begin{deriv}
-\dl{\frac{\partial P}{\partial\tau}=-rKe^{-r\tau}\Phi(-k)}{product rule on $Ke^{-r\tau}\Phi(-k)$; $\frac{\partial}{\partial\tau}e^{-r\tau}=-re^{-r\tau}$}
-\dl{\qquad-Ke^{-r\tau}\varphi(k)\frac{\partial k}{\partial\tau}+S\varphi(h)\frac{\partial h}{\partial\tau}}{Step~\ref{s:nfacts} on both $\Phi$s}
-\dl{\phantom{\frac{\partial P}{\partial\tau}}=-rKe^{-r\tau}\Phi(-k)+S\varphi(h)\frac{\partial h}{\partial\tau}}{Step~\ref{s:kder}}
-\dl{\qquad-Ke^{-r\tau}\varphi(k)\Big(\frac{\partial h}{\partial\tau}-\frac\sigma{2\sqrt\tau}\Big)}{}
-\dl{\phantom{\frac{\partial P}{\partial\tau}}=\big[S\varphi(h)-Ke^{-r\tau}\varphi(k)\big]\frac{\partial h}{\partial\tau}}{collect the $\frac{\partial h}{\partial\tau}$ terms}
-\dl{\qquad-rKe^{-r\tau}\Phi(-k)+\frac{S\varphi(h)\sigma}{2\sqrt\tau}}{$Ke^{-r\tau}\varphi(k)=S\varphi(h)$ (Step~\ref{s:ident})}
-\dl{\theta_P=-\frac{\partial P}{\partial\tau}=-\frac{S\varphi(h)\sigma}{2\sqrt\tau}+rKe^{-r\tau}\Phi(-k)}{bracket $=0$; then the sign flip}
-\end{deriv}
-
-\item\label{s:gcheck} Check with put--call parity, $C-P=S-Ke^{-r\tau}$ (Step~30). Differentiate both sides and compare with the Greeks found:
-\begin{deriv}
-\dl{\Delta_C-\Delta_P=\Phi(h)+\Phi(-h)=1}{$\frac{\partial}{\partial S}(S-Ke^{-r\tau})=1$; \cref{card:normal-prob}}
-\dl{\Gamma_C-\Gamma_P=0,\qquad\text{vega}_C-\text{vega}_P=0}{the right side is linear in $S$ and has no $\sigma$}
-\dl{\rho_C-\rho_P=K\tau e^{-r\tau}\big(\Phi(k)+\Phi(-k)\big)=K\tau e^{-r\tau}}{$\frac{\partial}{\partial r}(-Ke^{-r\tau})=K\tau e^{-r\tau}$}
-\dl{\theta_C-\theta_P=-rKe^{-r\tau}\big(\Phi(k)+\Phi(-k)\big)=-rKe^{-r\tau}}{$\frac{\partial}{\partial t}\big(-Ke^{-r(T-t)}\big)=-rKe^{-r\tau}$}
-\end{deriv}
-All five agree.
+A higher rate makes the strike, paid at $T$, cheaper today: good for the call holder, who pays $K$; bad for the put holder, who receives it.
 \end{steps}
 
-\answer{With $k=h-\sigma\sqrt\tau$: $\Delta_C=\Phi(h)$, $\Delta_P=-\Phi(-h)$; $\Gamma=\frac{\varphi(h)}{S\sigma\sqrt\tau}$ and $\text{vega}=S\varphi(h)\sqrt\tau$ for both; $\rho_C=K\tau e^{-r\tau}\Phi(k)$, $\rho_P=-K\tau e^{-r\tau}\Phi(-k)$; $\theta_C=-\frac{S\varphi(h)\sigma}{2\sqrt\tau}-rKe^{-r\tau}\Phi(k)$, $\theta_P=-\frac{S\varphi(h)\sigma}{2\sqrt\tau}+rKe^{-r\tau}\Phi(-k)$ (\cardrow{card:bsprice}{6}).}
+\subsection*{The Greeks in one table}
+\begin{center}\renewcommand{\arraystretch}{2.1}
+\begin{tabular}{@{}l|l|l@{}}
+ & call & put\\\hline
+$\Delta$ & $\Phi(h)$,\ \ between $0$ and $1$ & $\Phi(h)-1$,\ \ between $-1$ and $0$\\
+$\Gamma$ & $\dfrac{\varphi(h)}{S\sigma\sqrt\tau}>0$ & the same\\
+$\theta$ & $-\dfrac{S\varphi(h)\sigma}{2\sqrt\tau}-rKe^{-r\tau}\Phi(k)<0$ & $-\dfrac{S\varphi(h)\sigma}{2\sqrt\tau}+rKe^{-r\tau}\Phi(-k)$\\
+vega & $S\varphi(h)\sqrt\tau>0$ & the same\\
+$\rho$ & $K\tau e^{-r\tau}\Phi(k)>0$ & $-K\tau e^{-r\tau}\Phi(-k)<0$\\
+\end{tabular}
+\end{center}
+
+\answer{With $k=h-\sigma\sqrt\tau$: $\Delta_C=\Phi(h)\in(0,1)$ and $\Delta_P=\Phi(h)-1\in(-1,0)$; $\Gamma_C=\Gamma_P=\frac{\varphi(h)}{S\sigma\sqrt\tau}>0$; $\theta_C=-\frac{S\varphi(h)\sigma}{2\sqrt\tau}-rKe^{-r\tau}\Phi(k)<0$ and $\theta_P=-\frac{S\varphi(h)\sigma}{2\sqrt\tau}+rKe^{-r\tau}\Phi(-k)$; vega $=S\varphi(h)\sqrt\tau$ for both; $\rho_C=K\tau e^{-r\tau}\Phi(k)$, $\rho_P=-K\tau e^{-r\tau}\Phi(-k)$ (\cardrow{card:bsprice}{6}).}
