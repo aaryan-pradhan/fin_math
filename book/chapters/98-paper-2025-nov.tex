@@ -140,16 +140,81 @@ C-P=S_0-Ke^{-rT}.
 \begin{problem}[Q2(c)]
 Argue that the Black--Scholes market is arbitrage-free.
 \uses{card:bsprice}{7}
-\cardsays The market is arbitrage-free when a risk-neutral measure $P^*$ exists, one under which the discounted stock $e^{-rt}S_t$ is a martingale.
+\cardsays Two key facts of no-arbitrage pricing. (1) If there is a measure $P^*$ equivalent to $P$ (an EMM) under which the discounted stock, $(1+r)^{-t}S_t$ in discrete time or $e^{-rt}S_t$ in continuous time, is a martingale, the market is arbitrage-free. (2) If that EMM is unique, the market is complete: every claim can be copied, and so priced.
 \working
+So the whole job is to find every EMM and see that there is exactly one.
 \begin{steps}
-\item The market: a bond $B_t=e^{rt}$ and a stock $S_t=S_0e^{at+\sigma W_t}$, constant $r$ and $\sigma>0$.
-\item Discounted stock: $e^{-rt}S_t=S_0e^{(a-r)t+\sigma W_t}$.
-\item \Cref{card:gbm}, row 4: $e^{ct+\sigma W_t}$ is a martingale exactly when $c+\frac12\sigma^2=0$. With $c=a-r$ this asks for $a=r-\frac12\sigma^2$.
-\item Such a measure exists: the one under which the stock has drift $a=r-\frac12\sigma^2$.
-\item By the first fundamental theorem (no arbitrage $\iff$ a risk-neutral measure exists), there is no arbitrage. (It is also the only one, so the market is complete.)
+\item The market:
+\begin{deriv}
+\dl{B_t=e^{rt},\qquad dS_t=\mu S_t\,dt+\sigma S_t\,dW_t}{the bond, and the stock with $\mu\in\mathbb R$, $\sigma>0$}
+\dl{d\ln S_t=\big(\mu-\tfrac12\sigma^2\big)dt+\sigma\,dW_t}{\cref{card:ito}, row 5, with $f=\ln x$}
+\dl{S_t=S_0e^{(\mu-\frac12\sigma^2)t+\sigma W_t}}{integrate from $0$ to $t$}
+\end{deriv}
+\item Every candidate. Under a measure equivalent to $P$ the stock keeps its $\sigma$; only the drift can change (Girsanov). So try any adapted drift $a_t$:
+\begin{deriv}
+\dl{Z_t=S_0\exp\Big\{\int_0^ta_s\,ds+\sigma W_t\Big\}}{the stock under a candidate measure; $a_t$ may be random}
+\dl{e^{-rt}Z_t=S_0X_tY_t}{split into two factors}
+\dl{X_t=\exp\Big\{\int_0^ta_s\,ds\Big\},\qquad Y_t=e^{-rt+\sigma W_t}}{$X_t$ has no $dW$ part}
+\end{deriv}
+\item The two pieces:
+\begin{deriv}
+\dl{dX_t=a_tX_t\,dt}{derivative of $e^{\int_0^ta_s\,ds}$ in $t$}
+\dl{dY_t=Y_t\big(-r+\tfrac12\sigma^2\big)dt+\sigma Y_t\,dW_t}{\cardrow{card:ito}{2} with $\mu=-r$}
+\dl{dX_t\,dY_t=0}{$dt\cdot dt=dt\cdot dW=0$}
+\end{deriv}
+\item The product:
+\begin{deriv}
+\dl{d(X_tY_t)=Y_t\,dX_t+X_t\,dY_t+dX_t\,dY_t}{\cardrow{card:ito}{6}, the product rule}
+\dl{\phantom{d(X_tY_t)}=Y_ta_tX_t\,dt}{substitute Step~3}
+\dl{\phantom{d(X_tY_t)={}}+X_tY_t\big(-r+\tfrac12\sigma^2\big)dt+\sigma X_tY_t\,dW_t}{}
+\dl{\phantom{d(X_tY_t)}=X_tY_t\big(a_t-r+\tfrac12\sigma^2\big)dt+\sigma X_tY_t\,dW_t}{collect the $dt$ terms}
+\end{deriv}
+\item The test:
+\begin{deriv}
+\dl{e^{-rt}Z_t\text{ is a martingale}}{}
+\dl{\iff X_tY_t\big(a_t-r+\tfrac12\sigma^2\big)=0}{\cref{card:ito}, martingale test: the $dt$-coefficient must be $0$}
+\dl{\iff a_t=r-\tfrac12\sigma^2\ \text{ for all }t\in[0,T]}{$X_tY_t>0$: both are exponentials}
+\end{deriv}
+\item The conclusion:
+\begin{deriv}
+\dl{\text{an EMM exists}}{take $a_t=r-\frac12\sigma^2$: the stock $S_0e^{(r-\frac12\sigma^2)t+\sigma W^*_t}$}
+\dl{\text{it is the only one}}{Step~5 allows no other $a_t$, even a random one}
+\dl{\text{arbitrage-free and complete}}{the two key facts}
+\dl{P_t(X)=\E_{P^*}\big(e^{-r(T-t)}X\given\F_t\big)}{so any claim can be priced (\cref{card:bsprice})}
+\end{deriv}
 \end{steps}
-\answer{A risk-neutral measure exists (stock drift $r-\frac12\sigma^2$), so the Black--Scholes market is arbitrage-free.}
+\answer{Under a candidate measure the stock is $S_0\exp\{\int_0^ta_s\,ds+\sigma W_t\}$, and $e^{-rt}$ times it has $dt$-coefficient $X_tY_t(a_t-r+\frac12\sigma^2)$. It is a martingale only for $a_t=r-\frac12\sigma^2$: an EMM exists and is unique, so the Black--Scholes market is arbitrage-free and complete.}
+
+\paragraph{The same argument for the $T$-period binomial market.}
+\begin{steps}[resume]
+\item The market:
+\begin{deriv}
+\dl{B_t=(1+r)^t,\qquad S_t=uS_{t-1}\ \text{or}\ dS_{t-1}}{$t=1,\dots,T$, with $d<1+r<u$}
+\dl{\Omega=\{\omega=(v_1,\dots,v_T):v_t\in\{u,d\}\}}{a path lists the moves}
+\end{deriv}
+\item Every candidate. A measure $Q$ equivalent to $P$ gives every path a positive probability. At each node, let $q$ be the $Q$-probability of the up move:
+\begin{deriv}
+\dl{0<q<1}{both moves must stay possible}
+\dl{q\text{ may depend on the node}}{like $a_t$ above, it may be random}
+\end{deriv}
+\item The test, at one node at time $t$:
+\begin{deriv}
+\dl{\E_Q\big(S_{t+1}\given\F_t\big)=\big(qu+(1-q)d\big)S_t}{$S_{t+1}$ is $uS_t$ or $dS_t$; $S_t$ is known at $t$ (\cref{card:freeze})}
+\dl{\E_Q\Big(\frac{S_{t+1}}{(1+r)^{t+1}}\Bigm|\F_t\Big)=\frac{S_t}{(1+r)^t}}{martingale condition for the discounted stock}
+\dl{\iff qu+(1-q)d=1+r}{substitute the first line and cancel $\frac{S_t}{(1+r)^t}$}
+\dl{\iff q=\frac{1+r-d}{u-d}=p^*}{solve the linear equation; $u\ne d$}
+\end{deriv}
+\item The conclusion:
+\begin{deriv}
+\dl{0<p^*<1}{$d<1+r<u$, so $P^*(\omega)=(p^*)^j(1-p^*)^{T-j}>0$ for a path with $j$ ups}
+\dl{\text{an EMM exists}}{$q=p^*$ at every node (\cardrow{card:tree}{7})}
+\dl{\text{it is the only one}}{Step~9 allows no other $q$ at any node}
+\dl{\text{arbitrage-free and complete}}{the two key facts}
+\dl{V_0=\E_{P^*}\Big(\frac{g(S_T)}{(1+r)^T}\Big)}{the price of any claim $g(S_T)$ (\cardrow{card:tree}{1})}
+\end{deriv}
+Completeness can also be seen directly: \cardrow{card:tree}{5} builds the copy $(\Delta_t,b_t)$ of any $g(S_T)$, node by node, from the payoff backwards.
+\end{steps}
+\answer{At every node the up-probability must solve $qu+(1-q)d=1+r$, so $q=p^*=\frac{1+r-d}{u-d}\in(0,1)$: the EMM exists and is unique, and the $T$-period binomial market is arbitrage-free and complete.}
 \end{problem}
 
 \begin{problem}[Q2(d)]
