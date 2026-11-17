@@ -1,11 +1,11 @@
-\chapter{Black--Scholes from the binomial tree, every step}\label{app:bs}
+\chapter{Black--Scholes from scratch, every step}\label{app:bs}
 
 % Two columns: the line of mathematics on the left, how it follows from the line before on the right.
 \newenvironment{deriv}{\par\smallskip\noindent\renewcommand{\arraystretch}{1.3}%
   \begin{tabular}{@{}p{0.58\linewidth}@{\hspace{0.03\linewidth}}p{0.39\linewidth}@{}}}{\end{tabular}\par\smallskip}
 \newcommand{\dl}[2]{\mbox{$\displaystyle #1$} & \leavevmode\raggedright\small\color{thmc!80!black}#2\tabularnewline[1.2ex]}
 
-This appendix is the full version of Problem Q2(a) of the April 2024 paper. It starts with one period and a portfolio that copies the option, and it ends with the Black--Scholes formula. Part E then does the put by the same steps, and Part F builds the copying portfolio at every node of the tree and shows that it is self-financing. Each row does one thing. The right-hand column says how that row follows from the row before it.
+This appendix is the full version of Problem Q2(a) of the April 2024 paper. It starts with one period and a portfolio that copies the option, and it ends with the Black--Scholes formula. Part E then does the put by the same steps. Part F builds the copying portfolio at every node of the tree and shows that it is self-financing. Part G proves that the Black--Scholes market is arbitrage-free and complete, and Part H derives the Greeks of the call and the put. Each row does one thing. The right-hand column says how that row follows from the row before it.
 
 \begin{setup}[The market]
 A stock starts at $S_0$. Each period it is multiplied by $u$ (up) or by $d$ (down), with $d<u$. Money in the bond grows by $1+r$ each period. A European call with strike $K$ pays $(S_T-K)^+=\max(S_T-K,0)$ at time $T$.
@@ -269,105 +269,419 @@ A European put pays $(K-S_T)^+=\max(K-S_T,0)$. Steps 1--8 never used the payoff,
 
 \section*{Part F: the copying portfolio at every node, and why it is self-financing}
 
-Parts A and B found the \emph{price}. This part writes down the \emph{portfolio} that copies the claim, node by node, first in a two-period tree and then in a tree with any number of periods. In this part $\Delta$ is a number of shares (not the period length of Part D).
+Parts A and B found the \emph{price}. This part writes down the \emph{portfolio} that copies the claim, node by node: first in a two-period tree, then at any node of a tree with $T$ periods. In Parts F and G, $\Delta$ is a number of shares (not the period length of Part D).
 
 \begin{steps}[resume]
-\item The bookkeeping. A portfolio is chosen at a node and then held, unchanged, for one period:
+\item\label{s:conv} The convention. Read this step slowly: every $1+r$ mistake comes from mixing up these moments.
 \begin{deriv}
-\dl{\Delta=\text{number of shares bought at the node}}{kept until the next node}
-\dl{b=\text{money put in the bond at the node}}{counted in money \emph{of the node's time}}
-\dl{\text{cost at the node}=\Delta\,S+b}{$S$ is the stock price at the node; no $1+r$, you pay today's prices}
-\dl{\text{worth one period later}=\Delta\,S_{\text{next}}+b(1+r)}{the shares are worth the new price; the bond money has grown for one period}
+\dl{\Delta_t=\text{number of shares we buy at time }t}{chosen at time $t$, after we see the price $S_t$}
+\dl{b_t=\text{money we put in the bond at time }t}{counted in money \emph{of time $t$}}
+\dl{\text{hold }(\Delta_t,b_t)\text{, unchanged, from }t\text{ to }t+1}{at time $t+1$ we sell it and choose $(\Delta_{t+1},b_{t+1})$}
+\dl{\text{cost at time }t=\Delta_tS_t+b_t}{we pay today's price for the shares and hand over $b_t$; no $1+r$}
+\dl{\text{worth at time }t+1=\Delta_tS_{t+1}+b_t(1+r)}{the same shares at the new price; the bond money has grown for one period}
 \end{deriv}
+The timeline of one portfolio:
+\begin{center}
+\begin{tikzpicture}[font=\small]
+  \draw[thick,->,defc!70] (0,0) -- (12.4,0);
+  \draw[thick] (1,0.15) -- (1,-0.15) node[below] {time $t$};
+  \draw[thick] (11,0.15) -- (11,-0.15) node[below] {time $t+1$};
+  \node[above,align=center] at (1.6,0.3) {\textbf{buy}\\ $\Delta_t$ shares at $S_t$\\ $b_t$ into the bond\\ pay $\Delta_tS_t+b_t$};
+  \node[above,align=center] at (10.4,0.3) {\textbf{sell}\\ $\Delta_t$ shares at $S_{t+1}$\\ $b_t(1+r)$ out of the bond\\ get $\Delta_tS_{t+1}+b_t(1+r)$};
+  \node[above,align=center,text=thmc!80!black] at (6,0.3) {hold $(\Delta_t,b_t)$,\\ change nothing};
+  \node[below,align=center,text=thmc!80!black] at (6,-0.2) {the bond money grows:\\ $b_t\ \longrightarrow\ b_t(1+r)$};
+\end{tikzpicture}
+\end{center}
+$\Delta_t$ and $b_t$ are random. They are chosen after $S_t$ is seen, so they depend on the node the stock has reached. Write $\Delta_t[s]$ and $b_t[s]$ for their values at the node where $S_t=s$. At time $0$ there is only one node, so $\Delta_0$ and $b_0$ are plain numbers. At time $1$, $\Delta_1$ is either $\Delta_1[uS_0]$ or $\Delta_1[dS_0]$, and we only learn which at time $1$.
 \begin{trap}
-The $1+r$ goes on $b$ only, and only once for each period the money has sat in the bond. Never put $1+r$ on the shares: their growth is already inside the new price $S_{\text{next}}$. At the moment of buying there is no $1+r$ at all.
+The $1+r$ goes on $b_t$ only, and only when we look one period after buying. At the moment of buying there is no $1+r$ at all. Never put $1+r$ on the shares: their growth is already inside the new price $S_{t+1}$.
 \end{trap}
 
-\item The two-period tree and its names. Each node is named by the moves that lead to it:
-\begin{deriv}
-\dl{\text{time }0:\ S_0}{the root}
-\dl{\text{time }1:\ uS_0\ (\text{node }u),\quad dS_0\ (\text{node }d)}{one move}
-\dl{\text{time }2:\ u^2S_0,\quad udS_0,\quad d^2S_0}{two moves; up-down and down-up meet}
-\dl{V_{uu}=g(u^2S_0),\ \ V_{ud}=g(udS_0),\ \ V_{dd}=g(d^2S_0)}{the claim's payoffs at time $2$}
-\dl{(\Delta_0,b_0),\ (\Delta_u,b_u),\ (\Delta_d,b_d)}{the portfolio chosen at time $0$, at node $u$, at node $d$}
-\end{deriv}
-We do not know $V_u$, $V_d$, $V_0$ yet; they come out of the steps below. Work backwards, last period first.
+\item\label{s:tree2} The two-period tree. Each box is a node: the stock price there, the claim's value there, and the portfolio we buy there. At time $2$ the claim pays and nothing more is bought. Each arrow is one period, and it is labelled with what the portfolio bought at its start is worth at its end.
+\begin{center}
+\begin{tikzpicture}[x=5.9cm,y=2.3cm,
+  nd/.style={draw=defc!70,rounded corners,fill=defc!4,align=center,font=\footnotesize,inner sep=3pt},
+  ed/.style={->,thick,defc!60},
+  lb/.style={font=\scriptsize,text=thmc!80!black,sloped,align=center}]
+  \node[nd] (r)  at (0,0)  {$S_0$\\ value $V_0$\\ buy $\Delta_0,\ b_0$};
+  \node[nd] (u)  at (1,1)  {$uS_0$\\ value $V_1[uS_0]$\\ buy $\Delta_1[uS_0],\ b_1[uS_0]$};
+  \node[nd] (d)  at (1,-1) {$dS_0$\\ value $V_1[dS_0]$\\ buy $\Delta_1[dS_0],\ b_1[dS_0]$};
+  \node[nd] (uu) at (2,2)  {$u^2S_0$\\ payoff $g(u^2S_0)$};
+  \node[nd] (ud) at (2,0)  {$udS_0$\\ payoff $g(udS_0)$};
+  \node[nd] (dd) at (2,-2) {$d^2S_0$\\ payoff $g(d^2S_0)$};
+  \draw[ed] (r) -- node[lb,above] {$\Delta_0\,uS_0+b_0(1+r)$} (u);
+  \draw[ed] (r) -- node[lb,below] {$\Delta_0\,dS_0+b_0(1+r)$} (d);
+  \draw[ed] (u) -- node[lb,above] {$\Delta_1[uS_0]\,u^2S_0$\\ $+\,b_1[uS_0](1+r)$} (uu);
+  \draw[ed] (u) -- node[lb,below] {$\Delta_1[uS_0]\,udS_0$\\ $+\,b_1[uS_0](1+r)$} (ud);
+  \draw[ed] (d) -- node[lb,above] {$\Delta_1[dS_0]\,udS_0$\\ $+\,b_1[dS_0](1+r)$} (ud);
+  \draw[ed] (d) -- node[lb,below] {$\Delta_1[dS_0]\,d^2S_0$\\ $+\,b_1[dS_0](1+r)$} (dd);
+  \foreach \x/\t in {0/0,1/1,2/2} \node[font=\small] at (\x,-2.6) {time $\t$};
+\end{tikzpicture}
+\end{center}
+Copying means: on every arrow, the label equals the value in the box the arrow points to. We do not know $V_0$, $V_1[uS_0]$, $V_1[dS_0]$ yet; they come out of the steps below. Work backwards, last period first.
 
-\item The last period, at node $u$ (stock price $uS_0$). Choose $(\Delta_u,b_u)$ so that one period later it is worth the payoff in both cases:
+\item\label{s:nodeu} The last period, from the node $uS_0$. Its two arrows point to $u^2S_0$ and $udS_0$, so:
 \begin{deriv}
-\dl{\Delta_u\cdot u^2S_0+b_u(1+r)=V_{uu}}{up again: shares worth $u\cdot uS_0$; bond grown once (Step~31)}
-\dl{\Delta_u\cdot udS_0+b_u(1+r)=V_{ud}}{down: shares worth $d\cdot uS_0$}
-\dl{\Delta_u=\frac{V_{uu}-V_{ud}}{u^2S_0-udS_0}}{subtract; $b_u(1+r)$ cancels}
-\dl{b_u=\frac{V_{uu}-\Delta_u\,u^2S_0}{1+r}}{first line solved for $b_u$: divide by $1+r$, because $b_u$ is time-1 money that must \emph{grow into} what is needed at time 2}
+\dl{\Delta_1[uS_0]\,u^2S_0+b_1[uS_0](1+r)=g(u^2S_0)}{upper arrow out of $uS_0$ (Step~\ref{s:tree2})}
+\dl{\Delta_1[uS_0]\,udS_0+b_1[uS_0](1+r)=g(udS_0)}{lower arrow out of $uS_0$}
+\dl{\Delta_1[uS_0]=\frac{g(u^2S_0)-g(udS_0)}{u^2S_0-udS_0}}{subtract the second line from the first; $b_1[uS_0](1+r)$ cancels}
+\dl{b_1[uS_0]=\frac{g(u^2S_0)-\Delta_1[uS_0]\,u^2S_0}{1+r}}{first line solved for $b_1[uS_0]$}
 \end{deriv}
+Why divide by $1+r$ here: $b_1[uS_0]$ is time-1 money, and after one period in the bond it must have grown into the time-2 amount on the top line.
 
-\item The value at node $u$ is the cost of that portfolio at node $u$:
+\item\label{s:valu} The value at the node $uS_0$ is what that portfolio costs there:
 \begin{deriv}
-\dl{V_u=\Delta_u\cdot uS_0+b_u}{Step~31: cost at the node, no $1+r$}
-\dl{\phantom{V_u}=\frac{p^*V_{uu}+(1-p^*)V_{ud}}{1+r}}{the algebra of Steps 2--4 with $X_u=V_{uu}$, $X_d=V_{ud}$ and $S_0$ replaced by $uS_0$}
-\end{deriv}
-
-\item The same at node $d$ (stock price $dS_0$):
-\begin{deriv}
-\dl{\Delta_d\cdot udS_0+b_d(1+r)=V_{ud}}{up from node $d$: shares worth $u\cdot dS_0$}
-\dl{\Delta_d\cdot d^2S_0+b_d(1+r)=V_{dd}}{down from node $d$: shares worth $d\cdot dS_0$}
-\dl{\Delta_d=\frac{V_{ud}-V_{dd}}{udS_0-d^2S_0},\qquad b_d=\frac{V_{ud}-\Delta_d\,udS_0}{1+r}}{subtract; then the first line solved for $b_d$}
-\dl{V_d=\Delta_d\cdot dS_0+b_d=\frac{p^*V_{ud}+(1-p^*)V_{dd}}{1+r}}{cost at node $d$; Steps 2--4 with $X_u=V_{ud}$, $X_d=V_{dd}$, $S_0$ replaced by $dS_0$}
-\end{deriv}
-
-\item The first period, at time $0$. The time-0 portfolio does \emph{not} have to pay the claim. It has to be worth exactly what the time-1 portfolio costs, $V_u$ at node $u$ and $V_d$ at node $d$:
-\begin{deriv}
-\dl{\Delta_0\cdot uS_0+b_0(1+r)=V_u}{at node $u$: worth one period later (Step~31) $=$ cost of $(\Delta_u,b_u)$}
-\dl{\Delta_0\cdot dS_0+b_0(1+r)=V_d}{at node $d$: the same with $(\Delta_d,b_d)$}
-\dl{\Delta_0=\frac{V_u-V_d}{uS_0-dS_0}}{subtract; $b_0(1+r)$ cancels}
-\dl{b_0=\frac{V_u-\Delta_0\,uS_0}{1+r}}{first line solved for $b_0$}
-\dl{V_0=\Delta_0S_0+b_0=\frac{p^*V_u+(1-p^*)V_d}{1+r}}{cost at time $0$; Steps 2--4 with $X_u=V_u$, $X_d=V_d$}
+\dl{V_1[uS_0]=\Delta_1[uS_0]\,uS_0+b_1[uS_0]}{cost at time 1 (Step~\ref{s:conv}): no $1+r$}
+\dl{\phantom{V_1[uS_0]}=\frac{p^*g(u^2S_0)+(1-p^*)g(udS_0)}{1+r}}{the algebra of Steps 2--4 with $X_u=g(u^2S_0)$, $X_d=g(udS_0)$ and $S_0$ replaced by $uS_0$}
 \end{deriv}
 
-\item Self-financing at time 1. At node $u$ we sell the old portfolio and buy the new one. Compare the two at node $u$'s prices:
+\item\label{s:noded} The same from the node $dS_0$, whose arrows point to $udS_0$ and $d^2S_0$:
 \begin{deriv}
-\dl{\text{old, at node }u:\ \Delta_0\cdot uS_0+b_0(1+r)=V_u}{Step~31 (worth one period later); equals $V_u$ by the first line of Step~36}
-\dl{\text{new, at node }u:\ \Delta_u\cdot uS_0+b_u=V_u}{Step~31 (cost at the node); equals $V_u$ by Step~34}
-\dl{\text{old}-\text{new}=V_u-V_u=0}{no money is put in or taken out}
-\dl{\text{old, at node }d:\ \Delta_0\cdot dS_0+b_0(1+r)=V_d}{second line of Step~36}
-\dl{\text{new, at node }d:\ \Delta_d\cdot dS_0+b_d=V_d}{Step~35; again old $=$ new}
+\dl{\Delta_1[dS_0]\,udS_0+b_1[dS_0](1+r)=g(udS_0)}{upper arrow out of $dS_0$}
+\dl{\Delta_1[dS_0]\,d^2S_0+b_1[dS_0](1+r)=g(d^2S_0)}{lower arrow out of $dS_0$}
+\dl{\Delta_1[dS_0]=\frac{g(udS_0)-g(d^2S_0)}{udS_0-d^2S_0}}{subtract; $b_1[dS_0](1+r)$ cancels}
+\dl{b_1[dS_0]=\frac{g(udS_0)-\Delta_1[dS_0]\,udS_0}{1+r}}{first line solved for $b_1[dS_0]$}
+\dl{V_1[dS_0]=\Delta_1[dS_0]\,dS_0+b_1[dS_0]}{cost at time 1: no $1+r$}
+\dl{\phantom{V_1[dS_0]}=\frac{p^*g(udS_0)+(1-p^*)g(d^2S_0)}{1+r}}{Steps 2--4 with $X_u=g(udS_0)$, $X_d=g(d^2S_0)$, $S_0$ replaced by $dS_0$}
 \end{deriv}
-That is what self-financing means (\cref{card:selffin}): the old holding at the new prices equals the new holding at the new prices.
 
-\item The whole strategy, in time order:
+\item\label{s:root} The first period, from time $0$. The arrows out of $S_0$ point to the boxes $V_1[uS_0]$ and $V_1[dS_0]$. So the time-0 portfolio does \emph{not} have to pay the claim; it has to be worth exactly what the time-1 portfolio costs:
+\begin{deriv}
+\dl{\Delta_0\,uS_0+b_0(1+r)=V_1[uS_0]}{upper arrow out of $S_0$}
+\dl{\Delta_0\,dS_0+b_0(1+r)=V_1[dS_0]}{lower arrow out of $S_0$}
+\dl{\Delta_0=\frac{V_1[uS_0]-V_1[dS_0]}{uS_0-dS_0}}{subtract; $b_0(1+r)$ cancels}
+\dl{b_0=\frac{V_1[uS_0]-\Delta_0\,uS_0}{1+r}}{first line solved for $b_0$}
+\dl{V_0=\Delta_0S_0+b_0}{cost at time 0: no $1+r$}
+\dl{\phantom{V_0}=\frac{p^*V_1[uS_0]+(1-p^*)V_1[dS_0]}{1+r}}{Steps 2--4 with $X_u=V_1[uS_0]$, $X_d=V_1[dS_0]$}
+\end{deriv}
+
+\item\label{s:sf2} Self-financing at time 1. Say the stock went up, so we are at $uS_0$. We sell the old portfolio $(\Delta_0,b_0)$ and buy the new one $(\Delta_1[uS_0],b_1[uS_0])$:
+\begin{deriv}
+\dl{\text{we get: }\Delta_0\,uS_0+b_0(1+r)=V_1[uS_0]}{selling the old one: worth one period after buying; first line of Step~\ref{s:root}}
+\dl{\text{we pay: }\Delta_1[uS_0]\,uS_0+b_1[uS_0]=V_1[uS_0]}{buying the new one: cost at the moment of buying; Step~\ref{s:valu}}
+\dl{\text{get}-\text{pay}=0}{no money is put in or taken out}
+\end{deriv}
+If the stock went down, the same with $dS_0$: we get $V_1[dS_0]$ (second line of Step~\ref{s:root}) and pay $V_1[dS_0]$ (Step~\ref{s:noded}). That is what \emph{self-financing} means: when we switch portfolios, the old one at the new prices pays exactly for the new one.
+
+\item\label{s:story} The whole strategy, in time order:
 \begin{deriv}
 \dl{\text{time }0:\ \text{pay }V_0=\Delta_0S_0+b_0}{the only money that ever goes in}
-\dl{\text{time }1:\ \text{worth }V_u\text{ or }V_d}{Step~36}
-\dl{\phantom{\text{time }1:\ }\text{switch to }(\Delta_u,b_u)\text{ or }(\Delta_d,b_d)\text{ for free}}{Step~37}
-\dl{\text{time }2:\ \text{worth }V_{uu},\ V_{ud}\text{ or }V_{dd}}{the two lines of Step~33 or of Step~35}
+\dl{\text{time }1:\ \text{switch to }(\Delta_1[S_1],b_1[S_1])}{costs nothing extra (Step~\ref{s:sf2})}
+\dl{\text{time }2:\ \text{sell; get }g(S_2)}{the arrows of Steps \ref{s:nodeu} and \ref{s:noded}}
 \end{deriv}
 So $V_0$ at the start turns into exactly the claim's payoff at the end, with nothing added on the way. Any other price for the claim is an arbitrage (Step~4's argument), so $V_0$ is the price.
 
-\item Any number of periods. At time $t$ with stock price $S_t=s$, write $(\Delta_t[s],b_t[s])$ for the portfolio chosen there and $V_t[s]$ for the claim's value, with $V_T[s]=g(s)$. Steps 33--34 at this node:
+\item\label{s:gen} Any node of a big tree. The tree now has $T$ periods. Look at one node: time $t$, stock price $S_t=s$. It has two arrows out, to $us$ and $ds$ at time $t+1$; the rest of the tree, before and after, works the same way.
+\begin{center}
+\begin{tikzpicture}[x=6.2cm,y=1.9cm,
+  nd/.style={draw=defc!70,rounded corners,fill=defc!4,align=center,font=\footnotesize,inner sep=3pt},
+  ed/.style={->,thick,defc!60},
+  lb/.style={font=\scriptsize,text=thmc!80!black,sloped,align=center}]
+  \node (pu) at (-0.42,0.75) {$\cdots$};
+  \node (pd) at (-0.42,-0.75) {$\cdots$};
+  \node[nd] (n) at (0,0) {time $t$, $S_t=s$\\ value $V_t[s]$\\ buy $\Delta_t[s],\ b_t[s]$};
+  \node[nd] (u) at (1,1) {time $t+1$, $S_{t+1}=us$\\ value $V_{t+1}[us]$\\ buy $\Delta_{t+1}[us],\ b_{t+1}[us]$};
+  \node[nd] (d) at (1,-1) {time $t+1$, $S_{t+1}=ds$\\ value $V_{t+1}[ds]$\\ buy $\Delta_{t+1}[ds],\ b_{t+1}[ds]$};
+  \draw[ed,dashed] (pu) -- (n); \draw[ed,dashed] (pd) -- (n);
+  \draw[ed] (n) -- node[lb,above] {$\Delta_t[s]\,us$\\ $+\,b_t[s](1+r)$} (u);
+  \draw[ed] (n) -- node[lb,below] {$\Delta_t[s]\,ds$\\ $+\,b_t[s](1+r)$} (d);
+  \node at (1.42,1.35) {$\cdots$}; \node at (1.42,0.65) {$\cdots$};
+  \node at (1.42,-0.65) {$\cdots$}; \node at (1.42,-1.35) {$\cdots$};
+  \draw[ed,dashed] (u) -- (1.36,1.3); \draw[ed,dashed] (u) -- (1.36,0.7);
+  \draw[ed,dashed] (d) -- (1.36,-0.7); \draw[ed,dashed] (d) -- (1.36,-1.3);
+  \node[font=\scriptsize,align=center] at (1.42,0) {on to\\ time $T$,\\ where\\ $V_T[s]=g(s)$};
+\end{tikzpicture}
+\end{center}
+The same steps as at $uS_0$ (Steps \ref{s:nodeu}--\ref{s:valu}), with $s$ in place of $uS_0$:
 \begin{deriv}
-\dl{\Delta_t[s]\cdot us+b_t[s](1+r)=V_{t+1}[us]}{up: shares worth $us$; bond grown once}
-\dl{\Delta_t[s]\cdot ds+b_t[s](1+r)=V_{t+1}[ds]}{down: shares worth $ds$}
-\dl{\Delta_t[s]=\frac{V_{t+1}[us]-V_{t+1}[ds]}{us-ds}}{subtract}
-\dl{b_t[s]=\frac{V_{t+1}[us]-\Delta_t[s]\cdot us}{1+r}}{first line solved for $b_t[s]$}
-\dl{V_t[s]=\Delta_t[s]\cdot s+b_t[s]}{cost at the node (Step~31)}
-\dl{\phantom{V_t[s]}=\frac{p^*V_{t+1}[us]+(1-p^*)V_{t+1}[ds]}{1+r}}{Steps 1--4 at price $s$; this is Step~6}
+\dl{\Delta_t[s]\,us+b_t[s](1+r)=V_{t+1}[us]}{upper arrow: label $=$ the box it points to}
+\dl{\Delta_t[s]\,ds+b_t[s](1+r)=V_{t+1}[ds]}{lower arrow}
+\dl{\Delta_t[s]=\frac{V_{t+1}[us]-V_{t+1}[ds]}{us-ds}}{subtract; $b_t[s](1+r)$ cancels}
+\dl{b_t[s]=\frac{V_{t+1}[us]-\Delta_t[s]\,us}{1+r}}{first line solved for $b_t[s]$}
+\dl{V_t[s]=\Delta_t[s]\,s+b_t[s]}{cost at time $t$: no $1+r$}
+\dl{\phantom{V_t[s]}=\frac{p^*V_{t+1}[us]+(1-p^*)V_{t+1}[ds]}{1+r}}{Steps 2--4 at price $s$; this is Step~6}
+\end{deriv}
+Start at time $T$ with $V_T[s]=g(s)$ and use these lines at every node of time $T-1$, then $T-2$, and so on back to time $0$.
+
+\item\label{s:twob} Two ways of writing $b_t[s]$; they are the same number:
+\begin{deriv}
+\dl{b_t[s]=V_t[s]-\Delta_t[s]\,s}{from the cost line of Step~\ref{s:gen}: what is left after paying for the shares; all time-$t$ money, no $1+r$}
+\dl{b_t[s]=\frac{V_{t+1}[us]-\Delta_t[s]\,us}{1+r}}{from the upper arrow of Step~\ref{s:gen}: a time-$(t+1)$ amount brought back one period, so divide by $1+r$ once}
 \end{deriv}
 
-\item The two ways of writing $b$ are the same number:
+\item\label{s:sfgen} Self-financing at every node. The stock goes from $s$ at time $t$ to $us$ at time $t+1$ (for $ds$, put $d$ in place of $u$):
 \begin{deriv}
-\dl{b_t[s]=V_t[s]-\Delta_t[s]\cdot s}{last line but one of Step~39: what is left of the cost after the shares; no $1+r$, all time-$t$ money}
-\dl{b_t[s]=\frac{V_{t+1}[us]-\Delta_t[s]\cdot us}{1+r}}{Step~39: time-$(t+1)$ money brought back one period, so divide by $1+r$ once}
-\end{deriv}
-\cardrow{card:tree}{5} uses the first form. Use whichever you have the numbers for, and check the $1+r$ against the trap of Step~31.
-
-\item Self-financing at every node. ``Old'' is the portfolio bought at $(t,s)$; ``new'' is the one bought at the next node. Let the stock go from $s$ at time $t$ to $us$ at time $t+1$ (the case $ds$ is the same with $d$ for $u$):
-\begin{deriv}
-\dl{\text{old: }\Delta_t[s]\cdot us+b_t[s](1+r)=V_{t+1}[us]}{first line of Step~39}
-\dl{\text{new: }\Delta_{t+1}[us]\cdot us+b_{t+1}[us]=V_{t+1}[us]}{the cost line of Step~39 at the node $(t+1,us)$}
-\dl{\text{old}=\text{new}}{no money in or out (\cardrow{card:tree}{6})}
-\dl{\text{at }T:\ \Delta_{T-1}[s]\cdot S_T+b_{T-1}[s](1+r)}{the last portfolio, one period after it was bought}
-\dl{\qquad=V_T[S_T]=g(S_T)}{first two lines of Step~39 with $t=T-1$: it pays the claim}
+\dl{\text{we get: }\Delta_t[s]\,us+b_t[s](1+r)=V_{t+1}[us]}{selling the old portfolio: upper arrow of Step~\ref{s:gen}}
+\dl{\text{we pay: }\Delta_{t+1}[us]\,us+b_{t+1}[us]=V_{t+1}[us]}{buying the new one: cost line of Step~\ref{s:gen} at the node $us$, time $t+1$}
+\dl{\text{get}-\text{pay}=0}{no money in or out}
+\dl{\text{at time }T:\ \Delta_{T-1}[s]\,S_T+b_{T-1}[s](1+r)}{the last portfolio, one period after buying}
+\dl{\qquad=V_T[S_T]=g(S_T)}{the arrows of Step~\ref{s:gen} with $t=T-1$: it pays the claim}
 \end{deriv}
 \end{steps}
 
-\answer{At every node $(t,s)$ hold $\Delta_t[s]=\frac{V_{t+1}[us]-V_{t+1}[ds]}{us-ds}$ shares and $b_t[s]=V_t[s]-\Delta_t[s]\,s=\frac{V_{t+1}[us]-\Delta_t[s]\,us}{1+r}$ in the bond. It costs $V_t[s]$ when bought (no $1+r$) and is worth $V_{t+1}$ one period later (bond times $1+r$), which is exactly the cost of the next portfolio. So the strategy is self-financing, starts from $V_0$, and ends with the payoff $g(S_T)$.}
+\answer{At time $t$, at the node $S_t=s$, buy $\Delta_t[s]=\frac{V_{t+1}[us]-V_{t+1}[ds]}{us-ds}$ shares and put $b_t[s]=V_t[s]-\Delta_t[s]\,s=\frac{V_{t+1}[us]-\Delta_t[s]\,us}{1+r}$ in the bond. Hold both until time $t+1$. It costs $V_t[s]$ when bought (no $1+r$) and is worth $V_{t+1}$ one period later (the bond money times $1+r$), which is exactly what the next portfolio costs. So the strategy is self-financing, starts from $V_0$, and ends with the payoff $g(S_T)$.}
+
+%=====================================================================
+\section*{Part G: the Black--Scholes market, arbitrage-free and complete}
+
+Now time runs continuously, $t\in[0,T]$, and $W$ is a Brownian motion under the real-world probability $P$. The one result taken as known is Girsanov's theorem, used in the step that finds $P^*$. $\Delta_t$ and $b_t$ keep the meaning of Step~\ref{s:conv}: shares held, and money in the bond.
+
+\begin{steps}[resume]
+\item\label{s:mkt} The two assets and the rules:
+\begin{deriv}
+\dl{B_t=e^{rt},\qquad dB_t=rB_t\,dt}{the bond: money grows at the constant rate $r$; this replaces the factor $1+r$ of a period}
+\dl{dS_t=\mu S_t\,dt+\sigma S_t\,dW_t,\qquad\sigma>0}{the stock: mean return $\mu$, volatility $\sigma$}
+\dl{\text{no costs, no dividends, shorting allowed}}{any real number of shares, traded at any time}
+\dl{\text{a claim pays }g(S_T)\text{ at }T}{a call: $g(s)=(s-K)^+$; a put: $g(s)=(K-s)^+$}
+\end{deriv}
+
+\item\label{s:solve} Solve for $S_t$. Use \cref{card:ito} on $\ln S_t$, with $\frac{d}{ds}\ln s=\frac1s$ and $\frac{d^2}{ds^2}\ln s=-\frac1{s^2}$:
+\begin{deriv}
+\dl{d\ln S_t=\frac{dS_t}{S_t}-\frac12\frac{(dS_t)^2}{S_t^2}}{Itô's formula: first derivative times $dS$, plus half the second derivative times $(dS)^2$}
+\dl{(dS_t)^2=\sigma^2S_t^2\,dt}{$(dW_t)^2=dt$; $dt\,dW_t=0$ and $(dt)^2=0$}
+\dl{d\ln S_t=\mu\,dt+\sigma\,dW_t-\tfrac12\sigma^2\,dt}{put both in}
+\dl{S_t=S_0\,e^{(\mu-\frac12\sigma^2)t+\sigma W_t}}{add up from $0$ to $t$ ($W_0=0$), then take $e^{(\cdot)}$}
+\end{deriv}
+
+\item\label{s:sfc} Self-financing in continuous time. First in one period, with Step~\ref{s:conv}; then let the period shrink:
+\begin{deriv}
+\dl{V_t=\Delta_tS_t+b_t}{value at time $t$: the cost of what we hold}
+\dl{V_{t+1}=\Delta_tS_{t+1}+b_t(1+r)}{self-financing: the next portfolio costs what the old one is worth}
+\dl{V_{t+1}-V_t=\Delta_t(S_{t+1}-S_t)+r\,b_t}{subtract the two lines}
+\dl{dV_t=\Delta_t\,dS_t+r\,b_t\,dt}{the same over a period $dt$: the bond money earns $r\,b_t\,dt$}
+\dl{\phantom{dV_t}=\Delta_t\,dS_t+r\,(V_t-\Delta_tS_t)\,dt}{$b_t=V_t-\Delta_tS_t$ from the first line}
+\end{deriv}
+The value changes only because prices move. No money is added or taken out.
+
+\item\label{s:disc} Discount by the bond: write $\tilde S_t=e^{-rt}S_t$ and $\tilde V_t=e^{-rt}V_t$. Product rule (\cref{card:ito}), with $d(e^{-rt})=-re^{-rt}dt$, which has no $dW$ part, so no $(dt)(dW)$ term:
+\begin{deriv}
+\dl{d\tilde S_t=e^{-rt}\big(dS_t-rS_t\,dt\big)}{product rule on $e^{-rt}\cdot S_t$}
+\dl{d\tilde V_t=e^{-rt}\big(dV_t-rV_t\,dt\big)}{product rule on $e^{-rt}\cdot V_t$}
+\dl{\phantom{d\tilde V_t}=e^{-rt}\big(\Delta_t\,dS_t+rV_t\,dt-r\Delta_tS_t\,dt-rV_t\,dt\big)}{Step~\ref{s:sfc}, last line}
+\dl{\phantom{d\tilde V_t}=\Delta_t\,e^{-rt}\big(dS_t-rS_t\,dt\big)=\Delta_t\,d\tilde S_t}{the $rV_t\,dt$ terms cancel; then the first line}
+\end{deriv}
+In discounted money, a self-financing portfolio changes only through the shares it holds.
+
+\item\label{s:defs} The words we need:
+\begin{deriv}
+\dl{\text{arbitrage: self-financing},\ V_0=0}{costs nothing to start}
+\dl{\qquad V_T\ge0\text{ always},\ \ P(V_T>0)>0}{never loses, and sometimes wins}
+\dl{\text{risk-neutral measure }P^*}{a probability with the same impossible events as $P$ ($P^*(A)=0\iff P(A)=0$)}
+\dl{\qquad\text{under which }\tilde S_t\text{ is a martingale}}{$\E_{P^*}(\tilde S_t\given\F_u)=\tilde S_u$ for $u\le t$}
+\dl{\text{allowed strategies: }\E_{P^*}\!\int_0^T\Delta_t^2\tilde S_t^2\,dt<\infty}{rules out doubling-type bets; it makes the Itô integral in the discounted value a martingale (used below)}
+\end{deriv}
+
+\item\label{s:girs} Find $P^*$. First see that $\tilde S$ is not a martingale under $P$ (unless $\mu=r$):
+\begin{deriv}
+\dl{d\tilde S_t=e^{-rt}\big(\mu S_t\,dt+\sigma S_t\,dW_t-rS_t\,dt\big)}{Step~\ref{s:disc}, first line, with $dS_t$ from Step~\ref{s:mkt}}
+\dl{\phantom{d\tilde S_t}=\tilde S_t\big((\mu-r)\,dt+\sigma\,dW_t\big)}{$e^{-rt}S_t=\tilde S_t$}
+\dl{\lambda=\frac{\mu-r}{\sigma},\qquad W^*_t=W_t+\lambda t}{a name for the extra drift, and $W$ shifted by it}
+\dl{\text{Girsanov: there is a }P^*\text{ under which}}{\textbf{cited, not proved}; this $P^*$ has the same impossible events as $P$}
+\dl{\qquad W^*\text{ is a Brownian motion}}{}
+\dl{d\tilde S_t=\tilde S_t\big(\sigma\lambda\,dt+\sigma\,dW_t\big)=\sigma\tilde S_t\,dW^*_t}{$\mu-r=\sigma\lambda$, and $dW_t+\lambda\,dt=dW^*_t$}
+\end{deriv}
+
+\item\label{s:smart} Check that $\tilde S$ is a martingale under $P^*$, and see the stock's drift there:
+\begin{deriv}
+\dl{dS_t=\mu S_t\,dt+\sigma S_t(dW^*_t-\lambda\,dt)}{$dW_t=dW^*_t-\lambda\,dt$}
+\dl{\phantom{dS_t}=rS_t\,dt+\sigma S_t\,dW^*_t}{$\mu-\sigma\lambda=\mu-(\mu-r)=r$}
+\dl{S_t=S_0\,e^{(r-\frac12\sigma^2)t+\sigma W^*_t}}{Step~\ref{s:solve} with $\mu$ replaced by $r$ and $W$ by $W^*$}
+\dl{\tilde S_t=S_0\,e^{-\frac12\sigma^2t+\sigma W^*_t}}{multiply by $e^{-rt}$}
+\dl{\tilde S_t=\tilde S_u\,e^{-\frac12\sigma^2(t-u)+\sigma(W^*_t-W^*_u)}}{divide $\tilde S_t$ by $\tilde S_u$, for $u\le t$}
+\dl{\E_{P^*}(\tilde S_t\given\F_u)=\tilde S_u\,e^{-\frac12\sigma^2(t-u)}\,\E_{P^*}e^{\sigma(W^*_t-W^*_u)}}{$\tilde S_u$ is known at $u$; the increment is independent of $\F_u$ (\cref{card:freeze})}
+\dl{\phantom{\E_{P^*}(\tilde S_t\given\F_u)}=\tilde S_u\,e^{-\frac12\sigma^2(t-u)}\,e^{\frac12\sigma^2(t-u)}=\tilde S_u}{$W^*_t-W^*_u\sim N(0,t-u)$, so $\E_{P^*}e^{\sigma(W^*_t-W^*_u)}=e^{\frac12\sigma^2(t-u)}$ (\cref{card:normal-mgf})}
+\end{deriv}
+So under $P^*$ the stock grows at the bond rate $r$, and its exponent has drift $a=r-\frac12\sigma^2$.
+
+\item\label{s:vmart} The discounted value of an allowed self-financing strategy is a $P^*$-martingale:
+\begin{deriv}
+\dl{d\tilde V_t=\Delta_t\,d\tilde S_t=\sigma\Delta_t\tilde S_t\,dW^*_t}{Steps~\ref{s:disc} and~\ref{s:girs}}
+\dl{\tilde V_t=V_0+\int_0^t\sigma\Delta_u\tilde S_u\,dW^*_u}{add up from $0$ to $t$; $\tilde V_0=V_0$}
+\dl{\E_{P^*}(\tilde V_t\given\F_u)=\tilde V_u}{an Itô integral with $\E_{P^*}\int_0^T(\cdot)^2\,dt<\infty$ is a martingale (\cref{card:itoint}); Step~\ref{s:defs}}
+\end{deriv}
+
+\item\label{s:noarb} No arbitrage. Suppose an allowed strategy has $V_0=0$ and $V_T\ge0$:
+\begin{deriv}
+\dl{\E_{P^*}\tilde V_T=\tilde V_0=0}{Step~\ref{s:vmart} with $u=0$, $t=T$}
+\dl{\tilde V_T=e^{-rT}V_T\ge0}{$V_T\ge0$ and $e^{-rT}>0$}
+\dl{\tilde V_T=0\ \text{ with }P^*\text{-probability }1}{a quantity that is never negative and has mean $0$ is $0$}
+\dl{P^*(V_T>0)=0\ \Rightarrow\ P(V_T>0)=0}{$P^*$ and $P$ have the same impossible events (Step~\ref{s:defs})}
+\end{deriv}
+So no strategy is an arbitrage: \textbf{the Black--Scholes market is arbitrage-free.}
+
+\item\label{s:price} The price of a claim that can be copied. If an allowed self-financing strategy has $V_T=g(S_T)$, its value at time $t$ is the only fair price of the claim (otherwise buy the cheaper of the two, sell the dearer, and Step~\ref{s:noarb} is broken):
+\begin{deriv}
+\dl{\tilde V_t=\E_{P^*}(\tilde V_T\given\F_t)}{Step~\ref{s:vmart}}
+\dl{e^{-rt}V_t=\E_{P^*}\big(e^{-rT}g(S_T)\given\F_t\big)}{$\tilde V_t=e^{-rt}V_t$, $\tilde V_T=e^{-rT}V_T$ and $V_T=g(S_T)$}
+\dl{V_t=e^{-r(T-t)}\,\E_{P^*}\big(g(S_T)\given\F_t\big)}{multiply by $e^{rt}$}
+\end{deriv}
+This is \cref{card:bsprice}, box. Parts D and E computed it for the call and the put.
+
+\item\label{s:f} Completeness: every claim $g(S_T)$ can be copied. This step and the next two build the copy. Start with the candidate price as a function of time and stock price, with $\tau=T-t$ and $Z\sim N(0,1)$:
+\begin{deriv}
+\dl{S_T=S_t\,e^{(r-\frac12\sigma^2)\tau+\sigma(W^*_T-W^*_t)}}{Step~\ref{s:smart}, second line, at $T$ divided by at $t$}
+\dl{f(t,s)=e^{-r\tau}\,\E_{P^*}\,g\big(s\,e^{(r-\frac12\sigma^2)\tau+\sigma\sqrt\tau\,Z}\big)}{a name; $W^*_T-W^*_t$ has the law of $\sqrt\tau Z$}
+\dl{f(t,S_t)=e^{-r\tau}\,\E_{P^*}\big(g(S_T)\given\F_t\big)}{$S_t$ is known at $t$ and the increment is independent of $\F_t$ (\cref{card:freeze})}
+\dl{e^{-rt}f(t,S_t)=\E_{P^*}\big(e^{-rT}g(S_T)\given\F_t\big)}{multiply by $e^{-rt}$}
+\dl{e^{-rt}f(t,S_t)\text{ is a }P^*\text{-martingale}}{conditional expectations of one fixed quantity, $e^{-rT}g(S_T)$ (tower rule)}
+\end{deriv}
+We assume $f$ is smooth for $t<T$, which holds for the call and the put (their formulas in Parts D and E).
+
+\item\label{s:pde} Itô on $e^{-rt}f(t,S_t)$ under $P^*$. Write $f_t,f_s,f_{ss}$ for the partial derivatives at $(t,S_t)$:
+\begin{deriv}
+\dl{df=f_t\,dt+f_s\,dS_t+\tfrac12f_{ss}\,(dS_t)^2}{\cref{card:ito}}
+\dl{\phantom{df}=\big(f_t+rS_tf_s+\tfrac12\sigma^2S_t^2f_{ss}\big)dt+\sigma S_tf_s\,dW^*_t}{$dS_t=rS_t\,dt+\sigma S_t\,dW^*_t$ (Step~\ref{s:smart}), $(dS_t)^2=\sigma^2S_t^2\,dt$}
+\dl{d\big(e^{-rt}f\big)=e^{-rt}\big(df-rf\,dt\big)}{product rule, as in Step~\ref{s:disc}}
+\dl{\phantom{d\big(e^{-rt}f\big)}=e^{-rt}A_t\,dt+e^{-rt}\sigma S_tf_s\,dW^*_t}{$A_t=f_t+rS_tf_s+\frac12\sigma^2S_t^2f_{ss}-rf$}
+\dl{\E_{P^*}\Big(\int_t^{t+\epsilon}e^{-ru}A_u\,du\Bigm|\F_t\Big)=0}{the left side is a martingale (Step~\ref{s:f}) and so is the $dW^*$ part (an Itô integral, \cref{card:itoint}); so the $dt$ part is one too, and its expected change is $0$}
+\dl{e^{-rt}A_t=0}{divide by $\epsilon$ and let $\epsilon\to0$: $\frac1\epsilon\int_t^{t+\epsilon}\to$ the value at $t$, which is known at $t$}
+\dl{f_t+rsf_s+\tfrac12\sigma^2s^2f_{ss}-rf=0}{at every $(t,s)$: the Black--Scholes equation}
+\end{deriv}
+
+\item\label{s:copy} The copy. Choose
+\begin{deriv}
+\dl{\Delta_t=f_s(t,S_t),\qquad b_t=V_t-\Delta_tS_t}{shares $=$ the slope of the price in $s$; the rest in the bond (Step~\ref{s:sfc})}
+\dl{V_0=f(0,S_0)}{start with the candidate price}
+\dl{d\tilde V_t=\Delta_t\,d\tilde S_t=e^{-rt}\sigma S_tf_s\,dW^*_t}{Step~\ref{s:vmart}, first line, with $\Delta_t=f_s$}
+\dl{d\big(e^{-rt}f(t,S_t)\big)=e^{-rt}\sigma S_tf_s\,dW^*_t}{Step~\ref{s:pde}, with $A_t=0$}
+\dl{\tilde V_t=e^{-rt}f(t,S_t)\ \text{ for all }t}{same start $f(0,S_0)$ and the same change at every instant}
+\dl{V_T=f(T,S_T)=g(S_T)}{multiply by $e^{rT}$; at $\tau=0$ the formula of Step~\ref{s:f} gives $g(s)$}
+\end{deriv}
+So every claim $g(S_T)$ is copied by a self-financing strategy: \textbf{the Black--Scholes market is complete.} The hedge holds $\Delta_t=\partial_sf$ shares, the \emph{delta} of Part H.
+
+\item\label{s:unique} Why the risk-neutral measure is unique, the short argument. Take any risk-neutral measure $P'$. Under it the stock has the form $S_t=S_0e^{at+\sigma W'_t}$ with $W'$ a Brownian motion under $P'$ (Girsanov again):
+\begin{deriv}
+\dl{\tilde S_t=S_0\,e^{(a-r)t+\sigma W'_t}}{multiply by $e^{-rt}$}
+\dl{\E_{P'}\tilde S_t=S_0\,e^{(a-r+\frac12\sigma^2)t}}{\cref{card:normal-mgf}: $W'_t\sim N(0,t)$, so $\E_{P'}e^{\sigma W'_t}=e^{\frac12\sigma^2t}$}
+\dl{\text{martingale}\Rightarrow\E_{P'}\tilde S_t=S_0\Rightarrow a=r-\tfrac12\sigma^2}{a martingale has a constant mean; $e^{ct}=1$ for all $t$ forces $c=0$}
+\end{deriv}
+Only one drift works, so there is only one risk-neutral measure. This matches Step~\ref{s:copy}: a complete market has exactly one.
+\end{steps}
+
+\answer{The bond is $e^{rt}$ and the stock is $dS_t=\mu S_t\,dt+\sigma S_t\,dW_t$. Under $P^*$ (Girsanov) the stock is $S_0e^{(r-\frac12\sigma^2)t+\sigma W^*_t}$ and $e^{-rt}S_t$ is a martingale. Then the discounted value of every self-financing strategy is a martingale, so a strategy that starts at $0$ and never loses never wins: \emph{arbitrage-free}. The strategy $\Delta_t=\partial_sf(t,S_t)$ copies every $g(S_T)$: \emph{complete}. Only the drift $a=r-\frac12\sigma^2$ works, so $P^*$ is unique (\cardrow{card:bsprice}{7}).}
+
+%=====================================================================
+\section*{Part H: the Greeks of the call and the put}
+
+The Greeks say how the price moves when one input moves and the others stay fixed. Here $\tau=T-t$ is the time left, and from Parts D and E:
+\begin{deriv}
+\dl{h=\frac{\ln(S/K)+(r+\frac12\sigma^2)\tau}{\sigma\sqrt\tau},\qquad k=h-\sigma\sqrt\tau}{$k$ is a short name for $h-\sigma\sqrt\tau$}
+\dl{C=S\,\Phi(h)-Ke^{-r\tau}\,\Phi(k)}{the call, Step~24 at time $t$ with price $S$}
+\dl{P=Ke^{-r\tau}\,\Phi(-k)-S\,\Phi(-h)}{the put, Step~29}
+\dl{\Delta=\frac{\partial C}{\partial S},\ \ \Gamma=\frac{\partial^2C}{\partial S^2},\ \ \text{vega}=\frac{\partial C}{\partial\sigma},\ \ \rho=\frac{\partial C}{\partial r},\ \ \theta=\frac{\partial C}{\partial t}}{the five Greeks (the same for $P$)}
+\end{deriv}
+
+\begin{steps}[resume]
+\item\label{s:nfacts} Three facts about the normal curve, $\varphi(x)=\frac1{\sqrt{2\pi}}e^{-x^2/2}$ and $\Phi(x)=\int_{-\infty}^x\varphi(y)\,dy$:
+\begin{deriv}
+\dl{\frac{d}{dx}\Phi(x)=\varphi(x)}{the derivative of an integral in its upper limit is the integrand}
+\dl{\frac{\partial}{\partial a}\Phi(h)=\varphi(h)\,\frac{\partial h}{\partial a}}{chain rule, for any input $a$}
+\dl{\varphi(-x)=\varphi(x),\qquad\frac{\partial}{\partial a}\Phi(-h)=-\varphi(h)\,\frac{\partial h}{\partial a}}{$(-x)^2=x^2$; chain rule with the inside $-h$}
+\end{deriv}
+
+\item\label{s:hder} How $h$ moves. Write $h=\frac{\ln S-\ln K+r\tau}{\sigma\sqrt\tau}+\frac12\sigma\sqrt\tau$:
+\begin{deriv}
+\dl{\frac{\partial h}{\partial S}=\frac1{S\,\sigma\sqrt\tau}}{only $\ln S$ has $S$ in it; $\frac{d}{dS}\ln S=\frac1S$}
+\dl{\frac{\partial h}{\partial r}=\frac{\tau}{\sigma\sqrt\tau}=\frac{\sqrt\tau}\sigma}{only $r\tau$ has $r$ in it}
+\dl{\frac{\partial h}{\partial\sigma}=-\frac{\ln(S/K)+r\tau}{\sigma^2\sqrt\tau}+\frac12\sqrt\tau}{$\frac{d}{d\sigma}\frac1\sigma=-\frac1{\sigma^2}$ on the first part; the second part is $\frac12\sqrt\tau\cdot\sigma$}
+\dl{\phantom{\frac{\partial h}{\partial\sigma}}=-\frac{h-\frac12\sigma\sqrt\tau}{\sigma}+\frac12\sqrt\tau=-\frac{h-\sigma\sqrt\tau}{\sigma}=-\frac k\sigma}{the first part is $\frac1\sigma\big(h-\frac12\sigma\sqrt\tau\big)$, from the way we wrote $h$}
+\dl{\frac{\partial h}{\partial\tau}}{left as it is: it always cancels below}
+\end{deriv}
+
+\item\label{s:kder} How $k=h-\sigma\sqrt\tau$ moves:
+\begin{deriv}
+\dl{\frac{\partial k}{\partial S}=\frac{\partial h}{\partial S},\qquad\frac{\partial k}{\partial r}=\frac{\partial h}{\partial r}}{$\sigma\sqrt\tau$ has no $S$ and no $r$ in it}
+\dl{\frac{\partial k}{\partial\sigma}=\frac{\partial h}{\partial\sigma}-\sqrt\tau}{$\frac{\partial}{\partial\sigma}\sigma\sqrt\tau=\sqrt\tau$}
+\dl{\frac{\partial k}{\partial\tau}=\frac{\partial h}{\partial\tau}-\frac{\sigma}{2\sqrt\tau}}{$\frac{\partial}{\partial\tau}\sigma\sqrt\tau=\frac{\sigma}{2\sqrt\tau}$}
+\end{deriv}
+
+\item\label{s:ident} The identity that makes everything cancel, $S\varphi(h)=Ke^{-r\tau}\varphi(k)$:
+\begin{deriv}
+\dl{\frac{\varphi(k)}{\varphi(h)}=e^{(h^2-k^2)/2}}{$\varphi(x)=\frac1{\sqrt{2\pi}}e^{-x^2/2}$; the $\frac1{\sqrt{2\pi}}$ cancels}
+\dl{h^2-k^2=(h-k)(h+k)}{difference of two squares}
+\dl{\phantom{h^2-k^2}=\sigma\sqrt\tau\,(2h-\sigma\sqrt\tau)}{$h-k=\sigma\sqrt\tau$ and $h+k=2h-\sigma\sqrt\tau$}
+\dl{\phantom{h^2-k^2}=2\big(\ln(S/K)+(r+\tfrac12\sigma^2)\tau\big)-\sigma^2\tau}{$\sigma\sqrt\tau\cdot2h=2\big(\ln(S/K)+(r+\frac12\sigma^2)\tau\big)$ by the definition of $h$}
+\dl{\phantom{h^2-k^2}=2\ln(S/K)+2r\tau}{the $\sigma^2\tau$ terms cancel}
+\dl{\frac{\varphi(k)}{\varphi(h)}=e^{\ln(S/K)+r\tau}=\frac SK\,e^{r\tau}}{halve it and put it in the first line}
+\dl{Ke^{-r\tau}\varphi(k)=S\varphi(h)}{multiply both sides by $Ke^{-r\tau}\varphi(h)$}
+\end{deriv}
+So in every Greek below, any term $\big[S\varphi(h)-Ke^{-r\tau}\varphi(k)\big]\times(\text{anything})$ is $0$.
+
+\item\label{s:cdelta} Delta of the call:
+\begin{deriv}
+\dl{\frac{\partial C}{\partial S}=\Phi(h)+S\varphi(h)\frac{\partial h}{\partial S}-Ke^{-r\tau}\varphi(k)\frac{\partial k}{\partial S}}{product rule on $S\Phi(h)$, and Step~\ref{s:nfacts} on both $\Phi$s}
+\dl{\phantom{\frac{\partial C}{\partial S}}=\Phi(h)+\big[S\varphi(h)-Ke^{-r\tau}\varphi(k)\big]\frac{\partial h}{\partial S}}{$\frac{\partial k}{\partial S}=\frac{\partial h}{\partial S}$ (Step~\ref{s:kder})}
+\dl{\Delta_C=\Phi(h)}{the bracket is $0$ (Step~\ref{s:ident})}
+\end{deriv}
+
+\item\label{s:cgamma} Gamma of the call:
+\begin{deriv}
+\dl{\Gamma_C=\frac{\partial}{\partial S}\Phi(h)=\varphi(h)\frac{\partial h}{\partial S}}{differentiate $\Delta_C$ once more; Step~\ref{s:nfacts}}
+\dl{\phantom{\Gamma_C}=\frac{\varphi(h)}{S\sigma\sqrt\tau}}{Step~\ref{s:hder}}
+\end{deriv}
+
+\item\label{s:cvega} Vega of the call:
+\begin{deriv}
+\dl{\frac{\partial C}{\partial\sigma}=S\varphi(h)\frac{\partial h}{\partial\sigma}-Ke^{-r\tau}\varphi(k)\frac{\partial k}{\partial\sigma}}{$S$ and $Ke^{-r\tau}$ have no $\sigma$ in them; Step~\ref{s:nfacts}}
+\dl{\phantom{\frac{\partial C}{\partial\sigma}}=S\varphi(h)\frac{\partial h}{\partial\sigma}-Ke^{-r\tau}\varphi(k)\Big(\frac{\partial h}{\partial\sigma}-\sqrt\tau\Big)}{Step~\ref{s:kder}}
+\dl{\phantom{\frac{\partial C}{\partial\sigma}}=\big[S\varphi(h)-Ke^{-r\tau}\varphi(k)\big]\frac{\partial h}{\partial\sigma}+Ke^{-r\tau}\varphi(k)\sqrt\tau}{collect the $\frac{\partial h}{\partial\sigma}$ terms}
+\dl{\text{vega}_C=S\varphi(h)\sqrt\tau}{bracket $=0$, and $Ke^{-r\tau}\varphi(k)=S\varphi(h)$ (Step~\ref{s:ident})}
+\end{deriv}
+
+\item\label{s:crho} Rho of the call. Now $Ke^{-r\tau}$ depends on $r$ too: $\frac{\partial}{\partial r}e^{-r\tau}=-\tau e^{-r\tau}$:
+\begin{deriv}
+\dl{\frac{\partial C}{\partial r}=S\varphi(h)\frac{\partial h}{\partial r}+K\tau e^{-r\tau}\Phi(k)-Ke^{-r\tau}\varphi(k)\frac{\partial k}{\partial r}}{product rule on $Ke^{-r\tau}\Phi(k)$; the minus sign in front turns $-\tau$ into $+\tau$}
+\dl{\phantom{\frac{\partial C}{\partial r}}=\big[S\varphi(h)-Ke^{-r\tau}\varphi(k)\big]\frac{\partial h}{\partial r}+K\tau e^{-r\tau}\Phi(k)}{$\frac{\partial k}{\partial r}=\frac{\partial h}{\partial r}$}
+\dl{\rho_C=K\tau e^{-r\tau}\,\Phi(k)}{bracket $=0$}
+\end{deriv}
+
+\item\label{s:ctheta} Theta of the call. Time $t$ enters only through $\tau=T-t$, so $\frac{\partial}{\partial t}=-\frac{\partial}{\partial\tau}$ (chain rule, $\frac{d\tau}{dt}=-1$). First differentiate in $\tau$, with $\frac{\partial}{\partial\tau}e^{-r\tau}=-re^{-r\tau}$:
+\begin{deriv}
+\dl{\frac{\partial C}{\partial\tau}=S\varphi(h)\frac{\partial h}{\partial\tau}+rKe^{-r\tau}\Phi(k)-Ke^{-r\tau}\varphi(k)\frac{\partial k}{\partial\tau}}{product rule on $Ke^{-r\tau}\Phi(k)$}
+\dl{\phantom{\frac{\partial C}{\partial\tau}}=S\varphi(h)\frac{\partial h}{\partial\tau}+rKe^{-r\tau}\Phi(k)}{Step~\ref{s:kder}}
+\dl{\qquad-Ke^{-r\tau}\varphi(k)\Big(\frac{\partial h}{\partial\tau}-\frac\sigma{2\sqrt\tau}\Big)}{}
+\dl{\phantom{\frac{\partial C}{\partial\tau}}=\big[S\varphi(h)-Ke^{-r\tau}\varphi(k)\big]\frac{\partial h}{\partial\tau}}{collect the $\frac{\partial h}{\partial\tau}$ terms}
+\dl{\qquad+rKe^{-r\tau}\Phi(k)+\frac{S\varphi(h)\sigma}{2\sqrt\tau}}{$Ke^{-r\tau}\varphi(k)=S\varphi(h)$ (Step~\ref{s:ident})}
+\dl{\theta_C=-\frac{\partial C}{\partial\tau}=-\frac{S\varphi(h)\sigma}{2\sqrt\tau}-rKe^{-r\tau}\Phi(k)}{bracket $=0$; then the sign flip}
+\end{deriv}
+
+\item\label{s:pdelta} Delta and gamma of the put, $P=Ke^{-r\tau}\Phi(-k)-S\Phi(-h)$, the same way:
+\begin{deriv}
+\dl{\frac{\partial P}{\partial S}=-Ke^{-r\tau}\varphi(k)\frac{\partial k}{\partial S}-\Phi(-h)+S\varphi(h)\frac{\partial h}{\partial S}}{Step~\ref{s:nfacts}, third line, on both $\Phi$s; product rule on $S\Phi(-h)$}
+\dl{\phantom{\frac{\partial P}{\partial S}}=\big[S\varphi(h)-Ke^{-r\tau}\varphi(k)\big]\frac{\partial h}{\partial S}-\Phi(-h)}{$\frac{\partial k}{\partial S}=\frac{\partial h}{\partial S}$}
+\dl{\Delta_P=-\Phi(-h)}{bracket $=0$; it is negative: the put loses when $S$ rises}
+\dl{\Gamma_P=-\frac{\partial}{\partial S}\Phi(-h)=\varphi(h)\frac{\partial h}{\partial S}=\frac{\varphi(h)}{S\sigma\sqrt\tau}}{Step~\ref{s:nfacts}, third line; Step~\ref{s:hder}}
+\end{deriv}
+
+\item\label{s:pvega} Vega and rho of the put:
+\begin{deriv}
+\dl{\frac{\partial P}{\partial\sigma}=-Ke^{-r\tau}\varphi(k)\Big(\frac{\partial h}{\partial\sigma}-\sqrt\tau\Big)+S\varphi(h)\frac{\partial h}{\partial\sigma}}{Steps~\ref{s:nfacts} and~\ref{s:kder}}
+\dl{\phantom{\frac{\partial P}{\partial\sigma}}=\big[S\varphi(h)-Ke^{-r\tau}\varphi(k)\big]\frac{\partial h}{\partial\sigma}+Ke^{-r\tau}\varphi(k)\sqrt\tau}{collect}
+\dl{\text{vega}_P=S\varphi(h)\sqrt\tau}{as for the call (Step~\ref{s:ident})}
+\dl{\frac{\partial P}{\partial r}=-K\tau e^{-r\tau}\Phi(-k)}{product rule on $Ke^{-r\tau}\Phi(-k)$; $\frac{\partial}{\partial r}e^{-r\tau}=-\tau e^{-r\tau}$}
+\dl{\qquad-Ke^{-r\tau}\varphi(k)\frac{\partial k}{\partial r}+S\varphi(h)\frac{\partial h}{\partial r}}{Step~\ref{s:nfacts} on both $\Phi$s}
+\dl{\rho_P=-K\tau e^{-r\tau}\,\Phi(-k)}{$\frac{\partial k}{\partial r}=\frac{\partial h}{\partial r}$, so the other two terms make the bracket, which is $0$}
+\end{deriv}
+
+\item\label{s:ptheta} Theta of the put, first in $\tau$:
+\begin{deriv}
+\dl{\frac{\partial P}{\partial\tau}=-rKe^{-r\tau}\Phi(-k)}{product rule on $Ke^{-r\tau}\Phi(-k)$; $\frac{\partial}{\partial\tau}e^{-r\tau}=-re^{-r\tau}$}
+\dl{\qquad-Ke^{-r\tau}\varphi(k)\frac{\partial k}{\partial\tau}+S\varphi(h)\frac{\partial h}{\partial\tau}}{Step~\ref{s:nfacts} on both $\Phi$s}
+\dl{\phantom{\frac{\partial P}{\partial\tau}}=-rKe^{-r\tau}\Phi(-k)+S\varphi(h)\frac{\partial h}{\partial\tau}}{Step~\ref{s:kder}}
+\dl{\qquad-Ke^{-r\tau}\varphi(k)\Big(\frac{\partial h}{\partial\tau}-\frac\sigma{2\sqrt\tau}\Big)}{}
+\dl{\phantom{\frac{\partial P}{\partial\tau}}=\big[S\varphi(h)-Ke^{-r\tau}\varphi(k)\big]\frac{\partial h}{\partial\tau}}{collect the $\frac{\partial h}{\partial\tau}$ terms}
+\dl{\qquad-rKe^{-r\tau}\Phi(-k)+\frac{S\varphi(h)\sigma}{2\sqrt\tau}}{$Ke^{-r\tau}\varphi(k)=S\varphi(h)$ (Step~\ref{s:ident})}
+\dl{\theta_P=-\frac{\partial P}{\partial\tau}=-\frac{S\varphi(h)\sigma}{2\sqrt\tau}+rKe^{-r\tau}\Phi(-k)}{bracket $=0$; then the sign flip}
+\end{deriv}
+
+\item\label{s:gcheck} Check with put--call parity, $C-P=S-Ke^{-r\tau}$ (Step~30). Differentiate both sides and compare with the Greeks found:
+\begin{deriv}
+\dl{\Delta_C-\Delta_P=\Phi(h)+\Phi(-h)=1}{$\frac{\partial}{\partial S}(S-Ke^{-r\tau})=1$; \cref{card:normal-prob}}
+\dl{\Gamma_C-\Gamma_P=0,\qquad\text{vega}_C-\text{vega}_P=0}{the right side is linear in $S$ and has no $\sigma$}
+\dl{\rho_C-\rho_P=K\tau e^{-r\tau}\big(\Phi(k)+\Phi(-k)\big)=K\tau e^{-r\tau}}{$\frac{\partial}{\partial r}(-Ke^{-r\tau})=K\tau e^{-r\tau}$}
+\dl{\theta_C-\theta_P=-rKe^{-r\tau}\big(\Phi(k)+\Phi(-k)\big)=-rKe^{-r\tau}}{$\frac{\partial}{\partial t}\big(-Ke^{-r(T-t)}\big)=-rKe^{-r\tau}$}
+\end{deriv}
+All five agree.
+\end{steps}
+
+\answer{With $k=h-\sigma\sqrt\tau$: $\Delta_C=\Phi(h)$, $\Delta_P=-\Phi(-h)$; $\Gamma=\frac{\varphi(h)}{S\sigma\sqrt\tau}$ and $\text{vega}=S\varphi(h)\sqrt\tau$ for both; $\rho_C=K\tau e^{-r\tau}\Phi(k)$, $\rho_P=-K\tau e^{-r\tau}\Phi(-k)$; $\theta_C=-\frac{S\varphi(h)\sigma}{2\sqrt\tau}-rKe^{-r\tau}\Phi(k)$, $\theta_P=-\frac{S\varphi(h)\sigma}{2\sqrt\tau}+rKe^{-r\tau}\Phi(-k)$ (\cardrow{card:bsprice}{6}).}
