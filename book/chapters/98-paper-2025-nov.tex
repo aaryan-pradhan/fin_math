@@ -140,81 +140,144 @@ C-P=S_0-Ke^{-rT}.
 \begin{problem}[Q2(c)]
 Argue that the Black--Scholes market is arbitrage-free.
 \uses{card:bsprice}{7}
-\cardsays Two key facts of no-arbitrage pricing. (1) If there is a measure $P^*$ equivalent to $P$ (an EMM) under which the discounted stock, $(1+r)^{-t}S_t$ in discrete time or $e^{-rt}S_t$ in continuous time, is a martingale, the market is arbitrage-free. (2) If that EMM is unique, the market is complete: every claim can be copied, and so priced.
+\cardsays The words used below.
+\begin{itemize}
+\item A \emph{trading strategy} $(\Delta_t,b_t)$ holds $\Delta_t$ shares and $b_t$ bonds; its value is $V_t=\Delta_tS_t+b_tB_t$. It is \emph{self-financing} if it changes only by the moves of the prices: $V_{t+1}-V_t=\Delta_{t+1}(S_{t+1}-S_t)+b_{t+1}(B_{t+1}-B_t)$ in discrete time, $dV_t=\Delta_t\,dS_t+b_t\,dB_t$ in continuous time.
+\item An \emph{arbitrage} is a self-financing strategy with $V_0=0$, $V_T\ge0$ always, and $P(V_T>0)>0$. The market is \emph{arbitrage-free} if there is none.
+\item An \emph{EMM} (equivalent martingale measure) is a probability $P^*$ that gives positive probability to the same events as $P$, under which the discounted stock $\tilde S_t=S_t/B_t$ is a martingale.
+\item A claim $X$ is \emph{attainable} if some self-financing strategy has $V_T=X$. The market is \emph{complete} if every claim is attainable.
+\end{itemize}
+Two key facts: if an EMM exists, the market is arbitrage-free; if the EMM is unique, the market is complete. Below, each of the four statements is proved directly.
 \working
-So the whole job is to find every EMM and see that there is exactly one.
+
+\paragraph{The Black--Scholes market.} Bond $B_t=e^{rt}$; stock $dS_t=\mu S_t\,dt+\sigma S_t\,dW_t$ with $\mu\in\mathbb R$, $\sigma>0$, $t\in[0,T]$.
 \begin{steps}
-\item The market:
+\item First, find every EMM. Under a measure equivalent to $P$ the stock keeps its $\sigma$; only its drift can change (Girsanov). So write the stock with any adapted drift $a_t$:
 \begin{deriv}
-\dl{B_t=e^{rt},\qquad dS_t=\mu S_t\,dt+\sigma S_t\,dW_t}{the bond, and the stock with $\mu\in\mathbb R$, $\sigma>0$}
 \dl{d\ln S_t=\big(\mu-\tfrac12\sigma^2\big)dt+\sigma\,dW_t}{\cref{card:ito}, row 5, with $f=\ln x$}
-\dl{S_t=S_0e^{(\mu-\frac12\sigma^2)t+\sigma W_t}}{integrate from $0$ to $t$}
-\end{deriv}
-\item Every candidate. Under a measure equivalent to $P$ the stock keeps its $\sigma$; only the drift can change (Girsanov). So try any adapted drift $a_t$:
-\begin{deriv}
-\dl{Z_t=S_0\exp\Big\{\int_0^ta_s\,ds+\sigma W_t\Big\}}{the stock under a candidate measure; $a_t$ may be random}
+\dl{Z_t=S_0\exp\Big\{\int_0^ta_s\,ds+\sigma W_t\Big\}}{the stock under a candidate measure; under $P$, $a_t=\mu-\frac12\sigma^2$}
 \dl{e^{-rt}Z_t=S_0X_tY_t}{split into two factors}
 \dl{X_t=\exp\Big\{\int_0^ta_s\,ds\Big\},\qquad Y_t=e^{-rt+\sigma W_t}}{$X_t$ has no $dW$ part}
 \end{deriv}
-\item The two pieces:
+\item Differentiate each factor:
 \begin{deriv}
 \dl{dX_t=a_tX_t\,dt}{derivative of $e^{\int_0^ta_s\,ds}$ in $t$}
 \dl{dY_t=Y_t\big(-r+\tfrac12\sigma^2\big)dt+\sigma Y_t\,dW_t}{\cardrow{card:ito}{2} with $\mu=-r$}
 \dl{dX_t\,dY_t=0}{$dt\cdot dt=dt\cdot dW=0$}
 \end{deriv}
-\item The product:
+\item The product rule:
 \begin{deriv}
-\dl{d(X_tY_t)=Y_t\,dX_t+X_t\,dY_t+dX_t\,dY_t}{\cardrow{card:ito}{6}, the product rule}
-\dl{\phantom{d(X_tY_t)}=Y_ta_tX_t\,dt}{substitute Step~3}
-\dl{\phantom{d(X_tY_t)={}}+X_tY_t\big(-r+\tfrac12\sigma^2\big)dt+\sigma X_tY_t\,dW_t}{}
-\dl{\phantom{d(X_tY_t)}=X_tY_t\big(a_t-r+\tfrac12\sigma^2\big)dt+\sigma X_tY_t\,dW_t}{collect the $dt$ terms}
+\dl{d(X_tY_t)=Y_t\,dX_t+X_t\,dY_t+dX_t\,dY_t}{\cardrow{card:ito}{6}}
+\dl{\phantom{d(X_tY_t)}=X_tY_t\big(a_t-r+\tfrac12\sigma^2\big)dt+\sigma X_tY_t\,dW_t}{substitute Step~2; collect the $dt$ terms}
 \end{deriv}
-\item The test:
+\item The martingale test:
 \begin{deriv}
-\dl{e^{-rt}Z_t\text{ is a martingale}}{}
-\dl{\iff X_tY_t\big(a_t-r+\tfrac12\sigma^2\big)=0}{\cref{card:ito}, martingale test: the $dt$-coefficient must be $0$}
-\dl{\iff a_t=r-\tfrac12\sigma^2\ \text{ for all }t\in[0,T]}{$X_tY_t>0$: both are exponentials}
+\dl{e^{-rt}Z_t\text{ is a martingale}}{what an EMM needs}
+\dl{\iff X_tY_t\big(a_t-r+\tfrac12\sigma^2\big)=0}{\cref{card:ito}, martingale test: the $dt$-coefficient is $0$}
+\dl{\iff a_t=r-\tfrac12\sigma^2\ \text{ for all }t}{$X_tY_t>0$: both are exponentials}
 \end{deriv}
-\item The conclusion:
+So there is \textbf{exactly one} EMM $P^*$: the one under which the stock is $S_0e^{(r-\frac12\sigma^2)t+\sigma W^*_t}$, with $W^*$ a Brownian motion under $P^*$. From Step~3 with this $a_t$:
 \begin{deriv}
-\dl{\text{an EMM exists}}{take $a_t=r-\frac12\sigma^2$: the stock $S_0e^{(r-\frac12\sigma^2)t+\sigma W^*_t}$}
-\dl{\text{it is the only one}}{Step~5 allows no other $a_t$, even a random one}
-\dl{\text{arbitrage-free and complete}}{the two key facts}
-\dl{P_t(X)=\E_{P^*}\big(e^{-r(T-t)}X\given\F_t\big)}{so any claim can be priced (\cref{card:bsprice})}
+\dl{d\big(e^{-rt}S_t\big)=\sigma e^{-rt}S_t\,dW^*_t}{the $dt$ term is gone}
 \end{deriv}
 \end{steps}
-\answer{Under a candidate measure the stock is $S_0\exp\{\int_0^ta_s\,ds+\sigma W_t\}$, and $e^{-rt}$ times it has $dt$-coefficient $X_tY_t(a_t-r+\frac12\sigma^2)$. It is a martingale only for $a_t=r-\frac12\sigma^2$: an EMM exists and is unique, so the Black--Scholes market is arbitrage-free and complete.}
 
-\paragraph{The same argument for the $T$-period binomial market.}
+\paragraph{Derivation 1: the Black--Scholes market is arbitrage-free.}
 \begin{steps}[resume]
-\item The market:
+\item Any self-financing strategy, discounted. Write $\tilde V_t=e^{-rt}V_t$:
 \begin{deriv}
-\dl{B_t=(1+r)^t,\qquad S_t=uS_{t-1}\ \text{or}\ dS_{t-1}}{$t=1,\dots,T$, with $d<1+r<u$}
-\dl{\Omega=\{\omega=(v_1,\dots,v_T):v_t\in\{u,d\}\}}{a path lists the moves}
+\dl{d\tilde V_t=e^{-rt}\big(dV_t-rV_t\,dt\big)}{product rule; $d(e^{-rt})=-re^{-rt}dt$}
+\dl{\phantom{d\tilde V_t}=e^{-rt}\big(\Delta_t\,dS_t+b_trB_t\,dt}{self-financing, $dB_t=rB_t\,dt$,}
+\dl{\phantom{d\tilde V_t={}}-r\Delta_tS_t\,dt-rb_tB_t\,dt\big)}{and $V_t=\Delta_tS_t+b_tB_t$}
+\dl{\phantom{d\tilde V_t}=\Delta_t\,e^{-rt}\big(dS_t-rS_t\,dt\big)=\Delta_t\,d\big(e^{-rt}S_t\big)}{the $b_t$ terms cancel}
+\dl{\phantom{d\tilde V_t}=\Delta_t\,\sigma e^{-rt}S_t\,dW^*_t}{Step~4}
 \end{deriv}
-\item Every candidate. A measure $Q$ equivalent to $P$ gives every path a positive probability. At each node, let $q$ be the $Q$-probability of the up move:
+\item So $\tilde V_t$ is a $P^*$-martingale:
 \begin{deriv}
-\dl{0<q<1}{both moves must stay possible}
-\dl{q\text{ may depend on the node}}{like $a_t$ above, it may be random}
+\dl{\tilde V_T=\tilde V_0+\int_0^T\Delta_t\sigma e^{-rt}S_t\,dW^*_t}{integrate Step~5}
+\dl{\E_{P^*}\tilde V_T=\tilde V_0=V_0}{an Itô integral has mean $0$ (\cref{card:itoint}); $\Delta_t$ with $\int_0^T\E_{P^*}(\Delta_tS_t)^2dt<\infty$}
 \end{deriv}
-\item The test, at one node at time $t$:
+\item Suppose there were an arbitrage. Then:
+\begin{deriv}
+\dl{\E_{P^*}\big(e^{-rT}V_T\big)=V_0=0}{Step~6, with $V_0=0$}
+\dl{V_T\ge0\ \text{and}\ P^*(V_T>0)>0}{$P^*$ and $P$ agree on which events have probability $0$}
+\dl{\E_{P^*}\big(e^{-rT}V_T\big)>0}{a variable that is $\ge0$ and sometimes $>0$ has positive mean}
+\end{deriv}
+The last two lines contradict each other. \textbf{So there is no arbitrage.} (This is the same proof as for one period: an EMM gives every self-financing strategy mean discounted gain $0$.)
+\end{steps}
+
+\paragraph{Derivation 2: the Black--Scholes market is complete.}
+\begin{steps}[resume]
+\item By the uniqueness found in Step~4 and the second key fact, the market is complete. Concretely, here is the copy of a claim $X=g(S_T)$:
+\begin{deriv}
+\dl{P_t(X)=\E_{P^*}\big(e^{-r(T-t)}g(S_T)\given\F_t\big)}{the candidate price at time $t$}
+\dl{\phantom{P_t(X)}=e^{-r(T-t)}\E_{P^*}\big(g(S_T)\given S_t\big)=:f(t,S_t)}{the stock is Markov: only today's price matters}
+\dl{df(t,S_t)=\big(\partial_tf+\tfrac12\sigma^2S_t^2\partial_{ss}f\big)dt+\partial_sf\,dS_t}{\cref{card:ito}, row 5; $(dS_t)^2=\sigma^2S_t^2\,dt$}
+\dl{dV_t=\Delta_t\,dS_t+b_t\,dB_t}{what a self-financing copy must do}
+\end{deriv}
+\item Match the two lines:
+\begin{deriv}
+\dl{\Delta_t=\partial_sf(t,S_t)}{the $dS_t$ terms}
+\dl{b_t=\frac{f(t,S_t)-\Delta_tS_t}{B_t}}{the value must be $V_t=f(t,S_t)$}
+\dl{V_T=f(T,S_T)=g(S_T)=X}{at $t=T$ nothing is left to average}
+\end{deriv}
+The $dt$ terms then match too, because $f$ solves the Black--Scholes equation (\cref{card:hedge}). So every claim $g(S_T)$ has a self-financing copy: \textbf{the market is complete}, and $P_t(X)$ is its only arbitrage-free price.
+\end{steps}
+
+\paragraph{The $T$-period binomial market.} Bond $B_t=(1+r)^t$; stock $S_t=uS_{t-1}$ or $dS_{t-1}$, $t=1,\dots,T$, with $d<1+r<u$. A path is $\omega=(v_1,\dots,v_T)$ with each $v_t\in\{u,d\}$.
+\begin{steps}[resume]
+\item First, find every EMM. A measure $Q$ equivalent to $P$ gives every path positive probability, so at each node the up-probability $q$ has $0<q<1$; $q$ may depend on the node. At a node at time $t$:
 \begin{deriv}
 \dl{\E_Q\big(S_{t+1}\given\F_t\big)=\big(qu+(1-q)d\big)S_t}{$S_{t+1}$ is $uS_t$ or $dS_t$; $S_t$ is known at $t$ (\cref{card:freeze})}
-\dl{\E_Q\Big(\frac{S_{t+1}}{(1+r)^{t+1}}\Bigm|\F_t\Big)=\frac{S_t}{(1+r)^t}}{martingale condition for the discounted stock}
-\dl{\iff qu+(1-q)d=1+r}{substitute the first line and cancel $\frac{S_t}{(1+r)^t}$}
-\dl{\iff q=\frac{1+r-d}{u-d}=p^*}{solve the linear equation; $u\ne d$}
+\dl{\E_Q\Big(\frac{S_{t+1}}{(1+r)^{t+1}}\Bigm|\F_t\Big)=\frac{S_t}{(1+r)^t}}{what an EMM needs}
+\dl{\iff qu+(1-q)d=1+r}{substitute the first line; cancel $\frac{S_t}{(1+r)^t}$}
+\dl{\iff q=\frac{1+r-d}{u-d}=p^*}{one linear equation; $u\ne d$}
+\dl{0<p^*<1}{$d<1+r<u$}
 \end{deriv}
-\item The conclusion:
-\begin{deriv}
-\dl{0<p^*<1}{$d<1+r<u$, so $P^*(\omega)=(p^*)^j(1-p^*)^{T-j}>0$ for a path with $j$ ups}
-\dl{\text{an EMM exists}}{$q=p^*$ at every node (\cardrow{card:tree}{7})}
-\dl{\text{it is the only one}}{Step~9 allows no other $q$ at any node}
-\dl{\text{arbitrage-free and complete}}{the two key facts}
-\dl{V_0=\E_{P^*}\Big(\frac{g(S_T)}{(1+r)^T}\Big)}{the price of any claim $g(S_T)$ (\cardrow{card:tree}{1})}
-\end{deriv}
-Completeness can also be seen directly: \cardrow{card:tree}{5} builds the copy $(\Delta_t,b_t)$ of any $g(S_T)$, node by node, from the payoff backwards.
+So there is \textbf{exactly one} EMM $P^*$: up-probability $p^*$ at every node, $P^*(\omega)=(p^*)^j(1-p^*)^{T-j}>0$ for a path with $j$ ups.
 \end{steps}
-\answer{At every node the up-probability must solve $qu+(1-q)d=1+r$, so $q=p^*=\frac{1+r-d}{u-d}\in(0,1)$: the EMM exists and is unique, and the $T$-period binomial market is arbitrage-free and complete.}
+
+\paragraph{Derivation 3: the binomial market is arbitrage-free.}
+\begin{steps}[resume]
+\item Any self-financing strategy, discounted. Here $\Delta_{t+1},b_{t+1}$ are chosen at time $t$ (they depend on $S_0,\dots,S_t$) and held over $(t,t+1]$. Write $\tilde V_t=V_t/(1+r)^t$ and $\tilde S_t=S_t/(1+r)^t$:
+\begin{deriv}
+\dl{\tilde V_t=\Delta_{t+1}\tilde S_t+b_{t+1}}{self-financing: the new holding costs $V_t$; divide by $(1+r)^t$}
+\dl{\tilde V_{t+1}=\Delta_{t+1}\tilde S_{t+1}+b_{t+1}}{the same holding one period later}
+\dl{\tilde V_{t+1}-\tilde V_t=\Delta_{t+1}\big(\tilde S_{t+1}-\tilde S_t\big)}{subtract: $b_{t+1}$ cancels}
+\dl{\E_{P^*}\big(\tilde V_{t+1}-\tilde V_t\given\F_t\big)}{take $\E_{P^*}(\cdot\given\F_t)$ of the last line}
+\dl{\quad=\Delta_{t+1}\,\E_{P^*}\big(\tilde S_{t+1}-\tilde S_t\given\F_t\big)}{$\Delta_{t+1}$ is known at $t$ (\cref{card:freeze})}
+\dl{\quad=0}{$\tilde S$ is a $P^*$-martingale (Step~10)}
+\dl{\E_{P^*}\tilde V_T=\tilde V_0=V_0}{add the $T$ steps (tower property)}
+\end{deriv}
+\item Suppose there were an arbitrage. Then:
+\begin{deriv}
+\dl{\E_{P^*}\Big(\frac{V_T}{(1+r)^T}\Big)=V_0=0}{Step~11}
+\dl{\E_{P^*}\Big(\frac{V_T}{(1+r)^T}\Big)=\sum_\omega P^*(\omega)\frac{V_T(\omega)}{(1+r)^T}>0}{every $P^*(\omega)>0$, every $V_T(\omega)\ge0$, and one is $>0$}
+\end{deriv}
+The two lines contradict each other. \textbf{So there is no arbitrage.}
+\end{steps}
+
+\paragraph{Derivation 4: the binomial market is complete.}
+\begin{steps}[resume]
+\item By the uniqueness found in Step~10 and the second key fact, the market is complete. Concretely, copy any claim $X=g(S_T)$ backwards. Let $V_t[s]$ be the value needed at time $t$ when $S_t=s$; start with $V_T[s]=g(s)$. At a node at time $t-1$ with $S_{t-1}=s$, choose $(\Delta_t,b_t)$ to hit both values one period later:
+\begin{deriv}
+\dl{\Delta_t\,us+b_t(1+r)^t=V_t[us]}{if the stock goes up}
+\dl{\Delta_t\,ds+b_t(1+r)^t=V_t[ds]}{if it goes down}
+\dl{\Delta_t=\frac{V_t[us]-V_t[ds]}{us-ds}}{subtract the two lines}
+\dl{b_t=\frac{uV_t[ds]-dV_t[us]}{(1+r)^t(u-d)}}{put $\Delta_t$ back into either line}
+\end{deriv}
+\item The cost of this holding at the node:
+\begin{deriv}
+\dl{V_{t-1}[s]=\Delta_ts+b_t(1+r)^{t-1}}{the holding at time $t-1$ prices}
+\dl{\phantom{V_{t-1}[s]}=\frac{p^*V_t[us]+(1-p^*)V_t[ds]}{1+r}}{substitute Step~13 and simplify}
+\end{deriv}
+\item Put the nodes together. Step back from $t=T$ to $t=1$: at every node the holding chosen there costs exactly the value $V_{t-1}[s]$ that the holding before it is worth at that node. So no money is added or taken out (self-financing), and at $T$ the value is $V_T=g(S_T)=X$. Every claim is attainable: \textbf{the binomial market is complete}, and its price is
+\begin{deriv}
+\dl{V_0=\E_{P^*}\Big(\frac{g(S_T)}{(1+r)^T}\Big)}{Step~14, repeated $T$ times}
+\dl{\phantom{V_0}=\frac{\sum_{j=0}^T\binom Tj(p^*)^j(1-p^*)^{T-j}g\big(u^jd^{T-j}S_0\big)}{(1+r)^T}}{$j$ ups in $\binom Tj$ orders (\cardrow{card:tree}{1})}
+\end{deriv}
+\end{steps}
+\answer{Black--Scholes: $e^{-rt}S_t$ is a martingale only for the drift $r-\frac12\sigma^2$, so the EMM exists and is unique. Binomial: the up-probability must be $p^*=\frac{1+r-d}{u-d}\in(0,1)$ at every node, so again the EMM exists and is unique. In both, existence makes every discounted self-financing value a martingale, so an arbitrage would have mean $0$ and mean $>0$ at once: arbitrage-free. In both, every claim has a self-financing copy ($\Delta_t=\partial_sf$, or the backward one-period copies): complete.}
 \end{problem}
 
 \begin{problem}[Q2(d)]
