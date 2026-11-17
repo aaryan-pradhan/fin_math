@@ -1,0 +1,55 @@
+\documentclass[11pt]{article}
+\usepackage[margin=2cm]{geometry}
+\usepackage{amsmath,amssymb,array}
+\setlength{\parindent}{0pt}
+\newcommand{\row}[2]{$\displaystyle #1$ & \small #2\\[1.6ex]}
+\newenvironment{rows}{\par\smallskip\begin{tabular}{@{}p{0.6\linewidth}@{\hspace{0.03\linewidth}}>{\raggedright\arraybackslash}p{0.37\linewidth}@{}}}{\end{tabular}\par\medskip}
+\begin{document}
+
+\begin{center}\Large\bfseries Greeks of the European call and put (Black--Scholes)\end{center}
+
+Everything below uses only the lecture notes (Lectures 27--28, pages 3--5).
+
+\section*{What the notes give}
+\begin{rows}
+\row{C = S_0\,\Phi(h) - K e^{-rT}\,\Phi(h-\sigma\sqrt T)}{call price at $t=0$}
+\row{h = \frac{\ln(S_0/K) + (r+\tfrac{\sigma^2}{2})T}{\sigma\sqrt T}}{so $h-\sigma\sqrt T$ has $r-\tfrac{\sigma^2}{2}$}
+\row{\Phi'(x) = \phi(x) = \tfrac{1}{\sqrt{2\pi}}e^{-x^2/2}}{normal density}
+\row{\partial_{S_0} h = \frac{1}{\sigma\sqrt T\,S_0}}{notes, page 3}
+\row{S_0\,\phi(h) = K e^{-rT}\,\phi(h-\sigma\sqrt T)}{the ``$[1-1]$'' cancellation on page 4}
+\row{\Delta = \partial_{S_0}C,\quad \Gamma = \partial_{S_0S_0}C,\quad \Theta = \partial_T C}{definitions; note $\Theta$ is $\partial_T$ (maturity)}
+\row{S_0 + P - C = K e^{-rT}}{put--call parity at $t=0$}
+\end{rows}
+
+\section*{European call}
+\begin{rows}
+\row{\Delta_C = \Phi(h)}{notes, page 4: the two $\partial_{S_0}h$ terms cancel}
+\row{\Gamma_C = \partial_{S_0}\Phi(h) = \phi(h)\,\partial_{S_0}h}{chain rule}
+\row{\Gamma_C = \frac{\phi(h)}{\sigma\sqrt T\,S_0}}{notes, page 4}
+\row{\Theta_C = S_0\phi(h)\,\partial_T h + rKe^{-rT}\Phi(h-\sigma\sqrt T)}{differentiate $C$ in $T$ \dots}
+\row{\qquad - Ke^{-rT}\phi(h-\sigma\sqrt T)\,\partial_T(h-\sigma\sqrt T)}{\dots third term}
+\row{= S_0\phi(h)\big[\partial_T h - \partial_T h + \tfrac{\sigma}{2\sqrt T}\big] + rKe^{-rT}\Phi(h-\sigma\sqrt T)}{same cancellation; $\partial_T(\sigma\sqrt T)=\tfrac{\sigma}{2\sqrt T}$}
+\row{\Theta_C = \frac{S_0\,\phi(h)\,\sigma}{2\sqrt T} + rKe^{-rT}\,\Phi(h-\sigma\sqrt T)}{answer ($>0$)}
+\end{rows}
+
+\section*{European put (from parity: $P = C - S_0 + Ke^{-rT}$)}
+\begin{rows}
+\row{\Delta_P = \partial_{S_0}C - \partial_{S_0}S_0 = \Phi(h) - 1}{notes, page 4 ($<0$)}
+\row{\Gamma_P = \partial_{S_0}\big(\Phi(h)-1\big) = \Gamma_C}{the $-1$ has no $S_0$}
+\row{\Gamma_P = \frac{\phi(h)}{\sigma\sqrt T\,S_0}}{same as the call}
+\row{\Theta_P = \Theta_C + \partial_T\big(Ke^{-rT}\big) = \Theta_C - rKe^{-rT}}{differentiate parity in $T$}
+\row{\Theta_P = \frac{S_0\,\phi(h)\,\sigma}{2\sqrt T} - rKe^{-rT}\,\Phi\big(-(h-\sigma\sqrt T)\big)}{$\Phi(x)-1 = -\Phi(-x)$}
+\end{rows}
+
+\section*{Summary}
+\renewcommand{\arraystretch}{2.2}
+\begin{tabular}{@{}l|l|l@{}}
+ & European call & European put\\\hline
+$\Delta$ & $\Phi(h)$ & $\Phi(h)-1$\\
+$\Gamma$ & $\dfrac{\phi(h)}{\sigma\sqrt T S_0}$ & $\dfrac{\phi(h)}{\sigma\sqrt T S_0}$\\
+$\Theta=\partial_T$ & $\dfrac{S_0\phi(h)\sigma}{2\sqrt T} + rKe^{-rT}\Phi(h-\sigma\sqrt T)$ & $\dfrac{S_0\phi(h)\sigma}{2\sqrt T} - rKe^{-rT}\Phi(\sigma\sqrt T-h)$\\
+\end{tabular}
+
+\medskip
+\small The notes define $\Theta$ with respect to the maturity $T$. Many textbooks use $\partial_t$ (calendar time) instead, which is the same expression with the opposite sign.
+\end{document}
