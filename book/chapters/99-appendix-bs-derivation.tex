@@ -5,7 +5,7 @@
   \begin{tabular}{@{}p{0.58\linewidth}@{\hspace{0.03\linewidth}}p{0.39\linewidth}@{}}}{\end{tabular}\par\smallskip}
 \newcommand{\dl}[2]{\mbox{$\displaystyle #1$} & \leavevmode\raggedright\small\color{thmc!80!black}#2\tabularnewline[1.2ex]}
 
-This appendix is the full version of Problem Q2(a) of the April 2024 paper. It starts with one period and a portfolio that copies the option, and it ends with the Black--Scholes formula. Each row does one thing. The right-hand column says how that row follows from the row before it.
+This appendix is the full version of Problem Q2(a) of the April 2024 paper. It starts with one period and a portfolio that copies the option, and it ends with the Black--Scholes formula. Part E then does the put by the same steps. Each row does one thing. The right-hand column says how that row follows from the row before it.
 
 \begin{setup}[The market]
 A stock starts at $S_0$. Each period it is multiplied by $u$ (up) or by $d$ (down), with $d<u$. Money in the bond grows by $1+r$ each period. A European call with strike $K$ pays $(S_T-K)^+=\max(S_T-K,0)$ at time $T$.
@@ -214,3 +214,55 @@ That the probability of the event $J\ge m$ converges to the normal probability i
 \end{steps}
 
 \answer{$C=S_0\Phi(h)-Ke^{-r\tau}\Phi(h-\sigma\sqrt\tau)$ with $h=\dfrac{\ln(S_0/K)+(r+\frac12\sigma^2)\tau}{\sigma\sqrt\tau}$. This is the Black--Scholes formula (\cardrow{card:bsprice}{1}). The limit of the tree is \cardrow{card:bsprice}{8}.}
+
+\section*{Part E: the put, by the same steps}
+
+A European put pays $(K-S_T)^+=\max(K-S_T,0)$. Steps 1--8 never used the payoff, so they hold as they are. Only Steps 9--13 change, and then Steps 20 and 23 are used through their complements.
+
+\begin{steps}[resume]
+\item Step~9 for the put, $g(s)=(K-s)^+$. Now the paths that pay are the ones that end at or below $K$:
+\begin{deriv}
+\dl{j\ge m:\ (K-u^jd^{T-j}S_0)^+=0}{the end price is above $K$ (definition of $m$, Step~9)}
+\dl{j<m:\ (K-u^jd^{T-j}S_0)^+=K-u^jd^{T-j}S_0}{the end price is at most $K$}
+\dl{P=\frac1{(1+r)^T}\sum_{j<m}\binom Tj(p^*)^j(1-p^*)^{T-j}}{Step~8 with the $j\ge m$ terms dropped}
+\dl{\qquad\times\big(K-u^jd^{T-j}S_0\big)}{}
+\end{deriv}
+
+\item Split and tidy, as in Steps 10 and 11:
+\begin{deriv}
+\dl{P=\frac{K}{(1+r)^T}\sum_{j<m}\binom Tj(p^*)^j(1-p^*)^{T-j}}{the $K$ part; $K$ and $(1+r)^{-T}$ come out}
+\dl{\qquad-S_0\sum_{j<m}\binom Tj\hat p^{\,j}(1-\hat p)^{T-j}}{the stock part; the term inside is the one tidied in Step~11}
+\end{deriv}
+
+\item Read the sums as probabilities, as in Step~13:
+\begin{deriv}
+\dl{\sum_{j<m}\binom Tj(p^*)^j(1-p^*)^{T-j}=P^*(J<m)}{$J\sim\mathrm{Bin}(T,p^*)$ under $P^*$}
+\dl{\sum_{j<m}\binom Tj\hat p^{\,j}(1-\hat p)^{T-j}=\hat P(J<m)}{$J\sim\mathrm{Bin}(T,\hat p)$ under $\hat P$}
+\dl{J<m\iff S_T\le K}{the opposite of $J\ge m\iff S_T>K$ (Step~13)}
+\dl{P=\frac{K}{(1+r)^T}\,P^*(S_T\le K)-S_0\,\hat P(S_T\le K)}{put the three lines into Step~26}
+\end{deriv}
+
+\item Let the periods shrink. $\{S_\tau\le K\}$ is the opposite of $\{S_\tau>K\}$, so each probability is $1$ minus the call's, and \cref{card:normal-prob} gives $1-\Phi(x)=\Phi(-x)$:
+\begin{deriv}
+\dl{P^*(S_\tau\le K)=1-P^*(S_\tau>K)}{complement}
+\dl{\phantom{P^*(S_\tau\le K)}\to1-\Phi(h-\sigma\sqrt\tau)}{Step~20}
+\dl{\phantom{P^*(S_\tau\le K)}=\Phi(\sigma\sqrt\tau-h)}{$1-\Phi(x)=\Phi(-x)$ with $x=h-\sigma\sqrt\tau$}
+\dl{\hat P(S_\tau\le K)=1-\hat P(S_\tau>K)}{complement}
+\dl{\phantom{\hat P(S_\tau\le K)}\to1-\Phi(h)=\Phi(-h)}{Step~23, then the same rule}
+\end{deriv}
+
+\item Put the parts together:
+\begin{deriv}
+\dl{P=\frac{K}{(1+r_n)^n}\,P^*(S_\tau\le K)-S_0\,\hat P(S_\tau\le K)}{Step~27 with $T=n$}
+\dl{\phantom{P}\to Ke^{-r\tau}\,\Phi(\sigma\sqrt\tau-h)-S_0\,\Phi(-h)}{Steps 14 and 28}
+\end{deriv}
+
+\item Check with put--call parity (\cref{card:parity}, box): $S_0+P-C=Ke^{-r\tau}$, i.e.\ $C-P=S_0-Ke^{-r\tau}$:
+\begin{deriv}
+\dl{C-P=S_0\big[\Phi(h)+\Phi(-h)\big]}{Step~24 minus Step~29, the $S_0$ terms}
+\dl{\qquad-Ke^{-r\tau}\big[\Phi(h-\sigma\sqrt\tau)+\Phi(\sigma\sqrt\tau-h)\big]}{the $K$ terms}
+\dl{\phantom{C-P}=S_0-Ke^{-r\tau}}{$\Phi(x)+\Phi(-x)=1$ (\cref{card:normal-prob}) in each bracket}
+\end{deriv}
+\end{steps}
+
+\answer{$P=Ke^{-r\tau}\Phi(\sigma\sqrt\tau-h)-S_0\Phi(-h)$, with the same $h$ as the call. This is \cardrow{card:bsprice}{2}.}
