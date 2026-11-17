@@ -120,6 +120,8 @@
 % Inside a card: \cardtop{Box} links to the card's top, \rowlink{3}{Row 3} to its row 3.
 \makeatletter\newcommand{\cardtop}[1]{\hyperlink{tcb@cnt@mastercard.\theHtcb@cnt@mastercard}{#1}}\makeatother
 \newcommand{\rowlink}[2]{\hyperlink{cardrow.\thetcbcounter.#1}{#2}}
+% \cardrow{card:x}{3} prints a linked "Card 12.1, row 3" inline.
+\newcommand{\cardrow}[2]{\cref{#1}, \hyperlink{cardrow.\getrefnumber{#1}.#2}{row~#2}}
 \newcommand{\plug}[1]{\par\textit{Plug:} #1\par}
 \newcommand{\answer}[1]{\par\textbf{Answer:} #1\par}
 
