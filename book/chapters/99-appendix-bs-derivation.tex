@@ -430,13 +430,32 @@ Now time runs continuously, $t\in[0,T]$, and $W$ is a Brownian motion under the 
 \dl{\text{a claim pays }g(S_T)\text{ at }T}{a call: $g(s)=(s-K)^+$; a put: $g(s)=(K-s)^+$}
 \end{deriv}
 
-\item\label{s:solve} Solve for $S_t$. Use \cref{card:ito} on $\ln S_t$, with $\frac{d}{ds}\ln s=\frac1s$ and $\frac{d^2}{ds^2}\ln s=-\frac1{s^2}$:
+\item\label{s:solve} Solve for $S_t$, using \cref{card:ito} on $\ln S_t$. First, how to read the card. It is written for $dX_t=a_t\,dt+b_t\,dW_t$:
+\begin{itemize}
+\item $a_t$ is whatever stands in front of $dt$, and $b_t$ is whatever stands in front of $dW_t$.
+\item They do \emph{not} have to be plain functions of $t$. They may be random, as long as their value is \emph{known at time $t$}: they may contain $S_t$, $X_t$ or $W_t$, but nothing from after $t$.
+\item Why that is enough: over the short time from $t$ to $t+dt$, the only new randomness is $dW_t$. At time $t$ the values $a_t$ and $b_t$ are already fixed numbers, just as $\Delta_t$ is fixed over a period of the tree (Step~\ref{s:conv}). So Taylor's formula treats them as constants.
+\item In the simplest example, $dW_t$ itself, they are constants: $a_t=0$, $b_t=1$. Here they are random: $a_t=\mu S_t$ and $b_t=\sigma S_t$.
+\end{itemize}
+Now the steps, with $f(s)=\ln s$:
 \begin{deriv}
-\dl{d\ln S_t=\frac{dS_t}{S_t}-\frac12\frac{(dS_t)^2}{S_t^2}}{Itô's formula: first derivative times $dS$, plus half the second derivative times $(dS)^2$}
-\dl{(dS_t)^2=\sigma^2S_t^2\,dt}{$(dW_t)^2=dt$; $dt\,dW_t=0$ and $(dt)^2=0$}
-\dl{d\ln S_t=\mu\,dt+\sigma\,dW_t-\tfrac12\sigma^2\,dt}{put both in}
-\dl{S_t=S_0\,e^{(\mu-\frac12\sigma^2)t+\sigma W_t}}{add up from $0$ to $t$ ($W_0=0$), then take $e^{(\cdot)}$}
+\dl{a_t=\mu S_t,\qquad b_t=\sigma S_t}{read off $dS_t=\mu S_t\,dt+\sigma S_t\,dW_t$; both are known at time $t$}
+\dl{f'(s)=\frac1s,\qquad f''(s)=-\frac1{s^2}}{differentiate $\ln s$ twice; $f$ has no $t$ in it, so $\partial_tf=0$}
+\dl{d\ln S_t=f'(S_t)\,dS_t+\tfrac12f''(S_t)\,(dS_t)^2}{Taylor to second order; $S_t$ is known at time $t$, so $f'(S_t)$ and $f''(S_t)$ are numbers at $t$}
+\dl{(dS_t)^2=\mu^2S_t^2(dt)^2+2\mu\sigma S_t^2\,dt\,dW_t}{square $dS_t$: $S_t$ is a known number at $t$, so it squares like a constant}
+\dl{\qquad+\sigma^2S_t^2(dW_t)^2}{}
+\dl{\phantom{(dS_t)^2}=\sigma^2S_t^2\,dt}{the table: $(dt)^2=0$, $dt\,dW_t=0$, $(dW_t)^2=dt$}
+\dl{d\ln S_t=\frac1{S_t}\big(\mu S_t\,dt+\sigma S_t\,dW_t\big)}{put $f'$, $f''$, $dS_t$ and $(dS_t)^2$ in}
+\dl{\qquad-\frac12\cdot\frac1{S_t^2}\cdot\sigma^2S_t^2\,dt}{}
+\dl{\phantom{d\ln S_t}=\mu\,dt+\sigma\,dW_t-\tfrac12\sigma^2\,dt}{$S_t$ cancels: the $S_t$ inside $a_t$, $b_t$ against the $\frac1{S_t}$ of $f'$, and $S_t^2$ against the $\frac1{S_t^2}$ of $f''$}
+\dl{\phantom{d\ln S_t}=\big(\mu-\tfrac12\sigma^2\big)\,dt+\sigma\,dW_t}{collect the $dt$ terms}
+\dl{a_t\,\partial_xf+\tfrac12b_t^2\,\partial_{xx}f=\mu S_t\cdot\frac1{S_t}-\tfrac12\sigma^2S_t^2\cdot\frac1{S_t^2}}{check with the card's box directly: the $dt$ part}
+\dl{\qquad=\mu-\tfrac12\sigma^2}{the same as the line above}
+\dl{b_t\,\partial_xf=\sigma S_t\cdot\frac1{S_t}=\sigma}{and the $dW$ part}
+\dl{\ln S_t-\ln S_0=\big(\mu-\tfrac12\sigma^2\big)t+\sigma W_t}{add up from $0$ to $t$: the coefficients are now constants; $W_0=0$}
+\dl{S_t=S_0\,e^{(\mu-\frac12\sigma^2)t+\sigma W_t}}{take $e^{(\cdot)}$ of both sides}
 \end{deriv}
+$S_t$ is not removed by a trick: it cancels because $\ln$ has $f'(s)=\frac1s$, exactly what undoes the $S_t$ in $dS_t$. Non-random coefficients matter for a different card: \cardrow{card:itoint}{1} says $\int_0^tb\,dW$ is normal only when $b$ has no $W$ in it. Here, after the cancellation, the coefficients are the constants $\mu-\frac12\sigma^2$ and $\sigma$, so $\ln S_t$ is normal.
 
 \item\label{s:sfc} Self-financing in continuous time. First in one period, with Step~\ref{s:conv}; then let the period shrink:
 \begin{deriv}
