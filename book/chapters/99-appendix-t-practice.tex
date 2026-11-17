@@ -1,0 +1,271 @@
+\chapter{Practice appendix}\label{app:practice}
+
+A ten-question class test, solved step by step in the two-column style of \cref{app:bs}: each row does one thing, and the right-hand column says how it follows from the row before. The test came in four versions, Sets A to D, with the same ten questions and different numbers or statements. Each question below is solved in full for Set A; then the other three sets are done with the same steps. A table of all forty answers closes the appendix.
+
+\section*{Questions 1--4: one-period binomial put and call}
+
+\begin{question}
+A $T=1$ period binomial market has $u=1.25$, $d=0.25$, $r=0.15$ and stock price $S_0=200$ at $t=0$.
+\textbf{Q1.} A put with maturity $T=1$ and strike $K=225$: find the replicating portfolio $(\Delta,B)$ at time $0$.
+\textbf{Q2.} Price the put.
+\textbf{Q3.} A call with the same maturity and strike: find its replicating portfolio $(\Delta,B)$ at time $0$.
+\textbf{Q4.} Price the call.
+\end{question}
+
+The test's $B$ is the $b$ of \cref{app:bs}: the money put in the bond at time $0$, worth $B(1+r)$ at time $1$ (Step~\ref{s:conv}). The three formulas used are Steps 2--4 of \cref{app:bs}, which are \cardrow{card:finite}{1}:
+\[
+  \Delta=\frac{X_u-X_d}{(u-d)S_0},\qquad B=\frac{uX_d-dX_u}{(1+r)(u-d)},\qquad\text{price}=\Delta S_0+B.
+\]
+
+\begin{steps}
+\item\label{t:prices} The two prices at time $1$, and the numbers that every formula needs:
+\begin{deriv}
+\dl{S_u=uS_0=1.25\times200=250}{up: multiply by $u$}
+\dl{S_d=dS_0=0.25\times200=50}{down: multiply by $d$}
+\dl{u-d=1,\qquad(1+r)(u-d)=1.15}{the two denominators}
+\dl{d=0.25<1.15<1.25=u}{$d<1+r<u$: no arbitrage, so the formulas apply (Step 5 of \cref{app:bs})}
+\end{deriv}
+
+\item\label{t:put} Q1, the put. Its payoff is $(K-S_1)^+$:
+\begin{deriv}
+\dl{X_u=(225-250)^+=0}{the put pays only if the stock ends below $K$}
+\dl{X_d=(225-50)^+=175}{}
+\dl{\Delta=\frac{0-175}{1\times200}=-\frac78=-0.875}{the $\Delta$ formula}
+\dl{B=\frac{1.25\times175-0.25\times0}{1.15}=\frac{218.75}{1.15}}{the $B$ formula}
+\dl{\phantom{B}=\frac{4375}{23}\approx190.22}{multiply top and bottom by $20$: $\frac{4375}{23}$}
+\dl{250\Delta+1.15B=-218.75+218.75=0=X_u}{check: the copy pays $X_u$ in the up state}
+\dl{50\Delta+1.15B=-43.75+218.75=175=X_d}{check: and $X_d$ in the down state}
+\end{deriv}
+So: sell $\frac78$ of a share and put $190.22$ in the bond.
+
+\item\label{t:putprice} Q2, the price of the put:
+\begin{deriv}
+\dl{P_0=\Delta S_0+B=-\frac78\times200+\frac{4375}{23}}{the price is the cost of the copy}
+\dl{\phantom{P_0}=\frac{-175\times23+4375}{23}=\frac{350}{23}\approx15.22}{common denominator $23$}
+\dl{p^*=\frac{1+r-d}{u-d}=\frac{1.15-0.25}{1}=0.9}{second way: \cardrow{card:finite}{1}}
+\dl{P_0=\frac{0.9\times0+0.1\times175}{1.15}=\frac{17.5}{1.15}=\frac{350}{23}}{the same price}
+\end{deriv}
+
+\item\label{t:call} Q3, the call. Its payoff is $(S_1-K)^+$:
+\begin{deriv}
+\dl{X_u=(250-225)^+=25}{the call pays only if the stock ends above $K$}
+\dl{X_d=(50-225)^+=0}{}
+\dl{\Delta=\frac{25-0}{1\times200}=\frac18=0.125}{the $\Delta$ formula}
+\dl{B=\frac{1.25\times0-0.25\times25}{1.15}=-\frac{6.25}{1.15}}{the $B$ formula}
+\dl{\phantom{B}=-\frac{125}{23}\approx-5.43}{$B<0$ means borrowing}
+\dl{250\Delta+1.15B=31.25-6.25=25=X_u}{check: up state}
+\dl{50\Delta+1.15B=6.25-6.25=0=X_d}{check: down state}
+\end{deriv}
+So: buy $\frac18$ of a share and borrow $5.43$.
+
+\item\label{t:callprice} Q4, the price of the call, and a check of both prices:
+\begin{deriv}
+\dl{C_0=\Delta S_0+B=\frac18\times200-\frac{125}{23}=\frac{575-125}{23}}{the cost of the copy}
+\dl{\phantom{C_0}=\frac{450}{23}\approx19.57}{}
+\dl{C_0=\frac{0.9\times25}{1.15}=\frac{22.5}{1.15}=\frac{450}{23}}{second way, with $p^*=0.9$}
+\dl{C_0-P_0=\frac{450-350}{23}=\frac{100}{23}}{subtract the two prices}
+\dl{S_0-\frac{K}{1+r}=200-\frac{4500}{23}=\frac{100}{23}}{the same: put--call parity (\cref{card:parity}) holds}
+\end{deriv}
+
+\item\label{t:putcallBCD} Sets B, C, D change only $u$, $S_0$ and $K$. The same steps give:
+\begin{deriv}
+\dl{\text{B: }u=1.25,\ S_0=100,\ K=115}{$u-d=1$, $(1+r)(u-d)=1.15$}
+\dl{\phantom{\text{B: }}S_u=125,\ \ S_d=25}{}
+\dl{\text{put: }X_d=90,\ \Delta=-\tfrac{90}{100}=-0.9}{Step~\ref{t:put}}
+\dl{\phantom{\text{put: }}B=\tfrac{1.25\times90}{1.15}=\tfrac{2250}{23}\approx97.83}{}
+\dl{\phantom{\text{put: }}P_0=-90+\tfrac{2250}{23}=\tfrac{180}{23}\approx7.83}{Step~\ref{t:putprice}}
+\dl{\text{call: }X_u=10,\ \Delta=\tfrac{10}{100}=0.1}{Step~\ref{t:call}}
+\dl{\phantom{\text{call: }}B=-\tfrac{0.25\times10}{1.15}=-\tfrac{50}{23}\approx-2.17}{}
+\dl{\phantom{\text{call: }}C_0=10-\tfrac{50}{23}=\tfrac{180}{23}\approx7.83}{equal to the put: $S_0=\frac{K}{1+r}=100$}
+\dl{\text{C: }u=1.20,\ S_0=200,\ K=225}{$u-d=0.95$, $(1+r)(u-d)=1.0925=\frac{437}{400}$}
+\dl{\phantom{\text{C: }}S_u=240,\ \ S_d=50}{}
+\dl{\text{put: }X_d=175,\ \Delta=-\tfrac{175}{190}=-\tfrac{35}{38}\approx-0.921}{Step~\ref{t:put}}
+\dl{\phantom{\text{put: }}B=\tfrac{1.2\times175}{1.0925}=\tfrac{84000}{437}\approx192.22}{}
+\dl{\phantom{\text{put: }}P_0=-\tfrac{80500}{437}+\tfrac{84000}{437}=\tfrac{3500}{437}\approx8.01}{$\frac{35}{38}\times200=\frac{3500}{19}=\frac{80500}{437}$}
+\dl{\text{call: }X_u=15,\ \Delta=\tfrac{15}{190}=\tfrac3{38}\approx0.079}{Step~\ref{t:call}}
+\dl{\phantom{\text{call: }}B=-\tfrac{0.25\times15}{1.0925}=-\tfrac{1500}{437}\approx-3.43}{}
+\dl{\phantom{\text{call: }}C_0=\tfrac{6900}{437}-\tfrac{1500}{437}=\tfrac{5400}{437}\approx12.36}{$\frac3{38}\times200=\frac{300}{19}=\frac{6900}{437}$}
+\dl{\text{D: }u=1.20,\ S_0=100,\ K=115}{same denominators as Set C}
+\dl{\phantom{\text{D: }}S_u=120,\ \ S_d=25}{}
+\dl{\text{put: }X_d=90,\ \Delta=-\tfrac{90}{95}=-\tfrac{18}{19}\approx-0.947}{Step~\ref{t:put}}
+\dl{\phantom{\text{put: }}B=\tfrac{1.2\times90}{1.0925}=\tfrac{43200}{437}\approx98.86}{}
+\dl{\phantom{\text{put: }}P_0=-\tfrac{41400}{437}+\tfrac{43200}{437}=\tfrac{1800}{437}\approx4.12}{$\frac{18}{19}\times100=\frac{1800}{19}=\frac{41400}{437}$}
+\dl{\text{call: }X_u=5,\ \Delta=\tfrac5{95}=\tfrac1{19}\approx0.053}{Step~\ref{t:call}}
+\dl{\phantom{\text{call: }}B=-\tfrac{0.25\times5}{1.0925}=-\tfrac{500}{437}\approx-1.14}{}
+\dl{\phantom{\text{call: }}C_0=\tfrac{2300}{437}-\tfrac{500}{437}=\tfrac{1800}{437}\approx4.12}{equal to the put: $S_0=\frac{K}{1+r}=100$}
+\end{deriv}
+\end{steps}
+
+\section*{Question 5: a product of uniforms}
+
+\begin{question}
+Let $U_1,U_2,\dots$ be independent, each uniform on $(0,1]$. Let $X_0=1$ and $X_n=2^nU_1\cdots U_n$ for $n=1,2,\dots$. Is $\{X_n\}$ a martingale? (Yes/No)
+\end{question}
+
+\begin{steps}[resume]
+\item\label{t:mg} Use the martingale test, \cref{card:onestep}, in the form of \cardrow{card:onestep}{2}: multiply by a fresh factor.
+\begin{deriv}
+\dl{\E_P\,U_i=\tfrac12}{the mean of a uniform on $(0,1]$ is the midpoint}
+\dl{X_{n+1}=X_n\cdot2U_{n+1}}{$2^{n+1}U_1\cdots U_{n+1}=(2^nU_1\cdots U_n)(2U_{n+1})$; for $n=0$ too, as $X_0=1$}
+\dl{\E_P(X_{n+1}\given\F_n)=X_n\,\E_P(2U_{n+1})}{\cref{card:freeze}: $X_n$ is known, $U_{n+1}$ is fresh}
+\dl{\phantom{\E_P(X_{n+1}\given\F_n)}=X_n\cdot2\cdot\tfrac12=X_n}{the fresh factor has mean $1$}
+\dl{\E_P|X_n|=2^n\,\E_PU_1\cdots\E_PU_n=2^n\big(\tfrac12\big)^n=1<\infty}{$X_n>0$; independent, so the mean of the product is the product of the means}
+\end{deriv}
+Both conditions hold. \textbf{Set A: Yes.}
+
+\item\label{t:mgBCD} The other sets change the power of $2$. Then the rule $X_{n+1}=X_n\cdot2U_{n+1}$ still holds for $n\ge1$, but not for the first step from $X_0=1$:
+\begin{deriv}
+\dl{\text{B: }X_n=2^{n-1}U_1\cdots U_n:\ \ \E_P\,X_1=\E_P\,U_1}{}
+\dl{\qquad=\tfrac12\ne1=X_0}{fails at the first step: \textbf{No}}
+\dl{\text{C: }X_n=2^{n+1}U_1\cdots U_n:\ \ \E_P\,X_1=4\cdot\tfrac12=2\ne1}{\textbf{No}}
+\dl{\text{D: }X_n=2^{n+2}U_1\cdots U_n:\ \ \E_P\,X_1=8\cdot\tfrac12=4\ne1}{D asks ``is it \emph{not} a martingale?'': \textbf{Yes}}
+\end{deriv}
+A martingale keeps its mean, $\E_PX_n=\E_PX_0$ (\cref{card:onestep}, box), so one failed step is enough. In Sets B--D the intended question was probably $X_0$ matching the power of $2$; the official key gave the marks to everyone for this typo.
+\end{steps}
+
+\section*{Questions 6 and 8: arbitrage, state prices, completeness}
+
+These are true/false questions about a single-period market. They use three objects, defined here from scratch:
+\begin{deriv}
+\dl{X=\big(X_{s,m}\big),\ \ S\text{ rows},\ M\text{ columns}}{the payoff matrix: asset $m$ pays $X_{s,m}$ at time $1$ in state $s$}
+\dl{P\in\R^M}{the prices of the $M$ assets today}
+\dl{h\in\R^M:\ \text{cost }P\cdot h,\ \ \text{payoff }Xh\in\R^S}{a portfolio holds $h_m$ units of asset $m$}
+\dl{\pi\in\R^S,\ \ \pi_s>0,\ \ P_m=\sum_s\pi_sX_{s,m}}{a state price vector: $\pi_s$ is today's price of $1$ paid in state $s$ only}
+\end{deriv}
+A state price vector is \cref{card:finite} written per state: $\pi_s=Dp^*_s$, with $D=\frac1{1+r}$. Since every $p^*_s>0$, every $\pi_s>0$.
+
+\begin{steps}[resume]
+\item\label{t:arb} Set A, Q6: ``$h$ is an arbitrage if $P\cdot h\le0$ and $Xh\ge0$, with at least one strict inequality.''
+\begin{deriv}
+\dl{P\cdot h<0,\ \ Xh\ge0}{paid today to take it, and never lose later}
+\dl{P\cdot h\le0,\ \ Xh\ge0,\ \ Xh\ne0}{free today, never lose, and win in some state}
+\end{deriv}
+Both are a risk-free profit, the definition of an arbitrage in \cref{ch:arbitrage}. \textbf{True.}
+
+\item\label{t:arbBCD} Q6 in the other sets:
+\begin{deriv}
+\dl{\text{B: ``}\pi_s\text{ may be negative if }\textstyle\sum\pi_s=1\text{''}}{\textbf{False}: $\pi_s=Dp^*_s>0$ for every $s$}
+\dl{\pi_s\le0:\ \text{a claim paying }1\text{ in state }s\text{ only}}{suppose a state price were not positive}
+\dl{\qquad\text{costs }\pi_s\le0}{it never loses and wins in state $s$: an arbitrage}
+\dl{\textstyle\sum_s\pi_s=D\sum_sp^*_s=D=\frac1{1+r}}{the sum is the price of $1$ for sure, not $1$ (unless $r=0$)}
+\dl{\text{C: ``same payoff}\Rightarrow\text{same price''}}{\textbf{True}}
+\dl{Xh_1=Xh_2,\ P\cdot h_1<P\cdot h_2}{suppose not; buy the cheap one, sell the dear one}
+\dl{h=h_1-h_2:\ \ P\cdot h<0,\ \ Xh=0}{paid today, nothing owed later: an arbitrage (Step~\ref{t:arb})}
+\dl{\text{D: ``}\operatorname{rank}X=S\Rightarrow\text{every }y\in\R^S\text{ is }Xh\text{''}}{\textbf{True}}
+\dl{\{Xh:h\in\R^M\}=\text{the span of the }M\text{ columns}}{$Xh=\sum_mh_m\cdot(\text{column }m)$}
+\dl{\operatorname{rank}X=S\ \Rightarrow\ \text{the span is all of }\R^S}{$S$ independent columns in $\R^S$}
+\end{deriv}
+
+\item\label{t:complete} Q8 is about the definition of a complete market: every claim can be copied. By the last two rows of Step~\ref{t:arbBCD}:
+\begin{deriv}
+\dl{\text{complete}\iff\{Xh\}=\R^S\iff\operatorname{rank}X=S}{the span of the columns must be all of $\R^S$}
+\dl{\operatorname{rank}X\le M}{there are only $M$ columns}
+\end{deriv}
+So completeness depends on the rank, not on how $M$ compares with $S$. $M\ge S$ is needed, but it is not enough: two copies of the same asset add a column without adding rank.
+\begin{deriv}
+\dl{\text{A: ``complete}\iff M<S\text{''}}{\textbf{False}: $M<S$ gives $\operatorname{rank}X<S$, never complete}
+\dl{\text{B: ``complete}\iff M=S\text{''}}{\textbf{False}: $M=S$ with two equal columns is not complete; $M>S$ can be}
+\dl{\text{C: ``complete}\iff M>S\text{''}}{\textbf{False}: $M=S$ with $\operatorname{rank}X=S$ is complete}
+\dl{\text{D: ``complete}\iff M\ne S\text{''}}{\textbf{False}: same example as C}
+\end{deriv}
+\end{steps}
+
+\section*{Question 7: the price of an option with no sure win}
+
+\begin{question}
+A stock sells at Rs~40 per share. After one period its price (in present value) is Rs~100 or Rs~25. An option to buy $y$ units of the stock at time $1$ for the (present value) price $75y$ costs $cy$. What should $c$ be for there to be no sure win?
+\end{question}
+
+\begin{steps}[resume]
+\item\label{t:sure} ``No sure win'' means no arbitrage. Prices are in present value, so $D=1$: \cardrow{card:finite}{2}. One unit of the option ($y=1$):
+\begin{deriv}
+\dl{\text{payoff}=(S_1-75)^+:\ \ 25\text{ (up)},\ \ 0\text{ (down)}}{$100-75=25$; at $25$ the option is not used}
+\dl{40=100\,p^*+25(1-p^*)}{the box applied to the stock, with $D=1$}
+\dl{p^*=\frac{40-25}{100-25}=\frac{15}{75}=\frac15}{solve for $p^*$}
+\dl{c=p^*\cdot25+(1-p^*)\cdot0=\frac15\cdot25=5}{the box applied to the option}
+\end{deriv}
+
+\item\label{t:surecopy} The same answer by copying, and the sure win if $c\ne5$:
+\begin{deriv}
+\dl{100\Delta+B=25,\qquad25\Delta+B=0}{$\Delta$ shares and $B$ in cash; present value, so cash does not grow}
+\dl{\Delta=\frac{25}{75}=\frac13,\qquad B=-\frac{25}3}{subtract; then the down equation}
+\dl{c=40\Delta+B=\frac{40-25}3=5}{the cost of the copy}
+\dl{c>5:\ \text{sell the option, buy the copy}}{get $c-5>0$ today; the copy pays exactly what is owed}
+\dl{c<5:\ \text{buy the option, sell the copy}}{get $5-c>0$ today, owe nothing later}
+\end{deriv}
+
+\item\label{t:sureBCD} The other sets change only the stock price $S_0$. Then $p^*=\frac{S_0-25}{75}$ and $c=25p^*=\frac{S_0-25}3$:
+\begin{deriv}
+\dl{\text{B: }S_0=30:\ \ c=\tfrac{30-25}3=\tfrac53\approx1.67}{}
+\dl{\text{C: }S_0=50:\ \ c=\tfrac{50-25}3=\tfrac{25}3\approx8.33}{}
+\dl{\text{D: }S_0=60:\ \ c=\tfrac{60-25}3=\tfrac{35}3\approx11.67}{}
+\end{deriv}
+\end{steps}
+
+\section*{Question 9: the law of $\int_0^1t^k\,dW_t$}
+
+\begin{question}
+Find the distribution of $\int_0^1t^2\,dW_t$, with its mean and variance, where $W$ is a Wiener process.
+\end{question}
+
+\begin{steps}[resume]
+\item\label{t:int} Use \cardrow{card:itoint}{1}: an integrand with no $W$ in it gives a normal integral.
+\begin{deriv}
+\dl{\int_0^1t^2\,dW_t\ \text{ is normal}}{$t^2$ is not random}
+\dl{\text{mean}=\E_P\int_0^1t^2\,dW_t=0}{\cref{card:itoint}, box}
+\dl{\text{variance}=\int_0^1(t^2)^2\,dt=\int_0^1t^4\,dt}{\cardrow{card:itoint}{2}: square the integrand}
+\dl{\phantom{\text{variance}}=\Big[\frac{t^5}5\Big]_0^1=\frac15}{ordinary integral}
+\dl{\int_0^1t^2\,dW_t\sim N\big(0,\tfrac15\big)}{}
+\end{deriv}
+
+\item\label{t:intBCD} The other sets change the power $k$: the variance is $\int_0^1t^{2k}\,dt=\frac1{2k+1}$.
+\begin{deriv}
+\dl{\text{B: }k=3:\ \ N\big(0,\tfrac17\big)}{$2k+1=7$}
+\dl{\text{C: }k=4:\ \ N\big(0,\tfrac19\big)}{$2k+1=9$}
+\dl{\text{D: }k=5:\ \ N\big(0,\tfrac1{11}\big)}{$2k+1=11$}
+\end{deriv}
+\end{steps}
+
+\section*{Question 10: $d\,f(W_t)$}
+
+\begin{question}
+Compute the stochastic differential $d\sin(W_t)$.
+\end{question}
+
+\begin{steps}[resume]
+\item\label{t:ito} Use \cardrow{card:ito}{1}: for $X=W$, $a_t=0$ and $b_t=1$, so $df(W_t)=\frac12f''(W_t)\,dt+f'(W_t)\,dW_t$.
+\begin{deriv}
+\dl{f(x)=\sin x,\quad f'(x)=\cos x,\quad f''(x)=-\sin x}{differentiate twice}
+\dl{d\sin W_t=-\tfrac12\sin W_t\,dt+\cos W_t\,dW_t}{put them in}
+\end{deriv}
+
+\item\label{t:itoBCD} The other sets change $f$:
+\begin{deriv}
+\dl{\text{B: }f=\cos:\ \ f'=-\sin,\ f''=-\cos}{}
+\dl{\phantom{\text{B: }}d\cos W_t=-\tfrac12\cos W_t\,dt-\sin W_t\,dW_t}{}
+\dl{\text{C: }f=e^x:\ \ f'=f''=e^x}{}
+\dl{\phantom{\text{C: }}de^{W_t}=\tfrac12e^{W_t}\,dt+e^{W_t}\,dW_t}{}
+\dl{\text{D: }f=\ln x:\ \ f'=\frac1x,\ f''=-\frac1{x^2}}{}
+\dl{\phantom{\text{D: }}d\ln W_t=-\frac1{2W_t^2}\,dt+\frac1{W_t}\,dW_t}{only while $W_t>0$: $\ln$ is not defined at $W_t\le0$, and $W_0=0$}
+\end{deriv}
+\end{steps}
+
+\section*{All forty answers}
+
+\noindent{\small\renewcommand{\arraystretch}{1.5}%
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.07\linewidth}>{\raggedright\arraybackslash}p{0.2\linewidth}>{\raggedright\arraybackslash}p{0.2\linewidth}>{\raggedright\arraybackslash}p{0.2\linewidth}>{\raggedright\arraybackslash}p{0.21\linewidth}@{}}
+\toprule
+Q & Set A & Set B & Set C & Set D\\
+\midrule
+1 & $(-\frac78,\frac{4375}{23})$ & $(-0.9,\frac{2250}{23})$ & $(-\frac{35}{38},\frac{84000}{437})$ & $(-\frac{18}{19},\frac{43200}{437})$\\
+2 & $\frac{350}{23}\approx15.22$ & $\frac{180}{23}\approx7.83$ & $\frac{3500}{437}\approx8.01$ & $\frac{1800}{437}\approx4.12$\\
+3 & $(\frac18,-\frac{125}{23})$ & $(0.1,-\frac{50}{23})$ & $(\frac3{38},-\frac{1500}{437})$ & $(\frac1{19},-\frac{500}{437})$\\
+4 & $\frac{450}{23}\approx19.57$ & $\frac{180}{23}\approx7.83$ & $\frac{5400}{437}\approx12.36$ & $\frac{1800}{437}\approx4.12$\\
+5 & Yes & No & No & Yes (not a martingale)\\
+6 & True & False & True & True\\
+7 & $5$ & $\frac53$ & $\frac{25}3$ & $\frac{35}3$\\
+8 & False & False & False & False\\
+9 & $N(0,\frac15)$ & $N(0,\frac17)$ & $N(0,\frac19)$ & $N(0,\frac1{11})$\\
+10 & $-\frac12\sin W\,dt+\cos W\,dW$ & $-\frac12\cos W\,dt-\sin W\,dW$ & $\frac12e^W\,dt+e^W\,dW$ & $-\frac1{2W^2}\,dt+\frac1W\,dW$\\
+\bottomrule
+\end{tabular}}
