@@ -1,0 +1,492 @@
+\chapter{Appendicitis}\label{app:appendicitis}
+
+The derivations to write out from memory, in one place and in the order of the lectures. Each one follows the class steps; the right-hand column says why each line holds. Learn each section as a whole: the setup, the steps, and the last line.
+
+\begin{setup}[Notation used throughout]
+Bond $B_t$; stock $S_t$; a trading strategy $(\Delta_t,b_t)$ holds $\Delta_t$ shares and $b_t$ bonds, worth $V_t=\Delta_tS_t+b_tB_t$. An EMM (equivalent martingale measure) $P^*$ gives positive probability to the same events as $P$ and makes the discounted stock $S_t/B_t$ a martingale. $\varphi(x)=\frac1{\sqrt{2\pi}}e^{-x^2/2}$ and $\Phi$ are the standard normal density and distribution function.
+\end{setup}
+
+%=====================================================================
+\section{The Black--Scholes framework}\label{u:frame}
+\begin{steps}
+\item The market, in continuous time $t\in[0,T]$:
+\begin{deriv}
+\dl{B_t=e^{rt}\qquad(dB_t=rB_t\,dt,\ B_0=1)}{the bond}
+\dl{dS_t=\mu S_t\,dt+\sigma S_t\,dW_t}{the stock: the Black--Scholes SDE}
+\dl{\mu\in\mathbb R,\quad\sigma>0,\quad S_0>0}{constants; $(W_t)$ a standard Brownian motion}
+\dl{\frac{dS_t}{S_t}=\mu\,dt+\sigma\,dW_t}{divide by $S_t$}
+\end{deriv}
+\item Solve for the stock with Itô's formula:
+\begin{deriv}
+\dl{d(\ln S_t)=\frac1{S_t}\,dS_t-\frac1{2S_t^2}\,(dS_t)^2}{\cref{card:ito}, row 5, with $f=\ln x$}
+\dl{\phantom{d(\ln S_t)}=\frac{dS_t}{S_t}-\frac1{2S_t^2}\,\sigma^2S_t^2\,dt}{$(dS_t)^2=\sigma^2S_t^2\,dt$}
+\dl{\phantom{d(\ln S_t)}=\mu\,dt+\sigma\,dW_t-\frac{\sigma^2}2\,dt}{Step~1, last line}
+\dl{\phantom{d(\ln S_t)}=\Big(\mu-\frac{\sigma^2}2\Big)dt+\sigma\,dW_t}{collect the $dt$ terms}
+\dl{\ln S_t-\ln S_0=\Big(\mu-\frac{\sigma^2}2\Big)t+\sigma W_t}{integrate from $0$ to $t$}
+\dl{S_t=S_0\,e^{(\mu-\frac{\sigma^2}2)t+\sigma W_t},\qquad t\in[0,T]}{take $\exp$: a geometric Brownian motion}
+\end{deriv}
+\item Trading, in continuous time:
+\begin{deriv}
+\dl{(\Delta_t,b_t),\ t\in[0,T]}{a trading strategy: predictable, with $\int_0^u\Delta_t\,dS_t$ well defined}
+\dl{V_t=\Delta_tS_t+b_tB_t}{its value at time $t$}
+\dl{dV_t=\Delta_t\,dS_t+b_t\,dB_t}{self-financing: no money in or out}
+\end{deriv}
+An \emph{arbitrage} is a self-financing strategy with $V_0=0$, $V_T\ge0$ almost surely, and $P(V_T>0)>0$. To \emph{replicate} (hedge) a claim $X$ is to find a self-financing strategy with $V_T=X$.
+\item Two questions. (1) Is the market arbitrage-free? If yes, attainable claims can be priced. (2) Is it complete, that is, is every claim attainable? Both are answered by the three key facts of no-arbitrage pricing:
+\begin{deriv}
+\dl{\text{an EMM }P^*\text{ exists}\ \Rightarrow\ \text{arbitrage-free}}{key fact 1: $e^{-rt}S_t$ a martingale under $P^*$}
+\dl{P_t(X)=\E_{P^*}\big(e^{-r(T-t)}X\given\F_t\big)}{key fact 2: the price of an attainable claim}
+\dl{P^*\text{ unique}\ \Rightarrow\ \text{complete}}{key fact 3: every claim attainable, so priceable}
+\end{deriv}
+\end{steps}
+
+%=====================================================================
+\section{The Black--Scholes market is arbitrage-free}\label{u:bsna}
+\begin{steps}
+\item Look for every EMM. Let the drift be any adapted process $(a_t)_{t\in[0,T]}$:
+\begin{deriv}
+\dl{Z_t:=S_0\exp\Big\{\int_0^ta_s\,ds+\sigma W_t\Big\}}{$a_t=\mu-\frac{\sigma^2}2$ gives the stock of \cref{u:frame}}
+\dl{X_t=X_0+\int_0^ta_s\,ds+\int_0^tb_s\,dW_s}{an Itô process \dots}
+\dl{\text{is a martingale}\iff a_t=0\ \text{ for all }t}{\dots is a martingale iff its $dt$-coefficient is $0$ (\cref{card:ito}, martingale test)}
+\end{deriv}
+So $e^{-rt}Z_t$ is a martingale iff the $dt$-coefficient of $d(e^{-rt}Z_t)$ is $0$.
+\item Split into two factors:
+\begin{deriv}
+\dl{e^{-rt}Z_t=S_0\,X_tY_t}{}
+\dl{X_t:=\exp\Big\{\int_0^ta_s\,ds\Big\}}{no $dW$ part}
+\dl{Y_t:=\exp\{-rt+\sigma W_t\}}{}
+\dl{dX_t=a_tX_t\,dt}{derivative of $e^{\int_0^ta_s\,ds}$ in $t$}
+\dl{dY_t=-rY_t\,dt+\sigma Y_t\,dW_t+\tfrac12\sigma^2Y_t\,dt}{\cardrow{card:ito}{2} with $\mu=-r$}
+\end{deriv}
+\item The product rule:
+\begin{deriv}
+\dl{d(X_tY_t)=Y_t\,dX_t+X_t\,dY_t+dX_t\,dY_t}{\cardrow{card:ito}{6}}
+\dl{\phantom{d(X_tY_t)}=Y_ta_tX_t\,dt}{substitute Step~2}
+\dl{\quad+X_t\big(-rY_t\,dt+\sigma Y_t\,dW_t+\tfrac12\sigma^2Y_t\,dt\big)+0}{$dX_t\,dY_t=0$: $dX_t$ has only $dt$}
+\dl{\phantom{d(X_tY_t)}=X_tY_t\Big(a_t-r+\frac{\sigma^2}2\Big)dt+\sigma X_tY_t\,dW_t}{collect the $dt$ terms}
+\end{deriv}
+\item The martingale test:
+\begin{deriv}
+\dl{X_tY_t>0}{both are exponentials}
+\dl{\text{$dt$-coefficient}=0\iff a_t=r-\frac{\sigma^2}2}{divide by $X_tY_t$; for all $t\in[0,T]$}
+\end{deriv}
+\item Conclude:
+\begin{deriv}
+\dl{\text{an EMM }P^*\text{ exists}}{the drift $a_t=r-\frac{\sigma^2}2$ (Step~4)}
+\dl{e^{-rt}S_t\text{ is a martingale on }(\Omega,\F,P^*)}{what Step~4 checked}
+\dl{\text{the market is arbitrage-free}}{key fact 1 (\cref{u:frame}, Step~4)}
+\dl{P_t(X)=\E_{P^*}\big(e^{-r(T-t)}X\given\F_t\big)}{so attainable claims can be priced}
+\end{deriv}
+\end{steps}
+
+%=====================================================================
+\section{The Black--Scholes market is complete}\label{u:bscomp}
+\begin{steps}
+\item Uniqueness:
+\begin{deriv}
+\dl{a_t=r-\frac{\sigma^2}2\text{ is the only drift}}{\cref{u:bsna}, Step~4: no other $a_t$ gives $dt$-coefficient $0$}
+\dl{\text{the EMM }P^*\text{ is unique}}{one drift, one measure}
+\dl{\text{the market is complete}}{key fact 3}
+\end{deriv}
+\item How a claim $X=g(S_T)$ is copied. Its time-$t$ value must equal the value $V_t$ of the copy, or there is an arbitrage:
+\begin{deriv}
+\dl{P_t(X)=\E_{P^*}\big(e^{-r(T-t)}X\given\F_t\big)}{key fact 2}
+\dl{\phantom{P_t(X)}=e^{-r(T-t)}\,\E_{P^*}\big(g(S_T)\given\F_t\big)}{$e^{-r(T-t)}$ is not random}
+\dl{\phantom{P_t(X)}=e^{-r(T-t)}\,\E_{P^*}\big(g(S_T)\given S_t\big)}{the price process is Markov}
+\dl{\phantom{P_t(X)}=:f(t,S_t)}{a function of $t$ and $S_t$}
+\end{deriv}
+\item Assume $f(t,s)$ is smooth enough for Itô's formula:
+\begin{deriv}
+\dl{dV_t=dP_t(X)=df(t,S_t)}{the copy has the claim's value}
+\dl{\phantom{dV_t}=\partial_tf\,dt+\partial_sf\,dS_t+\tfrac12\partial_{ss}f\,(dS_t)^2}{\cref{card:ito}}
+\dl{\phantom{dV_t}=\big(\partial_tf+\tfrac12\partial_{ss}f\,\sigma^2S_t^2\big)dt+\partial_sf\,dS_t}{$(dS_t)^2=\sigma^2S_t^2\,dt$}
+\dl{dV_t=\Delta_t\,dS_t+b_t\,dB_t}{self-financing}
+\end{deriv}
+\item Compare the last two lines:
+\begin{deriv}
+\dl{\Delta_t=\partial_sf(t,S_t)}{the $dS_t$ terms}
+\dl{b_t=\frac{f(t,S_t)-\Delta_tS_t}{B_t},\quad t\in[0,T]}{the value is $V_t=\Delta_tS_t+b_tB_t=f(t,S_t)$}
+\end{deriv}
+The number of shares in the hedge is the partial derivative of the time-$t$ claim value in $s$: the delta.
+\end{steps}
+
+%=====================================================================
+\section{The $T$-period binomial market is arbitrage-free}\label{u:binna}
+\begin{steps}
+\item The market:
+\begin{deriv}
+\dl{B_t=(1+r)^t,\quad t=0,1,\dots,T}{the bond}
+\dl{S_t=uS_{t-1}\ \text{ or }\ S_t=dS_{t-1}}{the stock, each period}
+\dl{d<1+r<u}{the condition}
+\dl{(\Delta_t,b_t),\ t=1,\dots,T}{shares and bonds held during $(t-1,t]$}
+\dl{\Delta_t=\Delta_t(S_0,\dots,S_{t-1})}{chosen with what is known at $t-1$; the same for $b_t$}
+\end{deriv}
+\item Self-financing, equation \textcircled{1}:
+\begin{deriv}
+\dl{\Delta_tS_t+b_t(1+r)^t=\Delta_{t+1}S_t+b_{t+1}(1+r)^t}{$t=1,\dots,T-1$: old holding $=$ new holding, at time-$t$ prices}
+\dl{V_0=\Delta_1S_0+b_1}{$t=0$}
+\dl{V_1=\Delta_1S_1+b_1(1+r)=\Delta_2S_1+b_2(1+r)}{$t=1$: reshuffle $(\Delta_1,b_1)$ into $(\Delta_2,b_2)$}
+\end{deriv}
+\item The risk-neutral probability:
+\begin{deriv}
+\dl{p^*=\frac{1+r-d}{u-d},\qquad1-p^*=\frac{u-(1+r)}{u-d}}{}
+\dl{0<p^*<1}{$d<1+r<u$}
+\dl{p^*u+(1-p^*)d=\frac{(1+r-d)u+(u-1-r)d}{u-d}}{substitute}
+\dl{\phantom{p^*u+(1-p^*)d}=\frac{(1+r)(u-d)}{u-d}=1+r}{the $ud$ terms cancel}
+\end{deriv}
+\item The discounted stock is a martingale under $P^*$:
+\begin{deriv}
+\dl{\E_{P^*}\Big(\frac{S_{t+1}}{1+r}\Bigm|S_t=s_t\Big)=\frac{p^*us_t+(1-p^*)ds_t}{1+r}}{up with probability $p^*$, down with $1-p^*$}
+\dl{\phantom{\E_{P^*}\Big(\frac{S_{t+1}}{1+r}\Bigm|S_t=s_t\Big)}=s_t}{Step~3}
+\dl{\E_{P^*}\Big(\frac{S_{t+1}}{1+r}\Bigm|S_0=s_0,\dots,S_t=s_t\Big)=s_t}{the next move does not depend on the earlier ones}
+\dl{S^*_t:=S_t(1+r)^{-t}}{the discounted stock}
+\dl{\E_{P^*}\big(S^*_{t+1}\given S^*_0,\dots,S^*_t\big)=S^*_t}{divide by $(1+r)^t$; $t=0,\dots,T-1$}
+\end{deriv}
+\item Conclude:
+\begin{deriv}
+\dl{\text{an EMM }P^*\text{ exists}}{Step~4}
+\dl{\text{the market is arbitrage-free}}{key fact 1}
+\end{deriv}
+\end{steps}
+
+%=====================================================================
+\section{The $T$-period binomial market is complete}\label{u:bincomp}
+\begin{steps}
+\item Uniqueness. As in the single-period case, $P^*$ is the only probability on $\Omega=\{\omega=(v_1,\dots,v_T):v_t\in\{u,d\}\}$ under which $S^*_t$ is a martingale:
+\begin{deriv}
+\dl{qu+(1-q)d=1+r}{what any up-probability $q$ at a node must satisfy (\cref{u:binna}, Step~4)}
+\dl{q=\frac{1+r-d}{u-d}=p^*}{one linear equation in $q$; $u\ne d$}
+\dl{\text{the market is complete}}{key fact 3}
+\end{deriv}
+\item The copy of a claim $X=g(S_T)$: a self-financing $(\Delta_t,b_t)$ with $V_T(\omega)=\Delta_TS_T+b_T(1+r)^T=X(\omega)$ for every $\omega$. Start at the last period, $t=T-1$, $S_{T-1}=s$:
+\begin{deriv}
+\dl{\Delta_T\,us+b_T(1+r)^T=g(us)}{if the stock goes up}
+\dl{\Delta_T\,ds+b_T(1+r)^T=g(ds)}{if it goes down}
+\dl{\Delta_T(s)=\frac{g(us)-g(ds)}{us-ds}}{subtract the two lines}
+\dl{b_T(s)=\frac{u\,g(ds)-d\,g(us)}{(1+r)^T(u-d)}}{put $\Delta_T$ back into either line}
+\end{deriv}
+\item The value at $T-1$:
+\begin{deriv}
+\dl{V_{T-1}[s]=\Delta_Ts+b_T(1+r)^{T-1}}{the cost of the holding at $T-1$}
+\dl{\phantom{V_{T-1}[s]}=\frac1{1+r}\big[p^*g(us)+(1-p^*)g(ds)\big]}{substitute Step~2 and simplify}
+\dl{\phantom{V_{T-1}[s]}=\E_{P^*}\Big(\frac{g(S_T)}{1+r}\Bigm|S_{T-1}=s\Big)}{the same, as an average}
+\end{deriv}
+\item Move one step back and repeat with $V_{T-1}$ in place of $g$; at $t=T-2$ the stock price is $s$:
+\begin{deriv}
+\dl{\Delta_{T-1}[s]=\frac{V_{T-1}[us]-V_{T-1}[ds]}{us-ds}}{Step~2 with $g\to V_{T-1}$}
+\dl{b_{T-1}[s]=\frac{u\,V_{T-1}[ds]-d\,V_{T-1}[us]}{(1+r)^{T-1}(u-d)}}{the same}
+\dl{V_{T-2}[s]=\E_{P^*}\Big(\frac{V_{T-1}[S_{T-1}]}{1+r}\Bigm|S_{T-2}=s\Big)}{Step~3 with $g\to V_{T-1}$}
+\dl{\quad=\frac1{1+r}\big[p^*V_{T-1}[us]+(1-p^*)V_{T-1}[ds]\big]}{two branches}
+\dl{\quad=\frac1{(1+r)^2}\sum_{j=0}^2\binom2j(p^*)^j(1-p^*)^{2-j}}{put in Step~3}
+\dl{\qquad\times g\big(u^jd^{2-j}s\big)}{}
+\end{deriv}
+\item The general formula, $t=1,\dots,T$ (at time $t-1$ with stock price $s$):
+\begin{deriv}
+\dl{\Delta_t[s]=\frac{V_t[us]-V_t[ds]}{us-ds}}{shares for the period $(t-1,t]$}
+\dl{b_t[s]=\frac{u\,V_t[ds]-d\,V_t[us]}{(1+r)^t(u-d)}}{bonds for the period $(t-1,t]$}
+\dl{V_t[s]=\frac1{(1+r)^{T-t}}\sum_{j=0}^{T-t}\binom{T-t}j(p^*)^j}{the value at time $t$ when $S_t=s$}
+\dl{\qquad\times(1-p^*)^{T-t-j}\,g\big(u^jd^{T-t-j}s\big)}{}
+\dl{V_0[s_0]=\E_{P^*}\Big(\frac{g(S_T)}{(1+r)^T}\Big)}{$t=0$}
+\end{deriv}
+At every node the new holding costs exactly what the old one is worth there, so the copy is self-financing, and $V_T=g(S_T)$. Every claim has a copy.
+\end{steps}
+
+%=====================================================================
+\section{Verify directly that the copy is self-financing}\label{u:selffin}
+The test is equation \textcircled{1} of \cref{u:binna}: at each time $t$ and each node, the old holding at the new prices equals the new holding at the same prices, $\Delta_tS_t+b_t(1+r)^t=\Delta_{t+1}S_t+b_{t+1}(1+r)^t$. Example: $T=2$, $u=1.35$, $d=0.6$, $r=0.15$, $S_0=400$, a call with $K=500$.
+\begin{steps}
+\item Price by going backwards:
+\begin{deriv}
+\dl{p^*=\frac{1.15-0.6}{1.35-0.6}=\frac{11}{15}=0.7333}{\cref{u:binna}, Step~3}
+\dl{S_1\in\{540,240\},\qquad S_2\in\{729,324,144\}}{the stock tree}
+\dl{g(S_2)=(S_2-500)^+\in\{229,0,0\}}{the payoffs}
+\dl{V_1[540]=\frac{0.7333(229)}{1.15}=146.03,\quad V_1[240]=0}{one step back}
+\dl{V_0=\frac{0.7333(146.03)}{1.15}=93.12}{to time $0$}
+\end{deriv}
+\item The copy, from the general formula of \cref{u:bincomp}, Step~5:
+\begin{deriv}
+\dl{\Delta_1=\frac{146.03-0}{540-240}=0.4868}{for $(0,1]$}
+\dl{b_1=V_0-\Delta_1S_0=93.12-194.71=-101.59}{$V_0=\Delta_1S_0+b_1$}
+\dl{\Delta_2[540]=\frac{229-0}{729-324}=0.5654}{for $(1,2]$ after an up-move}
+\dl{b_2[540]=\frac{146.03-0.5654(540)}{1.15}=-138.53}{$V_1=\Delta_2S_1+b_2(1.15)$}
+\dl{\Delta_2[240]=0,\qquad b_2[240]=0}{after a down-move both payoffs are $0$}
+\end{deriv}
+\item Check equation \textcircled{1} at $t=1$:
+\begin{deriv}
+\dl{\Delta_1(540)+b_1(1.15)=262.85-116.82=146.03}{up, old holding at $S_1=540$}
+\dl{\Delta_2(540)+b_2(1.15)=305.33-159.30=146.03}{up, new holding: equal}
+\dl{\Delta_1(240)+b_1(1.15)=116.82-116.82=0}{down, old holding at $S_1=240$}
+\dl{\Delta_2(240)+b_2(1.15)=0}{down, new holding: equal}
+\end{deriv}
+\item Check the end, $t=2$, after an up-move:
+\begin{deriv}
+\dl{0.5654(729)-138.53(1.15)^2}{at $S_2=729$}
+\dl{\quad=412.20-183.20=229}{the call pays $229$}
+\dl{0.5654(324)-138.53(1.15)^2}{at $S_2=324$}
+\dl{\quad=183.20-183.20=0}{the call pays $0$}
+\end{deriv}
+At every node no money goes in or out, and the copy pays exactly the call: self-financing.
+\end{steps}
+
+%=====================================================================
+\section{Put--call parity}\label{u:parity}
+\begin{steps}
+\item One period, a call $C$ and a put $P$ with the same strike $K$, in an arbitrage-free market. Form the portfolio: long one share of the stock, long one put on one share, short one call on one share:
+\begin{deriv}
+\dl{V_0=S_0+P-C}{its value at $t=0$}
+\dl{V_1=S_1+(K-S_1)^+-(S_1-K)^+}{its value at $t=1$}
+\dl{\phantom{V_1}=S_1-\big((S_1-K)^+-(K-S_1)^+\big)}{regroup}
+\dl{\phantom{V_1}=S_1-(S_1-K)=K}{$x^+-(-x)^+=x$ (\cref{card:payoff})}
+\end{deriv}
+\item $V_1=K$ in every state, so the portfolio is riskless:
+\begin{deriv}
+\dl{\E_{P^*}\Big(\frac{V_1}{1+r}\Big)=V_0}{no arbitrage: the price is the discounted average}
+\dl{\frac K{1+r}=V_0}{$V_1=K$ is not random}
+\dl{S_0+P-C=\frac K{1+r}}{put--call parity}
+\end{deriv}
+\item The same argument over $T$ periods, and in the Black--Scholes market with the bond $e^{rT}$:
+\begin{deriv}
+\dl{S_0+P-C=\frac K{(1+r)^T}}{$T$ periods}
+\dl{S_0+P-C=Ke^{-rT}}{continuous time}
+\dl{S_t+P_t-C_t=Ke^{-r(T-t)},\quad t\in[0,T]}{at any time $t$}
+\end{deriv}
+\end{steps}
+
+%=====================================================================
+\section{Pricing a European call and put in the binomial setting}\label{u:bincall}
+\begin{steps}
+\item The call, $g(s)=(s-K)^+$, from \cref{u:bincomp}, Step~5 at $t=0$:
+\begin{deriv}
+\dl{C=\frac1{(1+r)^T}\sum_{j=0}^T\binom Tj(p^*)^j(1-p^*)^{T-j}}{$j$ ups out of $T$}
+\dl{\qquad\times\big(u^jd^{T-j}S_0-K\big)^+}{}
+\end{deriv}
+\item Only the paths that end above $K$ pay:
+\begin{deriv}
+\dl{u^jd^{T-j}S_0>K}{the call pays}
+\dl{\ln S_0+j\ln u+(T-j)\ln d>\ln K}{take logs}
+\dl{j(\ln u-\ln d)>\ln K-\ln S_0-T\ln d}{collect $j$}
+\dl{m:=\Big\lfloor\frac{\ln K-\ln S_0-T\ln d}{\ln u-\ln d}\Big\rfloor+1}{the least such $j$}
+\dl{C=\frac1{(1+r)^T}\sum_{j=m}^T\binom Tj(p^*)^j(1-p^*)^{T-j}}{drop the $+$: only $j\ge m$}
+\dl{\qquad\times\big(u^jd^{T-j}S_0-K\big)}{}
+\end{deriv}
+\item Split into the $S_0$ part and the $K$ part:
+\begin{deriv}
+\dl{C=S_0\sum_{j=m}^T\binom Tj\Big(\frac{up^*}{1+r}\Big)^j\Big(\frac{d(1-p^*)}{1+r}\Big)^{T-j}}{$\frac{u^jd^{T-j}}{(1+r)^T}=\big(\frac u{1+r}\big)^j\big(\frac d{1+r}\big)^{T-j}$}
+\dl{\quad-\frac K{(1+r)^T}\sum_{j=m}^T\binom Tj(p^*)^j(1-p^*)^{T-j}}{}
+\dl{\hat p:=\frac{up^*}{1+r},\qquad1-\hat p=\frac{d(1-p^*)}{1+r}}{they add to $1$: $up^*+d(1-p^*)=1+r$}
+\dl{C=S_0\,P(\hat U\ge m)-\frac K{(1+r)^T}\,P(U^*\ge m)}{$\hat U\sim B(T,\hat p)$, $U^*\sim B(T,p^*)$}
+\end{deriv}
+\item The put, $g(s)=(K-s)^+$, the same way: only $j<m$ pay, so
+\begin{deriv}
+\dl{P=\frac1{(1+r)^T}\sum_{j=0}^{m-1}\binom Tj(p^*)^j(1-p^*)^{T-j}}{}
+\dl{\qquad\times\big(K-u^jd^{T-j}S_0\big)}{}
+\dl{P=\frac K{(1+r)^T}\,P(U^*<m)-S_0\,P(\hat U<m)}{split as in Step~3}
+\dl{P=C-S_0+\frac K{(1+r)^T}}{check: $P(\cdot<m)=1-P(\cdot\ge m)$; this is put--call parity (\cref{u:parity})}
+\end{deriv}
+\end{steps}
+
+%=====================================================================
+\section{The Black--Scholes formula from the binomial model}\label{u:bin2bs}
+\begin{steps}
+\item Split $[0,T]$ into $n$ periods of length $\delta_n=\frac Tn$, and choose the tree for each $n$:
+\begin{deriv}
+\dl{S_{j\delta_n}=u_nS_{(j-1)\delta_n}\text{ or }d_nS_{(j-1)\delta_n}}{$j=1,\dots,n$}
+\dl{u_n=e^{\sigma\sqrt{\delta_n}},\qquad d_n=e^{-\sigma\sqrt{\delta_n}}}{up and down}
+\dl{r_n=e^{r\delta_n}-1}{so $(1+r_n)^n=e^{rT}$}
+\dl{S_n=S_0\,e^{\sum_{i=1}^nY_i}=S_0\,e^{Z_n}}{the price after $n$ periods}
+\dl{Y_i=\pm\sigma\sqrt{T/n}\ \text{ w.p. }p^*_n,\ 1-p^*_n}{$Z_n$ is a random walk with i.i.d.\ jumps $\ln u_n$ or $\ln d_n$}
+\end{deriv}
+\item The call price for each $n$ (\cref{u:bincall}, Step~3):
+\begin{deriv}
+\dl{C=S_0\,P(\hat U\ge m)-\frac K{(1+r_n)^n}\,P(U^*\ge m)}{$\hat U\sim B(n,\hat p_n)$, $U^*\sim B(n,p^*_n)$}
+\dl{p^*_n=\frac{1+r_n-d_n}{u_n-d_n},\qquad\hat p_n=\frac{u_np^*_n}{1+r_n}}{}
+\end{deriv}
+\item As $n\to\infty$ the binomials are close to normal (central limit theorem):
+\begin{deriv}
+\dl{P(U\ge m)\approx1-\Phi\Big(\frac{m-np}{\sqrt{np(1-p)}}\Big)}{$U\sim B(n,p)$ has mean $np$, variance $np(1-p)$}
+\dl{\phantom{P(U\ge m)}=\Phi\Big(\frac{np-m}{\sqrt{np(1-p)}}\Big)}{$1-\Phi(x)=\Phi(-x)$}
+\dl{C\approx S_0\,\Phi\Big(\frac{n\hat p_n-m}{\sqrt{n\hat p_n(1-\hat p_n)}}\Big)}{apply to both parts}
+\dl{\quad-\frac K{(1+r_n)^n}\,\Phi\Big(\frac{np^*_n-m}{\sqrt{np^*_n(1-p^*_n)}}\Big)}{}
+\end{deriv}
+\item Expand $p^*_n$ for small $\delta=\delta_n$, keeping the terms of order $\delta$:
+\begin{deriv}
+\dl{e^{r\delta}-e^{-\sigma\sqrt\delta}\approx r\delta+\sigma\sqrt\delta-\tfrac12\sigma^2\delta}{$e^x\approx1+x+\frac{x^2}2$}
+\dl{e^{\sigma\sqrt\delta}-e^{-\sigma\sqrt\delta}\approx2\sigma\sqrt\delta}{the same; the $\frac{x^2}2$ terms cancel}
+\dl{p^*_n\approx\frac12+\frac{r-\frac12\sigma^2}{2\sigma}\sqrt{\delta_n}}{divide; $p^*_n\to\frac12$}
+\dl{\hat p_n\approx\frac12+\frac{r+\frac12\sigma^2}{2\sigma}\sqrt{\delta_n}}{$\hat p_n=\frac{u_np^*_n}{1+r_n}$, $u_n\approx1+\sigma\sqrt\delta$: one more $\frac\sigma2\sqrt\delta$}
+\end{deriv}
+\item The cut-off $m$ and the denominators:
+\begin{deriv}
+\dl{u_n^jd_n^{n-j}S_0>K\iff(2j-n)\sigma\sqrt{\delta_n}>\ln\frac K{S_0}}{take logs}
+\dl{m\approx\frac n2+\frac{\ln(K/S_0)}{2\sigma\sqrt{\delta_n}}}{the least such $j$}
+\dl{\sqrt{np(1-p)}\approx\frac{\sqrt n}2}{for $p=p^*_n$ or $\hat p_n$, both $\to\frac12$}
+\end{deriv}
+\item The $K$ part:
+\begin{deriv}
+\dl{np^*_n-m\approx\frac{n\sqrt{\delta_n}\,(r-\frac12\sigma^2)}{2\sigma}-\frac{\ln(K/S_0)}{2\sigma\sqrt{\delta_n}}}{Steps~4 and~5}
+\dl{\phantom{np^*_n-m}=\frac{\ln(S_0/K)+(r-\frac12\sigma^2)T}{2\sigma\sqrt{\delta_n}}}{$n\delta_n=T$}
+\dl{\frac{np^*_n-m}{\sqrt n/2}=\frac{\ln(S_0/K)+(r-\frac12\sigma^2)T}{\sigma\sqrt T}}{$\sqrt n\sqrt{\delta_n}=\sqrt T$}
+\dl{\phantom{\frac{np^*_n-m}{\sqrt n/2}}=h-\sigma\sqrt T}{with $h$ below}
+\end{deriv}
+\item The $S_0$ part, the same way with $r+\frac12\sigma^2$:
+\begin{deriv}
+\dl{\frac{n\hat p_n-m}{\sqrt n/2}\to\frac{\ln(S_0/K)+(r+\frac12\sigma^2)T}{\sigma\sqrt T}=:h}{Step~6 with $\hat p_n$}
+\end{deriv}
+\item Put it together, with $(1+r_n)^n=e^{rT}$:
+\begin{deriv}
+\dl{C=S_0\,\Phi(h)-Ke^{-rT}\,\Phi\big(h-\sigma\sqrt T\big)}{the Black--Scholes formula}
+\dl{h=\frac{\ln(S_0/K)+(r+\frac12\sigma^2)T}{\sigma\sqrt T}}{}
+\end{deriv}
+This is the price of a European call with maturity $T$ and strike $K$ when the stock is the geometric Brownian motion $S_t=S_0e^{\mu t+\sigma W_t}$ and the bond is $B_t=e^{rt}$, $t\in[0,T]$.
+\end{steps}
+
+%=====================================================================
+\section{The sensitivities (Greeks) of a European call}\label{u:gcall}
+\begin{steps}
+\item At $t=0$, $C=C(S_0,T,K,r,\sigma)$, and the five sensitivities are:
+\begin{deriv}
+\dl{C=S_0\,\Phi(h)-Ke^{-rT}\,\Phi(h-\sigma\sqrt T)}{\cref{u:bin2bs}}
+\dl{h=\frac{\ln(S_0/K)+(r+\frac12\sigma^2)T}{\sigma\sqrt T}}{and $h_0:=h-\sigma\sqrt T$}
+\dl{\Delta=\partial_{S_0}C,\qquad\Gamma=\partial_{S_0S_0}C}{delta, gamma}
+\dl{\nu=\partial_\sigma C,\quad\Theta=\partial_TC,\quad\rho=\partial_rC}{vega, theta, rho}
+\end{deriv}
+\item Two facts:
+\begin{deriv}
+\dl{\partial_{S_0}h=\frac1{\sigma\sqrt T\,S_0}}{only $\ln S_0$ has $S_0$}
+\dl{\Phi'(h)=\varphi(h)=\frac1{\sqrt{2\pi}}e^{-h^2/2}}{}
+\end{deriv}
+\item The cancellation identity:
+\begin{deriv}
+\dl{\varphi(h-\sigma\sqrt T)=\varphi(h)\,e^{h\sigma\sqrt T}e^{-\sigma^2T/2}}{expand $(h-\sigma\sqrt T)^2$}
+\dl{e^{h\sigma\sqrt T}=e^{\ln(S_0/K)+rT+\frac12\sigma^2T}}{multiply $h$ by $\sigma\sqrt T$}
+\dl{Ke^{-rT}\varphi(h-\sigma\sqrt T)=Ke^{-rT}\varphi(h)\frac{S_0}Ke^{rT}}{substitute; the $\sigma^2T/2$ cancel}
+\dl{\phantom{Ke^{-rT}\varphi(h-\sigma\sqrt T)}=S_0\,\varphi(h)}{the identity}
+\end{deriv}
+\item \textbf{Delta}:
+\begin{deriv}
+\dl{\Delta=\Phi(h)+S_0\varphi(h)\partial_{S_0}h}{product rule on $S_0\Phi(h)$}
+\dl{\quad-Ke^{-rT}\varphi(h-\sigma\sqrt T)\,\partial_{S_0}h}{$\partial_{S_0}(h-\sigma\sqrt T)=\partial_{S_0}h$}
+\dl{\phantom{\Delta}=\Phi(h)+\frac{\varphi(h)}{\sigma\sqrt T}\Big[1-\frac K{S_0e^{rT}}e^{h\sigma\sqrt T}e^{-\sigma^2T/2}\Big]}{take out $S_0\varphi(h)\partial_{S_0}h$; Step~3, first line}
+\dl{\phantom{\Delta}=\Phi(h)+\frac{\varphi(h)}{\sigma\sqrt T}\,[1-1]}{Step~3, second line}
+\dl{\Delta=\Phi(h)}{}
+\end{deriv}
+\item \textbf{Gamma}:
+\begin{deriv}
+\dl{\Gamma=\partial_{S_0}\Phi(h)=\Phi'(h)\,\partial_{S_0}h}{differentiate $\Delta$; chain rule}
+\dl{\Gamma=\frac{\varphi(h)}{\sigma\sqrt T\,S_0}}{Step~2}
+\end{deriv}
+\item \textbf{Vega}:
+\begin{deriv}
+\dl{\nu=S_0\varphi(h)\partial_\sigma h-Ke^{-rT}\varphi(h-\sigma\sqrt T)\big(\partial_\sigma h-\sqrt T\big)}{$\partial_\sigma(h-\sigma\sqrt T)=\partial_\sigma h-\sqrt T$}
+\dl{\phantom{\nu}=\big[S_0\varphi(h)-Ke^{-rT}\varphi(h-\sigma\sqrt T)\big]\partial_\sigma h}{collect $\partial_\sigma h$}
+\dl{\quad+Ke^{-rT}\varphi(h-\sigma\sqrt T)\sqrt T}{}
+\dl{\nu=S_0\,\varphi(h)\sqrt T}{bracket $=0$ and Step~3}
+\end{deriv}
+\item \textbf{Theta}, $\Theta=\partial_TC$ (with $\partial_T(\sigma\sqrt T)=\frac\sigma{2\sqrt T}$ and $\partial_Te^{-rT}=-re^{-rT}$):
+\begin{deriv}
+\dl{\Theta=S_0\varphi(h)\partial_Th+rKe^{-rT}\Phi(h-\sigma\sqrt T)}{product rule on $Ke^{-rT}\Phi(\cdot)$}
+\dl{\quad-Ke^{-rT}\varphi(h-\sigma\sqrt T)\Big(\partial_Th-\frac\sigma{2\sqrt T}\Big)}{}
+\dl{\phantom{\Theta}=\big[S_0\varphi(h)-Ke^{-rT}\varphi(h-\sigma\sqrt T)\big]\partial_Th}{collect $\partial_Th$}
+\dl{\quad+rKe^{-rT}\Phi(h-\sigma\sqrt T)+\frac{S_0\varphi(h)\sigma}{2\sqrt T}}{Step~3 on the last term}
+\dl{\Theta=\frac{S_0\varphi(h)\sigma}{2\sqrt T}+rKe^{-rT}\Phi(h-\sigma\sqrt T)}{bracket $=0$}
+\end{deriv}
+In calendar time $t$ (time left $T-t$) the sign flips: $\theta=\partial_tC=-\Theta$.
+\item \textbf{Rho} (with $\partial_re^{-rT}=-Te^{-rT}$ and $\partial_rh=\partial_r(h-\sigma\sqrt T)=\frac{\sqrt T}\sigma$):
+\begin{deriv}
+\dl{\rho=S_0\varphi(h)\partial_rh+TKe^{-rT}\Phi(h-\sigma\sqrt T)}{product rule on $Ke^{-rT}\Phi(\cdot)$}
+\dl{\quad-Ke^{-rT}\varphi(h-\sigma\sqrt T)\,\partial_rh}{}
+\dl{\phantom{\rho}=\big[S_0\varphi(h)-Ke^{-rT}\varphi(h-\sigma\sqrt T)\big]\partial_rh}{collect $\partial_rh$}
+\dl{\quad+TKe^{-rT}\Phi(h-\sigma\sqrt T)}{}
+\dl{\rho=TKe^{-rT}\,\Phi(h-\sigma\sqrt T)}{bracket $=0$}
+\end{deriv}
+\end{steps}
+
+%=====================================================================
+\section{The sensitivities of a European put}\label{u:gput}
+\begin{steps}
+\item Put--call parity (\cref{u:parity}) gives the put from the call:
+\begin{deriv}
+\dl{S_0+P-C=Ke^{-rT}}{at $t=0$}
+\dl{P=C-S_0+Ke^{-rT}}{solve for $P$}
+\end{deriv}
+\item Differentiate each Greek of the call (\cref{u:gcall}) through this line:
+\begin{deriv}
+\dl{\Delta_P=\partial_{S_0}C-\partial_{S_0}S_0=\Phi(h)-1}{$Ke^{-rT}$ has no $S_0$}
+\dl{\Gamma_P=\partial_{S_0}\big(\Phi(h)-1\big)=\frac{\varphi(h)}{\sigma\sqrt T\,S_0}}{the same as the call}
+\dl{\nu_P=\nu_C=S_0\varphi(h)\sqrt T}{$-S_0+Ke^{-rT}$ has no $\sigma$}
+\dl{\Theta_P=\Theta_C+\partial_T\big(Ke^{-rT}\big)=\Theta_C-rKe^{-rT}}{}
+\dl{\phantom{\Theta_P}=\frac{S_0\varphi(h)\sigma}{2\sqrt T}-rKe^{-rT}\,\Phi\big(\sigma\sqrt T-h\big)}{$\Phi(x)-1=-\Phi(-x)$}
+\dl{\rho_P=\rho_C+\partial_r\big(Ke^{-rT}\big)=\rho_C-TKe^{-rT}}{}
+\dl{\phantom{\rho_P}=-TKe^{-rT}\,\Phi\big(\sigma\sqrt T-h\big)}{$\Phi(x)-1=-\Phi(-x)$}
+\end{deriv}
+\end{steps}
+
+\begin{center}\renewcommand{\arraystretch}{2.1}
+\begin{tabular}{@{}l|l|l@{}}
+ & call & put\\\hline
+$\Delta$ & $\Phi(h)$ & $\Phi(h)-1$\\
+$\Gamma$ & $\dfrac{\varphi(h)}{\sigma\sqrt TS_0}$ & the same\\
+$\nu$ & $S_0\varphi(h)\sqrt T$ & the same\\
+$\Theta=\partial_T$ & $\dfrac{S_0\varphi(h)\sigma}{2\sqrt T}+rKe^{-rT}\Phi(h-\sigma\sqrt T)$ & $\dfrac{S_0\varphi(h)\sigma}{2\sqrt T}-rKe^{-rT}\Phi(\sigma\sqrt T-h)$\\
+$\rho$ & $TKe^{-rT}\Phi(h-\sigma\sqrt T)$ & $-TKe^{-rT}\Phi(\sigma\sqrt T-h)$\\
+\end{tabular}
+\end{center}
+
+%=====================================================================
+\section{Interpreting delta, gamma and theta}\label{u:ginterp}
+\begin{steps}
+\item \textbf{Delta}, the number of shares in the hedge:
+\begin{deriv}
+\dl{\Delta_t=\partial_sf(t,S_t)}{the copy holds $\Delta_t$ shares (\cref{u:bscomp}, Step~4)}
+\dl{\Delta_C=\Phi(h)\in(0,1)}{$\Phi$ takes values in $(0,1)$}
+\dl{\Delta_P=\Phi(h)-1\in(-1,0)}{}
+\dl{\Delta_C>0}{the writer of a call must be able to deliver the stock in case the owner exercises: hold shares}
+\dl{\Delta_P<0}{the writer of a put must be able to absorb buying the stock: hold a short position}
+\dl{\Delta\approx\frac{\text{change in }C}{\text{change in }S_0}}{the call rises by about $\Delta$ when the stock rises by $1$}
+\end{deriv}
+\item \textbf{Gamma}, how fast delta moves:
+\begin{deriv}
+\dl{\Gamma=\partial_{S_0}\Delta=\frac{\varphi(h)}{\sigma\sqrt T\,S_0}>0}{a derivative of $\Delta$; $\varphi>0$}
+\dl{\Gamma>0}{$\Delta$ rises with $S_0$: the hedge must be readjusted as the stock moves; the price is convex in $S_0$}
+\dl{\Gamma\text{ largest near }h=0}{$\varphi$ peaks at $0$: the stock near the strike, close to expiry}
+\end{deriv}
+\item \textbf{Theta}, how the price moves with time:
+\begin{deriv}
+\dl{\Theta_C=\partial_TC>0}{both terms are positive: a call with longer to run is worth more}
+\dl{\theta_C=\partial_tC=-\Theta_C<0}{as calendar time passes, the call loses value (time decay)}
+\end{deriv}
+\end{steps}
+
+%=====================================================================
+\section{Value at risk (VaR)}\label{u:var}
+\begin{steps}
+\item Three approaches to VaR: the variance--covariance approach, the historical simulation approach, and the Monte Carlo simulation method. The variance--covariance approach is also called the delta-normal method.
+\item The assumption and the variance of the portfolio return:
+\begin{deriv}
+\dl{\text{each asset's return is normal}}{the assumption}
+\dl{\Var(R)=\sum_i\sum_jw_iw_j\sigma_{ij}}{the variance of the portfolio return $R$}
+\dl{\phantom{\Var(R)}=\sum_i\sum_jw_iw_j\sigma_i\sigma_j\rho_{ij}}{$\sigma_{ij}=\sigma_i\sigma_j\rho_{ij}$}
+\dl{w_i}{the fraction of the portfolio's value in asset $i$, $\sum_iw_i=1$}
+\dl{\sigma_{ij},\ \sigma_i,\ \rho_{ij}}{covariance of the returns of assets $i$ and $j$; s.d.\ of asset $i$'s return; their correlation}
+\end{deriv}
+\item Three assets:
+\begin{deriv}
+\dl{\Var(R)=w_1^2\sigma_1^2+w_2^2\sigma_2^2+w_3^2\sigma_3^2}{the double sum written out}
+\dl{\quad+2w_1w_2\sigma_{12}+2w_1w_3\sigma_{13}+2w_2w_3\sigma_{23}}{$\sigma_{ij}=\sigma_{ji}$}
+\end{deriv}
+\item From the variance to VaR:
+\begin{deriv}
+\dl{\text{s.d.\ of the daily return}=\sqrt{\Var(R)}}{}
+\dl{1\text{ s.d.\ of loss}=\sqrt{\Var(R)}\times\text{portfolio value}}{in money}
+\dl{\text{VaR}=z_\alpha\times(1\text{ s.d.\ of loss})}{$z_{0.95}=1.645$, $z_{0.99}=2.327$}
+\end{deriv}
+\item The class example: a portfolio worth $\$23$ million: a currency swap ($\$2$m, $8.7\%$), a bond ($\$17$m, $73.9\%$) and a stock ($\$4$m, $17.4\%$), with the daily variance--covariance matrix of the returns given. Then:
+\begin{deriv}
+\dl{\Var(R)=0.0002822}{Step~3 with the class matrix}
+\dl{\sqrt{0.0002822}=0.0168=1.68\%}{the s.d.\ of the daily return}
+\dl{1.68\%\times\$23\text{m}=\$386{,}375}{one s.d.\ of loss}
+\dl{1.645\times\$386{,}375=\$635{,}587}{a $5\%$ chance of a one-day loss this large}
+\dl{2.327\times\$386{,}375=\$899{,}095}{a $1\%$ chance of a one-day loss this large}
+\end{deriv}
+\end{steps}
+\answer{VaR at level $\alpha$ is the loss exceeded only with probability $1-\alpha$ over the horizon. With normal returns, $\text{VaR}=z_\alpha\sqrt{\sum_i\sum_jw_iw_j\sigma_{ij}}\times\text{portfolio value}$.}
