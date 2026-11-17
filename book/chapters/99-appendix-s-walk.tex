@@ -1,0 +1,331 @@
+\chapter{Brownian motion and SDEs, every step}\label{app:walk}
+
+This appendix derives the box of \cref{card:scaledwalk}, line by line. The card says:
+
+\begin{setup}[What \cref{card:scaledwalk} says]
+Every $\Delta t$ the walk moves up $\Delta x$ with probability $p$ or down $\Delta x$ with probability $1-p$, independently. After the $t/\Delta t$ steps made by time $t$,
+\[
+  \boxed{\begin{gathered}\E_P\,X(t)=\frac{t}{\Delta t}\,\Delta x\,(2p-1),\qquad \Var X(t)=\frac{t}{\Delta t}\,(\Delta x)^2\big(1-(2p-1)^2\big);\\
+  \Delta x=\sigma\sqrt{\Delta t},\ \ p=\tfrac12\big(1+\tfrac{\mu}{\sigma}\sqrt{\Delta t}\big),\ \ \Delta t\to0:\qquad X(t)\to\mu t+\sigma W(t)\sim N(\mu t,\sigma^2t).\end{gathered}}
+\]
+\end{setup}
+
+Part 1 finds the mean and the variance (the first line of the box). Part 2 explains the choices of $\Delta x$ and $p$. Part 3 shows that the limit is normal, which is the end of the second line. Part 4 uses the limit to find every moment $\E_P\,W_t^k$. Parts 5 and 6 derive the box and the four rows of \cref{card:linsde}, the mean-reverting SDE, and end with a table of the rows. Each row does one thing. The right-hand column says how that row follows from the row before it.
+
+\section*{Part 1: the mean and the variance}
+
+\begin{steps}
+\item\label{w:walk} Write the walk as a sum of its steps. Call the $i$-th step $\xi_i$:
+\begin{deriv}
+\dl{\xi_i=+\Delta x\ \text{ with probability }p}{one step up}
+\dl{\xi_i=-\Delta x\ \text{ with probability }1-p}{one step down; the steps $\xi_1,\xi_2,\dots$ are independent}
+\dl{n=\frac{t}{\Delta t}}{one step every $\Delta t$, so by time $t$ the walk has made $t/\Delta t$ steps}
+\dl{X(t)=\xi_1+\xi_2+\dots+\xi_n}{the walk starts at $0$, so its position is the sum of its steps}
+\end{deriv}
+
+\item\label{w:mean1} The mean of one step:
+\begin{deriv}
+\dl{\E_P\,\xi_i=(+\Delta x)\,p+(-\Delta x)(1-p)}{each value times its probability}
+\dl{\phantom{\E_P\,\xi_i}=\Delta x\,\big(p-(1-p)\big)}{take out $\Delta x$}
+\dl{\phantom{\E_P\,\xi_i}=\Delta x\,(2p-1)}{$p-1+p=2p-1$}
+\end{deriv}
+
+\item\label{w:var1} The variance of one step:
+\begin{deriv}
+\dl{\xi_i^2=(\Delta x)^2}{both $+\Delta x$ and $-\Delta x$ square to $(\Delta x)^2$}
+\dl{\E_P\,\xi_i^2=(\Delta x)^2}{$\xi_i^2$ is not random, so its mean is itself}
+\dl{\Var\xi_i=\E_P\,\xi_i^2-(\E_P\,\xi_i)^2}{the definition of variance}
+\dl{\phantom{\Var\xi_i}=(\Delta x)^2-(\Delta x)^2(2p-1)^2}{the line above and Step~\ref{w:mean1}}
+\dl{\phantom{\Var\xi_i}=(\Delta x)^2\big(1-(2p-1)^2\big)}{take out $(\Delta x)^2$}
+\end{deriv}
+
+\item\label{w:mean} The mean of $X(t)$:
+\begin{deriv}
+\dl{\E_P\,X(t)=\E_P\,\xi_1+\dots+\E_P\,\xi_n}{the mean of a sum is the sum of the means}
+\dl{\phantom{\E_P\,X(t)}=n\,\Delta x\,(2p-1)}{all $n$ steps have the mean of Step~\ref{w:mean1}}
+\dl{\phantom{\E_P\,X(t)}=\frac{t}{\Delta t}\,\Delta x\,(2p-1)}{$n=t/\Delta t$ (Step~\ref{w:walk})}
+\end{deriv}
+
+\item\label{w:var} The variance of $X(t)$:
+\begin{deriv}
+\dl{\Var X(t)=\sum_{i}\Var\xi_i+2\sum_{i<j}\Cov(\xi_i,\xi_j)}{the variance of a sum}
+\dl{\phantom{\Var X(t)}=\sum_{i}\Var\xi_i}{independent steps have $\Cov(\xi_i,\xi_j)=0$}
+\dl{\phantom{\Var X(t)}=n\,(\Delta x)^2\big(1-(2p-1)^2\big)}{all $n$ steps have the variance of Step~\ref{w:var1}}
+\dl{\phantom{\Var X(t)}=\frac{t}{\Delta t}\,(\Delta x)^2\big(1-(2p-1)^2\big)}{$n=t/\Delta t$}
+\end{deriv}
+Steps~\ref{w:mean} and~\ref{w:var} are the first line of the box.
+\end{steps}
+
+\section*{Part 2: why $\Delta x=\sigma\sqrt{\Delta t}$ and $p=\frac12\big(1+\frac\mu\sigma\sqrt{\Delta t}\big)$}
+
+\begin{steps}[resume]
+\item\label{w:dx} The size of a step. Take the fair walk first, $p=\frac12$:
+\begin{deriv}
+\dl{2p-1=0}{$p=\frac12$}
+\dl{\Var X(t)=\frac{t}{\Delta t}\,(\Delta x)^2=t\cdot\frac{(\Delta x)^2}{\Delta t}}{Step~\ref{w:var} with $2p-1=0$}
+\end{deriv}
+Now let $\Delta t\to0$. If $(\Delta x)^2/\Delta t\to0$ the variance goes to $0$ and the walk stops moving. If $(\Delta x)^2/\Delta t\to\infty$ the variance blows up. The only way to keep a finite, non-zero variance is to hold the ratio fixed at a constant, which we call $\sigma^2$:
+\begin{deriv}
+\dl{\frac{(\Delta x)^2}{\Delta t}=\sigma^2}{choose the ratio to be the constant $\sigma^2$}
+\dl{\Delta x=\sigma\sqrt{\Delta t}}{multiply by $\Delta t$ and take the square root ($\Delta x>0$)}
+\dl{\Var X(t)=\sigma^2t}{the line before last, put into $t\cdot\frac{(\Delta x)^2}{\Delta t}$}
+\end{deriv}
+
+\item\label{w:p} The probability of an up-step. We want the walk to drift at rate $\mu$, so we want $\E_P\,X(t)=\mu t$:
+\begin{deriv}
+\dl{\E_P\,X(t)=\frac{t}{\Delta t}\,\sigma\sqrt{\Delta t}\,(2p-1)}{Step~\ref{w:mean} with $\Delta x=\sigma\sqrt{\Delta t}$}
+\dl{\phantom{\E_P\,X(t)}=\frac{\sigma t}{\sqrt{\Delta t}}\,(2p-1)}{$\frac{\sqrt{\Delta t}}{\Delta t}=\frac1{\sqrt{\Delta t}}$}
+\dl{\frac{\sigma t}{\sqrt{\Delta t}}\,(2p-1)=\mu t}{set the mean equal to $\mu t$}
+\dl{2p-1=\frac\mu\sigma\sqrt{\Delta t}}{multiply both sides by $\frac{\sqrt{\Delta t}}{\sigma t}$}
+\dl{p=\tfrac12\Big(1+\frac\mu\sigma\sqrt{\Delta t}\Big)}{add $1$, then halve}
+\end{deriv}
+This is a probability (between $0$ and $1$) once $\Delta t$ is small enough that $\big|\frac\mu\sigma\big|\sqrt{\Delta t}\le1$.
+
+\item\label{w:mv} The mean and the variance with both choices:
+\begin{deriv}
+\dl{\E_P\,X(t)=\mu t}{exactly, because Step~\ref{w:p} chose $p$ to make it so}
+\dl{(\Delta x)^2=\sigma^2\Delta t,\qquad(2p-1)^2=\frac{\mu^2}{\sigma^2}\,\Delta t}{square the choices of Steps~\ref{w:dx} and~\ref{w:p}}
+\dl{\Var X(t)=\frac{t}{\Delta t}\,\sigma^2\Delta t\,\Big(1-\frac{\mu^2}{\sigma^2}\,\Delta t\Big)}{put both into Step~\ref{w:var}}
+\dl{\phantom{\Var X(t)}=\sigma^2t-\mu^2t\,\Delta t}{$\frac{t}{\Delta t}\,\sigma^2\Delta t=\sigma^2t$; multiply out}
+\dl{\phantom{\Var X(t)}\to\sigma^2t}{let $\Delta t\to0$}
+\end{deriv}
+So in the limit the mean is $\mu t$ and the variance is $\sigma^2t$. Part 3 shows that the limit is also \emph{normal}.
+\end{steps}
+
+\section*{Part 3: the limit is normal}
+
+A distribution is pinned down by its moment generating function $\E_P\,e^{\theta X}$, so we find the limit of $\E_P\,e^{\theta X(t)}$ and recognise it. Fix any number $\theta$.
+
+\begin{steps}[resume]
+\item\label{w:mgf1} The moment generating function of one step. Write $x=\theta\,\Delta x=\theta\sigma\sqrt{\Delta t}$ to save ink:
+\begin{deriv}
+\dl{\E_P\,e^{\theta\xi_i}=p\,e^{x}+(1-p)\,e^{-x}}{each value of $e^{\theta\xi_i}$ times its probability}
+\dl{e^{x}=1+x+\tfrac12x^2+O(x^3)}{Taylor expansion of $e^x$}
+\dl{e^{-x}=1-x+\tfrac12x^2+O(x^3)}{the same with $-x$; the square does not change sign}
+\dl{p\,e^{x}+(1-p)\,e^{-x}=1+(2p-1)\,x+\tfrac12x^2+O(x^3)}{add: $p+(1-p)=1$, $\ p\,x-(1-p)\,x=(2p-1)\,x$, $\ \frac12x^2(p+1-p)=\frac12x^2$}
+\end{deriv}
+
+\item\label{w:mgf1b} Put in $x$ and $p$:
+\begin{deriv}
+\dl{(2p-1)\,x=\frac\mu\sigma\sqrt{\Delta t}\cdot\theta\sigma\sqrt{\Delta t}=\theta\mu\,\Delta t}{$2p-1$ from Step~\ref{w:p}; the $\sigma$'s cancel and $\sqrt{\Delta t}\sqrt{\Delta t}=\Delta t$}
+\dl{\tfrac12x^2=\tfrac12\theta^2\sigma^2\,\Delta t}{square $x=\theta\sigma\sqrt{\Delta t}$}
+\dl{O(x^3)=O(\Delta t^{3/2})}{$x$ is a constant times $\sqrt{\Delta t}$}
+\dl{\E_P\,e^{\theta\xi_i}=1+a\,\Delta t+O(\Delta t^{3/2})}{collect the three lines in Step~\ref{w:mgf1}}
+\dl{\text{where }a=\theta\mu+\tfrac12\theta^2\sigma^2}{the two $\Delta t$ terms, with $\Delta t$ taken out}
+\end{deriv}
+
+\item\label{w:mgf} The moment generating function of $X(t)$:
+\begin{deriv}
+\dl{\E_P\,e^{\theta X(t)}=\E_P\big[e^{\theta\xi_1}e^{\theta\xi_2}\cdots e^{\theta\xi_n}\big]}{$X(t)=\xi_1+\dots+\xi_n$ and $e^{A+B}=e^Ae^B$}
+\dl{\phantom{\E_P\,e^{\theta X(t)}}=\E_P\,e^{\theta\xi_1}\cdot\E_P\,e^{\theta\xi_2}\cdots\E_P\,e^{\theta\xi_n}}{independent: the mean of a product is the product of the means}
+\dl{\phantom{\E_P\,e^{\theta X(t)}}=\big(1+a\,\Delta t+O(\Delta t^{3/2})\big)^{t/\Delta t}}{$n=t/\Delta t$ equal factors, each from Step~\ref{w:mgf1b}}
+\end{deriv}
+
+\item\label{w:lim} Let $\Delta t\to0$. Take logs, so the power becomes a product:
+\begin{deriv}
+\dl{\ln\E_P\,e^{\theta X(t)}=\frac{t}{\Delta t}\,\ln\big(1+a\,\Delta t+O(\Delta t^{3/2})\big)}{$\ln(y^n)=n\ln y$}
+\dl{\phantom{\ln\E_P\,e^{\theta X(t)}}=\frac{t}{\Delta t}\,\big(a\,\Delta t+O(\Delta t^{3/2})\big)}{$\ln(1+y)=y+O(y^2)$, and here $y^2$ is of order $\Delta t^2$}
+\dl{\phantom{\ln\E_P\,e^{\theta X(t)}}=a\,t+O(\sqrt{\Delta t})}{multiply out: $\frac{t}{\Delta t}\,O(\Delta t^{3/2})=O(\sqrt{\Delta t})$}
+\dl{\phantom{\ln\E_P\,e^{\theta X(t)}}\to a\,t}{let $\Delta t\to0$}
+\dl{\E_P\,e^{\theta X(t)}\to e^{\theta\mu t+\frac12\theta^2\sigma^2t}}{exponentiate and put in $a$ (Step~\ref{w:mgf1b})}
+\end{deriv}
+
+\item\label{w:normal} Recognise the limit. By \cref{card:normal-mgf}, a normal variable has this moment generating function:
+\begin{deriv}
+\dl{\eta\sim N(m,s^2)\ \Rightarrow\ \E_P\,e^{\theta\eta}=e^{\theta m+\frac12\theta^2s^2}}{\cref{card:normal-mgf}}
+\dl{m=\mu t,\qquad s^2=\sigma^2t}{match the exponent with the last line of Step~\ref{w:lim}}
+\dl{X(t)\ \to\ N(\mu t,\sigma^2t)}{moment generating functions converge, so the distributions converge}
+\end{deriv}
+That converging moment generating functions give converging distributions is taken as known (it is the same fact behind the central limit theorem).
+
+\item\label{w:bm} Write the limit with Brownian motion. At a fixed time, $W(t)\sim N(0,t)$:
+\begin{deriv}
+\dl{W(t)\overset{d}{=}\sqrt t\,Z,\qquad Z\sim N(0,1)}{$\Var(\sqrt t\,Z)=(\sqrt t)^2\cdot1=t$}
+\dl{\sigma W(t)\sim N(0,\sigma^2t)}{multiplying by $\sigma$ multiplies the variance by $\sigma^2$}
+\dl{\mu t+\sigma W(t)\sim N(\mu t,\sigma^2t)}{adding the constant $\mu t$ moves the mean, not the variance}
+\dl{X(t)\ \to\ \mu t+\sigma W(t)}{Step~\ref{w:normal}: the same distribution}
+\end{deriv}
+The scaling is $\sqrt t$, not $t$: $tZ$ has variance $t^2$, not $t$.
+The steps the walk makes after a time $s$ are independent of the steps it made before $s$, so the walk's moves over separate time intervals are independent, just as Brownian motion's are.
+\end{steps}
+
+\answer{With $\Delta x=\sigma\sqrt{\Delta t}$ and $p=\frac12\big(1+\frac\mu\sigma\sqrt{\Delta t}\big)$, the walk has $\E_P\,X(t)=\frac{t}{\Delta t}\Delta x(2p-1)=\mu t$ and $\Var X(t)=\frac{t}{\Delta t}(\Delta x)^2\big(1-(2p-1)^2\big)\to\sigma^2t$, and as $\Delta t\to0$, $X(t)\to\mu t+\sigma W(t)\sim N(\mu t,\sigma^2t)$. This is the box of \cref{card:scaledwalk}.}
+
+\section*{Part 4: every moment of $W_t$}
+
+\begin{steps}[resume]
+\item\label{w:scale} Reduce $W_t$ to a standard normal $Z$:
+\begin{deriv}
+\dl{W_t\overset{d}{=}\sqrt t\,Z}{Step~\ref{w:bm}}
+\dl{\E_P\,W_t^k=\E_P\big(\sqrt t\,Z\big)^k}{same distribution, so same mean of the $k$-th power}
+\dl{\phantom{\E_P\,W_t^k}=\E_P\big(t^{k/2}Z^k\big)}{$(\sqrt t)^k=t^{k/2}$}
+\dl{\phantom{\E_P\,W_t^k}=t^{k/2}\,\E_P\,Z^k}{$t^{k/2}$ is not random, so it comes out of $\E_P$}
+\end{deriv}
+The power of $t$ is $k/2$, not $k$: the scaling is $\sqrt t$ (Step~\ref{w:bm}).
+
+\item\label{w:rec} A formula that steps down from $k$ to $k-2$. Write $m_k(t)=\E_P\,W_t^k$. Use \cardrow{card:ito}{1} with $f(x)=x^k$, so $f'=kx^{k-1}$ and $f''=k(k-1)x^{k-2}$:
+\begin{deriv}
+\dl{d(W_t^k)=kW_t^{k-1}\,dW_t+\tfrac12k(k-1)\,W_t^{k-2}\,dt}{\cardrow{card:ito}{1}: $\partial_xf\,dW+\frac12\partial_{xx}f\,dt$}
+\dl{W_t^k=\int_0^tkW_s^{k-1}\,dW_s+\tfrac12k(k-1)\int_0^tW_s^{k-2}\,ds}{integrate from $0$ to $t$; $W_0^k=0$ for $k\ge1$}
+\dl{m_k(t)=0+\tfrac12k(k-1)\int_0^tm_{k-2}(s)\,ds}{take $\E_P$: the $dW$ integral has mean $0$ (\cref{card:itoint}, box)}
+\end{deriv}
+
+\item\label{w:odd} Odd $k$. Start from $m_1$ and step up by $2$:
+\begin{deriv}
+\dl{m_1(t)=\E_P\,W_t=0}{$W_t\sim N(0,t)$}
+\dl{m_3(t)=\tfrac12\cdot3\cdot2\int_0^t0\,ds=0}{Step~\ref{w:rec} with $k=3$}
+\dl{m_k(t)=0\ \text{ for every odd }k}{each step multiplies an integral of $0$}
+\end{deriv}
+
+\item\label{w:even} Even $k$. Start from $m_0=\E_P\,W_t^0=1$ and step up by $2$:
+\begin{deriv}
+\dl{m_2(t)=\tfrac12\cdot2\cdot1\int_0^t1\,ds=t}{Step~\ref{w:rec} with $k=2$}
+\dl{m_4(t)=\tfrac12\cdot4\cdot3\int_0^ts\,ds=6\cdot\frac{t^2}2=3t^2}{$k=4$, put in $m_2(s)=s$}
+\dl{m_6(t)=\tfrac12\cdot6\cdot5\int_0^t3s^2\,ds=15\cdot t^3=15t^3}{$k=6$, put in $m_4(s)=3s^2$}
+\end{deriv}
+The pattern is $1$, $3\cdot1$, $5\cdot3\cdot1$: the double factorial $(k-1)!!=(k-1)(k-3)\cdots3\cdot1$.
+
+\item\label{w:dfact} Check that the pattern goes on. Suppose $m_{k-2}(s)=(k-3)!!\,s^{(k-2)/2}$ for an even $k$:
+\begin{deriv}
+\dl{m_k(t)=\tfrac12k(k-1)\int_0^t(k-3)!!\,s^{k/2-1}\,ds}{Step~\ref{w:rec}; $\frac{k-2}2=\frac k2-1$}
+\dl{\phantom{m_k(t)}=\tfrac12k(k-1)\,(k-3)!!\,\frac{t^{k/2}}{k/2}}{$\int_0^ts^{k/2-1}ds=\frac{t^{k/2}}{k/2}$}
+\dl{\phantom{m_k(t)}=(k-1)\,(k-3)!!\;t^{k/2}}{$\frac12k\cdot\frac2k=1$}
+\dl{\phantom{m_k(t)}=(k-1)!!\;t^{k/2}}{$(k-1)(k-3)!!=(k-1)!!$}
+\end{deriv}
+So the pattern holds for $k$ whenever it holds for $k-2$, and it holds for $k=2$; so it holds for every even $k$.
+
+\item\label{w:Zk} The moments of $Z$, and the check against Step~\ref{w:scale}:
+\begin{deriv}
+\dl{\E_P\,Z^k=m_k(1)}{$W_1\sim N(0,1)$, the law of $Z$}
+\dl{\E_P\,Z^k=(k-1)!!\ \ (k\text{ even}),\qquad0\ \ (k\text{ odd})}{Steps~\ref{w:odd} and~\ref{w:dfact} with $t=1$}
+\dl{t^{k/2}\,\E_P\,Z^k=(k-1)!!\;t^{k/2}=m_k(t)}{Step~\ref{w:scale} gives the same answer as Step~\ref{w:dfact}}
+\end{deriv}
+The case $k=4$ matches \cardrow{card:normal-mgf}{3}: $\E_P(\xi-\mu)^4=3\sigma^4$ with $\sigma^2=t$.
+\end{steps}
+
+\answer{$\E_P\,W_t^k=t^{k/2}\,\E_P\,Z^k$, which is $0$ for odd $k$ and $(k-1)!!\,t^{k/2}$ for even $k$: $\E_PW_t^2=t$, $\E_PW_t^4=3t^2$, $\E_PW_t^6=15t^3$.}
+
+\section*{Part 5: the mean-reverting SDE (\cref{card:linsde}, box)}
+
+\begin{setup}[What \cref{card:linsde} says]
+For constants $\alpha$, $\beta>0$, $\sigma>0$, the SDE $dX_t=(\alpha-\beta X_t)\,dt+\sigma\,dW_t$, $X_0=x$, is solved by the integrating factor $e^{\beta t}$ (so $d(e^{\beta t}X_t)=\alpha e^{\beta t}dt+\sigma e^{\beta t}dW_t$):
+\[
+  \boxed{\begin{gathered}X_t=xe^{-\beta t}+\frac{\alpha}{\beta}\big(1-e^{-\beta t}\big)+\sigma\int_0^te^{-\beta(t-s)}\,dW_s,\\
+  X_t\sim N\Big(xe^{-\beta t}+\frac\alpha\beta\big(1-e^{-\beta t}\big),\ \frac{\sigma^2}{2\beta}\big(1-e^{-2\beta t}\big)\Big).\end{gathered}}
+\]
+The mean moves from $x$ towards the long-run level $\alpha/\beta$; the variance rises to $\sigma^2/(2\beta)$ and stays bounded.
+\end{setup}
+
+\begin{steps}[resume]
+\item\label{w:if} Multiply by the integrating factor $e^{\beta t}$. Use the product rule, \cardrow{card:ito}{6}: $d(XY)=X\,dY+Y\,dX+b\beta\,dt$, with $Y_t=e^{\beta t}$:
+\begin{deriv}
+\dl{dY_t=\beta e^{\beta t}\,dt}{ordinary derivative; $Y$ has no $dW$ part}
+\dl{d(e^{\beta t}X_t)=e^{\beta t}\,dX_t+X_t\,\beta e^{\beta t}\,dt+0}{product rule; the last term is $0$ because $Y$ has no $dW$}
+\dl{\phantom{d(e^{\beta t}X_t)}=e^{\beta t}(\alpha-\beta X_t)\,dt+e^{\beta t}\sigma\,dW_t}{put in $dX_t$ from the SDE}
+\dl{\qquad+\beta e^{\beta t}X_t\,dt}{}
+\dl{\phantom{d(e^{\beta t}X_t)}=\alpha e^{\beta t}\,dt+\sigma e^{\beta t}\,dW_t}{$-\beta e^{\beta t}X_t$ and $+\beta e^{\beta t}X_t$ cancel}
+\end{deriv}
+The factor $e^{\beta t}$ was chosen to make the $X_t$ terms cancel; what is left has no $X$ in it.
+
+\item\label{w:sol} Integrate from $0$ to $t$ and solve for $X_t$:
+\begin{deriv}
+\dl{e^{\beta t}X_t-x=\alpha\int_0^te^{\beta s}\,ds+\sigma\int_0^te^{\beta s}\,dW_s}{integrate both sides; $e^{0}X_0=x$}
+\dl{\alpha\int_0^te^{\beta s}\,ds=\frac\alpha\beta\big(e^{\beta t}-1\big)}{ordinary integral}
+\dl{X_t=xe^{-\beta t}+\frac\alpha\beta\big(1-e^{-\beta t}\big)}{multiply everything by $e^{-\beta t}$}
+\dl{\qquad+\sigma\int_0^te^{-\beta(t-s)}\,dW_s}{$e^{-\beta t}e^{\beta s}=e^{-\beta(t-s)}$; $e^{-\beta t}$ is not random, so it goes inside}
+\end{deriv}
+This is the first line of the box.
+
+\item\label{w:ou-mean} The mean:
+\begin{deriv}
+\dl{\E_P\int_0^te^{-\beta(t-s)}\,dW_s=0}{\cref{card:itoint}, box: an Itô integral has mean $0$}
+\dl{\E_P\,X_t=xe^{-\beta t}+\frac\alpha\beta\big(1-e^{-\beta t}\big)}{the other two terms are not random}
+\end{deriv}
+
+\item\label{w:ou-var} The variance:
+\begin{deriv}
+\dl{\Var X_t=\sigma^2\Var\int_0^te^{-\beta(t-s)}\,dW_s}{constants add no variance; $\Var(\sigma I)=\sigma^2\Var I$}
+\dl{\phantom{\Var X_t}=\sigma^2\int_0^te^{-2\beta(t-s)}\,ds}{\cardrow{card:itoint}{2} (Itô isometry): square the integrand}
+\dl{\int_0^te^{-2\beta(t-s)}\,ds=\int_0^te^{-2\beta u}\,du}{substitute $u=t-s$; $s=0\mapsto u=t$, $s=t\mapsto u=0$}
+\dl{\phantom{\int_0^te^{-2\beta(t-s)}\,ds}=\frac{1-e^{-2\beta t}}{2\beta}}{ordinary integral}
+\dl{\Var X_t=\frac{\sigma^2}{2\beta}\big(1-e^{-2\beta t}\big)}{put it back}
+\end{deriv}
+
+\item\label{w:ou-law} Normal, and the long run:
+\begin{deriv}
+\dl{\int_0^te^{-\beta(t-s)}\,dW_s\ \text{ is normal}}{\cardrow{card:itoint}{1}: the integrand has no $W$ in it}
+\dl{X_t\sim N\Big(xe^{-\beta t}+\frac\alpha\beta(1-e^{-\beta t}),\ \frac{\sigma^2}{2\beta}(1-e^{-2\beta t})\Big)}{a constant plus a normal is normal; Steps~\ref{w:ou-mean} and~\ref{w:ou-var}}
+\dl{t\to\infty:\ \ \E_P\,X_t\to\frac\alpha\beta,\quad\Var X_t\to\frac{\sigma^2}{2\beta}}{$\beta>0$, so $e^{-\beta t}\to0$ and $e^{-2\beta t}\to0$}
+\end{deriv}
+This is the second line of the box and the sentence under it.
+\end{steps}
+
+\section*{Part 6: the four rows of \cref{card:linsde}}
+
+Every row except CIR is the same move: write the SDE as $dX=(\alpha-\beta X)\,dt+\sigma\,dW$, read off $\alpha$, $\beta$, $\sigma$, $x$, and put them into Step~\ref{w:ou-law} or Step~\ref{w:sol}.
+
+\begin{steps}[resume]
+\item\label{w:r1} Row 1, Ornstein--Uhlenbeck: $dX_t=-rX_t\,dt+\sigma\,dW_t$, $X_0=x$, with $r>0$:
+\begin{deriv}
+\dl{-rX=\alpha-\beta X\ \Rightarrow\ \alpha=0,\ \beta=r}{match with $dX=(\alpha-\beta X)\,dt+\sigma\,dW$}
+\dl{X_t\sim N\Big(xe^{-rt},\ \frac{\sigma^2}{2r}\big(1-e^{-2rt}\big)\Big)}{Step~\ref{w:ou-law}; the $\frac\alpha\beta$ term is $0$}
+\dl{t\to\infty:\ \ X_t\to N\Big(0,\ \frac{\sigma^2}{2r}\Big)}{$e^{-rt}\to0$ because $r>0$}
+\end{deriv}
+
+\item\label{w:r2} Row 2, Vasicek: $dr_t=a(b-r_t)\,dt+\sigma\,dW_t$, $r(0)=r_0$:
+\begin{deriv}
+\dl{a(b-r)=ab-ar\ \Rightarrow\ \alpha=ab,\ \beta=a,\ x=r_0}{multiply out and match}
+\dl{\frac\alpha\beta=b}{$\frac{ab}a=b$: the long-run level}
+\dl{\E_P\,r_t=r_0e^{-at}+b\big(1-e^{-at}\big)}{Step~\ref{w:ou-mean}}
+\dl{\phantom{\E_P\,r_t}=b+e^{-at}(r_0-b)}{multiply out and collect $e^{-at}$}
+\dl{r_t\sim N\Big(b+e^{-at}(r_0-b),\ \frac{\sigma^2}{2a}\big(1-e^{-2at}\big)\Big)}{Step~\ref{w:ou-law} with $\beta=a$}
+\dl{P(r_t<0)=\Phi\Big(\frac{0-\E_P\,r_t}{\sqrt{\Var r_t}}\Big)>0}{\cref{card:normal-prob}: a normal can be negative}
+\end{deriv}
+So in Vasicek the rate can go negative.
+
+\item\label{w:r3} Row 3, CIR: $dr_t=a(b-r_t)\,dt+\sigma\sqrt{r_t}\,dW_t$. The noise $\sigma\sqrt{r_t}$ has $r$ in it, so the integrating factor does not leave a normal integral. Only the mean can be found:
+\begin{deriv}
+\dl{r_t=r_0+\int_0^ta(b-r_s)\,ds+\int_0^t\sigma\sqrt{r_s}\,dW_s}{integrate the SDE from $0$ to $t$}
+\dl{m(t)=r_0+\int_0^ta\big(b-m(s)\big)\,ds}{take $\E_P$, write $m(t)=\E_P\,r_t$; the $dW$ part has mean $0$ (\cref{card:itoint})}
+\dl{m'(t)=a\big(b-m(t)\big)}{differentiate in $t$}
+\dl{\frac{d}{dt}\big(e^{at}m\big)=e^{at}(m'+am)=abe^{at}}{the same integrating factor, with no $dW$}
+\dl{e^{at}m(t)-r_0=b\big(e^{at}-1\big)}{integrate from $0$ to $t$}
+\dl{\E_P\,r_t=b+e^{-at}(r_0-b)}{multiply by $e^{-at}$ and collect}
+\end{deriv}
+The same mean as Vasicek. The rate stays $\ge0$ and is not normal, and there is no simple closed form for its law.
+
+\item\label{w:r4} Row 4, a volatility process. Start from $dV=(1-V)\,dt+2\sqrt V\,dW$ and put $Z=\sqrt V$. Use \cardrow{card:ito}{5} with $f(v)=\sqrt v$, $a=1-V$, $b=2\sqrt V$:
+\begin{deriv}
+\dl{f'=\frac1{2\sqrt v},\qquad f''=-\frac1{4v^{3/2}}}{differentiate $v^{1/2}$ twice}
+\dl{dZ=\Big(\frac{1-V}{2\sqrt V}-\tfrac12\cdot4V\cdot\frac1{4V^{3/2}}\Big)dt+\frac{2\sqrt V}{2\sqrt V}\,dW}{$df=(af'+\frac12b^2f'')\,dt+bf'\,dW$ with $b^2=4V$}
+\dl{\phantom{dZ}=\Big(\frac{1-V}{2\sqrt V}-\frac1{2\sqrt V}\Big)dt+dW}{$\frac{4V}{2\cdot4V^{3/2}}=\frac1{2\sqrt V}$}
+\dl{\phantom{dZ}=-\tfrac12\sqrt V\,dt+dW=-\tfrac12Z\,dt+dW}{$\frac{-V}{2\sqrt V}=-\frac12\sqrt V$}
+\end{deriv}
+Now take $Z_0=1$ and read off the constants:
+\begin{deriv}
+\dl{\alpha=0,\ \ \beta=\tfrac12,\ \ \sigma=1,\ \ x=1}{match with $dX=(\alpha-\beta X)\,dt+\sigma\,dW$}
+\dl{Z_t=e^{-t/2}+\int_0^te^{-(t-s)/2}\,dW_s}{Step~\ref{w:sol}}
+\dl{\phantom{Z_t}=e^{-t/2}\Big(1+\int_0^te^{s/2}\,dW_s\Big)}{$e^{-(t-s)/2}=e^{-t/2}e^{s/2}$; take $e^{-t/2}$ out}
+\dl{\Var Z_t=\frac{1}{2\cdot\frac12}\big(1-e^{-t}\big)=1-e^{-t}}{Step~\ref{w:ou-var} with $\beta=\frac12$, $\sigma=1$}
+\end{deriv}
+\end{steps}
+
+\noindent\begin{minipage}{\linewidth}
+\subsection*{The four rows in one table}
+Each row: the SDE, the constants it gives, and the result.
+
+\medskip
+\noindent{\small\renewcommand{\arraystretch}{1.6}%
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.13\linewidth}>{\raggedright\arraybackslash}p{0.23\linewidth}>{\raggedright\arraybackslash}p{0.16\linewidth}>{\raggedright\arraybackslash}p{0.36\linewidth}@{}}
+\toprule
+Row & SDE & constants & result\\
+\midrule
+1. OU & $dX=-rX\,dt+\sigma\,dW$ & $\alpha=0$, $\beta=r$ & $X_t\sim N\big(xe^{-rt},\frac{\sigma^2}{2r}(1-e^{-2rt})\big)$; long run $N(0,\frac{\sigma^2}{2r})$; needs $r>0$\\
+2. Vasicek & $dr=a(b-r)\,dt+\sigma\,dW$ & $\alpha=ab$, $\beta=a$, $x=r_0$ & $r_t\sim N\big(b+e^{-at}(r_0-b),\frac{\sigma^2}{2a}(1-e^{-2at})\big)$; can go negative\\
+3. CIR & $dr=a(b-r)\,dt$\newline$\phantom{dr}+\sigma\sqrt r\,dW$ & none: noise has $r$ in it & $\E_Pr_t=b+e^{-at}(r_0-b)$; $r_t\ge0$, not normal\\
+4. Volatility & $dZ=-\frac12Z\,dt+dW$, $Z_0=1$ (from $Z=\sqrt V$) & $\alpha=0$, $\beta=\frac12$, $\sigma=1$, $x=1$ & $Z_t=e^{-t/2}\big(1+\int_0^te^{s/2}dW_s\big)$, $\Var Z_t=1-e^{-t}$\\
+\bottomrule
+\end{tabular}}
+\end{minipage}
+
+\answer{$X_t=xe^{-\beta t}+\frac\alpha\beta(1-e^{-\beta t})+\sigma\int_0^te^{-\beta(t-s)}dW_s\sim N\big(xe^{-\beta t}+\frac\alpha\beta(1-e^{-\beta t}),\frac{\sigma^2}{2\beta}(1-e^{-2\beta t})\big)$: the box of \cref{card:linsde}. The rows are this with the constants in the table.}
