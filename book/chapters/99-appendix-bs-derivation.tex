@@ -5,7 +5,7 @@
   \begin{tabular}{@{}p{0.58\linewidth}@{\hspace{0.03\linewidth}}p{0.39\linewidth}@{}}}{\end{tabular}\par\smallskip}
 \newcommand{\dl}[2]{\mbox{$\displaystyle #1$} & \leavevmode\raggedright\small\color{thmc!80!black}#2\tabularnewline[1.2ex]}
 
-This appendix is the full version of Problem Q2(a) of the April 2024 paper. It starts with one period and a portfolio that copies the option, and it ends with the Black--Scholes formula. Part E then does the put by the same steps. Each row does one thing. The right-hand column says how that row follows from the row before it.
+This appendix is the full version of Problem Q2(a) of the April 2024 paper. It starts with one period and a portfolio that copies the option, and it ends with the Black--Scholes formula. Part E then does the put by the same steps, and Part F builds the copying portfolio at every node of the tree and shows that it is self-financing. Each row does one thing. The right-hand column says how that row follows from the row before it.
 
 \begin{setup}[The market]
 A stock starts at $S_0$. Each period it is multiplied by $u$ (up) or by $d$ (down), with $d<u$. Money in the bond grows by $1+r$ each period. A European call with strike $K$ pays $(S_T-K)^+=\max(S_T-K,0)$ at time $T$.
@@ -266,3 +266,108 @@ A European put pays $(K-S_T)^+=\max(K-S_T,0)$. Steps 1--8 never used the payoff,
 \end{steps}
 
 \answer{$P=Ke^{-r\tau}\Phi(\sigma\sqrt\tau-h)-S_0\Phi(-h)$, with the same $h$ as the call. This is \cardrow{card:bsprice}{2}.}
+
+\section*{Part F: the copying portfolio at every node, and why it is self-financing}
+
+Parts A and B found the \emph{price}. This part writes down the \emph{portfolio} that copies the claim, node by node, first in a two-period tree and then in a tree with any number of periods. In this part $\Delta$ is a number of shares (not the period length of Part D).
+
+\begin{steps}[resume]
+\item The bookkeeping. A portfolio is chosen at a node and then held, unchanged, for one period:
+\begin{deriv}
+\dl{\Delta=\text{number of shares bought at the node}}{kept until the next node}
+\dl{b=\text{money put in the bond at the node}}{counted in money \emph{of the node's time}}
+\dl{\text{cost at the node}=\Delta\,S+b}{$S$ is the stock price at the node; no $1+r$, you pay today's prices}
+\dl{\text{worth one period later}=\Delta\,S_{\text{next}}+b(1+r)}{the shares are worth the new price; the bond money has grown for one period}
+\end{deriv}
+\begin{trap}
+The $1+r$ goes on $b$ only, and only once for each period the money has sat in the bond. Never put $1+r$ on the shares: their growth is already inside the new price $S_{\text{next}}$. At the moment of buying there is no $1+r$ at all.
+\end{trap}
+
+\item The two-period tree and its names. Each node is named by the moves that lead to it:
+\begin{deriv}
+\dl{\text{time }0:\ S_0}{the root}
+\dl{\text{time }1:\ uS_0\ (\text{node }u),\quad dS_0\ (\text{node }d)}{one move}
+\dl{\text{time }2:\ u^2S_0,\quad udS_0,\quad d^2S_0}{two moves; up-down and down-up meet}
+\dl{V_{uu}=g(u^2S_0),\ \ V_{ud}=g(udS_0),\ \ V_{dd}=g(d^2S_0)}{the claim's payoffs at time $2$}
+\dl{(\Delta_0,b_0),\ (\Delta_u,b_u),\ (\Delta_d,b_d)}{the portfolio chosen at time $0$, at node $u$, at node $d$}
+\end{deriv}
+We do not know $V_u$, $V_d$, $V_0$ yet; they come out of the steps below. Work backwards, last period first.
+
+\item The last period, at node $u$ (stock price $uS_0$). Choose $(\Delta_u,b_u)$ so that one period later it is worth the payoff in both cases:
+\begin{deriv}
+\dl{\Delta_u\cdot u^2S_0+b_u(1+r)=V_{uu}}{up again: shares worth $u\cdot uS_0$; bond grown once (Step~31)}
+\dl{\Delta_u\cdot udS_0+b_u(1+r)=V_{ud}}{down: shares worth $d\cdot uS_0$}
+\dl{\Delta_u=\frac{V_{uu}-V_{ud}}{u^2S_0-udS_0}}{subtract; $b_u(1+r)$ cancels}
+\dl{b_u=\frac{V_{uu}-\Delta_u\,u^2S_0}{1+r}}{first line solved for $b_u$: divide by $1+r$, because $b_u$ is time-1 money that must \emph{grow into} what is needed at time 2}
+\end{deriv}
+
+\item The value at node $u$ is the cost of that portfolio at node $u$:
+\begin{deriv}
+\dl{V_u=\Delta_u\cdot uS_0+b_u}{Step~31: cost at the node, no $1+r$}
+\dl{\phantom{V_u}=\frac{p^*V_{uu}+(1-p^*)V_{ud}}{1+r}}{the algebra of Steps 2--4 with $X_u=V_{uu}$, $X_d=V_{ud}$ and $S_0$ replaced by $uS_0$}
+\end{deriv}
+
+\item The same at node $d$ (stock price $dS_0$):
+\begin{deriv}
+\dl{\Delta_d\cdot udS_0+b_d(1+r)=V_{ud}}{up from node $d$: shares worth $u\cdot dS_0$}
+\dl{\Delta_d\cdot d^2S_0+b_d(1+r)=V_{dd}}{down from node $d$: shares worth $d\cdot dS_0$}
+\dl{\Delta_d=\frac{V_{ud}-V_{dd}}{udS_0-d^2S_0},\qquad b_d=\frac{V_{ud}-\Delta_d\,udS_0}{1+r}}{subtract; then the first line solved for $b_d$}
+\dl{V_d=\Delta_d\cdot dS_0+b_d=\frac{p^*V_{ud}+(1-p^*)V_{dd}}{1+r}}{cost at node $d$; Steps 2--4 with $X_u=V_{ud}$, $X_d=V_{dd}$, $S_0$ replaced by $dS_0$}
+\end{deriv}
+
+\item The first period, at time $0$. The time-0 portfolio does \emph{not} have to pay the claim. It has to be worth exactly what the time-1 portfolio costs, $V_u$ at node $u$ and $V_d$ at node $d$:
+\begin{deriv}
+\dl{\Delta_0\cdot uS_0+b_0(1+r)=V_u}{at node $u$: worth one period later (Step~31) $=$ cost of $(\Delta_u,b_u)$}
+\dl{\Delta_0\cdot dS_0+b_0(1+r)=V_d}{at node $d$: the same with $(\Delta_d,b_d)$}
+\dl{\Delta_0=\frac{V_u-V_d}{uS_0-dS_0}}{subtract; $b_0(1+r)$ cancels}
+\dl{b_0=\frac{V_u-\Delta_0\,uS_0}{1+r}}{first line solved for $b_0$}
+\dl{V_0=\Delta_0S_0+b_0=\frac{p^*V_u+(1-p^*)V_d}{1+r}}{cost at time $0$; Steps 2--4 with $X_u=V_u$, $X_d=V_d$}
+\end{deriv}
+
+\item Self-financing at time 1. At node $u$ we sell the old portfolio and buy the new one. Compare the two at node $u$'s prices:
+\begin{deriv}
+\dl{\text{old, at node }u:\ \Delta_0\cdot uS_0+b_0(1+r)=V_u}{Step~31 (worth one period later); equals $V_u$ by the first line of Step~36}
+\dl{\text{new, at node }u:\ \Delta_u\cdot uS_0+b_u=V_u}{Step~31 (cost at the node); equals $V_u$ by Step~34}
+\dl{\text{old}-\text{new}=V_u-V_u=0}{no money is put in or taken out}
+\dl{\text{old, at node }d:\ \Delta_0\cdot dS_0+b_0(1+r)=V_d}{second line of Step~36}
+\dl{\text{new, at node }d:\ \Delta_d\cdot dS_0+b_d=V_d}{Step~35; again old $=$ new}
+\end{deriv}
+That is what self-financing means (\cref{card:selffin}): the old holding at the new prices equals the new holding at the new prices.
+
+\item The whole strategy, in time order:
+\begin{deriv}
+\dl{\text{time }0:\ \text{pay }V_0=\Delta_0S_0+b_0}{the only money that ever goes in}
+\dl{\text{time }1:\ \text{worth }V_u\text{ or }V_d}{Step~36}
+\dl{\phantom{\text{time }1:\ }\text{switch to }(\Delta_u,b_u)\text{ or }(\Delta_d,b_d)\text{ for free}}{Step~37}
+\dl{\text{time }2:\ \text{worth }V_{uu},\ V_{ud}\text{ or }V_{dd}}{the two lines of Step~33 or of Step~35}
+\end{deriv}
+So $V_0$ at the start turns into exactly the claim's payoff at the end, with nothing added on the way. Any other price for the claim is an arbitrage (Step~4's argument), so $V_0$ is the price.
+
+\item Any number of periods. At time $t$ with stock price $S_t=s$, write $(\Delta_t[s],b_t[s])$ for the portfolio chosen there and $V_t[s]$ for the claim's value, with $V_T[s]=g(s)$. Steps 33--34 at this node:
+\begin{deriv}
+\dl{\Delta_t[s]\cdot us+b_t[s](1+r)=V_{t+1}[us]}{up: shares worth $us$; bond grown once}
+\dl{\Delta_t[s]\cdot ds+b_t[s](1+r)=V_{t+1}[ds]}{down: shares worth $ds$}
+\dl{\Delta_t[s]=\frac{V_{t+1}[us]-V_{t+1}[ds]}{us-ds}}{subtract}
+\dl{b_t[s]=\frac{V_{t+1}[us]-\Delta_t[s]\cdot us}{1+r}}{first line solved for $b_t[s]$}
+\dl{V_t[s]=\Delta_t[s]\cdot s+b_t[s]}{cost at the node (Step~31)}
+\dl{\phantom{V_t[s]}=\frac{p^*V_{t+1}[us]+(1-p^*)V_{t+1}[ds]}{1+r}}{Steps 1--4 at price $s$; this is Step~6}
+\end{deriv}
+
+\item The two ways of writing $b$ are the same number:
+\begin{deriv}
+\dl{b_t[s]=V_t[s]-\Delta_t[s]\cdot s}{last line but one of Step~39: what is left of the cost after the shares; no $1+r$, all time-$t$ money}
+\dl{b_t[s]=\frac{V_{t+1}[us]-\Delta_t[s]\cdot us}{1+r}}{Step~39: time-$(t+1)$ money brought back one period, so divide by $1+r$ once}
+\end{deriv}
+\cardrow{card:tree}{5} uses the first form. Use whichever you have the numbers for, and check the $1+r$ against the trap of Step~31.
+
+\item Self-financing at every node. ``Old'' is the portfolio bought at $(t,s)$; ``new'' is the one bought at the next node. Let the stock go from $s$ at time $t$ to $us$ at time $t+1$ (the case $ds$ is the same with $d$ for $u$):
+\begin{deriv}
+\dl{\text{old: }\Delta_t[s]\cdot us+b_t[s](1+r)=V_{t+1}[us]}{first line of Step~39}
+\dl{\text{new: }\Delta_{t+1}[us]\cdot us+b_{t+1}[us]=V_{t+1}[us]}{the cost line of Step~39 at the node $(t+1,us)$}
+\dl{\text{old}=\text{new}}{no money in or out (\cardrow{card:tree}{6})}
+\dl{\text{at }T:\ \Delta_{T-1}[s]\cdot S_T+b_{T-1}[s](1+r)}{the last portfolio, one period after it was bought}
+\dl{\qquad=V_T[S_T]=g(S_T)}{first two lines of Step~39 with $t=T-1$: it pays the claim}
+\end{deriv}
+\end{steps}
+
+\answer{At every node $(t,s)$ hold $\Delta_t[s]=\frac{V_{t+1}[us]-V_{t+1}[ds]}{us-ds}$ shares and $b_t[s]=V_t[s]-\Delta_t[s]\,s=\frac{V_{t+1}[us]-\Delta_t[s]\,us}{1+r}$ in the bond. It costs $V_t[s]$ when bought (no $1+r$) and is worth $V_{t+1}$ one period later (bond times $1+r$), which is exactly the cost of the next portfolio. So the strategy is self-financing, starts from $V_0$, and ends with the payoff $g(S_T)$.}
