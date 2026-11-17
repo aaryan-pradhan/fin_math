@@ -1,10 +1,5 @@
 \chapter{Black--Scholes from scratch, every step}\label{app:bs}
 
-% Two columns: the line of mathematics on the left, how it follows from the line before on the right.
-\newenvironment{deriv}{\par\smallskip\noindent\renewcommand{\arraystretch}{1.3}%
-  \begin{tabular}{@{}p{0.58\linewidth}@{\hspace{0.03\linewidth}}p{0.39\linewidth}@{}}}{\end{tabular}\par\smallskip}
-\newcommand{\dl}[2]{\mbox{$\displaystyle #1$} & \leavevmode\raggedright\small\color{thmc!80!black}#2\tabularnewline[1.2ex]}
-
 This appendix is the full version of Problem Q2(a) of the April 2024 paper. It starts with one period and a portfolio that copies the option, and it ends with the Black--Scholes formula. Part E then does the put by the same steps. Part F builds the copying portfolio at every node of the tree and shows that it is self-financing. Part G proves that the Black--Scholes market is arbitrage-free and complete, and Part H derives the Greeks of the call and the put. Each row does one thing. The right-hand column says how that row follows from the row before it.
 
 \begin{setup}[The market]
