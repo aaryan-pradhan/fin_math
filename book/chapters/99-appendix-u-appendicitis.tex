@@ -290,52 +290,53 @@ At every node no money goes in or out, and the copy pays exactly the call: self-
 \begin{steps}
 \item Split $[0,T]$ into $n$ periods of length $\delta_n=\frac Tn$, and choose the tree for each $n$:
 \begin{deriv}
-\dl{S_{j\delta_n}=u_nS_{(j-1)\delta_n}\text{ or }d_nS_{(j-1)\delta_n}}{$j=1,\dots,n$}
 \dl{u_n=e^{\sigma\sqrt{\delta_n}},\qquad d_n=e^{-\sigma\sqrt{\delta_n}}}{up and down}
 \dl{r_n=e^{r\delta_n}-1}{so $(1+r_n)^n=e^{rT}$}
 \dl{S_n=S_0\,e^{\sum_{i=1}^nY_i}=S_0\,e^{Z_n}}{the price after $n$ periods}
-\dl{Y_i=\pm\sigma\sqrt{T/n}\ \text{ w.p. }p^*_n,\ 1-p^*_n}{$Z_n$ is a random walk with i.i.d.\ jumps $\ln u_n$ or $\ln d_n$}
+\dl{Y_i=+\sigma\sqrt{\delta_n}\ \text{ w.p. }p^*_n,\quad-\sigma\sqrt{\delta_n}\ \text{ w.p. }1-p^*_n}{$Z_n$ is a random walk with i.i.d.\ steps $\ln u_n$ or $\ln d_n$}
+\dl{p^*_n=\frac{1+r_n-d_n}{u_n-d_n}=\frac{e^{r\delta_n}-e^{-\sigma\sqrt{\delta_n}}}{e^{\sigma\sqrt{\delta_n}}-e^{-\sigma\sqrt{\delta_n}}}}{\cref{u:binna}, Step~3}
 \end{deriv}
-\item The call price for each $n$ (\cref{u:bincall}, Step~3):
+\item The call price for each $n$ is the discounted $P^*$-average of the payoff:
 \begin{deriv}
-\dl{C=S_0\,P(\hat U\ge m)-\frac K{(1+r_n)^n}\,P(U^*\ge m)}{$\hat U\sim B(n,\hat p_n)$, $U^*\sim B(n,p^*_n)$}
-\dl{p^*_n=\frac{1+r_n-d_n}{u_n-d_n},\qquad\hat p_n=\frac{u_np^*_n}{1+r_n}}{}
+\dl{C=\frac1{(1+r_n)^n}\,\E_{P^*}\big(S_0e^{Z_n}-K\big)^+}{\cref{u:bincomp}, Step~5, with $g(s)=(s-K)^+$}
+\dl{\phantom{C}=e^{-rT}\,\E_{P^*}\big(S_0e^{Z_n}-K\big)^+}{$(1+r_n)^n=e^{rT}$}
 \end{deriv}
-\item As $n\to\infty$ the binomials are close to normal (central limit theorem):
-\begin{deriv}
-\dl{P(U\ge m)\approx1-\Phi\Big(\frac{m-np}{\sqrt{np(1-p)}}\Big)}{$U\sim B(n,p)$ has mean $np$, variance $np(1-p)$}
-\dl{\phantom{P(U\ge m)}=\Phi\Big(\frac{np-m}{\sqrt{np(1-p)}}\Big)}{$1-\Phi(x)=\Phi(-x)$}
-\dl{C\approx S_0\,\Phi\Big(\frac{n\hat p_n-m}{\sqrt{n\hat p_n(1-\hat p_n)}}\Big)}{apply to both parts}
-\dl{\quad-\frac K{(1+r_n)^n}\,\Phi\Big(\frac{np^*_n-m}{\sqrt{np^*_n(1-p^*_n)}}\Big)}{}
-\end{deriv}
-\item Expand $p^*_n$ for small $\delta=\delta_n$, keeping the terms of order $\delta$:
+So we only need the law of $Z_n$ under $P^*$ as $n\to\infty$.
+\item Write $p^*_n$ in the form of \cref{card:scaledwalk}. For small $\delta=\delta_n$, keep the terms of order $\delta$:
 \begin{deriv}
 \dl{e^{r\delta}-e^{-\sigma\sqrt\delta}\approx r\delta+\sigma\sqrt\delta-\tfrac12\sigma^2\delta}{$e^x\approx1+x+\frac{x^2}2$}
 \dl{e^{\sigma\sqrt\delta}-e^{-\sigma\sqrt\delta}\approx2\sigma\sqrt\delta}{the same; the $\frac{x^2}2$ terms cancel}
-\dl{p^*_n\approx\frac12+\frac{r-\frac12\sigma^2}{2\sigma}\sqrt{\delta_n}}{divide; $p^*_n\to\frac12$}
-\dl{\hat p_n\approx\frac12+\frac{r+\frac12\sigma^2}{2\sigma}\sqrt{\delta_n}}{$\hat p_n=\frac{u_np^*_n}{1+r_n}$, $u_n\approx1+\sigma\sqrt\delta$: one more $\frac\sigma2\sqrt\delta$}
+\dl{p^*_n\approx\frac12\Big(1+\frac{r-\frac12\sigma^2}{\sigma}\sqrt{\delta_n}\Big)}{divide}
 \end{deriv}
-\item The cut-off $m$ and the denominators:
+\item The random-walk card:
 \begin{deriv}
-\dl{u_n^jd_n^{n-j}S_0>K\iff(2j-n)\sigma\sqrt{\delta_n}>\ln\frac K{S_0}}{take logs}
-\dl{m\approx\frac n2+\frac{\ln(K/S_0)}{2\sigma\sqrt{\delta_n}}}{the least such $j$}
-\dl{\sqrt{np(1-p)}\approx\frac{\sqrt n}2}{for $p=p^*_n$ or $\hat p_n$, both $\to\frac12$}
+\dl{\text{steps }\pm\sigma\sqrt{\delta_n},\ \ p=\tfrac12\big(1+\tfrac{\mu}{\sigma}\sqrt{\delta_n}\big)}{\cardrow{card:scaledwalk}{5}, with $\mu=r-\frac12\sigma^2$ (Step~3)}
+\dl{Z_n\to Z\sim N\Big(\big(r-\tfrac12\sigma^2\big)T,\ \sigma^2T\Big)}{the walk becomes Brownian motion with drift, at time $T$}
+\dl{C\to e^{-rT}\,\E_{P^*}\big(S_0e^Z-K\big)^+}{Step~2}
+\end{deriv}
+\item Write $Z=mT+\sigma\sqrt T\,\xi$ with $m=r-\frac12\sigma^2$ and $\xi\sim N(0,1)$, and find where the call pays:
+\begin{deriv}
+\dl{S_0e^Z>K\iff\xi>\frac{\ln(K/S_0)-mT}{\sigma\sqrt T}}{take logs}
+\dl{\phantom{S_0e^Z>K\iff\xi}=-\big(h-\sigma\sqrt T\big)}{with $h$ below}
+\dl{h:=\frac{\ln(S_0/K)+(r+\frac12\sigma^2)T}{\sigma\sqrt T}}{so $h-\sigma\sqrt T=\frac{\ln(S_0/K)+mT}{\sigma\sqrt T}$}
+\dl{\E_{P^*}\big(S_0e^Z-K\big)^+}{split the payoff}
+\dl{\quad=\E_{P^*}\big(S_0e^Z\,;\,\xi>-(h-\sigma\sqrt T)\big)}{}
+\dl{\qquad-K\,P\big(\xi>-(h-\sigma\sqrt T)\big)}{}
 \end{deriv}
 \item The $K$ part:
 \begin{deriv}
-\dl{np^*_n-m\approx\frac{n\sqrt{\delta_n}\,(r-\frac12\sigma^2)}{2\sigma}-\frac{\ln(K/S_0)}{2\sigma\sqrt{\delta_n}}}{Steps~4 and~5}
-\dl{\phantom{np^*_n-m}=\frac{\ln(S_0/K)+(r-\frac12\sigma^2)T}{2\sigma\sqrt{\delta_n}}}{$n\delta_n=T$}
-\dl{\frac{np^*_n-m}{\sqrt n/2}=\frac{\ln(S_0/K)+(r-\frac12\sigma^2)T}{\sigma\sqrt T}}{$\sqrt n\sqrt{\delta_n}=\sqrt T$}
-\dl{\phantom{\frac{np^*_n-m}{\sqrt n/2}}=h-\sigma\sqrt T}{with $h$ below}
+\dl{P\big(\xi>-(h-\sigma\sqrt T)\big)=\Phi\big(h-\sigma\sqrt T\big)}{$P(\xi>-x)=\Phi(x)$ (\cref{card:normal-prob})}
 \end{deriv}
-\item The $S_0$ part, the same way with $r+\frac12\sigma^2$:
+\item The $S_0$ part, completing the square:
 \begin{deriv}
-\dl{\frac{n\hat p_n-m}{\sqrt n/2}\to\frac{\ln(S_0/K)+(r+\frac12\sigma^2)T}{\sigma\sqrt T}=:h}{Step~6 with $\hat p_n$}
+\dl{e^{\sigma\sqrt T x}\varphi(x)=e^{\frac12\sigma^2T}\varphi\big(x-\sigma\sqrt T\big)}{expand $(x-\sigma\sqrt T)^2$}
+\dl{\E_{P^*}\big(e^{\sigma\sqrt T\xi};\xi>a\big)=e^{\frac12\sigma^2T}P\big(\xi>a-\sigma\sqrt T\big)}{integrate over $x>a$}
+\dl{S_0e^{mT}e^{\frac12\sigma^2T}\,P\big(\xi>-h\big)=S_0e^{rT}\,\Phi(h)}{$a=-(h-\sigma\sqrt T)$; $m+\frac12\sigma^2=r$}
 \end{deriv}
-\item Put it together, with $(1+r_n)^n=e^{rT}$:
+\item Put the two parts together and discount by $e^{-rT}$:
 \begin{deriv}
+\dl{C=e^{-rT}\big(S_0e^{rT}\Phi(h)-K\,\Phi(h-\sigma\sqrt T)\big)}{Steps~4--7}
 \dl{C=S_0\,\Phi(h)-Ke^{-rT}\,\Phi\big(h-\sigma\sqrt T\big)}{the Black--Scholes formula}
-\dl{h=\frac{\ln(S_0/K)+(r+\frac12\sigma^2)T}{\sigma\sqrt T}}{}
 \end{deriv}
 This is the price of a European call with maturity $T$ and strike $K$ when the stock is the geometric Brownian motion $S_t=S_0e^{\mu t+\sigma W_t}$ and the bond is $B_t=e^{rt}$, $t\in[0,T]$.
 \end{steps}
