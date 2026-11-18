@@ -288,67 +288,65 @@ At every node no money goes in or out, and the copy pays exactly the call: self-
 %=====================================================================
 \section{The Black--Scholes formula from the binomial model}\label{u:bin2bs}
 \begin{steps}
-\item Split $[0,T]$ into $n$ periods of length $\delta_n=\frac Tn$, and choose the tree for each $n$:
+\item Split $[0,T]$ into $n$ periods of length $\delta=\frac Tn$, and choose the tree for each $n$:
 \begin{deriv}
-\dl{u_n=e^{\sigma\sqrt{\delta_n}},\qquad d_n=e^{-\sigma\sqrt{\delta_n}}}{up and down}
-\dl{r_n=e^{r\delta_n}-1}{so $(1+r_n)^n=e^{rT}$}
-\dl{S_n=S_0\,e^{\sum_{i=1}^nY_i}=S_0\,e^{Z_n}}{the price after $n$ periods}
-\dl{Y_i=+\sigma\sqrt{\delta_n}\ \text{ w.p. }p^*_n,\quad-\sigma\sqrt{\delta_n}\ \text{ w.p. }1-p^*_n}{$Z_n$ is a random walk with i.i.d.\ steps $\ln u_n$ or $\ln d_n$}
-\dl{p^*_n=\frac{1+r_n-d_n}{u_n-d_n}=\frac{e^{r\delta_n}-e^{-\sigma\sqrt{\delta_n}}}{e^{\sigma\sqrt{\delta_n}}-e^{-\sigma\sqrt{\delta_n}}}}{\cref{u:binna}, Step~3}
+\dl{u_n=e^{\sigma\sqrt\delta},\qquad d_n=e^{-\sigma\sqrt\delta}}{up and down}
+\dl{r_n=e^{r\delta}-1}{so $(1+r_n)^n=e^{rn\delta}=e^{rT}$}
+\dl{p^*_n=\frac{1+r_n-d_n}{u_n-d_n},\qquad\hat p_n=\frac{u_np^*_n}{1+r_n}}{as in \cref{u:bincall}}
 \end{deriv}
-\item The call price for each $n$ is the discounted $P^*$-average of the payoff:
+\item The call price for each $n$ (\cref{u:bincall}, Step~3):
 \begin{deriv}
-\dl{C=\frac1{(1+r_n)^n}\,\E_{P^*}\big(S_0e^{Z_n}-K\big)^+}{\cref{u:bincomp}, Step~5, with $g(s)=(s-K)^+$}
-\dl{\phantom{C}=e^{-rT}\,\E_{P^*}\big(S_0e^{Z_n}-K\big)^+}{$(1+r_n)^n=e^{rT}$}
+\dl{C=S_0\,P(\hat U\ge m)-\frac K{(1+r_n)^n}\,P(U^*\ge m)}{$\hat U\sim B(n,\hat p_n)$, $U^*\sim B(n,p^*_n)$}
+\dl{\phantom{C}=S_0\,P(\hat U\ge m)-Ke^{-rT}\,P(U^*\ge m)}{Step~1}
 \end{deriv}
-So we only need the law of $Z_n$ under $P^*$ as $n\to\infty$.
-\item Expand $p^*_n$ for small $\delta=\delta_n$, using $e^x\approx1+x+\frac{x^2}2$ and keeping terms up to $\delta$:
+The plan: show that $P(\hat U\ge m)\to\Phi(h)$ and $P(U^*\ge m)\to\Phi(h-\sigma\sqrt T)$.
+\item A binomial with large $n$ is close to normal (central limit theorem). For $U\sim B(n,p)$:
 \begin{deriv}
-\dl{e^{r\delta}\approx1+r\delta}{$x=r\delta$; $x^2$ is of order $\delta^2$, dropped}
-\dl{e^{\sigma\sqrt\delta}\approx1+\sigma\sqrt\delta+\tfrac12\sigma^2\delta}{$x=\sigma\sqrt\delta$}
-\dl{e^{-\sigma\sqrt\delta}\approx1-\sigma\sqrt\delta+\tfrac12\sigma^2\delta}{$x=-\sigma\sqrt\delta$}
-\dl{\text{top: }e^{r\delta}-e^{-\sigma\sqrt\delta}\approx\sigma\sqrt\delta+\big(r-\tfrac12\sigma^2\big)\delta}{subtract; the $1$s cancel}
-\dl{\text{bottom: }e^{\sigma\sqrt\delta}-e^{-\sigma\sqrt\delta}\approx2\sigma\sqrt\delta}{subtract; the $1$s and $\frac12\sigma^2\delta$ cancel}
-\dl{p^*_n\approx\frac12+\frac{r-\frac12\sigma^2}{2\sigma}\sqrt\delta}{divide top by bottom}
-\dl{2p^*_n-1\approx\frac{r-\frac12\sigma^2}{\sigma}\sqrt\delta}{what the walk's mean needs}
+\dl{\E_P\,U=np,\qquad\text{s.d.}(U)=\sqrt{np(1-p)}}{binomial mean and variance}
+\dl{P(U\ge m)=P\Big(\frac{U-np}{\sqrt{np(1-p)}}\ge\frac{m-np}{\sqrt{np(1-p)}}\Big)}{standardise both sides}
+\dl{\phantom{P(U\ge m)}\approx P\Big(\xi\ge\frac{m-np}{\sqrt{np(1-p)}}\Big)}{$\xi\sim N(0,1)$}
+\dl{\phantom{P(U\ge m)}=\Phi\Big(\frac{np-m}{\sqrt{np(1-p)}}\Big)}{$P(\xi\ge-x)=\Phi(x)$}
 \end{deriv}
-\item Mean and variance of $Z_n=Y_1+\dots+Y_n$ under $P^*$ (\cref{card:scaledwalk}, box):
+So we need three things for large $n$: $p$ (Step~4), $m$ and the s.d.\ (Step~5).
+\item The two probabilities for small $\delta$, using $e^x\approx1+x+\frac{x^2}2$:
 \begin{deriv}
-\dl{\E_{P^*}Y_i=\sigma\sqrt\delta\,p^*_n-\sigma\sqrt\delta\,(1-p^*_n)=\sigma\sqrt\delta\,(2p^*_n-1)}{one step}
-\dl{\phantom{\E_{P^*}Y_i}\approx\big(r-\tfrac12\sigma^2\big)\delta}{Step~3, last line}
-\dl{\E_{P^*}Z_n=n\,\E_{P^*}Y_i\approx\big(r-\tfrac12\sigma^2\big)n\delta=\big(r-\tfrac12\sigma^2\big)T}{$n$ steps; $n\delta=T$}
-\dl{\Var Y_i=\E_{P^*}Y_i^2-(\E_{P^*}Y_i)^2\approx\sigma^2\delta}{$Y_i^2=\sigma^2\delta$ always; $(\E_{P^*}Y_i)^2$ is of order $\delta^2$}
-\dl{\Var Z_n=n\Var Y_i\approx\sigma^2T}{independent steps}
-\dl{Z_n\to Z\sim N\Big(\big(r-\tfrac12\sigma^2\big)T,\ \sigma^2T\Big)}{a sum of many small independent steps is normal (central limit theorem; \cardrow{card:scaledwalk}{5})}
-\dl{C\to e^{-rT}\,\E_{P^*}\big(S_0e^Z-K\big)^+}{Step~2}
+\dl{1+r_n-d_n=e^{r\delta}-e^{-\sigma\sqrt\delta}}{top of $p^*_n$}
+\dl{\phantom{1+r_n-d_n}\approx(1+r\delta)-\big(1-\sigma\sqrt\delta+\tfrac12\sigma^2\delta\big)}{expand each}
+\dl{\phantom{1+r_n-d_n}=\sigma\sqrt\delta+\big(r-\tfrac12\sigma^2\big)\delta}{the $1$s cancel}
+\dl{u_n-d_n=e^{\sigma\sqrt\delta}-e^{-\sigma\sqrt\delta}}{bottom of $p^*_n$}
+\dl{\quad\approx\big(1+\sigma\sqrt\delta+\tfrac12\sigma^2\delta\big)-\big(1-\sigma\sqrt\delta+\tfrac12\sigma^2\delta\big)}{expand each}
+\dl{\phantom{u_n-d_n}=2\sigma\sqrt\delta}{everything else cancels}
+\dl{p^*_n\approx\frac12+\frac{r-\frac12\sigma^2}{2\sigma}\sqrt\delta}{top divided by bottom}
+\dl{\hat p_n\approx\frac12+\frac{r+\frac12\sigma^2}{2\sigma}\sqrt\delta}{$\hat p_n\approx(1+\sigma\sqrt\delta)p^*_n$ adds $\frac12\sigma\sqrt\delta=\frac{\sigma^2}{2\sigma}\sqrt\delta$}
 \end{deriv}
-\item Write $Z$ with a standard normal $\xi\sim N(0,1)$, and find when the call pays:
+Both are $\frac12+(\text{something})\sqrt\delta$; only the $\pm\frac12\sigma^2$ differs.
+\item The cut-off $m$ and the s.d.:
 \begin{deriv}
-\dl{Z=mT+\sigma\sqrt T\,\xi,\qquad m:=r-\tfrac12\sigma^2}{mean $mT$, s.d.\ $\sigma\sqrt T$}
-\dl{S_0e^Z>K\iff Z>\ln\frac K{S_0}}{take logs}
-\dl{\phantom{S_0e^Z>K}\iff\xi>\frac{\ln(K/S_0)-mT}{\sigma\sqrt T}=-k}{solve for $\xi$}
-\dl{k:=\frac{\ln(S_0/K)+(r-\frac12\sigma^2)T}{\sigma\sqrt T}}{a name for the cut-off}
-\dl{\E_{P^*}\big(S_0e^Z-K\big)^+=A-B}{split: pays $S_0e^Z-K$ when $\xi>-k$, else $0$}
-\dl{A=\E_{P^*}\big(S_0e^Z;\ \xi>-k\big),\qquad B=K\,P(\xi>-k)}{the stock part and the strike part}
+\dl{u_n^jd_n^{n-j}S_0=S_0\,e^{(2j-n)\sigma\sqrt\delta}}{$j$ ups and $n-j$ downs}
+\dl{S_0\,e^{(2j-n)\sigma\sqrt\delta}>K\iff j>\frac n2+\frac{\ln(K/S_0)}{2\sigma\sqrt\delta}}{take logs, solve for $j$}
+\dl{m\approx\frac n2+\frac{\ln(K/S_0)}{2\sigma\sqrt\delta}}{the least such $j$}
+\dl{\sqrt{np(1-p)}\approx\sqrt{n\cdot\tfrac12\cdot\tfrac12}=\frac{\sqrt n}2}{both $p^*_n$ and $\hat p_n$ tend to $\frac12$}
 \end{deriv}
-\item The strike part:
+\item The $K$ part. Two conversions do the work, both from $\delta=\frac Tn$:
 \begin{deriv}
-\dl{B=K\,P(\xi>-k)=K\,\Phi(k)}{the bell curve is symmetric: $P(\xi>-k)=P(\xi<k)$}
+\dl{n\sqrt\delta=\sqrt n\sqrt T,\qquad\frac1{\sqrt\delta}=\frac{\sqrt n}{\sqrt T}}{$\sqrt\delta=\frac{\sqrt T}{\sqrt n}$}
+\dl{np^*_n=\frac n2+\frac{(r-\frac12\sigma^2)\,n\sqrt\delta}{2\sigma}}{Step~4, times $n$}
+\dl{\phantom{np^*_n}=\frac n2+\frac{\sqrt n}{2\sigma\sqrt T}\big(r-\tfrac12\sigma^2\big)T}{$n\sqrt\delta=\sqrt n\sqrt T=\frac{\sqrt n}{\sqrt T}\,T$}
+\dl{m=\frac n2+\frac{\sqrt n}{2\sigma\sqrt T}\ln\frac K{S_0}}{Step~5}
+\dl{np^*_n-m=\frac{\sqrt n}{2\sigma\sqrt T}\Big(\ln\frac{S_0}K+\big(r-\tfrac12\sigma^2\big)T\Big)}{subtract: the $\frac n2$ cancel; $-\ln\frac K{S_0}=\ln\frac{S_0}K$}
+\dl{\frac{np^*_n-m}{\sqrt n/2}=\frac{\ln(S_0/K)+(r-\frac12\sigma^2)T}{\sigma\sqrt T}}{divide by the s.d.: the $\sqrt n$ cancel}
+\dl{\phantom{\frac{np^*_n-m}{\sqrt n/2}}=h-\sigma\sqrt T}{$h$ as in Step~7}
+\dl{P(U^*\ge m)\to\Phi\big(h-\sigma\sqrt T\big)}{Step~3}
 \end{deriv}
-\item The stock part, as an integral against the bell curve $\varphi(x)=\frac1{\sqrt{2\pi}}e^{-x^2/2}$:
+\item The $S_0$ part: exactly Step~6 with $\hat p_n$, so $r-\frac12\sigma^2$ becomes $r+\frac12\sigma^2$:
 \begin{deriv}
-\dl{A=\int_{-k}^\infty S_0e^{mT+\sigma\sqrt Tx}\,\varphi(x)\,dx}{$S_0e^Z=S_0e^{mT+\sigma\sqrt T\xi}$}
-\dl{\sigma\sqrt Tx-\frac{x^2}2=-\frac{(x-\sigma\sqrt T)^2}2+\frac{\sigma^2T}2}{complete the square}
-\dl{e^{\sigma\sqrt Tx}\varphi(x)=e^{\sigma^2T/2}\,\varphi\big(x-\sigma\sqrt T\big)}{so: the bell curve shifted right by $\sigma\sqrt T$}
-\dl{A=S_0e^{mT+\sigma^2T/2}\int_{-k}^\infty\varphi\big(x-\sigma\sqrt T\big)\,dx}{substitute}
-\dl{\phantom{A}=S_0e^{rT}\int_{-k-\sigma\sqrt T}^\infty\varphi(y)\,dy}{$m+\frac12\sigma^2=r$; $y=x-\sigma\sqrt T$}
-\dl{\phantom{A}=S_0e^{rT}\,\Phi\big(k+\sigma\sqrt T\big)}{symmetry, as in Step~6}
+\dl{\frac{n\hat p_n-m}{\sqrt n/2}=\frac{\ln(S_0/K)+(r+\frac12\sigma^2)T}{\sigma\sqrt T}=:h}{}
+\dl{P(\hat U\ge m)\to\Phi(h)}{Step~3}
 \end{deriv}
-\item Put the two parts together:
+\item Put both into Step~2:
 \begin{deriv}
-\dl{h:=k+\sigma\sqrt T=\frac{\ln(S_0/K)+(r+\frac12\sigma^2)T}{\sigma\sqrt T}}{$\frac{\sigma^2T}{\sigma\sqrt T}=\sigma\sqrt T$ turns $-\frac12\sigma^2$ into $+\frac12\sigma^2$}
-\dl{C=e^{-rT}(A-B)=e^{-rT}\big(S_0e^{rT}\Phi(h)-K\Phi(k)\big)}{Steps~4--7}
-\dl{C=S_0\,\Phi(h)-Ke^{-rT}\,\Phi\big(h-\sigma\sqrt T\big)}{$k=h-\sigma\sqrt T$: the Black--Scholes formula}
+\dl{C=S_0\,\Phi(h)-Ke^{-rT}\,\Phi\big(h-\sigma\sqrt T\big)}{the Black--Scholes formula}
+\dl{h=\frac{\ln(S_0/K)+(r+\frac12\sigma^2)T}{\sigma\sqrt T}}{$h-\sigma\sqrt T$ has $r-\frac12\sigma^2$ instead}
 \end{deriv}
 This is the price of a European call with maturity $T$ and strike $K$ when the stock is the geometric Brownian motion $S_t=S_0e^{\mu t+\sigma W_t}$ and the bond is $B_t=e^{rt}$, $t\in[0,T]$.
 \end{steps}
