@@ -302,41 +302,53 @@ At every node no money goes in or out, and the copy pays exactly the call: self-
 \dl{\phantom{C}=e^{-rT}\,\E_{P^*}\big(S_0e^{Z_n}-K\big)^+}{$(1+r_n)^n=e^{rT}$}
 \end{deriv}
 So we only need the law of $Z_n$ under $P^*$ as $n\to\infty$.
-\item Write $p^*_n$ in the form of \cref{card:scaledwalk}. For small $\delta=\delta_n$, keep the terms of order $\delta$:
+\item Expand $p^*_n$ for small $\delta=\delta_n$, using $e^x\approx1+x+\frac{x^2}2$ and keeping terms up to $\delta$:
 \begin{deriv}
-\dl{e^{r\delta}-e^{-\sigma\sqrt\delta}\approx r\delta+\sigma\sqrt\delta-\tfrac12\sigma^2\delta}{$e^x\approx1+x+\frac{x^2}2$}
-\dl{e^{\sigma\sqrt\delta}-e^{-\sigma\sqrt\delta}\approx2\sigma\sqrt\delta}{the same; the $\frac{x^2}2$ terms cancel}
-\dl{p^*_n\approx\frac12\Big(1+\frac{r-\frac12\sigma^2}{\sigma}\sqrt{\delta_n}\Big)}{divide}
+\dl{e^{r\delta}\approx1+r\delta}{$x=r\delta$; $x^2$ is of order $\delta^2$, dropped}
+\dl{e^{\sigma\sqrt\delta}\approx1+\sigma\sqrt\delta+\tfrac12\sigma^2\delta}{$x=\sigma\sqrt\delta$}
+\dl{e^{-\sigma\sqrt\delta}\approx1-\sigma\sqrt\delta+\tfrac12\sigma^2\delta}{$x=-\sigma\sqrt\delta$}
+\dl{\text{top: }e^{r\delta}-e^{-\sigma\sqrt\delta}\approx\sigma\sqrt\delta+\big(r-\tfrac12\sigma^2\big)\delta}{subtract; the $1$s cancel}
+\dl{\text{bottom: }e^{\sigma\sqrt\delta}-e^{-\sigma\sqrt\delta}\approx2\sigma\sqrt\delta}{subtract; the $1$s and $\frac12\sigma^2\delta$ cancel}
+\dl{p^*_n\approx\frac12+\frac{r-\frac12\sigma^2}{2\sigma}\sqrt\delta}{divide top by bottom}
+\dl{2p^*_n-1\approx\frac{r-\frac12\sigma^2}{\sigma}\sqrt\delta}{what the walk's mean needs}
 \end{deriv}
-\item The random-walk card:
+\item Mean and variance of $Z_n=Y_1+\dots+Y_n$ under $P^*$ (\cref{card:scaledwalk}, box):
 \begin{deriv}
-\dl{\text{steps }\pm\sigma\sqrt{\delta_n},\ \ p=\tfrac12\big(1+\tfrac{\mu}{\sigma}\sqrt{\delta_n}\big)}{\cardrow{card:scaledwalk}{5}, with $\mu=r-\frac12\sigma^2$ (Step~3)}
-\dl{Z_n\to Z\sim N\Big(\big(r-\tfrac12\sigma^2\big)T,\ \sigma^2T\Big)}{the walk becomes Brownian motion with drift, at time $T$}
+\dl{\E_{P^*}Y_i=\sigma\sqrt\delta\,p^*_n-\sigma\sqrt\delta\,(1-p^*_n)=\sigma\sqrt\delta\,(2p^*_n-1)}{one step}
+\dl{\phantom{\E_{P^*}Y_i}\approx\big(r-\tfrac12\sigma^2\big)\delta}{Step~3, last line}
+\dl{\E_{P^*}Z_n=n\,\E_{P^*}Y_i\approx\big(r-\tfrac12\sigma^2\big)n\delta=\big(r-\tfrac12\sigma^2\big)T}{$n$ steps; $n\delta=T$}
+\dl{\Var Y_i=\E_{P^*}Y_i^2-(\E_{P^*}Y_i)^2\approx\sigma^2\delta}{$Y_i^2=\sigma^2\delta$ always; $(\E_{P^*}Y_i)^2$ is of order $\delta^2$}
+\dl{\Var Z_n=n\Var Y_i\approx\sigma^2T}{independent steps}
+\dl{Z_n\to Z\sim N\Big(\big(r-\tfrac12\sigma^2\big)T,\ \sigma^2T\Big)}{a sum of many small independent steps is normal (central limit theorem; \cardrow{card:scaledwalk}{5})}
 \dl{C\to e^{-rT}\,\E_{P^*}\big(S_0e^Z-K\big)^+}{Step~2}
 \end{deriv}
-\item Write $Z=mT+\sigma\sqrt T\,\xi$ with $m=r-\frac12\sigma^2$ and $\xi\sim N(0,1)$, and find where the call pays:
+\item Write $Z$ with a standard normal $\xi\sim N(0,1)$, and find when the call pays:
 \begin{deriv}
-\dl{S_0e^Z>K\iff\xi>\frac{\ln(K/S_0)-mT}{\sigma\sqrt T}}{take logs}
-\dl{\phantom{S_0e^Z>K\iff\xi}=-\big(h-\sigma\sqrt T\big)}{with $h$ below}
-\dl{h:=\frac{\ln(S_0/K)+(r+\frac12\sigma^2)T}{\sigma\sqrt T}}{so $h-\sigma\sqrt T=\frac{\ln(S_0/K)+mT}{\sigma\sqrt T}$}
-\dl{\E_{P^*}\big(S_0e^Z-K\big)^+}{split the payoff}
-\dl{\quad=\E_{P^*}\big(S_0e^Z\,;\,\xi>-(h-\sigma\sqrt T)\big)}{}
-\dl{\qquad-K\,P\big(\xi>-(h-\sigma\sqrt T)\big)}{}
+\dl{Z=mT+\sigma\sqrt T\,\xi,\qquad m:=r-\tfrac12\sigma^2}{mean $mT$, s.d.\ $\sigma\sqrt T$}
+\dl{S_0e^Z>K\iff Z>\ln\frac K{S_0}}{take logs}
+\dl{\phantom{S_0e^Z>K}\iff\xi>\frac{\ln(K/S_0)-mT}{\sigma\sqrt T}=-k}{solve for $\xi$}
+\dl{k:=\frac{\ln(S_0/K)+(r-\frac12\sigma^2)T}{\sigma\sqrt T}}{a name for the cut-off}
+\dl{\E_{P^*}\big(S_0e^Z-K\big)^+=A-B}{split: pays $S_0e^Z-K$ when $\xi>-k$, else $0$}
+\dl{A=\E_{P^*}\big(S_0e^Z;\ \xi>-k\big),\qquad B=K\,P(\xi>-k)}{the stock part and the strike part}
 \end{deriv}
-\item The $K$ part:
+\item The strike part:
 \begin{deriv}
-\dl{P\big(\xi>-(h-\sigma\sqrt T)\big)=\Phi\big(h-\sigma\sqrt T\big)}{$P(\xi>-x)=\Phi(x)$ (\cref{card:normal-prob})}
+\dl{B=K\,P(\xi>-k)=K\,\Phi(k)}{the bell curve is symmetric: $P(\xi>-k)=P(\xi<k)$}
 \end{deriv}
-\item The $S_0$ part, completing the square:
+\item The stock part, as an integral against the bell curve $\varphi(x)=\frac1{\sqrt{2\pi}}e^{-x^2/2}$:
 \begin{deriv}
-\dl{e^{\sigma\sqrt T x}\varphi(x)=e^{\frac12\sigma^2T}\varphi\big(x-\sigma\sqrt T\big)}{expand $(x-\sigma\sqrt T)^2$}
-\dl{\E_{P^*}\big(e^{\sigma\sqrt T\xi};\xi>a\big)=e^{\frac12\sigma^2T}P\big(\xi>a-\sigma\sqrt T\big)}{integrate over $x>a$}
-\dl{S_0e^{mT}e^{\frac12\sigma^2T}\,P\big(\xi>-h\big)=S_0e^{rT}\,\Phi(h)}{$a=-(h-\sigma\sqrt T)$; $m+\frac12\sigma^2=r$}
+\dl{A=\int_{-k}^\infty S_0e^{mT+\sigma\sqrt Tx}\,\varphi(x)\,dx}{$S_0e^Z=S_0e^{mT+\sigma\sqrt T\xi}$}
+\dl{\sigma\sqrt Tx-\frac{x^2}2=-\frac{(x-\sigma\sqrt T)^2}2+\frac{\sigma^2T}2}{complete the square}
+\dl{e^{\sigma\sqrt Tx}\varphi(x)=e^{\sigma^2T/2}\,\varphi\big(x-\sigma\sqrt T\big)}{so: the bell curve shifted right by $\sigma\sqrt T$}
+\dl{A=S_0e^{mT+\sigma^2T/2}\int_{-k}^\infty\varphi\big(x-\sigma\sqrt T\big)\,dx}{substitute}
+\dl{\phantom{A}=S_0e^{rT}\int_{-k-\sigma\sqrt T}^\infty\varphi(y)\,dy}{$m+\frac12\sigma^2=r$; $y=x-\sigma\sqrt T$}
+\dl{\phantom{A}=S_0e^{rT}\,\Phi\big(k+\sigma\sqrt T\big)}{symmetry, as in Step~6}
 \end{deriv}
-\item Put the two parts together and discount by $e^{-rT}$:
+\item Put the two parts together:
 \begin{deriv}
-\dl{C=e^{-rT}\big(S_0e^{rT}\Phi(h)-K\,\Phi(h-\sigma\sqrt T)\big)}{Steps~4--7}
-\dl{C=S_0\,\Phi(h)-Ke^{-rT}\,\Phi\big(h-\sigma\sqrt T\big)}{the Black--Scholes formula}
+\dl{h:=k+\sigma\sqrt T=\frac{\ln(S_0/K)+(r+\frac12\sigma^2)T}{\sigma\sqrt T}}{$\frac{\sigma^2T}{\sigma\sqrt T}=\sigma\sqrt T$ turns $-\frac12\sigma^2$ into $+\frac12\sigma^2$}
+\dl{C=e^{-rT}(A-B)=e^{-rT}\big(S_0e^{rT}\Phi(h)-K\Phi(k)\big)}{Steps~4--7}
+\dl{C=S_0\,\Phi(h)-Ke^{-rT}\,\Phi\big(h-\sigma\sqrt T\big)}{$k=h-\sigma\sqrt T$: the Black--Scholes formula}
 \end{deriv}
 This is the price of a European call with maturity $T$ and strike $K$ when the stock is the geometric Brownian motion $S_t=S_0e^{\mu t+\sigma W_t}$ and the bond is $B_t=e^{rt}$, $t\in[0,T]$.
 \end{steps}
